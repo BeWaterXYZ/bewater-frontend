@@ -27,7 +27,7 @@ export const MenuItem = forwardRef(function (
   return (
     <a
       className={clsx(
-        'relative flex items-center h-full px-6 text-sm uppercase cursor-default bg-bw-back outline-none after:absolute after:top-0 after:left-0 after:right-0 after:h-[3px] after:bg-bw-back after:opacity-50 hover:after:block focus:after:block',
+        'relative flex items-center h-full px-4 text-sm cursor-default outline-none after:absolute after:top-0 after:left-0 after:right-0 after:h-[3px] after:bg-bw-back after:opacity-50 hover:after:block focus:after:block',
         isOpen || isActive ? 'after:block' : 'after:hidden',
         {
           'after:opacity-100': isActive,

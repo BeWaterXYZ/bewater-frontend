@@ -1,31 +1,33 @@
 import clsx from 'clsx';
-import MenuUnstyled from '@mui/base/MenuUnstyled';
 
 import type { MenuItemType } from '@/models/menu';
 
 import { MenuItem } from './menu-item';
 
 type Props = {
-  label: string;
   items: MenuItemType[];
-  isActive: boolean;
+  className?: string;
 };
 
 export const Menu = ({
-  label,
   items,
-  isActive,
+  className,
 }: Props) => {
-  return (
-    <li
-      className={clsx('h-full touch-manipulation')}
-    >
-      <MenuItem
-        isOpen={false}
-        label={label}
-        hasSubMenu={false}
-        isActive={isActive}
-      />
-    </li>
-  );
+  return items?.length ? (
+    <ul className={clsx('flex flex-row items-center h-20', className)}>
+      {items.map((item,i) =>
+        <li
+          key={i}
+          className={clsx('h-full touch-manipulation')}
+        >
+          <MenuItem
+            item={item}
+            isOpen={false}
+            hasSubMenu={false}
+            isActive={false}
+          />
+        </li>
+      )}
+    </ul>
+  ) : <div />;
 }

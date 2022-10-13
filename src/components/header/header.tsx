@@ -1,44 +1,35 @@
-import clsx from 'clsx';
-import { useState } from 'react';
-
 import Logo from '@/components/logos/bewater.svg';
-import { Menu, MenuItem } from '@/components/menu';
+import { Menu } from '@/components/menu';
+import { useMenuData } from '@/hooks/useMenuData';
 
+import type { Auth } from '@/models/auth';
 import type { MenuData } from '@/models/menu';
 
 type Props = {
-  menuData: MenuData;
+  menuData?: MenuData;
 };
 
 export function Header({ menuData }: Props) {
-  const [subMenuOpen, setSubMenuOpen] = useState<string | null>(null);
-
   return (
     <header
-      className='sticky top-0 bg-ef-white border-b border-solid border-ef-tints-200 z-50'
+      className='sticky top-0 bg-bw-back z-10'
     >
       <div
-        className='header-width h-14 px-5 flex justify-between mx-auto'
+        className='header-width h-20 px-5 flex justify-between mx-auto'
       >
-        <div className='h-full flex items-center'>
-          <a href="/">
-            <Logo className='h-6 mr-4 shrink-0' />
-          </a>
-
-          <ul className='flex items-center h-full'>
-
-            {menuData.main.map((item) => (
-              <MenuItem
-                key={item.key}
-                label={item.label}
-                hasSubMenu={false}
-                isActive={false}
-                isOpen={false}
-              />
-            ))}
-          </ul>
-        </div>
+        <a className='h-full flex items-center' href="/">
+          <Logo className='h-6 mr-4 shrink-0' />
+        </a>
+        <Menu items={menuData?.main || []} />
+        <div />
       </div>
     </header>
   );
+}
+
+export const HeaderWrapper = () => {
+  const { menuData } = useMenuData({} as Auth);
+  return (
+    <Header menuData={menuData} />
+  )
 }

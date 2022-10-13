@@ -26,16 +26,16 @@ const mainMenu: MenuItemType[] = [
 
 const profileMenu: MenuItemType[] = [{
   type: 'menu-item',
-    key: 'signin',
-    label: 'Sign In',
-    path: '/signin',
+  key: 'signin',
+  label: 'Sign In',
+  path: '/signin',
 }]
 
 export function useMenuData(auth: Auth) {
   const [menuData, setMenuData] = useState<MenuData>();
 
   useEffect(() => {
-    if (auth.headers['X-BW-Access'] && auth.headers['Authorization']) {
+    if (auth?.headers && auth?.headers['X-BW-Access'] && auth?.headers['Authorization']) {
       // TODO: query api to get different menu for account width different associatedFeatures
     } else {
       // show menu for visiters

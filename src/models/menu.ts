@@ -1,9 +1,10 @@
-export type MenuSectionType = {
-  type: 'menu-section';
-  key: string;
-  label: string;
-  items: MenuItemType[];
-};
+// TODO: uncomment this when there was submenu for menu
+// export type MenuSectionType = {
+//   type: 'menu-section';
+//   key: string;
+//   label: string;
+//   items: MenuItemType[];
+// };
 
 export type MenuItemType = {
   type: 'menu-item';
@@ -16,8 +17,8 @@ export type MenuItemType = {
 };
 
 export type MenuData = {
-  main: (MenuSectionType | MenuItemType)[];
-  profile: (MenuSectionType | MenuItemType)[];
+  main: MenuItemType[];
+  profile: MenuItemType[];
 };
 
 export enum MenuAction {

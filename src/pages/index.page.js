@@ -1,17 +1,10 @@
-import BWHeader from './header'
-import BWFooter from './footer'
-import { Layout, Button } from 'antd';
+import { HeaderWrapper } from '@/components/header';
+import { Footer } from '@/components/footer';
 import React ,{ useEffect } from 'react';
-import TwitterIcon from './twitterIcon';
-import GithubIcon from './githubIcon';
-import GoogleIcon from './googleIcon';
-import DiscordIcon from './discordIcon';
 import { useSession, signIn, signOut } from "next-auth/react";
 import { WalletButton } from './walletButton';
 import { useAccount, useSignMessage, useNetwork } from 'wagmi'
 import axios from 'axios'
-
-const { Content } = Layout;
 
 const App = () => {
     const { isConnected, address } = useAccount()
@@ -19,7 +12,7 @@ const App = () => {
     const { status } = useSession()
     const { signMessageAsync } = useSignMessage()
     const { data: session } = useSession();
-    
+
     useEffect(() => {
         const handleAuth = async () => {
             const userData = { address, chain: chain.id, network: 'evm' }
@@ -34,7 +27,6 @@ const App = () => {
 
             const signature = await signMessageAsync({ message })
 
-
             const { url } = await signIn('credentials', {
                 message,
                 signature,
@@ -47,28 +39,36 @@ const App = () => {
     }, [isConnected])
 
     return(
-        <Layout className="layout" theme="light">
-            <BWHeader />
-           
+        <div className="layout" data-theme="light">
+            <HeaderWrapper />
+
             {!session && (
-                 <Content
+                 <div
                   style={{
                     padding: '120px 50px',
                     background: 'white'
                   }}
                 >
-                    <div id="content">
-                        <h1>Welcome aboard.</h1>
-                        <WalletButton />
-                        <div id="otherLogin">
-                            <Button type="text" icon={<GithubIcon />} onClick={() => signIn('github')}>Sign in with Github</Button>
-                            <Button type="text" icon={<DiscordIcon />} onClick={() => signIn('discord')}>Sign in with Discord</Button>
-                            <Button type="text" icon={<TwitterIcon />} >Sign in with Twitter</Button>
-                            <Button type="text" icon={<GoogleIcon />} onClick={() => signIn('google')}>Sign in with Google</Button>
-                        </div>
-                      <text>By singning in or conecting wallet, you agree to our <b>Terms of Service </b>and acknowledge that you have read our <strong>Privacy Policy</strong> and <strong>Cookie Use</strong>.</text>
+                    <div id="content" className='mx-auto'>
+                      <h1 className='typ-h5'>Welcome aboard.</h1>
+                      <WalletButton />
+                      <div id="otherLogin">
+                          <button type="button" onClick={() => signIn('github')}>
+                            Sign in with Github
+                          </button>
+                          <button type="button" onClick={() => signIn('discord')}>
+                            Sign in with Discord
+                          </button>
+                          <button type="button">
+                            Sign in with Twitter
+                          </button>
+                          <button type="button" onClick={() => signIn('google')}>
+                            Sign in with Google
+                          </button>
+                      </div>
+                      <div className='typ-body-small'>By singning in or conecting wallet, you agree to our <b>Terms of Service </b>and acknowledge that you have read our <strong>Privacy Policy</strong> and <strong>Cookie Use</strong>.</div>
                     </div>
-            </Content>
+            </div>
             )}
             {session && (
                 <div>
@@ -81,8 +81,8 @@ const App = () => {
                     <button onClick={() => signOut()}>Sign out</button>
                 </div>
             )}
-            <BWFooter />
-        </Layout>
+            <Footer />
+        </div>
     );
 }
 
