@@ -1,3 +1,21 @@
+/* Build-time imports by postcss-import */
+@import 'tailwindcss/base';
+@import 'reset.css/reset.css';
+@import './theme.css';
+@import 'tailwindcss/components';
+
+@layer components {
+  .bg-placeholder {
+    @apply bg-gray-600 opacity-50;
+  }
+  .header-width {
+    @apply w-full lg:w-[1280px];
+  }
+  .content-width {
+    @apply sm:w-[calc(100vw - 48px)] lg:w-[1024px] mx-auto;
+  }
+}
+
 html,
 body {
   padding: 0;
@@ -147,18 +165,4 @@ a {
 
 #otherLogin button:nth-last-child(1){
   border-bottom: none ;
-}
-
-#footer {
-  font-family: Space Grotesk;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 32px;
-  letter-spacing: 0em;
-  text-align: center;
-  background: white;
-}
-
-.ant-layout-footer div img {
-  margin-right: 16px ;
 }

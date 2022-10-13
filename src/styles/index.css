@@ -1,0 +1,8 @@
+@import './globals.css';
+
+/* please put shared component css here */
+@import './typ.css';
+
+/* utilities.css should be after component layer css */
+/* see why here: https://tailwindcss.com/docs/adding-custom-styles */
+@import './utilities.css';
