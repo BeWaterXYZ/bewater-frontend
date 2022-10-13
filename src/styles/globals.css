@@ -143,6 +143,7 @@ a {
   border: solid 1px #e4e4e4;
   border-radius: 7px;
   text-align: center;
+  color: #000;
 }
 
 #otherLogin button{

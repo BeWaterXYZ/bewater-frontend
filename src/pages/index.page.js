@@ -1,11 +1,16 @@
+import React ,{ useEffect } from 'react';
+import axios from 'axios';
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useAccount, useSignMessage, useNetwork } from 'wagmi';
+
 import { HeaderWrapper } from '@/components/header';
 import { Footer } from '@/components/footer';
-import React ,{ useEffect } from 'react';
-import { useSession, signIn, signOut } from "next-auth/react";
-import { WalletButton } from './walletButton';
-import { useAccount, useSignMessage, useNetwork } from 'wagmi'
-import axios from 'axios'
+import Discord from '@/components/logos/discord.svg';
+import Github from '@/components/logos/github.svg';
+import Google from '@/components/logos/google.svg';
+import Twitter from '@/components/logos/twitter.svg';
 
+import { WalletButton } from './walletButton';
 const App = () => {
     const { isConnected, address } = useAccount()
     const { chain } = useNetwork()
@@ -54,16 +59,16 @@ const App = () => {
                       <WalletButton />
                       <div id="otherLogin">
                           <button type="button" onClick={() => signIn('github')}>
-                            Sign in with Github
+                            <Github className="inline-block mr-2" /><span>Sign in with Github</span>
                           </button>
                           <button type="button" onClick={() => signIn('discord')}>
-                            Sign in with Discord
+                            <Discord className="inline-block mr-2" /><span>Sign in with Discord</span>
                           </button>
                           <button type="button">
-                            Sign in with Twitter
+                            <Twitter className="inline-block mr-2" /><span>Sign in with Twitter</span>
                           </button>
                           <button type="button" onClick={() => signIn('google')}>
-                            Sign in with Google
+                            <Google className="inline-block mr-2" /><span>Sign in with Google</span>
                           </button>
                       </div>
                       <div className='typ-body-small'>By singning in or conecting wallet, you agree to our <b>Terms of Service </b>and acknowledge that you have read our <strong>Privacy Policy</strong> and <strong>Cookie Use</strong>.</div>
