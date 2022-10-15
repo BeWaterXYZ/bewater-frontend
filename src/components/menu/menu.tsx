@@ -12,10 +12,7 @@ type Props = {
 export const Menu = ({ items, className }: Props) => {
   return items?.length ? (
     <ul
-      className={clsx(
-        'flex flex-row justify-center items-center h-20',
-        className,
-      )}
+      className={clsx('flex flex-row space-x-8 h-full items-center', className)}
     >
       {items.map((item, i) => (
         <li key={i} className={clsx('h-full touch-manipulation')}>
