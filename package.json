@@ -2,18 +2,31 @@
   "name": "bewater",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@7.8.0",
   "scripts": {
-    "dev": "electron . | next dev",
+    "preinstall": "npx -y only-allow pnpm",
+    "prepare": "husky install",
+    "dev": "next dev",
+    "export": "next build && next export",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "build:icons": "rm -rf ./src/components/icons/* && node -r esm ./scripts/build-icons",
+    "lint": "next lint",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier -c .",
+    "lint-staged": "lint-staged"
+  },
+  "engines": {
+    "node": ">=16.5.0",
+    "pnpm": ">=7"
   },
   "dependencies": {
+    "@mui/base": "5.0.0-alpha.100",
     "@rainbow-me/rainbowkit": "^0.7.1",
-    "@zeit/next-css": "^1.0.1",
-    "antd": "^4.23.4",
     "axios": "^1.0.0",
-    "babel-plugin-import": "^1.13.5",
+    "clsx": "^1.2.1",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.1",
     "moralis": "^2.6.4",
@@ -21,11 +34,54 @@
     "next-auth": "^4.12.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "reset.css": "^2.0.2",
     "wagmi": "^0.6.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.10",
+    "@storybook/addon-actions": "^6.5.10",
+    "@storybook/addon-essentials": "^6.5.10",
+    "@storybook/addon-interactions": "^6.5.10",
+    "@storybook/addon-links": "^6.5.10",
+    "@storybook/addon-postcss": "^2.0.0",
+    "@storybook/builder-webpack5": "^6.5.10",
+    "@storybook/manager-webpack5": "^6.5.10",
+    "@storybook/react": "^6.5.10",
+    "@storybook/testing-library": "^0.0.13",
+    "@svgr/webpack": "^6.3.1",
+    "@swc/core": "^1.2.222",
+    "@types/node": "18.6.3",
+    "@types/react": "18.0.15",
+    "@types/react-dom": "18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "autoprefixer": "^10.4.8",
+    "babel-loader": "^8.2.5",
     "eslint": "8.24.0",
-    "eslint-config-next": "12.3.1"
+    "eslint-config-next": "12.3.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-storybook": "^0.6.3",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "esm": "^3.2.25",
+    "fs-extra": "^10.1.0",
+    "glob-promise": "^5.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "mustache": "^4.2.0",
+    "postcss": "^8.4.14",
+    "prettier": "^2.7.1",
+    "svgo": "^2.8.0",
+    "tailwindcss": "^3.1.7",
+    "ts-loader": "^9.3.1",
+    "tslib": "^2.4.0",
+    "typescript": "4.7.4",
+    "webpack": "^5.74.0"
   },
-  "main": "main.js"
+  "lint-staged": {
+    "*": "prettier --write"
+  },
+  "browserslist": [
+    "last 10 version",
+    "not dead",
+    "iOS >= 10"
+  ]
 }
