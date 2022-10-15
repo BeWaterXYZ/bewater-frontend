@@ -31,7 +31,7 @@ const profileMenu: MenuItemType[] = [{
   path: '/signin',
 }]
 
-export function useMenuData(auth: Auth) {
+export function useMenuData(auth?: Auth) {
   const [menuData, setMenuData] = useState<MenuData>();
 
   useEffect(() => {

@@ -19,12 +19,10 @@ export default class MyDocument extends Document<{}> {
     return (
       <Html>
         <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk&display=optional"
-          rel="stylesheet"
-        />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+          <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
         </Head>
-        <body className="bg-bw-back antialiased">
+        <body className="bg-bw-back antialiased" data-theme="light">
           <Main />
           <NextScript />
         </body>

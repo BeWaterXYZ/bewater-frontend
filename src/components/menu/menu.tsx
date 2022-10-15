@@ -14,7 +14,7 @@ export const Menu = ({
   className,
 }: Props) => {
   return items?.length ? (
-    <ul className={clsx('flex flex-row items-center h-20', className)}>
+    <ul className={clsx('flex flex-row justify-center items-center h-20', className)}>
       {items.map((item,i) =>
         <li
           key={i}
