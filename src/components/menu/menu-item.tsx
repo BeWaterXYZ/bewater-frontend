@@ -13,7 +13,7 @@ type Props = {
   isActive: boolean;
 };
 
-export const MenuItem = forwardRef(function (
+export const MenuItem = forwardRef(function MenuItem(
   { label, item, hasSubMenu, isOpen, isActive }: Props,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
@@ -22,7 +22,14 @@ export const MenuItem = forwardRef(function (
   const handleActionMemo = useMemo(() => {
     // If menu item doesn't have an action then default anchor behavior is used
     return item?.action && handleAction.bind(null, item.action);
-  }, [item?.action]);
+  }, [item?.action, handleAction]);
+
+  const externalProps = item?.external
+    ? {
+        rel: 'noreferrer noopener',
+        target: '_blank',
+      }
+    : {};
 
   return (
     <a
@@ -35,7 +42,7 @@ export const MenuItem = forwardRef(function (
         },
       )}
       href={item?.path}
-      target={item?.external ? '_blank' : undefined}
+      {...externalProps}
       onClick={handleActionMemo}
       ref={ref}
       tabIndex={0}

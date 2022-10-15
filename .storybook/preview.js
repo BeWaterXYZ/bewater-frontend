@@ -47,9 +47,7 @@ export const globalTypes = {
 const withThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
   document.body.setAttribute('data-theme', theme);
-  return (
-    <Story {...context} />
-  );
+  return <Story {...context} />;
 };
 
 export const decorators = [withThemeProvider];

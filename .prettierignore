@@ -9,6 +9,7 @@ public/
 
 .gitignore
 .prettierignore
+.eslintignore
 pnpm-lock.yaml
 .env
 Dockerfile

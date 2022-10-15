@@ -21,33 +21,39 @@ const mainMenu: MenuItemType[] = [
     key: 'docs',
     label: 'Docs',
     path: '/docs',
-  }
+  },
 ];
 
-const profileMenu: MenuItemType[] = [{
-  type: 'menu-item',
-  key: 'signin',
-  label: 'Sign In',
-  path: '/signin',
-}]
+const profileMenu: MenuItemType[] = [
+  {
+    type: 'menu-item',
+    key: 'signin',
+    label: 'Sign In',
+    path: '/signin',
+  },
+];
 
 export function useMenuData(auth?: Auth) {
   const [menuData, setMenuData] = useState<MenuData>();
 
   useEffect(() => {
-    if (auth?.headers && auth?.headers['X-BW-Access'] && auth?.headers['Authorization']) {
+    if (
+      auth?.headers &&
+      auth?.headers['X-BW-Access'] &&
+      auth?.headers['Authorization']
+    ) {
       // TODO: query api to get different menu for account width different associatedFeatures
     } else {
       // show menu for visiters
       setMenuData({
-        main: mainMenu.map(menu => {
+        main: mainMenu.map((menu) => {
           return {
             type: menu.type,
             key: menu.key,
             label: menu.label,
             path: menu.path,
             external: menu.external,
-          }
+          };
         }),
         // TODO: remove profile for Sign In page
         profile: profileMenu,

@@ -14,7 +14,7 @@ module.exports = {
         bw: {
           fore: 'var(--bw-fr-color)',
           back: 'var(--bw-bg-color)',
-        }
+        },
       },
       borderRadius: {
         button: 'var(--bw-button-radius)',
@@ -38,7 +38,6 @@ module.exports = {
         body_small: 'var(--bw-body-small-weight)',
       },
       lineHeight: {
-        btn: 'var(--bw-button-line-height)',
         h1: 'var(--bw-h1-line-height)',
         h2: 'var(--bw-h2-line-height)',
         h3: 'var(--bw-h3-line-height)',

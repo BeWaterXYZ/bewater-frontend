@@ -17,9 +17,7 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Header> = () => {
   const { menuData } = useMenuData({} as Auth);
-  return (
-    <Header menuData={menuData} />
-  )
+  return <Header menuData={menuData} />;
 };
 
 export const Normal = Template.bind({});

@@ -1,5 +1,6 @@
-import { MenuAction } from '@/models/menu';
 import { useCallback } from 'react';
+
+import { MenuAction } from '@/models/menu';
 
 export function useMenuActions() {
   const handleAction = useCallback((action: string) => {

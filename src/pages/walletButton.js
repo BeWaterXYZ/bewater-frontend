@@ -19,14 +19,13 @@ export const WalletButton = () => {
           ready &&
           account &&
           chain &&
-          (!authenticationStatus ||
-            authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === 'authenticated');
 
         return (
           <div
             {...(!ready && {
               'aria-hidden': true,
-              'style': {
+              style: {
                 opacity: 0,
                 pointerEvents: 'none',
                 userSelect: 'none',

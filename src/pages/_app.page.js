@@ -1,6 +1,11 @@
-import '../styles/index.css'
+import '../styles/index.css';
 
-import { createClient, configureChains, defaultChains, WagmiConfig } from 'wagmi';
+import {
+  createClient,
+  configureChains,
+  defaultChains,
+  WagmiConfig,
+} from 'wagmi';
 import { publicProvider } from 'wagmi/providers/public';
 import { SessionProvider } from 'next-auth/react';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
@@ -9,10 +14,12 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { HeaderWrapper } from '@/components/header';
 import { Footer } from '@/components/footer';
 
-const { provider, webSocketProvider, chains } = configureChains(defaultChains, [publicProvider()]);
+const { provider, webSocketProvider, chains } = configureChains(defaultChains, [
+  publicProvider(),
+]);
 const { connectors } = getDefaultWallets({
   appName: 'BeWater',
-  chains
+  chains,
 });
 
 const client = createClient({
@@ -36,8 +43,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         </RainbowKitProvider>
       </SessionProvider>
     </WagmiConfig>
-
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

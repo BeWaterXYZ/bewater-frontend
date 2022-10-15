@@ -40,10 +40,6 @@ export interface IconProps {
    */
   width?: string;
   /**
-   * Applies a gradient attribute to the SVG element.
-   */
-  gradient?: boolean;
-  /**
    * Applies a onClick event
    */
   onClick?: (
@@ -65,15 +61,11 @@ const Icon = React.forwardRef(function Icon(
     titleAccess,
     viewBox = '0 0 24 24',
     width,
-    gradient,
     onClick,
     ...restProps
   } = props;
 
   const iClassName = clsx('inline-block', className);
-  // Why uuidv4 here: if there is 2 or more same gradient icon on the page,
-  // when you hide one, all the icon with same gradient id where be hide
-  // so we should generate unique id for each gradient icon here.
   const _color = color ? color : 'inherit';
 
   return (

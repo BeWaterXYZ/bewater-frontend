@@ -1,6 +1,6 @@
-import React ,{ useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut } from 'next-auth/react';
 import { useAccount, useSignMessage, useNetwork } from 'wagmi';
 
 import Discord from '@/components/logos/discord.svg';
@@ -10,60 +10,67 @@ import Twitter from '@/components/logos/twitter.svg';
 
 import { WalletButton } from './walletButton';
 const App = () => {
-  const { isConnected, address } = useAccount()
-  const { chain } = useNetwork()
-  const { status } = useSession()
-  const { signMessageAsync } = useSignMessage()
+  const { isConnected, address } = useAccount();
+  const { chain } = useNetwork();
+  const { status } = useSession();
+  const { signMessageAsync } = useSignMessage();
   const { data: session } = useSession();
 
   useEffect(() => {
     const handleAuth = async () => {
-      const userData = { address, chain: chain.id, network: 'evm' }
+      const userData = { address, chain: chain.id, network: 'evm' };
       const { data } = await axios.post('/api/auth/request-message', userData, {
         headers: {
-            'content-type': 'application/json',
+          'content-type': 'application/json',
         },
-      })
-      const message = data.message
-      const signature = await signMessageAsync({ message })
+      });
+      const message = data.message;
+      const signature = await signMessageAsync({ message });
       const { url } = await signIn('credentials', {
         message,
         signature,
         redirect: false,
-      })
-    }
+      });
+    };
     if (status === 'unauthenticated' && isConnected) {
-      handleAuth()
+      handleAuth();
     }
-  }, [isConnected])
+  }, [isConnected]);
 
-  return(
+  return (
     <>
       {!session && (
-        <div
-          className='py-[120px] px-[50px]'
-        >
-          <div id="content" className='w-[280px] mx-auto'>
-            <h1 className='typ-h5'>Welcome aboard.</h1>
+        <div className="py-[120px] px-[50px]">
+          <div id="content" className="w-[280px] mx-auto">
+            <h1 className="typ-h5">Welcome aboard.</h1>
             <WalletButton />
             <div id="otherLogin">
               <button type="button" onClick={() => signIn('github')}>
-                <Github className="inline-block mr-2" /><span>Sign in with Github</span>
+                <Github className="inline-block mr-2" />
+                <span>Sign in with Github</span>
               </button>
               <button type="button" onClick={() => signIn('discord')}>
-                <Discord className="inline-block mr-2" /><span>Sign in with Discord</span>
+                <Discord className="inline-block mr-2" />
+                <span>Sign in with Discord</span>
               </button>
               <button type="button">
-                <Twitter className="inline-block mr-2" /><span>Sign in with Twitter</span>
+                <Twitter className="inline-block mr-2" />
+                <span>Sign in with Twitter</span>
               </button>
               <button type="button" onClick={() => signIn('google')}>
-                <Google className="inline-block mr-2" /><span>Sign in with Google</span>
+                <Google className="inline-block mr-2" />
+                <span>Sign in with Google</span>
               </button>
             </div>
-            <div className='typ-body-small'>
-              By singning in or conecting wallet, you agree to our <span className='font-bold'>Terms of Service </span>and acknowledge that you have read our <span className='font-bold'>Privacy Policy</span> and <span className='font-bold'>Cookie Use</span>.</div>
+            <div className="typ-body-small">
+              By singning in or conecting wallet, you agree to our{' '}
+              <span className="font-bold">Terms of Service </span>and
+              acknowledge that you have read our{' '}
+              <span className="font-bold">Privacy Policy</span> and{' '}
+              <span className="font-bold">Cookie Use</span>.
+            </div>
           </div>
-      </div>
+        </div>
       )}
       {session && (
         <div>
@@ -78,6 +85,6 @@ const App = () => {
       )}
     </>
   );
-}
+};
 
 export default App;
