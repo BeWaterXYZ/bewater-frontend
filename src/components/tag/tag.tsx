@@ -10,9 +10,13 @@ interface Props {
 export const Tag = ({ name, isSkill, className }: Props) => {
   return (
     <p
-      className={clsx('typ-body w-auto', {
-        'before:content-["#"]': isSkill,
-      })}
+      className={clsx(
+        'typ-body w-auto',
+        {
+          'before:content-["#"]': isSkill,
+        },
+        className,
+      )}
     >
       {name}
     </p>

@@ -8,9 +8,9 @@ interface Props {
 
 export const TagList = ({ className }: Props) => {
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="flex flex-col gap-y-3">
       <label className="typ-h5">Skills</label>
-      <div className={clsx('flex flex-col space-y-2', className)}>
+      <div className={clsx('flex flex-col gap-y-2', className)}>
         <Tag name="React" isSkill={true} />
         <Tag name="Next.js" isSkill={true} />
         <Tag name="TypeScript" isSkill={true} />
