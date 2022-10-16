@@ -1,2 +1,3 @@
 export { FormItem } from './form-item';
-export { Form } from './form';
+export { FormProfile } from './form-profile';
+export { FormWelcome } from './form-welcome';

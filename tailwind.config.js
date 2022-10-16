@@ -14,7 +14,11 @@ module.exports = {
         bw: {
           fore: 'var(--bw-fr-color)',
           back: 'var(--bw-bg-color)',
+          brand: '#0020f4',
         },
+      },
+      backgroundImage: {
+        linearWelcome: 'var(--bw-linear-welcome)',
       },
       borderRadius: {
         button: 'var(--bw-button-radius)',
@@ -49,6 +53,41 @@ module.exports = {
       },
       radius: {
         button: 'var(--bw-button-radius)',
+      },
+      animation: {
+        'spin-ripple': 'ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;',
+      },
+      keyframes: {
+        ripple: {
+          '0%': {
+            top: '36px',
+            left: '36px',
+            width: 0,
+            height: 0,
+            opacity: 0,
+          },
+          '4.9%': {
+            top: '36px',
+            left: '36px',
+            width: 0,
+            height: 0,
+            opacity: 0,
+          },
+          '5%': {
+            top: '36px',
+            left: '36px',
+            width: '0',
+            height: '0',
+            opacity: '1',
+          },
+          '100%': {
+            top: 0,
+            left: 0,
+            width: '72px',
+            height: '72px',
+            opacity: 0,
+          },
+        },
       },
     },
   },

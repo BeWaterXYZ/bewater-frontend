@@ -6,6 +6,7 @@ import Wallet from '../icons/wallet';
 
 interface Props {
   label: string;
+  required?: boolean;
   placeholder?: string;
   type: string;
   inputType: string;
@@ -18,6 +19,7 @@ interface Props {
 
 export const FormItem = ({
   label,
+  required,
   placeholder,
   type,
   inputType,
@@ -31,6 +33,7 @@ export const FormItem = ({
     <div className={clsx('block mb-4', className)}>
       <label className="block typ-label w-auto text-bw-fore py-1">
         {label}
+        {required ? ' *' : null}
       </label>
       {type === 'input' && <Input placeholder={placeholder} type={inputType} />}
       {type === 'button' && <Button text={buttonText} type={buttonType} />}

@@ -2,34 +2,41 @@ import { useEffect, useState } from 'react';
 
 import { Auth } from '@/models/auth';
 import { MenuData, MenuItemType } from '@/models/menu';
+import { urlWithBasePath } from '@/utils/urlWithBasePath';
 
 const mainMenu: MenuItemType[] = [
   {
     type: 'menu-item',
     key: 'challenges',
     label: 'Challenges',
-    path: '/challenges',
+    path: urlWithBasePath('/challenges'),
   },
   {
     type: 'menu-item',
     key: 'showcase',
     label: 'Showcase',
-    path: '/showcase',
+    path: urlWithBasePath('/showcase'),
   },
   {
     type: 'menu-item',
     key: 'docs',
     label: 'Docs',
-    path: '/docs',
+    path: urlWithBasePath('/docs'),
   },
 ];
 
 const profileMenu: MenuItemType[] = [
   {
     type: 'menu-item',
-    key: 'signin',
-    label: 'Sign In',
-    path: '/signin',
+    key: 'user_profile',
+    label: 'Your Profile',
+    path: urlWithBasePath('/user/profile'),
+  },
+  {
+    type: 'menu-item',
+    key: 'user_settings',
+    label: 'Account Settings',
+    path: urlWithBasePath('/user/settings'),
   },
 ];
 

@@ -4,9 +4,10 @@ interface Props {
   text: string;
   type: string;
   className?: string;
+  onClick?: () => void;
 }
 
-export const Button = ({ text, type, className }: Props) => {
+export const Button = ({ text, type, className, ...props }: Props) => {
   return (
     <button
       className={clsx(
@@ -17,6 +18,7 @@ export const Button = ({ text, type, className }: Props) => {
           'border-[#DD2828] bg-bw-back text-[#DD2828]': type === 'danger',
         },
         className,
+        { ...props },
       )}
     >
       {text}

@@ -1,5 +1,5 @@
+import React, { useMemo } from 'react';
 import clsx from 'clsx';
-import { forwardRef, useMemo } from 'react';
 
 import { useMenuActions } from '@/hooks/useMenuActions';
 
@@ -13,7 +13,7 @@ type Props = {
   isActive: boolean;
 };
 
-export const MenuItem = forwardRef(function MenuItem(
+export const MenuItem = React.forwardRef(function MenuItem(
   { label, item, hasSubMenu, isOpen, isActive }: Props,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {

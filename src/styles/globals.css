@@ -12,16 +12,14 @@
     @apply w-full lg:w-[1280px];
   }
   .content-width {
-    @apply sm:w-[calc(100vw - 48px)] lg:w-[1024px] mx-auto;
+    @apply sm:w-screen sm:px-12 lg:w-[1024px] mx-auto;
   }
-}
-
-.bw-layout {
-  @apply flex flex-col min-h-screen;
-}
-
-.bw-content {
-  @apply flex-1;
+  .bw-layout {
+    @apply flex flex-col min-h-screen;
+  }
+  .bw-content {
+    @apply flex-1;
+  }
 }
 
 #wallet {

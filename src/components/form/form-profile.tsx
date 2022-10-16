@@ -6,7 +6,7 @@ interface Props {
   className?: string;
 }
 
-export const Form = ({ className }: Props) => {
+export const FormProfile = ({ className }: Props) => {
   return (
     <form className={clsx('mb-[104px] max-w-[680px]', className)}>
       <FormItem
