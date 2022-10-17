@@ -8,7 +8,7 @@ interface Props {
 
 export const Button = ({ text, type, className }: Props) => {
   return (
-    <div
+    <button
       className={clsx(
         'inline-flex typ-body py-1 px-4 border-2 border-solid rounded-[7px] cursor-pointer w-auto hover:brightness-90 transition duration-[.15s] ease-out',
         {
@@ -20,6 +20,6 @@ export const Button = ({ text, type, className }: Props) => {
       )}
     >
       {text}
-    </div>
+    </button>
   );
 };
