@@ -13,6 +13,13 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 
-const Template: ComponentStory<typeof ButtonGroup> = () => <ButtonGroup />;
+const Template: ComponentStory<typeof ButtonGroup> = (args) => (
+  <ButtonGroup {...args} />
+);
 
 export const Normal = Template.bind({});
+Normal.args = {
+  name1: 'MetaMask',
+  name2: 'Coinbase Wallet',
+  name3: 'WalletConnect',
+};

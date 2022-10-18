@@ -3,10 +3,13 @@ import clsx from 'clsx';
 import { ButtonGroupItem } from './buttonGroup-item';
 
 interface Props {
+  name1: string;
+  name2: string;
+  name3: string;
   className?: string;
 }
 
-export const ButtonGroup = ({ className }: Props) => {
+export const ButtonGroup = ({ name1, name2, name3, className }: Props) => {
   return (
     <ul
       className={clsx(
@@ -14,9 +17,9 @@ export const ButtonGroup = ({ className }: Props) => {
         className,
       )}
     >
-      <ButtonGroupItem name="MetaMask" />
-      <ButtonGroupItem name="Coinbase Wallet" />
-      <ButtonGroupItem name="WalletConnect" />
+      <ButtonGroupItem name={name1} />
+      <ButtonGroupItem name={name2} />
+      <ButtonGroupItem name={name3} />
     </ul>
   );
 };
