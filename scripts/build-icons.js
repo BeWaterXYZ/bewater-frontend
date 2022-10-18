@@ -12,7 +12,7 @@ const icons = [
     name: 'BeWater Icons',
     contents: [
       {
-        files: path.resolve(__dirname, `${sourcePath}/svgs/24x24/*.svg`),
+        files: path.resolve(__dirname, `${sourcePath}/svgs/16x16/*.svg`),
       },
     ],
   },
@@ -60,20 +60,21 @@ function getFileName(file) {
 // Noise introduced by Google
 const noises = [
   [
-    '<path fill="#fff" d="M0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0z" />',
+    '<path fill="#fff" d="M0 0h16v16H0V0zm0 0h16v16H0V0zm0 0h16v16H0V0zm0 0h16v16H0V0z" />',
     '',
   ],
-  ['<path fill="#fff" d="M0 0h24v24H0V0zm0 0h24v24H0V0z" />', ''],
-  ['<path fill="#fff" d="M0 0h24v24H0z" />', ''],
-  ['="M0 0h24v24H0V0zm0 0h24v24H0V0z', '="'],
-  ['="M0 0h24v24H0zm0 0h24v24H0zm0 0h24v24H0z', '="'],
+  ['<path fill="#fff" d="M0 0h16v16H0V0zm0 0h16v16H0V0z" />', ''],
+  ['<path fill="#fff" d="M0 0h16v16H0z" />', ''],
+  ['="M0 0h16v16H0V0zm0 0h16v16H0V0z', '="'],
+  ['="M0 0h16v16H0zm0 0h16v16H0zm0 0h16v16H0z', '="'],
 ];
 
 async function cleanPaths(svgPath, data) {
   // Remove hardcoded color fill before optimizing so that empty groups are removed
   const input = data
-    .replace(/ fill="#191919"/g, '')
-    .replace(/<rect fill="#fff" width="24" height="24"\/>/g, '');
+    .replace(/ fill="black"/g, '')
+    .replace(/<rect fill="#fff" width="16" height="16"\/>/g, '')
+    .replace(/<rect width="16" height="16" fill="white"\/>/g, '');
 
   const result = await optimize(input, {
     floatPrecision: 4,
@@ -100,25 +101,25 @@ async function cleanPaths(svgPath, data) {
     .replace(/stroke-linecap/g, 'strokeLinecap')
     .replace(/stroke-linejoin/g, 'strokeLinejoin')
     .replace(/stroke-width/g, 'strokeWidth')
-    .replace(/fill="#191919"/g, '')
+    .replace(/fill="black"/g, '')
     .replace(/fill-opacity=/g, 'fillOpacity=')
     .replace(/xlink:href=/g, 'xlinkHref=')
     .replace(/clip-rule=/g, 'clipRule=')
     .replace(/fill-rule=/g, 'fillRule=')
     .replace(/ clip-path=".+?"/g, '') // Fix visibility issue and save some bytes.
     .replace(/<clipPath.+?<\/clipPath>/g, '') // Remove unused definitions
-    .replace(/<path[^/]*d="M0 0h24v24H0z" \/>/g, '')
+    .replace(/<path[^/]*d="M0 0h16v16H0z" \/>/g, '')
     .replace(
-      /<path[^/]*d="M0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0zm0 0h24v24H0V0z" \/>/g,
+      /<path[^/]*d="M0 0h16v16H0V0zm0 0h16v16H0V0zm0 0h16v16H0V0zm0 0h16v16H0V0z" \/>/g,
       '',
     )
-    .replace(/<path[^/]*d="M0 0h24v24H0V0zm0 0h24v24H0V0z" \/>/g, '');
+    .replace(/<path[^/]*d="M0 0h16v16H0V0zm0 0h16v16H0V0z" \/>/g, '');
 
   const sizeMatch = svgPath.match(/^.*-([0-9]+).svg$/);
   const size = sizeMatch ? Number(sizeMatch[1]) : null;
 
-  if (size !== null && size !== 24) {
-    const scale = Math.round((24 / size) * 100) / 100; // Keep a maximum of 2 decimals
+  if (size !== null && size !== 16) {
+    const scale = Math.round((16 / size) * 100) / 100; // Keep a maximum of 2 decimals
     paths = paths.replace('clipPath="url(#b)" ', '');
     paths = paths.replace(
       /<path /g,

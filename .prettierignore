@@ -21,3 +21,4 @@ src/**/*.svg
 
 *.woff
 *.woff2
+*.gitkeep
