@@ -12,7 +12,7 @@
     "start": "next start",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "build:icons": "rm -rf ./src/components/icons/* && node -r esm ./scripts/build-icons",
+    "build-icons": "rm -rf ./src/components/icons/* && node -r esm ./scripts/build-icons",
     "lint": "next lint",
     "prettier": "prettier --write .",
     "prettier:check": "prettier -c .",

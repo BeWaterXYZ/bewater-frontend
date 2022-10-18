@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { {{componentName}} } from './index';
+import { IconLink } from './index';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Icons/{{componentName}}',
-  component: {{componentName}},
+  title: 'Icons/IconLink',
+  component: IconLink,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     size: {
@@ -16,10 +16,10 @@ export default {
       control: 'text',
     },
   },
-} as ComponentMeta<typeof {{componentName}}>;
+} as ComponentMeta<typeof IconLink>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof {{componentName}}> = (args) => <{{componentName}} {...args} />;
+const Template: ComponentStory<typeof IconLink> = (args) => <IconLink {...args} />;
 
 export const Normal = Template.bind({});
 Normal.args = {
