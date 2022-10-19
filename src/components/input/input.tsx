@@ -11,7 +11,7 @@ export const Input = ({ placeholder, type, className }: Props) => {
     <input
       placeholder={placeholder}
       className={clsx(
-        'typ-body py-1 px-4 border border-solid bg-bw-back rounded-[7px] w-full max-w-[400px]  transition duration-[.15s] focus:outline-none ease',
+        'typ-body py-1 px-4 h-8 box-border border border-solid bg-bw-back rounded-button w-full max-w-[400px]  transition duration-[.15s] focus:outline-none ease',
         {
           'border-[#E4E4E4] cursor-not-allowed pointer-events-none text-bw-fore text-opacity-30':
             type === 'disabled',
