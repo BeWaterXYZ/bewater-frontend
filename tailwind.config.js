@@ -27,6 +27,7 @@ module.exports = {
         h5: 'var(--bw-h5-size)',
         body: 'var(--bw-body-size)',
         body_small: 'var(--bw-body-small-size)',
+        label: 'var(--bw-label-size)',
       },
       fontWeight: {
         h1: 'var(--bw-h1-weight)',
@@ -45,6 +46,9 @@ module.exports = {
         h5: 'var(--bw-h5-line-height)',
         body: 'var(--bw-body-line-height)',
         body_small: 'var(--bw-body-small-line-height)',
+      },
+      radius: {
+        button: 'var(--bw-button-radius)',
       },
     },
   },
