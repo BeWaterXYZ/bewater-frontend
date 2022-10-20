@@ -22,6 +22,7 @@
   --bw-body-small-size: 12px;
   --bw-body-small-weight: 400;
   --bw-body-small-line-height: 24px;
+  --bw-label-size: 14px;
   /** base border radius settings **/
   --bw-button-radius: 7px;
 }
