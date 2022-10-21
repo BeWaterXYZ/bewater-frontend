@@ -10,7 +10,10 @@ interface Props {
 export const Avatar = ({ src, className }: Props) => {
   return (
     <div
-      className={clsx('inline-flex flex-col gap-y-4 items-center', className)}
+      className={clsx(
+        'inline-flex flex-col gap-y-4 w-[216px] items-center',
+        className,
+      )}
     >
       {src ? (
         <img
