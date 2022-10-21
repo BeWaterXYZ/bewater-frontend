@@ -17,9 +17,17 @@ const Template: ComponentStory<typeof Avatar> = (args) => <Avatar {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   src: '',
+  isEditing: true,
 };
 
 export const Normal = Template.bind({});
 Normal.args = {
   src: 'https://pbs.twimg.com/profile_images/1434703855158104068/6Jg879l1_400x400.jpg',
+  isEditing: true,
+};
+
+export const Visitor = Template.bind({});
+Visitor.args = {
+  src: 'https://pbs.twimg.com/profile_images/1434703855158104068/6Jg879l1_400x400.jpg',
+  isEditing: false,
 };

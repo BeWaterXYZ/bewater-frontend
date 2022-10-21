@@ -5,9 +5,10 @@ import { Button } from '../button';
 interface Props {
   src: string;
   className?: string;
+  isEditing: boolean;
 }
 
-export const Avatar = ({ src, className }: Props) => {
+export const Avatar = ({ src, isEditing, className }: Props) => {
   return (
     <div
       className={clsx(
@@ -24,10 +25,11 @@ export const Avatar = ({ src, className }: Props) => {
       ) : (
         <div className="rounded-full w-40 h-40 bg-bw-fore" />
       )}
-      {src ? (
-        <Button text="Change Avatar" type="secondary" />
-      ) : (
-        <Button text="Upload Avatar" type="secondary" />
+      {isEditing && (
+        <Button
+          text={src ? 'Change Avatar' : 'Upload Avatar'}
+          type="secondary"
+        />
       )}
     </div>
   );
