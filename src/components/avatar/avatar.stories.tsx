@@ -14,20 +14,20 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Avatar> = (args) => <Avatar {...args} />;
 
-export const Default = Template.bind({});
-Default.args = {
+export const EditingDefault = Template.bind({});
+EditingDefault.args = {
   src: '',
   isEditing: true,
 };
 
-export const Normal = Template.bind({});
-Normal.args = {
+export const EditingNormal = Template.bind({});
+EditingNormal.args = {
   src: 'https://pbs.twimg.com/profile_images/1434703855158104068/6Jg879l1_400x400.jpg',
   isEditing: true,
 };
 
-export const Visitor = Template.bind({});
-Visitor.args = {
+export const NoEditing = Template.bind({});
+NoEditing.args = {
   src: 'https://pbs.twimg.com/profile_images/1434703855158104068/6Jg879l1_400x400.jpg',
   isEditing: false,
 };

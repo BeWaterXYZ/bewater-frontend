@@ -12,7 +12,8 @@ export const Avatar = ({ src, isEditing, className }: Props) => {
   return (
     <div
       className={clsx(
-        'inline-flex flex-col gap-y-4 w-[216px] items-center',
+        'inline-flex flex-col gap-y-4 items-center h-auto',
+        { 'w-[216px]': isEditing },
         className,
       )}
     >
