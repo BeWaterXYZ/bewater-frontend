@@ -1,4 +1,24 @@
+import * as React from 'react';
+import ButtonUnstyled, { ButtonUnstyledProps } from '@mui/base/ButtonUnstyled';
+
 import clsx from 'clsx';
+
+const CustomButton = React.forwardRef(function CustomButton(
+  props: ButtonUnstyledProps,
+  ref: React.ForwardedRef<HTMLButtonElement>,
+) {
+  return (
+    <ButtonUnstyled
+      {...props}
+      componentsProps={{
+        root: () => ({
+          className: `inline-flex typ-body py-1 px-4 border border-solid rounded-button cursor-pointer w-auto h-8 box-border hover:brightness-90 transition duration-[.15s] ease-out`,
+        }),
+      }}
+      ref={ref}
+    />
+  );
+});
 
 interface Props {
   text: string;
@@ -8,9 +28,8 @@ interface Props {
 
 export const Button = ({ text, type, className }: Props) => {
   return (
-    <button
+    <CustomButton
       className={clsx(
-        'inline-flex typ-body py-1 px-4 border border-solid rounded-button cursor-pointer w-auto h-8 box-border hover:brightness-90 transition duration-[.15s] ease-out',
         {
           'border-bw-fore bg-bw-fore text-bw-back': type === 'primary',
           'border-bw-fore bg-bw-back text-bw-fore': type === 'secondary',
@@ -20,6 +39,6 @@ export const Button = ({ text, type, className }: Props) => {
       )}
     >
       {text}
-    </button>
+    </CustomButton>
   );
 };

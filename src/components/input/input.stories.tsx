@@ -20,16 +20,26 @@ export const Normal = Template.bind({});
 Normal.args = {
   placeholder: 'Enter your full name',
   type: 'normal',
+  helpText: '',
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   placeholder: 'Disabled text',
   type: 'disabled',
+  helpText: '',
 };
 
 export const Error = Template.bind({});
 Error.args = {
   placeholder: 'Error text',
   type: 'error',
+  helpText: 'This username has been taken.',
+};
+
+export const Multiline = Template.bind({});
+Multiline.args = {
+  placeholder: 'Input your bio',
+  type: 'multiline',
+  helpText: '',
 };
