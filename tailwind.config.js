@@ -10,6 +10,9 @@ module.exports = {
       lg: '1280px',
     },
     extend: {
+      fontFamily: {
+        mono: "'Space Mono'",
+      },
       colors: {
         bw: {
           fore: 'var(--bw-fr-color)',
