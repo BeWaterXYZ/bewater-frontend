@@ -14,7 +14,7 @@ export const Input = ({ placeholder, type, className }: Props) => {
         className={clsx(
           'typ-body py-1 px-4 h-8 box-border border border-solid bg-bw-back rounded-button w-full max-w-[400px] mr-4 transition duration-[.15s] focus:outline-none ease',
           {
-            'border-[#E4E4E4] cursor-not-allowed pointer-events-none text-bw-fore text-opacity-30 bg-[#F7F7F7':
+            'border-[#E4E4E4] cursor-not-allowed pointer-events-none text-bw-fore text-opacity-30 bg-[#F7F7F7]':
               type === 'disabled',
             'border-[#E4E4E4] text-bw-fore hover:border-[#d0d0d0] focus:border-[#999]':
               type === 'normal',
