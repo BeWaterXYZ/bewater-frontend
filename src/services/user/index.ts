@@ -37,6 +37,9 @@ export function useFetchUser(
     },
     toSWROptions(options),
   );
+
+  console.log({ token }, { userId }, { result });
+
   return useResultMapper(result);
 }
 

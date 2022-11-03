@@ -19,6 +19,10 @@ export default function useNavigator() {
     isBrowser && void router.push('/auth/connect-wallet');
   }, [router]);
 
+  const goToWelcome = useCallback(() => {
+    isBrowser && void router.push('/welcome');
+  }, [router]);
+
   const goToExternal = useCallback((url: string) => {
     isBrowser && window.open(url);
   }, []);
@@ -28,5 +32,6 @@ export default function useNavigator() {
     goToUserProfile,
     goToUserSettings,
     goToConnectWallet,
+    goToWelcome,
   };
 }

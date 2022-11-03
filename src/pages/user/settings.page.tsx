@@ -9,6 +9,7 @@ import type { NextPage } from 'next';
 // Pass client to React Context Provider
 const PageUserSettings: NextPage = () => {
   const { isLoading, isError, error, data } = useFetchUser({ userId: '123' });
+  console.log({ isLoading, isError, error, data });
   if (isError) {
     console.error(error);
     return <div>Error occurs!</div>;

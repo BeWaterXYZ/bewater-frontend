@@ -11,9 +11,12 @@ import {
   submitVerifySignedMessage,
 } from '@/services/auth';
 
+import type { UserLocalStorage } from '@/models/user';
+
 export function ConnectWallet() {
   const [isLogining, setIsLogining] = useToggle(false);
-  const [_token, setToken] = useLocalStorage('authToken');
+  const [_token, setToken] = useLocalStorage<string>('authToken');
+  const [_user, setUser] = useLocalStorage<UserLocalStorage>('user');
   const { isConnected, address } = useAccount();
   const navigator = useNavigator();
   const { chain } = useNetwork();
@@ -34,20 +37,34 @@ export function ConnectWallet() {
           // console.log({ message });
           const signature = await signMessageAsync({ message });
           // console.log({ signature });
-          const { token } = await submitVerifySignedMessage({
+          const { token, userId, isNewUser } = await submitVerifySignedMessage({
             message,
             signature,
           });
           setToken(token);
-          navigator.goToUserSettings();
+          setUser({
+            ..._user,
+            userId,
+            walletAddress: address,
+            isNewUser,
+          });
+          if (isNewUser) {
+            navigator.goToWelcome();
+          } else {
+            navigator.goToUserSettings();
+          }
         }
       } catch (error) {
         console.error(error);
       }
     };
 
-    if (isAuthed(authToken)) {
-      navigator.goToUserSettings();
+    if (isAuthed(authToken) && _user) {
+      if (_user.isNewUser) {
+        navigator.goToWelcome();
+      } else {
+        navigator.goToUserSettings();
+      }
     } else if (!isLogining && isConnected && !isAuthed(authToken)) {
       // console.log('start asyncAuth...');
       setIsLogining(true);
@@ -60,8 +77,10 @@ export function ConnectWallet() {
     address,
     chain,
     isLogining,
+    _user,
     setIsLogining,
     setToken,
+    setUser,
     signMessageAsync,
   ]);
 
