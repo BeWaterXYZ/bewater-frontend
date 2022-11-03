@@ -35,7 +35,14 @@ export const FormItem = ({
         {label}
         {required ? ' *' : null}
       </label>
-      {type === 'input' && <Input placeholder={placeholder} type={inputType} />}
+      {type === 'input' && (
+        <Input
+          name={label}
+          errors={{}}
+          placeholder={placeholder}
+          type={inputType}
+        />
+      )}
       {type === 'button' && <Button text={buttonText} type={buttonType} />}
       {type === 'link' && (
         <div className="flex flex-row gap-x-4 items-center justify-between">

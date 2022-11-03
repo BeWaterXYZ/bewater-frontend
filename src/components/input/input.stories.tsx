@@ -19,17 +19,29 @@ const Template: ComponentStory<typeof Input> = (args) => {
 export const Normal = Template.bind({});
 Normal.args = {
   placeholder: 'Enter your full name',
-  type: 'normal',
+  label: 'Name',
+  name: 'name',
+  errors: {},
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   placeholder: 'Disabled text',
-  type: 'disabled',
+  label: 'Name',
+  name: 'name',
+  disabled: true,
+  errors: {},
 };
 
 export const Error = Template.bind({});
 Error.args = {
   placeholder: 'Error text',
-  type: 'error',
+  label: 'Name',
+  name: 'name',
+  required: true,
+  errors: {
+    name: {
+      message: 'name is required',
+    },
+  },
 };

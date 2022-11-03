@@ -2,6 +2,7 @@
 
 /* please put shared component css here */
 @import './typ.css';
+@import '../components/input/input.css';
 
 /* utilities.css should be after component layer css */
 /* see why here: https://tailwindcss.com/docs/adding-custom-styles */

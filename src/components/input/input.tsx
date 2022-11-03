@@ -1,33 +1,41 @@
 import clsx from 'clsx';
+import { HelpText } from './help-text';
 
-interface Props {
-  placeholder?: string;
-  type: string;
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  name: string;
+  errors: {
+    [key: string]: {
+      [key: string]: string;
+    } | null;
+  };
+  required?: boolean;
   className?: string;
 }
 
-export const Input = ({ placeholder, type, className }: Props) => {
+export const Input = ({
+  label,
+  name,
+  errors,
+  className,
+  required,
+  ...props
+}: Props) => {
   return (
-    <div className="block items-center">
+    <>
+      {label ? (
+        <label className="block typ-label py-1">
+          {label}
+          {required && '*'}
+        </label>
+      ) : null}
       <input
-        placeholder={placeholder}
-        className={clsx(
-          'typ-body py-1 px-4 h-8 box-border border border-solid bg-bw-back rounded-button w-full max-w-[400px] mr-4 transition duration-[.15s] focus:outline-none ease',
-          {
-            'border-[#E4E4E4] cursor-not-allowed pointer-events-none text-bw-fore text-opacity-30 bg-[#F7F7F7]':
-              type === 'disabled',
-            'border-[#E4E4E4] text-bw-fore hover:border-[#d0d0d0] focus:border-[#999]':
-              type === 'normal',
-            'border-[#EB7E7E] placeholder:text-[#DD2828]': type === 'error',
-          },
-          className,
-        )}
+        className={clsx('input', className, {
+          error: errors[name],
+        })}
+        {...props}
       ></input>
-      {type === 'error' && (
-        <a className="inline-block whitespace-nowrap typ-body py-1 text-[#DD2828]">
-          This username has been taken.
-        </a>
-      )}
-    </div>
+      <HelpText text={errors[name]?.message} />
+    </>
   );
 };
