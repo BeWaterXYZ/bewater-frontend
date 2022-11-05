@@ -1,37 +1,48 @@
 import clsx from 'clsx';
+import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/button';
+import { Input } from '@/components/input';
+import { Loading } from '@/components/loading';
+import { useFetchUser } from '@/services/user';
 
-import { FormItem } from './form-item';
+import type { FieldValues } from 'react-hook-form';
 
 interface Props {
   className?: string;
 }
 
 export const FormWelcome = ({ className }: Props) => {
-  return (
-    <form className={clsx('mb-[104px] max-w-[680px]', className)}>
-      <FormItem
-        label={'Username'}
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { isLoading, isError, error, data } = useFetchUser();
+  const onSubmit = (data: FieldValues) => console.log(data);
+  return isLoading ? (
+    <form
+      className={clsx('mb-[104px] max-w-[680px]', className)}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <input type="hidden" name="userId" value={data?.userProfile?.userId} />
+      <Input
+        label="Username"
+        placeholder="Enter your username"
         required
-        type={'input'}
-        inputType={'normal'}
-        buttonType={''}
-        buttonText={''}
-        linkText={''}
-        placeholder={'Enter your username'}
+        errors={errors}
+        {...register('username', { required: 'Username is required.' })}
       />
-      <FormItem
-        label={'Fullname'}
+      <Input
+        label="Full name"
+        placeholder="Enter your full name"
         required
-        type={'input'}
-        inputType={'normal'}
-        buttonType={''}
-        buttonText={''}
-        linkText={''}
-        placeholder={'Enter your full name'}
+        errors={errors}
+        {...register('fullname', { required: 'Full name is required.' })}
       />
       <Button className="mt-16" type="primary" text="Finish Setup" />
     </form>
+  ) : (
+    <Loading />
   );
 };

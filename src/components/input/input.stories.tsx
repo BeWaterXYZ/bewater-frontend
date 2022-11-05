@@ -32,16 +32,3 @@ Disabled.args = {
   disabled: true,
   errors: {},
 };
-
-export const Error = Template.bind({});
-Error.args = {
-  placeholder: 'Error text',
-  label: 'Name',
-  name: 'name',
-  required: true,
-  errors: {
-    name: {
-      message: 'name is required',
-    },
-  },
-};

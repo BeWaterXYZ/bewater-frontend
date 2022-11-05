@@ -1,3 +1,11 @@
+export interface UserAuthToken {
+  userId: string;
+  walletAddress: string;
+  moralisId: string;
+  chain: string;
+  network: string;
+}
+
 /** GetLoginMessage */
 export interface GetLoginMessageRequest {
   walletAddress: string;

@@ -1,10 +1,12 @@
 import Moralis from 'moralis';
 import getConfig from 'next/config';
+import { nanoid } from 'nanoid';
 import jwt from 'jsonwebtoken';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 import type {
+  UserAuthToken,
   VerifySignedMessageRequest,
   VerifySignedMessageResponse,
 } from '@/types/auth';
@@ -38,14 +40,21 @@ export default async function handler(
       signature,
       network: 'evm',
     });
-    const { address, profileId, expirationTime } = resVerify.toJSON();
-    const user = { address, profileId, expirationTime, signature };
-    const token = jwt.sign(user.profileId, nextAuthSecret);
+    const { address, profileId, chain } = resVerify.toJSON();
+    const user: UserAuthToken = {
+      walletAddress: address,
+      userId: nanoid(),
+      moralisId: profileId,
+      chain: chain.toString(),
+      network: 'evm',
+    };
+
+    const token = jwt.sign(user, nextAuthSecret);
     res.status(200).json({
       status: 200,
       error: [],
       token: token,
-      userId: user.profileId,
+      userId: user.userId,
       isNewUser: true,
     });
     return user;

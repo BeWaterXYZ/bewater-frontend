@@ -6,8 +6,8 @@ import { fetchBody } from '../helper/request';
 import { toSWROptions } from '../helper/options';
 import { useResultMapper } from '../helper/state';
 
+import type { SWRResponse } from 'swr';
 import type {
-  GetUserProfileByIdRequest,
   GetUserProfileByIdResponse,
   CreateUserProfileRequest,
   CreateUserProfileResponse,
@@ -17,30 +17,38 @@ import type {
 import type { Auth } from '@/models/auth';
 import type { RequestOptions } from '../helper/options';
 
-export function useFetchUser(
-  { userId }: GetUserProfileByIdRequest,
-  options?: RequestOptions,
-) {
-  const token = useAuthContext();
-  const result = useSWR<
+const CACHE_TTL_MINUTES = 10;
+
+export function useFetchUser(userId?: string, options?: RequestOptions) {
+  const url = `/api/user?userId=${userId}`;
+  let response = lscache?.get(url) as SWRResponse<
     GetUserProfileByIdResponse,
-    Error,
-    [url: string, token: Auth] | false
-  >(
-    isAuthed(token) && [`/api/user?userId=${userId}`, token],
-    (url, token) => {
-      return fetchBody(url, {
-        ...{
-          headers: { ...token.headers },
-        },
-      });
-    },
-    toSWROptions(options),
-  );
-
-  console.log({ token }, { userId }, { result });
-
-  return useResultMapper(result);
+    Error
+  >;
+  if (!response) {
+    const token = useAuthContext();
+    const result = useSWR<
+      GetUserProfileByIdResponse,
+      Error,
+      [url: string, token: Auth] | false
+    >(
+      isAuthed(token) && [`/api/user?userId=${userId}`, token],
+      (url, token) => {
+        return fetchBody(url, {
+          ...{
+            headers: { ...token.headers },
+          },
+        });
+      },
+      toSWROptions(options),
+    );
+    if (result.data) {
+      lscache.set(url, result.data, CACHE_TTL_MINUTES);
+    }
+    return useResultMapper(result);
+  } else {
+    return response;
+  }
 }
 
 export async function submitCreateUserProfile(
