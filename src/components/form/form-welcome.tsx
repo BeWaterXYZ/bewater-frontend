@@ -10,11 +10,10 @@ import useNavigator from '@/hooks/useNavigator';
 
 import type { FieldValues } from 'react-hook-form';
 import type { Auth } from '@/models/auth';
-import type { UserLocalStorage } from '@/models/user';
 import type { CreateUserProfileRequest } from '@/types/user';
 
 interface Props {
-  token: Auth & { user: UserLocalStorage };
+  token: Auth;
   className?: string;
 }
 
@@ -27,20 +26,27 @@ export const FormWelcome = ({ token, className }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigator = useNavigator();
   const onSubmit = useCallback(
-    async (data: FieldValues) => {
+    (data: FieldValues) => {
       setIsLoading(true);
-      await submitCreateUserProfile(token, {
+      submitCreateUserProfile(token, {
         ...data,
         userId: token.user?.userId,
-      } as CreateUserProfileRequest);
-      navigator.goToUserSettings();
+      } as CreateUserProfileRequest)
+        .then((res) => {
+          navigator.goToUserSettings();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     [navigator, token],
   );
-  return !isLoading ? (
+  return (
     <form
+      method="post"
       className={clsx('mb-[104px] max-w-[680px]', className)}
-      onSubmit={void handleSubmit(onSubmit)}
+      // eslint-disable-next-line
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Input
         label="Username"
@@ -57,8 +63,7 @@ export const FormWelcome = ({ token, className }: Props) => {
         {...register('email', { required: 'Full name is required.' })}
       />
       <Button className="mt-16" type="primary" text="Finish Setup" />
+      {isLoading ? <Loading /> : null}
     </form>
-  ) : (
-    <Loading />
   );
 };

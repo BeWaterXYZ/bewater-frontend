@@ -60,7 +60,7 @@ export function BasicHeader({ menuData }: Props) {
 }
 
 export const HeaderWrapper = () => {
-  const { menuData } = useMenuData();
   const token = useAuthContext();
+  const { menuData } = useMenuData(token);
   return <Header menuData={menuData} showButton={!isAuthed(token)} />;
 };

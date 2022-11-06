@@ -17,7 +17,7 @@ export const AuthContext = createContext({
     Authorization: '',
   },
   user: {},
-} as Auth & { user: UserLocalStorage });
+} as Auth);
 
 export function useAuthContext() {
   return useContext(AuthContext);
@@ -27,9 +27,7 @@ export function isAuthed(tokens: Auth): boolean {
   return !!tokens.headers['Authorization'] || !authRequired;
 }
 
-export function useAuthToken(
-  setTokenState: (newToken: Auth & { user: UserLocalStorage }) => void,
-) {
+export function useAuthToken(setTokenState: (newToken: Auth) => void) {
   const [token] = useLocalStorage<string>('authToken');
   const [user] = useLocalStorage<UserLocalStorage>('user');
 

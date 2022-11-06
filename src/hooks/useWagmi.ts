@@ -6,7 +6,8 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 
 export default function useWagmi() {
-  const [wagmiClient, setWagmiClient] = useState();
+  // eslint-disable-next-line
+  const [wagmiClient, setWagmiClient] = useState<any>();
 
   useEffect(() => {
     // Configure chains & providers with the Alchemy provider.
@@ -41,5 +42,6 @@ export default function useWagmi() {
     setWagmiClient(client);
   }, []);
 
+  // eslint-disable-next-line
   return { wagmiClient };
 }

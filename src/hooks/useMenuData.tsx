@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { Auth } from '@/models/auth';
-import { MenuData, MenuItemType } from '@/models/menu';
 import { urlWithBasePath } from '@/utils/urlWithBasePath';
+
+import type { Auth } from '@/models/auth';
+import type { MenuData, MenuItemType } from '@/models/menu';
 
 const mainMenu: MenuItemType[] = [
   {
