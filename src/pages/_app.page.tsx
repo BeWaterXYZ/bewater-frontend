@@ -10,6 +10,7 @@ import useTheme from '@/hooks/useTheme';
 import getFirstParam from '@/utils/getFirstParam';
 import swrConfig from '@/utils/swrConfig';
 import { isBrowser } from '@/constants';
+import { UserLocalStorage } from '@/models/user';
 
 import type { AppProps, AppContext } from 'next/app';
 import type { ParsedUrlQuery } from 'querystring';
@@ -20,15 +21,19 @@ interface Props {
 }
 
 function BeWaterWebsite({ Component, query, pageProps }: Props & AppProps) {
-  const [token, setToken] = useState<Auth>({
+  const [token, setToken] = useState<Auth & { user: UserLocalStorage }>({
     headers: { Authorization: '' },
+    user: {},
   });
   const router = useRouter();
   const theme = getFirstParam(router.query.theme);
   useTheme(theme);
-  const _setToken = useCallback((newToken: Auth) => {
-    setToken(newToken);
-  }, []);
+  const _setToken = useCallback(
+    (newToken: Auth & { user: UserLocalStorage }) => {
+      setToken(newToken);
+    },
+    [],
+  );
   useAuthToken(_setToken);
   const { renderHeader, renderFooter } = useHeaderFooter(Component);
   return (

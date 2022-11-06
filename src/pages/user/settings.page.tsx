@@ -1,26 +1,21 @@
-import { Loading } from '@/components/loading/loading';
+// import { Loading } from '@/components/loading/loading';
 import { FormProfile } from '@/components/form';
 import { AvatarOnly } from '@/components/avatar';
 import { Button } from '@/components/button';
-import { useFetchUser } from '@/services/user';
+import { useAuthContext } from '@/hooks/useAuth';
 
 import type { NextPage } from 'next';
 
 // Pass client to React Context Provider
 const PageUserSettings: NextPage = () => {
-  const { isLoading, isError, error, data } = useFetchUser({ userId: '123' });
-  console.log({ isLoading, isError, error, data });
-  if (isError) {
-    console.error(error);
-    return <div>Error occurs!</div>;
-  }
-  return !isLoading ? (
+  const token = useAuthContext();
+  return (
     <div className="flex flex-row h-[calc(100vh-160px)] content-width mx-auto">
       <div className="w-[270px] pt-10 border-r border-solid border-[#E4E4E4]">
         <div className="w-full flex flex-col justify-center items-center">
           <AvatarOnly
-            walletAddress={data?.userProfile?.walletAddress}
-            imageUrl={data?.userProfile?.avatarURI}
+            walletAddress={token.user.walletAddress}
+            imageUrl={token?.user?.avatarURI}
           />
           <Button className="mt-4 mb-6" type="secondary" text="Change Avatar" />
         </div>
@@ -33,11 +28,9 @@ const PageUserSettings: NextPage = () => {
         </div>
       </div>
       <div className="w-[750px] pt-10 pl-16">
-        <FormProfile />
+        <FormProfile userId={token.user.userId || ''} />
       </div>
     </div>
-  ) : (
-    <Loading />
   );
 };
 

@@ -6,6 +6,7 @@ import { isBrowser } from '@/constants';
 
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 import type { Auth } from '@/models/auth';
+import type { UserLocalStorage } from '@/models/user';
 
 const {
   publicRuntimeConfig: { authRequired },
@@ -15,7 +16,8 @@ export const AuthContext = createContext({
   headers: {
     Authorization: '',
   },
-} as Auth);
+  user: {},
+} as Auth & { user: UserLocalStorage });
 
 export function useAuthContext() {
   return useContext(AuthContext);
@@ -25,8 +27,11 @@ export function isAuthed(tokens: Auth): boolean {
   return !!tokens.headers['Authorization'] || !authRequired;
 }
 
-export function useAuthToken(setTokenState: (newToken: Auth) => void) {
+export function useAuthToken(
+  setTokenState: (newToken: Auth & { user: UserLocalStorage }) => void,
+) {
   const [token] = useLocalStorage<string>('authToken');
+  const [user] = useLocalStorage<UserLocalStorage>('user');
 
   useEffect(() => {
     if (isBrowser && authRequired && token) {
@@ -34,8 +39,9 @@ export function useAuthToken(setTokenState: (newToken: Auth) => void) {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        user: user || {},
       };
       setTokenState(authToken);
     }
-  }, [token, setTokenState]);
+  }, [token, user, setTokenState]);
 }

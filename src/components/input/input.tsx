@@ -1,5 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
+
 import { HelpText } from './help-text';
 
 import type { FieldErrorsImpl } from 'react-hook-form';
@@ -7,6 +8,7 @@ import type { FieldErrorsImpl } from 'react-hook-form';
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   name: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: Partial<FieldErrorsImpl<{ [x: string]: any }>>;
   required?: boolean;
   className?: string;

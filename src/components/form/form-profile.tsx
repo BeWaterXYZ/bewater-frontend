@@ -1,14 +1,24 @@
 import clsx from 'clsx';
 
+import { useFetchUser } from '@/services/user';
+import { Loading } from '@/components/loading';
+
 import { FormItem } from './form-item';
 
 interface Props {
+  userId: string;
   className?: string;
 }
 
-export const FormProfile = ({ className }: Props) => {
-  return (
+export const FormProfile = ({ userId, className }: Props) => {
+  const { isLoading, isError, error, data } = useFetchUser(userId);
+  if (isError) {
+    console.error(error);
+    return <div>Error occurs!</div>;
+  }
+  return !isLoading ? (
     <form className={clsx('mb-[104px] max-w-[680px]', className)}>
+      {JSON.stringify(data)}
       <FormItem
         label={'Username'}
         type={'input'}
@@ -65,5 +75,7 @@ export const FormProfile = ({ className }: Props) => {
         placeholder={''}
       />
     </form>
+  ) : (
+    <Loading />
   );
 };
