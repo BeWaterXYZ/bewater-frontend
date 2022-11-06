@@ -32,7 +32,7 @@ export const FormWelcome = ({ token, className }: Props) => {
         ...data,
         userId: token.user?.userId,
       } as CreateUserProfileRequest)
-        .then((res) => {
+        .then(() => {
           navigator.goToUserSettings();
         })
         .catch((error) => {

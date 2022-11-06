@@ -22,4 +22,6 @@ const PageWelcome: NextPage = () => {
   );
 };
 
+PageWelcome.displayName = 'PageWelcome';
+
 export default PageWelcome;

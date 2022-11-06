@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { urlWithBasePath } from '@/utils/urlWithBasePath';
 
-import type { Auth } from '@/models/auth';
 import type { MenuData, MenuItemType } from '@/models/menu';
 
 const mainMenu: MenuItemType[] = [
@@ -41,29 +40,31 @@ const profileMenu: MenuItemType[] = [
   },
 ];
 
-export function useMenuData(auth?: Auth) {
+export function useMenuData() {
   const [menuData, setMenuData] = useState<MenuData>();
 
   useEffect(() => {
-    if (auth?.headers && auth?.headers['Authorization']) {
-      // TODO: query api to get different menu for account width different associatedFeatures
-    } else {
-      // show menu for visiters
-      setMenuData({
-        main: mainMenu.map((menu) => {
-          return {
-            type: menu.type,
-            key: menu.key,
-            label: menu.label,
-            path: menu.path,
-            external: menu.external,
-          };
-        }),
-        // TODO: remove profile for Sign In page
-        profile: profileMenu,
-      });
-    }
-  }, [auth]);
+    setMenuData({
+      main: mainMenu.map((menu) => {
+        return {
+          type: menu.type,
+          key: menu.key,
+          label: menu.label,
+          path: menu.path,
+          external: menu.external,
+        };
+      }),
+      profile: profileMenu.map((menu) => {
+        return {
+          type: menu.type,
+          key: menu.key,
+          label: menu.label,
+          path: menu.path,
+          external: menu.external,
+        };
+      }),
+    });
+  }, []);
 
   return {
     menuData,

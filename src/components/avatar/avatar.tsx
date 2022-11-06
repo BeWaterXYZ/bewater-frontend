@@ -1,36 +1,46 @@
 import clsx from 'clsx';
 
-import { Button } from '../button';
+import { useRandomColor } from '@/hooks/useRandomColor';
 
 interface Props {
-  src: string;
+  walletAddress?: string;
+  src?: string;
+  size?: 'large' | 'small';
   className?: string;
-  isEditing: boolean;
+  onClick?: () => void;
 }
 
-export const Avatar = ({ src, isEditing, className }: Props) => {
+export const Avatar = ({
+  walletAddress = '',
+  size = 'large',
+  src,
+  className,
+  onClick,
+}: Props) => {
+  const randomColor = useRandomColor(walletAddress);
   return (
     <div
-      className={clsx(
-        'inline-flex flex-col gap-y-4 items-center h-auto',
-        { 'w-[216px]': isEditing },
+      className={clsx({
+        'w-40 h-40': size === 'large',
+        'w-10 h-10': size === 'small',
         className,
-      )}
+      })}
     >
       {src ? (
         <img
+          className="w-full h-full rounded-full cursor-pointer object-cover"
           src={src}
           alt="avatar"
-          className={clsx('rounded-full object-fill  w-40 h-40', className)}
         />
       ) : (
-        <div className="rounded-full w-40 h-40 bg-bw-fore" />
-      )}
-      {isEditing && (
-        <Button
-          text={src ? 'Change Avatar' : 'Upload Avatar'}
-          type="secondary"
-        />
+        <div
+          className={clsx(
+            'w-full h-full rounded-full cursor-pointer',
+            className,
+          )}
+          style={{ backgroundImage: `linear-gradient(${randomColor}, #fff)` }}
+          onClick={onClick}
+        ></div>
       )}
     </div>
   );

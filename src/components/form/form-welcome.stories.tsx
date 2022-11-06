@@ -12,8 +12,16 @@ export default {
 } as ComponentMeta<typeof FormWelcome>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof FormWelcome> = () => {
-  return <FormWelcome />;
+const Template: ComponentStory<typeof FormWelcome> = (args) => {
+  return <FormWelcome {...args} />;
 };
 
 export const Normal = Template.bind({});
+Normal.args = {
+  token: {
+    headers: {
+      Authorization: 'Bearer eyjidfkqwelrkjasdfk',
+    },
+    user: {},
+  },
+};

@@ -5,20 +5,20 @@ import { Loading } from '@/components/loading';
 
 import { FormItem } from './form-item';
 
+import type { GetUserProfileByIdResponse } from '@/types/user';
+
 interface Props {
   userId: string;
+  data?: GetUserProfileByIdResponse;
   className?: string;
 }
+type FormProfileProps = Pick<Props, 'data' | 'className'>;
+type FormProfileWrapProps = Pick<Props, 'userId' | 'className'>;
 
-export const FormProfile = ({ userId, className }: Props) => {
-  const { isLoading, isError, error, data } = useFetchUser(userId);
-  if (isError) {
-    console.error(error);
-    return <div>Error occurs!</div>;
-  }
-  return !isLoading ? (
+export const FormProfile = ({ data, className }: FormProfileProps) => {
+  return (
     <form className={clsx('mb-[104px] max-w-[680px]', className)}>
-      {JSON.stringify(data)}
+      {JSON.stringify(data?.userProfile)}
       <FormItem
         label={'Username'}
         type={'input'}
@@ -75,7 +75,18 @@ export const FormProfile = ({ userId, className }: Props) => {
         placeholder={''}
       />
     </form>
+  );
+};
+
+export function FormProfileWrap({ userId, className }: FormProfileWrapProps) {
+  const { isLoading, isError, error, data } = useFetchUser(userId);
+  if (isError) {
+    console.error(error);
+    return <div>Error occurs!</div>;
+  }
+  return !isLoading ? (
+    <FormProfile data={data} className={className} />
   ) : (
     <Loading />
   );
-};
+}

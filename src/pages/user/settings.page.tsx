@@ -1,7 +1,6 @@
 // import { Loading } from '@/components/loading/loading';
-import { FormProfile } from '@/components/form';
-import { AvatarOnly } from '@/components/avatar';
-import { Button } from '@/components/button';
+import { FormProfileWrap } from '@/components/form';
+import { AvatarWithEditor } from '@/components/avatar';
 import { useAuthContext } from '@/hooks/useAuth';
 
 import type { NextPage } from 'next';
@@ -13,11 +12,10 @@ const PageUserSettings: NextPage = () => {
     <div className="flex flex-row h-[calc(100vh-160px)] content-width mx-auto">
       <div className="w-[270px] pt-10 border-r border-solid border-[#E4E4E4]">
         <div className="w-full flex flex-col justify-center items-center">
-          <AvatarOnly
+          <AvatarWithEditor
             walletAddress={token.user.walletAddress}
-            imageUrl={token?.user?.avatarURI}
+            src={token?.user?.avatarURI}
           />
-          <Button className="mt-4 mb-6" type="secondary" text="Change Avatar" />
         </div>
         <div>
           <div>Bio</div>
@@ -28,7 +26,7 @@ const PageUserSettings: NextPage = () => {
         </div>
       </div>
       <div className="w-[750px] pt-10 pl-16">
-        <FormProfile userId={token.user.userId || ''} />
+        <FormProfileWrap userId={token.user.userId || ''} />
       </div>
     </div>
   );
