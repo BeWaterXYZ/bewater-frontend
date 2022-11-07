@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Button } from '@/components/button';
-import { Input } from '@/components/input';
+import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
 import useNavigator from '@/hooks/useNavigator';
@@ -62,7 +62,7 @@ export const FormWelcome = ({ token, className }: Props) => {
         errors={errors}
         {...register('email', { required: 'Full name is required.' })}
       />
-      <Button className="mt-16" type="primary" text="Finish Setup" />
+      <Button className="mt-12" type="primary" text="Finish Setup" />
       {isLoading ? <Loading /> : null}
     </form>
   );

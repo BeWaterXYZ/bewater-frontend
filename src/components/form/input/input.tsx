@@ -20,15 +20,15 @@ export const Input = React.forwardRef(function Input(
 ) {
   const { label, name, errors, className, required, ...restProps } = props;
   return (
-    <>
+    <div className={clsx('block pb-4', className)}>
       {label ? (
         <label className="block typ-label py-1">
           {label}
-          {required && '*'}
+          {required && ' *'}
         </label>
       ) : null}
       <input
-        className={clsx('input', className, {
+        className={clsx('input', {
           error: errors[name],
         })}
         ref={ref}
@@ -36,6 +36,6 @@ export const Input = React.forwardRef(function Input(
         name={name}
       ></input>
       <HelpText text={errors[name]?.message as string} />
-    </>
+    </div>
   );
 });

@@ -2,10 +2,10 @@
   .input {
     @apply block typ-body py-1 px-4 h-8 box-border border border-solid bg-bw-back
     rounded-button w-full max-w-[400px] mr-4 transition duration-[.15s]
-    focus:outline-none ease-in-out border-[#E4E4E4] text-bw-fore
-    hover:border-[#d0d0d0] focus:border-[#999];
+    ease-in-out border-[#E4E4E4] text-bw-fore
+    hover:border-[#d0d0d0] focus:border-[#999] focus:outline-none;
     &[disabled] {
-      @apply border-[#E4E4E4] cursor-not-allowed pointer-events-none text-bw-fore text-opacity-30 bg-[#F7F7F7];
+      @apply border-[#E4E4E4] cursor-not-allowed pointer-events-none text-opacity-30 bg-[#F7F7F7];
     }
     &.error {
       @apply border-[#EB7E7E] placeholder:text-[#DD2828];

@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 
-import { Input } from '../input/input';
 import { Button } from '../button/button';
 import Wallet from '../icons/wallet';
+
+import { Input } from './input';
 
 interface Props {
   label: string;

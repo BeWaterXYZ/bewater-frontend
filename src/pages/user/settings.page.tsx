@@ -26,7 +26,7 @@ const PageUserSettings: NextPage = () => {
         </div>
       </div>
       <div className="w-[750px] pt-10 pl-16">
-        <FormProfileWrap userId={token.user.userId || ''} />
+        <FormProfileWrap token={token} userId={token.user.userId || ''} />
       </div>
     </div>
   );
