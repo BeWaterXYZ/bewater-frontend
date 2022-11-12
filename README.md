@@ -21,4 +21,26 @@ pnpm >= 7
 * View UI Components in Storybook
   * `pnpm storybook`
 
-## Workflows
+### Mock/Local  mode
+add the following to `.env.local`
+
+```
+AUTH_REQUIRED=true
+MOCK_MODE=true
+NEXT_PUBLIC_BASE_PATH=
+ENVIRONMENT=local
+```
+
+Example url:
+`http://localhost:3000/auth-connect-wallet`
+
+## Github Workflows
+For CI (triggered at PR), we should
+* run eslint
+* run all the tests (Not done yet)
+
+For CD (triggered by create new release with tag), we should
+* run eslint
+* run all the tests
+* deploy the project
+  * build & publish directly to QA Server

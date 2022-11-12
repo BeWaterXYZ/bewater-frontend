@@ -1,5 +1,5 @@
 @layer components {
-  /* .typ-h1 {
+  .typ-h1 {
     @apply text-h1 font-h1 leading-h1;
   }
   .typ-h2 {
@@ -12,7 +12,7 @@
 
   .typ-h4 {
     @apply text-h4 font-h4 leading-h4;
-  } */
+  }
 
   .typ-h5 {
     @apply text-h5 font-h5 leading-h5;

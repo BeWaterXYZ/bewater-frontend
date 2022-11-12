@@ -1,1 +1,1 @@
-export { HeaderWrapper } from './header';
+export { HeaderWrapper, BasicHeader, Header } from './header';

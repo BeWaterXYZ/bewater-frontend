@@ -1,19 +1,27 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Form } from './form';
+import { FormWelcome } from './form-welcome';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Form/Form',
-  component: Form,
+  title: 'Form/FormWelcome',
+  component: FormWelcome,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
-} as ComponentMeta<typeof Form>;
+} as ComponentMeta<typeof FormWelcome>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Form> = () => {
-  return <Form />;
+const Template: ComponentStory<typeof FormWelcome> = (args) => {
+  return <FormWelcome {...args} />;
 };
 
 export const Normal = Template.bind({});
+Normal.args = {
+  token: {
+    headers: {
+      Authorization: 'Bearer eyjidfkqwelrkjasdfk',
+    },
+    user: {},
+  },
+};

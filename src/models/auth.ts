@@ -1,9 +1,12 @@
+import type { UserLocalStorage } from './user';
+
 export type Auth = {
   headers: {
     Authorization: Bearer;
-    'X-BW-Access': AccountJWT;
   };
+  user: UserLocalStorage;
 };
 
 export type Bearer = string;
-export type AccountJWT = string;
+export type UserID = string;
+export type WalletAddress = string;

@@ -5,7 +5,7 @@ import { ButtonGroup } from './buttonGroup';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'ButtonGroup/ButtonGroup',
+  title: 'Base/ButtonGroup',
   component: ButtonGroup,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

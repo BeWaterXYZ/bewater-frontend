@@ -1,11 +1,13 @@
 import clsx from 'clsx';
 
-import { Input } from '../input/input';
 import { Button } from '../button/button';
 import Wallet from '../icons/wallet';
 
+import { Input } from './input';
+
 interface Props {
   label: string;
+  required?: boolean;
   placeholder?: string;
   type: string;
   inputType: string;
@@ -18,6 +20,7 @@ interface Props {
 
 export const FormItem = ({
   label,
+  required,
   placeholder,
   type,
   inputType,
@@ -31,8 +34,16 @@ export const FormItem = ({
     <div className={clsx('block mb-4', className)}>
       <label className="block typ-label w-auto text-bw-fore py-1">
         {label}
+        {required ? ' *' : null}
       </label>
-      {type === 'input' && <Input placeholder={placeholder} type={inputType} />}
+      {type === 'input' && (
+        <Input
+          name={label}
+          errors={{}}
+          placeholder={placeholder}
+          type={inputType}
+        />
+      )}
       {type === 'button' && <Button text={buttonText} type={buttonType} />}
       {type === 'link' && (
         <div className="flex flex-row gap-x-4 items-center justify-between">

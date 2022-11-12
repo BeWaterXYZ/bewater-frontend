@@ -1,7 +1,56 @@
 /** @type {import('next').NextConfig} */
+
+const api = {
+  local: 'http://localhost:3000',
+  qa: 'https://qa-api.bewater.com',
+  production: 'https://api.bewater.com',
+};
+
+const basePath =
+  typeof process.env.NEXT_PUBLIC_BASE_PATH === 'string'
+    ? process.env.NEXT_PUBLIC_BASE_PATH
+    : '';
+
+const environment =
+  typeof process.env.ENVIRONMENT === 'string'
+    ? process.env.ENVIRONMENT
+    : 'local';
+
+console.log('use', { basePath, environment });
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  basePath,
+  serverRuntimeConfig: {
+    moralisAppDomain: process.env.MORALIS_APP_DOMAIN || 'BeWater',
+    moralisAPIKey: process.env.MORALIS_API_KEY,
+    nextAuthURL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
+    nextAuthSecret: process.env.NEXTAUTH_SECRET || 'secret',
+  },
+  publicRuntimeConfig: {
+    basePath,
+    environment,
+    authRequired: process.env.AUTH_REQUIRED === 'true',
+    apiHost: api[environment],
+    mockMode: process.env.MOCK_MODE === 'true',
+  },
+  // exportPathMap: async function (
+  //   defaultPathMap,
+  //   { dev, dir, outDir, distDir, buildId }
+  // ) {
+  //   return {
+  //     '/': { page: '/' },
+  //     '/index': { page: '/index' },
+  //     '/welcome': { page: '/welcome' },
+  //     '/auth/connect-wallet': { page: '/auth/connect-wallet' },
+  //     '/user/settings': { page: '/user/settings' },
+  //     '/user/profile': { page: '/user/profile' },
+  //     '/challenges': { page: '/challenges/index' },
+  //     '/showcase': { page: '/showcase/index' },
+  //     '/docs': { page: '/docs/index' },
+  //   }
+  // },
   // Disabling Next.js ESLint check with custom one as there is
   // a separate step for it in the CI workflow
   eslint: {

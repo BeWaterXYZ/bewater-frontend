@@ -1,8 +1,18 @@
+import { setConfig } from 'next/config';
 import * as NextImage from 'next/image';
 
 import '../src/styles/index.css';
 
 const OriginalNextImage = NextImage.default;
+
+setConfig({
+  publicRuntimeConfig: {
+    basePath: '',
+    environment: 'local',
+    authRequired: true,
+    mockMode: 'true',
+  },
+});
 
 Object.defineProperty(NextImage, 'default', {
   configurable: true,

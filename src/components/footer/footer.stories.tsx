@@ -5,7 +5,7 @@ import { Footer } from './footer';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Footers/Footer',
+  title: 'Base/Footer',
   component: Footer,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

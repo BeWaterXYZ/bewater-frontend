@@ -5,7 +5,7 @@ import { Logo } from './logo';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Logo',
+  title: 'Base/Logo',
   component: Logo,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

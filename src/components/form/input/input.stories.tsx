@@ -5,7 +5,7 @@ import { Input } from './input';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Input/Input',
+  title: 'Form/Input',
   component: Input,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
@@ -19,17 +19,16 @@ const Template: ComponentStory<typeof Input> = (args) => {
 export const Normal = Template.bind({});
 Normal.args = {
   placeholder: 'Enter your full name',
-  type: 'normal',
+  label: 'Name',
+  name: 'name',
+  errors: {},
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   placeholder: 'Disabled text',
-  type: 'disabled',
-};
-
-export const Error = Template.bind({});
-Error.args = {
-  placeholder: 'Error text',
-  type: 'error',
+  label: 'Name',
+  name: 'name',
+  disabled: true,
+  errors: {},
 };

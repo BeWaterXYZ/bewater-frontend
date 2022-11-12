@@ -59,7 +59,7 @@ const Icon = React.forwardRef(function Icon(
     height,
     size = '100%',
     titleAccess,
-    viewBox = '0 0 24 24',
+    viewBox = '0 0 16 16',
     width,
     onClick,
     ...restProps
