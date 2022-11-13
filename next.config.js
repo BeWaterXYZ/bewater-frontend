@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 
 const api = {
-  local: 'http://localhost:3000',
-  qa: 'https://qa-api.bewater.com',
+  local: 'http://localhost:3080',
+  qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
   production: 'https://api.bewater.com',
 };
 
@@ -32,25 +32,9 @@ const nextConfig = {
     basePath,
     environment,
     authRequired: process.env.AUTH_REQUIRED === 'true',
-    apiHost: api[environment],
     mockMode: process.env.MOCK_MODE === 'true',
+    apiHost: api[environment],
   },
-  // exportPathMap: async function (
-  //   defaultPathMap,
-  //   { dev, dir, outDir, distDir, buildId }
-  // ) {
-  //   return {
-  //     '/': { page: '/' },
-  //     '/index': { page: '/index' },
-  //     '/welcome': { page: '/welcome' },
-  //     '/auth/connect-wallet': { page: '/auth/connect-wallet' },
-  //     '/user/settings': { page: '/user/settings' },
-  //     '/user/profile': { page: '/user/profile' },
-  //     '/challenges': { page: '/challenges/index' },
-  //     '/showcase': { page: '/showcase/index' },
-  //     '/docs': { page: '/docs/index' },
-  //   }
-  // },
   // Disabling Next.js ESLint check with custom one as there is
   // a separate step for it in the CI workflow
   eslint: {

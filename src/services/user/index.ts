@@ -31,7 +31,7 @@ export function useFetchUser(userId?: string, options?: RequestOptions) {
     Error,
     [url: string, token: Auth] | false
   >(
-    isAuthed(token) && !!userId && [`/api/user?userId=${userId}`, token],
+    isAuthed(token) && !!userId && [`/api/user/${userId}`, token],
     (url, token) => {
       return fetchBody(url, {
         ...{

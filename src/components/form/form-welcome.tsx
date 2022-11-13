@@ -30,7 +30,8 @@ export const FormWelcome = ({ token, className }: Props) => {
       setIsLoading(true);
       submitCreateUserProfile(token, {
         ...data,
-        userId: token.user?.userId,
+        userId: token.user.userId,
+        walletAddress: token.user.walletAddress,
       } as CreateUserProfileRequest)
         .then(() => {
           navigator.goToUserSettings();

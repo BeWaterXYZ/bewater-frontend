@@ -23,10 +23,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GetLoginMessageResponse>,
 ) {
+  console.log('local response');
   // console.log({ config });
-  const { walletAddress, chain } = JSON.parse(
-    req.body as string,
-  ) as GetLoginMessageRequest;
+  const { walletAddress, chain } = req.body as GetLoginMessageRequest;
 
   if (req.method !== 'POST') {
     res.status(405).end('Only POST requests allowed');

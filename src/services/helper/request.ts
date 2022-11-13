@@ -5,11 +5,11 @@ import { withTimeout } from '@/utils/withTimeout';
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 
 const {
-  publicRuntimeConfig: { apiHost },
+  publicRuntimeConfig: { basePath },
 } = getConfig() as NextRuntimeConfig;
 
 export function apiUrl(path: string): string {
-  return `${apiHost}${path}`;
+  return `${basePath}${path}`;
 }
 
 export async function fetchBody<T>(
@@ -29,7 +29,10 @@ export async function fetchResponse(
   return await withTimeout(
     fetch(apiUrl(req), {
       ...init,
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer',
       headers: {
+        'Content-Type': 'application/json',
         ...init?.headers,
         accept: 'application/json',
       },

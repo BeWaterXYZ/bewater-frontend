@@ -29,6 +29,8 @@ export default async function user(
     userId = (req.body as { userId: string }).userId;
   }
 
+  console.log('local response');
+
   switch (req.method) {
     case 'GET':
       return await getUser(userId, res);

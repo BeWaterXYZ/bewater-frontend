@@ -19,9 +19,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifySignedMessageResponse>,
 ) {
-  const { message, signature } = JSON.parse(
-    req.body as string,
-  ) as VerifySignedMessageRequest;
+  console.log('local response');
+
+  const { message, signature } = req.body as VerifySignedMessageRequest;
 
   if (req.method !== 'POST') {
     res.status(405).end('Only POST requests allowed');
