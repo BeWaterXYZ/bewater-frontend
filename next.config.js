@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const api = {
-  local: 'http://localhost:3080',
+  local: 'http://localhost:3000',
   qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
   production: 'https://api.bewater.com',
 };

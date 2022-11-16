@@ -37,19 +37,22 @@ export function ConnectWallet() {
           // console.log({ message });
           const signature = await signMessageAsync({ message });
           // console.log({ signature });
-          const { token, userId, isNewUser } = await submitVerifySignedMessage({
-            message,
-            signature,
-          });
+          const { token, userId, userProfile } =
+            await submitVerifySignedMessage({
+              message,
+              signature,
+            });
           setToken(token);
           setUser({
             ..._user,
             userId,
             walletAddress: address,
-            isNewUser,
+            isNewUser: !userProfile,
           });
-          if (isNewUser) {
-            navigator.goToWelcome();
+          if (!userProfile) {
+            setTimeout(() => {
+              navigator.goToWelcome();
+            }, 1000);
           } else {
             navigator.goToUserSettings();
           }

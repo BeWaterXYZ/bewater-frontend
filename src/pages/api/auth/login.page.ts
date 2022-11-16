@@ -55,7 +55,6 @@ export default async function handler(
       error: [],
       token: token,
       userId: user.userId,
-      isNewUser: true,
     });
     return user;
   } catch (error) {

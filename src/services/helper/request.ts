@@ -5,10 +5,13 @@ import { withTimeout } from '@/utils/withTimeout';
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 
 const {
-  publicRuntimeConfig: { basePath },
+  publicRuntimeConfig: { apiHost, basePath },
 } = getConfig() as NextRuntimeConfig;
 
 export function apiUrl(path: string): string {
+  if (path.startsWith('/api') && apiHost.startsWith('http')) {
+    return `${apiHost}${path.replace('/api', '')}`;
+  }
   return `${basePath}${path}`;
 }
 

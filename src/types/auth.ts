@@ -1,3 +1,5 @@
+import { UserProfile } from './user';
+
 export interface UserAuthToken {
   userId: string;
   walletAddress: string;
@@ -31,7 +33,7 @@ export interface VerifySignedMessageResponse {
   error: string[];
   token: string;
   userId: string;
-  isNewUser: boolean;
+  userProfile?: UserProfile;
 }
 
 /** Validate */
