@@ -60,7 +60,7 @@ jobs:
 
       - name: Build
         run:
-          NEXT_PUBLIC_BASE_PATH=${{ steps.tagName.outputs.version }} ENVIRONMENT=qa pnpm build
+          NEXT_PUBLIC_BASE_PATH=/qa_v${{ steps.tagName.outputs.version }} ENVIRONMENT=qa pnpm build
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
