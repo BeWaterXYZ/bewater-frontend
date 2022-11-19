@@ -45,7 +45,6 @@ const nextConfig = {
   eslint: {
     dirs: ['src'],
   },
-  distDir: basePath ? `./build/${basePath}/` : './build',
   webpack(config) {
     if (config.name === 'client') {
       // choose the right format for Catalyst packages
