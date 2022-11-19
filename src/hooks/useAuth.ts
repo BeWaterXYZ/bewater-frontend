@@ -30,7 +30,6 @@ export function isAuthed(tokens: Auth): boolean {
 export function useAuthToken(setTokenState: (newToken: Auth) => void) {
   const [token] = useLocalStorage<string>('authToken');
   const [user] = useLocalStorage<UserLocalStorage>('user');
-
   useEffect(() => {
     if (isBrowser && authRequired && token) {
       const authToken = {

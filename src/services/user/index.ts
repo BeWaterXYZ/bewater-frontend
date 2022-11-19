@@ -67,7 +67,6 @@ export async function submitCreateUserProfile(
       email,
     }),
     headers: {
-      ['content-type']: 'application/json',
       ...token.headers,
     },
   });
@@ -93,7 +92,6 @@ export async function submitUpdateUserProfile(
       walletAddress,
     }),
     headers: {
-      ['content-type']: 'application/json',
       ...token.headers,
     },
   });

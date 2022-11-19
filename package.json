@@ -8,7 +8,7 @@
     "preinstall": "npx -y only-allow pnpm",
     "prepare": "husky install",
     "dev": "next dev",
-    "dev:proxy": "NODE_ENV='development' node server.js",
+    "dev:proxy": "node proxy-server.js",
     "build": "next build && next export",
     "start": "next start",
     "storybook": "start-storybook -p 6006",

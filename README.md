@@ -10,8 +10,15 @@ pnpm >= 7
 
 * Install dependencies
   * `pnpm install`
-* Start dev website
+* Start dev website with local mock mode
+  * set `ENVIRONMENT=local` in `.env.local` file
   * `pnpm dev`
+* Start dev website with qa backend server
+  * set `ENVIRONMENT=qa` in `.env.local` file
+  * `pnpm dev`
+* Debug with local backend server
+  * set `ENVIRONMENT=local` in `.env.local` file
+  * `pnpm dev:proxy`
 * Build website
   * `pnpm build`
 * Export website
@@ -21,18 +28,27 @@ pnpm >= 7
 * View UI Components in Storybook
   * `pnpm storybook`
 
-### Mock/Local  mode
-add the following to `.env.local`
-
+### .env file
 ```
+# config for local mock
+MORALIS_API_KEY
+MORALIS_APP_DOMAIN
+NEXTAUTH_URL=
+NEXTAUTH_SECRET=
+
+# configs for change dev conditions
+# user need connect wallet before visit pages(except connect-wallet page)
 AUTH_REQUIRED=true
-MOCK_MODE=true
+# base path from next.js\
+# ref: https://nextjs.org/docs/api-reference/next.config.js/basepath
 NEXT_PUBLIC_BASE_PATH=
+# mapping different api url for different environment
+# local | qa | prod
 ENVIRONMENT=local
 ```
 
 Example url:
-`http://localhost:3000/auth-connect-wallet`
+`http://localhost:3000/auth/connect-wallet`
 
 ## Github Workflows
 For CI (triggered at PR), we should
