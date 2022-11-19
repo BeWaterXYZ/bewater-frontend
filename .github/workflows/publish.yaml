@@ -60,7 +60,7 @@ jobs:
 
       - name: Build
         run:
-          NEXT_PUBLIC_BASE_PATH=${{ steps.tagName.outputs.version }} ENVIRONMENT=prod pnpm build
+          NEXT_PUBLIC_BASE_PATH=/prod_v${{ steps.tagName.outputs.version }} ENVIRONMENT=prod pnpm build
 
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -69,7 +69,7 @@ jobs:
           known_hosts: 'just-a-placeholder-so-we-dont-get-errors'
 
       - name: Adding Known Hosts
-        run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.DEPLOY_HOST_PROD }} >> ~/.ssh/known_hosts
+        run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to target ECS with rsync
-        run: rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --progress ./build/* ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST_PROD }}:${{ secrets.DEPLOY_PATH }}
+        run: rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --progress ./build/* ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
