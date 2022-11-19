@@ -31,7 +31,7 @@ export function useFetchUser(userId?: string, options?: RequestOptions) {
     Error,
     [url: string, token: Auth] | false
   >(
-    isAuthed(token) && !!userId && [`/api/user?userId=${userId}`, token],
+    isAuthed(token) && !!userId && [`/api/user/${userId}`, token],
     (url, token) => {
       return fetchBody(url, {
         ...{
@@ -67,7 +67,6 @@ export async function submitCreateUserProfile(
       email,
     }),
     headers: {
-      ['content-type']: 'application/json',
       ...token.headers,
     },
   });
@@ -93,7 +92,6 @@ export async function submitUpdateUserProfile(
       walletAddress,
     }),
     headers: {
-      ['content-type']: 'application/json',
       ...token.headers,
     },
   });

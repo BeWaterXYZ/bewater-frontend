@@ -7,10 +7,12 @@ import type { NextPage } from 'next';
 
 // Pass client to React Context Provider
 const PageConnectWallet: NextPage = () => {
+  // eslint-disable-next-line
   const { wagmiClient } = useWagmi();
   return (
     <div className="flex flex-col h-[calc(100vh-160px)] justify-center items-center">
       {wagmiClient ? (
+        // eslint-disable-next-line
         <WagmiConfig client={wagmiClient}>
           <div className="typ-h4 pb-12">Connect Wallet</div>
           <ConnectWallet />

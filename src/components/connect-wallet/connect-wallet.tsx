@@ -10,6 +10,7 @@ import {
   submitGetLoginMessage,
   submitVerifySignedMessage,
 } from '@/services/auth';
+import { urlWithBasePath } from '@/utils/urlWithBasePath';
 
 import type { UserLocalStorage } from '@/models/user';
 
@@ -34,28 +35,29 @@ export function ConnectWallet() {
             network: 'evm',
           };
           const { message } = await submitGetLoginMessage(messageParams);
-          // console.log({ message });
           const signature = await signMessageAsync({ message });
-          // console.log({ signature });
-          const { token, userId, isNewUser } = await submitVerifySignedMessage({
-            message,
-            signature,
-          });
+          const { token, userId, userProfile } =
+            await submitVerifySignedMessage({
+              message,
+              signature,
+            });
           setToken(token);
           setUser({
             ..._user,
             userId,
             walletAddress: address,
-            isNewUser,
+            isNewUser: !userProfile,
           });
-          if (isNewUser) {
-            navigator.goToWelcome();
+          if (!userProfile) {
+            window.location.href = urlWithBasePath('/welcome');
           } else {
-            navigator.goToUserSettings();
+            window.location.href = urlWithBasePath('/user/settings');
           }
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setIsLogining(false);
       }
     };
 
@@ -66,7 +68,6 @@ export function ConnectWallet() {
         navigator.goToUserSettings();
       }
     } else if (!isLogining && isConnected && !isAuthed(authToken)) {
-      // console.log('start asyncAuth...');
       setIsLogining(true);
       void asyncAuth();
     }

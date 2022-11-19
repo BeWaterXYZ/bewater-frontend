@@ -11,7 +11,7 @@ public/
 .prettierignore
 .eslintignore
 pnpm-lock.yaml
-.env
+.env*
 Dockerfile
 
 src/components/icon/template.js

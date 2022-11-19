@@ -9,7 +9,7 @@ export interface NextRuntimeConfig {
     basePath: string;
     environment: string;
     authRequired: boolean;
-    apiHost: string;
     mockMode: boolean;
+    apiHost: string;
   };
 }
