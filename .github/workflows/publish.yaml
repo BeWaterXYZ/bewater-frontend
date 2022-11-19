@@ -72,6 +72,6 @@ jobs:
         run: ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to target ECS with rsync
-        run:
+        run: |
           mv ./out/*.* ./out/prod_v${{ steps.tagName.outputs.version }}/
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --progress ./out/* ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
