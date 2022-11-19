@@ -3,7 +3,7 @@ name: publish
 on:
   push:
     tags:
-      - '**_v[0-9]+.[0-9]+.[0-9]+'
+      - '**_prod_v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   publish:
@@ -21,7 +21,7 @@ jobs:
       - uses: olegtarasov/get-tag@v2.1
         id: tagName
         with:
-          tagRegex: "(?<package>.*)_v(?<version>.*)"
+          tagRegex: "(?<package>.*)_prod_v(?<version>.*)"
 
       - name: package information
         id: package_info
@@ -73,5 +73,6 @@ jobs:
 
       - name: Deploy to target ECS with rsync
         run: |
+          mkdir -p ./out/prod_v${{ steps.tagName.outputs.version }}
           mv ./out/*.* ./out/prod_v${{ steps.tagName.outputs.version }}/
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --progress ./out/* ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}

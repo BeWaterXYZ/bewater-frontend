@@ -73,5 +73,6 @@ jobs:
 
       - name: Deploy to target ECS with rsync
         run: |
+          mkdir -p ./out/qa_v${{ steps.tagName.outputs.version }}
           mv ./out/*.* ./out/qa_v${{ steps.tagName.outputs.version }}/
           rsync -avz -e 'ssh -p ${{ secrets.SSH_PORT }}' --progress ./out/* ${{ secrets.DEPLOY_USERNAME }}@${{ secrets.DEPLOY_HOST }}:${{ secrets.DEPLOY_PATH }}
