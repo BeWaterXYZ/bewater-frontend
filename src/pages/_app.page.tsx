@@ -1,5 +1,4 @@
 import '../styles/index.css';
-import '@rainbow-me/rainbowkit/styles.css';
 import { useCallback, useState } from 'react';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';

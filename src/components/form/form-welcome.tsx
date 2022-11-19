@@ -54,7 +54,7 @@ export const FormWelcome = ({ token, className }: Props) => {
         placeholder="Enter your username"
         required
         errors={errors}
-        {...register('username', { required: 'Username is required.' })}
+        {...register('userName', { required: 'Username is required.' })}
       />
       <Input
         label="Full name"

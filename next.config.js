@@ -32,6 +32,7 @@ const nextConfig = {
   publicRuntimeConfig: {
     basePath,
     environment,
+    version: process.env.VERSION || 'local',
     authRequired: process.env.AUTH_REQUIRED === 'true',
     apiHost: api[environment],
   },
@@ -45,6 +46,8 @@ const nextConfig = {
   eslint: {
     dirs: ['src'],
   },
+  // This will build the project as a standalone app inside the Docker image.
+  output: 'standalone',
   webpack(config) {
     if (config.name === 'client') {
       // choose the right format for Catalyst packages
