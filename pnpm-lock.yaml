@@ -16339,7 +16339,7 @@ packages:
     dev: true
 
   github.com/ethereumjs/ethereumjs-abi/ee3994657fa7a427238e6ba92a84d0b529bbcde0:
-    resolution: {commit: ee3994657fa7a427238e6ba92a84d0b529bbcde0, repo: git+ssh://git@github.com/ethereumjs/ethereumjs-abi.git, type: git}
+    resolution: {commit: ee3994657fa7a427238e6ba92a84d0b529bbcde0, repo: https://github.com/ethereumjs/ethereumjs-abi, type: git}
     name: ethereumjs-abi
     version: 0.6.8
     dependencies:
