@@ -29,6 +29,7 @@ export default async function user(
     userId = (req.body as { userId: string }).userId;
   }
 
+  // eslint-disable-next-line
   console.log('local response');
 
   switch (req.method) {

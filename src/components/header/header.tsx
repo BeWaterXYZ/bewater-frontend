@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import Link from 'next/link';
 
 import Logo from '@/components/logos/bewater.svg';
 import { Menu } from '@/components/menu';
@@ -24,22 +24,17 @@ export function Header({ token, menuData, showButton = false }: Props) {
         <a href={urlWithBasePath('/')}>
           <Logo className="object-contain shrink-0 cursor-pointer" />
         </a>
-        <a
-          className={clsx({
-            hidden: !showButton,
-          })}
-          href={urlWithBasePath('/auth/connect-wallet')}
-        >
-          <Button type="primary" text="Connect Wallet" />
-        </a>
-        <Avatar
-          size="small"
-          src={token?.user.avatarURI}
-          walletAddress={token?.user.walletAddress}
-          className={clsx({
-            hidden: showButton,
-          })}
-        />
+        {showButton ? (
+          <Link href="/auth/connect-wallet" passHref legacyBehavior>
+            <Button type="primary" text="Connect Wallet" />
+          </Link>
+        ) : (
+          <Avatar
+            size="small"
+            src={token?.user.avatarURI}
+            walletAddress={token?.user.walletAddress}
+          />
+        )}
         <Menu
           className="absolute flex items-center h-full left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 "
           items={menuData?.main || []}
