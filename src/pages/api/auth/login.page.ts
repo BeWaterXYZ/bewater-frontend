@@ -19,6 +19,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<VerifySignedMessageResponse>,
 ) {
+  // eslint-disable-next-line
   console.log('local response');
 
   const { message, signature } = req.body as VerifySignedMessageRequest;

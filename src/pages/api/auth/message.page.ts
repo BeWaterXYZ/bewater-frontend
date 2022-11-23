@@ -23,6 +23,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<GetLoginMessageResponse>,
 ) {
+  // eslint-disable-next-line
   console.log('local response');
   // console.log({ config });
   const { walletAddress, chain } = req.body as GetLoginMessageRequest;
