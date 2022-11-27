@@ -29,7 +29,7 @@ function BeWaterWebsite({ Component, query, pageProps }: Props & AppProps) {
   const _setToken = useCallback((newToken: Auth) => {
     setToken(newToken);
   }, []);
-  useAuthToken(_setToken);
+  useAuthToken(_setToken, router.pathname);
   const { renderHeader, renderFooter } = useHeaderFooter(Component);
   return (
     <AuthContext.Provider value={token}>

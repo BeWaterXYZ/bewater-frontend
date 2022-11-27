@@ -5,6 +5,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import dayjs from 'dayjs';
 
 import { isBrowser } from '@/constants';
+import { urlWithBasePath } from '@/utils/urlWithBasePath';
 
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 import type { Auth } from '@/models/auth';
@@ -37,10 +38,19 @@ export function isAuthed(tokens: Auth): boolean {
   return !authRequired || (hasToken && verifiedToken);
 }
 
-export function useAuthToken(setTokenState: (newToken: Auth) => void) {
+export function useAuthToken(
+  setTokenState: (newToken: Auth) => void,
+  pathname?: string,
+) {
   const [token] = useLocalStorage<string>('authToken');
   const [user] = useLocalStorage<UserLocalStorage>('user');
   useEffect(() => {
+    if (pathname !== '/auth/connect-wallet') {
+      const authed = !authRequired || verifyToken(token);
+      if (!authed) {
+        window.location.href = urlWithBasePath('/auth/connect-wallet');
+      }
+    }
     if (isBrowser && authRequired && token) {
       const authToken = {
         headers: {
@@ -50,7 +60,7 @@ export function useAuthToken(setTokenState: (newToken: Auth) => void) {
       };
       setTokenState(authToken);
     }
-  }, [token, user, setTokenState]);
+  }, [token, user, setTokenState, pathname]);
 }
 
 export function verifyToken(token?: string): boolean {
