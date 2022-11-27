@@ -61,7 +61,14 @@ export const FormWelcome = ({ token, className }: Props) => {
         placeholder="Enter your full name"
         required
         errors={errors}
-        {...register('email', { required: 'Full name is required.' })}
+        {...register('fullname', { required: 'Full name is required.' })}
+      />
+      <Input
+        label="Email"
+        placeholder="Enter your email"
+        required
+        errors={errors}
+        {...register('email', { required: 'Email is required.' })}
       />
       <Button className="mt-12" type="primary" text="Finish Setup" />
       {isLoading ? <Loading /> : null}

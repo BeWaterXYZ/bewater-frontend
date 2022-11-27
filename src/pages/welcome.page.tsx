@@ -13,9 +13,6 @@ const PageWelcome: NextPage = () => {
         <div className="bg-linearWelcome bg-clip-text text-transparent typ-h2">
           {'Welcome aboard,'}
         </div>
-        <div className="typ-body pb-10 break-words">
-          <div>{token.user.walletAddress}</div>
-        </div>
         <FormWelcome token={token} />
       </div>
     </div>
