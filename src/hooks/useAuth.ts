@@ -1,8 +1,11 @@
 import { useEffect, createContext, useContext } from 'react';
 import getConfig from 'next/config';
 import { useLocalStorage } from 'react-use';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import dayjs from 'dayjs';
 
 import { isBrowser } from '@/constants';
+import { urlWithBasePath } from '@/utils/urlWithBasePath';
 
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 import type { Auth } from '@/models/auth';
@@ -11,6 +14,8 @@ import type { UserLocalStorage } from '@/models/user';
 const {
   publicRuntimeConfig: { authRequired },
 } = getConfig() as NextRuntimeConfig;
+
+const durationBeforeTokenExpired = 1000 * 60 * 20; // 20 minutes
 
 export const AuthContext = createContext({
   headers: {
@@ -24,13 +29,28 @@ export function useAuthContext() {
 }
 
 export function isAuthed(tokens: Auth): boolean {
-  return !!tokens.headers['Authorization'] || !authRequired;
+  const hasToken = !!tokens.headers['Authorization'];
+  let verifiedToken = false;
+  if (hasToken) {
+    const token = tokens.headers['Authorization'].split(' ')[1];
+    verifiedToken = verifyToken(token);
+  }
+  return !authRequired || (hasToken && verifiedToken);
 }
 
-export function useAuthToken(setTokenState: (newToken: Auth) => void) {
+export function useAuthToken(
+  setTokenState: (newToken: Auth) => void,
+  pathname?: string,
+) {
   const [token] = useLocalStorage<string>('authToken');
   const [user] = useLocalStorage<UserLocalStorage>('user');
   useEffect(() => {
+    if (pathname !== '/auth/connect-wallet') {
+      const authed = !authRequired || verifyToken(token);
+      if (!authed) {
+        window.location.href = urlWithBasePath('/auth/connect-wallet');
+      }
+    }
     if (isBrowser && authRequired && token) {
       const authToken = {
         headers: {
@@ -40,5 +60,20 @@ export function useAuthToken(setTokenState: (newToken: Auth) => void) {
       };
       setTokenState(authToken);
     }
-  }, [token, user, setTokenState]);
+  }, [token, user, setTokenState, pathname]);
+}
+
+export function verifyToken(token?: string): boolean {
+  if (token) {
+    const decodedToken = jwt.decode(token) as JwtPayload;
+    const today = dayjs();
+    if (!decodedToken.exp) return false;
+    const expireDay = dayjs.unix(decodedToken.exp);
+    const millsecondsToExpire = expireDay.diff(today);
+    if (millsecondsToExpire > durationBeforeTokenExpired) {
+      return true;
+    }
+    return false;
+  }
+  return false;
 }
