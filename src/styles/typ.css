@@ -29,4 +29,8 @@
   .typ-label {
     @apply text-label font-body_small leading-body_small;
   }
+
+  .typ-number {
+    @apply text-body font-body_small leading-body font-mono;
+  }
 }
