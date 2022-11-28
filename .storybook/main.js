@@ -45,6 +45,12 @@ module.exports = {
       '@': [path.resolve(__dirname, '../src/'), path.resolve(__dirname, '../')],
     };
 
+    config.resolve.fallback = {
+      stream: require.resolve('stream-browserify'),
+      crypto: require.resolve('crypto-browserify'),
+      path: require.resolve('path-browserify'),
+    };
+
     /**
      * Fixes font import with /
      * @see https://github.com/storybookjs/storybook/issues/12844#issuecomment-867544160
