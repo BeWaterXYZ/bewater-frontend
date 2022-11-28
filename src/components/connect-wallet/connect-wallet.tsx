@@ -22,7 +22,11 @@ import { urlWithBasePath } from '@/utils/urlWithBasePath';
 import type { Connector } from 'wagmi';
 import type { UserLocalStorage } from '@/models/user';
 
-export function ConnectWallet() {
+interface Props {
+  onError?: (text?: string) => void;
+}
+
+export function ConnectWallet({ onError }: Props) {
   const [startLogin, setStartLogin] = useToggle(false);
   const [isLogining, setIsLogining] = useToggle(false);
   const [_token, setToken] = useLocalStorage<string>('authToken');
@@ -32,13 +36,7 @@ export function ConnectWallet() {
   const navigator = useNavigator();
   const { chain } = useNetwork();
   const { signMessageAsync } = useSignMessage();
-  const { connect, connectors, error, isLoading, pendingConnector } =
-    useConnect({
-      onError(error) {
-        console.error('Error::::', error);
-        // TODO: logger
-      },
-    });
+  const { connect, connectors, isLoading } = useConnect();
   const authToken = useAuthContext();
 
   useEffect(() => {
@@ -73,6 +71,7 @@ export function ConnectWallet() {
         }
       } catch (error) {
         console.error('asyncAuth::', error);
+        onError && onError('Connect Wallet Failed. Please try again.');
         // TODO: logger
       } finally {
         setIsLogining(false);
@@ -113,6 +112,7 @@ export function ConnectWallet() {
     setUser,
     signMessageAsync,
     disconnect,
+    onError,
   ]);
 
   const onClick = (connector: Connector) => {
@@ -142,15 +142,8 @@ export function ConnectWallet() {
             <Logo code={connector.name} />
             <span>{connector.name}</span>
             {/* {!connector.ready && ' (unsupported)'} */}
-            {isLoading &&
-              connector.id === pendingConnector?.id &&
-              ' (connecting)'}
           </button>
         ))}
-
-        {error && (
-          <div className="mt-3 text-center text-red-400">{error.message}</div>
-        )}
       </div>
       {isLoading || isLogining ? <Loading /> : null}
     </>
