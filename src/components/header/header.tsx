@@ -20,7 +20,7 @@ type Props = {
 export function Header({ token, menuData, showButton = false }: Props) {
   return (
     <div className="block sticky top-0 left-0 right-0 text-bw-fore bg-bw-back z-10 w-full pl-5 pr-8 py-5 border-[#E4E4E4] border-b border-solid">
-      <div className=" relative flex items-center justify-between header-width mx-auto">
+      <div className="relative flex items-center justify-between header-width mx-auto">
         <a href={urlWithBasePath('/')}>
           <Logo className="object-contain shrink-0 cursor-pointer" />
         </a>

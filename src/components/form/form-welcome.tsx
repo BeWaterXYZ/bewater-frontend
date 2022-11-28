@@ -15,9 +15,10 @@ import type { CreateUserProfileRequest } from '@/types/user';
 interface Props {
   token: Auth;
   className?: string;
+  onError?: (text?: string) => void;
 }
 
-export const FormWelcome = ({ token, className }: Props) => {
+export const FormWelcome = ({ token, className, onError }: Props) => {
   const {
     register,
     handleSubmit,
@@ -33,11 +34,18 @@ export const FormWelcome = ({ token, className }: Props) => {
         userId: token.user.userId,
         walletAddress: token.user.walletAddress,
       } as CreateUserProfileRequest)
-        .then(() => {
-          navigator.goToUserSettings();
+        .then((res) => {
+          if (res.status !== 200) {
+            setIsLoading(false);
+            onError && onError(res.error[0]);
+          } else {
+            navigator.goToUserSettings();
+          }
         })
         .catch((error) => {
           console.error(error);
+          setIsLoading(false);
+          onError && onError();
         });
     },
     [navigator, token],

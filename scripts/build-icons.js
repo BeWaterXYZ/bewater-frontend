@@ -101,6 +101,7 @@ async function cleanPaths(svgPath, data) {
     .replace(/stroke-linecap/g, 'strokeLinecap')
     .replace(/stroke-linejoin/g, 'strokeLinejoin')
     .replace(/stroke-width/g, 'strokeWidth')
+    .replace(/stroke-miterlimit/g, 'strokeMiterlimit')
     .replace(/fill="black"/g, '')
     .replace(/fill-opacity=/g, 'fillOpacity=')
     .replace(/xlink:href=/g, 'xlinkHref=')
