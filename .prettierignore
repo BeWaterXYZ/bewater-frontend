@@ -25,3 +25,4 @@ src/**/*.svg
 *.gitkeep
 
 storybook-static
+build-storybook.log
