@@ -1,32 +1,32 @@
 # bewater-website
 
-This repo is managed via [PNPM](https://pnpm.io).
+This repo is managed via [Yarn](https://yarnpkg.com).
 
 ## Requirements
 Node >= 16.5
-pnpm >= 7
+yarn >= 1.22.15
 
 ## Recipes
 
 * Install dependencies
-  * `pnpm install`
+  * `yarn install`
 * Start dev website with local mock mode
   * set `ENVIRONMENT=local` in `.env.local` file
-  * `pnpm dev`
+  * `yarn dev`
 * Start dev website with qa backend server
   * set `ENVIRONMENT=qa` in `.env.local` file
-  * `pnpm dev`
+  * `yarn dev`
 * Debug with local backend server
   * set `ENVIRONMENT=local` in `.env.local` file
-  * `pnpm dev:proxy`
+  * `yarn dev:proxy`
 * Build website
-  * `pnpm build`
+  * `yarn build`
 * Export website
-  * `pnpm export`
+  * `yarn export`
 * Lint everything
-  * `pnpm lint`
+  * `yarn lint`
 * View UI Components in Storybook
-  * `pnpm storybook`
+  * `yarn storybook`
 
 ### .env file
 ```
