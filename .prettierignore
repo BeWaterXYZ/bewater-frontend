@@ -13,7 +13,7 @@ public/
 pnpm-lock.yaml
 yarn.lock
 .env*
-Dockerfile
+Dockerfile*
 
 src/components/icon/template.js
 src/components/icon/template.story.js
@@ -23,3 +23,5 @@ src/**/*.svg
 *.woff
 *.woff2
 *.gitkeep
+
+storybook-static

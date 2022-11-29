@@ -5,7 +5,7 @@ import { Stats } from './stats';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Stats/Stats',
+  title: 'Base/Stats',
   component: Stats,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
