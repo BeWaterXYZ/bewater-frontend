@@ -3,7 +3,7 @@
 This repo is managed via [Yarn](https://yarnpkg.com).
 
 ## Requirements
-Node >= 16.5
+Node >= 16.8
 yarn >= 1.22.15
 
 ## Recipes
