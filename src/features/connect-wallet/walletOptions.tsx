@@ -26,7 +26,7 @@ interface Props {
   onError?: (text?: string) => void;
 }
 
-export function ConnectWallet({ onError }: Props) {
+export function WalletOptions({ onError }: Props) {
   const [startLogin, setStartLogin] = useToggle(false);
   const [isLogining, setIsLogining] = useToggle(false);
   const [_token, setToken] = useLocalStorage<string>('authToken');
