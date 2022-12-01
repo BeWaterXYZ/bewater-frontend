@@ -17,17 +17,17 @@ import type {
 import type { FieldValues } from 'react-hook-form';
 import type { Auth } from '@/models/auth';
 import { useAuthStore } from '@/stores/auth';
+import { UserLocalStorage } from '@/models/user';
 
 interface Props {
-  token: Auth;
-  userId: string;
+  user: UserLocalStorage;
   data?: GetUserProfileByIdResponse;
   className?: string;
 }
-type FormProfileProps = Pick<Props, 'token' | 'data' | 'className'>;
-type FormProfileWrapProps = Pick<Props, 'token' | 'userId' | 'className'>;
+type FormProfileProps = Pick<Props, 'user' | 'data' | 'className'>;
+type FormProfileWrapProps = Pick<Props, 'user' | 'className'>;
 
-export const FormProfile = ({ token, data, className }: FormProfileProps) => {
+export const FormProfile = ({ user, data, className }: FormProfileProps) => {
   const { walletAddress } = useAuthStore((s) => s.user);
   const {
     register,
@@ -42,7 +42,7 @@ export const FormProfile = ({ token, data, className }: FormProfileProps) => {
       setIsLoading(true);
       submitUpdateUserProfile({
         ...submitData,
-        userId: token.user?.userId,
+        userId: user?.userId,
       } as UpdateUserProfileRequest)
         .then(() => {
           // TODO: make some success alert?
@@ -54,7 +54,7 @@ export const FormProfile = ({ token, data, className }: FormProfileProps) => {
           setIsLoading(false);
         });
     },
-    [token],
+    [user],
   );
   return (
     <form
@@ -94,18 +94,14 @@ export const FormProfile = ({ token, data, className }: FormProfileProps) => {
   );
 };
 
-export function FormProfileWrap({
-  token,
-  userId,
-  className,
-}: FormProfileWrapProps) {
-  const { isLoading, isError, error, data } = useFetchUser(userId);
+export function FormProfileWrap({ user, className }: FormProfileWrapProps) {
+  const { isLoading, isError, error, data } = useFetchUser(user.userId);
   if (isError) {
     console.error(error);
     return <div>Error occurs!</div>;
   }
   return !isLoading ? (
-    <FormProfile data={data} className={className} token={token} />
+    <FormProfile user={user} data={data} className={className} />
   ) : (
     <Loading />
   );

@@ -3,7 +3,8 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { useMenuData } from '@/features/header/useMenuData';
 
-import { HeaderImpl, HeaderUserArea } from './header';
+import { HeaderImpl } from './header';
+import UserArea from './userArea';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -21,10 +22,10 @@ const Template: ComponentStory<typeof HeaderImpl> = (args) => {
 
 export const ShowButton = Template.bind({});
 ShowButton.args = {
-  userArea: <HeaderUserArea isAuthed={false} user={{ walletAddress: 'xxx' }} />,
+  userArea: <UserArea isAuthed={false} user={{ walletAddress: 'xxx' }} />,
 };
 
 export const ShowAvatar = Template.bind({});
 ShowAvatar.args = {
-  userArea: <HeaderUserArea isAuthed={true} user={{ walletAddress: 'xxx' }} />,
+  userArea: <UserArea isAuthed={true} user={{ walletAddress: 'xxx' }} />,
 };

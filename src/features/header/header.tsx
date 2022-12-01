@@ -1,36 +1,19 @@
 import Link from 'next/link';
 import Logo from '@/components/logos/bewater.svg';
 import { Menu } from './menu';
-import { Avatar } from '@/components/avatar';
-import { Button } from '@/components/button';
 import { useMenuData } from './useMenuData';
 import { useAuthStore } from '@/stores/auth';
 import { MenuItemType } from '@/models/menu';
-import { UserLocalStorage } from '@/models/user';
-
-interface HeaderUserAreaProps {
-  isAuthed: boolean;
-  user: UserLocalStorage;
-}
-export function HeaderUserArea({ isAuthed, user }: HeaderUserAreaProps) {
-  console.log({ isAuthed });
-  return !isAuthed ? (
-    <Link href="/auth/connect-wallet" passHref>
-      <Button type="primary" text="Connect Wallet" />
-    </Link>
-  ) : (
-    <Avatar
-      size="small"
-      src={user.avatarURI}
-      walletAddress={user.walletAddress}
-    />
-  );
-}
+import dynamic from 'next/dynamic';
 
 interface HeaderImplProps {
   menuData: MenuItemType[];
   userArea: JSX.Element;
 }
+
+const UserArea = dynamic(() => import('./userArea'), {
+  ssr: false,
+});
 
 export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
   return (
@@ -55,7 +38,7 @@ export const Header = () => {
   return (
     <HeaderImpl
       menuData={menuData.main}
-      userArea={<HeaderUserArea isAuthed={!!token} user={user} />}
+      userArea={<UserArea isAuthed={!!token} user={user} />}
     />
   );
 };
