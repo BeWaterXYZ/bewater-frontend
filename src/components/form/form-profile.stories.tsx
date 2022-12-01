@@ -20,11 +20,8 @@ const Template: ComponentStory<typeof FormProfile> = (args) => {
 
 export const Normal = Template.bind({});
 Normal.args = {
-  token: {
-    headers: {
-      Authorization: 'Bearer etyhjasdfasdf',
-    },
-    user: {},
+  user: {
+    walletAddress: 'xxxx',
   },
   data: {
     status: 200,

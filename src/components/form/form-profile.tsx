@@ -28,7 +28,7 @@ type FormProfileProps = Pick<Props, 'user' | 'data' | 'className'>;
 type FormProfileWrapProps = Pick<Props, 'user' | 'className'>;
 
 export const FormProfile = ({ user, data, className }: FormProfileProps) => {
-  const { walletAddress } = useAuthStore((s) => s.user);
+  const { walletAddress } = user;
   const {
     register,
     handleSubmit,
