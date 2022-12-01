@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
 
-import { useMenuActions } from '@/hooks/useMenuActions';
+import { useMenuActions } from './useMenuActions';
 
 import type { MenuItemType } from '@/models/menu';
 import Link from 'next/link';

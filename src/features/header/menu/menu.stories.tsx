@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { useMenuData } from '@/hooks/useMenuData';
+import { useMenuData } from '@/features/header/useMenuData';
 
 import { Menu } from './menu';
 
