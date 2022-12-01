@@ -1,25 +1,22 @@
-import { fetchBody } from '../helper/request';
-
 import type {
   GetLoginMessageRequest,
   GetLoginMessageResponse,
   VerifySignedMessageRequest,
   VerifySignedMessageResponse,
 } from '@/types/auth';
+import { agentAnon } from '../agent';
 
 export async function submitGetLoginMessage({
   walletAddress,
   chain,
   network = 'evm',
 }: GetLoginMessageRequest): Promise<GetLoginMessageResponse> {
-  return await fetchBody('/api/auth/message', {
-    method: 'POST',
-    body: JSON.stringify({
-      walletAddress,
-      chain,
-      network,
-    }),
+  const { data } = await agentAnon.post('/auth/message', {
+    walletAddress,
+    chain,
+    network,
   });
+  return data;
 }
 
 export async function submitVerifySignedMessage({
@@ -27,12 +24,10 @@ export async function submitVerifySignedMessage({
   message,
   network = 'evm',
 }: VerifySignedMessageRequest): Promise<VerifySignedMessageResponse> {
-  return await fetchBody('/api/auth/login', {
-    method: 'POST',
-    body: JSON.stringify({
-      signature,
-      message,
-      network,
-    }),
+  const { data } = await agentAnon.post('/auth/login', {
+    signature,
+    message,
+    network,
   });
+  return data;
 }

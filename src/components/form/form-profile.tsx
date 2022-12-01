@@ -16,6 +16,7 @@ import type {
 } from '@/types/user';
 import type { FieldValues } from 'react-hook-form';
 import type { Auth } from '@/models/auth';
+import { useAuthStore } from '@/stores/auth';
 
 interface Props {
   token: Auth;
@@ -27,6 +28,7 @@ type FormProfileProps = Pick<Props, 'token' | 'data' | 'className'>;
 type FormProfileWrapProps = Pick<Props, 'token' | 'userId' | 'className'>;
 
 export const FormProfile = ({ token, data, className }: FormProfileProps) => {
+  const { walletAddress } = useAuthStore((s) => s.user);
   const {
     register,
     handleSubmit,
@@ -38,7 +40,7 @@ export const FormProfile = ({ token, data, className }: FormProfileProps) => {
   const onSubmit = useCallback(
     (submitData: FieldValues) => {
       setIsLoading(true);
-      submitUpdateUserProfile(token, {
+      submitUpdateUserProfile({
         ...submitData,
         userId: token.user?.userId,
       } as UpdateUserProfileRequest)
@@ -81,7 +83,7 @@ export const FormProfile = ({ token, data, className }: FormProfileProps) => {
         inputType={''}
         buttonType={''}
         buttonText={''}
-        linkText={'0x1234561234561234561234561234561234561234'}
+        linkText={walletAddress ?? ''}
         placeholder={''}
       />
       <SocialLink name="github" label="Github" />

@@ -7,7 +7,6 @@ import type { NextPage } from 'next';
 
 // Pass client to React Context Provider
 const PageWelcome: NextPage = () => {
-  const token = useAuthContext();
   const { Alert, onAlert } = useAlert({
     title: 'An error occurs',
     text: 'Create user failed, please visit the site later',
@@ -19,7 +18,7 @@ const PageWelcome: NextPage = () => {
           <div className="bg-linearWelcome bg-clip-text text-transparent typ-h2">
             {'Welcome aboard,'}
           </div>
-          <FormWelcome token={token} onError={onAlert} />
+          <FormWelcome onError={onAlert} />
         </div>
       </div>
       <Alert />
