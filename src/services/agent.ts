@@ -7,8 +7,8 @@ const {
   publicRuntimeConfig: { apiHost },
 } = getConfig() as NextRuntimeConfig;
 
-let requestInterceptor = async (config: AxiosRequestConfig) => {
-  const accessToken = await useAuthStore.getState().token;
+const requestInterceptor = (config: AxiosRequestConfig) => {
+  const accessToken = useAuthStore.getState().token;
   if (config.headers) {
     config.headers['authorization'] = `Bearer ${accessToken}`;
   }

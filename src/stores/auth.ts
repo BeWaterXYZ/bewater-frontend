@@ -8,12 +8,16 @@ interface Store {
   user: UserLocalStorage;
 }
 
-let fakeStorage = {
+const fakeStorage = {
   getItem: (name: string) => {
     return name;
   },
-  setItem: (name: string, value: string) => {},
-  removeItem: (name: string) => {},
+  setItem: (name: string, value: string) => {
+    console.log('set', name, value);
+  },
+  removeItem: (name: string) => {
+    console.log('remove', name);
+  },
 };
 export const useAuthStore = create<Store>()(
   persist(

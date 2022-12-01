@@ -32,8 +32,8 @@ export async function submitCreateUserProfile({
   userId,
   walletAddress,
   email,
-}: CreateUserProfileRequest): Promise<CreateUserProfileResponse> {
-  const { data } = await agentAuthed.post('/user', {
+}: CreateUserProfileRequest) {
+  const { data } = await agentAuthed.post<CreateUserProfileResponse>('/user', {
     userId,
     walletAddress,
     email,
@@ -47,8 +47,8 @@ export async function submitUpdateUserProfile({
   email,
   avatarURI,
   walletAddress,
-}: UpdateUserProfileRequest): Promise<UpdateUserProfileResponse> {
-  const { data } = await agentAuthed.put('/user', {
+}: UpdateUserProfileRequest) {
+  const { data } = await agentAuthed.put<UpdateUserProfileResponse>('/user', {
     userId,
     userName,
     email,

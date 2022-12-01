@@ -10,12 +10,15 @@ export async function submitGetLoginMessage({
   walletAddress,
   chain,
   network = 'evm',
-}: GetLoginMessageRequest): Promise<GetLoginMessageResponse> {
-  const { data } = await agentAnon.post('/auth/message', {
-    walletAddress,
-    chain,
-    network,
-  });
+}: GetLoginMessageRequest) {
+  const { data } = await agentAnon.post<GetLoginMessageResponse>(
+    '/auth/message',
+    {
+      walletAddress,
+      chain,
+      network,
+    },
+  );
   return data;
 }
 
@@ -23,11 +26,14 @@ export async function submitVerifySignedMessage({
   signature,
   message,
   network = 'evm',
-}: VerifySignedMessageRequest): Promise<VerifySignedMessageResponse> {
-  const { data } = await agentAnon.post('/auth/login', {
-    signature,
-    message,
-    network,
-  });
+}: VerifySignedMessageRequest) {
+  const { data } = await agentAnon.post<VerifySignedMessageResponse>(
+    '/auth/login',
+    {
+      signature,
+      message,
+      network,
+    },
+  );
   return data;
 }
