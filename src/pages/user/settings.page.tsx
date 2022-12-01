@@ -1,20 +1,18 @@
-// import { Loading } from '@/components/loading/loading';
-import { FormProfileWrap } from '@/components/form';
 import { AvatarWithEditor } from '@/components/avatar';
-import { useAuthContext } from '@/hooks/useAuth';
+import { FormProfileWrap } from '@/components/form';
 
+import { useAuthStore } from '@/stores/auth';
 import type { NextPage } from 'next';
 
-// Pass client to React Context Provider
 const PageUserSettings: NextPage = () => {
-  const token = useAuthContext();
+  const user = useAuthStore((s) => s.user);
   return (
     <div className="flex flex-row h-[calc(100vh-160px)] content-width mx-auto">
       <div className="w-[270px] pt-10 border-r border-solid border-[#E4E4E4]">
         <div className="w-full flex flex-col justify-center items-center">
           <AvatarWithEditor
-            walletAddress={token.user.walletAddress}
-            src={token?.user?.avatarURI}
+            walletAddress={user.walletAddress}
+            src={user?.avatarURI}
           />
         </div>
         <div>
@@ -26,7 +24,7 @@ const PageUserSettings: NextPage = () => {
         </div>
       </div>
       <div className="w-[750px] pt-10 pl-16">
-        <FormProfileWrap token={token} userId={token.user.userId || ''} />
+        <FormProfileWrap user={user} />
       </div>
     </div>
   );

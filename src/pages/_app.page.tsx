@@ -3,7 +3,6 @@ import { useCallback, useState } from 'react';
 import { SWRConfig } from 'swr';
 import { useRouter } from 'next/router';
 
-import { useHeaderFooter } from '@/hooks/useHeaderFooter';
 import { AuthContext, useAuthToken } from '@/hooks/useAuth';
 import useTheme from '@/hooks/useTheme';
 import getFirstParam from '@/utils/getFirstParam';
@@ -12,39 +11,28 @@ import { isBrowser } from '@/constants';
 
 import type { AppProps, AppContext } from 'next/app';
 import type { ParsedUrlQuery } from 'querystring';
-import type { Auth } from '@/models/auth';
+import { Footer } from '@/components/footer';
+import { Header } from '@/features/header';
 
 interface Props {
   query: ParsedUrlQuery;
 }
 
 function BeWaterWebsite({ Component, query, pageProps }: Props & AppProps) {
-  const [token, setToken] = useState<Auth>({
-    headers: { Authorization: '' },
-    user: {},
-  });
   const router = useRouter();
   const theme = getFirstParam(router.query.theme);
   useTheme(theme);
-  const _setToken = useCallback((newToken: Auth) => {
-    setToken(newToken);
-  }, []);
-  useAuthToken(_setToken, router.pathname);
-  const { renderHeader, renderFooter } = useHeaderFooter(Component);
+
   return (
-    <AuthContext.Provider value={token}>
-      <SWRConfig value={swrConfig}>
-        <div className="bw-layout">
-          <>
-            {renderHeader()}
-            <div className="bw-content">
-              <Component {...pageProps} query={query} />
-            </div>
-            {renderFooter()}
-          </>
+    <SWRConfig value={swrConfig}>
+      <div className="bw-layout">
+        <Header />
+        <div className="bw-content">
+          <Component {...pageProps} query={query} />
         </div>
-      </SWRConfig>
-    </AuthContext.Provider>
+        <Footer />
+      </div>
+    </SWRConfig>
   );
 }
 

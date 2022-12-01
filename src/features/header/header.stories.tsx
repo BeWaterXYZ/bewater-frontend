@@ -1,36 +1,31 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { useMenuData } from '@/hooks/useMenuData';
+import { useMenuData } from '@/features/header/useMenuData';
 
-import { Header } from './header';
+import { HeaderImpl } from './header';
+import UserArea from './userArea';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Base/Header',
-  component: Header,
+  component: HeaderImpl,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
-} as ComponentMeta<typeof Header>;
+} as ComponentMeta<typeof HeaderImpl>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Header> = (args) => {
+const Template: ComponentStory<typeof HeaderImpl> = (args) => {
   const { menuData } = useMenuData();
-  return <Header menuData={menuData} {...args} />;
+  return <HeaderImpl {...args} menuData={menuData.main} />;
 };
 
 export const ShowButton = Template.bind({});
 ShowButton.args = {
-  showButton: true,
+  userArea: <UserArea isAuthed={false} user={{ walletAddress: 'xxx' }} />,
 };
 
 export const ShowAvatar = Template.bind({});
 ShowAvatar.args = {
-  token: {
-    headers: {
-      Authorization: 'Bearer eyiasdfkl;qwerj;kj',
-    },
-    user: {},
-  },
-  showButton: false,
+  userArea: <UserArea isAuthed={true} user={{ walletAddress: 'xxx' }} />,
 };
