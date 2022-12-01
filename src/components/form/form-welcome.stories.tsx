@@ -18,10 +18,5 @@ const Template: ComponentStory<typeof FormWelcome> = (args) => {
 
 export const Normal = Template.bind({});
 Normal.args = {
-  token: {
-    headers: {
-      Authorization: 'Bearer eyjidfkqwelrkjasdfk',
-    },
-    user: {},
-  },
+  user: {},
 };

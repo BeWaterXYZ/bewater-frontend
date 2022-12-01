@@ -11,14 +11,15 @@ import useNavigator from '@/hooks/useNavigator';
 import type { FieldValues } from 'react-hook-form';
 import type { Auth } from '@/models/auth';
 import type { CreateUserProfileRequest } from '@/types/user';
+import { UserLocalStorage } from '@/models/user';
 
 interface Props {
-  token: Auth;
+  user: UserLocalStorage;
   className?: string;
   onError?: (text?: string) => void;
 }
 
-export const FormWelcome = ({ token, className, onError }: Props) => {
+export const FormWelcome = ({ user, className, onError }: Props) => {
   const {
     register,
     handleSubmit,
@@ -29,10 +30,10 @@ export const FormWelcome = ({ token, className, onError }: Props) => {
   const onSubmit = useCallback(
     (data: FieldValues) => {
       setIsLoading(true);
-      submitCreateUserProfile(token, {
+      submitCreateUserProfile({
         ...data,
-        userId: token.user.userId,
-        walletAddress: token.user.walletAddress,
+        userId: user.userId,
+        walletAddress: user.walletAddress,
       } as CreateUserProfileRequest)
         .then((res) => {
           if (res.status !== 200) {
@@ -48,7 +49,7 @@ export const FormWelcome = ({ token, className, onError }: Props) => {
           onError && onError();
         });
     },
-    [navigator, token],
+    [navigator, user],
   );
   return (
     <form

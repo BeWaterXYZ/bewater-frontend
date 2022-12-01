@@ -21,12 +21,13 @@ import { urlWithBasePath } from '@/utils/urlWithBasePath';
 
 import type { Connector } from 'wagmi';
 import type { UserLocalStorage } from '@/models/user';
+import { useAuthStore } from '@/stores/auth';
 
 interface Props {
   onError?: (text?: string) => void;
 }
 
-export function ConnectWallet({ onError }: Props) {
+export function WalletOptions({ onError }: Props) {
   const [startLogin, setStartLogin] = useToggle(false);
   const [isLogining, setIsLogining] = useToggle(false);
   const [_token, setToken] = useLocalStorage<string>('authToken');
@@ -56,17 +57,16 @@ export function ConnectWallet({ onError }: Props) {
               message,
               signature,
             });
-          setToken(token);
-          setUser({
-            ..._user,
-            userId,
-            walletAddress: address,
-            isNewUser: !userProfile,
+
+          useAuthStore.setState({
+            token,
+            user: { userId, walletAddress: address, isNewUser: !userProfile },
           });
+
           if (!userProfile) {
-            window.location.href = urlWithBasePath('/welcome');
+            navigator.goToWelcome();
           } else {
-            window.location.href = urlWithBasePath('/user/settings');
+            navigator.goToUserSettings();
           }
         }
       } catch (error) {

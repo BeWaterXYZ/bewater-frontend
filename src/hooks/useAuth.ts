@@ -10,6 +10,7 @@ import { urlWithBasePath } from '@/utils/urlWithBasePath';
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 import type { Auth } from '@/models/auth';
 import type { UserLocalStorage } from '@/models/user';
+import { useAuthStore } from '@/stores/auth';
 
 const {
   publicRuntimeConfig: { authRequired },
@@ -42,8 +43,9 @@ export function useAuthToken(
   setTokenState: (newToken: Auth) => void,
   pathname?: string,
 ) {
-  const [token] = useLocalStorage<string>('authToken');
-  const [user] = useLocalStorage<UserLocalStorage>('user');
+  const state = useAuthStore.getState();
+  const { token, user } = state;
+
   useEffect(() => {
     if (pathname !== '/auth/connect-wallet') {
       const authed = !authRequired || verifyToken(token);
