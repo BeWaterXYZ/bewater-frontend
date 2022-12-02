@@ -18,7 +18,6 @@ export const Avatar = ({
   onClick,
 }: Props) => {
   const randomColor = useRandomColor(walletAddress);
-  console.log(src);
   return (
     <div
       className={clsx({

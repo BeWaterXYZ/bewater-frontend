@@ -93,14 +93,15 @@ export const FormProfile = ({ user, data, className }: FormProfileProps) => {
 };
 
 export function FormProfileWrap({ user, className }: FormProfileWrapProps) {
-  const { error, data } = useFetchUser(user.userId);
+  const { error, data, isLoading } = useFetchUser(user.userId);
+
+  if (isLoading) return <Loading />;
+
   if (error) {
     console.error(error);
     return <div>Error occurs!</div>;
   }
   return data ? (
     <FormProfile user={user} data={data} className={className} />
-  ) : (
-    <Loading />
-  );
+  ) : null;
 }

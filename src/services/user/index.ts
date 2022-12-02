@@ -1,7 +1,3 @@
-import useSWR from 'swr';
-
-import { toSWROptions } from '../helper/options';
-
 import type {
   GetUserProfileByIdResponse,
   CreateUserProfileRequest,
@@ -9,17 +5,24 @@ import type {
   UpdateUserProfileRequest,
   UpdateUserProfileResponse,
 } from '@/types/user';
-import type { RequestOptions } from '../helper/options';
 import { agentAuthed } from '../agent';
+import { useQuery } from '@tanstack/react-query';
 
-export function useFetchUser(userId?: string, options?: RequestOptions) {
-  return useSWR<GetUserProfileByIdResponse, Error, [url: string] | false>(
-    !!userId && [`/user/${userId}`],
-    async (url) => {
-      return (await agentAuthed.get<GetUserProfileByIdResponse>(url, {})).data;
+export function useFetchUser(userId?: string) {
+  return useQuery({
+    queryKey: ['user', userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getUserProfile(userId!);
     },
-    toSWROptions(options),
+  });
+}
+
+export async function getUserProfile(userId: string) {
+  const { data } = await agentAuthed.get<GetUserProfileByIdResponse>(
+    `/user/${userId}`,
   );
+  return data;
 }
 
 export async function submitCreateUserProfile({
