@@ -15,8 +15,6 @@ import type {
   UpdateUserProfileRequest,
 } from '@/types/user';
 import type { FieldValues } from 'react-hook-form';
-import type { Auth } from '@/models/auth';
-import { useAuthStore } from '@/stores/auth';
 import { UserLocalStorage } from '@/models/user';
 
 interface Props {
@@ -95,12 +93,12 @@ export const FormProfile = ({ user, data, className }: FormProfileProps) => {
 };
 
 export function FormProfileWrap({ user, className }: FormProfileWrapProps) {
-  const { isLoading, isError, error, data } = useFetchUser(user.userId);
-  if (isError) {
+  const { error, data } = useFetchUser(user.userId);
+  if (error) {
     console.error(error);
     return <div>Error occurs!</div>;
   }
-  return !isLoading ? (
+  return data ? (
     <FormProfile user={user} data={data} className={className} />
   ) : (
     <Loading />

@@ -25,7 +25,7 @@ export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
           </a>
         </Link>
         <Menu className=" flex items-center h-full " items={menuData} />
-        {userArea}
+        <div className="min-w-[160px] flex justify-end">{userArea}</div>
       </div>
     </div>
   );
