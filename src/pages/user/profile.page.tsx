@@ -1,14 +1,15 @@
 import { useFetchUser } from '@/services/user';
 import { Loading } from '@/components/loading/loading';
-import { useAuthContext } from '@/hooks/useAuth';
 
 import type { NextPage } from 'next';
 import { useAuthStore } from '@/stores/auth';
 
-// Pass client to React Context Provider
 const PageProfile: NextPage = () => {
   const user = useAuthStore((s) => s.user);
-  const { error, data } = useFetchUser(user.userId);
+  const { error, data, isLoading } = useFetchUser(user.userId);
+
+  if (isLoading) return <Loading />;
+
   if (error) {
     console.error(error);
     return <div>Error occurs!</div>;
@@ -18,9 +19,7 @@ const PageProfile: NextPage = () => {
       Profile Page
       {JSON.stringify(data)}
     </div>
-  ) : (
-    <Loading />
-  );
+  ) : null;
 };
 
 export default PageProfile;
