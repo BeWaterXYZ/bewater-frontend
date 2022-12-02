@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export function useRequireAuthed() {
-  let token = useAuthStore((s) => s.token);
-  let router = useRouter();
+  const token = useAuthStore((s) => s.token);
+  const router = useRouter();
   useEffect(() => {
     if (!token) {
-      router.push('/auth/connect-wallet');
+      void router.push('/auth/connect-wallet');
     }
   }, [token]);
 }
