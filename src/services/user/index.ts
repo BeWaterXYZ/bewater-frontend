@@ -1,7 +1,6 @@
 import useSWR from 'swr';
 
 import { toSWROptions } from '../helper/options';
-import { useResultMapper } from '../helper/state';
 
 import type {
   GetUserProfileByIdResponse,
@@ -14,18 +13,13 @@ import type { RequestOptions } from '../helper/options';
 import { agentAuthed } from '../agent';
 
 export function useFetchUser(userId?: string, options?: RequestOptions) {
-  const result = useSWR<
-    GetUserProfileByIdResponse,
-    Error,
-    [url: string] | false
-  >(
+  return useSWR<GetUserProfileByIdResponse, Error, [url: string] | false>(
     !!userId && [`/user/${userId}`],
-    (url) => {
-      return agentAuthed.get(url, {});
+    async (url) => {
+      return (await agentAuthed.get(url, {})).data;
     },
     toSWROptions(options),
   );
-  return useResultMapper(result);
 }
 
 export async function submitCreateUserProfile({

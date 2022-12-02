@@ -8,7 +8,7 @@ interface Store {
   user: UserLocalStorage;
 }
 
-const fakeStorage = {
+const dummyStorage = {
   getItem: (name: string) => {
     return name;
   },
@@ -28,7 +28,7 @@ export const useAuthStore = create<Store>()(
     {
       name: 'bewater', // name of item in the storage (must be unique)
       getStorage: () => {
-        return isBrowser ? localStorage : fakeStorage;
+        return isBrowser ? localStorage : dummyStorage;
       },
     },
   ),
