@@ -3,8 +3,10 @@ import { FormProfileWrap } from '@/components/form';
 
 import { useAuthStore } from '@/stores/auth';
 import type { NextPage } from 'next';
+import { useRequireAuthed } from '../../hooks/useRequireAuthed';
 
 const PageUserSettings: NextPage = () => {
+  useRequireAuthed();
   const user = useAuthStore((s) => s.user);
   return (
     <div className="flex flex-row h-[calc(100vh-160px)] content-width mx-auto">

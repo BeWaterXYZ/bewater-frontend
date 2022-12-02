@@ -16,7 +16,7 @@ export function useFetchUser(userId?: string, options?: RequestOptions) {
   return useSWR<GetUserProfileByIdResponse, Error, [url: string] | false>(
     !!userId && [`/user/${userId}`],
     async (url) => {
-      return (await agentAuthed.get(url, {})).data;
+      return (await agentAuthed.get<GetUserProfileByIdResponse>(url, {})).data;
     },
     toSWROptions(options),
   );
