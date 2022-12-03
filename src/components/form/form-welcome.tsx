@@ -7,11 +7,10 @@ import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
 import useNavigator from '@/hooks/useNavigator';
+import { UserLocalStorage } from '@/models/user';
 
 import type { FieldValues } from 'react-hook-form';
-import type { Auth } from '@/models/auth';
 import type { CreateUserProfileRequest } from '@/types/user';
-import { UserLocalStorage } from '@/models/user';
 
 interface Props {
   user: UserLocalStorage;
@@ -49,7 +48,7 @@ export const FormWelcome = ({ user, className, onError }: Props) => {
           onError && onError();
         });
     },
-    [navigator, user],
+    [navigator, user, onError],
   );
   return (
     <form

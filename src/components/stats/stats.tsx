@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+
 import { StatsItem } from './stats-item';
 
 interface Props {

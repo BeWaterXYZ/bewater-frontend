@@ -1,16 +1,14 @@
 import { useEffect, createContext, useContext } from 'react';
 import getConfig from 'next/config';
-import { useLocalStorage } from 'react-use';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import dayjs from 'dayjs';
 
 import { isBrowser } from '@/constants';
 import { urlWithBasePath } from '@/utils/urlWithBasePath';
+import { useAuthStore } from '@/stores/auth';
 
 import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 import type { Auth } from '@/models/auth';
-import type { UserLocalStorage } from '@/models/user';
-import { useAuthStore } from '@/stores/auth';
 
 const {
   publicRuntimeConfig: { authRequired },
