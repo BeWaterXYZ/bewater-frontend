@@ -13,7 +13,7 @@ export const ButtonGroup = ({ name1, name2, name3, className }: Props) => {
   return (
     <ul
       className={clsx(
-        'w-80 list-none border border-solid border-[#E4E4E4] rounded-button ',
+        'w-80 list-none border border-solid border-[#E4E4E4] rounded-md ',
         className,
       )}
     >

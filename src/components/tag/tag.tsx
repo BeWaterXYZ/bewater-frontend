@@ -11,7 +11,7 @@ export const Tag = ({ name, isSkill, className }: Props) => {
   return (
     <p
       className={clsx(
-        'typ-body font-body_small w-auto',
+        'body-1 font-body_small w-auto',
         {
           'before:content-["#"]': isSkill,
         },

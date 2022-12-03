@@ -8,7 +8,7 @@ interface Props {
 export const HelpText = ({ text }: Props) => {
   return (
     <div
-      className={clsx('whitespace-nowrap typ-body py-1 text-[#DD2828]', {
+      className={clsx('whitespace-nowrap body1 py-1 text-[#DD2828]', {
         hidden: !text,
       })}
     >

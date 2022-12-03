@@ -131,8 +131,8 @@ export function WalletOptions({ onError }: Props) {
               'w-full h-12 border-t border-l border-r border-solid border-[#E4E4E4] flex flex-row items-center px-4 gap-x-4',
               'hover:bg-[#E4E4E4]',
               {
-                'rounded-t-button': i === 0,
-                'rounded-b-button border-b': i === connectors.length - 1,
+                'rounded-t-md': i === 0,
+                'rounded-b-md border-b': i === connectors.length - 1,
               },
             )}
             // disabled={!connector.ready}

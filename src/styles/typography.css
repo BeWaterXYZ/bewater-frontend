@@ -1,0 +1,32 @@
+/* Using a serif font for headings and a sans serif font for body text can give your text higher contrast and make it easier to read. */
+
+@layer components {
+  .heading1 {
+    @apply font-mono text-[30px] leading-normal font-bold;
+  }
+  .heading2 {
+    @apply font-mono text-[26px] leading-normal font-bold;
+  }
+  .heading3 {
+    @apply font-mono text-[23px] leading-normal font-bold;
+  }
+  .heading4 {
+    @apply font-mono text-[20px] leading-normal font-bold;
+  }
+  .heading5 {
+    @apply font-mono text-[18px] leading-normal font-bold;
+  }
+  .heading6 {
+    @apply font-mono text-[16px] leading-normal font-bold;
+  }
+
+  .body1 {
+    @apply font-grotesk text-[16px] leading-normal font-normal;
+  }
+  .body2 {
+    @apply font-grotesk text-[14px] leading-normal font-normal;
+  }
+  .body3 {
+    @apply font-grotesk text-[12px] leading-normal font-normal;
+  }
+}

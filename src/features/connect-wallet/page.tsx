@@ -18,9 +18,9 @@ export const PageConnectWallet: NextPage = () => {
     <>
       <div className="flex flex-col h-[calc(100vh-160px)] justify-center items-center">
         <WagmiConfig client={wagmiClient}>
-          <div className="typ-h4 pb-12">Connect Wallet</div>
+          <div className="heading4 pb-12">Connect Wallet</div>
           <WalletOptions onError={onAlert} />
-          <div className="typ-body-small pt-10 w-[270px] text-center">
+          <div className="body2 pt-10 w-[270px] text-center">
             By connecting a wallet, you agree to our{' '}
             <span className="font-bold">Terms of Service</span> and acknowledge
             that you have read our{' '}

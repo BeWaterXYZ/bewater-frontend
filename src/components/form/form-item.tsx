@@ -32,7 +32,7 @@ export const FormItem = ({
 }: Props) => {
   return (
     <div className={clsx('block mb-4', className)}>
-      <label className="block typ-label w-auto text-bw-fore py-1">
+      <label className="block body3 w-auto text-black py-1">
         {label}
         {required ? ' *' : null}
       </label>
@@ -49,7 +49,7 @@ export const FormItem = ({
         <div className="flex flex-row gap-x-4 items-center justify-between">
           <div className="flex flex-row gap-x-2 items-center w-full">
             <Wallet className="w-4 h-4" />
-            <a className="typ-body py-1 text-bw-fore">{linkText}</a>
+            <a className="body-1 py-1 text-bw-fore">{linkText}</a>
           </div>
           {showDisconnect && <Button text="Disconnect" type="danger" />}
         </div>

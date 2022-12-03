@@ -17,8 +17,8 @@ const UserArea = dynamic(() => import('./userArea'), {
 
 export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
   return (
-    <div className="block sticky top-0 left-0 right-0 text-bw-fore bg-bw-back z-10 w-full pl-5 pr-8 py-5 border-[#E4E4E4] border-b border-solid">
-      <div className="relative flex items-center justify-between header-width mx-auto">
+    <div className="block sticky top-0 left-0 right-0 text-black bg-bw-back z-10 w-full py-5 border-[#E4E4E4] border-b border-solid">
+      <div className="relative flex items-center justify-between container ">
         <Link href="/">
           <a>
             <Logo className="object-contain shrink-0 cursor-pointer" />

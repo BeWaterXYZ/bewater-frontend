@@ -1,9 +1,10 @@
-@import './globals.css';
+@import './theme.css';
 
-/* please put shared component css here */
-@import './typ.css';
+@import 'tailwindcss/base';
+@import './typography.css';
+
+@import 'tailwindcss/components';
 @import '../components/form/input/input.css';
 
-/* utilities.css should be after component layer css */
-/* see why here: https://tailwindcss.com/docs/adding-custom-styles */
+@import 'tailwindcss/utilities';
 @import './utilities.css';
