@@ -1,10 +1,12 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
 import Logo from '@/components/logos/bewater.svg';
-import { Menu } from './menu';
-import { useMenuData } from './useMenuData';
 import { useAuthStore } from '@/stores/auth';
 import { MenuItemType } from '@/models/menu';
-import dynamic from 'next/dynamic';
+
+import { Menu } from './menu';
+import { useMenuData } from './useMenuData';
 
 interface HeaderImplProps {
   menuData: MenuItemType[];
@@ -24,7 +26,7 @@ export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
             <Logo className="object-contain shrink-0 cursor-pointer" />
           </a>
         </Link>
-        <Menu className=" flex items-center h-full " items={menuData} />
+        <Menu className="flex items-center h-full" items={menuData} />
         <div className="min-w-[160px] flex justify-end">{userArea}</div>
       </div>
     </div>

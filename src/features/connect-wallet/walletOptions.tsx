@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
 import clsx from 'clsx';
+import { useEffect } from 'react';
+import { useLocalStorage, useToggle } from 'react-use';
 import {
   useAccount,
   useConnect,
@@ -7,21 +8,20 @@ import {
   useNetwork,
   useSignMessage,
 } from 'wagmi';
-import { useToggle, useLocalStorage } from 'react-use';
 
-import { Logo } from '@/components/logos';
 import { Loading } from '@/components/loading';
-import useNavigator from '@/hooks/useNavigator';
+import { Logo } from '@/components/logos';
 import { isAuthed, useAuthContext } from '@/hooks/useAuth';
+import useNavigator from '@/hooks/useNavigator';
 import {
   submitGetLoginMessage,
   submitVerifySignedMessage,
 } from '@/services/auth';
-import { urlWithBasePath } from '@/utils/urlWithBasePath';
-
-import type { Connector } from 'wagmi';
-import type { UserLocalStorage } from '@/models/user';
 import { useAuthStore } from '@/stores/auth';
+import { useModalStore } from '@/stores/modal';
+
+import type { UserLocalStorage } from '@/models/user';
+import type { Connector } from 'wagmi';
 
 interface Props {
   onError?: (text?: string) => void;
@@ -37,7 +37,16 @@ export function WalletOptions({ onError }: Props) {
   const navigator = useNavigator();
   const { chain } = useNetwork();
   const { signMessageAsync } = useSignMessage();
-  const { connect, connectors, isLoading } = useConnect();
+  const open = useModalStore((s) => s.open);
+  const { connect, connectors, isLoading } = useConnect({
+    onError(error, variables) {
+      if (error.name === 'ConnectorNotFoundError') {
+        if (variables.connector.id === 'metaMask') {
+          open('metamask');
+        }
+      }
+    },
+  });
   const authToken = useAuthContext();
 
   useEffect(() => {

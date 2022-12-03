@@ -2,7 +2,7 @@ name: ci
 
 on:
   pull_request:
-    branches: [ "develop", "main" ]
+    branches: [ "develop" ]
 
   workflow_dispatch:
 
@@ -14,8 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Fetch origin/main
-        run: git fetch origin main --depth=1
+      - name: Fetch origin/develop
+        run: git fetch origin develop --depth=1
 
       - name: Install Node.js
         uses: actions/setup-node@v3

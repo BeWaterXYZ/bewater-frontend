@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import { Avatar } from '@/components/avatar';
 import { Button } from '@/components/button';
 import { UserLocalStorage } from '@/models/user';

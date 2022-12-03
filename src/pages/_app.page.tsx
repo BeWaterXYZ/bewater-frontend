@@ -1,20 +1,22 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import '../styles/index.css';
-
-import { isBrowser } from '@/constants';
-import useTheme from '@/hooks/useTheme';
-import getFirstParam from '@/utils/getFirstParam';
-
-import { Footer } from '@/components/footer';
-import { Header } from '@/features/header';
 import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
+
+import { isBrowser } from '@/constants';
+import useTheme from '@/hooks/useTheme';
+import getFirstParam from '@/utils/getFirstParam';
+import { Footer } from '@/components/footer';
+import { Header } from '@/features/header';
+
 import type { AppContext, AppProps } from 'next/app';
 import type { ParsedUrlQuery } from 'querystring';
+
+import '../styles/index.css';
+
 interface Props {
   query: ParsedUrlQuery;
 }

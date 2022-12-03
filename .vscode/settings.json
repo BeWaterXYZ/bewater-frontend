@@ -7,5 +7,9 @@
   },
   "editor.quickSuggestions": {
     "strings": true
+  },
+  "eslint.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
   }
 }

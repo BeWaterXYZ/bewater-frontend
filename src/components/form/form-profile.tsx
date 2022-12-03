@@ -5,6 +5,7 @@ import { useState, useCallback } from 'react';
 import { useFetchUser } from '@/services/user';
 import { Loading } from '@/components/loading';
 import { submitUpdateUserProfile } from '@/services/user';
+import { UserLocalStorage } from '@/models/user';
 
 import { FormItem } from './form-item';
 import { Input } from './input';
@@ -15,7 +16,6 @@ import type {
   UpdateUserProfileRequest,
 } from '@/types/user';
 import type { FieldValues } from 'react-hook-form';
-import { UserLocalStorage } from '@/models/user';
 
 interface Props {
   user: UserLocalStorage;

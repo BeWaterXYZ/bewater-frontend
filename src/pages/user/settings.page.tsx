@@ -1,9 +1,10 @@
 import { AvatarWithEditor } from '@/components/avatar';
 import { FormProfileWrap } from '@/components/form';
-
 import { useAuthStore } from '@/stores/auth';
-import type { NextPage } from 'next';
+
 import { useRequireAuthed } from '../../hooks/useRequireAuthed';
+
+import type { NextPage } from 'next';
 
 const PageUserSettings: NextPage = () => {
   useRequireAuthed();
