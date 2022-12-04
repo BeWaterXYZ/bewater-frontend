@@ -17,7 +17,7 @@ export const Button = React.forwardRef(function Button(
     return (
       <button
         className={clsx(
-          'inline-flex body1 py-1 px-4 border border-solid rounded-md cursor-pointer w-auto h-8 box-border hover:brightness-90 transition duration-[.15s] ease-out',
+          'inline-flex body-1 py-1 px-4 border border-solid rounded-md cursor-pointer w-auto h-8 box-border hover:brightness-90 transition duration-[.15s] ease-out',
           {
             'border-black bg-black text-white': type === 'primary',
             'border-black bg-white text-black': type === 'secondary',

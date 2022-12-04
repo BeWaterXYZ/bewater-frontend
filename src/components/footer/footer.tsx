@@ -10,7 +10,7 @@ interface Props {
 export const Footer = ({ className }: Props) => {
   return (
     <footer
-      className={clsx('w-full heading5 text-black bg-bw-back', className)}
+      className={clsx('w-full heading-5 text-black bg-bw-back', className)}
     >
       <div className="container mx-auto py-6 flex flex-col gap-2 justify-between items-center md:flex-row md:items-start">
         <div>© {new Date().getFullYear()} BeWater. All Rights Reserved.</div>

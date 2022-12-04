@@ -1,6 +1,6 @@
 @layer components {
   .input {
-    @apply block body1 py-1 px-4 h-8 box-border border border-solid bg-white
+    @apply block body-1 py-1 px-4 h-8 box-border border border-solid bg-white
     rounded-md w-full max-w-[400px] mr-4 transition duration-[.15s]
     ease-in-out border-[#E4E4E4] text-black
     hover:border-[#d0d0d0] focus:border-[#999] focus:outline-none;
