@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 import { Avatar } from '@/components/avatar';
-import { Button } from '@/components/button';
 import { UserLocalStorage } from '@/models/user';
 
 interface UserAreaProps {
@@ -10,8 +9,8 @@ interface UserAreaProps {
 }
 export default function UserArea({ isAuthed, user }: UserAreaProps) {
   return !isAuthed ? (
-    <Link href="/auth/connect-wallet" passHref>
-      <Button type="primary" text="Connect Wallet" />
+    <Link href="/auth/connect-wallet">
+      <a className="btn btn-primary">Connect Wallet</a>
     </Link>
   ) : (
     <Avatar

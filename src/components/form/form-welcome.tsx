@@ -2,7 +2,6 @@ import clsx from 'clsx';
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button } from '@/components/button';
 import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
@@ -78,7 +77,7 @@ export const FormWelcome = ({ user, className, onError }: Props) => {
         errors={errors}
         {...register('email', { required: 'Email is required.' })}
       />
-      <Button className="mt-12" type="primary" text="Finish Setup" />
+      <button className="btn btn-primary">Finish Setup</button>
       {isLoading ? <Loading /> : null}
     </form>
   );

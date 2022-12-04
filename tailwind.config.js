@@ -6,6 +6,7 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx,css}',
     './src/components/**/*.{js,ts,jsx,tsx,css}',
     './src/features/**/*.{js,ts,jsx,tsx,css}',
+    './src/styles/**/*.stories.tsx',
   ],
   theme: {
     container: {
@@ -22,10 +23,6 @@ module.exports = {
         highlight: '#0020f4',
         danger: '#EB7E7E',
       },
-      backgroundImage: {
-        linearWelcome: 'var(--bw-linear-welcome)',
-      },
-
       animation: {
         'spin-ripple': 'ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;',
       },

@@ -16,7 +16,7 @@ const PageWelcome: NextPage = () => {
     <>
       <div className="flex flex-col h-[calc(100vh-160px)] justify-center items-center">
         <div className="w-[280px] flex flex-col">
-          <div className="bg-linearWelcome bg-clip-text text-transparent heading-1">
+          <div className="bg-gradient-to-r from-[#fc9e1c] to-[#f62584] bg-clip-text text-transparent heading-1">
             {'Welcome aboard,'}
           </div>
           <FormWelcome user={user} onError={onAlert} />

@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 
-import { Button } from '@/components/button';
 import { Avatar } from '@/components/avatar';
 
 interface Props {
@@ -18,7 +17,9 @@ export const AvatarWithEditor = ({ src, walletAddress, className }: Props) => {
       )}
     >
       <Avatar src={src} size="large" walletAddress={walletAddress} />
-      <Button text={src ? 'Change Avatar' : 'Upload Avatar'} type="secondary" />
+      <button className="btn btn-secondary">
+        {src ? 'Change Avatar' : 'Upload Avatar'}
+      </button>
     </div>
   );
 };
