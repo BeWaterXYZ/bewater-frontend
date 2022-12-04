@@ -11,7 +11,7 @@ type Params = {
 
 export function useAlert({ title, text, autoCloseTimeout = 10000 }: Params) {
   const [show, setShow] = useState(false);
-  const [t, setT] = useState(title);
+  const [t] = useState(title);
   const [d, setD] = useState(text);
 
   const [_, cancel, reset] = useTimeoutFn(() => {
@@ -36,7 +36,7 @@ export function useAlert({ title, text, autoCloseTimeout = 10000 }: Params) {
 
   const Alert = useCallback(
     () => <Snackbar open={show} title={t} text={d} onClose={handleClose} />,
-    [show, title, text, handleClose],
+    [show, d, t, handleClose],
   );
 
   return { Alert, onAlert: handleAlert };

@@ -1,7 +1,8 @@
-import { isBrowser } from '@/constants';
-import { UserLocalStorage } from '@/models/user';
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
+
+import { isBrowser } from '@/constants';
+import { UserLocalStorage } from '@/models/user';
 
 interface Store {
   token: string;
@@ -13,15 +14,17 @@ const dummyStorage = {
     return name;
   },
   setItem: (name: string, value: string) => {
+    // eslint-disable-next-line
     console.log('set', name, value);
   },
   removeItem: (name: string) => {
+    // eslint-disable-next-line
     console.log('remove', name);
   },
 };
 export const useAuthStore = create<Store>()(
   persist(
-    (set, get) => ({
+    () => ({
       token: '',
       user: {},
     }),

@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 import { useMenuActions } from './useMenuActions';
 
 import type { MenuItemType } from '@/models/menu';
-import Link from 'next/link';
 
 type Props = {
   item: MenuItemType;

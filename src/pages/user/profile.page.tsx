@@ -1,8 +1,8 @@
 import { useFetchUser } from '@/services/user';
 import { Loading } from '@/components/loading/loading';
+import { useAuthStore } from '@/stores/auth';
 
 import type { NextPage } from 'next';
-import { useAuthStore } from '@/stores/auth';
 
 const PageProfile: NextPage = () => {
   const user = useAuthStore((s) => s.user);

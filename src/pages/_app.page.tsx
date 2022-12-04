@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import '../styles/index.css';
-
-import { Footer } from '@/components/footer';
-import { Header } from '@/features/header';
 import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
+
+import { Footer } from '@/components/footer';
+import { Header } from '@/features/header';
+
+import type { ParsedUrlQuery } from 'querystring';
+
+interface Props {
+  query: ParsedUrlQuery;
+}
 
 function BeWaterWebsite({
   Component,

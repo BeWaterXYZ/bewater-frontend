@@ -1,7 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import getConfig from 'next/config';
-import type { NextRuntimeConfig } from '@/types/next-runtime-config';
+
 import { useAuthStore } from '@/stores/auth';
+
+import type { NextRuntimeConfig } from '@/types/next-runtime-config';
 
 const {
   publicRuntimeConfig: { apiHost },

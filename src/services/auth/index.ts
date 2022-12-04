@@ -1,10 +1,11 @@
+import { agentAnon } from '../agent';
+
 import type {
   GetLoginMessageRequest,
   GetLoginMessageResponse,
   VerifySignedMessageRequest,
   VerifySignedMessageResponse,
 } from '@/types/auth';
-import { agentAnon } from '../agent';
 
 export async function submitGetLoginMessage({
   walletAddress,

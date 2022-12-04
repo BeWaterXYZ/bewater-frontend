@@ -1,10 +1,9 @@
 // import { Loading } from '@/components/loading/loading';
 import { FormWelcome } from '@/components/form/form-welcome';
 import { useAlert } from '@/components/alert';
-import { useAuthContext } from '@/hooks/useAuth';
+import { useAuthStore } from '@/stores/auth';
 
 import type { NextPage } from 'next';
-import { useAuthStore } from '@/stores/auth';
 
 // Pass client to React Context Provider
 const PageWelcome: NextPage = () => {

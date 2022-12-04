@@ -1,3 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { agentAuthed } from '../agent';
+
 import type {
   GetUserProfileByIdResponse,
   CreateUserProfileRequest,
@@ -5,15 +9,13 @@ import type {
   UpdateUserProfileRequest,
   UpdateUserProfileResponse,
 } from '@/types/user';
-import { agentAuthed } from '../agent';
-import { useQuery } from '@tanstack/react-query';
 
 export function useFetchUser(userId?: string) {
   return useQuery({
     queryKey: ['user', userId],
     enabled: !!userId,
     queryFn: async () => {
-      return getUserProfile(userId!);
+      return getUserProfile(userId as string);
     },
   });
 }

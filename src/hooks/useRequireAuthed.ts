@@ -1,6 +1,7 @@
-import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+
+import { useAuthStore } from '@/stores/auth';
 
 export function useRequireAuthed() {
   const token = useAuthStore((s) => s.token);
@@ -9,5 +10,5 @@ export function useRequireAuthed() {
     if (!token) {
       void router.push('/auth/connect-wallet');
     }
-  }, [token]);
+  }, [token, router]);
 }

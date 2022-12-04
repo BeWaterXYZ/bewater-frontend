@@ -1,9 +1,13 @@
 import { WagmiConfig } from 'wagmi';
-import { createWagmiClient } from '@/features/connect-wallet/createWagmiClient';
+
 import { useAlert } from '@/components/alert';
+import { ModalMetamask } from '@/components/modal/modal-metamask';
+import { createWagmiClient } from '@/features/connect-wallet/createWagmiClient';
+import { useModalStore } from '@/stores/modal';
+
+import { WalletOptions } from './walletOptions';
 
 import type { NextPage } from 'next';
-import { WalletOptions } from './walletOptions';
 
 const wagmiClient = createWagmiClient();
 
@@ -14,6 +18,7 @@ export const PageConnectWallet: NextPage = () => {
     title: 'An error occurs',
     text: 'Connect Wallet Failed.',
   });
+  const [metamask, close] = useModalStore((s) => [s.metamask, s.close]);
   return (
     <>
       <div className="flex flex-col h-[calc(100vh-160px)] justify-center items-center">
@@ -30,6 +35,7 @@ export const PageConnectWallet: NextPage = () => {
         </WagmiConfig>
       </div>
       <Alert />
+      <ModalMetamask modalOpen={metamask} onClose={() => close('metamask')} />
     </>
   );
 };
