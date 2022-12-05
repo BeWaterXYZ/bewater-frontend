@@ -19,7 +19,7 @@ const UserArea = dynamic(() => import('./userArea'), {
 
 export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
   return (
-    <div className="block sticky top-0 left-0 right-0 text-black bg-bw-back z-10 w-full py-5 border-[#E4E4E4] border-b border-solid">
+    <div className="block sticky top-0 left-0 right-0 text-black bg-white z-10 w-full py-5 border-[#E4E4E4] border-b border-solid">
       <div className="relative flex items-center justify-between container ">
         <Link href="/">
           <a>
