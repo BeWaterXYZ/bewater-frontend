@@ -1,9 +1,11 @@
 import React from 'react';
 
-export default {
+const config = {
   title: 'CSS/Typography',
   argTypes: {},
 };
+
+export default config;
 
 export const Example = () => (
   <>

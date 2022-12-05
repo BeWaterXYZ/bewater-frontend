@@ -1,9 +1,10 @@
 import React from 'react';
 
-export default {
+const config = {
   title: 'CSS/Button',
   argTypes: {},
 };
+export default config;
 
 export const Example = () => (
   <>
