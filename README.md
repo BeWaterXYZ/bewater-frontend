@@ -48,7 +48,7 @@ ENVIRONMENT=local
 ```
 
 Example url:
-`http://localhost:3000/auth/connect-wallet`
+`http://localhost:3000/connect`
 
 Storybook Review Url:
 `https://www.chromatic.com/library?appId=6385af5a3bf0976c3f78ac1e`

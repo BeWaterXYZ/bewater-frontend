@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useEffect } from 'react';
-import { useLocalStorage, useToggle } from 'react-use';
+import { useToggle } from 'react-use';
 import {
   useAccount,
   useConnect,
@@ -11,7 +11,6 @@ import {
 
 import { Loading } from '@/components/loading';
 import { Logo } from '@/components/logos';
-import { isAuthed, useAuthContext } from '@/hooks/useAuth';
 import useNavigator from '@/hooks/useNavigator';
 import {
   submitGetLoginMessage,
@@ -20,7 +19,6 @@ import {
 import { useAuthStore } from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
 
-import type { UserLocalStorage } from '@/models/user';
 import type { Connector } from 'wagmi';
 
 interface Props {
@@ -28,10 +26,10 @@ interface Props {
 }
 
 export function WalletOptions({ onError }: Props) {
+  const isAuthed = useAuthStore((s) => s.isAuthed);
+  const setAuthState = useAuthStore((s) => s.setState);
   const [startLogin, setStartLogin] = useToggle(false);
   const [isLogining, setIsLogining] = useToggle(false);
-  const [_token, setToken] = useLocalStorage<string>('authToken');
-  const [_user, setUser] = useLocalStorage<UserLocalStorage>('user');
   const { isConnected, connector: activeConnector, address } = useAccount();
   const { disconnect } = useDisconnect();
   const navigator = useNavigator();
@@ -47,7 +45,6 @@ export function WalletOptions({ onError }: Props) {
       }
     },
   });
-  const authToken = useAuthContext();
 
   useEffect(() => {
     const asyncAuth = async () => {
@@ -67,7 +64,7 @@ export function WalletOptions({ onError }: Props) {
               signature,
             });
 
-          useAuthStore.setState({
+          setAuthState({
             token,
             user: { userId, walletAddress: address, isNewUser: !userProfile },
           });
@@ -88,40 +85,25 @@ export function WalletOptions({ onError }: Props) {
         disconnect();
       }
     };
-
-    if (isAuthed(authToken) && _user) {
-      if (_user.isNewUser) {
-        navigator.goToWelcome();
-      } else {
-        navigator.goToUserSettings();
-      }
-    } else if (
-      startLogin &&
-      !isLogining &&
-      !isLoading &&
-      isConnected &&
-      !isAuthed(authToken)
-    ) {
+    if (startLogin && !isLogining && !isLoading && isConnected && !isAuthed()) {
       void asyncAuth();
     }
   }, [
     isConnected,
     activeConnector,
     navigator,
-    authToken,
     address,
     chain,
     startLogin,
     isLogining,
     isLoading,
-    _user,
     setIsLogining,
     setStartLogin,
-    setToken,
-    setUser,
     signMessageAsync,
     disconnect,
     onError,
+    isAuthed,
+    setAuthState,
   ]);
 
   const onClick = (connector: Connector) => {

@@ -3,24 +3,23 @@ import dynamic from 'next/dynamic';
 
 import Logo from '@/components/logos/bewater.svg';
 import { useAuthStore } from '@/stores/auth';
-import { MenuItemType } from '@/models/menu';
 
 import { Menu } from './menu';
-import { useMenuData } from './useMenuData';
+import { mainMenu, MenuItemType } from './menu-data';
 
 interface HeaderImplProps {
   menuData: MenuItemType[];
   userArea: JSX.Element;
 }
 
-const UserArea = dynamic(() => import('./userArea'), {
+const UserArea = dynamic(() => import('./user-area'), {
   ssr: false,
 });
 
 export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
   return (
-    <div className="block sticky top-0 left-0 right-0 text-black bg-white z-10 w-full py-5 border-[#E4E4E4] border-b border-solid">
-      <div className="relative flex items-center justify-between container ">
+    <div className="sticky top-0 left-0 right-0 text-black bg-white z-10 w-full h-[80px] flex justify-center items-center border-[#E4E4E4] border-b border-solid">
+      <div className=" flex items-center justify-between container ">
         <Link href="/">
           <a>
             <Logo className="object-contain shrink-0 cursor-pointer" />
@@ -34,12 +33,11 @@ export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
 };
 
 export const Header = () => {
-  const { menuData } = useMenuData();
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
   return (
     <HeaderImpl
-      menuData={menuData.main}
+      menuData={mainMenu}
       userArea={<UserArea isAuthed={!!token} user={user} />}
     />
   );

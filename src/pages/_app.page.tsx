@@ -6,7 +6,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 
-import { Footer } from '@/components/footer';
+import { Footer } from '@/features/footer';
 import { Header } from '@/features/header';
 
 import type { AppProps } from 'next/app';

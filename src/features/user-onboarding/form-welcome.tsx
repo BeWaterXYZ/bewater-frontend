@@ -6,13 +6,13 @@ import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
 import useNavigator from '@/hooks/useNavigator';
-import { UserLocalStorage } from '@/models/user';
+import { User } from '@/stores/auth';
 
 import type { FieldValues } from 'react-hook-form';
 import type { CreateUserProfileRequest } from '@/types/user';
 
 interface Props {
-  user: UserLocalStorage;
+  user: User;
   className?: string;
   onError?: (text?: string) => void;
 }

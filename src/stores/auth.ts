@@ -1,12 +1,25 @@
 import create from 'zustand';
 import { persist } from 'zustand/middleware';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { isBrowser } from '@/constants';
-import { UserLocalStorage } from '@/models/user';
 
-interface Store {
+export type User = {
+  userId?: string;
+  walletAddress?: string;
+  isNewUser?: boolean;
+  avatarURI?: string;
+};
+
+interface State {
   token: string;
-  user: UserLocalStorage;
+  expireAt: number;
+  user: User;
+}
+
+interface Actions {
+  isAuthed: () => boolean;
+  setState: (state: Partial<State>) => void;
 }
 
 const dummyStorage = {
@@ -22,11 +35,22 @@ const dummyStorage = {
     console.log('remove', name);
   },
 };
-export const useAuthStore = create<Store>()(
+export const useAuthStore = create<State & Actions>()(
   persist(
-    () => ({
+    (set, get) => ({
       token: '',
       user: {},
+      expireAt: 0,
+      isAuthed: () => {
+        return !!get().token && get().expireAt > Date.now();
+      },
+      setState: (state) => {
+        set(state);
+        if (state.token) {
+          const decodedToken = jwt.decode(state.token) as JwtPayload;
+          set({ expireAt: (decodedToken.exp ?? 0) * 1000 });
+        }
+      },
     }),
     {
       name: 'bewater', // name of item in the storage (must be unique)

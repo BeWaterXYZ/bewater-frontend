@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 
-import { MenuItem } from './menu-item';
+import { MenuItemType } from '../menu-data';
 
-import type { MenuItemType } from '@/models/menu';
+import { MenuItem } from './menu-item';
 
 type Props = {
   items: MenuItemType[];

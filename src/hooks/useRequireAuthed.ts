@@ -4,11 +4,12 @@ import { useEffect } from 'react';
 import { useAuthStore } from '@/stores/auth';
 
 export function useRequireAuthed() {
-  const token = useAuthStore((s) => s.token);
+  const isAuthed = useAuthStore((s) => s.isAuthed);
   const router = useRouter();
+
   useEffect(() => {
-    if (!token) {
-      void router.push('/auth/connect-wallet');
+    if (!isAuthed()) {
+      void router.push('/connect');
     }
-  }, [token, router]);
+  }, [isAuthed, router]);
 }

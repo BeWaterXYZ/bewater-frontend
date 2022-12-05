@@ -1,10 +1,9 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { useMenuData } from '@/features/header/useMenuData';
-
 import { HeaderImpl } from './header';
-import UserArea from './userArea';
+import UserArea from './user-area';
+import { mainMenu } from './menu-data';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -16,8 +15,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof HeaderImpl> = (args) => {
-  const { menuData } = useMenuData();
-  return <HeaderImpl {...args} menuData={menuData.main} />;
+  return <HeaderImpl {...args} menuData={mainMenu} />;
 };
 
 export const ShowButton = Template.bind({});

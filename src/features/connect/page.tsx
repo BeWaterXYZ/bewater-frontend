@@ -2,10 +2,10 @@ import { WagmiConfig } from 'wagmi';
 
 import { useAlert } from '@/components/alert';
 import { ModalMetamask } from '@/components/modal/modal-metamask';
-import { createWagmiClient } from '@/features/connect-wallet/createWagmiClient';
 import { useModalStore } from '@/stores/modal';
 
-import { WalletOptions } from './walletOptions';
+import { createWagmiClient } from './createWagmiClient';
+import { WalletOptions } from './wallets';
 
 import type { NextPage } from 'next';
 

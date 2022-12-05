@@ -1,10 +1,8 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { useMenuActions } from './useMenuActions';
-
-import type { MenuItemType } from '@/models/menu';
+import { MenuItemType } from '../menu-data';
 
 type Props = {
   item: MenuItemType;
@@ -18,13 +16,6 @@ export const MenuItem = React.forwardRef(function MenuItem(
   { label, item, hasSubMenu, isOpen, isActive }: Props,
   ref: React.ForwardedRef<HTMLAnchorElement>,
 ) {
-  const { handleAction } = useMenuActions();
-
-  const handleActionMemo = useMemo(() => {
-    // If menu item doesn't have an action then default anchor behavior is used
-    return item?.action && handleAction.bind(null, item.action);
-  }, [item?.action, handleAction]);
-
   const externalProps = item?.external
     ? {
         rel: 'noreferrer noopener',
@@ -44,7 +35,6 @@ export const MenuItem = React.forwardRef(function MenuItem(
           },
         )}
         {...externalProps}
-        onClick={handleActionMemo}
         ref={ref}
         tabIndex={0}
       >

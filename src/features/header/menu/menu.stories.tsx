@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { useMenuData } from '@/features/header/useMenuData';
+import { mainMenu } from '../menu-data';
 
 import { Menu } from './menu';
 
@@ -15,8 +15,7 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Menu> = () => {
-  const { menuData } = useMenuData();
-  return <Menu items={menuData?.main || []} />;
+  return <Menu items={mainMenu || []} />;
 };
 
 export const Normal = Template.bind({});

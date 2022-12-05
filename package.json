@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@mui/base": "5.0.0-alpha.100",
+    "@radix-ui/react-navigation-menu": "^1.1.1",
     "@tanstack/react-query": "^4.19.0",
     "axios": "^1.0.0",
     "clsx": "^1.2.1",
@@ -95,12 +96,6 @@
     "tslib": "^2.4.0",
     "typescript": "4.7.4",
     "webpack": "^5.74.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "prettier --write",
-      "eslint --max-warnings 0"
-    ]
   },
   "browserslist": [
     "last 10 version",
