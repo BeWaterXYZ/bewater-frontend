@@ -9,7 +9,6 @@ setConfig({
   publicRuntimeConfig: {
     basePath: '',
     environment: 'local',
-    authRequired: true,
     mockMode: 'true',
   },
 });
