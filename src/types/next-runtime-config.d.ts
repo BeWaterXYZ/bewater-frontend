@@ -1,7 +1,5 @@
 export interface NextRuntimeConfig {
   serverRuntimeConfig: {
-    moralisAppDomain: string;
-    moralisAPIKey: string;
     nextAuthURL: string;
     nextAuthSecret: string;
   };

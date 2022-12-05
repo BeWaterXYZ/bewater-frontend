@@ -24,8 +24,6 @@ const nextConfig = {
   swcMinify: true,
   basePath,
   serverRuntimeConfig: {
-    moralisAppDomain: process.env.MORALIS_APP_DOMAIN || 'BeWater',
-    moralisAPIKey: process.env.MORALIS_API_KEY,
     nextAuthURL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
     nextAuthSecret: process.env.NEXTAUTH_SECRET || 'secret',
   },
