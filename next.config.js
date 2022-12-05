@@ -3,19 +3,12 @@
 const api = {
   local: 'http://localhost:3000',
   qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
-  // TODO: change it later
   prod: 'https://api.bewater.xyz',
 };
 
-const basePath =
-  typeof process.env.NEXT_PUBLIC_BASE_PATH === 'string'
-    ? process.env.NEXT_PUBLIC_BASE_PATH
-    : '';
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
-const environment =
-  typeof process.env.ENVIRONMENT === 'string'
-    ? process.env.ENVIRONMENT
-    : 'local';
+const environment = process.env.ENVIRONMENT ?? 'local';
 
 console.log('use', { basePath, environment });
 
@@ -23,15 +16,11 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   basePath,
-  serverRuntimeConfig: {
-    nextAuthURL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
-    nextAuthSecret: process.env.NEXTAUTH_SECRET || 'secret',
-  },
+  serverRuntimeConfig: {},
   publicRuntimeConfig: {
     basePath,
     environment,
     version: process.env.VERSION || 'local',
-    authRequired: process.env.AUTH_REQUIRED === 'true',
     apiHost: api[environment],
   },
   // Disabling Next.js ESLint check with custom one as there is
