@@ -5,11 +5,11 @@ import { useState, useCallback } from 'react';
 import { useFetchUser } from '@/services/user';
 import { Loading } from '@/components/loading';
 import { submitUpdateUserProfile } from '@/services/user';
-import { UserLocalStorage } from '@/models/user';
+import { User } from '@/stores/auth';
 
-import { FormItem } from './form-item';
-import { Input } from './input';
-import { SocialLink } from './social-link';
+import { FormItem } from '../../components/form/form-item';
+import { Input } from '../../components/form/input';
+import { SocialLink } from '../../components/form/social-link';
 
 import type {
   GetUserProfileByIdResponse,
@@ -18,14 +18,18 @@ import type {
 import type { FieldValues } from 'react-hook-form';
 
 interface Props {
-  user: UserLocalStorage;
+  user: User;
   data?: GetUserProfileByIdResponse;
   className?: string;
 }
 type FormProfileProps = Pick<Props, 'user' | 'data' | 'className'>;
 type FormProfileWrapProps = Pick<Props, 'user' | 'className'>;
 
-export const FormProfile = ({ user, data, className }: FormProfileProps) => {
+export const FormUserSettings = ({
+  user,
+  data,
+  className,
+}: FormProfileProps) => {
   const { walletAddress } = user;
   const {
     register,
@@ -92,7 +96,7 @@ export const FormProfile = ({ user, data, className }: FormProfileProps) => {
   );
 };
 
-export function FormProfileWrap({ user, className }: FormProfileWrapProps) {
+export function FormSettingsWrapper({ user, className }: FormProfileWrapProps) {
   const { error, data, isLoading } = useFetchUser(user.userId);
 
   if (isLoading) return <Loading />;
@@ -102,6 +106,6 @@ export function FormProfileWrap({ user, className }: FormProfileWrapProps) {
     return <div>Error occurs!</div>;
   }
   return data ? (
-    <FormProfile user={user} data={data} className={className} />
+    <FormUserSettings user={user} data={data} className={className} />
   ) : null;
 }

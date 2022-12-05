@@ -45,10 +45,10 @@ export function useAuthToken(
   const { token, user } = state;
 
   useEffect(() => {
-    if (pathname !== '/auth/connect-wallet') {
+    if (pathname !== '/connect') {
       const authed = !authRequired || verifyToken(token);
       if (!authed) {
-        window.location.href = urlWithBasePath('/auth/connect-wallet');
+        window.location.href = urlWithBasePath('/connect');
       }
     }
     if (isBrowser && authRequired && token) {

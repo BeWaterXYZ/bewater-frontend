@@ -1,12 +1,13 @@
 // import { Loading } from '@/components/loading/loading';
-import { FormWelcome } from '@/components/form/form-welcome';
 import { useAlert } from '@/components/alert';
 import { useAuthStore } from '@/stores/auth';
+
+import { FormWelcome } from './form-welcome';
 
 import type { NextPage } from 'next';
 
 // Pass client to React Context Provider
-const PageWelcome: NextPage = () => {
+export const PageUserOnboarding: NextPage = () => {
   const { Alert, onAlert } = useAlert({
     title: 'An error occurs',
     text: 'Create user failed, please visit the site later',
@@ -27,6 +28,4 @@ const PageWelcome: NextPage = () => {
   );
 };
 
-PageWelcome.displayName = 'PageWelcome';
-
-export default PageWelcome;
+PageUserOnboarding.displayName = 'PageWelcome';

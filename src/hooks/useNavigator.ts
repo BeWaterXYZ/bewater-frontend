@@ -16,11 +16,11 @@ export default function useNavigator() {
   }, [router]);
 
   const goToConnectWallet = useCallback(() => {
-    isBrowser && void router.push('/auth/connect-wallet');
+    isBrowser && void router.push('/connect');
   }, [router]);
 
   const goToWelcome = useCallback(() => {
-    isBrowser && void router.push('/welcome');
+    isBrowser && void router.push('/user/onboarding');
   }, [router]);
 
   const goToExternal = useCallback((url: string) => {

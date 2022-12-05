@@ -3,17 +3,16 @@ import dynamic from 'next/dynamic';
 
 import Logo from '@/components/logos/bewater.svg';
 import { useAuthStore } from '@/stores/auth';
-import { MenuItemType } from '@/models/menu';
 
 import { Menu } from './menu';
-import { useMenuData } from './useMenuData';
+import { mainMenu, MenuItemType } from './menu-data';
 
 interface HeaderImplProps {
   menuData: MenuItemType[];
   userArea: JSX.Element;
 }
 
-const UserArea = dynamic(() => import('./userArea'), {
+const UserArea = dynamic(() => import('./user-area'), {
   ssr: false,
 });
 
@@ -34,12 +33,11 @@ export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
 };
 
 export const Header = () => {
-  const { menuData } = useMenuData();
   const token = useAuthStore((s) => s.token);
   const user = useAuthStore((s) => s.user);
   return (
     <HeaderImpl
-      menuData={menuData.main}
+      menuData={mainMenu}
       userArea={<UserArea isAuthed={!!token} user={user} />}
     />
   );

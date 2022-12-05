@@ -1,10 +1,10 @@
-import type { UserLocalStorage } from './user';
+import { User } from '@/stores/auth';
 
 export type Auth = {
   headers: {
     Authorization: Bearer;
   };
-  user: UserLocalStorage;
+  user: User;
 };
 
 export type Bearer = string;

@@ -22,6 +22,10 @@ module.exports = {
         brand: '#040000',
         highlight: '#0020f4',
         danger: '#EB7E7E',
+        border: '#E4E4E4',
+      },
+      boxShadow: {
+        border: '0px 0px 4px #E4E4E4',
       },
       animation: {
         'spin-ripple': 'ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;',
