@@ -1,0 +1,14 @@
+@layer components {
+  .btn {
+    @apply inline-flex body-1 py-1 px-4 border border-solid rounded-md cursor-pointer w-auto h-8 box-border hover:brightness-90 transition duration-[.15s] ease-out;
+  }
+  .btn-primary {
+    @apply border-black bg-black text-white;
+  }
+  .btn-secondary {
+    @apply border-black bg-white text-black;
+  }
+  .btn-danger {
+    @apply border-danger bg-white text-danger;
+  }
+}

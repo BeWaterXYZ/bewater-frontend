@@ -10,7 +10,7 @@ const PageUserSettings: NextPage = () => {
   useRequireAuthed();
   const user = useAuthStore((s) => s.user);
   return (
-    <div className="flex flex-row h-[calc(100vh-160px)] content-width mx-auto">
+    <div className="flex flex-row h-[calc(100vh-160px)] container">
       <div className="w-[270px] pt-10 border-r border-solid border-[#E4E4E4]">
         <div className="w-full flex flex-col justify-center items-center">
           <AvatarWithEditor

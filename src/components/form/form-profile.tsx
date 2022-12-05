@@ -79,7 +79,7 @@ export const FormProfile = ({ user, data, className }: FormProfileProps) => {
         label={'Wallet Address'}
         type={'link'}
         inputType={''}
-        buttonType={''}
+        buttonType={'btn-primary'}
         buttonText={''}
         linkText={walletAddress ?? ''}
         placeholder={''}

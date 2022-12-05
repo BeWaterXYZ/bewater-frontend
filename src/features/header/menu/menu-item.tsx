@@ -36,7 +36,7 @@ export const MenuItem = React.forwardRef(function MenuItem(
     <Link href={item.path ?? '/'}>
       <a
         className={clsx(
-          'relative flex items-center h-full typ-h5 outline-none after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[3px] after:bg-bw-fore after:rounded-full after:opacity-0 after:transition-opacity after:duration-[.15s] after:ease-out hover:after:opacity-100 focus:after:opacity-100',
+          'relative flex items-center h-full heading-5 outline-none after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[3px] after:bg-bw-fore after:rounded-full after:opacity-0 after:transition-opacity after:duration-[.15s] after:ease-out hover:after:opacity-100 focus:after:opacity-100',
           isOpen || isActive ? 'after:opacity-100' : 'after:opacity-0',
           {
             'after:opacity-100': isActive,

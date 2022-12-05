@@ -1,62 +1,27 @@
 /** @type {import('tailwindcss').Config} */
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,css}',
     './src/components/**/*.{js,ts,jsx,tsx,css}',
     './src/features/**/*.{js,ts,jsx,tsx,css}',
+    './src/styles/**/*.stories.tsx',
   ],
   theme: {
-    screens: {
-      sm: { max: '767.95px' },
-      lg: '1280px',
+    container: {
+      center: true,
+      padding: '2rem',
     },
     extend: {
       fontFamily: {
-        mono: "'Space Mono'",
+        mono: ['Space Mono', ...fontFamily.serif],
+        grotesk: ['Space Grotesk', ...fontFamily.sans],
       },
       colors: {
-        bw: {
-          fore: 'var(--bw-fr-color)',
-          back: 'var(--bw-bg-color)',
-          brand: '#0020f4',
-        },
-      },
-      backgroundImage: {
-        linearWelcome: 'var(--bw-linear-welcome)',
-      },
-      borderRadius: {
-        button: 'var(--bw-button-radius)',
-      },
-      fontSize: {
-        h1: 'var(--bw-h1-size)',
-        h2: 'var(--bw-h2-size)',
-        h3: 'var(--bw-h3-size)',
-        h4: 'var(--bw-h4-size)',
-        h5: 'var(--bw-h5-size)',
-        body: 'var(--bw-body-size)',
-        body_small: 'var(--bw-body-small-size)',
-        label: 'var(--bw-label-size)',
-      },
-      fontWeight: {
-        h1: 'var(--bw-h1-weight)',
-        h2: 'var(--bw-h2-weight)',
-        h3: 'var(--bw-h3-weight)',
-        h4: 'var(--bw-h4-weight)',
-        h5: 'var(--bw-h5-weight)',
-        body: 'var(--bw-body-weight)',
-        body_small: 'var(--bw-body-small-weight)',
-      },
-      lineHeight: {
-        h1: 'var(--bw-h1-line-height)',
-        h2: 'var(--bw-h2-line-height)',
-        h3: 'var(--bw-h3-line-height)',
-        h4: 'var(--bw-h4-line-height)',
-        h5: 'var(--bw-h5-line-height)',
-        body: 'var(--bw-body-line-height)',
-        body_small: 'var(--bw-body-small-line-height)',
-      },
-      radius: {
-        button: 'var(--bw-button-radius)',
+        brand: '#040000',
+        highlight: '#0020f4',
+        danger: '#EB7E7E',
       },
       animation: {
         'spin-ripple': 'ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;',

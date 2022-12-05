@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 
-import { Button } from '../button/button';
 import Wallet from '../icons/wallet';
 
 import { Input } from './input';
@@ -32,7 +31,7 @@ export const FormItem = ({
 }: Props) => {
   return (
     <div className={clsx('block mb-4', className)}>
-      <label className="block typ-label w-auto text-bw-fore py-1">
+      <label className="block body-3 w-auto text-black py-1">
         {label}
         {required ? ' *' : null}
       </label>
@@ -44,14 +43,18 @@ export const FormItem = ({
           type={inputType}
         />
       )}
-      {type === 'button' && <Button text={buttonText} type={buttonType} />}
+      {type === 'button' && (
+        <button className={`btn ${buttonType}`}>{buttonText}</button>
+      )}
       {type === 'link' && (
         <div className="flex flex-row gap-x-4 items-center justify-between">
           <div className="flex flex-row gap-x-2 items-center w-full">
             <Wallet className="w-4 h-4" />
-            <a className="typ-body py-1 text-bw-fore">{linkText}</a>
+            <a className="body-1 py-1 text-black">{linkText}</a>
           </div>
-          {showDisconnect && <Button text="Disconnect" type="danger" />}
+          {showDisconnect && (
+            <button className="btn btn-danger">Disconnect</button>
+          )}
         </div>
       )}
     </div>
