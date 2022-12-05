@@ -21,7 +21,7 @@
   }
 
   .body-1 {
-    @apply font-grotesk text-[16px] leading-normal font-normal;
+    @apply font-grotesk text-[16px] leading-normal font-medium;
   }
   .body-2 {
     @apply font-grotesk text-[14px] leading-normal font-normal;
