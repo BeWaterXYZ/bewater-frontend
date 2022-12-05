@@ -5,16 +5,11 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query';
-import type { AppProps } from 'next/app';
 
 import { Footer } from '@/components/footer';
 import { Header } from '@/features/header';
 
-import type { ParsedUrlQuery } from 'querystring';
-
-interface Props {
-  query: ParsedUrlQuery;
-}
+import type { AppProps } from 'next/app';
 
 function BeWaterWebsite({
   Component,
