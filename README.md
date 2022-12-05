@@ -10,15 +10,11 @@ yarn >= 1.22.15
 
 * Install dependencies
   * `yarn install`
-* Start dev website with local mock mode
-  * set `ENVIRONMENT=local` in `.env.local` file
-  * `yarn dev`
+
 * Start dev website with qa backend server
-  * set `ENVIRONMENT=qa` in `.env.local` file
+  * set `ENVIRONMENT=qa` in `.env` file
   * `yarn dev`
-* Debug with local backend server
-  * set `ENVIRONMENT=local` in `.env.local` file
-  * `yarn dev:proxy`
+
 * Build website
   * `yarn build`
 * Export website
@@ -30,15 +26,10 @@ yarn >= 1.22.15
 
 ### .env file
 ```
-# config for local mock
-MORALIS_API_KEY
-MORALIS_APP_DOMAIN
-NEXTAUTH_URL=
-NEXTAUTH_SECRET=
+
 
 # configs for change dev conditions
-# user need connect wallet before visit pages(except connect-wallet page)
-AUTH_REQUIRED=true
+
 # base path from next.js\
 # ref: https://nextjs.org/docs/api-reference/next.config.js/basepath
 NEXT_PUBLIC_BASE_PATH=
