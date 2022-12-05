@@ -97,7 +97,10 @@
     "webpack": "^5.74.0"
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --max-warnings 0"
+    ]
   },
   "browserslist": [
     "last 10 version",
