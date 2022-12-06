@@ -1,13 +1,5 @@
 import { UserProfile } from './user';
 
-export interface UserAuthToken {
-  userId: string;
-  walletAddress: string;
-  moralisId: string;
-  chain: string;
-  network: string;
-}
-
 /** GetLoginMessage */
 export interface GetLoginMessageRequest {
   walletAddress: string;
@@ -34,15 +26,4 @@ export interface VerifySignedMessageResponse {
   token: string;
   userId: string;
   userProfile?: UserProfile;
-}
-
-/** Validate */
-export interface ValidateRequest {
-  token: string;
-}
-
-export interface ValidateResponse {
-  status: number;
-  error: string[];
-  userId: string;
 }

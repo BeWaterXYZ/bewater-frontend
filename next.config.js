@@ -1,16 +1,20 @@
 /** @type {import('next').NextConfig} */
 
-const api = {
-  local: 'http://localhost:3000',
-  qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
-  prod: 'https://api.bewater.xyz',
-};
+const { withSentryConfig } = require('@sentry/nextjs');
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const environment = process.env.ENVIRONMENT ?? 'local';
 
-console.log('use', { basePath, environment });
+const isInGithubAction = !!process.env.GITHUB_ACTION;
+
+console.log('use', { basePath, environment, isInGithubAction });
+
+const api = {
+  local: 'http://localhost:3000',
+  qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
+  prod: 'https://api.bewater.xyz',
+};
 
 const nextConfig = {
   reactStrictMode: true,
@@ -54,4 +58,42 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const sentryModuleExports = {
+  // your existing module.exports
+
+  // Optional build-time configuration options
+  sentry: {
+    // See the sections below for information on the following options:
+    //   'Configure Source Maps':
+    //     - disableServerWebpackPlugin
+    //     - disableClientWebpackPlugin
+    //     - hideSourceMaps
+    //     - widenClientFileUpload
+    //   'Configure Legacy Browser Support':
+    //     - transpileClientSDK
+    //   'Configure Serverside Auto-instrumentation':
+    //     - autoInstrumentServerFunctions
+    //     - excludeServerRoutes
+    hideSourceMaps: true,
+  },
+};
+
+const sentryWebpackPluginOptions = {
+  // Additional config options for the Sentry Webpack plugin. Keep in mind that
+  // the following options are set automatically, and overriding them is not
+  // recommended:
+  //   release, url, org, project, authToken, configFile, stripPrefix,
+  //   urlPrefix, include, ignore
+
+  silent: true, // Suppresses all logs
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options.
+};
+// Make sure adding Sentry options is the last code to run before exporting, to
+// ensure that your source maps include changes from all other Webpack plugins
+module.exports = isInGithubAction
+  ? nextConfig
+  : withSentryConfig(
+      { ...nextConfig, ...sentryModuleExports },
+      sentryWebpackPluginOptions,
+    );
