@@ -12,7 +12,9 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 const environment = process.env.ENVIRONMENT ?? 'local';
 
-console.log('use', { basePath, environment });
+const isInCI = process.env.CI ?? false;
+
+console.log('use', { basePath, environment, isInCI });
 
 const nextConfig = {
   sentry: {
@@ -78,7 +80,9 @@ const sentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
-
+console.log(process.env);
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+module.exports = isInCI
+  ? nextConfig
+  : withSentryConfig(nextConfig, sentryWebpackPluginOptions);
