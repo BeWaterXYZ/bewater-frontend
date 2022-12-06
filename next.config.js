@@ -2,30 +2,21 @@
 
 const { withSentryConfig } = require('@sentry/nextjs');
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
+const environment = process.env.ENVIRONMENT ?? 'local';
+
+const isInGithubAction = !!process.env.GITHUB_ACTION;
+
+console.log('use', { basePath, environment, isInGithubAction });
+
 const api = {
   local: 'http://localhost:3000',
   qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
   prod: 'https://api.bewater.xyz',
 };
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-
-const environment = process.env.ENVIRONMENT ?? 'local';
-
-const isInCI = process.env.CI ?? false;
-
-console.log('use', { basePath, environment, isInCI });
-
 const nextConfig = {
-  sentry: {
-    // Use `hidden-source-map` rather than `source-map` as the Webpack `devtool`
-    // for client-side builds. (This will be the default starting in
-    // `@sentry/nextjs` version 8.0.0.) See
-    // https://webpack.js.org/configuration/devtool/ and
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/#use-hidden-source-map
-    // for more information.
-    hideSourceMaps: true,
-  },
   reactStrictMode: true,
   swcMinify: true,
   basePath,
@@ -67,7 +58,25 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const sentryModuleExports = {
+  // your existing module.exports
+
+  // Optional build-time configuration options
+  sentry: {
+    // See the sections below for information on the following options:
+    //   'Configure Source Maps':
+    //     - disableServerWebpackPlugin
+    //     - disableClientWebpackPlugin
+    //     - hideSourceMaps
+    //     - widenClientFileUpload
+    //   'Configure Legacy Browser Support':
+    //     - transpileClientSDK
+    //   'Configure Serverside Auto-instrumentation':
+    //     - autoInstrumentServerFunctions
+    //     - excludeServerRoutes
+    hideSourceMaps: true,
+  },
+};
 
 const sentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that
@@ -80,9 +89,11 @@ const sentryWebpackPluginOptions = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };
-console.log(process.env);
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = isInCI
-  ? nextConfig
-  : withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+module.exports = isInGithubAction
+  ? { nextConfig }
+  : withSentryConfig(
+      { ...nextConfig, ...sentryModuleExports },
+      sentryWebpackPluginOptions,
+    );
