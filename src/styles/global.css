@@ -1,0 +1,11 @@
+@layer components {
+  html {
+    height: 100%;
+  }
+  body {
+    min-height: 100%;
+  }
+  #__next {
+    height: 100vh;
+  }
+}

@@ -29,7 +29,7 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body className="bg-bw-back antialiased" data-theme="light">
+        <body className="antialiased " data-theme="light">
           <Main />
           <NextScript />
         </body>

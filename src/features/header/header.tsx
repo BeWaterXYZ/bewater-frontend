@@ -18,15 +18,21 @@ const UserArea = dynamic(() => import('./user-area'), {
 
 export const HeaderImpl = ({ menuData, userArea }: HeaderImplProps) => {
   return (
-    <div className="sticky top-0 left-0 right-0 text-black bg-white z-10 w-full h-[80px] flex justify-center items-center border-[#E4E4E4] border-b border-solid">
-      <div className=" flex items-center justify-between container ">
-        <Link href="/">
-          <a>
-            <Logo className="object-contain shrink-0 cursor-pointer" />
-          </a>
-        </Link>
-        <Menu className="flex items-center h-full" items={menuData} />
-        <div className="min-w-[160px] flex justify-end">{userArea}</div>
+    <div className="sticky top-0 left-0 right-0 text-black bg-white  w-full  flex  flex-shrink-0 justify-center items-center border-border border-b border-solid">
+      <div className=" flex items-center justify-between container flex-wrap">
+        <div className="w-1/2 order-1 md:w-1/5 ">
+          <Link href="/">
+            <a>
+              <Logo className="object-contain shrink-0 cursor-pointer" />
+            </a>
+          </Link>
+        </div>
+        <div className="w-full order-3 md:order-2 md:w-3/5  ">
+          <Menu items={menuData} />
+        </div>
+        <div className="w-1/2  order-2 md:oirder-3 md:w-1/5 ">
+          <div className="flex justify-end py-4">{userArea}</div>
+        </div>
       </div>
     </div>
   );
