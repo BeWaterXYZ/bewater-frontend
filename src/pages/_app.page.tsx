@@ -19,7 +19,7 @@ function BeWaterWebsite({
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps?.dehydratedState}>
-        <div className="flex flex-col min-h-screen">
+        <div className="h-full flex flex-col">
           <Header />
           <div className="flex-1">
             <Component {...pageProps} />

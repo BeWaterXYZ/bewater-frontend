@@ -18,7 +18,7 @@ export const UserProfie: NextPage = () => {
     return <div>Error occurs!</div>;
   }
   return data ? (
-    <div className="flex flex-col h-[calc(100vh-160px)] justify-center items-center">
+    <div className="flex flex-col break-all justify-center items-center">
       Profile Page
       {JSON.stringify(data)}
     </div>

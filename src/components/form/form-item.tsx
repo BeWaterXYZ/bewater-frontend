@@ -50,7 +50,7 @@ export const FormItem = ({
         <div className="flex flex-row gap-x-4 items-center justify-between">
           <div className="flex flex-row gap-x-2 items-center w-full">
             <Wallet className="w-4 h-4" />
-            <a className="body-1 py-1 text-black">{linkText}</a>
+            <a className="body-1 py-1 text-black break-all">{linkText}</a>
           </div>
           {showDisconnect && (
             <button className="btn btn-danger">Disconnect</button>

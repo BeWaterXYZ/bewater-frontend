@@ -6,13 +6,14 @@ import { MenuItem } from './menu-item';
 
 type Props = {
   items: MenuItemType[];
-  className?: string;
 };
 
-export const Menu = ({ items, className }: Props) => {
-  return items?.length ? (
+export const Menu = ({ items }: Props) => {
+  return (
     <ul
-      className={clsx('flex flex-row gap-x-8 h-full items-center', className)}
+      className={clsx(
+        'flex flex-row gap-x-8 h-full items-center justify-center ',
+      )}
     >
       {items.map((item, i) => (
         <li key={i} className={clsx('h-full touch-manipulation')}>
@@ -25,7 +26,5 @@ export const Menu = ({ items, className }: Props) => {
         </li>
       ))}
     </ul>
-  ) : (
-    <div />
   );
 };

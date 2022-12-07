@@ -21,7 +21,7 @@ export const PageConnectWallet: NextPage = () => {
   const [metamask, close] = useModalStore((s) => [s.metamask, s.close]);
   return (
     <>
-      <div className="flex flex-col h-[calc(100vh-160px)] justify-center items-center">
+      <div className="flex h-full flex-col  justify-center items-center">
         <WagmiConfig client={wagmiClient}>
           <div className="heading-4 pb-12">Connect Wallet</div>
           <WalletOptions onError={onAlert} />
