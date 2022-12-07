@@ -15,22 +15,21 @@ import type { Connector } from 'wagmi';
 interface Props {
   onError?: (text?: string) => void;
 }
-function isErrorWithName(error: unknown): error is { name: string } {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'message' in error &&
-    typeof (error as Record<string, unknown>).name === 'string'
-  );
-}
+
 export function WalletOptions({ onError }: Props) {
   const setAuthState = useAuthStore((s) => s.setState);
   const [isLogining, setIsLogining] = useToggle(false);
   const navigator = useNavigator();
-  const open = useModalStore((s) => s.open);
+  const openModal = useModalStore((s) => s.open);
   const { connectors } = useConnect();
 
   const onConnectorClick = async (connector: Connector) => {
+    if (!connector.ready) {
+      if (connector.id === 'metaMask') {
+        openModal('metamask');
+        return;
+      }
+    }
     try {
       setIsLogining(true);
       const { address, chainId } = await connectWallet(connector);
@@ -51,16 +50,7 @@ export function WalletOptions({ onError }: Props) {
           navigator.goToUserSettings();
         }
       }
-    } catch (error: unknown) {
-      if (isErrorWithName(error)) {
-        if (error?.name === 'ConnectorNotFoundError') {
-          if (connector.id === 'metaMask') {
-            open('metamask');
-            return;
-          }
-        }
-      }
-
+    } catch (error) {
       onError && onError('Connect Wallet Failed. Please try again.');
     } finally {
       setIsLogining(false);
@@ -85,7 +75,6 @@ export function WalletOptions({ onError }: Props) {
           >
             <Logo code={connector.name} />
             <span>{connector.name}</span>
-            {/* {!connector.ready && ' (unsupported)'} */}
           </button>
         ))}
       </div>
