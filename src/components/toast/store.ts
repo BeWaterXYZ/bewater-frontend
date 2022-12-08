@@ -3,6 +3,7 @@ import create from 'zustand';
 interface Toast {
   id: number;
   title: string;
+  type: 'success' | 'error' | 'info';
   description: string;
 }
 
@@ -25,7 +26,7 @@ export const useToastStore = create<State & Actions>((set, get) => ({
       toasts: [
         ...old,
         {
-          ...{ id: id++, title: '', description: '' },
+          ...{ id: id++, title: '', description: '', type: 'error' },
           ...toast,
         },
       ],

@@ -31,11 +31,13 @@ export async function submitCreateUserProfile({
   userId,
   walletAddress,
   email,
+  userName,
 }: CreateUserProfileRequest) {
   const { data } = await agentAuthed.post<CreateUserProfileResponse>('/user', {
     userId,
     walletAddress,
     email,
+    userName,
   });
   return data;
 }

@@ -12,7 +12,7 @@ const PageIndex: NextPage = () => {
       <button
         className="btn btn-primary"
         onClick={() => {
-          add({ title: 'test', description: '' });
+          add({ title: 'test', description: 'this is description' });
         }}
       >
         add toast

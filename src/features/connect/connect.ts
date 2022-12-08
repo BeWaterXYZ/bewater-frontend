@@ -18,7 +18,7 @@ export async function connectWallet(connector: Connector) {
   if (account.isConnected) {
     const { chain } = getNetwork();
     return {
-      address: account.address,
+      address: account.address?.toLowerCase(),
       chainId: chain?.id,
     };
   } else {
@@ -26,7 +26,7 @@ export async function connectWallet(connector: Connector) {
     console.log('connect result:', { res });
 
     return {
-      address: res.account,
+      address: res.account.toLowerCase(),
       chainId: res.chain.id,
     };
   }

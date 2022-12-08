@@ -1,4 +1,5 @@
 import * as Toast from '@radix-ui/react-toast';
+import clsx from 'clsx';
 
 import { useToastStore } from './store';
 
@@ -8,8 +9,18 @@ export function ToastContainer() {
     <div>
       <Toast.Provider>
         {toasts.map((toast) => (
-          <Toast.Root key={toast.id}>
-            <Toast.Description>{toast.title}</Toast.Description>
+          <Toast.Root
+            key={toast.id}
+            className={clsx('rounded shadow-sm p-4', {
+              'bg-red-400': toast.type === 'error',
+              'bg-green-400': toast.type === 'success',
+              'bg-blue-400': toast.type === 'info',
+            })}
+          >
+            <Toast.Title className="body-1">{toast.title}</Toast.Title>
+            <Toast.Description className="body-2">
+              {toast.description}
+            </Toast.Description>
           </Toast.Root>
         ))}
 
