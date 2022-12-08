@@ -9,6 +9,7 @@ import {
 import { Footer } from '@/features/footer';
 import { Header } from '@/features/header';
 import { ToastContainer } from '@/components/toast';
+import { useToastStore } from '@/components/toast/store';
 
 import type { AppProps } from 'next/app';
 
@@ -17,6 +18,8 @@ function BeWaterWebsite({
   pageProps,
 }: AppProps<{ dehydratedState: unknown }>) {
   const [queryClient] = useState(() => new QueryClient());
+  const toasts = useToastStore((s) => s.toasts);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps?.dehydratedState}>
@@ -26,7 +29,7 @@ function BeWaterWebsite({
             <Component {...pageProps} />
           </div>
           <Footer />
-          <ToastContainer />
+          <ToastContainer toasts={toasts} />
         </div>
       </Hydrate>
     </QueryClientProvider>

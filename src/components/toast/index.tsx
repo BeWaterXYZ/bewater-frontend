@@ -1,10 +1,13 @@
 import * as Toast from '@radix-ui/react-toast';
 import clsx from 'clsx';
 
-import { useToastStore } from './store';
+import { Toast as ToastType } from './store';
 
-export function ToastContainer() {
-  const toasts = useToastStore((s) => s.toasts);
+interface ToastContainerProps {
+  toasts: ToastType[];
+}
+
+export function ToastContainer({ toasts }: ToastContainerProps) {
   return (
     <div>
       <Toast.Provider>
