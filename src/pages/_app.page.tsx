@@ -8,6 +8,7 @@ import {
 
 import { Footer } from '@/features/footer';
 import { Header } from '@/features/header';
+import { ToastContainer } from '@/components/toast';
 
 import type { AppProps } from 'next/app';
 
@@ -25,6 +26,7 @@ function BeWaterWebsite({
             <Component {...pageProps} />
           </div>
           <Footer />
+          <ToastContainer />
         </div>
       </Hydrate>
     </QueryClientProvider>

@@ -7,6 +7,7 @@ import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
 import useNavigator from '@/hooks/useNavigator';
 import { User } from '@/stores/auth';
+import { useToastStore } from '@/components/toast/store';
 
 import type { FieldValues } from 'react-hook-form';
 import type { CreateUserProfileRequest } from '@/types/user';
@@ -14,10 +15,10 @@ import type { CreateUserProfileRequest } from '@/types/user';
 interface Props {
   user: User;
   className?: string;
-  onError?: (text?: string) => void;
 }
 
-export const FormWelcome = ({ user, className, onError }: Props) => {
+export const FormWelcome = ({ user, className }: Props) => {
+  const addToast = useToastStore((s) => s.add);
   const {
     register,
     handleSubmit,
@@ -36,7 +37,13 @@ export const FormWelcome = ({ user, className, onError }: Props) => {
         .then((res) => {
           if (res.status !== 200) {
             setIsLoading(false);
-            onError && onError(res.error[0]);
+            addToast({
+              title: 'An error occurs',
+              description:
+                res?.error[0] ??
+                'Create user failed, please visit the site later',
+              type: 'error',
+            });
           } else {
             navigator.goToUserSettings();
           }
@@ -44,10 +51,14 @@ export const FormWelcome = ({ user, className, onError }: Props) => {
         .catch((error) => {
           console.error(error);
           setIsLoading(false);
-          onError && onError();
+          addToast({
+            title: 'An error occurs',
+            description: 'Create user failed, please visit the site later',
+            type: 'error',
+          });
         });
     },
-    [navigator, user, onError],
+    [navigator, user],
   );
   return (
     <form
