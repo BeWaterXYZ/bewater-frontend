@@ -26,6 +26,8 @@ const nextConfig = {
     environment,
     version: process.env.VERSION || 'local',
     apiHost: api[environment],
+    PROVIDER_INFURA_KEY: process.env.PROVIDER_INFURA_KEY,
+    PROVIDER_ALCHEMY_KEY: process.env.PROVIDER_ALCHEMY_KEY,
   },
   // Disabling Next.js ESLint check with custom one as there is
   // a separate step for it in the CI workflow
