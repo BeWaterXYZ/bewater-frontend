@@ -27,6 +27,6 @@ Normal.args = {
     status: 200,
     error: [],
     userExist: true,
-    userProfile: getMockUserProfile('testUserId'),
+    updatedUserInfo: getMockUserProfile('testUserId'),
   },
 };
