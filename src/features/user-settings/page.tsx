@@ -10,6 +10,7 @@ import type { NextPage } from 'next';
 export const UserSettings: NextPage = () => {
   useRequireAuthed();
   const user = useAuthStore((s) => s.user);
+
   return (
     <div className="flex flex-row h-full container flex-wrap">
       <div className="w-full  md:w-1/3  pt-10 border-none md:border-r md:border-solid border-border flex flex-col items-center">
