@@ -36,7 +36,7 @@ export const FormUserSettings = ({
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: data?.userProfile,
+    defaultValues: data?.updatedUserInfo,
   });
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = useCallback(
@@ -58,10 +58,11 @@ export const FormUserSettings = ({
     },
     [user],
   );
+  console.log(data?.updatedUserInfo);
   return (
     <form
       method="post"
-      className={clsx('mb-[104px] max-w-[680px]', className)}
+      className={clsx('', className)}
       // eslint-disable-next-line
       onSubmit={handleSubmit(onSubmit)}
     >
