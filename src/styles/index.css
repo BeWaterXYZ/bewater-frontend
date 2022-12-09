@@ -5,6 +5,8 @@
 @import './global.css';
 @import './button.css';
 @import './typography.css';
+
+@import '../components/dialog/dialog.css';
 @import '../components/form/input/input.css';
 
 @import 'tailwindcss/utilities';

@@ -1,8 +1,5 @@
 import { WagmiConfig } from 'wagmi';
 
-import { ModalMetamask } from '@/components/modal/modal-metamask';
-import { useModalStore } from '@/stores/modal';
-
 import { createWagmiClient } from './createWagmiClient';
 import { WalletOptions } from './wallets';
 
@@ -11,7 +8,6 @@ import type { NextPage } from 'next';
 const wagmiClient = createWagmiClient();
 
 export const PageConnectWallet: NextPage = () => {
-  const [metamask, close] = useModalStore((s) => [s.metamask, s.close]);
   return (
     <>
       <div className="flex h-full flex-col  justify-center items-center">
@@ -27,7 +23,6 @@ export const PageConnectWallet: NextPage = () => {
           </div>
         </WagmiConfig>
       </div>
-      <ModalMetamask modalOpen={metamask} onClose={() => close('metamask')} />
     </>
   );
 };

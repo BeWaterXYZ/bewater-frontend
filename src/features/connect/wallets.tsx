@@ -6,8 +6,8 @@ import { Loading } from '@/components/loading';
 import { Logo } from '@/components/logos';
 import useNavigator from '@/hooks/useNavigator';
 import { useAuthStore } from '@/stores/auth';
-import { useModalStore } from '@/stores/modal';
 import { useToastStore } from '@/components/toast/store';
+import { useDialogStore } from '@/components/dialog/store';
 
 import { connectWallet, startSignMsgAndVerify } from './connect';
 
@@ -15,17 +15,18 @@ import type { Connector } from 'wagmi';
 
 export function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
+  const openDialog = useDialogStore((s) => s.open);
   const clearToast = useToastStore((s) => s.clear);
   const setAuthState = useAuthStore((s) => s.setState);
   const [isLogining, setIsLogining] = useToggle(false);
   const navigator = useNavigator();
-  const openModal = useModalStore((s) => s.open);
   const { connectors } = useConnect();
 
   const onConnectorClick = async (connector: Connector) => {
     if (!connector.ready) {
       if (connector.id === 'metaMask') {
-        openModal('metamask');
+        openDialog('metamask_not_support', true);
+        // openModal('metamask');
         return;
       }
     }

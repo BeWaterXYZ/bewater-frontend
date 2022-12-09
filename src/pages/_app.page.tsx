@@ -10,6 +10,8 @@ import { Footer } from '@/features/footer';
 import { Header } from '@/features/header';
 import { ToastContainer } from '@/components/toast';
 import { useToastStore } from '@/components/toast/store';
+import { DialogContainer } from '@/components/dialog';
+import { useDialogStore } from '@/components/dialog/store';
 
 import type { AppProps } from 'next/app';
 
@@ -19,6 +21,8 @@ function BeWaterWebsite({
 }: AppProps<{ dehydratedState: unknown }>) {
   const [queryClient] = useState(() => new QueryClient());
   const toasts = useToastStore((s) => s.toasts);
+  const dialogs = useDialogStore((s) => s.dialogs);
+  const closeDialog = useDialogStore((s) => s.close);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,6 +33,7 @@ function BeWaterWebsite({
             <Component {...pageProps} />
           </div>
           <Footer />
+          <DialogContainer dialogs={dialogs} closeDialog={closeDialog} />
           <ToastContainer toasts={toasts} />
         </div>
       </Hydrate>
