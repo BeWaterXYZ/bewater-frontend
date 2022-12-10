@@ -1,45 +1,49 @@
-import React from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { MenuItemType } from '../menu-data';
+import { MenuItemType } from '../linkts';
 
-type Props = {
+type NavItemProps = {
   item: MenuItemType;
   label?: string;
-  isOpen: boolean;
-  hasSubMenu: boolean;
-  isActive: boolean;
 };
 
-export const MenuItem = React.forwardRef(function MenuItem(
-  { label, item, hasSubMenu, isOpen, isActive }: Props,
-  ref: React.ForwardedRef<HTMLAnchorElement>,
-) {
-  const externalProps = item?.external
-    ? {
-        rel: 'noreferrer noopener',
-        target: '_blank',
-      }
-    : {};
-
+export function NavItem({ label, item }: NavItemProps) {
+  // TODO
+  const isActive = false;
   return (
     <Link href={item.path ?? '/'}>
       <a
         className={clsx(
           'relative flex items-center h-full heading-5 outline-none after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[3px] after:bg-bw-fore after:rounded-full after:opacity-0 after:transition-opacity after:duration-[.15s] after:ease-out hover:after:opacity-100 focus:after:opacity-100',
-          isOpen || isActive ? 'after:opacity-100' : 'after:opacity-0',
+          isActive ? 'after:opacity-100' : 'after:opacity-0',
           {
             'after:opacity-100': isActive,
-            'cursor-pointer': !hasSubMenu,
           },
         )}
-        {...externalProps}
-        ref={ref}
-        tabIndex={0}
       >
         {item?.label ? item?.label : label}
       </a>
     </Link>
   );
-});
+}
+
+type NavProps = {
+  items: MenuItemType[];
+};
+
+export const Nav = ({ items }: NavProps) => {
+  return (
+    <ul
+      className={clsx(
+        'flex flex-row gap-x-8 h-full items-center justify-center ',
+      )}
+    >
+      {items.map((item, i) => (
+        <li key={item.path} className={clsx('h-full touch-manipulation')}>
+          <NavItem item={item} />
+        </li>
+      ))}
+    </ul>
+  );
+};
