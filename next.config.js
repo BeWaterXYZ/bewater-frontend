@@ -2,13 +2,9 @@
 
 const { withSentryConfig } = require('@sentry/nextjs');
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
-
-const environment = process.env.ENVIRONMENT ?? 'local';
-
 const isInGithubAction = !!process.env.GITHUB_ACTION;
 
-console.log('use', { basePath, environment, isInGithubAction });
+console.log('use', { isInGithubAction });
 
 const api = {
   local: 'http://localhost:3000',
@@ -19,16 +15,6 @@ const api = {
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  basePath,
-  serverRuntimeConfig: {},
-  publicRuntimeConfig: {
-    basePath,
-    environment,
-    version: process.env.VERSION || 'local',
-    apiHost: api[environment],
-    PROVIDER_INFURA_KEY: process.env.PROVIDER_INFURA_KEY,
-    PROVIDER_ALCHEMY_KEY: process.env.PROVIDER_ALCHEMY_KEY,
-  },
   // Disabling Next.js ESLint check with custom one as there is
   // a separate step for it in the CI workflow
   eslint: {

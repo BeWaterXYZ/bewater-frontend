@@ -1,13 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import getConfig from 'next/config';
 
 import { useAuthStore } from '@/stores/auth';
-
-import type { NextRuntimeConfig } from '@/types/next-runtime-config';
-
-const {
-  publicRuntimeConfig: { apiHost },
-} = getConfig() as NextRuntimeConfig;
+import { CONFIGS } from '@/config';
 
 const requestInterceptor = (config: AxiosRequestConfig) => {
   const accessToken = useAuthStore.getState().token;
@@ -18,11 +12,11 @@ const requestInterceptor = (config: AxiosRequestConfig) => {
 };
 
 const agentAuthed = axios.create({
-  baseURL: apiHost,
+  baseURL: CONFIGS.API_ENDPOINT,
 });
 
 agentAuthed.interceptors.request.use(requestInterceptor);
 
-const agentAnon = axios.create({ baseURL: apiHost });
+const agentAnon = axios.create({ baseURL: CONFIGS.API_ENDPOINT });
 
 export { agentAuthed, agentAnon };
