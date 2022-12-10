@@ -5,20 +5,15 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { publicProvider } from 'wagmi/providers/public';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { infuraProvider } from 'wagmi/providers/infura';
-import getConfig from 'next/config';
 
-import type { NextRuntimeConfig } from '@/types/next-runtime-config';
-
-const {
-  publicRuntimeConfig: { PROVIDER_ALCHEMY_KEY, PROVIDER_INFURA_KEY },
-} = getConfig() as NextRuntimeConfig;
+import { CONFIGS } from '@/config';
 
 export function createWagmiClient() {
   const { chains, provider, webSocketProvider } = configureChains(
     defaultChains,
     [
-      alchemyProvider({ apiKey: PROVIDER_ALCHEMY_KEY }),
-      infuraProvider({ apiKey: PROVIDER_INFURA_KEY }),
+      alchemyProvider({ apiKey: CONFIGS.PROVIDER_ALCHEMY_KEY }),
+      infuraProvider({ apiKey: CONFIGS.PROVIDER_INFURA_KEY }),
       publicProvider(),
     ],
   );
