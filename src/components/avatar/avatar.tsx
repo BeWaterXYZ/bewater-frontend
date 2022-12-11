@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-
+import Image from 'next/image';
 import { useRandomColor } from '@/hooks/useRandomColor';
 
 interface Props {
@@ -27,7 +27,7 @@ export const Avatar = ({
       })}
     >
       {src ? (
-        <img
+        <Image
           className="w-full h-full rounded-full cursor-pointer object-cover"
           src={src}
           alt="avatar"

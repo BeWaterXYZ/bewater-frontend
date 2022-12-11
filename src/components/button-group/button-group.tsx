@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { ButtonGroupItem } from './buttonGroup-item';
+import { ButtonGroupItem } from './button-group-item';
 
 interface Props {
   name1: string;

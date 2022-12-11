@@ -21,7 +21,7 @@ Normal.args = {
   placeholder: 'Enter your full name',
   label: 'Name',
   name: 'name',
-  errors: {},
+  error: undefined,
 };
 
 export const Disabled = Template.bind({});
@@ -30,5 +30,5 @@ Disabled.args = {
   label: 'Name',
   name: 'name',
   disabled: true,
-  errors: {},
+  error: undefined,
 };

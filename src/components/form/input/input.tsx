@@ -1,15 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { HelpText } from './help-text';
-
-import type { FieldErrorsImpl } from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   name: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  errors: Partial<FieldErrorsImpl<{ [x: string]: any }>>;
+  error?: FieldError;
   required?: boolean;
   className?: string;
 }
@@ -18,9 +15,9 @@ export const Input = React.forwardRef(function Input(
   props: Props,
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {
-  const { label, name, errors, className, required, ...restProps } = props;
+  const { label, name, error, className, required, ...restProps } = props;
   return (
-    <div className={clsx('block pb-4', className)}>
+    <div className={clsx('block pb-2', className)}>
       {label ? (
         <label className="block body-3 py-1">
           {label}
@@ -29,13 +26,20 @@ export const Input = React.forwardRef(function Input(
       ) : null}
       <input
         className={clsx('input', {
-          error: errors[name],
+          error: error,
         })}
         ref={ref}
         {...restProps}
         name={name}
       ></input>
-      <HelpText text={errors[name]?.message as string} />
+
+      <div
+        className={clsx('whitespace-nowrap body-2 py-1 text-danger', {
+          invisible: !error,
+        })}
+      >
+        {error?.message ?? 'placeholder'}
+      </div>
     </div>
   );
 });
