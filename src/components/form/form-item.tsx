@@ -38,7 +38,7 @@ export const FormItem = ({
       {type === 'input' && (
         <Input
           name={label}
-          errors={{}}
+          error={undefined}
           placeholder={placeholder}
           type={inputType}
         />

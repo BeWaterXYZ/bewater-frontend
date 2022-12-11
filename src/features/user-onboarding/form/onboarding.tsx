@@ -54,7 +54,7 @@ export const FormOnboarding = ({ user }: Props) => {
           });
         });
     },
-    [navigator, user],
+    [navigator, user, addToast],
   );
   return (
     <form method="post" onSubmit={handleSubmit(onSubmit)}>
