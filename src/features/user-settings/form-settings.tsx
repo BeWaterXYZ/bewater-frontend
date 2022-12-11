@@ -70,14 +70,14 @@ export const FormUserSettings = ({
         label="Username"
         placeholder="Enter your username"
         required
-        errors={errors}
+        error={errors['userName']}
         {...register('userName', { required: 'Username is required.' })}
       />
       <Input
         label="Full name"
         placeholder="Enter your full name"
         required
-        errors={errors}
+        error={errors['email']}
         {...register('email', { required: 'Full name is required.' })}
       />
       <FormItem

@@ -1,6 +1,4 @@
-import clsx from 'clsx';
 import { useCallback, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
@@ -9,31 +7,29 @@ import useNavigator from '@/hooks/useNavigator';
 import { User } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 
-import type { FieldValues } from 'react-hook-form';
-import type { CreateUserProfileRequest } from '@/types/user';
+import { useOnboardingForm, Inputs } from './use-onboarding-form';
 
 interface Props {
   user: User;
-  className?: string;
 }
 
-export const FormWelcome = ({ user, className }: Props) => {
+export const FormOnboarding = ({ user }: Props) => {
   const addToast = useToastStore((s) => s.add);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useOnboardingForm();
   const [isLoading, setIsLoading] = useState(false);
   const navigator = useNavigator();
   const onSubmit = useCallback(
-    (data: FieldValues) => {
+    (data: Inputs) => {
       setIsLoading(true);
       submitCreateUserProfile({
         ...data,
-        userId: user.userId,
-        walletAddress: user.walletAddress,
-      } as CreateUserProfileRequest)
+        userId: user.userId!,
+        walletAddress: user.walletAddress!,
+      })
         .then((res) => {
           if (res.status !== 200) {
             setIsLoading(false);
@@ -61,32 +57,24 @@ export const FormWelcome = ({ user, className }: Props) => {
     [navigator, user],
   );
   return (
-    <form
-      method="post"
-      className={clsx('mb-[104px] max-w-[680px]', className)}
-      // eslint-disable-next-line
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form method="post" onSubmit={void handleSubmit(onSubmit)}>
       <Input
         label="Username"
         placeholder="Enter your username"
-        required
-        errors={errors}
-        {...register('userName', { required: 'Username is required.' })}
+        error={errors['userName']}
+        {...register('userName')}
       />
       <Input
         label="Full name"
         placeholder="Enter your full name"
-        required
-        errors={errors}
-        {...register('fullname', { required: 'Full name is required.' })}
+        error={errors['fullname']}
+        {...register('fullname')}
       />
       <Input
         label="Email"
         placeholder="Enter your email"
-        required
-        errors={errors}
-        {...register('email', { required: 'Email is required.' })}
+        error={errors['email']}
+        {...register('email')}
       />
       <button className="btn btn-primary">Finish Setup</button>
       {isLoading ? <Loading /> : null}

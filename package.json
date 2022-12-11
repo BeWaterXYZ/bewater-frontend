@@ -22,6 +22,7 @@
     "yarn": ">=1.22.0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^2.9.10",
     "@radix-ui/react-dialog": "^1.0.2",
     "@radix-ui/react-navigation-menu": "^1.1.1",
     "@radix-ui/react-toast": "^1.1.2",
@@ -40,6 +41,7 @@
     "react-hook-form": "^7.39.1",
     "react-use": "^17.4.0",
     "wagmi": "^0.8.5",
+    "zod": "^3.19.1",
     "zustand": "^4.1.4"
   },
   "devDependencies": {

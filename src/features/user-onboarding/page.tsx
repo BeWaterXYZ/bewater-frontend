@@ -1,7 +1,7 @@
 // import { Loading } from '@/components/loading/loading';
 import { useAuthStore } from '@/stores/auth';
 
-import { FormWelcome } from './form-welcome';
+import { FormOnboarding } from './form/onboarding';
 
 import type { NextPage } from 'next';
 
@@ -15,7 +15,7 @@ export const PageUserOnboarding: NextPage = () => {
           <div className="bg-gradient-to-r from-[#fc9e1c] to-[#f62584] bg-clip-text text-transparent heading-1">
             {'Welcome aboard,'}
           </div>
-          <FormWelcome user={user} />
+          <FormOnboarding user={user} />
         </div>
       </div>
     </>
