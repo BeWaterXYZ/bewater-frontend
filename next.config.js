@@ -4,14 +4,6 @@ const { withSentryConfig } = require('@sentry/nextjs');
 
 const isInGithubAction = !!process.env.GITHUB_ACTION;
 
-console.log('use', { isInGithubAction });
-
-const api = {
-  local: 'http://localhost:3000',
-  qa: 'http://bw-backend-elb-532860068.ap-southeast-1.elb.amazonaws.com',
-  prod: 'https://api.bewater.xyz',
-};
-
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -79,9 +71,10 @@ const sentryWebpackPluginOptions = {
 };
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = isInGithubAction
-  ? nextConfig
-  : withSentryConfig(
-      { ...nextConfig, ...sentryModuleExports },
-      sentryWebpackPluginOptions,
-    );
+
+const configWithSentry = withSentryConfig(
+  { ...nextConfig, ...sentryModuleExports },
+  sentryWebpackPluginOptions,
+);
+
+module.exports = isInGithubAction ? nextConfig : configWithSentry;
