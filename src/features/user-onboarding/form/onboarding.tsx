@@ -57,7 +57,7 @@ export const FormOnboarding = ({ user }: Props) => {
     [navigator, user],
   );
   return (
-    <form method="post" onSubmit={void handleSubmit(onSubmit)}>
+    <form method="post" onSubmit={handleSubmit(onSubmit)}>
       <Input
         label="Username"
         placeholder="Enter your username"
