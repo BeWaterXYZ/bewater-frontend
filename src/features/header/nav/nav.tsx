@@ -1,7 +1,7 @@
 'use client';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useSelectedLayoutSegments } from 'next/navigation';
+// import { useSelectedLayoutSegments } from 'next/navigation';
 
 import { MenuItemType } from '../links';
 
@@ -12,9 +12,8 @@ type NavItemProps = {
 
 export function NavItem({ label, item }: NavItemProps) {
   // TODO
-  const segments = useSelectedLayoutSegments();
-  console.log({ segments });
-  const isActive = segments.some((s) => item.path?.includes(s));
+  // const segments = useSelectedLayoutSegments();
+  const isActive = false; // segments.some((s) => item.path?.includes(s));
   return (
     <Link
       href={item.path ?? '/'}
