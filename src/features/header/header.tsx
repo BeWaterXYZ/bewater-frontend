@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Logo from '@/components/logos/bewater_black.svg';
 
 import { Nav } from './nav';
-import { nav } from './links';
 import UserArea from './user';
 
 interface HeaderImplProps {
@@ -38,10 +37,6 @@ const BeWaterLogo = () => {
 
 export const Header = () => {
   return (
-    <HeaderImpl
-      logo={<BeWaterLogo />}
-      nav={<Nav items={nav} />}
-      user={<UserArea />}
-    />
+    <HeaderImpl logo={<BeWaterLogo />} nav={<Nav />} user={<UserArea />} />
   );
 };

@@ -1,6 +1,7 @@
 export type MenuItemType = {
   label: string;
   path?: string;
+  active?: boolean;
 };
 export const nav: MenuItemType[] = [
   {
