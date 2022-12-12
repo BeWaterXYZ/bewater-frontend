@@ -2,7 +2,7 @@
   .input {
     @apply block body-1 py-1 px-4 h-8 box-border border border-solid bg-white
     rounded-md w-full  mr-4 transition duration-[.15s]
-    ease-in-out border-border text-black
+    ease-in-out border-titanium text-black
     hover:border-gray-400 focus:border-gray-600 focus:outline-none;
     &[disabled] {
       @apply cursor-not-allowed pointer-events-none text-opacity-30 bg-gray-300;

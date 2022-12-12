@@ -9,7 +9,6 @@ interface MetaMaskNotSupportDialogProps {
 export default function MetaMaskNotSupportDialog(
   props: MetaMaskNotSupportDialogProps,
 ) {
-  console.log(props);
   return (
     <div className="flex flex-col justify-center items-center">
       <Logo className="w-12 h-12" code="metamask" />
@@ -18,7 +17,7 @@ export default function MetaMaskNotSupportDialog(
         You can try to install through its official site.
       </div>
       <a
-        className="body-1 text-bw-brand"
+        className="body-1 "
         target="_blank"
         rel="noopenner noreferrer"
         href="https://metamask.io"

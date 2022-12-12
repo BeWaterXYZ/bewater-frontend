@@ -64,22 +64,18 @@ export function WalletOptions() {
 
   return (
     <>
-      <div className="w-[320px]">
+      <div className="min-h-[200px]">
         {connectors.map((connector, i) => (
           <button
             className={clsx(
-              'w-full h-12 border-t border-l border-r border-solid border-border flex flex-row items-center px-4 gap-x-4',
-              'hover:bg-border',
-              {
-                'rounded-t-md': i === 0,
-                'rounded-b-md border-b': i === connectors.length - 1,
-              },
+              ' w-full h-12 border border-solid border-day  flex flex-row justify-center items-center px-4 gap-x-4',
             )}
             key={connector.id}
             onClick={() => void onConnectorClick(connector)}
           >
-            <Logo code={connector.name} />
-            <span>{connector.name}</span>
+            {/* <Logo code={connector.name} /> */}
+            {/* <span className="body-2">{connector.name}</span> */}
+            <span className="body-2 text-day uppercase">Connect Wallet</span>
           </button>
         ))}
       </div>

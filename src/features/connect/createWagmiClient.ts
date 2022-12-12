@@ -23,18 +23,18 @@ export function createWagmiClient() {
     autoConnect: true,
     connectors: [
       new MetaMaskConnector({ chains }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: {
-          appName: 'BeWater',
-        },
-      }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          qrcode: true,
-        },
-      }),
+      // new CoinbaseWalletConnector({
+      //   chains,
+      //   options: {
+      //     appName: 'BeWater',
+      //   },
+      // }),
+      // new WalletConnectConnector({
+      //   chains,
+      //   options: {
+      //     qrcode: true,
+      //   },
+      // }),
     ],
     provider,
     webSocketProvider,

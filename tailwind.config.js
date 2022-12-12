@@ -19,10 +19,11 @@ module.exports = {
         grotesk: ['Space Grotesk', ...fontFamily.sans],
       },
       colors: {
-        brand: '#040000',
-        highlight: '#0020f4',
+        // inspiration from  https://colornamer.robertcooper.me/
+        night: '#04051B',
+        day: '#00CCCC',
+        titanium: '#E4E4E4',
         danger: '#EB7E7E',
-        border: '#E4E4E4',
       },
       boxShadow: {
         border: '0px 0px 4px #E4E4E4',
