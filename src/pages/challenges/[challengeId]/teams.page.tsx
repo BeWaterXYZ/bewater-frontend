@@ -1,14 +1,14 @@
-// import { Loading } from '@/components/loading/loading';
-
+import { ChallengeHero } from '@/features/challenges/hero';
+import { ChallengeNav } from '@/features/challenges/nav';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
-// Pass client to React Context Provider
 const PageChallenges: NextPage = () => {
-  const router = useRouter();
-  console.log(router.query);
   return (
-    <div className="heading-1 flex flex-col  justify-center items-center">
-      Challenges teams Page
+    <div className=" flex flex-col  justify-center items-center">
+      <ChallengeHero />
+      <div className="container">
+        <ChallengeNav />
+        <p className="body-1">teams</p>
+      </div>
     </div>
   );
 };

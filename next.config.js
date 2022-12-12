@@ -36,6 +36,15 @@ const nextConfig = {
     });
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: '/challenges/:cid',
+        destination: '/challenges/:cid/intro',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 const sentryModuleExports = {
