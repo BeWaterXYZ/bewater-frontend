@@ -1,4 +1,4 @@
-// import { Loading } from '@/components/loading/loading';
+'use client';
 import { useAuthStore } from '@/stores/auth';
 
 import { FormOnboarding } from './form/onboarding';

@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { MenuItemType } from '../linkts';
+import { MenuItemType } from '../links';
 
 type NavItemProps = {
   item: MenuItemType;
@@ -12,7 +12,7 @@ export function NavItem({ label, item }: NavItemProps) {
   // TODO
   const isActive = false;
   return (
-    <Link href={item.path ?? '/'}>
+    <Link href={item.path ?? '/'} legacyBehavior>
       <a
         className={clsx(
           'relative flex items-center h-full heading-5 outline-none after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[3px] after:bg-bw-fore after:rounded-full after:opacity-0 after:transition-opacity after:duration-[.15s] after:ease-out hover:after:opacity-100 focus:after:opacity-100',

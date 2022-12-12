@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { nav } from '../linkts';
+import { nav } from '../links';
 
 import { Nav } from './nav';
 

@@ -1,14 +1,12 @@
+'use client';
 import { AvatarWithEditor } from '@/components/avatar';
 import { useAuthStore } from '@/stores/auth';
-
-import { useRequireAuthed } from '../../hooks/useRequireAuthed';
 
 import { FormSettingsWrapper } from './form-settings';
 
 import type { NextPage } from 'next';
 
 export const UserSettings: NextPage = () => {
-  useRequireAuthed();
   const user = useAuthStore((s) => s.user);
 
   return (

@@ -1,6 +1,7 @@
+'use client';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 let links = [
   {
@@ -22,16 +23,21 @@ let links = [
 ];
 
 export function ChallengeNav() {
-  let router = useRouter();
-  let pathname = router.pathname;
+  // TODO
+  // let router = useRouter();
+  // let pathname =router.pathname;
 
-  let { challengeId } = router.query;
+  let { challengeId } = { challengeId: '123' }; // router.query;
   return (
     <nav className="w-full body-3 flex justify-center border-b border-gray-600">
       {links.map((link) => {
-        let isAcitve = pathname.includes(link.path);
+        let isAcitve = false; // pathname.includes(link.path);
         return (
-          <Link key={link.path} href={`/challenges/${challengeId}${link.path}`}>
+          <Link
+            key={link.path}
+            href={`/challenges/${challengeId}${link.path}`}
+            legacyBehavior
+          >
             <a
               className={clsx('py-3 w-[80px] text-center', {
                 'text-day border-b-2 border-day': isAcitve,

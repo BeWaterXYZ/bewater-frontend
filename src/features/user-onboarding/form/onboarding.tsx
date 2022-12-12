@@ -1,13 +1,14 @@
+'use client';
 import { useCallback, useState } from 'react';
 
 import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
-import useNavigator from '@/hooks/useNavigator';
 import { User } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 
 import { useOnboardingForm, Inputs } from './use-onboarding-form';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   user: User;
@@ -15,13 +16,13 @@ interface Props {
 
 export const FormOnboarding = ({ user }: Props) => {
   const addToast = useToastStore((s) => s.add);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useOnboardingForm();
   const [isLoading, setIsLoading] = useState(false);
-  const navigator = useNavigator();
   const onSubmit = useCallback(
     (data: Inputs) => {
       setIsLoading(true);
@@ -41,7 +42,7 @@ export const FormOnboarding = ({ user }: Props) => {
               type: 'error',
             });
           } else {
-            navigator.goToUserSettings();
+            router.push('/user/settings');
           }
         })
         .catch((error) => {

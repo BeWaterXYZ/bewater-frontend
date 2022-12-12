@@ -1,10 +1,11 @@
+'use client';
 import clsx from 'clsx';
 import { useToggle } from 'react-use';
 import { useConnect } from 'wagmi';
 
 import { Loading } from '@/components/loading';
 import { Logo } from '@/components/logos';
-import useNavigator from '@/hooks/useNavigator';
+// import useNavigator from '@/hooks/useNavigator';
 import { useAuthStore } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 import { useDialogStore } from '@/components/dialog/store';
@@ -12,6 +13,7 @@ import { useDialogStore } from '@/components/dialog/store';
 import { connectWallet, startSignMsgAndVerify } from './connect';
 
 import type { Connector } from 'wagmi';
+import { useRouter } from 'next/navigation';
 
 export function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
@@ -19,7 +21,8 @@ export function WalletOptions() {
   const clearToast = useToastStore((s) => s.clear);
   const setAuthState = useAuthStore((s) => s.setState);
   const [isLogining, setIsLogining] = useToggle(false);
-  const navigator = useNavigator();
+  // const navigator = useNavigator();
+  let router = useRouter();
   const { connectors } = useConnect();
 
   const onConnectorClick = async (connector: Connector) => {
@@ -46,9 +49,11 @@ export function WalletOptions() {
         });
 
         if (!userProfile) {
-          navigator.goToWelcome();
+          // navigator.goToWelcome();
+          router.push('/user/onboarding');
         } else {
-          navigator.goToUserSettings();
+          // navigator.goToUserSettings();
+          router.push('/user/settings');
         }
       }
     } catch (error) {

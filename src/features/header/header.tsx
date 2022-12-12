@@ -4,11 +4,8 @@ import Link from 'next/link';
 import Logo from '@/components/logos/bewater_black.svg';
 
 import { Nav } from './nav';
-import { nav } from './linkts';
-
-const UserArea = dynamic(() => import('./user'), {
-  ssr: false,
-});
+import { nav } from './links';
+import UserArea from './user';
 
 interface HeaderImplProps {
   logo: React.ReactNode;
@@ -34,7 +31,7 @@ export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
 
 const BeWaterLogo = () => {
   return (
-    <Link href="/">
+    <Link href="/" legacyBehavior>
       <a>
         <Logo className="object-contain shrink-0 cursor-pointer " />
       </a>

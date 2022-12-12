@@ -1,16 +1,19 @@
 import { ChallengeHero } from '@/features/challenges/hero';
 import { ChallengeNav } from '@/features/challenges/nav';
-import type { NextPage } from 'next';
-const PageChallenges: NextPage = () => {
+
+export default function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className=" flex flex-col  justify-center items-center">
+    <div>
       <ChallengeHero />
       <div className="container">
         <ChallengeNav />
-        <p className="body-1">teams</p>
+        {children}
       </div>
     </div>
   );
-};
-
-export default PageChallenges;
+}

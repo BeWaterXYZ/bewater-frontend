@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
@@ -32,13 +33,19 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </div>
             <ul className="font-medium">
               <li className="border-t p-4 py-2">
-                <Link href="/user/profile">Your Profile</Link>
+                <Link href="/user/profile" legacyBehavior>
+                  Your Profile
+                </Link>
               </li>
               <li className="border-t p-4 py-2">
-                <Link href="/user/settings">Account Settings</Link>
+                <Link href="/user/settings" legacyBehavior>
+                  Account Settings
+                </Link>
               </li>
               <li className="border-t p-4 py-2">
-                <Link href="/user/logout">Disconnect</Link>
+                <Link href="/user/logout" legacyBehavior>
+                  Disconnect
+                </Link>
               </li>
             </ul>
           </NavigationMenu.Content>

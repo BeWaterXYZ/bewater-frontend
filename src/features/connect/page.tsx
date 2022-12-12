@@ -1,3 +1,4 @@
+'use client';
 import { WagmiConfig } from 'wagmi';
 
 import { createWagmiClient } from './createWagmiClient';
