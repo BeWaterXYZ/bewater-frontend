@@ -14,7 +14,7 @@ export default function UserArea() {
   useEffect(() => {
     setMounted(true);
   }, []);
-  // TODO FIX IT
+  // TODO FIX IT with nextjs 13.0.7
   if (!mounted) return null;
   return !isAuthed() ? (
     <Link href="/connect" className="btn btn-primary">

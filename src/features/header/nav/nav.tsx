@@ -1,36 +1,31 @@
 'use client';
 import clsx from 'clsx';
 import Link from 'next/link';
-// import { useSelectedLayoutSegments } from 'next/navigation';
+import { useSelectedLayoutSegments } from 'next/navigation';
+import { nav } from '../links';
 
 import { MenuItemType } from '../links';
 
-type NavItemProps = {
-  item: MenuItemType;
-  label?: string;
-};
+type NavItemProps = { item: MenuItemType };
 
-export function NavItem({ label, item }: NavItemProps) {
-  // TODO
-  // const segments = useSelectedLayoutSegments();
-  const isActive = false; // segments.some((s) => item.path?.includes(s));
+export function NavItem({ item }: NavItemProps) {
   return (
     <Link
       href={item.path ?? '/'}
       className={clsx(' flex items-center h-full heading-5 outline-none ', {
-        'text-day border-b border-day': isActive,
+        'text-day border-b border-day': item.active,
       })}
     >
-      {item?.label ? item?.label : label}
+      {item.label}
     </Link>
   );
 }
 
-type NavProps = {
+type NavImplProps = {
   items: MenuItemType[];
 };
 
-export const Nav = ({ items }: NavProps) => {
+export const NavImpl = ({ items }: NavImplProps) => {
   return (
     <ul
       className={clsx(
@@ -44,4 +39,14 @@ export const Nav = ({ items }: NavProps) => {
       ))}
     </ul>
   );
+};
+export const Nav = () => {
+  const segments = useSelectedLayoutSegments();
+
+  let items = nav.map((n) => ({
+    ...n,
+    active: segments.some((s) => n.path?.includes(s)),
+  }));
+
+  return <NavImpl items={items} />;
 };
