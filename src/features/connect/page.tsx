@@ -4,11 +4,9 @@ import { WagmiConfig } from 'wagmi';
 import { createWagmiClient } from './createWagmiClient';
 import { WalletOptions } from './wallets';
 
-import type { NextPage } from 'next';
-
 const wagmiClient = createWagmiClient();
 
-export const PageConnectWallet: NextPage = () => {
+export const PageConnectWallet = () => {
   return (
     <div className="flex h-full flex-col  justify-center items-center">
       <div className="w-80">

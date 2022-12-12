@@ -3,9 +3,7 @@ import { Loading } from '@/components/loading/loading';
 import { useAuthStore } from '@/stores/auth';
 import { useRequireAuthed } from '@/hooks/useRequireAuthed';
 
-import type { NextPage } from 'next';
-
-export const UserProfie: NextPage = () => {
+export const UserProfie = () => {
   useRequireAuthed();
 
   const user = useAuthStore((s) => s.user);

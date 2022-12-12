@@ -3,10 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 
 import { FormOnboarding } from './form/onboarding';
 
-import type { NextPage } from 'next';
-
-// Pass client to React Context Provider
-export const PageUserOnboarding: NextPage = () => {
+export const PageUserOnboarding = () => {
   const user = useAuthStore((s) => s.user);
   return (
     <>

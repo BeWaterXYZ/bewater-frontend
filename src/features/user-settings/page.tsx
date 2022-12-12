@@ -4,9 +4,7 @@ import { useAuthStore } from '@/stores/auth';
 
 import { FormSettingsWrapper } from './form-settings';
 
-import type { NextPage } from 'next';
-
-export const UserSettings: NextPage = () => {
+export const UserSettings = () => {
   const user = useAuthStore((s) => s.user);
 
   return (

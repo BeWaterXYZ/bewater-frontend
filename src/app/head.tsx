@@ -1,4 +1,7 @@
 export default function Head() {
+  let hack: any = {
+    precedence: 'default',
+  };
   return (
     <>
       <title>BeWater</title>
@@ -14,7 +17,7 @@ export default function Head() {
       <link
         href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet"
-        precedence="default"
+        {...hack}
       />
     </>
   );
