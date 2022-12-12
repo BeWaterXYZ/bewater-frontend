@@ -1,5 +1,7 @@
+'use client';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useSelectedLayoutSegments } from 'next/navigation';
 
 import { MenuItemType } from '../links';
 
@@ -10,20 +12,17 @@ type NavItemProps = {
 
 export function NavItem({ label, item }: NavItemProps) {
   // TODO
-  const isActive = false;
+  const segments = useSelectedLayoutSegments();
+  console.log({ segments });
+  const isActive = segments.some((s) => item.path?.includes(s));
   return (
-    <Link href={item.path ?? '/'} legacyBehavior>
-      <a
-        className={clsx(
-          'relative flex items-center h-full heading-5 outline-none after:absolute after:left-0 after:right-0 after:bottom-0 after:h-[3px] after:bg-bw-fore after:rounded-full after:opacity-0 after:transition-opacity after:duration-[.15s] after:ease-out hover:after:opacity-100 focus:after:opacity-100',
-          isActive ? 'after:opacity-100' : 'after:opacity-0',
-          {
-            'after:opacity-100': isActive,
-          },
-        )}
-      >
-        {item?.label ? item?.label : label}
-      </a>
+    <Link
+      href={item.path ?? '/'}
+      className={clsx(' flex items-center h-full heading-5 outline-none ', {
+        'text-day border-b border-day': isActive,
+      })}
+    >
+      {item?.label ? item?.label : label}
     </Link>
   );
 }

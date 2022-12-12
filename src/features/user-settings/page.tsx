@@ -6,6 +6,7 @@ import { FormSettingsWrapper } from './form-settings';
 
 export const UserSettings = () => {
   const user = useAuthStore((s) => s.user);
+  console.log({ user });
 
   return (
     <div className="flex flex-row h-full container flex-wrap">

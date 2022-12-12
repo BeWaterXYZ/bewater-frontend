@@ -33,19 +33,13 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </div>
             <ul className="font-medium">
               <li className="border-t p-4 py-2">
-                <Link href="/user/profile" legacyBehavior>
-                  Your Profile
-                </Link>
+                <Link href="/user/profile">Your Profile</Link>
               </li>
               <li className="border-t p-4 py-2">
-                <Link href="/user/settings" legacyBehavior>
-                  Account Settings
-                </Link>
+                <Link href="/user/settings">Account Settings</Link>
               </li>
               <li className="border-t p-4 py-2">
-                <Link href="/user/logout" legacyBehavior>
-                  Disconnect
-                </Link>
+                <Link href="/user/logout">Disconnect</Link>
               </li>
             </ul>
           </NavigationMenu.Content>

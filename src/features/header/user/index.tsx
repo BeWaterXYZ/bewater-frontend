@@ -17,8 +17,8 @@ export default function UserArea() {
   // TODO FIX IT
   if (!mounted) return null;
   return !isAuthed() ? (
-    <Link href="/connect" legacyBehavior>
-      <a className="btn btn-primary">Connect</a>
+    <Link href="/connect" className="btn btn-primary">
+      Connect
     </Link>
   ) : (
     <UserMenu user={user} />

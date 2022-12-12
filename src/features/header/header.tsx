@@ -31,10 +31,8 @@ export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
 
 const BeWaterLogo = () => {
   return (
-    <Link href="/" legacyBehavior>
-      <a>
-        <Logo className="object-contain shrink-0 cursor-pointer " />
-      </a>
+    <Link href="/">
+      <Logo className="object-contain shrink-0 cursor-pointer " />
     </Link>
   );
 };
