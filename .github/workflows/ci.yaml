@@ -28,8 +28,5 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Lint app
-        run: yarn lint
-
       - name: Build app
         run: yarn build

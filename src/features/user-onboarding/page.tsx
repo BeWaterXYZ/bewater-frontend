@@ -1,13 +1,15 @@
-// import { Loading } from '@/components/loading/loading';
+'use client';
 import { useAuthStore } from '@/stores/auth';
+import { useRouter } from 'next/navigation';
 
 import { FormOnboarding } from './form/onboarding';
 
-import type { NextPage } from 'next';
-
-// Pass client to React Context Provider
-export const PageUserOnboarding: NextPage = () => {
+export const PageUserOnboarding = () => {
   const user = useAuthStore((s) => s.user);
+  const router = useRouter();
+  const onComplete = () => {
+    router.push('/user/settings');
+  };
   return (
     <>
       <div className="flex flex-col h-full justify-center items-center">
@@ -15,7 +17,7 @@ export const PageUserOnboarding: NextPage = () => {
           <div className="bg-gradient-to-r from-[#fc9e1c] to-[#f62584] bg-clip-text text-transparent heading-1">
             {'Welcome aboard,'}
           </div>
-          <FormOnboarding user={user} />
+          <FormOnboarding user={user} onComplete={onComplete} />
         </div>
       </div>
     </>

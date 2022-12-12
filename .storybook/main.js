@@ -4,7 +4,6 @@ module.exports = {
   reactDocgen: false,
   stories: [
     '../src/components/**/*.stories.@(jsx|tsx)',
-    '../src/pages/**/*.stories.@(jsx|tsx)',
     '../src/features/**/*.stories.@(jsx|tsx)',
     '../src/styles/**/*.stories.@(jsx|tsx)',
   ],

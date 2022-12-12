@@ -1,9 +1,9 @@
+'use client';
 import { useCallback, useState } from 'react';
 
 import { Input } from '@/components/form/input';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
-import useNavigator from '@/hooks/useNavigator';
 import { User } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 
@@ -11,9 +11,10 @@ import { useOnboardingForm, Inputs } from './use-onboarding-form';
 
 interface Props {
   user: User;
+  onComplete: () => void;
 }
 
-export const FormOnboarding = ({ user }: Props) => {
+export const FormOnboarding = ({ user, onComplete }: Props) => {
   const addToast = useToastStore((s) => s.add);
   const {
     register,
@@ -21,7 +22,6 @@ export const FormOnboarding = ({ user }: Props) => {
     formState: { errors },
   } = useOnboardingForm();
   const [isLoading, setIsLoading] = useState(false);
-  const navigator = useNavigator();
   const onSubmit = useCallback(
     (data: Inputs) => {
       setIsLoading(true);
@@ -41,7 +41,7 @@ export const FormOnboarding = ({ user }: Props) => {
               type: 'error',
             });
           } else {
-            navigator.goToUserSettings();
+            onComplete();
           }
         })
         .catch((error) => {
@@ -54,7 +54,7 @@ export const FormOnboarding = ({ user }: Props) => {
           });
         });
     },
-    [navigator, user, addToast],
+    [user, addToast],
   );
   return (
     <form method="post" onSubmit={handleSubmit(onSubmit)}>

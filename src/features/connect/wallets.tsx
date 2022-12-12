@@ -1,10 +1,11 @@
+'use client';
 import clsx from 'clsx';
 import { useToggle } from 'react-use';
 import { useConnect } from 'wagmi';
 
 import { Loading } from '@/components/loading';
 import { Logo } from '@/components/logos';
-import useNavigator from '@/hooks/useNavigator';
+// import useNavigator from '@/hooks/useNavigator';
 import { useAuthStore } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 import { useDialogStore } from '@/components/dialog/store';
@@ -12,6 +13,7 @@ import { useDialogStore } from '@/components/dialog/store';
 import { connectWallet, startSignMsgAndVerify } from './connect';
 
 import type { Connector } from 'wagmi';
+import { useRouter } from 'next/navigation';
 
 export function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
@@ -19,7 +21,8 @@ export function WalletOptions() {
   const clearToast = useToastStore((s) => s.clear);
   const setAuthState = useAuthStore((s) => s.setState);
   const [isLogining, setIsLogining] = useToggle(false);
-  const navigator = useNavigator();
+  // const navigator = useNavigator();
+  let router = useRouter();
   const { connectors } = useConnect();
 
   const onConnectorClick = async (connector: Connector) => {
@@ -46,9 +49,11 @@ export function WalletOptions() {
         });
 
         if (!userProfile) {
-          navigator.goToWelcome();
+          // navigator.goToWelcome();
+          router.push('/user/onboarding');
         } else {
-          navigator.goToUserSettings();
+          // navigator.goToUserSettings();
+          router.push('/user/settings');
         }
       }
     } catch (error) {
@@ -64,22 +69,18 @@ export function WalletOptions() {
 
   return (
     <>
-      <div className="w-[320px]">
+      <div className="min-h-[200px]">
         {connectors.map((connector, i) => (
           <button
             className={clsx(
-              'w-full h-12 border-t border-l border-r border-solid border-border flex flex-row items-center px-4 gap-x-4',
-              'hover:bg-border',
-              {
-                'rounded-t-md': i === 0,
-                'rounded-b-md border-b': i === connectors.length - 1,
-              },
+              ' w-full h-12 border border-solid border-day  flex flex-row justify-center items-center px-4 gap-x-4',
             )}
             key={connector.id}
             onClick={() => void onConnectorClick(connector)}
           >
-            <Logo code={connector.name} />
-            <span>{connector.name}</span>
+            {/* <Logo code={connector.name} /> */}
+            {/* <span className="body-2">{connector.name}</span> */}
+            <span className="body-2 text-day uppercase">Connect Wallet</span>
           </button>
         ))}
       </div>

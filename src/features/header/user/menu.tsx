@@ -1,3 +1,4 @@
+'use client';
 import Link from 'next/link';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
@@ -20,7 +21,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               walletAddress={user.walletAddress}
             />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content className="absolute top-[100%] rounded right-0 body-2 w-60 border border-border bg-white  shadow-border">
+          <NavigationMenu.Content className="absolute top-[100%] rounded right-0 body-2 w-60 border border-titanium bg-night  shadow-titanium">
             <div className="p-4">
               <p className="body-2">
                 {user.walletAddress?.substring(0, 8)} ...

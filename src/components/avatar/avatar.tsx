@@ -28,6 +28,8 @@ export const Avatar = ({
     >
       {src ? (
         <Image
+          width={size === 'large' ? 160 : 40}
+          height={size === 'large' ? 160 : 40}
           className="w-full h-full rounded-full cursor-pointer object-cover"
           src={src}
           alt="avatar"
