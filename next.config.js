@@ -9,8 +9,7 @@ const nextConfig = {
     appDir: true,
   },
   reactStrictMode: true,
-  // could be a bug in beta
-  optimizeFonts: false,
+
   // swcMinify: true,
 
   // // Disabling Next.js ESLint check with custom one as there is
