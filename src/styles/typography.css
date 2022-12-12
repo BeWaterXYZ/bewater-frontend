@@ -2,31 +2,31 @@
 
 @layer components {
   .heading-1 {
-    @apply font-mono text-[30px] leading-normal font-bold text-white;
+    @apply font-bw-serif text-[30px] leading-normal font-bold text-white;
   }
   .heading-2 {
-    @apply font-mono text-[26px] leading-normal font-bold text-white;
+    @apply font-bw-serif text-[26px] leading-normal font-bold text-white;
   }
   .heading-3 {
-    @apply font-mono text-[23px] leading-normal font-bold text-white;
+    @apply font-bw-serif text-[23px] leading-normal font-bold text-white;
   }
   .heading-4 {
-    @apply font-mono text-[20px] leading-normal font-bold text-white;
+    @apply font-bw-serif text-[20px] leading-normal font-bold text-white;
   }
   .heading-5 {
-    @apply font-mono text-[18px] leading-normal font-bold text-white;
+    @apply font-bw-serif text-[18px] leading-normal font-bold text-white;
   }
   .heading-6 {
-    @apply font-mono text-[16px] leading-normal font-bold text-white;
+    @apply font-bw-serif text-[16px] leading-normal font-bold text-white;
   }
 
   .body-1 {
-    @apply font-grotesk text-[16px] leading-normal font-medium text-white;
+    @apply font-bw-sans text-[16px] leading-normal font-medium text-white;
   }
   .body-2 {
-    @apply font-grotesk text-[14px] leading-normal font-normal text-white;
+    @apply font-bw-sans text-[14px] leading-normal font-normal text-white;
   }
   .body-3 {
-    @apply font-grotesk text-[12px] leading-normal font-normal text-white;
+    @apply font-bw-sans text-[12px] leading-normal font-normal text-white;
   }
 }

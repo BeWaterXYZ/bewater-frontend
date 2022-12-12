@@ -8,7 +8,6 @@ export default function Layout({
   children: React.ReactNode;
   params: { challengeId: string };
 }) {
-  console.log({ params });
   return (
     <div>
       <ChallengeHero />

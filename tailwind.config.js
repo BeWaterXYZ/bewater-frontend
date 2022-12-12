@@ -15,8 +15,8 @@ module.exports = {
     },
     extend: {
       fontFamily: {
-        mono: ['Space Mono', ...fontFamily.serif],
-        grotesk: ['Space Grotesk', ...fontFamily.sans],
+        'bw-serif': ['var(--font-serif)', ...fontFamily.serif],
+        'bw-sans': ['var(--font-sans)', ...fontFamily.sans],
       },
       colors: {
         // inspiration from  https://colornamer.robertcooper.me/
