@@ -8,15 +8,14 @@ import { User } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 
 import { useOnboardingForm, Inputs } from './use-onboarding-form';
-import { useRouter } from 'next/navigation';
 
 interface Props {
   user: User;
+  onComplete: () => void;
 }
 
-export const FormOnboarding = ({ user }: Props) => {
+export const FormOnboarding = ({ user, onComplete }: Props) => {
   const addToast = useToastStore((s) => s.add);
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -42,7 +41,7 @@ export const FormOnboarding = ({ user }: Props) => {
               type: 'error',
             });
           } else {
-            router.push('/user/settings');
+            onComplete();
           }
         })
         .catch((error) => {
