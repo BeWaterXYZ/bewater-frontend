@@ -9,6 +9,7 @@ const nextConfig = {
     appDir: true,
   },
   reactStrictMode: true,
+
   // swcMinify: true,
 
   // // Disabling Next.js ESLint check with custom one as there is
