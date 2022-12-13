@@ -23,6 +23,7 @@ module.exports = {
         night: '#04051B',
         day: '#00CCCC',
         titanium: '#E4E4E4',
+        ibis: '#24254E',
         danger: '#EB7E7E',
       },
       boxShadow: {
