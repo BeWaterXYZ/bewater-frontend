@@ -9,14 +9,12 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   const query = querySchema.parse(searchParams);
 
   return (
-    <div className="body-1 text-center">
-      <div className="container flex  p-4">
-        <div className="hidden md:block">
-          <FilterArea />
-        </div>
-        <div className="flex-1">
-          <ProjectList query={query} />
-        </div>
+    <div className="container flex p-4">
+      <div className="hidden md:block">
+        <FilterArea />
+      </div>
+      <div className="flex-1">
+        <ProjectList query={query} />
       </div>
     </div>
   );

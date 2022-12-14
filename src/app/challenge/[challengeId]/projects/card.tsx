@@ -1,13 +1,13 @@
-'use client';
-import * as AspectRatio from '@radix-ui/react-aspect-ratio';
+import { Aspect } from '@/components/aspect';
+
 export function Card() {
   let url =
     'https://source.unsplash.com/random/?Cryptocurrency&' + Math.random();
   return (
     <div>
-      <AspectRatio.Root ratio={4 / 3}>
+      <Aspect ratio={4 / 3}>
         <img src={url} alt="crypto" className="object-cover w-full h-full" />
-      </AspectRatio.Root>
+      </Aspect>
       <div className="p-4 bg-white/5 border-l border-r border-b border-ibis">
         <h2 className="heading-4">Awesome DeFi Idea</h2>
         <p className="body-3 text-gray-400 text-left">
