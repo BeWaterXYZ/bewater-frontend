@@ -26,7 +26,7 @@ export default function RootLayout({
       <head />
       <body>
         <QueryProvider>
-          <div className="h-[100vh] flex flex-col bg-night">
+          <div className="min-h-[100vh] flex flex-col bg-night">
             <Header />
             <div className="flex-1 ">{children}</div>
             <Footer />

@@ -23,10 +23,15 @@ module.exports = {
         night: '#04051B',
         day: '#00CCCC',
         titanium: '#E4E4E4',
+        ibis: '#24254E',
         danger: '#EB7E7E',
       },
       boxShadow: {
         border: '0px 0px 4px #E4E4E4',
+      },
+      gridTemplateColumns: {
+        300: 'repeat(auto-fit, minmax(300px, 1fr))',
+        100: 'repeat(auto-fit, minmax(100px, 1fr))',
       },
       animation: {
         'spin-ripple': 'ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;',
