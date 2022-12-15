@@ -8,7 +8,7 @@ export default function ChallengeIntro() {
 
       <div className="flex flex-wrap">
         <div className="w-full md:w-48">left</div>
-        <div className="w-full md:w-2/3">
+        <div className="w-full md:flex-1">
           <h3 className="heading-3 my-4">Description</h3>
           <p>
             Lorem ipsum is placeholder text commonly used in the graphic, print,
