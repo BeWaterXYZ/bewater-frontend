@@ -34,7 +34,7 @@ export const Input = React.forwardRef(function Input(
       ></input>
 
       <div
-        className={clsx('whitespace-nowrap body-2 py-1 text-danger', {
+        className={clsx('whitespace-nowrap body-4 py-1 text-danger', {
           invisible: !error,
         })}
       >

@@ -12,8 +12,8 @@ export function NavItem({ item }: NavItemProps) {
   return (
     <Link
       href={item.path ?? '/'}
-      className={clsx(' flex items-center h-full heading-5 outline-none ', {
-        'text-day border-b border-day': item.active,
+      className={clsx(' flex items-center h-full body-2 outline-none ', {
+        'text-day [text-shadow:0_0_10px_theme(colors.day)]': item.active,
       })}
     >
       {item.label}

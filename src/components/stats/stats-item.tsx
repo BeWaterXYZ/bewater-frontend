@@ -11,7 +11,7 @@ export const StatsItem = ({ title, description, type, className }: Props) => {
   return (
     <div
       className={clsx(
-        'flex flex-col gap-2 py-3 px-4 box-border border border-titanium border-solid bg-bw-back rounded-md w-full max-w-[192px] h-20 transition duration-[.15s] ease',
+        'flex flex-col gap-2 py-3 px-4 box-border border border-titanium border-solid bg-back rounded-md w-full max-w-[192px] h-20 transition duration-[.15s] ease',
         className,
       )}
     >

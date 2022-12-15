@@ -12,10 +12,10 @@ export default function MetaMaskNotSupportDialog(
   return (
     <div className="flex flex-col justify-center items-center ">
       <Logo className="w-12 h-12" code="metamask" />
-      <div className="heading-4 mt-5 mb-8 text-black">
+      <div className="heading-5 mt-5 mb-8 text-black">
         MetaMask is not found.
       </div>
-      <div className="body-1 text-black">
+      <div className="body-3 text-black">
         You can try to install through its official site.
       </div>
       <a
