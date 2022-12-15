@@ -8,7 +8,7 @@ const config = {
 export default config;
 
 export const Example = () => (
-  <>
+  <div className="bg-night">
     <div className="py-2">
       <h1 className="heading-1">The quick brown fox jumps over the lazy dog</h1>
     </div>
@@ -37,5 +37,5 @@ export const Example = () => (
     <div className="py-2">
       <p className="body-3">The quick brown fox jumps over the lazy dog</p>
     </div>
-  </>
+  </div>
 );

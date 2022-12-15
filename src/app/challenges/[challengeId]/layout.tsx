@@ -1,5 +1,5 @@
-import { ChallengeHero } from '@/features/challenges/hero';
-import { ChallengeNav } from '@/features/challenges/nav';
+import { ChallengeHero } from './hero';
+import { ChallengeNav } from './nav';
 
 export default function Layout({
   children,

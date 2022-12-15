@@ -20,6 +20,7 @@ interface State {
 interface Actions {
   isAuthed: () => boolean;
   setState: (state: Partial<State>) => void;
+  clear: () => void;
 }
 
 const dummyStorage = {
@@ -35,12 +36,15 @@ const dummyStorage = {
     console.log('remove', name);
   },
 };
+const init = {
+  token: '',
+  user: {},
+  expireAt: 0,
+};
 export const useAuthStore = create<State & Actions>()(
   persist(
     (set, get) => ({
-      token: '',
-      user: {},
-      expireAt: 0,
+      ...init,
       isAuthed: () => {
         return !!get().token && get().expireAt > Date.now();
       },
@@ -50,6 +54,9 @@ export const useAuthStore = create<State & Actions>()(
           const decodedToken = jwt.decode(state.token) as JwtPayload;
           set({ expireAt: (decodedToken.exp ?? 0) * 1000 });
         }
+      },
+      clear: () => {
+        set(init);
       },
     }),
     {

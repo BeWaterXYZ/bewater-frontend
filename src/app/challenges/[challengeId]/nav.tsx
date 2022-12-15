@@ -32,7 +32,7 @@ export function ChallengeNav({ challengeId }: { challengeId: string }) {
         return (
           <Link
             key={link.path}
-            href={`/challenge/${challengeId}${link.path}`}
+            href={`/challenges/${challengeId}${link.path}`}
             className={clsx('py-3 p-3 text-center', {
               'text-day border-b-2 border-day': isAcitve,
             })}
