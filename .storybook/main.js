@@ -79,19 +79,6 @@ module.exports = {
       loader: 'ts-loader',
     });
 
-    config.module.rules.push({
-      test: /\.woff2$/,
-      use: [
-        {
-          loader: 'file-loader',
-          // query: {
-          //   name: '[name].[ext]',
-          // },
-        },
-      ],
-      include: path.resolve(__dirname, '../'),
-    });
-
     return config;
   },
   staticDirs: ['../public'],
