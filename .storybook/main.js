@@ -4,7 +4,6 @@ module.exports = {
   reactDocgen: false,
   stories: [
     '../src/components/**/*.stories.@(jsx|tsx)',
-    '../src/features/**/*.stories.@(jsx|tsx)',
     '../src/styles/**/*.stories.@(jsx|tsx)',
     '../src/app/**/*.stories.@(jsx|tsx)',
   ],
@@ -78,6 +77,19 @@ module.exports = {
     config.module.rules.push({
       test: /\.tsx?$/,
       loader: 'ts-loader',
+    });
+
+    config.module.rules.push({
+      test: /\.woff2$/,
+      use: [
+        {
+          loader: 'file-loader',
+          // query: {
+          //   name: '[name].[ext]',
+          // },
+        },
+      ],
+      include: path.resolve(__dirname, '../'),
     });
 
     return config;
