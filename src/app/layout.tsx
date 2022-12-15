@@ -1,10 +1,10 @@
-import { Footer } from '@/features/footer';
-import { Header } from '@/features/header';
+import { Header } from '@/components/header';
 import '../styles/index.css';
 import { Dumpster } from './dumpster';
 import { QueryProvider } from './query';
 import { JetBrains_Mono } from '@next/font/google';
 import localFont from '@next/font/local';
+import { Footer } from '@/components/footer';
 
 const fontSans = JetBrains_Mono({
   variable: '--font-sans',

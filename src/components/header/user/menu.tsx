@@ -4,12 +4,18 @@ import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
 import { Avatar } from '@/components/avatar';
 
-import type { User } from '@/stores/auth';
+import { useAuthStore, User } from '@/stores/auth';
 
 interface UserMenuProps {
   user: User;
 }
 export const UserMenu = ({ user }: UserMenuProps) => {
+  const clearStore = useAuthStore((s) => s.clear);
+  const logout = () => {
+    // fix me
+    clearStore();
+    window.location.href = '/';
+  };
   return (
     <NavigationMenu.Root className="relative">
       <NavigationMenu.List className="list-none">
@@ -31,15 +37,21 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 )}
               </p>
             </div>
-            <ul className="font-medium">
+            <ul className="font-medium ">
               <li className="border-t p-4 py-2">
-                <Link href="/user/profile">Your Profile</Link>
+                <Link href="/user/profile" className="body-2">
+                  Your Profile
+                </Link>
               </li>
               <li className="border-t p-4 py-2">
-                <Link href="/user/settings">Account Settings</Link>
+                <Link href="/user/settings" className="body-2">
+                  Account Settings
+                </Link>
               </li>
               <li className="border-t p-4 py-2">
-                <Link href="/user/logout">Disconnect</Link>
+                <button className="body-2" onClick={logout}>
+                  Disconnect
+                </button>
               </li>
             </ul>
           </NavigationMenu.Content>

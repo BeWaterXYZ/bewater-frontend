@@ -7,15 +7,14 @@ import { Loading } from '@/components/loading';
 import { submitUpdateUserProfile } from '@/services/user';
 import { User } from '@/stores/auth';
 
-import { FormItem } from '../../components/form/form-item';
-import { Input } from '../../components/form/input';
-import { SocialLink } from '../../components/form/social-link';
-
 import type {
   GetUserProfileByIdResponse,
   UpdateUserProfileRequest,
 } from '@/types/user';
 import type { FieldValues } from 'react-hook-form';
+import { Input } from '@/components/form/input';
+import { FormItem } from '@/components/form';
+import { SocialLink } from '@/components/form/social-link';
 
 interface Props {
   user: User;
