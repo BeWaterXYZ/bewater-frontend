@@ -3,17 +3,34 @@ import { Header } from '@/features/header';
 import '../styles/index.css';
 import { Dumpster } from './dumpster';
 import { QueryProvider } from './query';
-import { Space_Grotesk, Space_Mono } from '@next/font/google';
+import { JetBrains_Mono } from '@next/font/google';
+import localFont from '@next/font/local';
 
-const fontSans = Space_Grotesk({
+const fontSans = JetBrains_Mono({
   variable: '--font-sans',
   subsets: ['latin'],
   weight: ['400', '500', '700'],
 });
-const fontSerif = Space_Mono({
+const fontSerif = localFont({
+  src: [
+    {
+      path: '../font/BasementGrotesque-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../font/BasementGrotesque-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../font/BasementGrotesque-Black.woff2',
+      weight: '900',
+      style: 'normal',
+    },
+  ],
+
   variable: '--font-serif',
-  subsets: ['latin'],
-  weight: ['400', '700'],
 });
 
 export default function RootLayout({
