@@ -16,7 +16,7 @@ export interface GetUserProfileByIdResponse {
   status: number;
   error: string[];
   userExist: boolean;
-  updatedUserInfo?: UserProfile;
+  userProfile?: UserProfile;
 }
 
 /** CreateUserProfile */
