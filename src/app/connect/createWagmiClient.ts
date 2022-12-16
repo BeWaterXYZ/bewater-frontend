@@ -1,4 +1,4 @@
-import { configureChains, createClient, defaultChains } from 'wagmi';
+import { configureChains, createClient, mainnet } from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
@@ -10,7 +10,7 @@ import { CONFIGS } from '@/config';
 
 export function createWagmiClient() {
   const { chains, provider, webSocketProvider } = configureChains(
-    defaultChains,
+    [mainnet],
     [
       alchemyProvider({ apiKey: CONFIGS.PROVIDER_ALCHEMY_KEY }),
       infuraProvider({ apiKey: CONFIGS.PROVIDER_INFURA_KEY }),
@@ -29,12 +29,12 @@ export function createWagmiClient() {
       //     appName: 'BeWater',
       //   },
       // }),
-      // new WalletConnectConnector({
-      //   chains,
-      //   options: {
-      //     qrcode: true,
-      //   },
-      // }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true,
+        },
+      }),
     ],
     provider,
     webSocketProvider,
