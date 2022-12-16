@@ -33,6 +33,7 @@
     "axios": "^1.0.0",
     "clsx": "^1.2.1",
     "color": "^4.2.3",
+    "encoding": "^0.1.13",
     "ethers": "^5.7.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
