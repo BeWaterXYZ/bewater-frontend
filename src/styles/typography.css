@@ -2,31 +2,53 @@
 
 @layer components {
   .heading-1 {
-    @apply font-bw-serif text-[30px] leading-normal font-bold text-white;
+    @apply font-primary text-[64px] leading-normal font-bold text-white;
   }
   .heading-2 {
-    @apply font-bw-serif text-[26px] leading-normal font-bold text-white;
+    @apply font-primary text-[48px] leading-normal font-bold text-white;
   }
   .heading-3 {
-    @apply font-bw-serif text-[23px] leading-normal font-bold text-white;
+    @apply font-primary text-[36px] leading-normal font-bold text-white;
   }
   .heading-4 {
-    @apply font-bw-serif text-[20px] leading-normal font-bold text-white;
+    @apply font-primary text-[30px] leading-normal font-bold text-white;
   }
   .heading-5 {
-    @apply font-bw-serif text-[18px] leading-normal font-bold text-white;
+    @apply font-primary text-[24px] leading-normal font-bold text-white;
   }
   .heading-6 {
-    @apply font-bw-serif text-[16px] leading-normal font-bold text-white;
+    @apply font-primary text-[20px] leading-normal font-bold text-white;
   }
 
   .body-1 {
-    @apply font-bw-sans text-[16px] leading-normal font-medium text-white;
+    @apply font-primary text-[18px] leading-normal font-medium text-white;
   }
   .body-2 {
-    @apply font-bw-sans text-[14px] leading-normal font-normal text-white;
+    @apply font-primary text-[16px] leading-normal font-normal text-white;
   }
   .body-3 {
-    @apply font-bw-sans text-[12px] leading-normal font-normal text-white;
+    @apply font-primary text-[14px] leading-normal font-normal text-white;
+  }
+  .body-4 {
+    @apply font-primary text-[12px] leading-normal font-normal text-white;
+  }
+  .body-5 {
+    @apply font-primary text-[10px] leading-normal font-normal text-white;
+  }
+
+  .mono-1 {
+    @apply font-secondary text-[18px] leading-normal font-medium text-white;
+  }
+  .mono-2 {
+    @apply font-secondary text-[16px] leading-normal font-normal text-white;
+  }
+  .mono-3 {
+    @apply font-secondary text-[14px] leading-normal font-normal text-white;
+  }
+  .mono-4 {
+    @apply font-secondary text-[12px] leading-normal font-normal text-white;
+  }
+  .mono-5 {
+    @apply font-secondary text-[10px] leading-normal font-normal text-white;
   }
 }

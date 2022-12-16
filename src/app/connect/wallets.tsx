@@ -25,6 +25,8 @@ export function WalletOptions() {
   let router = useRouter();
   const { connectors } = useConnect();
 
+  const connector = connectors.filter((c) => c.ready)[0];
+
   const onConnectorClick = async (connector: Connector) => {
     if (!connector.ready) {
       if (connector.id === 'metaMask') {
@@ -70,19 +72,17 @@ export function WalletOptions() {
   return (
     <>
       <div className="min-h-[200px]">
-        {connectors.map((connector, i) => (
-          <button
-            className={clsx(
-              ' w-full h-12 border border-solid border-day  flex flex-row justify-center items-center px-4 gap-x-4',
-            )}
-            key={connector.id}
-            onClick={() => void onConnectorClick(connector)}
-          >
-            {/* <Logo code={connector.name} /> */}
-            {/* <span className="body-2">{connector.name}</span> */}
-            <span className="body-2 text-day uppercase">Connect Wallet</span>
-          </button>
-        ))}
+        <button
+          className={clsx(
+            ' w-full h-12 border border-solid border-day  flex flex-row justify-center items-center px-4 gap-x-4',
+          )}
+          key={connector.id}
+          onClick={() => void onConnectorClick(connector)}
+        >
+          {/* <Logo code={connector.name} /> */}
+          {/* <span className="body-2">{connector.name}</span> */}
+          <span className="body-2 text-day uppercase">Connect Wallet</span>
+        </button>
       </div>
       {isLogining ? <Loading /> : null}
     </>

@@ -12,10 +12,10 @@ export default function ChallengePage() {
               <div className="grid gap-4 grid-cols-300">
                 <div className="flex flex-col justify-around py-4">
                   <div className="body-1">Jul 05, 2023 - Aug 07, 2023</div>
-                  <div className="body-1">点我看 challenge 详情</div>
+                  <div className="body-1">BUIDL IN PROGRESS </div>
                 </div>
                 <div className="flex flex-col justify-around py-4">
-                  <div className="body-1">Sample Online Challenge</div>
+                  <div className="body-1">click me goto challenges/123</div>
                   <div className="body-1">xxxx xxx xxxx</div>
                 </div>
                 <div>

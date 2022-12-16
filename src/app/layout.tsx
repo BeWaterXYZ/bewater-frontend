@@ -6,12 +6,7 @@ import { JetBrains_Mono } from '@next/font/google';
 import localFont from '@next/font/local';
 import { Footer } from '@/components/footer';
 
-const fontSans = JetBrains_Mono({
-  variable: '--font-sans',
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-});
-const fontSerif = localFont({
+const fontPrimary = localFont({
   src: [
     {
       path: '../font/BasementGrotesque-Regular.woff2',
@@ -30,16 +25,23 @@ const fontSerif = localFont({
     },
   ],
 
-  variable: '--font-serif',
+  variable: '--font-primary',
 });
-
+const fontSecondary = JetBrains_Mono({
+  variable: '--font-secondary',
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${fontSans.variable} ${fontSerif.variable}`}>
+    <html
+      lang="en"
+      className={`${fontSecondary.variable} ${fontPrimary.variable}`}
+    >
       <head />
       <body>
         <QueryProvider>

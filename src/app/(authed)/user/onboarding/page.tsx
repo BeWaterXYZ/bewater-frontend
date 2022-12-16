@@ -12,11 +12,9 @@ export default function Page() {
   };
   return (
     <>
-      <div className="flex flex-col h-full justify-center items-center  md:mt-20">
-        <div className="w-[280px] flex flex-col">
-          <div className="bg-gradient-to-r from-[#fc9e1c] to-[#f62584] bg-clip-text text-transparent heading-1">
-            {'Welcome aboard,'}
-          </div>
+      <div className="flex flex-col h-full justify-center items-center  md:my-20">
+        <div className="md:w-[450px]  flex flex-col">
+          <h5 className="text-day  heading-5 my-4">Welcome aboard,</h5>
           <FormOnboarding user={user} onComplete={onComplete} />
         </div>
       </div>

@@ -57,7 +57,13 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
     [user, addToast],
   );
   return (
-    <form method="post" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      method="post"
+      onSubmit={handleSubmit(onSubmit)}
+      className="bg-gray-500/20 p-7 rounded"
+    >
+      <p className="body-2 py-4">Set up your basic profile</p>
+
       <Input
         label="Username"
         placeholder="Enter your username"
@@ -76,7 +82,7 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
         error={errors['email']}
         {...register('email')}
       />
-      <button className="btn btn-primary">Finish Setup</button>
+      <button className="btn btn-primary w-full">Finish Setup</button>
       {isLoading ? <Loading /> : null}
     </form>
   );

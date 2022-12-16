@@ -17,7 +17,7 @@ const Template: ComponentStory<typeof HeaderImpl> = (args) => {
 
 export const Normal = Template.bind({});
 Normal.args = {
-  logo: <div>this is logo</div>,
-  nav: <div>this is nav</div>,
-  user: <div>this is user</div>,
+  logo: <div className="body-3">this is logo</div>,
+  nav: <div className="body-3">this is nav</div>,
+  user: <div className="body-3">this is user</div>,
 };

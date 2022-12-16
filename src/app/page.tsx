@@ -5,7 +5,7 @@ export default function Home() {
     <div>
       <div className="text-center h-[400px] flex justify-center items-center ">
         <Link href="/challenges" className="body-2 ">
-          点我去看看 challenge 吧
+          go to /challenges
         </Link>
       </div>
     </div>
