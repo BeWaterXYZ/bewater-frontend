@@ -35,7 +35,7 @@ export const FormUserSettings = ({
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: data?.updatedUserInfo,
+    defaultValues: data?.userProfile,
   });
   const [isLoading, setIsLoading] = useState(false);
   const onSubmit = useCallback(
@@ -57,7 +57,7 @@ export const FormUserSettings = ({
     },
     [user],
   );
-  console.log(data?.updatedUserInfo);
+  console.log(data?.userProfile);
   return (
     <form
       method="post"
