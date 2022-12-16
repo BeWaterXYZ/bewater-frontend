@@ -3,8 +3,10 @@
 import {
   usePathname,
   useRouter,
+  useSearchParams,
   useSelectedLayoutSegments,
 } from 'next/navigation';
+import { useQueryBuilder } from './query';
 
 {
   /* <button
@@ -17,43 +19,62 @@ import {
 }
 
 export function FilterArea() {
-  let router = useRouter();
-  let segments = useSelectedLayoutSegments();
-  console.log({ segments });
+  let { toggle, isOn } = useQueryBuilder();
 
-  const pathname = usePathname();
-  console.log({ pathname });
+  let onToggle = (key: string, value: string) => () => {
+    toggle(key, value);
+  };
 
   return (
     <div className="w-64 text-left">
-      <div className="body-2">Filter</div>
+      <div className="body-2 mb-4">Filter</div>
       <div className="my-2">
-        <p className="body-3 uppercase ">Status</p>
+        <p className="body-3 uppercase my-3 ">Status</p>
         <div>
-          <label className="body-3 flex items-center">
-            <input className="m-1" type="checkbox"></input>
+          <label className="body-3 flex items-center my-1">
+            <input
+              className="m-1"
+              type="checkbox"
+              checked={isOn('status', 'WIP')}
+              onChange={onToggle('status', 'WIP')}
+            ></input>
             WIP
           </label>
         </div>
         <div>
-          <label className="body-3 flex items-center">
-            <input className="m-1" type="checkbox"></input>
+          <label className="body-3 flex items-center  my-1">
+            <input
+              className="m-1"
+              type="checkbox"
+              checked={isOn('status', 'finished')}
+              onChange={onToggle('status', 'finished')}
+            ></input>
             Finished
           </label>
         </div>
       </div>
 
       <div className="my-2">
-        <p className="body-3 uppercase">Tags</p>
+        <p className="body-3 uppercase my-3">Tags</p>
         <div>
-          <label className="body-3 flex items-center">
-            <input className="m-1" type="checkbox"></input>
+          <label className="body-3 flex items-center  my-1">
+            <input
+              className="m-1"
+              type="checkbox"
+              checked={isOn('tag', 'GameFi')}
+              onChange={onToggle('tag', 'GameFi')}
+            ></input>
             GameFi
           </label>
         </div>
         <div>
-          <label className="body-3 flex items-center">
-            <input className="m-1" type="checkbox"></input>
+          <label className="body-3 flex items-center  my-1">
+            <input
+              className="m-1"
+              type="checkbox"
+              checked={isOn('tag', 'SocialFi')}
+              onChange={onToggle('tag', 'SocialFi')}
+            ></input>
             SocialFi
           </label>
         </div>
