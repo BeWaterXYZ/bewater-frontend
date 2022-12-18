@@ -1,31 +1,35 @@
 'use client';
 import { AvatarWithEditor } from '@/components/avatar';
+import { Loading } from '@/components/loading';
+import { useFetchUser } from '@/services/user';
 import { useAuthStore } from '@/stores/auth';
 
-import { FormSettingsWrapper } from './form-settings';
+import { FormUserSettings } from './form/form-settings';
 
 export default function Page() {
   const user = useAuthStore((s) => s.user);
 
+  const { error, data, isLoading } = useFetchUser(user.userId);
+
+  if (isLoading) return <Loading />;
+
+  if (error) {
+    console.error(error);
+    return <div>Error occurs!</div>;
+  }
+
   return (
     <div className="flex flex-row h-full container flex-wrap">
-      <div className="w-full  md:w-1/3  pt-10 border-none md:border-r md:border-solid border-titanium flex flex-col items-center">
+      <div className="w-full  md:w-1/3  pt-10  flex flex-col items-center">
         <div className="w-full flex flex-col justify-center items-center">
           <AvatarWithEditor
-            walletAddress={user.walletAddress}
-            src={user?.avatarURI}
-          />
-        </div>
-        <div>
-          <div>Bio</div>
-          <textarea
-            className="mt-2 h-20 p-4 border border-solid border-titanium"
-            placeholder="Some One’s super legit introduction / bio."
+            walletAddress={data?.userProfile?.walletAddress}
+            src={data?.userProfile?.avatarURI}
           />
         </div>
       </div>
       <div className="w-full md:w-2/3 pt-10 md:pl-16">
-        <FormSettingsWrapper user={user} />
+        <FormUserSettings user={user} data={data!} />
       </div>
     </div>
   );

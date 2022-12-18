@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useId } from 'react';
 import clsx from 'clsx';
-
 import type { FieldError } from 'react-hook-form';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.ComponentPropsWithRef<'input'> {
   label?: string;
   name: string;
   error?: FieldError;
@@ -16,15 +15,17 @@ export const Input = React.forwardRef(function Input(
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {
   const { label, name, error, className, required, ...restProps } = props;
+  const id = useId();
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
-        <label className="block body-3 py-1">
+        <label className="block body-3 py-1" htmlFor={id}>
           {label}
           {required && ' *'}
         </label>
       ) : null}
       <input
+        id={id}
         className={clsx('input', {
           error: error,
         })}
