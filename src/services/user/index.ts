@@ -46,15 +46,16 @@ export async function submitUpdateUserProfile({
   userId,
   userName,
   email,
-  avatarURI,
-  walletAddress,
+  fullName,
 }: UpdateUserProfileRequest) {
-  const { data } = await agentAuthed.put<UpdateUserProfileResponse>('/user', {
-    userId,
-    userName,
-    email,
-    avatarURI,
-    walletAddress,
-  });
+  const { data } = await agentAuthed.put<UpdateUserProfileResponse>(
+    `/user/${userId}`,
+    {
+      userId,
+      userName,
+      email,
+      fullName,
+    },
+  );
   return data;
 }

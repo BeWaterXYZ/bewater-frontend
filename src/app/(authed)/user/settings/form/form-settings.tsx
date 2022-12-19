@@ -52,7 +52,6 @@ export const FormUserSettings = ({ data, className }: FormProfileProps) => {
     <form
       method="post"
       className={clsx('', className)}
-      // eslint-disable-next-line
       onSubmit={handleSubmit(onSubmit)}
     >
       <p className="body-1">Edit your profile</p>
@@ -68,16 +67,16 @@ export const FormUserSettings = ({ data, className }: FormProfileProps) => {
         label="Full name"
         placeholder="Enter your full name"
         required
-        error={errors['email']}
-        {...register('email', { required: 'Full name is required.' })}
+        error={errors['fullName']}
+        {...register('fullName', { required: 'Full name is required.' })}
       />
       <TextArea
         label="Bio"
         rows={3}
         placeholder="Content"
         required
-        error={errors['email']}
-        {...register('email', { required: 'Full name is required.' })}
+        error={errors['bio']}
+        {...register('bio', { required: 'Bio is required.' })}
       />
       <Input
         name="address"
@@ -97,7 +96,9 @@ export const FormUserSettings = ({ data, className }: FormProfileProps) => {
       <SocialLink name="discord" label="Discord" />
       <SocialLink name="twitter" label="Twitter" />
 
-      <button className="btn btn-primary">Save Changes</button>
+      <button className="btn btn-primary" type="submit">
+        Save Changes
+      </button>
       {isLoading ? <Loading /> : null}
     </form>
   );
