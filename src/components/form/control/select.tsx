@@ -2,19 +2,24 @@ import React, { useId } from 'react';
 import clsx from 'clsx';
 import type { FieldError } from 'react-hook-form';
 
-interface Props extends React.ComponentPropsWithRef<'textarea'> {
+interface Props extends React.ComponentPropsWithRef<'select'> {
   label?: string;
-  name: string;
+  name?: string;
   error?: FieldError;
   required?: boolean;
   className?: string;
+  options: {
+    label: string;
+    value: string;
+  }[];
 }
 
-export const TextArea = React.forwardRef(function TextArea(
+export const Select = React.forwardRef(function TextArea(
   props: Props,
-  ref: React.ForwardedRef<HTMLTextAreaElement>,
+  ref: React.ForwardedRef<HTMLSelectElement>,
 ) {
-  const { label, name, error, className, required, ...restProps } = props;
+  const { options, label, name, error, className, required, ...restProps } =
+    props;
   const id = useId();
   return (
     <div className={clsx('block pb-2', className)}>
@@ -24,7 +29,7 @@ export const TextArea = React.forwardRef(function TextArea(
           {required && ' *'}
         </label>
       ) : null}
-      <textarea
+      <select
         id={id}
         className={clsx('control', {
           error: error,
@@ -32,7 +37,13 @@ export const TextArea = React.forwardRef(function TextArea(
         ref={ref}
         {...restProps}
         name={name}
-      ></textarea>
+      >
+        {options.map((op) => (
+          <option key={op.value} value={op.value}>
+            {op.label}
+          </option>
+        ))}
+      </select>
 
       <div
         className={clsx('whitespace-nowrap body-4 py-1 text-danger', {

@@ -26,7 +26,7 @@ export const Input = React.forwardRef(function Input(
       ) : null}
       <input
         id={id}
-        className={clsx('input', {
+        className={clsx('control', {
           error: error,
         })}
         ref={ref}
