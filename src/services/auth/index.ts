@@ -1,11 +1,31 @@
 import { agentAnon } from '../agent';
 
-import type {
-  GetLoginMessageRequest,
-  GetLoginMessageResponse,
-  VerifySignedMessageRequest,
-  VerifySignedMessageResponse,
-} from '@/types/auth';
+import { APIResponse } from '@/types/response';
+import { UserProfile } from '../user';
+
+/** GetLoginMessage */
+export interface GetLoginMessageRequest {
+  walletAddress: string;
+  chain: string;
+  network?: string;
+}
+
+export interface GetLoginMessageResponse extends APIResponse {
+  message: string;
+}
+
+/** VerifySignedMessage */
+export interface VerifySignedMessageRequest {
+  network?: string;
+  signature: string;
+  message: string;
+}
+
+export interface VerifySignedMessageResponse extends APIResponse {
+  token: string;
+  userId: string;
+  userProfile?: UserProfile;
+}
 
 export async function submitGetLoginMessage({
   walletAddress,

@@ -2,13 +2,12 @@ import clsx from 'clsx';
 import { useState, useCallback } from 'react';
 
 import { Loading } from '@/components/loading';
-import { submitUpdateUserProfile } from '@/services/user';
+import {
+  GetUserProfileByIdResponse,
+  submitUpdateUserProfile,
+} from '@/services/user';
 import { User } from '@/stores/auth';
 
-import type {
-  GetUserProfileByIdResponse,
-  UpdateUserProfileRequest,
-} from '@/types/user';
 import type { FieldValues } from 'react-hook-form';
 import { Input, TextArea } from '@/components/form/control';
 import { SocialLink } from '@/components/form/social-link';
@@ -19,10 +18,8 @@ interface Props {
   data: GetUserProfileByIdResponse;
   className?: string;
 }
-type FormProfileProps = Pick<Props, 'user' | 'data' | 'className'>;
-type FormProfileWrapProps = Pick<Props, 'user' | 'className'>;
 
-export const FormUserSettings = ({ data, className }: FormProfileProps) => {
+export const FormUserSettings = ({ data, className }: Props) => {
   const {
     register,
     handleSubmit,
@@ -36,8 +33,8 @@ export const FormUserSettings = ({ data, className }: FormProfileProps) => {
     setIsLoading(true);
     submitUpdateUserProfile({
       ...submitData,
-      userId: data?.userProfile?.userId,
-    } as UpdateUserProfileRequest)
+      userId: data?.userProfile?.userId!,
+    })
       .then(() => {
         // TODO: make some success alert?
       })
