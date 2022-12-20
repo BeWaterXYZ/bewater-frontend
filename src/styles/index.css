@@ -7,7 +7,7 @@
 @import './typography.css';
 
 @import '../components/dialog/dialog.css';
-@import '../components/form/input/input.css';
+@import '../components/form/control/control.css';
 
 @import 'tailwindcss/utilities';
 @import './utilities.css';

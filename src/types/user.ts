@@ -38,6 +38,7 @@ export interface CreateUserProfileResponse {
 export interface UpdateUserProfileRequest {
   userId: string;
   userName?: string | undefined;
+  fullName?: string | undefined;
   email?: string | undefined;
   walletAddress?: string | undefined;
   avatarURI?: string | undefined;
@@ -46,5 +47,5 @@ export interface UpdateUserProfileRequest {
 export interface UpdateUserProfileResponse {
   status: number;
   error: string[];
-  updatedUserInfo: UserProfile | undefined;
+  userProfile: UserProfile | undefined;
 }

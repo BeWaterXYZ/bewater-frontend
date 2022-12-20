@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useState } from 'react';
 
-import { Input } from '@/components/form/input';
+import { Input } from '@/components/form/control';
 import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
 import { User } from '@/stores/auth';

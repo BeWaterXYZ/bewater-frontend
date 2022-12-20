@@ -1,9 +1,9 @@
 @layer components {
-  .input {
-    @apply block body-3 h-9 px-4 box-border border border-solid border-titanium/30 bg-night
+  .control {
+    @apply block body-3 py-2 px-2 box-border border border-solid border-titanium/20 bg-night
     rounded-sm w-full  mr-4 transition duration-[.15s]
     ease-in-out  text-white
-    hover:border-gray-400 focus:border-gray-600 focus:outline-none;
+    hover:border-gray-400 focus:border-gray-400 focus:outline-none;
     &[disabled] {
       @apply cursor-not-allowed pointer-events-none text-opacity-30 bg-gray-300;
     }

@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useId } from 'react';
 import clsx from 'clsx';
-
 import type { FieldError } from 'react-hook-form';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.ComponentPropsWithRef<'textarea'> {
   label?: string;
   name: string;
   error?: FieldError;
@@ -11,27 +10,29 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-export const Input = React.forwardRef(function Input(
+export const TextArea = React.forwardRef(function TextArea(
   props: Props,
-  ref: React.ForwardedRef<HTMLInputElement>,
+  ref: React.ForwardedRef<HTMLTextAreaElement>,
 ) {
   const { label, name, error, className, required, ...restProps } = props;
+  const id = useId();
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
-        <label className="block body-3 py-1">
+        <label className="block body-3 py-1" htmlFor={id}>
           {label}
           {required && ' *'}
         </label>
       ) : null}
-      <input
-        className={clsx('input', {
+      <textarea
+        id={id}
+        className={clsx('control', {
           error: error,
         })}
         ref={ref}
         {...restProps}
         name={name}
-      ></input>
+      ></textarea>
 
       <div
         className={clsx('whitespace-nowrap body-4 py-1 text-danger', {
