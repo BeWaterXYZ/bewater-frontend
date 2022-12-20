@@ -1,7 +1,6 @@
 import clsx from 'clsx';
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
-import { Loading } from '@/components/loading';
 import {
   GetUserProfileByIdResponse,
   submitUpdateUserProfile,
@@ -12,6 +11,8 @@ import type { FieldValues } from 'react-hook-form';
 import { Input, TextArea } from '@/components/form/control';
 import { SocialLink } from '@/components/form/social-link';
 import { useSettingsForm } from './use-settings-form';
+import { useToastStore } from '@/components/toast/store';
+import { useLoadingStoreAction } from '@/components/loading/store';
 
 interface Props {
   user: User;
@@ -20,6 +21,8 @@ interface Props {
 }
 
 export const FormUserSettings = ({ data, className }: Props) => {
+  const addToast = useToastStore((s) => s.add);
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
   const {
     register,
     handleSubmit,
@@ -28,21 +31,24 @@ export const FormUserSettings = ({ data, className }: Props) => {
     defaultValues: data?.userProfile,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
   const onSubmit = useCallback((submitData: FieldValues) => {
-    setIsLoading(true);
+    showLoading();
     submitUpdateUserProfile({
       ...submitData,
       userId: data?.userProfile?.userId!,
     })
       .then(() => {
         // TODO: make some success alert?
+        addToast({
+          title: 'Saved!',
+          type: 'success',
+        });
       })
       .catch((error) => {
         console.error(error);
       })
       .finally(() => {
-        setIsLoading(false);
+        dismissLoading();
       });
   }, []);
   return (
@@ -51,8 +57,11 @@ export const FormUserSettings = ({ data, className }: Props) => {
       className={clsx('', className)}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <p className="body-1">Edit your profile</p>
-      <hr className="border-titanium/20 my-4" />
+      <p className="heading-6">Edit your profile</p>
+
+      <hr className="border-titanium/20 my-6" />
+
+      <p className="body-2 text-gray-400/30 my-6">Basic Information</p>
       <Input
         label="Username"
         placeholder="Enter your username"
@@ -81,6 +90,7 @@ export const FormUserSettings = ({ data, className }: Props) => {
         value={data?.userProfile?.walletAddress}
         placeholder=""
         readOnly
+        disabled
       />
       <Input
         label="Email"
@@ -89,14 +99,13 @@ export const FormUserSettings = ({ data, className }: Props) => {
         error={errors['email']}
         {...register('email', { required: 'Email is required.' })}
       />
-      <SocialLink name="github" label="Github" />
+      {/* <SocialLink name="github" label="Github" />
       <SocialLink name="discord" label="Discord" />
-      <SocialLink name="twitter" label="Twitter" />
+      <SocialLink name="twitter" label="Twitter" /> */}
 
       <button className="btn btn-primary" type="submit">
         Save Changes
       </button>
-      {isLoading ? <Loading /> : null}
     </form>
   );
 };

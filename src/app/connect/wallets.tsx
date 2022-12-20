@@ -1,11 +1,7 @@
 'use client';
 import clsx from 'clsx';
-import { useToggle } from 'react-use';
 import { useConnect } from 'wagmi';
 
-import { Loading } from '@/components/loading';
-import { Logo } from '@/components/logos';
-// import useNavigator from '@/hooks/useNavigator';
 import { useAuthStore } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 import { useDialogStore } from '@/components/dialog/store';
@@ -13,16 +9,16 @@ import { useDialogStore } from '@/components/dialog/store';
 import { connectWallet, startSignMsgAndVerify } from './connect';
 
 import type { Connector } from 'wagmi';
-import { useRouter } from 'next/navigation';
+import { useLoadingStoreAction } from '@/components/loading/store';
+import { useNavigator } from '@/hooks/useNavigator';
 
 export function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
   const openDialog = useDialogStore((s) => s.open);
   const clearToast = useToastStore((s) => s.clear);
   const setAuthState = useAuthStore((s) => s.setState);
-  const [isLogining, setIsLogining] = useToggle(false);
-  // const navigator = useNavigator();
-  let router = useRouter();
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
+  const navigator = useNavigator();
   const { connectors } = useConnect();
 
   const connector = connectors.filter((c) => c.ready)[0];
@@ -37,7 +33,7 @@ export function WalletOptions() {
     }
     try {
       clearToast();
-      setIsLogining(true);
+      showLoading();
       const { address, chainId } = await connectWallet(connector);
       if (address && chainId) {
         const { token, userId, userProfile } = await startSignMsgAndVerify(
@@ -51,11 +47,9 @@ export function WalletOptions() {
         });
 
         if (!userProfile) {
-          // navigator.goToWelcome();
-          router.push('/user/onboarding');
+          navigator.goToWelcome();
         } else {
-          // navigator.goToUserSettings();
-          router.push('/user/settings');
+          navigator.gotAfterConnect();
         }
       }
     } catch (error) {
@@ -65,7 +59,7 @@ export function WalletOptions() {
         type: 'error',
       });
     } finally {
-      setIsLogining(false);
+      dismissLoading();
     }
   };
 
@@ -84,7 +78,6 @@ export function WalletOptions() {
           <span className="body-2 text-day uppercase">Connect Wallet</span>
         </button>
       </div>
-      {isLogining ? <Loading /> : null}
     </>
   );
 }

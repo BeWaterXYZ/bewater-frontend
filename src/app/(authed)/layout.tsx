@@ -6,7 +6,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  useRequireAuthed();
+  const isAuthed = useRequireAuthed();
 
-  return children;
+  return isAuthed ? children : null;
 }

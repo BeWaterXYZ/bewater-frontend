@@ -9,8 +9,6 @@ const paramSchema = z.object({
 });
 
 export default async function ChallengeIntro({ params }: any) {
-  console.log({ params });
-
   const { challengeId } = paramSchema.parse(params);
   const challenge = await getChallengeById(challengeId);
 

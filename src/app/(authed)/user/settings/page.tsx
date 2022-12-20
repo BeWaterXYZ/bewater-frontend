@@ -1,7 +1,7 @@
 'use client';
 import { AvatarWithEditor } from '@/components/avatar';
 import { Select } from '@/components/form/control';
-import { Loading } from '@/components/loading';
+import { useLoadingWhen } from '@/components/loading/store';
 import { useFetchUser } from '@/services/user';
 import { useAuthStore } from '@/stores/auth';
 
@@ -12,7 +12,9 @@ export default function Page() {
 
   const { error, data, isLoading } = useFetchUser(user.userId);
 
-  if (isLoading) return <Loading />;
+  useLoadingWhen(isLoading);
+
+  if (isLoading) return null;
 
   if (error) {
     console.error(error);
@@ -55,10 +57,8 @@ export default function Page() {
                 '#Swift',
                 '#Rust',
                 '#TypeScript',
-                '#React',
-                '#Swift',
-                '#Rust',
-                '#TypeScript',
+                '#ReactNative',
+                '#SwiftUI',
               ].map((skill) => {
                 return (
                   <span

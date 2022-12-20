@@ -2,10 +2,12 @@ import { useCallback } from 'react';
 
 import { isBrowser } from '@/constants';
 
-import useQueryAwareRouter from './useQueryAwareRouter';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
-export default function useNavigator() {
-  const router = useQueryAwareRouter();
+export function useNavigator() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const goToUserProfile = useCallback(() => {
     isBrowser && void router.push('/user/profile');
@@ -16,8 +18,11 @@ export default function useNavigator() {
   }, [router]);
 
   const goToConnectWallet = useCallback(() => {
-    isBrowser && void router.push('/connect');
-  }, [router]);
+    void router.push(
+      '/connect' + '?redirect=' + encodeURIComponent(pathname ?? ''),
+      {},
+    );
+  }, [router, pathname]);
 
   const goToWelcome = useCallback(() => {
     isBrowser && void router.push('/user/onboarding');
@@ -27,11 +32,17 @@ export default function useNavigator() {
     isBrowser && window.open(url);
   }, []);
 
+  const gotAfterConnect = useCallback(() => {
+    let goto = searchParams.get('redirect') ?? '/user/settings';
+    router.push(goto);
+  }, [router]);
+
   return {
     goToExternal,
     goToUserProfile,
     goToUserSettings,
     goToConnectWallet,
     goToWelcome,
+    gotAfterConnect,
   };
 }
