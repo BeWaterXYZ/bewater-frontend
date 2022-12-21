@@ -44,6 +44,8 @@ export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
     {
+      cache: 'force-cache',
+      next: { revalidate: 10 },
       params: {
         startTime: '2022-01-01T19:54:35.308Z',
         endTime: '2023-12-20T19:54:35.308Z',
@@ -56,6 +58,10 @@ export async function getChallenges() {
 export async function getChallengeById(challengeId: string) {
   const { data } = await agentAnon.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
+    {
+      cache: 'force-cache',
+      next: { revalidate: 10 },
+    },
   );
   return data.challenge;
 }

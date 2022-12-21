@@ -2,11 +2,7 @@ import { Aspect } from '@/components/aspect';
 import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
 
-import * as z from 'zod';
-
-const paramSchema = z.object({
-  challengeId: z.string(),
-});
+import { paramSchema } from '../param-schema';
 
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = paramSchema.parse(params);
@@ -38,6 +34,8 @@ export default async function ChallengeIntro({ params }: any) {
               <li key={r}>{r}</li>
             ))}
           </ul>
+          <h3 className="heading-3 my-4">Location</h3>
+          <p>{challenge.location}</p>
 
           <h3 className="heading-3 my-4">Speaker & Judges</h3>
           <div className="grid gap-5 grid-cols-100">
