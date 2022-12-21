@@ -27,6 +27,6 @@ const generateHSL = (name: string): HSL => {
   return [h, s, l];
 };
 
-export const useRandomColor = (str: string) => {
+export const getRandomColor = (str: string) => {
   return Color.hsl(generateHSL(str)).hex();
 };

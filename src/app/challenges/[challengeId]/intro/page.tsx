@@ -1,37 +1,47 @@
 import { Aspect } from '@/components/aspect';
+import { getChallengeById, getChallenges } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
 
-export default function ChallengeIntro() {
+import { paramSchema } from '../param-schema';
+
+export default async function ChallengeIntro({ params }: any) {
+  const { challengeId } = paramSchema.parse(params);
+  const challenge = await getChallengeById(challengeId);
+
   return (
     <div className="container  p-4 body-1">
       <div className="body-1 text-center bg-cyan-400 h-20">time schedule</div>
 
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-48">left</div>
-        <div className="w-full md:flex-1">
+      <div className="block md:grid gap-5 grid-cols-[minmax(0,_1fr),minmax(0,_2fr)]">
+        <div className="">
+          <h3 className="heading-3 my-4">Awards</h3>
+          <div className="break-words">{JSON.stringify(challenge.awards)}</div>
+
+          <div className="max-w-full">
+            <h3 className="heading-3 my-4">Sponsor</h3>
+            <div className="break-words">
+              {JSON.stringify(challenge.sponsors)}
+            </div>
+          </div>
+        </div>
+        <div className="">
           <h3 className="heading-3 my-4">Description</h3>
-          <p>
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing for previewing layouts and visual mockups like this.
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing for previewing layouts and visual mockups like this
-            ...
-          </p>
+          <p>{challenge.description}</p>
 
           <h3 className="heading-3 my-4">Requirements</h3>
-          <p>
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing for previewing layouts and visual mockups like this.
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing for previewing layouts and visual mockups like this
-            ...
-          </p>
+          <ul>
+            {challenge.requirements.map((r) => (
+              <li key={r}>{r}</li>
+            ))}
+          </ul>
+          <h3 className="heading-3 my-4">Location</h3>
+          <p>{challenge.location}</p>
 
           <h3 className="heading-3 my-4">Speaker & Judges</h3>
           <div className="grid gap-5 grid-cols-100">
-            {new Array(8).fill(0).map((_, index) => {
+            {challenge.judges.map((judge) => {
               return (
-                <div key={index}>
+                <div key={judge.id} className="max-w-xs">
                   <Aspect ratio={1 / 1}>
                     <img
                       src={unsplash('women')}
@@ -39,10 +49,8 @@ export default function ChallengeIntro() {
                       alt=""
                     />
                   </Aspect>
-                  <p className="body-3">Mila Yakonvenko</p>
-                  <p className="body-3 text-gray-400">
-                    Designer @ Crypto Capital
-                  </p>
+                  <p className="body-3">{judge.name}</p>
+                  <p className="body-3 text-gray-400">{judge.organization}</p>
                 </div>
               );
             })}
@@ -51,4 +59,11 @@ export default function ChallengeIntro() {
       </div>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const challenges = await getChallenges();
+  return challenges.map((c) => ({
+    challengeId: c.id,
+  }));
 }

@@ -1,13 +1,13 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 import { Input } from '@/components/form/control';
-import { Loading } from '@/components/loading';
 import { submitCreateUserProfile } from '@/services/user';
 import { User } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 
 import { useOnboardingForm, Inputs } from './use-onboarding-form';
+import { useLoadingStoreAction } from '@/components/loading/store';
 
 interface Props {
   user: User;
@@ -16,42 +16,33 @@ interface Props {
 
 export const FormOnboarding = ({ user, onComplete }: Props) => {
   const addToast = useToastStore((s) => s.add);
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useOnboardingForm();
-  const [isLoading, setIsLoading] = useState(false);
   const onSubmit = useCallback(
     (data: Inputs) => {
-      setIsLoading(true);
+      showLoading();
       submitCreateUserProfile({
         ...data,
         userId: user.userId!,
         walletAddress: user.walletAddress!,
       })
         .then((res) => {
-          if (res.status !== 200) {
-            setIsLoading(false);
-            addToast({
-              title: 'An error occurs',
-              description:
-                res?.error[0] ??
-                'Create user failed, please visit the site later',
-              type: 'error',
-            });
-          } else {
-            onComplete();
-          }
+          onComplete();
         })
         .catch((error) => {
           console.error(error);
-          setIsLoading(false);
           addToast({
             title: 'An error occurs',
             description: 'Create user failed, please visit the site later',
             type: 'error',
           });
+        })
+        .finally(() => {
+          dismissLoading();
         });
     },
     [user, addToast],
@@ -83,7 +74,6 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
         {...register('email')}
       />
       <button className="btn btn-primary w-full">Finish Setup</button>
-      {isLoading ? <Loading /> : null}
     </form>
   );
 };

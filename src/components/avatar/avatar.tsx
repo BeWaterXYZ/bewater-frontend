@@ -1,6 +1,6 @@
+import { getRandomColor } from '@/utils/random-color';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useRandomColor } from '@/hooks/useRandomColor';
 
 interface Props {
   walletAddress?: string;
@@ -17,7 +17,7 @@ export const Avatar = ({
   className,
   onClick,
 }: Props) => {
-  const randomColor = useRandomColor(walletAddress.toLowerCase());
+  const randomColor = getRandomColor(walletAddress.toLowerCase());
   return (
     <div
       className={clsx({

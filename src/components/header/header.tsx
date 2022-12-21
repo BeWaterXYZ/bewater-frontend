@@ -3,13 +3,17 @@ import Link from 'next/link';
 import Logo from '@/components/logos/bewater_black.svg';
 
 import { Nav } from './nav';
-import UserArea from './user';
+import dynamic from 'next/dynamic';
 
 interface HeaderImplProps {
   logo: React.ReactNode;
   nav: React.ReactNode;
   user: React.ReactNode;
 }
+
+const UserArea = dynamic(() => import('./user'), {
+  ssr: false,
+});
 
 export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
   return (
