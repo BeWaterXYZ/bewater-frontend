@@ -30,13 +30,8 @@
  * @property {string} [baseURL] a base URL from which to resolve all URLs
  * @property {typeof window.fetch} [fetch] Custom window.fetch implementation
  * @property {any} [data]
- * @property {'force-cache' | 'no-store'} [cache]
- * @property {FetchNextConfig} [next]
- */
-/**
- * @public
- * @typedef FetchNextConfig
- * @property {false | number} revalidate
+ * @property {RequestCache} [cache]
+ * @property {NextFetchRequestConfig} [next]
  */
 
 /**
@@ -217,6 +212,8 @@ function create(defaults) {
     const fetchFunc = options.fetch || fetch;
 
     return fetchFunc(url, {
+      cache: options.cache,
+      next: options.next,
       method: (_method || options.method || 'get').toUpperCase(),
       body: data,
       headers: deepMerge(options.headers, customHeaders, true),
