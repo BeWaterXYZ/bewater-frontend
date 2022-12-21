@@ -38,7 +38,6 @@ export const FormUserSettings = ({ data, className }: Props) => {
       userId: data?.userProfile?.userId!,
     })
       .then(() => {
-        // TODO: make some success alert?
         addToast({
           title: 'Saved!',
           type: 'success',
