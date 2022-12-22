@@ -14,7 +14,7 @@ async function getChallengesByStatus() {
 export default async function ChallengePage() {
   const { active, upcoming, completed } = await getChallengesByStatus();
   return (
-    <div className="container my-4">
+    <div className="container my-4 pt-20">
       {active.length > 0 && (
         <div className="border-b py-4">
           <h2 className="heading-2">Happening Now</h2>
