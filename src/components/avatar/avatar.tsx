@@ -22,7 +22,7 @@ export const Avatar = ({
     <div
       className={clsx({
         'w-40 h-40': size === 'large',
-        'w-10 h-10': size === 'small',
+        'w-8 h-8': size === 'small',
         className,
       })}
     >

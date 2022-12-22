@@ -8,7 +8,7 @@ const wagmiClient = createWagmiClient();
 
 export default function Page() {
   return (
-    <div className="flex h-full flex-col  justify-center items-center">
+    <div className="flex h-full flex-col  justify-center items-center pt-20">
       <div className="w-80 mt-20">
         <WagmiConfig client={wagmiClient}>
           <div className="heading-4 pb-12">Welcome onboard,</div>

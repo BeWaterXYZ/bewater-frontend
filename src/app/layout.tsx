@@ -47,7 +47,7 @@ export default function RootLayout({
         <QueryProvider>
           <div className="min-h-[100vh] flex flex-col bg-night">
             <Header />
-            <div className="flex-1 ">{children}</div>
+            <div className="flex-1">{children}</div>
             <Footer />
             <Dumpster />
           </div>
