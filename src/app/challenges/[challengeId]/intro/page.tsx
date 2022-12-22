@@ -10,7 +10,7 @@ export default async function ChallengeIntro({ params }: any) {
 
   return (
     <div className="container  p-4 body-1">
-      <div className="body-1 text-center bg-cyan-400 h-20">time schedule</div>
+      <div className="body-1 text-center bg-cyan-400">time schedule</div>
 
       <div className="block md:grid gap-5 grid-cols-[minmax(0,_1fr),minmax(0,_2fr)]">
         <div className="">
