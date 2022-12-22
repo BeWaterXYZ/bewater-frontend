@@ -2,7 +2,4 @@
   body {
     min-height: 100vh;
   }
-  [data-nextjs-scroll-focus-boundary] {
-    @apply h-full;
-  }
 }
