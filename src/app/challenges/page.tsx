@@ -17,20 +17,20 @@ export default async function ChallengePage() {
     <div className="container my-4 pt-20">
       {active.length > 0 && (
         <div className="border-b py-4">
-          <h2 className="heading-2">Happening Now</h2>
+          <h2 className="heading-5">Happening Now</h2>
           <ChallengeList challenges={active} />
         </div>
       )}
       {upcoming.length > 0 && (
         <div className="border-b py-4">
-          <h2 className="heading-2">Up Next</h2>
+          <h2 className="heading-5">Up Next</h2>
           <ChallengeList challenges={upcoming} />
         </div>
       )}
 
       {completed.length > 0 && (
         <div className="border-b py-4">
-          <h2 className="heading-2">Completed</h2>
+          <h2 className="heading-5">Completed</h2>
           <ChallengeList challenges={completed} />
         </div>
       )}
