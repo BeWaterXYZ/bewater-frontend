@@ -1,6 +1,7 @@
 import { Aspect } from '@/components/aspect';
 import { getChallengeById, getChallenges } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
+import Link from 'next/link';
 
 import { paramSchema } from '../param-schema';
 
@@ -72,9 +73,12 @@ export default async function ChallengeIntro({ params }: any) {
           Join over 4,000+ hackers all over the world.
         </p>
         <div className="py-4">
-          <button className="btn btn-primary-invert uppercase w-64">
+          <Link
+            href={`/challenges/${challengeId}/teams`}
+            className="btn btn-primary-invert uppercase w-64"
+          >
             Go to team page
-          </button>
+          </Link>
         </div>
       </div>
     </div>
