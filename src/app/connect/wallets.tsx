@@ -68,7 +68,7 @@ export function WalletOptions() {
       <div className="min-h-[200px]">
         <button
           className={clsx(
-            ' w-full h-12 border border-solid border-day  flex flex-row justify-center items-center px-4 gap-x-4',
+            'btn btn-primary-invert w-full h-12 flex flex-row justify-center items-center px-4 gap-x-4',
           )}
           key={connector.id}
           onClick={() => void onConnectorClick(connector)}

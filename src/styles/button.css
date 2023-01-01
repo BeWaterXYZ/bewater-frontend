@@ -5,6 +5,9 @@
   .btn-primary {
     @apply border-day bg-day text-night;
   }
+  .btn-primary-invert{
+    @apply border-day bg-night text-day;
+  }
   .btn-secondary {
     @apply border-dream bg-dream text-white;
   }
