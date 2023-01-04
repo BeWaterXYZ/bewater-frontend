@@ -8,7 +8,7 @@ export default function Page() {
   const user = useAuthStore((s) => s.user);
   const navigator = useNavigator();
   const onComplete = () => {
-    navigator.goToUserSettings();
+    navigator.gotoAfterConnect();
   };
   return (
     <div className="flex flex-col h-full justify-center items-center  md:my-20">

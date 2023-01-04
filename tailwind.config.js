@@ -25,6 +25,7 @@ module.exports = {
         titanium: '#E4E4E4',
         ibis: '#24254E',
         danger: '#EB7E7E',
+        grey: '#64748B',
       },
       boxShadow: {
         border: '0px 0px 4px #E4E4E4',

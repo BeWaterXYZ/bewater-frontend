@@ -1,5 +1,6 @@
 import { Avatar } from '@/components/avatar';
 import { LabelRole } from '@/components/label/role';
+import { JoinButton } from './join-button';
 
 export function TeamItem() {
   return (
@@ -42,7 +43,7 @@ export function TeamItem() {
         </div>
       </div>
       <div className="flex justify-center items-center">
-        <button className="btn btn-secondary w-28"> JOIN </button>
+        <JoinButton />
       </div>
     </div>
   );

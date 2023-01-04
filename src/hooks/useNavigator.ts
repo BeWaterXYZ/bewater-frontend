@@ -25,14 +25,15 @@ export function useNavigator() {
   }, [router, pathname]);
 
   const goToWelcome = useCallback(() => {
-    isBrowser && void router.push('/user/onboarding');
+    isBrowser &&
+      void router.push('/user/onboarding?' + searchParams.toString());
   }, [router]);
 
   const goToExternal = useCallback((url: string) => {
     isBrowser && window.open(url);
   }, []);
 
-  const gotAfterConnect = useCallback(() => {
+  const gotoAfterConnect = useCallback(() => {
     let goto = searchParams.get('redirect') ?? '/user/settings';
     router.push(goto);
   }, [router]);
@@ -43,6 +44,6 @@ export function useNavigator() {
     goToUserSettings,
     goToConnectWallet,
     goToWelcome,
-    gotAfterConnect,
+    gotoAfterConnect,
   };
 }

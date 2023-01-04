@@ -7,7 +7,7 @@ interface LabelSkillProps {
 
 export function LabelSkill({ label, onClick }: LabelSkillProps) {
   return (
-    <span className="rounded-full h-6 bg-[#1E293B]  body-4 px-3 py-1 m-1 ">
+    <span className="whitespace-nowrap inline-block rounded-full h-6 bg-[#1E293B]  body-4 px-3 py-1 m-1 ">
       <span className="opacity-75">
         #{label}{' '}
         {onClick && (

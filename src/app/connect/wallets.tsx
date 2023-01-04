@@ -49,7 +49,7 @@ export function WalletOptions() {
         if (!userProfile) {
           navigator.goToWelcome();
         } else {
-          navigator.gotAfterConnect();
+          navigator.gotoAfterConnect();
         }
       }
     } catch (error) {
