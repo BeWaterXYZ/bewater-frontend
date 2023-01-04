@@ -1,4 +1,7 @@
-@layer components {
+@layer base {
+  html {
+    @apply bg-night;
+  }
   body {
     min-height: 100vh;
   }
