@@ -3,9 +3,7 @@ import create from 'zustand';
 export type Dialogs = {
   metamask_not_support?: boolean;
   team_join?: { teamId: string };
-  what_ever?: {
-    data_you_want_pass_to_dialog: string;
-  };
+  team_create?: boolean;
 };
 
 type State = {
@@ -24,7 +22,7 @@ export const useDialogStore = create<State & Actions>((set) => ({
   dialogs: {
     metamask_not_support: undefined,
     team_join: undefined,
-    what_ever: undefined,
+    team_create: undefined,
   },
   open: (name, data) =>
     set((old) => ({ dialogs: { ...old.dialogs, [name]: data } })),

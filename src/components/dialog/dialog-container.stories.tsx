@@ -32,3 +32,13 @@ TeamJoin.args = {
   // eslint-disable-next-line
   closeDialog: () => {},
 };
+
+export const TeamCreate = Template.bind({});
+
+TeamCreate.args = {
+  dialogs: {
+    team_create: true,
+  },
+  // eslint-disable-next-line
+  closeDialog: () => {},
+};

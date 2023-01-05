@@ -2,7 +2,6 @@ import { Avatar } from '@/components/avatar';
 import { Select } from '@/components/form/control';
 import { LabelRole } from '@/components/label/role';
 import { LabelSkill } from '@/components/label/skill';
-import { Logo } from '@/components/logos';
 
 import { Dialogs } from '../store';
 

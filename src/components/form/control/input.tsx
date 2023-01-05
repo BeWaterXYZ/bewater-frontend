@@ -19,7 +19,7 @@ export const Input = React.forwardRef(function Input(
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
-        <label className="block body-3 py-1" htmlFor={id}>
+        <label className="block body-3 py-1 text-grey" htmlFor={id}>
           {label}
           {required && ' *'}
         </label>
