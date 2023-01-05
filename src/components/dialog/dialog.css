@@ -1,10 +1,10 @@
 @layer components {
   .DialogOverlay {
-    @apply bg-black/50 fixed inset-0;
+    @apply bg-black/60 z-20 fixed inset-0;
     animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .DialogContent {
-    @apply bg-white rounded-md shadow-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] min-h-[240px] max-w-sm p-5;
+    @apply z-30 bg-[#141527] rounded-md shadow-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] min-h-[240px] max-w-sm p-5;
     animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 }

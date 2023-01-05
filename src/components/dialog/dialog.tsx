@@ -16,8 +16,11 @@ export function Dialog({
         <RadixDialog.Content className="DialogContent">
           {children}
           <RadixDialog.Close asChild>
-            <button className="IconButton" aria-label="Close">
-              <Cross2Icon className="absolute z-10 top-4 right-4" />
+            <button
+              className="absolute z-10 top-4 right-4 rounded-full border p-1 border-white/30"
+              aria-label="Close"
+            >
+              <Cross2Icon className=" text-white" />
             </button>
           </RadixDialog.Close>
         </RadixDialog.Content>

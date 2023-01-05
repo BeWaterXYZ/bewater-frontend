@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { isBrowser } from '@/constants';
@@ -25,7 +25,7 @@ interface Actions {
 
 const dummyStorage = {
   getItem: (name: string) => {
-    return name;
+    return '{}';
   },
   setItem: (name: string, value: string) => {
     // eslint-disable-next-line
@@ -61,9 +61,9 @@ export const useAuthStore = create<State & Actions>()(
     }),
     {
       name: 'bewater', // name of item in the storage (must be unique)
-      getStorage: () => {
-        return isBrowser ? localStorage : dummyStorage;
-      },
+      storage: createJSONStorage(() =>
+        isBrowser ? localStorage : dummyStorage,
+      ),
     },
   ),
 );
