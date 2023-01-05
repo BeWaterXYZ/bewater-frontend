@@ -9,6 +9,19 @@ const maps = {
   'Blockchain Developer': ['bg-[#312E81]', 'border-[#4338CA]'],
 };
 
+export const RoleOptions = [
+  {
+    value: 'designer',
+    label: 'Designer',
+    classes: 'bg-[#831843] border-[#BE185D]',
+  },
+  {
+    value: 'fe',
+    label: 'Frontend Developer',
+    classes: 'bg-[#14532D] border-[#15803D]',
+  },
+];
+
 type Roles = keyof typeof maps;
 
 interface LabelRoleProps {

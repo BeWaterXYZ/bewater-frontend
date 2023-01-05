@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Select } from './select';
+import { useForm } from 'react-hook-form';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,9 +14,10 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Select> = (args) => {
+  const { control } = useForm();
   return (
     <div className="p-4 bg-night">
-      <Select {...args} />
+      <Select {...args} control={control} />
     </div>
   );
 };

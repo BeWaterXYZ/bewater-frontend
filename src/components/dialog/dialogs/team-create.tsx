@@ -1,6 +1,6 @@
 import { Avatar } from '@/components/avatar';
 import { Input, Select } from '@/components/form/control';
-import { LabelRole } from '@/components/label/role';
+import { LabelRole, RoleOptions } from '@/components/label/role';
 import { LabelSkill } from '@/components/label/skill';
 
 import { Dialogs } from '../store';
@@ -14,6 +14,7 @@ const schema = z
     name: z.string().min(3, { message: 'At least 3 characters' }),
     title: z.string().min(3, { message: 'At least 3 characters' }),
     description: z.string(),
+    roles: z.array(z.string()),
   })
   .required();
 
@@ -34,6 +35,7 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
     console.log({ data });
   };
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -62,6 +64,14 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
           placeholder="Enter your project description"
           error={errors['description']}
           {...register('description')}
+        />
+        <Select
+          label="Roles Needed"
+          options={RoleOptions}
+          error={errors['roles']}
+          control={control}
+          isMulti
+          {...register('roles')}
         />
         <div className="flex gap-2">
           <button className="btn btn-secondary w-full">Cancel</button>

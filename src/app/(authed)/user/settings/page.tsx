@@ -1,6 +1,5 @@
 'use client';
 import { AvatarWithEditor } from '@/components/avatar';
-import { Select } from '@/components/form/control';
 import { LabelRole } from '@/components/label/role';
 import { LabelSkill } from '@/components/label/skill';
 import { useLoadingWhen } from '@/components/loading/store';
@@ -33,7 +32,6 @@ export default function Page() {
           />
           <div className="text-left w-full my-4">
             <p className="body-4 my-4">Roles</p>
-            <Select options={[{ value: '', label: 'Select your roles' }]} />
             <LabelRole label="Designer" onClick={() => {}} />
             <LabelRole label="Frontend Developer" onClick={() => {}} />
             <LabelRole label="Backend Developer" onClick={() => {}} />
@@ -43,7 +41,6 @@ export default function Page() {
 
           <div className="text-left w-full my-4">
             <p className="body-4 my-4">Skills</p>
-            <Select options={[{ value: '', label: 'Select your skills' }]} />
 
             <div className="flex flex-wrap">
               {['React', 'Swift', 'Rust', 'TypeScript'].map((skill) => {

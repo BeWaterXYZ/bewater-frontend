@@ -41,13 +41,6 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
         </div>
       </div>
       <p className="body-4 text-grey my-1 mt-3">{"You're going to play"}</p>
-      <Select
-        options={[
-          { value: '', label: 'Select your roles' },
-          { value: 'Designer', label: 'Designer' },
-          { value: 'Frontend', label: 'Frontend Developer' },
-        ]}
-      />
 
       <div className="mt-4 w-full">
         <button className="btn btn-primary w-full">Request to Join</button>
