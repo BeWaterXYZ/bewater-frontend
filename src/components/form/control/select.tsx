@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import type { FieldError, Merge } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import RSelect, { ClassNamesConfig } from 'react-select';
-import { TagOption } from '@/components/label/role';
+import { TagOption } from '@/components/tag';
 
 interface Props extends React.ComponentPropsWithRef<'select'> {
   label?: string;
