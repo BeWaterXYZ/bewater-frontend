@@ -88,6 +88,6 @@ export default async function ChallengeIntro({ params }: any) {
 export async function generateStaticParams() {
   const challenges = await getChallenges();
   return challenges.map((c) => ({
-    challengeId: c.id,
+    challengeId: c.id.toString(),
   }));
 }
