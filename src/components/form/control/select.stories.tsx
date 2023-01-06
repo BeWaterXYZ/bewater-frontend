@@ -3,6 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Select } from './select';
 import { useForm } from 'react-hook-form';
+import { RoleOptions } from '@/components/tag';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -28,8 +29,5 @@ Normal.args = {
   label: 'Name',
   name: 'name',
   error: undefined,
-  options: [
-    { label: 'option1', value: 'option1' },
-    { label: 'option2', value: 'option2' },
-  ],
+  options: RoleOptions,
 };
