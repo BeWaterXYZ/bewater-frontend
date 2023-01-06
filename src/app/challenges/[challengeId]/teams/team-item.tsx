@@ -1,5 +1,5 @@
 import { Avatar } from '@/components/avatar';
-import { LabelRole } from '@/components/label/role';
+import { TagRole } from '@/components/tag';
 import { JoinButton } from './join-button';
 
 export function TeamItem() {
@@ -23,10 +23,8 @@ export function TeamItem() {
       </div>
       <div>
         <div className="flex flex-wrap gap-1">
-          <LabelRole label="Designer" />
-          <LabelRole label="Frontend Developer" />
-          <LabelRole label="Backend Developer" />
-          <LabelRole label="Blockchain Developer" />
+          <TagRole label="designer" />
+          <TagRole label="fe" />
         </div>
 
         <div className="flex gap-1">
