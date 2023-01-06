@@ -8,7 +8,10 @@ interface DialogContainerProps {
   closeDialog: CloseDialogFunc;
 }
 
-type DialogMap = Record<DialogsKeys, ComponentType<{ data: any }>>;
+type DialogMap = Record<
+  DialogsKeys,
+  ComponentType<{ data: any; close?: () => void }>
+>;
 
 const dialogMaps: DialogMap = {
   metamask_not_support: dynamic(
@@ -42,7 +45,7 @@ export function DialogContainer({
               }
             }}
           >
-            <DialogComp data={dialogs[key]} />
+            <DialogComp data={dialogs[key]} close={() => closeDialog(key)} />
           </Dialog>
         );
       })}

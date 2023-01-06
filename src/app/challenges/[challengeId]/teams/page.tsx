@@ -1,5 +1,7 @@
 import { TeamItem } from './team-item';
 import Image from 'next/image';
+import { CreateTeamButton } from './create-team-button';
+
 export default function ChallengeTeams() {
   return (
     <div className="body-1 text-center">
@@ -57,7 +59,7 @@ export default function ChallengeTeams() {
         <div className="my-2 flex justify-between">
           <div>Sort</div>
           <div>
-            <button className="btn btn-primary">Create a team</button>
+            <CreateTeamButton />
           </div>
         </div>
         <div className="hidden  md:grid grid-cols-[1fr,_2fr,_3fr,_1fr] text-left body-2 opacity-20">

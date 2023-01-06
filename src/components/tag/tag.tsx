@@ -12,7 +12,7 @@ export function Tag({ label, classes, onClick }: TagProps) {
   return (
     <div
       className={clsx(
-        'whitespace-nowrap inline-block rounded-sm h-6  border  text-white px-2 py-1 my-1',
+        'whitespace-nowrap inline-block rounded-sm h-6    text-white px-2 py-1 my-1',
         classes,
       )}
     >

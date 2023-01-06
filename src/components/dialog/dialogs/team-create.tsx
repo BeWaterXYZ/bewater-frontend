@@ -1,4 +1,3 @@
-import { Avatar } from '@/components/avatar';
 import { Input, Select, TextArea } from '@/components/form/control';
 import { RoleOptions, SkillOptions } from '@/components/tag/data';
 
@@ -20,7 +19,7 @@ const schema = z
 
 export type Inputs = z.infer<typeof schema>;
 
-export function useOnboardingForm() {
+export function useTeamCreateForm() {
   return useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -30,11 +29,15 @@ export function useOnboardingForm() {
   });
 }
 
-interface TeamJoinDialogProps {
-  data: Dialogs['team_join'];
+interface TeamCreateDialogProps {
+  data: Dialogs['team_create'];
+  close?: () => void;
 }
 
-export default function TeamJoinDialog(props: TeamJoinDialogProps) {
+export default function TeamCreateDialog({
+  data,
+  close,
+}: TeamCreateDialogProps) {
   const onSubmit = (data: Inputs) => {
     console.log({ data });
   };
@@ -43,7 +46,7 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useOnboardingForm();
+  } = useTeamCreateForm();
   return (
     <div className="flex flex-col justify-center  ">
       <p className="body-2 mb-4">Create A Team</p>
@@ -87,7 +90,13 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
           {...register('skills')}
         />
         <div className="flex gap-2">
-          <button className="btn btn-secondary w-full">Cancel</button>
+          <button
+            className="btn btn-secondary w-full"
+            type="button"
+            onClick={close}
+          >
+            Cancel
+          </button>
           <button className="btn btn-primary w-full">Create</button>
         </div>
       </form>
