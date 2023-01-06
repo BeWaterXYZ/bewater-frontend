@@ -1,24 +1,28 @@
+'use client';
 import clsx from 'clsx';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
-interface Props {
-  name: string;
-  color?: string;
-  isSkill: boolean;
-  className?: string;
+export interface TagProps {
+  label: string;
+  classes: string;
+  onClick?: () => void;
 }
 
-export const Tag = ({ name, isSkill, className }: Props) => {
+export function Tag({ label, classes, onClick }: TagProps) {
   return (
-    <p
+    <div
       className={clsx(
-        'body-1 font-body_small w-auto',
-        {
-          'before:content-["#"]': isSkill,
-        },
-        className,
+        'whitespace-nowrap inline-block rounded-sm h-6  border  text-white px-2 py-1 my-1',
+        classes,
       )}
     >
-      {name}
-    </p>
+      {label}{' '}
+      {onClick && (
+        <Cross2Icon
+          className="inline w-3 h-3 cursor-pointer"
+          onClick={onClick}
+        />
+      )}
+    </div>
   );
-};
+}

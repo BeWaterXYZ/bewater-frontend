@@ -2,7 +2,9 @@ import React, { useId } from 'react';
 import clsx from 'clsx';
 import type { FieldError, Merge } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
-import RSelect from 'react-select';
+import RSelect, { ClassNamesConfig } from 'react-select';
+import { TagOption } from '@/components/label/role';
+
 interface Props extends React.ComponentPropsWithRef<'select'> {
   label?: string;
   name: string;
@@ -10,10 +12,7 @@ interface Props extends React.ComponentPropsWithRef<'select'> {
   required?: boolean;
   className?: string;
   control: any;
-  options: {
-    label: string;
-    value: string;
-  }[];
+  options: TagOption[];
   isMulti?: boolean;
 }
 
@@ -33,6 +32,17 @@ export const Select = React.forwardRef(function TextArea(
     value,
   } = props;
   const id = useId();
+  const styles: ClassNamesConfig<TagOption> = {
+    control: () => clsx('control', { error: error }),
+    clearIndicator: () => '!hidden',
+    indicatorSeparator: () => '!hidden',
+    multiValue: ({ data }) => data.classes.container,
+    multiValueLabel: ({ data }) => data.classes.text,
+    multiValueRemove: () => 'hover:!bg-transparent',
+    menu: () => '!bg-night',
+    option: () => '!text-white hover:!bg-day !bg-transparent',
+  };
+  console.log(error);
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
@@ -49,6 +59,7 @@ export const Select = React.forwardRef(function TextArea(
           isMulti ? (
             <RSelect
               isMulti
+              classNames={styles}
               options={options}
               value={options.filter((c) =>
                 (field.value ?? []).includes(c.value),

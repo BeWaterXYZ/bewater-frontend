@@ -1,7 +1,6 @@
 import { Avatar } from '@/components/avatar';
-import { Input, Select } from '@/components/form/control';
-import { LabelRole, RoleOptions } from '@/components/label/role';
-import { LabelSkill } from '@/components/label/skill';
+import { Input, Select, TextArea } from '@/components/form/control';
+import { RoleOptions, SkillOptions } from '@/components/tag/data';
 
 import { Dialogs } from '../store';
 
@@ -15,6 +14,7 @@ const schema = z
     title: z.string().min(3, { message: 'At least 3 characters' }),
     description: z.string(),
     roles: z.array(z.string()),
+    skills: z.array(z.string()),
   })
   .required();
 
@@ -23,6 +23,10 @@ export type Inputs = z.infer<typeof schema>;
 export function useOnboardingForm() {
   return useForm<Inputs>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      roles: [],
+      skills: [],
+    },
   });
 }
 
@@ -59,7 +63,7 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
           error={errors['title']}
           {...register('title')}
         />
-        <Input
+        <TextArea
           label="Project Description"
           placeholder="Enter your project description"
           error={errors['description']}
@@ -72,6 +76,15 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
           control={control}
           isMulti
           {...register('roles')}
+        />
+
+        <Select
+          label="Skill Needed"
+          options={SkillOptions}
+          error={errors['skills']}
+          control={control}
+          isMulti
+          {...register('skills')}
         />
         <div className="flex gap-2">
           <button className="btn btn-secondary w-full">Cancel</button>

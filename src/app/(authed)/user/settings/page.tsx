@@ -1,7 +1,6 @@
 'use client';
 import { AvatarWithEditor } from '@/components/avatar';
-import { LabelRole } from '@/components/label/role';
-import { LabelSkill } from '@/components/label/skill';
+import { Skill, TagRole, TagSkill } from '@/components/tag';
 import { useLoadingWhen } from '@/components/loading/store';
 import { useFetchUser } from '@/services/user';
 import { useAuthStore } from '@/stores/auth';
@@ -32,10 +31,10 @@ export default function Page() {
           />
           <div className="text-left w-full my-4">
             <p className="body-4 my-4">Roles</p>
-            <LabelRole label="Designer" onClick={() => {}} />
-            <LabelRole label="Frontend Developer" onClick={() => {}} />
-            <LabelRole label="Backend Developer" onClick={() => {}} />
-            <LabelRole label="Blockchain Developer" onClick={() => {}} />
+            <TagRole label="designer" onClick={() => {}} />
+            <TagRole label="fe" onClick={() => {}} />
+            <TagRole label="be" onClick={() => {}} />
+            <TagRole label="bc" onClick={() => {}} />
           </div>
           <hr className="border-titanium/20 my-4" />
 
@@ -43,11 +42,8 @@ export default function Page() {
             <p className="body-4 my-4">Skills</p>
 
             <div className="flex flex-wrap">
-              {['React', 'Swift', 'Rust', 'TypeScript'].map((skill) => {
-                return (
-                  <LabelSkill key={skill} label={skill} onClick={() => {}} />
-                );
-              })}
+              <TagSkill label={'typescript'} onClick={() => {}} />
+              <TagSkill label={'react'} onClick={() => {}} />
             </div>
           </div>
         </div>

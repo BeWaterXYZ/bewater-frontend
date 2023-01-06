@@ -1,2 +1,4 @@
 export { Tag } from './tag';
-export { TagList } from './tag-list';
+export { TagSkill } from './skill';
+export { TagRole } from './role';
+export * from './data';
