@@ -1,7 +1,7 @@
 import { agentAnon } from '../agent';
 
 export interface Challenge {
-  id: string;
+  id: number;
   title: string;
   description: string;
   requirements: string[];

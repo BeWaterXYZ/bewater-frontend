@@ -50,6 +50,7 @@ export const FormUserSettings = ({ data, className }: Props) => {
         dismissLoading();
       });
   }, []);
+  console.log(register('userName', { required: 'Username is required.' }));
   return (
     <form
       method="post"

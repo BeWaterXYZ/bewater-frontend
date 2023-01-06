@@ -1,5 +1,5 @@
 import { Avatar } from '@/components/avatar';
-import { LabelRole } from '@/components/label/role';
+import { TagRole, TagSkill } from '@/components/tag';
 import { JoinButton } from './join-button';
 
 export function TeamItem() {
@@ -23,23 +23,13 @@ export function TeamItem() {
       </div>
       <div>
         <div className="flex flex-wrap gap-1">
-          <LabelRole label="Designer" />
-          <LabelRole label="Frontend Developer" />
-          <LabelRole label="Backend Developer" />
-          <LabelRole label="Blockchain Developer" />
+          <TagRole label="designer" />
+          <TagRole label="fe" />
         </div>
 
         <div className="flex gap-1">
-          {['#React', '#Swift', '#SwiftUI'].map((skill) => {
-            return (
-              <span
-                key={skill}
-                className="rounded-full h-6 bg-gray-400/20  body-4 px-3 py-1 m-1 text-white/50 "
-              >
-                {skill}
-              </span>
-            );
-          })}
+          <TagSkill label="react"></TagSkill>
+          <TagSkill label="typescript"></TagSkill>
         </div>
       </div>
       <div className="flex justify-center items-center">

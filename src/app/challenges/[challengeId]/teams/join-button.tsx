@@ -11,6 +11,7 @@ export let JoinButton = () => {
   let handleClick = () => {
     if (!isAuthed()) {
       navigator.goToConnectWallet();
+      return;
     }
     openDialog('team_join', { teamId: '123' });
   };
