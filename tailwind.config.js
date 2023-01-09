@@ -26,6 +26,7 @@ module.exports = {
         ibis: '#24254E',
         danger: '#EB7E7E',
         grey: '#64748B',
+        cadet: '#94A3B8',
       },
       boxShadow: {
         border: '0px 0px 4px #E4E4E4',
