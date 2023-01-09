@@ -10,7 +10,7 @@ import { paramSchema } from '../param-schema';
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = paramSchema.parse(params);
   const challenge = await getChallengeById(challengeId);
-  const { awards, sponsors } = challenge;
+  const { awards, sponsorships } = challenge;
 
   return (
     <div className="container  p-4 body-1">
@@ -42,29 +42,29 @@ export default async function ChallengeIntro({ params }: any) {
           <div className="max-w-full">
             <h3 className="body-3 my-4">Organizer & Sponsors</h3>
             <div className="grid gap-4 grid-cols-2">
-              {sponsors.map((sponsor, index) => (
+              {sponsorships.map((sponsorship, index) => (
                 <div
-                  key={sponsor.id}
+                  key={sponsorship.id}
                   className={clsx('border border-cadet', {
                     'col-span-2': index === 0,
                   })}
                 >
                   <Aspect ratio={3}>
                     <img
-                      src={unsplash('logo')}
+                      src={unsplash('sponsor')}
                       alt="crypto"
                       className="object-cover w-full h-full"
                     />
                   </Aspect>
                   <div
-                    className={clsx('flex justify-center items-center h-6', {
+                    className={clsx('flex justify-center items-end h-6', {
                       'bg-gradient-to-r from-[#F62584] to-[#480CA7]':
                         index === 0,
                       'bg-cadet': index !== 0,
                     })}
                   >
                     <div className="body-3">
-                      {formatMoney(sponsor.fundingAmount)}
+                      {formatMoney(sponsorship.amount)}
                     </div>
                   </div>
                 </div>

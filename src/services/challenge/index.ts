@@ -8,19 +8,21 @@ export interface Challenge {
   startTime: string;
   endTime: string;
   totalAward: number;
+  awardCurrency: string;
   status: 'DRAFT' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED';
   location: string;
-  judges: Judge[];
+  judgeIDs: string[];
+  userIDs: string[];
   awards: Award[];
-  sponsors: Sponsor[];
+  milestones: Milestone[];
+  judges: Judge[];
+  sponsorships: Sponsorship[];
 }
 
 export interface Award {
-  id: string;
   awardName: string;
   amount: number;
   count: number;
-  challengeId: string;
 }
 
 export interface Judge {
@@ -29,15 +31,27 @@ export interface Judge {
   title: string;
   organization: string;
   avatarURI: string;
-  challengeId: string;
+  challengeIDs: number[];
+}
+
+export interface Milestone {
+  dueDate: Date;
+  stageName: string;
+}
+
+export interface Sponsorship {
+  id: number;
+  amount: number;
+  currency: string;
+  challengeId: number;
+  sponsorId: string;
+  sponsor: Sponsor;
 }
 
 export interface Sponsor {
   id: string;
   sponsorName: string;
   logoURI: string;
-  fundingAmount: number;
-  challengeId: string;
 }
 
 export interface Team {
