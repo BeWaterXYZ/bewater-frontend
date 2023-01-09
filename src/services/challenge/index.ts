@@ -54,6 +54,10 @@ export interface Sponsor {
   logoURI: string;
 }
 
+export interface Team {
+  teamId: string;
+}
+
 export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
