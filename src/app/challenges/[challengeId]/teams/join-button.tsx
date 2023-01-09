@@ -3,12 +3,15 @@
 import { useDialogStore } from '@/components/dialog/store';
 import { useNavigator } from '@/hooks/useNavigator';
 import { useAuthStore } from '@/stores/auth';
+import { MouseEventHandler } from 'react';
 
 export let JoinButton = () => {
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const navigator = useNavigator();
   const openDialog = useDialogStore((s) => s.open);
-  let handleClick = () => {
+  let handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (!isAuthed()) {
       navigator.goToConnectWallet();
       return;
