@@ -1,3 +1,4 @@
+import { Cross2Icon } from '@radix-ui/react-icons';
 import * as Toast from '@radix-ui/react-toast';
 import clsx from 'clsx';
 
@@ -14,16 +15,35 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
         {toasts.map((toast) => (
           <Toast.Root
             key={toast.id}
-            className={clsx('rounded shadow-sm p-4', {
-              'bg-red-400': toast.type === 'error',
-              'bg-green-400': toast.type === 'success',
-              'bg-blue-400': toast.type === 'info',
-            })}
+            className={clsx(
+              'rounded shadow-sm p-4 relative bg-gray-800 border border-[#1E293B]',
+              {
+                // 'bg-red-400': toast.type === 'error',
+                // 'bg-green-400': toast.type === 'success',
+                // 'bg-blue-400': toast.type === 'info',
+              },
+            )}
           >
-            <Toast.Title className="body-1">{toast.title}</Toast.Title>
-            <Toast.Description className="body-2">
-              {toast.description}
-            </Toast.Description>
+            <div className="flex flex-row">
+              <div>
+                <Toast.Title className="body-3 font-bold">
+                  {toast.title}
+                </Toast.Title>
+                <Toast.Description className="body-4 text-grey">
+                  {toast.description}
+                </Toast.Description>
+              </div>
+              <div className="w-20">
+                <Toast.Close>
+                  <button
+                    className="absolute z-10 top-4 right-4 rounded-full  p-1 "
+                    aria-label="Close"
+                  >
+                    <Cross2Icon className=" text-grey" />
+                  </button>
+                </Toast.Close>
+              </div>
+            </div>
           </Toast.Root>
         ))}
 

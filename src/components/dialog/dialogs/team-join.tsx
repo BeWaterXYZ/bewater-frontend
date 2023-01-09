@@ -1,14 +1,48 @@
 import { Avatar } from '@/components/avatar';
-import { TagSkill } from '@/components/tag';
+import { Select, TextArea } from '@/components/form/control';
+import { RoleOptions, TagSkill } from '@/components/tag';
 import { TagRole } from '@/components/tag';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { Dialogs } from '../store';
 
-interface TeamJoinDialogProps {
-  data: Dialogs['team_join'];
+const schema = z
+  .object({
+    roles: z.array(z.string()),
+    message: z.string(),
+  })
+  .required();
+
+export type Inputs = z.infer<typeof schema>;
+
+export function useTeamCreateForm() {
+  return useForm<Inputs>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      roles: [],
+      message: '',
+    },
+  });
 }
 
-export default function TeamJoinDialog(props: TeamJoinDialogProps) {
+interface TeamJoinDialogProps {
+  data: Dialogs['team_join'];
+  close?: () => void;
+}
+
+export default function TeamJoinDialog({ data, close }: TeamJoinDialogProps) {
+  const onSubmit = (data: Inputs) => {
+    console.log({ data });
+  };
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useTeamCreateForm();
+
   return (
     <div className="flex flex-col justify-center  ">
       <p className="body-4 text-grey my-1">{"Now You're Requesting to Join"}</p>
@@ -39,11 +73,34 @@ export default function TeamJoinDialog(props: TeamJoinDialogProps) {
           </div>
         </div>
       </div>
-      <p className="body-4 text-grey my-1 mt-3">{"You're going to play"}</p>
 
-      <div className="mt-4 w-full">
-        <button className="btn btn-primary w-full">Request to Join</button>
-      </div>
+      <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+        <Select
+          label="You're going to play"
+          options={RoleOptions}
+          error={errors['roles']}
+          control={control}
+          isMulti
+          {...register('roles')}
+        />
+
+        <TextArea
+          label="Include a message"
+          {...register('message')}
+          placeholder="write a request message..."
+        ></TextArea>
+
+        <div className="mt-4 flex flex-row gap-4">
+          <button
+            className="btn btn-secondary w-full"
+            type="button"
+            onClick={close}
+          >
+            Cancel
+          </button>
+          <button className="btn btn-primary w-full">Send request</button>
+        </div>
+      </form>
     </div>
   );
 }

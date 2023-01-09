@@ -33,7 +33,7 @@ export const Select = React.forwardRef(function TextArea(
   } = props;
   const id = useId();
   const styles: ClassNamesConfig<TagOption> = {
-    control: () => clsx('control', { error: error }),
+    control: () => clsx('control !p-0', { error: error }),
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
     multiValue: ({ data }) => data.classes.container,
@@ -42,7 +42,6 @@ export const Select = React.forwardRef(function TextArea(
     menu: () => '!bg-night',
     option: () => '!text-white hover:!bg-day !bg-transparent',
   };
-  console.log(error);
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
