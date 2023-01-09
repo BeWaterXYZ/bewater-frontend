@@ -45,7 +45,7 @@ export const Select = React.forwardRef(function TextArea(
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
-        <label className="block body-3 py-1 text-grey " htmlFor={id}>
+        <label className="block body-3 py-1 text-grey font-bold " htmlFor={id}>
           {label}
           {required && ' *'}
         </label>

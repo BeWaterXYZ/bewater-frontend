@@ -45,36 +45,12 @@ export default function TeamJoinDialog({ data, close }: TeamJoinDialogProps) {
 
   return (
     <div className="flex flex-col justify-center  ">
-      <p className="body-4 text-grey my-1">{"Now You're Requesting to Join"}</p>
-      <p className="heading-6">Yet another layer 2 idea</p>
+      <p className="heading-6">Request to Join The Team</p>
 
-      <p className="body-4 text-grey my-1 mt-3">Team Leader</p>
-      <Avatar size="small" />
+      <p className="body-3 text-grey my-1  mt-4 font-bold">Team Name</p>
+      <p className="body-3 my-1">Dream team</p>
 
-      <p className="body-4 text-grey my-1 mt-3">Description</p>
-      <p className="body-4">Let’s make a terrific Layer 2 product!</p>
-
-      <p className="body-4 text-grey my-1 mt-3">The team needs...</p>
-      <div className="flex justify-between">
-        <div className="w-1/2">
-          <p className="body-5 text-grey">Roles</p>
-          <div>
-            <TagRole label="fe" />
-            <TagRole label="be" />
-            <TagRole label="fe" />
-          </div>
-        </div>
-        <div className="w-1/2">
-          <p className="body-5 text-grey">Skills</p>
-          <div className="">
-            <TagSkill label="react" />
-            <TagSkill label="react" />
-            <TagSkill label="react" />
-          </div>
-        </div>
-      </div>
-
-      <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+      <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
         <Select
           label="You're going to play"
           options={RoleOptions}
