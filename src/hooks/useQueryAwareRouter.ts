@@ -2,7 +2,6 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
-import { URLSearchParams } from 'url';
 import { isBrowser } from '@/constants';
 
 const searchParamsToCarryOver = ['redirect'];
@@ -33,7 +32,7 @@ class QueryAwareRouterImpl {
 
   push(url: string, options?: Parameters<AppRouterInstance['push']>[1]) {
     if (!isBrowser) return;
-    let { searchParams, pathname } = new URL(url);
+    let { searchParams, pathname } = new URL(url, window.location.origin);
     let finalParams = searchParamsToCarryOver.reduce((prev, cur) => {
       let param = searchParams.get(cur) ?? this.searchParams.get(cur);
       if (param) {
@@ -41,10 +40,12 @@ class QueryAwareRouterImpl {
       }
       return prev;
     }, new URLSearchParams());
-    return this.router.push(pathname + '?' + finalParams.toString(), options);
+    let finalURL = pathname + '?' + finalParams.toString();
+    return this.router.push(finalURL, options);
   }
   pushWithRedirect(url: string) {
-    let { searchParams, pathname } = new URL(url);
+    console.log(url);
+    let { searchParams, pathname } = new URL(url, window.location.origin);
     searchParams.set('redirect', this.pathname);
     this.router.push(pathname + '?' + searchParams.toString());
   }
@@ -64,19 +65,4 @@ class QueryAwareRouterImpl {
   refresh() {
     throw new Error('Method not implemented.');
   }
-
-  // private passQuery(original: UrlObject | string): UrlObject {
-  //   if (typeof original === 'string') {
-  //     return { pathname: original, query: this.copyQuery() };
-  //   } else {
-  //     return {
-  //       ...original,
-  //       query: Object.assign({}, this.copyQuery(), original.query),
-  //     };
-  //   }
-  // }
-
-  // private copyQuery() {
-  //   return pick(this.delegate., searchParamsToCarryOver) as ParsedUrlQuery;
-  // }
 }
