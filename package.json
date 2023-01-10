@@ -75,7 +75,7 @@
     "chromatic": "^6.14.0",
     "crypto-browserify": "^3.12.0",
     "eslint": "8.29.0",
-    "eslint-config-next": "^13.0.6",
+    "eslint-config-next": "^13.1.1",
     "esm": "^3.2.25",
     "fs-extra": "^11.1.0",
     "glob-promise": "^6.0.1",
