@@ -13,13 +13,11 @@ interface TagSkillProps {
 }
 
 export function TagSkill({ label, onClick }: TagSkillProps) {
+  let option = mapsTagSkill[label];
   return (
     <Tag
-      label={mapsTagSkill[label].label}
-      classes={clsx(
-        mapsTagSkill[label].classes.container,
-        mapsTagSkill[label].classes.text,
-      )}
+      label={option.label}
+      classes={clsx(option.classes.container, option.classes.text)}
       onClick={onClick}
     />
   );

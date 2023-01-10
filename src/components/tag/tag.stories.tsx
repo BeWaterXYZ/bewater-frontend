@@ -23,16 +23,16 @@ export default {
 const Template: ComponentStory<typeof TagRole> = (args) => (
   <div>
     <div className="flex gap-2">
-      <TagRole label="designer" />
-      <TagRole label="fe" />
-      <TagRole label="be" />
-      <TagRole label="bc" />
+      <TagRole label="Designer" />
+      <TagRole label="Frontend Developer" />
+      <TagRole label="Backend Developer" />
+      <TagRole label="Blockchain Developer" />
     </div>
     <div className="flex gap-2">
-      <TagRole label="designer" onClick={() => {}} />
-      <TagRole label="fe" onClick={() => {}} />
-      <TagRole label="be" onClick={() => {}} />
-      <TagRole label="bc" onClick={() => {}} />
+      <TagRole label="Designer" onClick={() => {}} />
+      <TagRole label="Frontend Developer" onClick={() => {}} />
+      <TagRole label="Backend Developer" onClick={() => {}} />
+      <TagRole label="Blockchain Developer" onClick={() => {}} />
     </div>
   </div>
 );
@@ -41,12 +41,12 @@ export const Role = Template.bind({});
 const Template2: ComponentStory<typeof TagSkill> = (args) => (
   <div>
     <div className="flex gap-2">
-      <TagSkill label="react" />
-      <TagSkill label="typescript" />
+      <TagSkill label="React" />
+      <TagSkill label="Solidity" />
     </div>
     <div className="flex gap-2">
-      <TagSkill label="react" onClick={() => {}} />
-      <TagSkill label="typescript" onClick={() => {}} />
+      <TagSkill label="React" onClick={() => {}} />
+      <TagSkill label="Solidity" onClick={() => {}} />
     </div>
   </div>
 );
