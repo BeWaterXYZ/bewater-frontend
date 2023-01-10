@@ -30,7 +30,7 @@ export default function Page() {
             src={data?.userProfile?.avatarURI}
           />
           <div className="text-left w-full my-4">
-            <p className="body-4 my-4">Roles</p>
+            <p className="body-4 my-4 gap-2">Roles</p>
             <TagRole label="Designer" onClick={() => {}} />
             <TagRole label="Frontend Developer" onClick={() => {}} />
           </div>
@@ -39,7 +39,7 @@ export default function Page() {
           <div className="text-left w-full my-4">
             <p className="body-4 my-4">Skills</p>
 
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap gap-2">
               <TagSkill label={'Solidity'} onClick={() => {}} />
               <TagSkill label={'React'} onClick={() => {}} />
             </div>

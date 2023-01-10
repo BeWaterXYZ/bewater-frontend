@@ -72,6 +72,10 @@ export const SkillOptionsRaw = [
     value: 'Nextjs',
     label: '#Nextjs',
   },
+  {
+    value: 'Vue',
+    label: '#Vue',
+  },
 ] as const;
 
 export const SkillOptions: TagOption[] = SkillOptionsRaw.map((op) => ({

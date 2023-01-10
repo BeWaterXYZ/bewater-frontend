@@ -59,7 +59,7 @@ export default async function Page({ params }: any) {
 
         <div>
           <p className="body-3 text-grey font-bold my-4"> Members</p>
-          <div className="flex my-4">
+          <div className="flex my-4 gap-3 flex-wrap">
             {members.map((member) => (
               <TeamMember key={member.id} member={member} />
             ))}
