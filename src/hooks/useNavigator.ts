@@ -2,31 +2,24 @@ import { useCallback } from 'react';
 
 import { isBrowser } from '@/constants';
 
-import { useRouter, usePathname, useSearchParams } from 'next/navigation';
+import useQueryAwareRouter from './useQueryAwareRouter';
 
 export function useNavigator() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-
+  const router = useQueryAwareRouter();
   const goToUserProfile = useCallback(() => {
-    isBrowser && void router.push('/user/profile');
+    router.push('/user/profile');
   }, [router]);
 
   const goToUserSettings = useCallback(() => {
-    isBrowser && void router.push('/user/settings');
+    router.push('/user/settings');
   }, [router]);
 
   const goToConnectWallet = useCallback(() => {
-    void router.push(
-      '/connect' + '?redirect=' + encodeURIComponent(pathname ?? ''),
-      {},
-    );
-  }, [router, pathname]);
+    router.pushWithRedirect('/connect');
+  }, [router]);
 
   const goToWelcome = useCallback(() => {
-    isBrowser &&
-      void router.push('/user/onboarding?' + searchParams.toString());
+    router.push('/user/onboarding');
   }, [router]);
 
   const goToExternal = useCallback((url: string) => {
@@ -34,8 +27,7 @@ export function useNavigator() {
   }, []);
 
   const gotoAfterConnect = useCallback(() => {
-    let goto = searchParams.get('redirect') ?? '/user/settings';
-    router.push(goto);
+    router.gotoRedirect('/user/settings');
   }, [router]);
 
   return {

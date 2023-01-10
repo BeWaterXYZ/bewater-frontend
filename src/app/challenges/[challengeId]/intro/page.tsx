@@ -5,10 +5,10 @@ import { unsplash } from '@/utils/unsplash';
 import clsx from 'clsx';
 import Link from 'next/link';
 
-import { paramSchema } from '../param-schema';
+import { challengeSchema } from '../param-schema';
 
 export default async function ChallengeIntro({ params }: any) {
-  const { challengeId } = paramSchema.parse(params);
+  const { challengeId } = challengeSchema.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { awards, sponsorships } = challenge;
 

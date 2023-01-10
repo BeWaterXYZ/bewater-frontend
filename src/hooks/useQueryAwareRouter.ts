@@ -1,89 +1,68 @@
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { pick } from 'lodash';
 
-import type { ParsedUrlQuery } from 'querystring';
-import type { UrlObject } from 'url';
-import type { NextRouter } from 'next/router';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import { isBrowser } from '@/constants';
 
-export type QueryAwareRouter = Pick<
-  NextRouter,
-  'push' | 'replace' | 'prefetch' | 'reload' | 'back' | 'query' | 'events'
->;
+const searchParamsToCarryOver = ['redirect'];
 
-const searchParamsToCarryOver = [
-  'theme', // Should be light
-  'platform', // web | ios | android
-];
-
-export default function useQueryAwareRouter(): QueryAwareRouter {
+export default function useQueryAwareRouter() {
   const delegate = useRouter();
-  return useMemo(() => new QueryAwareRouterImpl(delegate), [delegate]);
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  return useMemo(
+    () => new QueryAwareRouterImpl(delegate, searchParams, pathname ?? ''),
+    [delegate],
+  );
 }
 
-class QueryAwareRouterImpl implements QueryAwareRouter {
-  constructor(public readonly delegate: NextRouter) {}
-
-  prefetch(
-    url: string,
-    as?: string,
-    options?: Parameters<NextRouter['prefetch']>[2],
-  ) {
-    return this.delegate.prefetch(url, as, options);
+class QueryAwareRouterImpl {
+  constructor(
+    public readonly router: AppRouterInstance,
+    public readonly searchParams: ReturnType<typeof useSearchParams>,
+    public readonly pathname: string,
+  ) {}
+  forward(): void {
+    throw new Error('Method not implemented.');
   }
 
-  push(
-    url: UrlObject | string,
-    as?: UrlObject | string,
-    options?: Parameters<NextRouter['push']>[2],
-  ) {
-    return this.delegate.push(
-      this.passQuery(url),
-      as && this.passQuery(as),
-      options,
-    );
+  prefetch(url: string) {
+    return this.router.prefetch(url);
   }
 
-  replace(
-    url: UrlObject | string,
-    as?: UrlObject | string,
-    options?: Parameters<NextRouter['replace']>[2],
-  ) {
-    return this.delegate.replace(
-      this.passQuery(url),
-      as && this.passQuery(as),
-      options,
-    );
+  push(url: string, options?: Parameters<AppRouterInstance['push']>[1]) {
+    if (!isBrowser) return;
+    let { searchParams, pathname } = new URL(url, window.location.origin);
+    let finalParams = searchParamsToCarryOver.reduce((prev, cur) => {
+      let param = searchParams.get(cur) ?? this.searchParams.get(cur);
+      if (param) {
+        prev.set(cur, param);
+      }
+      return prev;
+    }, new URLSearchParams());
+    let finalURL = pathname + '?' + finalParams.toString();
+    return this.router.push(finalURL, options);
+  }
+  pushWithRedirect(url: string) {
+    console.log(url);
+    let { searchParams, pathname } = new URL(url, window.location.origin);
+    searchParams.set('redirect', this.pathname);
+    this.router.push(pathname + '?' + searchParams.toString());
+  }
+  gotoRedirect(fallbackURL: string) {
+    let goto = this.searchParams.get('redirect') ?? fallbackURL;
+    this.router.push(goto);
+  }
+
+  replace(href: string, options?: Parameters<AppRouterInstance['push']>[1]) {
+    return this.router.replace(href, options);
   }
 
   back() {
-    this.delegate.back();
+    this.router.back();
   }
 
-  reload() {
-    this.delegate.reload();
-  }
-
-  get query() {
-    return this.delegate.query;
-  }
-
-  get events() {
-    return this.delegate.events;
-  }
-
-  private passQuery(original: UrlObject | string): UrlObject {
-    if (typeof original === 'string') {
-      return { pathname: original, query: this.copyQuery() };
-    } else {
-      return {
-        ...original,
-        query: Object.assign({}, this.copyQuery(), original.query),
-      };
-    }
-  }
-
-  private copyQuery() {
-    return pick(this.delegate.query, searchParamsToCarryOver) as ParsedUrlQuery;
+  refresh() {
+    throw new Error('Method not implemented.');
   }
 }
