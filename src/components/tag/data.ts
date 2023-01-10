@@ -11,28 +11,35 @@ export type TagOption = {
 
 export const RoleOptions: TagOption[] = [
   {
-    value: 'designer',
+    value: 'PM',
+    label: 'PM',
+    classes: {
+      container: '!bg-[#713F12] !border-[#A16207] border',
+    },
+  },
+  {
+    value: 'Designer',
     label: 'Designer',
     classes: {
       container: '!bg-[#831843] !border-[#BE185D] border',
     },
   },
   {
-    value: 'fe',
+    value: 'Frontend Developer',
     label: 'Frontend Developer',
     classes: {
       container: '!bg-[#14532D] !border-[#15803D] border',
     },
   },
   {
-    value: 'be',
+    value: 'Backend Developer',
     label: 'Backend Developer',
     classes: {
       container: '!bg-[#1E3A8A] !border-[#1D4ED8] border',
     },
   },
   {
-    value: 'bc',
+    value: 'Blockchain Developer',
     label: 'Blockchain Developer',
     classes: {
       container: '!bg-[#312E81] !border-[#4338CA] border',
@@ -46,12 +53,12 @@ export const RoleOptions: TagOption[] = [
 export type Skill = 'react' | 'typescript' | 'solidity' | 'javascript';
 export const SkillOptions: TagOption[] = [
   {
-    value: 'react',
+    value: 'React',
     label: '#React',
   },
   {
-    value: 'typescript',
-    label: '#Typescript',
+    value: 'Solidity',
+    label: '#Solidity',
   },
 ].map((op) => ({
   ...op,

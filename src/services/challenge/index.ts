@@ -1,4 +1,6 @@
+import { Roles, Skill } from '@/components/tag';
 import { agentAnon } from '../agent';
+import { UserProfile } from '../user';
 
 export interface Challenge {
   id: number;
@@ -55,9 +57,25 @@ export interface Sponsor {
 }
 
 export interface Team {
-  teamId: string;
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  challengeId: number;
+  openingRoles: Roles[];
+  tags: string[];
+  skills: Skill[];
+  teamMembers: TeamMember[];
 }
 
+export interface TeamMember {
+  id: string;
+  teamId: number;
+  userId: string;
+  teamRole: Roles;
+  isLeader: boolean;
+  userProfile: UserProfile;
+}
 export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
@@ -82,4 +100,22 @@ export async function getChallengeById(challengeId: string) {
     },
   );
   return data.challenge;
+}
+
+export async function getChallengeTeams(challengeId: string) {
+  const { data } = await agentAnon.get<{ teams: Team[] }>(
+    `/challenge/${challengeId}/teams`,
+    {
+      cache: 'force-cache',
+      next: { revalidate: 10 },
+    },
+  );
+  return data.teams;
+}
+export async function getTeam(teamId: string) {
+  const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`, {
+    cache: 'force-cache',
+    next: { revalidate: 10 },
+  });
+  return data.team;
 }

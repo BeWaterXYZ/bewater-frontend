@@ -1,12 +1,13 @@
 import { TeamItem } from './team-item';
 import Image from 'next/image';
 import { CreateTeamButton } from './create-team-button';
-import { paramSchema } from '../param-schema';
-import { getChallengeById } from '@/services/challenge';
+import { challengeSchema } from '../param-schema';
+import { getChallengeById, getChallengeTeams } from '@/services/challenge';
 
 export default async function ChallengeTeams({ params }: any) {
-  const { challengeId } = paramSchema.parse(params);
+  const { challengeId } = challengeSchema.parse(params);
   const challenge = await getChallengeById(challengeId);
+  const teams = await getChallengeTeams(challengeId);
   return (
     <div className="body-1 text-center">
       <div>
@@ -56,14 +57,8 @@ export default async function ChallengeTeams({ params }: any) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {new Array(10).fill(0).map((_, index) => {
-            return (
-              <TeamItem
-                key={index}
-                challenge={challenge}
-                team={{ teamId: '1' }}
-              />
-            );
+          {teams.map((team) => {
+            return <TeamItem key={team.id} challenge={challenge} team={team} />;
           })}
         </div>
       </div>
