@@ -76,11 +76,11 @@ export default async function Page({ params }: any) {
   );
 }
 // fix me
-// export async function generateStaticParams({ params }: { params: any }) {
-//   console.log('params' ,params)
-//   const { challengeId } = challengeSchema.parse(params);
-//   const teams = await getChallengeTeams(challengeId);
-//   return teams.map((t) => ({
-//     teamId: t.id,
-//   }));
-// }
+export async function generateStaticParams({ params }: any) {
+  console.log('params', params);
+  const { challengeId } = challengeSchema.parse(params);
+  const teams = await getChallengeTeams(challengeId);
+  return teams.map((t) => ({
+    teamId: t.id.toString(),
+  }));
+}

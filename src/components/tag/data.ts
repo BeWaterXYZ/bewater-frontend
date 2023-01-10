@@ -1,5 +1,3 @@
-export type Roles = 'designer' | 'fe' | 'be' | 'bc';
-
 export type TagOption = {
   value: string;
   label: string;
@@ -9,7 +7,7 @@ export type TagOption = {
   };
 };
 
-export const RoleOptions: TagOption[] = [
+export const RoleOptionsRaw = [
   {
     value: 'PM',
     label: 'PM',
@@ -45,13 +43,23 @@ export const RoleOptions: TagOption[] = [
       container: '!bg-[#312E81] !border-[#4338CA] border',
     },
   },
-].map((op) => ({
+  {
+    value: 'Smart Contract Developer',
+    label: 'Smart Contract Developer',
+    classes: {
+      container: '!bg-[#312E81] !border-[#4338CA] border',
+    },
+  },
+] as const;
+
+export const RoleOptions = RoleOptionsRaw.map((op) => ({
   ...op,
   classes: { ...op.classes, text: 'body-4 !text-white' },
 }));
 
-export type Skill = 'react' | 'typescript' | 'solidity' | 'javascript';
-export const SkillOptions: TagOption[] = [
+export type Roles = typeof RoleOptionsRaw[number]['value'];
+
+export const SkillOptionsRaw = [
   {
     value: 'React',
     label: '#React',
@@ -60,10 +68,18 @@ export const SkillOptions: TagOption[] = [
     value: 'Solidity',
     label: '#Solidity',
   },
-].map((op) => ({
+  {
+    value: 'Nextjs',
+    label: '#Nextjs',
+  },
+] as const;
+
+export const SkillOptions: TagOption[] = SkillOptionsRaw.map((op) => ({
   ...op,
   classes: {
     container: '!rounded-full !bg-[#1E293B]  body-4',
     text: '!text-grey',
   },
 }));
+
+export type Skill = typeof SkillOptionsRaw[number]['value'];

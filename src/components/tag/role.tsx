@@ -13,13 +13,11 @@ interface TagRoleProps {
 }
 
 export function TagRole({ label, onClick }: TagRoleProps) {
+  let option = mapsTagRole[label];
   return (
     <Tag
-      label={mapsTagRole[label].label}
-      classes={clsx(
-        mapsTagRole[label].classes.container,
-        mapsTagRole[label].classes.text,
-      )}
+      label={option.label}
+      classes={clsx(option.classes.container, option.classes.text)}
       onClick={onClick}
     />
   );

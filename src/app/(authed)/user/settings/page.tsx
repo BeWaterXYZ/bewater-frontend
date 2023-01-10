@@ -31,10 +31,8 @@ export default function Page() {
           />
           <div className="text-left w-full my-4">
             <p className="body-4 my-4">Roles</p>
-            <TagRole label="designer" onClick={() => {}} />
-            <TagRole label="fe" onClick={() => {}} />
-            <TagRole label="be" onClick={() => {}} />
-            <TagRole label="bc" onClick={() => {}} />
+            <TagRole label="Designer" onClick={() => {}} />
+            <TagRole label="Frontend Developer" onClick={() => {}} />
           </div>
           <hr className="border-titanium/20 my-4" />
 
@@ -42,8 +40,8 @@ export default function Page() {
             <p className="body-4 my-4">Skills</p>
 
             <div className="flex flex-wrap">
-              <TagSkill label={'typescript'} onClick={() => {}} />
-              <TagSkill label={'react'} onClick={() => {}} />
+              <TagSkill label={'Solidity'} onClick={() => {}} />
+              <TagSkill label={'React'} onClick={() => {}} />
             </div>
           </div>
         </div>
