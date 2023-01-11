@@ -4,6 +4,11 @@ import Link from 'next/link';
 import { TeamMember } from './team-member';
 import Image from 'next/image';
 import { challengeSchema, challengeTeamSchema } from '../../param-schema';
+import dynamic from 'next/dynamic';
+
+const TeamMenu = dynamic(() => import('./team-menu'), {
+  ssr: false,
+});
 
 export default async function Page({ params }: any) {
   const { challengeId, teamId } = challengeTeamSchema.parse(params);
@@ -25,7 +30,7 @@ export default async function Page({ params }: any) {
         <div className="heading-6 mb-4">{team.name}</div>
 
         <div>
-          <button className="btn btn-primary">Request to join</button>
+          <TeamMenu team={team} />
         </div>
       </div>
       <div className="border border-gray-700 rounded bg-white/5 p-4 flex gap-4 my-4 justify-center mb-8">
@@ -75,9 +80,7 @@ export default async function Page({ params }: any) {
     </div>
   );
 }
-// fix me
 export async function generateStaticParams({ params }: any) {
-  console.log('params', params);
   const { challengeId } = challengeSchema.parse(params);
   const teams = await getChallengeTeams(challengeId);
   return teams.map((t) => ({

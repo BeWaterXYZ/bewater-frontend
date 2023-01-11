@@ -8,6 +8,8 @@ export default async function ChallengeTeams({ params }: any) {
   const { challengeId } = challengeSchema.parse(params);
   const challenge = await getChallengeById(challengeId);
   const teams = await getChallengeTeams(challengeId);
+  const team_len = teams.length;
+  const team_active_len = teams.filter((t) => t.status === 'ACTIVE').length;
   return (
     <div className="body-1 text-center">
       <div>
@@ -39,11 +41,13 @@ export default async function ChallengeTeams({ params }: any) {
             </div>
             <div className="flex flex-col justify-around">
               <p className="body-2 ">
-                <strong className="heading-4">23</strong> teams are ready to
-                challenge
+                <strong className="heading-4">{team_len}</strong> teams are
+                ready to challenge
               </p>
               <p className="body-2 ">
-                <strong className="heading-4   text-[#F62584] ">23</strong>{' '}
+                <strong className="heading-4   text-[#F62584] ">
+                  {team_active_len}
+                </strong>{' '}
                 teams are looking for builders
               </p>
             </div>
