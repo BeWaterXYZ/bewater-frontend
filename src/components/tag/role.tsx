@@ -9,16 +9,20 @@ const mapsTagRole = RoleOptions.reduce((prev, cur) => {
 }, {} as { [index: string]: TagOption });
 interface TagRoleProps {
   label: Roles;
+  simple?: boolean;
   onClick?: () => void;
 }
 
-export function TagRole({ label, onClick }: TagRoleProps) {
+export function TagRole({ label, onClick, simple = false }: TagRoleProps) {
   let option = mapsTagRole[label];
   if (!option) console.log({ label });
   return (
     <Tag
-      label={option.label}
-      classes={clsx(option.classes.container, option.classes.text)}
+      label={simple ? '' : option.label}
+      title={option.label}
+      classes={clsx(option.classes.container, option.classes.text, {
+        '!rounded-full !w-4 !h-4 !block !p-0': simple,
+      })}
       onClick={onClick}
     />
   );

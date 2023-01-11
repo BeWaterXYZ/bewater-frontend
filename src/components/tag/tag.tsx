@@ -4,13 +4,15 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 
 export interface TagProps {
   label: string;
+  title?: string;
   classes: string;
   onClick?: () => void;
 }
 
-export function Tag({ label, classes, onClick }: TagProps) {
+export function Tag({ label, classes, onClick, title }: TagProps) {
   return (
     <div
+      title={title ?? label}
       className={clsx(
         'whitespace-nowrap inline-block rounded-sm h-6    text-white px-2 py-1 my-1',
         classes,
