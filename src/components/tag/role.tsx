@@ -14,6 +14,7 @@ interface TagRoleProps {
 
 export function TagRole({ label, onClick }: TagRoleProps) {
   let option = mapsTagRole[label];
+  if (!option) console.log({ label });
   return (
     <Tag
       label={option.label}

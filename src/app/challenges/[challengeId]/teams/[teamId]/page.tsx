@@ -1,4 +1,4 @@
-import { TagRole } from '@/components/tag';
+import { TagRole, TagSkill } from '@/components/tag';
 import { getChallengeTeams, getTeam } from '@/services/challenge';
 import Link from 'next/link';
 import { TeamMember } from './team-member';
@@ -46,7 +46,10 @@ export default async function Page({ params }: any) {
           <p className="body-3"> we still need</p>
           <div className="flex gap-2 flex-wrap">
             {team.openingRoles.map((role) => (
-              <TagRole label={role} key={role}></TagRole>
+              <TagRole label={role} key={role} />
+            ))}
+            {team.skills.map((skill) => (
+              <TagSkill label={skill} key={skill} />
             ))}
           </div>
         </div>
@@ -74,8 +77,8 @@ export default async function Page({ params }: any) {
 
       <div className="mb-16">
         <p className="body-3 text-grey font-bold "> Project Overview</p>
-        <h3 className="body-2 font-bold py-3">Yet another Layer 2 Idea</h3>
-        <p className="body-4 opacity-70">{team.description}</p>
+        <h3 className="body-2 font-bold py-3">{team.ideaTitle}</h3>
+        <p className="body-4 opacity-70">{team.ideaDescription}</p>
       </div>
     </div>
   );

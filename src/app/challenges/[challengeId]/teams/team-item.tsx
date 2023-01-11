@@ -15,9 +15,9 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
         <div className="bg-[#1A1C40] p-4">
           <div className="">
             <div className="body-2 font-bold">
-              {team.name}
+              {team.ideaTitle}
 
-              {team.tags.map((tag) => (
+              {team.ideaTags.map((tag) => (
                 <span
                   key={tag}
                   className="mono-4 border rounded p-[1px] m-1 opacity-80 uppercase"

@@ -9,6 +9,7 @@ export interface Challenge {
   requirements: string[];
   startTime: string;
   endTime: string;
+  teamUpDeadline: string;
   totalAward: number;
   awardCurrency: string;
   status: 'DRAFT' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED';
@@ -59,11 +60,12 @@ export interface Sponsor {
 export interface Team {
   id: number;
   name: string;
-  description: string;
+  ideaTitle: string;
+  ideaDescription: string;
   status: string;
   challengeId: number;
   openingRoles: Roles[];
-  tags: string[];
+  ideaTags: string[];
   skills: Skill[];
   teamMembers: TeamMember[];
 }

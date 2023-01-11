@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { CreateTeamButton } from './create-team-button';
 import { challengeSchema } from '../param-schema';
 import { getChallengeById, getChallengeTeams } from '@/services/challenge';
+import { Countdown } from './countdown';
 
 export default async function ChallengeTeams({ params }: any) {
   const { challengeId } = challengeSchema.parse(params);
@@ -27,7 +28,10 @@ export default async function ChallengeTeams({ params }: any) {
               <p className="body-1 text-[#701A75]">
                 TEAM FORMATION WILL END IN
               </p>
-              <p className="heading-5"> 4 days 14:32:30 </p>
+              <p className="heading-5">
+                {' '}
+                <Countdown deadline={challenge.teamUpDeadline} />
+              </p>
             </div>
           </div>
           <div className="flex-1 h-36  p-8 flex justify-around rounded bg-gradient-to-b from-[#1C104A] to-[#1c104a00] border border-[#1C104A]">
