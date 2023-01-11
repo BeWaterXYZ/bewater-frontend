@@ -112,6 +112,11 @@ export async function getChallengeTeams(challengeId: string) {
   );
   return data.teams;
 }
+
+// const sleep = (ms:number) => new Promise(res=>setTimeout(() => {
+//   res(ms)
+// }, ms))
+
 export async function getTeam(teamId: string) {
   const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`, {
     cache: 'force-cache',

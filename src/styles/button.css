@@ -12,6 +12,6 @@
     @apply border-dream bg-dream text-white;
   }
   .btn-danger {
-    @apply border-danger bg-white text-danger;
+    @apply border-danger bg-night text-danger;
   }
 }
