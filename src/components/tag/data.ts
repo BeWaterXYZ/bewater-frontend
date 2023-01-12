@@ -47,14 +47,14 @@ export const RoleOptionsRaw = [
     value: 'Full Stack Developer',
     label: 'Full Stack Developer',
     classes: {
-      container: '!bg-[#312E81] !border-[#4338CA] border',
+      container: '!bg-[#164E63] !border-[#0E7490] border',
     },
   },
   {
     value: 'Security Engineer',
     label: 'Security Engineer',
     classes: {
-      container: '!bg-[#312E81] !border-[#4338CA] border',
+      container: '!bg-[#701A75] !border-[#A21CAF] border',
     },
   },
   {
