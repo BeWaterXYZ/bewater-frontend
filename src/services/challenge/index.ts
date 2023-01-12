@@ -38,7 +38,7 @@ export interface Judge {
 }
 
 export interface Milestone {
-  dueDate: Date;
+  dueDate: string;
   stageName: string;
 }
 
