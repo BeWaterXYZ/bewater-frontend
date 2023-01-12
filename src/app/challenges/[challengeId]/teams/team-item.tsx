@@ -15,9 +15,9 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
         <div className="bg-[#1A1C40] p-4">
           <div className="">
             <div className="body-2 font-bold">
-              {team.name}
+              {team.ideaTitle}
 
-              {team.tags.map((tag) => (
+              {team.ideaTags.map((tag) => (
                 <span
                   key={tag}
                   className="mono-4 border rounded p-[1px] m-1 opacity-80 uppercase"
@@ -37,10 +37,12 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
                 <TagSkill label={skill} key={skill}></TagSkill>
               ))}
             </div>
-            <div className="flex flex-wrap gap-1">
-              {team.openingRoles.map((role) => (
-                <TagRole label={role} key={role}></TagRole>
-              ))}
+            <div className="float-left">
+              <div className="flex gap-2 rounded border border-[#333568] p-1 px-2 my-2">
+                {team.openingRoles.map((role) => (
+                  <TagRole label={role} key={role} simple></TagRole>
+                ))}
+              </div>
             </div>
           </div>
           <div className="flex justify-center items-center">

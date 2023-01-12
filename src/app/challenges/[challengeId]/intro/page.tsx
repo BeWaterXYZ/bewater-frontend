@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 import { challengeSchema } from '../param-schema';
+import { Timeline } from './timeline';
 
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = challengeSchema.parse(params);
@@ -14,11 +15,13 @@ export default async function ChallengeIntro({ params }: any) {
 
   return (
     <div className="container  p-4 body-1">
-      {/* <div className="body-1 text-center bg-cyan-400">time schedule</div> */}
+      <div className="hidden lg:block">
+        <Timeline milestones={challenge.milestones} />
+      </div>
 
       <div className="block md:grid gap-5 grid-cols-[minmax(0,_1fr),minmax(0,_3fr)]">
         <div className="">
-          <h3 className="body-3 my-4 ">Awards</h3>
+          <h3 className="body-3 my-8 ">Awards</h3>
 
           <div className="border border-gray-700 p-4 mb-4">
             {awards.map((award, index) => (

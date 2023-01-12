@@ -9,8 +9,8 @@ export type TagOption = {
 
 export const RoleOptionsRaw = [
   {
-    value: 'PM',
-    label: 'PM',
+    value: 'Product Manager',
+    label: 'Product Manager',
     classes: {
       container: '!bg-[#713F12] !border-[#A16207] border',
     },
@@ -44,10 +44,24 @@ export const RoleOptionsRaw = [
     },
   },
   {
-    value: 'Smart Contract Developer',
-    label: 'Smart Contract Developer',
+    value: 'Full Stack Developer',
+    label: 'Full Stack Developer',
     classes: {
-      container: '!bg-[#312E81] !border-[#4338CA] border',
+      container: '!bg-[#164E63] !border-[#0E7490] border',
+    },
+  },
+  {
+    value: 'Security Engineer',
+    label: 'Security Engineer',
+    classes: {
+      container: '!bg-[#701A75] !border-[#A21CAF] border',
+    },
+  },
+  {
+    value: 'Data Analyst',
+    label: 'Data Analyst',
+    classes: {
+      container: '!bg-[#4C1D95] !border-[#6D28D9] border',
     },
   },
 ] as const;
