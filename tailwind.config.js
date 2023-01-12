@@ -18,15 +18,10 @@ module.exports = {
         secondary: ['var(--font-secondary)', ...fontFamily.sans],
       },
       colors: {
-        // inspiration from  https://colornamer.robertcooper.me/
         night: '#04051B',
         day: '#00CCCC',
-        dream: '#2F3153',
-        titanium: '#E4E4E4',
-        ibis: '#24254E',
         danger: '#EB7E7E',
         grey: '#64748B',
-        cadet: '#94A3B8',
       },
       boxShadow: {
         border: '0px 0px 4px #E4E4E4',

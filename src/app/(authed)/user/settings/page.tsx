@@ -34,7 +34,7 @@ export default function Page() {
             <TagRole label="Designer" onClick={() => {}} />
             <TagRole label="Frontend Developer" onClick={() => {}} />
           </div>
-          <hr className="border-titanium/20 my-4" />
+          <hr className="border-[#1E293B] my-4" />
 
           <div className="text-left w-full my-4">
             <p className="body-4 my-4">Skills</p>
