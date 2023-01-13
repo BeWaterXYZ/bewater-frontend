@@ -27,7 +27,7 @@ export const TeamJoin = Template.bind({});
 
 TeamJoin.args = {
   dialogs: {
-    team_join: { teamId: '1' },
+    team_join: { id: 1 },
   },
   // eslint-disable-next-line
   closeDialog: () => {},

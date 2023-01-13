@@ -1,6 +1,7 @@
 'use client';
 
 import { useDialogStore } from '@/components/dialog/store';
+import { useNavigator } from '@/hooks/useNavigator';
 import { Team } from '@/services/challenge';
 import { useAuthStore } from '@/stores/auth';
 
@@ -9,6 +10,8 @@ interface TeamMenuProps {
 }
 export default function TeamMenu({ team }: TeamMenuProps) {
   const user = useAuthStore((s) => s.user);
+  const isAuthed = useAuthStore((s) => s.isAuthed);
+  const navigator = useNavigator();
   const showDialog = useDialogStore((s) => s.open);
   const isJoined = team.teamMembers.some((m) => m.userId === user.userId);
   const isLeader = team.teamMembers
@@ -16,6 +19,10 @@ export default function TeamMenu({ team }: TeamMenuProps) {
     .some((m) => m.userId === user.userId);
 
   const requestJoin = () => {
+    if (!isAuthed()) {
+      navigator.goToConnectWallet();
+      return;
+    }
     showDialog('team_join', team);
   };
   const manageMembers = () => {
