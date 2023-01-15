@@ -19,7 +19,7 @@ export default async function Page({ params }: any) {
     <div>
       <div className="my-4">
         <Link
-          className="body-3 text-cadet"
+          className="body-3 text-grey"
           href={`/challenges/${challengeId}/teams`}
         >
           {'< Team List'}

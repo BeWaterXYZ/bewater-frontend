@@ -19,8 +19,8 @@ export default async function ChallengeIntro({ params }: any) {
         <Timeline milestones={challenge.milestones} />
       </div>
 
-      <div className="block md:grid gap-5 grid-cols-[minmax(0,_1fr),minmax(0,_3fr)]">
-        <div className="">
+      <div className=" flex flex-wrap gap-8 ">
+        <div className="w-full lg:flex-1 order-2 lg:order-1">
           <h3 className="body-3 my-8 ">Awards</h3>
 
           <div className="border border-gray-700 p-4 mb-4">
@@ -33,7 +33,7 @@ export default async function ChallengeIntro({ params }: any) {
               >
                 <div className="flex-1">
                   <p className="body-3 py-2">{award.awardName}</p>
-                  <div className="flex justify-between body-4 text-cadet">
+                  <div className="flex justify-between body-4 text-grey">
                     <p>{formatMoney(award.amount)}</p>
                     <p>x {award.count}</p>
                   </div>
@@ -48,7 +48,7 @@ export default async function ChallengeIntro({ params }: any) {
               {sponsorships.map((sponsorship, index) => (
                 <div
                   key={sponsorship.id}
-                  className={clsx('border border-cadet', {
+                  className={clsx('border border-grey', {
                     'col-span-2': index === 0,
                   })}
                 >
@@ -63,7 +63,7 @@ export default async function ChallengeIntro({ params }: any) {
                     className={clsx('flex justify-center items-end h-6', {
                       'bg-gradient-to-r from-[#F62584] to-[#480CA7]':
                         index === 0,
-                      'bg-cadet': index !== 0,
+                      'bg-grey': index !== 0,
                     })}
                   >
                     <div className="body-3">
@@ -76,22 +76,22 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         </div>
 
-        <div className="">
+        <div className="w-full lg:flex-[3] order-1 lg:order-2">
           <h3 className="body-3 my-8 ">Description</h3>
-          <p className="body-3 text-white/60">{challenge.description}</p>
+          <p className="body-3 text-gray-400">{challenge.description}</p>
           <hr className="my-4 border-gray-700" />
           <h3 className="body-3 my-8">Requirements</h3>
           <ul>
             {challenge.requirements.map((r) => (
-              <li key={r}>
-                <p className="body-3 text-white/60">{r}</p>
+              <li key={r} className="list-disc list-inside">
+                <span className="body-3 text-gray-400">{r}</span>
               </li>
             ))}
           </ul>
           <hr className="my-4 border-gray-700" />
 
           <h3 className="body-3 my-8">Location</h3>
-          <p className="body-3 text-white/60">{challenge.location}</p>
+          <p className="body-3 text-gray-400">{challenge.location}</p>
           <hr className="my-4 border-gray-700" />
 
           <h3 className="body-3 my-8">Speaker & Judges</h3>
@@ -119,7 +119,7 @@ export default async function ChallengeIntro({ params }: any) {
         <p className="heading-4 py-4">
           Interested? Make your team and embrace it.
         </p>
-        <p className="body-2 text-white/60  py-4">
+        <p className="body-2 text-gray-400  py-4">
           Join over 4,000+ hackers all over the world.
         </p>
         <div className="py-4">

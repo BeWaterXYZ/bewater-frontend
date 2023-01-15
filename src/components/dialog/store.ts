@@ -1,9 +1,11 @@
+import { Team } from '@/services/challenge';
 import create from 'zustand';
 
 export type Dialogs = {
   metamask_not_support?: boolean;
-  team_join?: { teamId: string };
+  team_join?: Partial<Team>;
   team_create?: boolean;
+  team_manage_member?: Team;
 };
 
 type State = {
@@ -23,6 +25,7 @@ export const useDialogStore = create<State & Actions>((set) => ({
     metamask_not_support: undefined,
     team_join: undefined,
     team_create: undefined,
+    team_manage_member: undefined,
   },
   open: (name, data) =>
     set((old) => ({ dialogs: { ...old.dialogs, [name]: data } })),

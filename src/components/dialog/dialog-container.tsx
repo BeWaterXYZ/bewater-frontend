@@ -14,14 +14,10 @@ type DialogMap = Record<
 >;
 
 const dialogMaps: DialogMap = {
-  metamask_not_support: dynamic(
-    () => import('./dialogs/metamask-not-support'),
-    //   {
-    //     ssr: false,
-    //   },
-  ),
+  metamask_not_support: dynamic(() => import('./dialogs/metamask-not-support')),
   team_join: dynamic(() => import('./dialogs/team-join')),
   team_create: dynamic(() => import('./dialogs/team-create')),
+  team_manage_member: dynamic(() => import('./dialogs/team-manage-member')),
 };
 
 export function DialogContainer({

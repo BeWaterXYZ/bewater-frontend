@@ -33,7 +33,12 @@ export const Select = React.forwardRef(function TextArea(
   } = props;
   const id = useId();
   const styles: ClassNamesConfig<TagOption> = {
-    control: () => clsx('control !p-0 !flex', { error: error }),
+    control: ({ isFocused }) => {
+      return clsx('control !p-0 !flex !shadow-none ', {
+        error: error,
+        '!border-day hover:!border-day': isFocused,
+      });
+    },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
     multiValue: ({ data }) => data.classes.container,

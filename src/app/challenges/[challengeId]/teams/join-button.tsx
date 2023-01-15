@@ -10,13 +10,13 @@ export let JoinButton = () => {
   const navigator = useNavigator();
   const openDialog = useDialogStore((s) => s.open);
   let handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    if (!isAuthed()) {
-      navigator.goToConnectWallet();
-      return;
-    }
-    openDialog('team_join', { teamId: '123' });
+    // e.stopPropagation();
+    // e.preventDefault();
+    // if (!isAuthed()) {
+    //   navigator.goToConnectWallet();
+    //   return;
+    // }
+    // openDialog('team_join', { teamId: '123' });
   };
 
   return (

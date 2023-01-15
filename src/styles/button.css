@@ -9,7 +9,7 @@
     @apply border-day bg-night text-day;
   }
   .btn-secondary {
-    @apply border-dream bg-dream text-white;
+    @apply border-[#2F3153] bg-[#2F3153] text-white;
   }
   .btn-danger {
     @apply border-danger bg-night text-danger;
