@@ -1,7 +1,8 @@
 import { Avatar } from '@/components/avatar';
 import { TagRole } from '@/components/tag';
+import { teamRemoveMember } from '@/services/challenge';
 
-import { Dialogs } from '../store';
+import { Dialogs, useDialogStore } from '../store';
 
 interface TeamManageMemberDialogProps {
   data: Dialogs['team_manage_member'];
@@ -12,7 +13,13 @@ export default function TeamManageMemberDialog({
   data,
   close,
 }: TeamManageMemberDialogProps) {
+  let updateDialog = useDialogStore((s) => s.open);
   let nonLeaders = data?.teamMembers.filter((m) => !m.isLeader)!;
+
+  let removeMember = async (userId: string) => {
+    const team = await teamRemoveMember(data?.id!, userId);
+    updateDialog('team_manage_member', team);
+  };
 
   return (
     <div className="flex flex-col justify-center  ">
@@ -39,7 +46,14 @@ export default function TeamManageMemberDialog({
             <TagRole label={m.teamRole} />
           </div>
           <div>
-            <button className="btn btn-danger">remove</button>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                removeMember(m.userId);
+              }}
+            >
+              remove
+            </button>
           </div>
         </div>
       ))}

@@ -1,24 +1,21 @@
-import React, { useId } from 'react';
+import React, { ForwardedRef, useId } from 'react';
 import clsx from 'clsx';
 import type { FieldError, Merge } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import RSelect, { ClassNamesConfig } from 'react-select';
 import { TagOption } from '@/components/tag';
-
-interface Props extends React.ComponentPropsWithRef<'select'> {
+interface SelectProps extends React.ComponentPropsWithoutRef<'select'> {
   label?: string;
   name: string;
   error?: FieldError | Merge<FieldError, (FieldError | undefined)[]>;
-  required?: boolean;
-  className?: string;
   control: any;
   options: TagOption[];
   isMulti?: boolean;
 }
 
 export const Select = React.forwardRef(function TextArea(
-  props: Props,
-  ref: React.ForwardedRef<HTMLSelectElement>,
+  props: SelectProps,
+  ref: ForwardedRef<HTMLSelectElement>,
 ) {
   const {
     isMulti = false,
@@ -41,6 +38,7 @@ export const Select = React.forwardRef(function TextArea(
     },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
+    singleValue: () => 'body-4',
     multiValue: ({ data }) => data.classes.container,
     multiValueLabel: ({ data }) => data.classes.text,
     multiValueRemove: () => 'hover:!bg-transparent',
@@ -62,6 +60,7 @@ export const Select = React.forwardRef(function TextArea(
         render={({ field }) =>
           isMulti ? (
             <RSelect
+              id={id}
               isMulti
               classNames={styles}
               options={options}
@@ -75,6 +74,9 @@ export const Select = React.forwardRef(function TextArea(
             />
           ) : (
             <RSelect
+              id={id}
+              isMulti={false}
+              classNames={styles}
               options={options}
               value={options.find((c) => c.value === value)}
               onChange={(val) => val && field.onChange(val.value)}

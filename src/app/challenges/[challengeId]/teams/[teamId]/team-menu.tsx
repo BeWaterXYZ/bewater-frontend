@@ -31,7 +31,7 @@ export default function TeamMenu({ team }: TeamMenuProps) {
 
   return (
     <div>
-      {!isJoined ? (
+      {!isAuthed() || !isJoined ? (
         <div>
           <button className="btn btn-primary" onClick={requestJoin}>
             Request to join

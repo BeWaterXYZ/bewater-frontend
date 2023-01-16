@@ -2,12 +2,9 @@ import React, { useId } from 'react';
 import clsx from 'clsx';
 import type { FieldError } from 'react-hook-form';
 
-interface Props extends React.ComponentPropsWithRef<'input'> {
+interface Props extends React.ComponentPropsWithoutRef<'input'> {
   label?: string;
-  name: string;
   error?: FieldError;
-  required?: boolean;
-  className?: string;
 }
 
 export const Input = React.forwardRef(function Input(
