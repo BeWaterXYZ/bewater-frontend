@@ -12,7 +12,8 @@ const schema = z
     name: z.string().min(3, { message: 'At least 3 characters' }),
     title: z.string().min(3, { message: 'At least 3 characters' }),
     description: z.string(),
-    roles: z.array(z.string()),
+    role: z.string(),
+    roles: z.array(z.string()).min(1, { message: 'choose at least one role' }),
     skills: z.array(z.string()),
   })
   .required();
@@ -72,6 +73,14 @@ export default function TeamCreateDialog({
           error={errors['description']}
           {...register('description')}
         />
+        <Select
+          label="Role"
+          options={RoleOptions}
+          error={errors['role']}
+          control={control}
+          {...register('role')}
+        />
+
         <Select
           label="Roles Needed"
           options={RoleOptions}

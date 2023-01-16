@@ -2,12 +2,9 @@ import React, { useId } from 'react';
 import clsx from 'clsx';
 import type { FieldError } from 'react-hook-form';
 
-interface Props extends React.ComponentPropsWithRef<'textarea'> {
+interface Props extends React.ComponentPropsWithoutRef<'textarea'> {
   label?: string;
-  name: string;
   error?: FieldError;
-  required?: boolean;
-  className?: string;
 }
 
 export const TextArea = React.forwardRef(function TextArea(
