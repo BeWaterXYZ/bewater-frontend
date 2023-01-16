@@ -1,5 +1,5 @@
 import { Roles, Skill } from '@/components/tag';
-import { agentAnon } from '../agent';
+import { agentAnon, agentAuthed } from '../agent';
 import { UserProfile } from '../user';
 
 export interface Challenge {
@@ -93,7 +93,7 @@ export async function getChallenges() {
   return data.challenges;
 }
 
-export async function getChallengeById(challengeId: string) {
+export async function getChallengeById(challengeId: number) {
   const { data } = await agentAnon.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
     {
@@ -104,7 +104,7 @@ export async function getChallengeById(challengeId: string) {
   return data.challenge;
 }
 
-export async function getChallengeTeams(challengeId: string) {
+export async function getChallengeTeams(challengeId: number) {
   const { data } = await agentAnon.get<{ teams: Team[] }>(
     `/challenge/${challengeId}/teams`,
     {
@@ -119,10 +119,20 @@ export async function getChallengeTeams(challengeId: string) {
 //   res(ms)
 // }, ms))
 
-export async function getTeam(teamId: string) {
+export async function getTeam(teamId: number) {
   const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`, {
     cache: 'force-cache',
     next: { revalidate: 10 },
   });
+  return data.team;
+}
+
+export async function teamRemoveMember(teamId: number, userId: string) {
+  const { data } = await agentAuthed.put<{ team: Team }>(
+    `/team/${teamId}/remove`,
+    {
+      userId,
+    },
+  );
   return data.team;
 }
