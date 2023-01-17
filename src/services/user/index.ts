@@ -2,9 +2,11 @@ import { APIResponse } from '@/types/response';
 import { useQuery } from '@tanstack/react-query';
 
 import { agentAuthed } from '../agent';
+import { GroupingRequestFull } from '../shared';
+export type UserID = string;
 
 export interface UserProfile {
-  userId: string;
+  userId: UserID;
   email: string;
   walletAddress: string;
   userName?: string | undefined;
@@ -18,24 +20,34 @@ export interface GetUserProfileByIdResponse extends APIResponse {
 }
 
 export interface CreateUserProfileResponse extends APIResponse {
-  userId: string;
+  userId: UserID;
 }
 
 export interface UpdateUserProfileResponse extends APIResponse {
   userProfile: UserProfile | undefined;
 }
 
-export function useFetchUser(userId?: string) {
+export function useFetchUser(userId?: UserID) {
   return useQuery({
     queryKey: ['user', userId],
     enabled: !!userId,
     queryFn: async () => {
-      return getUserProfile(userId as string);
+      return getUserProfile(userId!);
     },
   });
 }
 
-export async function getUserProfile(userId: string) {
+export function useFetchGroupingRequest(userId?: UserID) {
+  return useQuery({
+    queryKey: ['user', 'request', userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getAllGroupingRequest(userId!);
+    },
+  });
+}
+
+export async function getUserProfile(userId: UserID) {
   const { data } = await agentAuthed.get<GetUserProfileByIdResponse>(
     `/user/${userId}`,
   );
@@ -58,5 +70,15 @@ export async function submitUpdateUserProfile(
     `/user/${userProfile.userId}`,
     userProfile,
   );
+  return data;
+}
+
+export async function getAllGroupingRequest(userId: UserID) {
+  const { data } = await agentAuthed.get<{
+    receivedApplications: GroupingRequestFull[];
+    receivedInvitations: GroupingRequestFull[];
+    sentApplications: GroupingRequestFull[];
+    sentInvitations: GroupingRequestFull[];
+  }>(`/user/${userId}/requests`);
   return data;
 }

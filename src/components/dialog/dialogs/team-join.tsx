@@ -1,7 +1,9 @@
-import { Avatar } from '@/components/avatar';
 import { Select, TextArea } from '@/components/form/control';
-import { RoleOptions, TagSkill } from '@/components/tag';
-import { TagRole } from '@/components/tag';
+import { useLoadingStoreAction } from '@/components/loading/store';
+import { RoleOptions, Roles } from '@/components/tag';
+import { useToastStore } from '@/components/toast/store';
+import { sendTeamApplication } from '@/services/challenge';
+import { useAuthStore } from '@/stores/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -10,8 +12,10 @@ import { Dialogs } from '../store';
 
 const schema = z
   .object({
-    roles: z.array(z.string()),
-    message: z.string(),
+    roles: z
+      .array(z.string())
+      .max(1, { message: 'You can only choose one role' }),
+    message: z.string().min(3, 'At least 3 characters'),
   })
   .required();
 
@@ -28,13 +32,46 @@ export function useTeamCreateForm() {
 }
 
 interface TeamJoinDialogProps {
-  data: Dialogs['team_join'];
-  close?: () => void;
+  data: NonNullable<Dialogs['team_join']>;
+  close: () => void;
 }
 
-export default function TeamJoinDialog({ data, close }: TeamJoinDialogProps) {
-  const onSubmit = (data: Inputs) => {
-    console.log({ data });
+export default function TeamJoinDialog({
+  data: team,
+  close,
+}: TeamJoinDialogProps) {
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
+  const addToast = useToastStore((s) => s.add);
+  const currentUser = useAuthStore((s) => s.user);
+
+  const leaders = team.teamMembers.filter((m) => m.isLeader);
+
+  const onSubmit = async (formData: Inputs) => {
+    showLoading();
+    try {
+      const data = await sendTeamApplication(team.id, {
+        type: 'APPLICATION',
+        senderId: currentUser.userId!,
+        recipientId: leaders[0].userId,
+        teamRole: formData.roles.join(',') as Roles,
+        message: formData.message,
+      });
+      console.log({ data });
+      addToast({
+        type: 'success',
+        title: 'Request sent!',
+        description: 'please wait for team leader to approve',
+      });
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Request not sent!',
+        description: 'please try again later',
+      });
+    } finally {
+      dismissLoading();
+      close();
+    }
   };
   const {
     control,
@@ -62,8 +99,9 @@ export default function TeamJoinDialog({ data, close }: TeamJoinDialogProps) {
 
         <TextArea
           label="Include a message"
-          {...register('message')}
+          error={errors['message']}
           placeholder="write a request message..."
+          {...register('message')}
         ></TextArea>
 
         <div className="mt-4 flex flex-row gap-4">

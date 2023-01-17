@@ -3,7 +3,7 @@ import create from 'zustand';
 
 export type Dialogs = {
   metamask_not_support?: boolean;
-  team_join?: Partial<Team>;
+  team_join?: Team;
   team_create?: boolean;
   team_manage_member?: Team;
 };

@@ -5,8 +5,8 @@ import { z } from 'zod';
 const schema = z
   .object({
     email: z.string().email(),
-    userName: z.string().min(3, { message: 'Required' }),
-    bio: z.string().min(3, { message: 'Required' }),
+    userName: z.string().min(3, { message: 'At least 3 characters' }),
+    bio: z.string().min(3, { message: 'At least 3 characters' }),
     fullName: z.string().min(3, { message: 'At least 3 characters' }),
   })
   .required();
