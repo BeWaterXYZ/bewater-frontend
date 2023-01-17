@@ -10,7 +10,7 @@ interface DialogContainerProps {
 
 type DialogMap = Record<
   DialogsKeys,
-  ComponentType<{ data: any; close?: () => void }>
+  ComponentType<{ data: any; close: () => void }>
 >;
 
 const dialogMaps: DialogMap = {

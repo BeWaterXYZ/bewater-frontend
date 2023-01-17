@@ -6,7 +6,7 @@ import { Dialogs, useDialogStore } from '../store';
 
 interface TeamManageMemberDialogProps {
   data: Dialogs['team_manage_member'];
-  close?: () => void;
+  close: () => void;
 }
 
 export default function TeamManageMemberDialog({
