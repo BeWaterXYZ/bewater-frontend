@@ -64,8 +64,8 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
       <Input
         label="Full name"
         placeholder="Enter your full name"
-        error={errors['fullname']}
-        {...register('fullname')}
+        error={errors['fullName']}
+        {...register('fullName')}
       />
       <Input
         label="Email"

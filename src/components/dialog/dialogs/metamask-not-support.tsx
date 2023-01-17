@@ -4,6 +4,7 @@ import { Dialogs } from '../store';
 
 interface MetaMaskNotSupportDialogProps {
   data: Dialogs['metamask_not_support'];
+  close: () => void;
 }
 
 export default function MetaMaskNotSupportDialog(

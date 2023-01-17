@@ -1,6 +1,7 @@
 import { Roles, Skill } from '@/components/tag';
 import { agentAnon, agentAuthed } from '../agent';
-import { UserProfile } from '../user';
+import { UserID, UserProfile } from '../user';
+import { GroupingRequest, GroupingRequestId } from '../shared';
 
 export interface Challenge {
   id: number;
@@ -73,11 +74,12 @@ export interface Team {
 export interface TeamMember {
   id: string;
   teamId: number;
-  userId: string;
+  userId: UserID;
   teamRole: Roles;
   isLeader: boolean;
   userProfile: UserProfile;
 }
+
 export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
@@ -135,4 +137,25 @@ export async function teamRemoveMember(teamId: number, userId: string) {
     },
   );
   return data.team;
+}
+
+export async function sendTeamApplication(
+  teamId: Pick<Team, 'id'>['id'],
+  request: GroupingRequest,
+) {
+  const { data } = await agentAuthed.post(`/team/${teamId}/request`, request);
+  return data;
+}
+
+export async function revokeGroupingRequest(requestId: GroupingRequestId) {
+  const { data } = await agentAuthed.put(`/team/request/${requestId}/revoke`);
+  return data;
+}
+export async function acceptGroupingRequest(requestId: GroupingRequestId) {
+  const { data } = await agentAuthed.put(`/team/request/${requestId}/accept`);
+  return data;
+}
+export async function declineGroupingRequest(requestId: GroupingRequestId) {
+  const { data } = await agentAuthed.put(`/team/request/${requestId}/decline`);
+  return data;
 }

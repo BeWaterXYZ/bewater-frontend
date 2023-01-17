@@ -32,7 +32,7 @@ export function useTeamCreateForm() {
 
 interface TeamCreateDialogProps {
   data: Dialogs['team_create'];
-  close?: () => void;
+  close: () => void;
 }
 
 export default function TeamCreateDialog({
