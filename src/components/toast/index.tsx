@@ -18,19 +18,20 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
             key={toast.id}
             className={clsx(
               'rounded shadow-sm p-4 relative bg-gray-800 border border-[#1E293B]',
-              {
-                // 'bg-red-400': toast.type === 'error',
-                // 'bg-green-400': toast.type === 'success',
-                // 'bg-blue-400': toast.type === 'info',
-              },
             )}
           >
-            <div className="flex flex-row">
-              <div className="mx-1">
+            <div className="flex flex-row gap-2">
+              <div className="">
                 <Image
-                  src="/icons/check-circle.svg"
-                  width={24}
-                  height={24}
+                  src={
+                    toast.type === 'success'
+                      ? '/icons/success.svg'
+                      : toast.type === 'error'
+                      ? '/icons/error.svg'
+                      : '/icons/warning.svg'
+                  }
+                  width={20}
+                  height={20}
                   alt="check"
                 />
               </div>

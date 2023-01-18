@@ -27,7 +27,7 @@ Normal.args = {
       id: 2,
       title: 'this is title 1',
       description: 'this is description',
-      type: 'info',
+      type: 'warning',
     },
     {
       id: 2,

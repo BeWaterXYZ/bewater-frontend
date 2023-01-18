@@ -15,13 +15,14 @@ export default async function ChallengeTeams({ params }: any) {
     <div className="body-1 text-center">
       <div>
         <div className="my-2 gap-4 flex justify-between flex-col lg:flex-row">
-          <div className="flex-1 h-36  p-8 flex justify-around rounded bg-gradient-to-b from-[#310D37] to-[#310d3700] border border-[#310D37]">
+          <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#310D37] to-[#310d3700] border border-[#310D37]">
             <div>
               <Image
                 src="/challenge/clock.svg"
                 alt="Picture of the author"
                 width={80}
                 height={80}
+                className="m-1"
               />
             </div>
             <div className="flex flex-col justify-around">
@@ -34,7 +35,7 @@ export default async function ChallengeTeams({ params }: any) {
               </p>
             </div>
           </div>
-          <div className="flex-1 h-36  p-8 flex justify-around rounded bg-gradient-to-b from-[#1C104A] to-[#1c104a00] border border-[#1C104A]">
+          <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#1C104A] to-[#1c104a00] border border-[#1C104A]">
             <div>
               <Image
                 src="/challenge/team.svg"
