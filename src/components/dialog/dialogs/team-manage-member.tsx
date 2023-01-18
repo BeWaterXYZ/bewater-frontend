@@ -22,7 +22,7 @@ export default function TeamManageMemberDialog({
   };
 
   return (
-    <div className="flex flex-col justify-center  ">
+    <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="heading-6">Manage Members</p>
 
       {nonLeaders.map((m) => (

@@ -1,4 +1,4 @@
-export type TagOption = {
+export type Option = {
   value: string;
   label: string;
   classes: {
@@ -75,24 +75,75 @@ export type Roles = typeof RoleOptionsRaw[number]['value'];
 
 export const SkillOptionsRaw = [
   {
-    value: 'React',
-    label: '#React',
-  },
-  {
     value: 'Solidity',
     label: '#Solidity',
   },
   {
-    value: 'Nextjs',
-    label: '#Nextjs',
+    value: 'React',
+    label: '#React',
+  },
+  {
+    value: 'Angular',
+    label: '#Angular',
   },
   {
     value: 'Vue',
     label: '#Vue',
   },
+  {
+    value: 'iOS',
+    label: '#iOS',
+  },
+  {
+    value: 'Android',
+    label: '#Android',
+  },
+  {
+    value: 'Database',
+    label: '#Database',
+  },
+  {
+    value: 'ML&AI',
+    label: '#ML&AI',
+  },
+  {
+    value: 'DevOps',
+    label: '#DevOps',
+  },
+
+  {
+    value: 'Cybersecurity',
+    label: '#Cybersecurity',
+  },
+  {
+    value: '3D',
+    label: '#3D',
+  },
+
+  {
+    value: 'UI/UX',
+    label: '#UI/UX',
+  },
+  {
+    value: 'Branding',
+    label: '#Branding',
+  },
+
+  {
+    value: 'Motion',
+    label: '#Motion',
+  },
+  {
+    value: 'Character',
+    label: '#Character',
+  },
+  {
+    value: 'Illustration',
+    label: '#Illustration',
+  },
 ] as const;
 
-export const SkillOptions: TagOption[] = SkillOptionsRaw.map((op) => ({
+export const SkillOptions: Option[] = SkillOptionsRaw.map((op) => ({
   ...op,
   classes: {
     container: '!rounded-full !bg-[#1E293B]  body-4',
@@ -101,3 +152,68 @@ export const SkillOptions: TagOption[] = SkillOptionsRaw.map((op) => ({
 }));
 
 export type Skill = typeof SkillOptionsRaw[number]['value'];
+
+export const TagOptionsRaw = [
+  {
+    value: 'DeFi',
+    label: 'DeFi',
+  },
+  {
+    value: 'NFTs',
+    label: 'NFTs',
+  },
+  {
+    value: 'Gaming',
+    label: 'Gaming',
+  },
+  {
+    value: 'DAO',
+    label: 'DAO',
+  },
+
+  {
+    value: 'Layer 2',
+    label: 'Layer 2',
+  },
+  {
+    value: 'Wallet/Payments',
+    label: 'Wallet/Payments',
+  },
+
+  {
+    value: 'Developer Tool',
+    label: 'Developer Tool',
+  },
+  {
+    value: 'Data/Analytics',
+    label: 'Data/Analytics',
+  },
+
+  {
+    value: 'Audio/Video',
+    label: 'Audio/Video',
+  },
+  {
+    value: 'Social Network',
+    label: 'Social Network',
+  },
+  {
+    value: 'Zero Knowledge',
+    label: 'Zero Knowledge',
+  },
+  {
+    value: 'Metaverse',
+    label: 'Metaverse',
+  },
+  {
+    value: 'Others',
+    label: 'Others',
+  },
+];
+export const TagOptions: Option[] = TagOptionsRaw.map((op) => ({
+  ...op,
+  classes: {
+    container: '!rounded-full !bg-[#1E293B]  body-4',
+    text: '!text-grey',
+  },
+}));

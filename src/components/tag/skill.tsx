@@ -1,12 +1,12 @@
 'use client';
 import clsx from 'clsx';
-import { Skill, SkillOptions, TagOption } from './data';
+import { Skill, SkillOptions, Option } from './data';
 import { Tag } from './tag';
 
 const mapsTagSkill = SkillOptions.reduce((prev, cur) => {
   prev[cur.value] = cur;
   return prev;
-}, {} as { [index: string]: TagOption });
+}, {} as { [index: string]: Option });
 interface TagSkillProps {
   label: Skill;
   onClick?: () => void;

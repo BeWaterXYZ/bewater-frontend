@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 
 export function HeaderScrollHelper() {
   const handleScroll = (e: Event) => {
-    if (window.scrollY > 100) {
+    console.log(window.scrollY);
+    if (window.scrollY > 20) {
       document.querySelector('#main-header')?.classList.add('bg-night');
     } else {
       document.querySelector('#main-header')?.classList.remove('bg-night');

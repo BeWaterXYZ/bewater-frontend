@@ -81,7 +81,7 @@ export default function TeamJoinDialog({
   } = useTeamCreateForm();
 
   return (
-    <div className="flex flex-col justify-center  ">
+    <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="heading-6">Request to Join The Team</p>
 
       <p className="body-3 text-grey my-1  mt-4 font-bold">Team Name</p>

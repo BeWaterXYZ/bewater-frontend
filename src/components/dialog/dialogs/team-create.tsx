@@ -1,20 +1,31 @@
 import { Input, Select, TextArea } from '@/components/form/control';
-import { RoleOptions, SkillOptions } from '@/components/tag/data';
+import { RoleOptions, SkillOptions, TagOptions } from '@/components/tag/data';
 
 import { Dialogs } from '../store';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useToastStore } from '@/components/toast/store';
 
 const schema = z
   .object({
     name: z.string().min(3, { message: 'At least 3 characters' }),
     title: z.string().min(3, { message: 'At least 3 characters' }),
     description: z.string(),
-    role: z.string(),
-    roles: z.array(z.string()).min(1, { message: 'choose at least one role' }),
-    skills: z.array(z.string()),
+    role: z
+      .array(z.string())
+      .max(1, { message: 'You can only choose one role' }),
+    tags: z
+      .array(z.string())
+      .max(3, { message: 'You can only choose 3 skills' }),
+    roles: z
+      .array(z.string())
+      .min(1, { message: 'choose at least one role' })
+      .max(5, { message: 'You can only choose 5 roles' }),
+    skills: z
+      .array(z.string())
+      .max(5, { message: 'You can only choose 5 skills' }),
   })
   .required();
 
@@ -39,8 +50,11 @@ export default function TeamCreateDialog({
   data,
   close,
 }: TeamCreateDialogProps) {
+  const addToast = useToastStore((s) => s.add);
+
   const onSubmit = (data: Inputs) => {
     console.log({ data });
+    addToast({ type: 'success', title: 'team created', description: 'asdasd' });
   };
   const {
     control,
@@ -49,7 +63,7 @@ export default function TeamCreateDialog({
     formState: { errors },
   } = useTeamCreateForm();
   return (
-    <div className="flex flex-col justify-center  ">
+    <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="body-2 mb-4">Create A Team</p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
@@ -67,6 +81,15 @@ export default function TeamCreateDialog({
           error={errors['title']}
           {...register('title')}
         />
+        <Select
+          label="Project Tag"
+          required
+          isMulti
+          options={TagOptions}
+          error={errors['tags']}
+          control={control}
+          {...register('tags')}
+        />
         <TextArea
           label="Project Description"
           placeholder="Enter your project description"
@@ -74,7 +97,9 @@ export default function TeamCreateDialog({
           {...register('description')}
         />
         <Select
-          label="Role"
+          label="You’re going to play"
+          required
+          isMulti
           options={RoleOptions}
           error={errors['role']}
           control={control}

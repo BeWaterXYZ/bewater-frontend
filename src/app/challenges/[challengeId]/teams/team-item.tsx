@@ -2,7 +2,7 @@ import { Avatar } from '@/components/avatar';
 import { TagRole, TagSkill } from '@/components/tag';
 import { Challenge, Team } from '@/services/challenge';
 import Link from 'next/link';
-import { JoinButton } from './join-button';
+import { TeamStatus } from './team-status';
 
 interface TeamItemProps {
   challenge: Challenge;
@@ -46,7 +46,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
             </div>
           </div>
           <div className="flex justify-center items-center">
-            <JoinButton />
+            <TeamStatus team={team} />
           </div>
         </div>
       </div>

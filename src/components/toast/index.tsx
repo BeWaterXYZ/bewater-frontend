@@ -1,6 +1,7 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 import * as Toast from '@radix-ui/react-toast';
 import clsx from 'clsx';
+import Image from 'next/image';
 
 import { Toast as ToastType } from './store';
 
@@ -25,6 +26,14 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
             )}
           >
             <div className="flex flex-row">
+              <div className="mx-1">
+                <Image
+                  src="/icons/check-circle.svg"
+                  width={24}
+                  height={24}
+                  alt="check"
+                />
+              </div>
               <div>
                 <Toast.Title className="body-3 font-bold">
                   {toast.title}
