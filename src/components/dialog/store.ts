@@ -1,10 +1,10 @@
-import { Team } from '@/services/challenge';
+import { Challenge, Team } from '@/services/challenge';
 import create from 'zustand';
 
 export type Dialogs = {
   metamask_not_support?: boolean;
   team_join?: Team;
-  team_create?: boolean;
+  team_create?: Challenge;
   team_manage_member?: Team;
 };
 

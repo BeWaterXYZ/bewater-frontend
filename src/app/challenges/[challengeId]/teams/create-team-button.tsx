@@ -1,10 +1,11 @@
 'use client';
 import { useDialogStore } from '@/components/dialog/store';
+import { Challenge } from '@/services/challenge';
 
-export function CreateTeamButton() {
+export function CreateTeamButton({ challenge }: { challenge: Challenge }) {
   const showDialog = useDialogStore((s) => s.open);
   const onClick = () => {
-    showDialog('team_create', true);
+    showDialog('team_create', challenge);
   };
   return (
     <button className="btn btn-primary" onClick={onClick}>

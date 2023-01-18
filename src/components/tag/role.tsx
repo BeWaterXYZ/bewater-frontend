@@ -1,6 +1,6 @@
 'use client';
 import clsx from 'clsx';
-import { RoleOptions, Roles, Option } from './data';
+import { RoleOptions, Role, Option } from './data';
 import { Tag } from './tag';
 
 const mapsTagRole = RoleOptions.reduce((prev, cur) => {
@@ -8,7 +8,7 @@ const mapsTagRole = RoleOptions.reduce((prev, cur) => {
   return prev;
 }, {} as { [index: string]: Option });
 interface TagRoleProps {
-  label: Roles;
+  label: Role;
   simple?: boolean;
   onClick?: () => void;
 }

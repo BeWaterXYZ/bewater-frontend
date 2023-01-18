@@ -1,5 +1,10 @@
 import { Input, Select, TextArea } from '@/components/form/control';
-import { RoleOptions, SkillOptions, TagOptions } from '@/components/tag/data';
+import {
+  RoleOptions,
+  SkillOptions,
+  ProjectTagOptions,
+  ProjectTag,
+} from '@/components/tag/data';
 
 import { Dialogs } from '../store';
 
@@ -7,6 +12,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToastStore } from '@/components/toast/store';
+import { useLoadingStoreAction } from '@/components/loading/store';
+import { createTeam, CreateTeamRequest } from '@/services/challenge';
 
 const schema = z
   .object({
@@ -42,19 +49,42 @@ export function useTeamCreateForm() {
 }
 
 interface TeamCreateDialogProps {
-  data: Dialogs['team_create'];
+  data: NonNullable<Dialogs['team_create']>;
   close: () => void;
 }
 
 export default function TeamCreateDialog({
-  data,
+  data: challenge,
   close,
 }: TeamCreateDialogProps) {
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
 
-  const onSubmit = (data: Inputs) => {
-    console.log({ data });
-    addToast({ type: 'success', title: 'team created', description: 'asdasd' });
+  const onSubmit = async (formData: Inputs) => {
+    showLoading();
+    try {
+      let data = await createTeam({
+        name: formData.name,
+        projectName: formData.title,
+        projectDescription: formData.description,
+        projectTags: formData.tags,
+        challengeId: challenge.id,
+        openingRoles: formData.roles,
+        skills: formData.skills,
+        leaderRole: formData.role[0],
+      } as CreateTeamRequest);
+
+      console.log(data);
+
+      addToast({
+        type: 'success',
+        title: 'team created',
+        description: 'asdasd',
+      });
+    } catch (err) {
+    } finally {
+      dismissLoading();
+    }
   };
   const {
     control,
@@ -85,7 +115,7 @@ export default function TeamCreateDialog({
           label="Project Tag"
           required
           isMulti
-          options={TagOptions}
+          options={ProjectTagOptions}
           error={errors['tags']}
           control={control}
           {...register('tags')}

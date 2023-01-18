@@ -42,7 +42,7 @@ export function useFetchGroupingRequest(userId?: UserID) {
     queryKey: ['user', 'request', userId],
     enabled: !!userId,
     queryFn: async () => {
-      return getAllGroupingRequest(userId!);
+      return getAllGroupingRequest();
     },
   });
 }
@@ -73,12 +73,12 @@ export async function submitUpdateUserProfile(
   return data;
 }
 
-export async function getAllGroupingRequest(userId: UserID) {
+export async function getAllGroupingRequest() {
   const { data } = await agentAuthed.get<{
     receivedApplications: GroupingRequestFull[];
     receivedInvitations: GroupingRequestFull[];
     sentApplications: GroupingRequestFull[];
     sentInvitations: GroupingRequestFull[];
-  }>(`/user/${userId}/requests`);
+  }>(`/user/requests`);
   return data;
 }

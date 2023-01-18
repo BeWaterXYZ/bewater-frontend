@@ -2,6 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { DialogContainer } from './index';
+import { Challenge } from '@/services/challenge';
 
 export default {
   title: 'Base/DialogContainer',
@@ -28,14 +29,19 @@ export const TeamJoin = Template.bind({});
 TeamJoin.args = {
   dialogs: {
     team_join: {
-      id: 1,
+      id: '1',
       name: 'team name',
-      ideaTitle: 'team title',
-      ideaDescription: 'team ideaDescription',
+      project: {
+        id: '123',
+        teamId: '1',
+        status: 'ACTIVE',
+        name: 'team title',
+        description: 'team ideaDescription',
+        tags: [],
+      },
       status: 'ACTIVE',
       challengeId: 1,
       openingRoles: [],
-      ideaTags: [],
       skills: [],
       teamMembers: [],
     },
@@ -48,7 +54,9 @@ export const TeamCreate = Template.bind({});
 
 TeamCreate.args = {
   dialogs: {
-    team_create: true,
+    team_create: {
+      id: '1',
+    } as Challenge,
   },
   // eslint-disable-next-line
   closeDialog: () => {},

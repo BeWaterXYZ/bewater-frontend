@@ -1,3 +1,5 @@
+import { type } from 'os';
+
 export type Option = {
   value: string;
   label: string;
@@ -71,7 +73,7 @@ export const RoleOptions = RoleOptionsRaw.map((op) => ({
   classes: { ...op.classes, text: 'body-4 !text-white' },
 }));
 
-export type Roles = typeof RoleOptionsRaw[number]['value'];
+export type Role = typeof RoleOptionsRaw[number]['value'];
 
 export const SkillOptionsRaw = [
   {
@@ -89,6 +91,14 @@ export const SkillOptionsRaw = [
   {
     value: 'Vue',
     label: '#Vue',
+  },
+  {
+    value: 'NuxtJS',
+    label: '#NuxtJS',
+  },
+  {
+    value: 'NextJS',
+    label: '#NextJS',
   },
   {
     value: 'iOS',
@@ -153,14 +163,18 @@ export const SkillOptions: Option[] = SkillOptionsRaw.map((op) => ({
 
 export type Skill = typeof SkillOptionsRaw[number]['value'];
 
-export const TagOptionsRaw = [
+export const ProjectTagOptionsRaw = [
+  {
+    value: 'Ethereum',
+    label: 'Ethereum',
+  },
   {
     value: 'DeFi',
     label: 'DeFi',
   },
   {
-    value: 'NFTs',
-    label: 'NFTs',
+    value: 'NFT',
+    label: 'NFT',
   },
   {
     value: 'Gaming',
@@ -209,11 +223,13 @@ export const TagOptionsRaw = [
     value: 'Others',
     label: 'Others',
   },
-];
-export const TagOptions: Option[] = TagOptionsRaw.map((op) => ({
+] as const;
+export const ProjectTagOptions: Option[] = ProjectTagOptionsRaw.map((op) => ({
   ...op,
   classes: {
     container: '!rounded-full !bg-[#1E293B]  body-4',
     text: '!text-grey',
   },
 }));
+
+export type ProjectTag = typeof ProjectTagOptionsRaw[number]['value'];

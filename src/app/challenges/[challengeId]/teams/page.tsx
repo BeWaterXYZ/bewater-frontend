@@ -61,7 +61,7 @@ export default async function ChallengeTeams({ params }: any) {
         <div className="my-8 flex justify-between">
           <div className="invisible">Sort</div>
           <div>
-            <CreateTeamButton />
+            <CreateTeamButton challenge={challenge} />
           </div>
         </div>
 

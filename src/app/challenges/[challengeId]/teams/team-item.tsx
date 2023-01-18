@@ -14,13 +14,13 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
       <div className=" border border-gray-400/20  text-left bg-[#0B0C24] rounded ">
         <div className="bg-[#1A1C40] p-4">
           <div className="">
-            <div className="body-2 font-bold">
-              {team.ideaTitle}
+            <div className="flex items-center ">
+              <h2 className="body-2 font-bold">{team.project.name}</h2>
 
-              {team.ideaTags.map((tag) => (
+              {team.project.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="mono-4 border rounded p-[1px] m-1 opacity-80 uppercase"
+                  className="mono-4 border rounded p-[1px] m-1 opacity-80 uppercase px-1"
                 >
                   {tag}
                 </span>

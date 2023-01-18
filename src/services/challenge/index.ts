@@ -1,10 +1,11 @@
-import { Roles, Skill } from '@/components/tag';
+import { ProjectTag, Role, Skill } from '@/components/tag';
 import { agentAnon, agentAuthed } from '../agent';
 import { UserID, UserProfile } from '../user';
 import { GroupingRequest, GroupingRequestId } from '../shared';
 
+export type ChallengeID = string;
 export interface Challenge {
-  id: number;
+  id: ChallengeID;
   title: string;
   description: string;
   requirements: string[];
@@ -58,26 +59,44 @@ export interface Sponsor {
   logoURI: string;
 }
 
+export type TeamID = string;
+
 export interface Team {
-  id: number;
+  id: TeamID;
   name: string;
-  ideaTitle: string;
-  ideaDescription: string;
   status: string;
   challengeId: number;
-  openingRoles: Roles[];
-  ideaTags: string[];
+  openingRoles: Role[];
   skills: Skill[];
   teamMembers: TeamMember[];
+  project: Project;
 }
-
+export interface Project {
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  status: string;
+  teamId: string;
+}
 export interface TeamMember {
   id: string;
   teamId: number;
   userId: UserID;
-  teamRole: Roles;
+  teamRole: Role;
   isLeader: boolean;
   userProfile: UserProfile;
+}
+
+export interface CreateTeamRequest {
+  name: string;
+  projectName: string;
+  projectDescription: string;
+  projectTags: ProjectTag[];
+  challengeId: ChallengeID;
+  openingRoles: Role[];
+  skills: Skill[];
+  leaderRole: Role;
 }
 
 export async function getChallenges() {
@@ -95,7 +114,7 @@ export async function getChallenges() {
   return data.challenges;
 }
 
-export async function getChallengeById(challengeId: number) {
+export async function getChallengeById(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
     {
@@ -106,7 +125,7 @@ export async function getChallengeById(challengeId: number) {
   return data.challenge;
 }
 
-export async function getChallengeTeams(challengeId: number) {
+export async function getChallengeTeams(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ teams: Team[] }>(
     `/challenge/${challengeId}/teams`,
     {
@@ -121,7 +140,7 @@ export async function getChallengeTeams(challengeId: number) {
 //   res(ms)
 // }, ms))
 
-export async function getTeam(teamId: number) {
+export async function getTeam(teamId: TeamID) {
   const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`, {
     cache: 'force-cache',
     next: { revalidate: 10 },
@@ -129,7 +148,12 @@ export async function getTeam(teamId: number) {
   return data.team;
 }
 
-export async function teamRemoveMember(teamId: number, userId: string) {
+export async function createTeam(team: CreateTeamRequest) {
+  const { data } = await agentAuthed.post<{ team: Team }>(`/team`, team);
+  return data.team;
+}
+
+export async function teamRemoveMember(teamId: TeamID, userId: UserID) {
   const { data } = await agentAuthed.put<{ team: Team }>(
     `/team/${teamId}/remove`,
     {
@@ -141,7 +165,7 @@ export async function teamRemoveMember(teamId: number, userId: string) {
 
 export async function sendTeamApplication(
   teamId: Pick<Team, 'id'>['id'],
-  request: GroupingRequest,
+  request: Omit<GroupingRequest, 'senderId'>,
 ) {
   const { data } = await agentAuthed.post(`/team/${teamId}/request`, request);
   return data;

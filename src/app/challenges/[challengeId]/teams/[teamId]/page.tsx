@@ -77,8 +77,8 @@ export default async function Page({ params }: any) {
 
       <div className="mb-16">
         <p className="body-3 text-grey font-bold "> Project Overview</p>
-        <h3 className="body-2 font-bold py-3">{team.ideaTitle}</h3>
-        <p className="body-4 opacity-70">{team.ideaDescription}</p>
+        <h3 className="body-2 font-bold py-3">{team.project.name}</h3>
+        <p className="body-4 opacity-70">{team.project.description}</p>
       </div>
     </div>
   );

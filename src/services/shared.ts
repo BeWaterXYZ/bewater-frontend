@@ -1,4 +1,4 @@
-import { Roles } from '@/components/tag';
+import { Role } from '@/components/tag';
 import { Team } from './challenge';
 import { UserID, UserProfile } from './user';
 
@@ -8,7 +8,7 @@ export interface GroupingRequest {
   type: 'APPLICATION' | 'INVITATION';
   senderId: UserID;
   recipientId: UserID;
-  teamRole: Roles;
+  teamRole: Role;
   message: string;
 }
 export interface GroupingRequestFull extends GroupingRequest {
