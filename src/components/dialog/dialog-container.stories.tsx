@@ -55,8 +55,10 @@ export const TeamCreate = Template.bind({});
 TeamCreate.args = {
   dialogs: {
     team_create: {
-      id: '1',
-    } as Challenge,
+      challenge: {
+        id: '123',
+      } as Challenge,
+    },
   },
   // eslint-disable-next-line
   closeDialog: () => {},

@@ -166,7 +166,10 @@ export async function updateTeam(teamId: TeamID, payload: UpdateTeamRequest) {
   );
   return data.team;
 }
-
+export async function dismissTeam(teamId: TeamID) {
+  const { data } = await agentAuthed.put<{ team: Team }>(`/team/${teamId}`);
+  return data.team;
+}
 export async function teamRemoveMember(teamId: TeamID, userId: UserID) {
   const { data } = await agentAuthed.put<{ team: Team }>(
     `/team/${teamId}/remove`,
