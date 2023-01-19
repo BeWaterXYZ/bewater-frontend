@@ -29,24 +29,25 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
           </div>
           <div className="body-2 text-grey"> {team.name}</div>
         </div>
-
-        <div className="p-4 flex justify-between items-end">
-          <div>
-            <div className="flex gap-1">
-              {team.skills.map((skill) => (
-                <TagSkill label={skill} key={skill}></TagSkill>
-              ))}
-            </div>
-            <div className="float-left">
-              <div className="flex gap-2 rounded border border-[#333568] p-1 px-2 my-2">
-                {team.openingRoles.map((role) => (
-                  <TagRole label={role} key={role} simple></TagRole>
-                ))}
+        <div className="p-4">
+          <div className="flex gap-1">
+            {team.skills.map((skill) => (
+              <TagSkill label={skill} key={skill}></TagSkill>
+            ))}
+          </div>
+          <div className="flex justify-between items-end">
+            <div>
+              <div className="float-left">
+                <div className="flex gap-2 rounded border border-[#333568] p-1 px-2 my-2">
+                  {team.openingRoles.map((role) => (
+                    <TagRole label={role} key={role} simple></TagRole>
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex justify-center items-center">
-            <TeamStatus team={team} />
+            <div className="flex justify-center items-center">
+              <TeamStatus team={team} />
+            </div>
           </div>
         </div>
       </div>
