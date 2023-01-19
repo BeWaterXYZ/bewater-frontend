@@ -36,7 +36,13 @@ export function useNavigator() {
 
   const gotoTeam = useCallback(
     (challengeId: ChallengeID, teamId: TeamID) => {
-      router.push(`/challenge/${challengeId}/team/${teamId}`);
+      router.push(`/challenges/${challengeId}/teams/${teamId}`);
+    },
+    [router],
+  );
+  const gotoTeamList = useCallback(
+    (challengeId: ChallengeID) => {
+      router.push(`/challenges/${challengeId}/teams`);
     },
     [router],
   );
@@ -49,5 +55,6 @@ export function useNavigator() {
     gotoAfterConnect,
     refresh,
     gotoTeam,
+    gotoTeamList,
   };
 }

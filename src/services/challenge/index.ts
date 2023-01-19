@@ -65,7 +65,7 @@ export interface Team {
   id: TeamID;
   name: string;
   status: string;
-  challengeId: number;
+  challengeId: ChallengeID;
   openingRoles: Role[];
   skills: Skill[];
   teamMembers: TeamMember[];
@@ -157,7 +157,7 @@ export async function getTeam(teamId: TeamID) {
 
 export async function createTeam(payload: CreateTeamRequest) {
   const { data } = await agentAuthed.post<{ team: Team }>(`/team`, payload);
-  return data.team;
+  return data;
 }
 export async function updateTeam(teamId: TeamID, payload: UpdateTeamRequest) {
   const { data } = await agentAuthed.put<{ team: Team }>(
@@ -167,7 +167,9 @@ export async function updateTeam(teamId: TeamID, payload: UpdateTeamRequest) {
   return data.team;
 }
 export async function dismissTeam(teamId: TeamID) {
-  const { data } = await agentAuthed.put<{ team: Team }>(`/team/${teamId}`);
+  const { data } = await agentAuthed.put<{ team: Team }>(
+    `/team/${teamId}/dismiss`,
+  );
   return data.team;
 }
 export async function teamRemoveMember(teamId: TeamID, userId: UserID) {

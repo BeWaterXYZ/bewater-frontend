@@ -77,6 +77,42 @@ export type Role = typeof RoleOptionsRaw[number]['value'];
 
 export const SkillOptionsRaw = [
   {
+    value: 'Python',
+    label: '#Python',
+  },
+  {
+    value: 'JavaScript',
+    label: '#JavaScript',
+  },
+  {
+    value: 'TypeScript',
+    label: '#TypeScript',
+  },
+  {
+    value: 'Rust',
+    label: '#Rust',
+  },
+  {
+    value: 'Golang',
+    label: '#Golang',
+  },
+  {
+    value: 'Java',
+    label: '#Java',
+  },
+  {
+    value: 'Move',
+    label: '#Move',
+  },
+  {
+    value: 'Cairo',
+    label: '#Cairo',
+  },
+  {
+    value: 'Vyper',
+    label: '#Vyper',
+  },
+  {
     value: 'Solidity',
     label: '#Solidity',
   },
@@ -85,20 +121,16 @@ export const SkillOptionsRaw = [
     label: '#React',
   },
   {
-    value: 'Angular',
-    label: '#Angular',
-  },
-  {
     value: 'Vue',
     label: '#Vue',
   },
   {
-    value: 'NuxtJS',
-    label: '#NuxtJS',
+    value: 'Next.js',
+    label: '#Next.js',
   },
   {
-    value: 'NextJS',
-    label: '#NextJS',
+    value: 'Nuxt.js',
+    label: '#Nuxt.js',
   },
   {
     value: 'iOS',
@@ -113,21 +145,42 @@ export const SkillOptionsRaw = [
     label: '#Database',
   },
   {
-    value: 'ML&AI',
-    label: '#ML&AI',
+    value: 'Cloud Computing',
+    label: '#Cloud Computing',
   },
   {
-    value: 'DevOps',
-    label: '#DevOps',
+    value: 'Machine Learning',
+    label: '#Machine Learning',
   },
-
+  {
+    value: 'AI',
+    label: '#AI',
+  },
+  {
+    value: 'AR/VR/XR',
+    label: '#AR/VR/XR',
+  },
   {
     value: 'Cybersecurity',
     label: '#Cybersecurity',
   },
+
   {
-    value: '3D',
-    label: '#3D',
+    value: 'DevOps',
+    label: '#DevOps',
+  },
+  {
+    value: 'Docker',
+    label: '#Docker',
+  },
+  {
+    value: 'K8s',
+    label: '#K8s',
+  },
+
+  {
+    value: '3D Design',
+    label: '#3D Design',
   },
 
   {
@@ -140,12 +193,12 @@ export const SkillOptionsRaw = [
   },
 
   {
-    value: 'Motion',
-    label: '#Motion',
+    value: 'Motion Design',
+    label: '#Motion Design',
   },
   {
-    value: 'Character',
-    label: '#Character',
+    value: 'Character Design',
+    label: '#Character Design',
   },
   {
     value: 'Illustration',
@@ -157,7 +210,7 @@ export const SkillOptions: Option[] = SkillOptionsRaw.map((op) => ({
   ...op,
   classes: {
     container: '!rounded-full !bg-[#1E293B]  body-4',
-    text: '!text-grey',
+    text: '!text-[#94A3B8]',
   },
 }));
 
@@ -165,13 +218,18 @@ export type Skill = typeof SkillOptionsRaw[number]['value'];
 
 export const ProjectTagOptionsRaw = [
   {
-    value: 'Ethereum',
-    label: 'Ethereum',
+    value: 'Account Abstraction',
+    label: 'Account Abstraction',
+  },
+  {
+    value: 'Public Goods',
+    label: 'Public Goods',
   },
   {
     value: 'DeFi',
     label: 'DeFi',
   },
+
   {
     value: 'NFT',
     label: 'NFT',
@@ -181,8 +239,12 @@ export const ProjectTagOptionsRaw = [
     label: 'Gaming',
   },
   {
-    value: 'DAO',
-    label: 'DAO',
+    value: 'GameFi',
+    label: 'GameFi',
+  },
+  {
+    value: 'DAO Tooling',
+    label: 'DAO Tooling',
   },
 
   {
@@ -212,8 +274,12 @@ export const ProjectTagOptionsRaw = [
     label: 'Social Network',
   },
   {
-    value: 'Zero Knowledge',
-    label: 'Zero Knowledge',
+    value: 'SocialFi',
+    label: 'SocialFi',
+  },
+  {
+    value: 'Zero Knowledge Proofs',
+    label: 'Zero Knowledge Proofs',
   },
   {
     value: 'Metaverse',

@@ -33,7 +33,7 @@ export default async function Page({ params }: any) {
           <TeamMenu team={team} />
         </div>
       </div>
-      <div className="border border-gray-700 rounded bg-white/5 p-4 flex gap-4 my-4 justify-center mb-8">
+      <div className="border border-[#24254E] rounded bg-[#0B0C24] p-4 flex gap-4 my-4 justify-center mb-8">
         <div>
           <Image
             src="/challenge/wanted.svg"
@@ -43,7 +43,7 @@ export default async function Page({ params }: any) {
           />
         </div>
         <div className="flex-1 flex flex-col justify-around">
-          <p className="body-3"> we still need</p>
+          <p className="body-3"> We still Need...</p>
           <div className="flex gap-2 flex-wrap">
             {team.openingRoles.map((role) => (
               <TagRole label={role} key={role} />
@@ -55,7 +55,7 @@ export default async function Page({ params }: any) {
         </div>
       </div>
       <div className="mb-8">
-        <div className="mb-4">
+        <div className="mb-8">
           <p className="body-3 text-grey font-bold my-4"> Team Leader</p>
 
           <div className="flex my-4">
@@ -77,8 +77,18 @@ export default async function Page({ params }: any) {
 
       <div className="mb-16">
         <p className="body-3 text-grey font-bold "> Project Overview</p>
-        <h3 className="body-2 font-bold py-3">{team.project.name}</h3>
-        <p className="body-4 opacity-70">{team.project.description}</p>
+        <div className="flex items-center py-2">
+          <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
+          {team.project.tags.map((tag) => (
+            <span
+              key={tag}
+              className="mono-4 border rounded p-[1px] m-1  uppercase px-1 text-[#CBD5E1] border-[#94A3B8]"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+        <p className="body-4 text-[#CBD5E1]">{team.project.description}</p>
       </div>
     </div>
   );

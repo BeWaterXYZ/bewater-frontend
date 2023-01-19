@@ -15,6 +15,7 @@ import { useLoadingStoreAction } from '@/components/loading/store';
 import {
   createTeam,
   CreateTeamRequest,
+  dismissTeam,
   Team,
   updateTeam,
   UpdateTeamRequest,
@@ -39,7 +40,7 @@ const schema = z
       .max(5, { message: 'You can only choose 5 roles' }),
     skills: z
       .array(z.string())
-      .max(5, { message: 'You can only choose 5 skills' }),
+      .max(10, { message: 'You can only choose 10 skills' }),
   })
   .required();
 
@@ -73,6 +74,23 @@ export default function TeamCreateDialog({
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
   const router = useNavigator();
+  const onDismiss = async () => {
+    showLoading();
+    try {
+      await dismissTeam(data.team!.id);
+      router.gotoTeamList(data.team!.challengeId);
+      close();
+      addToast({
+        type: 'success',
+        title: 'team dismissed',
+        description: '',
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      dismissLoading();
+    }
+  };
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
@@ -106,6 +124,7 @@ export default function TeamCreateDialog({
         let res = await createTeam(payload);
 
         console.log(payload);
+        router.gotoTeam(data.challenge!.id, res.team.id);
 
         addToast({
           type: 'success',
@@ -192,7 +211,11 @@ export default function TeamCreateDialog({
         />
         <div className="flex justify-between">
           {isEditing ? (
-            <button className="btn btn-danger " type="button" onClick={close}>
+            <button
+              className="btn btn-danger "
+              type="button"
+              onClick={onDismiss}
+            >
               Dismiss
             </button>
           ) : null}

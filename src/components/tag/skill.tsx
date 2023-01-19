@@ -14,6 +14,7 @@ interface TagSkillProps {
 
 export function TagSkill({ label, onClick }: TagSkillProps) {
   let option = mapsTagSkill[label];
+  !option && console.log({ label });
   return (
     <Tag
       label={option.label}
