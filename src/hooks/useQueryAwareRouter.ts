@@ -63,6 +63,6 @@ class QueryAwareRouterImpl {
   }
 
   refresh() {
-    throw new Error('Method not implemented.');
+    this.router.refresh();
   }
 }

@@ -227,8 +227,8 @@ export const ProjectTagOptionsRaw = [
 export const ProjectTagOptions: Option[] = ProjectTagOptionsRaw.map((op) => ({
   ...op,
   classes: {
-    container: '!rounded-full !bg-[#1E293B]  body-4',
-    text: '!text-grey',
+    container: 'mono-4 border !rounded  m-1 !bg-transparent uppercase !px-1',
+    text: '!text-white !p-[1px]',
   },
 }));
 

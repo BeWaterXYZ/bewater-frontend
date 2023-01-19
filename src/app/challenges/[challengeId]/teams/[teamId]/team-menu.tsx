@@ -28,7 +28,9 @@ export default function TeamMenu({ team }: TeamMenuProps) {
   const manageMembers = () => {
     showDialog('team_manage_member', team);
   };
-
+  const editTeam = () => {
+    showDialog('team_create', { team });
+  };
   return (
     <div>
       {!isAuthed() || !isJoined ? (
@@ -42,7 +44,9 @@ export default function TeamMenu({ team }: TeamMenuProps) {
           <button className="btn btn-secondary" onClick={manageMembers}>
             Manage Members
           </button>
-          <button className="btn btn-secondary">Edit</button>
+          <button className="btn btn-secondary" onClick={editTeam}>
+            Edit
+          </button>
         </div>
       ) : (
         <div>

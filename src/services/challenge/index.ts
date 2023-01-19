@@ -98,7 +98,14 @@ export interface CreateTeamRequest {
   skills: Skill[];
   leaderRole: Role;
 }
-
+export interface UpdateTeamRequest {
+  name: string;
+  projectName: string;
+  projectDescription: string;
+  projectTags: ProjectTag[];
+  openingRoles: Role[];
+  skills: Skill[];
+}
 export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
@@ -148,8 +155,15 @@ export async function getTeam(teamId: TeamID) {
   return data.team;
 }
 
-export async function createTeam(team: CreateTeamRequest) {
-  const { data } = await agentAuthed.post<{ team: Team }>(`/team`, team);
+export async function createTeam(payload: CreateTeamRequest) {
+  const { data } = await agentAuthed.post<{ team: Team }>(`/team`, payload);
+  return data.team;
+}
+export async function updateTeam(teamId: TeamID, payload: UpdateTeamRequest) {
+  const { data } = await agentAuthed.put<{ team: Team }>(
+    `/team/${teamId}`,
+    payload,
+  );
   return data.team;
 }
 

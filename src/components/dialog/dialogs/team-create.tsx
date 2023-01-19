@@ -3,7 +3,6 @@ import {
   RoleOptions,
   SkillOptions,
   ProjectTagOptions,
-  ProjectTag,
 } from '@/components/tag/data';
 
 import { Dialogs } from '../store';
@@ -13,7 +12,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useToastStore } from '@/components/toast/store';
 import { useLoadingStoreAction } from '@/components/loading/store';
-import { createTeam, CreateTeamRequest } from '@/services/challenge';
+import {
+  createTeam,
+  CreateTeamRequest,
+  Team,
+  updateTeam,
+  UpdateTeamRequest,
+} from '@/services/challenge';
+
+import { useNavigator } from '@/hooks/useNavigator';
 
 const schema = z
   .object({
@@ -38,12 +45,17 @@ const schema = z
 
 export type Inputs = z.infer<typeof schema>;
 
-export function useTeamCreateForm() {
+export function useTeamCreateForm(team?: Team) {
   return useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      roles: [],
-      skills: [],
+      name: team?.name ?? '',
+      title: team?.project.name ?? '',
+      description: team?.project.description ?? '',
+      role: team ? ['whatever'] : [],
+      tags: team?.project.tags ?? [],
+      roles: team?.openingRoles ?? [],
+      skills: team?.skills ?? [],
     },
   });
 }
@@ -54,34 +66,57 @@ interface TeamCreateDialogProps {
 }
 
 export default function TeamCreateDialog({
-  data: challenge,
+  data,
   close,
 }: TeamCreateDialogProps) {
+  const isEditing = !!data.team;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
-
+  const router = useNavigator();
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
-      let data = await createTeam({
-        name: formData.name,
-        projectName: formData.title,
-        projectDescription: formData.description,
-        projectTags: formData.tags,
-        challengeId: challenge.id,
-        openingRoles: formData.roles,
-        skills: formData.skills,
-        leaderRole: formData.role[0],
-      } as CreateTeamRequest);
+      if (isEditing) {
+        let payload = {
+          name: formData.name,
+          projectName: formData.title,
+          projectDescription: formData.description,
+          projectTags: formData.tags,
+          openingRoles: formData.roles,
+          skills: formData.skills,
+        } as UpdateTeamRequest;
+        let res = await updateTeam(data.team?.id!, payload);
+        addToast({
+          type: 'success',
+          title: 'team updated',
+          description: '',
+        });
+      } else {
+        let payload = {
+          name: formData.name,
+          projectName: formData.title,
+          projectDescription: formData.description,
+          projectTags: formData.tags,
+          challengeId: data.challenge!.id,
+          openingRoles: formData.roles,
+          skills: formData.skills,
+          leaderRole: formData.role[0],
+        } as CreateTeamRequest;
 
-      console.log(data);
+        let res = await createTeam(payload);
 
-      addToast({
-        type: 'success',
-        title: 'team created',
-        description: 'asdasd',
-      });
+        console.log(payload);
+
+        addToast({
+          type: 'success',
+          title: 'team created',
+          description: '',
+        });
+      }
+      router.refresh();
+      close();
     } catch (err) {
+      console.log(err);
     } finally {
       dismissLoading();
     }
@@ -91,7 +126,7 @@ export default function TeamCreateDialog({
     register,
     handleSubmit,
     formState: { errors },
-  } = useTeamCreateForm();
+  } = useTeamCreateForm(data.team);
   return (
     <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="body-2 mb-4">Create A Team</p>
@@ -126,15 +161,17 @@ export default function TeamCreateDialog({
           error={errors['description']}
           {...register('description')}
         />
-        <Select
-          label="You’re going to play"
-          required
-          isMulti
-          options={RoleOptions}
-          error={errors['role']}
-          control={control}
-          {...register('role')}
-        />
+        {isEditing ? null : (
+          <Select
+            label="You’re going to play"
+            required
+            isMulti
+            options={RoleOptions}
+            error={errors['role']}
+            control={control}
+            {...register('role')}
+          />
+        )}
 
         <Select
           label="Roles Needed"
@@ -153,15 +190,25 @@ export default function TeamCreateDialog({
           isMulti
           {...register('skills')}
         />
-        <div className="flex gap-2">
-          <button
-            className="btn btn-secondary w-full"
-            type="button"
-            onClick={close}
-          >
-            Cancel
-          </button>
-          <button className="btn btn-primary w-full">Create</button>
+        <div className="flex justify-between">
+          {isEditing ? (
+            <button className="btn btn-danger " type="button" onClick={close}>
+              Dismiss
+            </button>
+          ) : null}
+          <div className="flex-1" />
+          <div className="flex gap-2">
+            <button
+              className="btn btn-secondary "
+              type="button"
+              onClick={close}
+            >
+              Cancel
+            </button>
+            <button className="btn btn-primary ">
+              {isEditing ? 'Update' : 'Create'}
+            </button>
+          </div>
         </div>
       </form>
     </div>
