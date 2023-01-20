@@ -1,5 +1,5 @@
 import { Role } from '@/components/tag';
-import { Team } from './challenge';
+import { Challenge, Team } from './challenge';
 import { UserID, UserProfile } from './user';
 
 export type GroupingRequestId = string;
@@ -19,5 +19,7 @@ export interface GroupingRequestFull extends GroupingRequest {
   updatedAt: string;
   recipient?: UserProfile;
   sender?: UserProfile;
-  team: Pick<Team, 'id' | 'name'>;
+  team: Pick<Team, 'id' | 'name'> & {
+    challenge: Pick<Challenge, 'id' | 'title'>;
+  };
 }

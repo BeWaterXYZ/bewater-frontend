@@ -30,7 +30,7 @@ export function GroupingRequestNotification({
   return (
     <div
       key={req.id}
-      className="border  border-[#334155] bg-[#0F172A] p-4 flex gap-3"
+      className="border  border-[#334155] bg-[#0F172A] p-4 flex gap-3 min-h-[120px]"
     >
       <div>
         <Avatar
@@ -43,15 +43,14 @@ export function GroupingRequestNotification({
         <div className="">
           {sentOrReceived ? (
             <p className="body-3 text-[#CBD5E1]">
-              You wanted to join{' '}
-              <strong>
-                {req.team.name} of {req.recipient?.fullName} on
-              </strong>
+              You wanted to join <strong>{req.team.name} </strong> on{' '}
+              <strong>{req.team.challenge.title} </strong>
             </p>
           ) : (
             <p className="body-3 text-[#CBD5E1]">
               {req.sender!.fullName} wanted to join{' '}
-              <strong>{req.team.name} on</strong>
+              <strong>{req.team.name} </strong> on{' '}
+              <strong>{req.team.challenge.title} </strong>
             </p>
           )}
         </div>
