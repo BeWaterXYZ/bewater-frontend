@@ -5,7 +5,7 @@ import Image from 'next/image';
 interface Props {
   walletAddress?: string;
   src?: string;
-  size?: 'large' | 'small';
+  size?: 'large' | 'small' | 'medium';
   className?: string;
   onClick?: () => void;
 }
@@ -22,6 +22,7 @@ export const Avatar = ({
     <div
       className={clsx({
         'w-40 h-40': size === 'large',
+        'w-12 h-12': size === 'medium',
         'w-10 h-10': size === 'small',
         className,
       })}

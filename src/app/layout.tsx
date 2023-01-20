@@ -5,6 +5,7 @@ import { QueryProvider } from './query';
 import { JetBrains_Mono } from '@next/font/google';
 import localFont from '@next/font/local';
 import { Footer } from '@/components/footer';
+import Script from 'next/script';
 
 const fontPrimary = localFont({
   src: [
@@ -52,6 +53,19 @@ export default function RootLayout({
             <Dumpster />
           </div>
         </QueryProvider>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-60J539690M"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+           window.dataLayer = window.dataLayer || [];
+           function gtag(){dataLayer.push(arguments);}
+           gtag('js', new Date());
+         
+           gtag('config', 'G-60J539690M');
+        `}
+        </Script>
       </body>
     </html>
   );

@@ -2,18 +2,20 @@
 
 import { useDialogStore } from '@/components/dialog/store';
 import { useNavigator } from '@/hooks/useNavigator';
-import { Team } from '@/services/challenge';
+import { Team, teamRemoveMember } from '@/services/challenge';
 import { useAuthStore } from '@/stores/auth';
 
 interface TeamMenuProps {
   team: Team;
 }
 export default function TeamMenu({ team }: TeamMenuProps) {
+  const router = useNavigator();
   const user = useAuthStore((s) => s.user);
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const navigator = useNavigator();
   const showDialog = useDialogStore((s) => s.open);
   const isJoined = team.teamMembers.some((m) => m.userId === user.userId);
+
   const isLeader = team.teamMembers
     .filter((m) => m.isLeader)
     .some((m) => m.userId === user.userId);
@@ -28,7 +30,14 @@ export default function TeamMenu({ team }: TeamMenuProps) {
   const manageMembers = () => {
     showDialog('team_manage_member', team);
   };
+  const editTeam = () => {
+    showDialog('team_create', { team });
+  };
 
+  const quitTeam = async () => {
+    const res = await teamRemoveMember(team.id, user.userId!);
+    router.refresh();
+  };
   return (
     <div>
       {!isAuthed() || !isJoined ? (
@@ -42,11 +51,15 @@ export default function TeamMenu({ team }: TeamMenuProps) {
           <button className="btn btn-secondary" onClick={manageMembers}>
             Manage Members
           </button>
-          <button className="btn btn-secondary">Edit</button>
+          <button className="btn btn-secondary" onClick={editTeam}>
+            Edit
+          </button>
         </div>
       ) : (
         <div>
-          <button className="btn btn-danger">Quit</button>
+          <button className="btn btn-danger" onClick={quitTeam}>
+            Quit
+          </button>
         </div>
       )}
     </div>

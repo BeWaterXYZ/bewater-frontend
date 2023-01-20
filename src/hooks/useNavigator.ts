@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { isBrowser } from '@/constants';
 
 import useQueryAwareRouter from './useQueryAwareRouter';
+import { Challenge, ChallengeID, TeamID } from '@/services/challenge';
 
 export function useNavigator() {
   const router = useQueryAwareRouter();
@@ -29,7 +30,22 @@ export function useNavigator() {
   const gotoAfterConnect = useCallback(() => {
     router.gotoRedirect('/user/settings');
   }, [router]);
+  const refresh = useCallback(() => {
+    router.refresh();
+  }, [router]);
 
+  const gotoTeam = useCallback(
+    (challengeId: ChallengeID, teamId: TeamID) => {
+      router.push(`/challenges/${challengeId}/teams/${teamId}`);
+    },
+    [router],
+  );
+  const gotoTeamList = useCallback(
+    (challengeId: ChallengeID) => {
+      router.push(`/challenges/${challengeId}/teams`);
+    },
+    [router],
+  );
   return {
     goToExternal,
     goToUserProfile,
@@ -37,5 +53,8 @@ export function useNavigator() {
     goToConnectWallet,
     goToWelcome,
     gotoAfterConnect,
+    refresh,
+    gotoTeam,
+    gotoTeamList,
   };
 }

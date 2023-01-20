@@ -20,7 +20,7 @@ module.exports = {
       colors: {
         night: '#04051B',
         day: '#00CCCC',
-        danger: '#EB7E7E',
+        danger: '#F43F5E',
         grey: '#64748B',
       },
       boxShadow: {

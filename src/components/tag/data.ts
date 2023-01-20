@@ -1,3 +1,5 @@
+import { type } from 'os';
+
 export type Option = {
   value: string;
   label: string;
@@ -71,9 +73,45 @@ export const RoleOptions = RoleOptionsRaw.map((op) => ({
   classes: { ...op.classes, text: 'body-4 !text-white' },
 }));
 
-export type Roles = typeof RoleOptionsRaw[number]['value'];
+export type Role = typeof RoleOptionsRaw[number]['value'];
 
 export const SkillOptionsRaw = [
+  {
+    value: 'Python',
+    label: '#Python',
+  },
+  {
+    value: 'JavaScript',
+    label: '#JavaScript',
+  },
+  {
+    value: 'TypeScript',
+    label: '#TypeScript',
+  },
+  {
+    value: 'Rust',
+    label: '#Rust',
+  },
+  {
+    value: 'Golang',
+    label: '#Golang',
+  },
+  {
+    value: 'Java',
+    label: '#Java',
+  },
+  {
+    value: 'Move',
+    label: '#Move',
+  },
+  {
+    value: 'Cairo',
+    label: '#Cairo',
+  },
+  {
+    value: 'Vyper',
+    label: '#Vyper',
+  },
   {
     value: 'Solidity',
     label: '#Solidity',
@@ -83,12 +121,16 @@ export const SkillOptionsRaw = [
     label: '#React',
   },
   {
-    value: 'Angular',
-    label: '#Angular',
-  },
-  {
     value: 'Vue',
     label: '#Vue',
+  },
+  {
+    value: 'Next.js',
+    label: '#Next.js',
+  },
+  {
+    value: 'Nuxt.js',
+    label: '#Nuxt.js',
   },
   {
     value: 'iOS',
@@ -103,21 +145,42 @@ export const SkillOptionsRaw = [
     label: '#Database',
   },
   {
-    value: 'ML&AI',
-    label: '#ML&AI',
+    value: 'Cloud Computing',
+    label: '#Cloud Computing',
   },
   {
-    value: 'DevOps',
-    label: '#DevOps',
+    value: 'Machine Learning',
+    label: '#Machine Learning',
   },
-
+  {
+    value: 'AI',
+    label: '#AI',
+  },
+  {
+    value: 'AR/VR/XR',
+    label: '#AR/VR/XR',
+  },
   {
     value: 'Cybersecurity',
     label: '#Cybersecurity',
   },
+
   {
-    value: '3D',
-    label: '#3D',
+    value: 'DevOps',
+    label: '#DevOps',
+  },
+  {
+    value: 'Docker',
+    label: '#Docker',
+  },
+  {
+    value: 'K8s',
+    label: '#K8s',
+  },
+
+  {
+    value: '3D Design',
+    label: '#3D Design',
   },
 
   {
@@ -130,12 +193,12 @@ export const SkillOptionsRaw = [
   },
 
   {
-    value: 'Motion',
-    label: '#Motion',
+    value: 'Motion Design',
+    label: '#Motion Design',
   },
   {
-    value: 'Character',
-    label: '#Character',
+    value: 'Character Design',
+    label: '#Character Design',
   },
   {
     value: 'Illustration',
@@ -147,28 +210,41 @@ export const SkillOptions: Option[] = SkillOptionsRaw.map((op) => ({
   ...op,
   classes: {
     container: '!rounded-full !bg-[#1E293B]  body-4',
-    text: '!text-grey',
+    text: '!text-[#94A3B8]',
   },
 }));
 
 export type Skill = typeof SkillOptionsRaw[number]['value'];
 
-export const TagOptionsRaw = [
+export const ProjectTagOptionsRaw = [
+  {
+    value: 'Account Abstraction',
+    label: 'Account Abstraction',
+  },
+  {
+    value: 'Public Goods',
+    label: 'Public Goods',
+  },
   {
     value: 'DeFi',
     label: 'DeFi',
   },
+
   {
-    value: 'NFTs',
-    label: 'NFTs',
+    value: 'NFT',
+    label: 'NFT',
   },
   {
     value: 'Gaming',
     label: 'Gaming',
   },
   {
-    value: 'DAO',
-    label: 'DAO',
+    value: 'GameFi',
+    label: 'GameFi',
+  },
+  {
+    value: 'DAO Tooling',
+    label: 'DAO Tooling',
   },
 
   {
@@ -198,8 +274,12 @@ export const TagOptionsRaw = [
     label: 'Social Network',
   },
   {
-    value: 'Zero Knowledge',
-    label: 'Zero Knowledge',
+    value: 'SocialFi',
+    label: 'SocialFi',
+  },
+  {
+    value: 'Zero Knowledge Proofs',
+    label: 'Zero Knowledge Proofs',
   },
   {
     value: 'Metaverse',
@@ -209,11 +289,13 @@ export const TagOptionsRaw = [
     value: 'Others',
     label: 'Others',
   },
-];
-export const TagOptions: Option[] = TagOptionsRaw.map((op) => ({
+] as const;
+export const ProjectTagOptions: Option[] = ProjectTagOptionsRaw.map((op) => ({
   ...op,
   classes: {
-    container: '!rounded-full !bg-[#1E293B]  body-4',
-    text: '!text-grey',
+    container: 'mono-4 border !rounded  m-1 !bg-transparent uppercase !px-1',
+    text: '!text-white !p-[1px]',
   },
 }));
+
+export type ProjectTag = typeof ProjectTagOptionsRaw[number]['value'];

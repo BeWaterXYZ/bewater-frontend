@@ -1,6 +1,6 @@
 import { Select, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
-import { RoleOptions, Roles } from '@/components/tag';
+import { RoleOptions, Role } from '@/components/tag';
 import { useToastStore } from '@/components/toast/store';
 import { sendTeamApplication } from '@/services/challenge';
 import { useAuthStore } from '@/stores/auth';
@@ -42,7 +42,7 @@ export default function TeamJoinDialog({
 }: TeamJoinDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
-  const currentUser = useAuthStore((s) => s.user);
+  // const currentUser = useAuthStore((s) => s.user);
 
   const leaders = team.teamMembers.filter((m) => m.isLeader);
 
@@ -51,9 +51,9 @@ export default function TeamJoinDialog({
     try {
       const data = await sendTeamApplication(team.id, {
         type: 'APPLICATION',
-        senderId: currentUser.userId!,
+        // senderId: currentUser.userId!,
         recipientId: leaders[0].userId,
-        teamRole: formData.roles.join(',') as Roles,
+        teamRole: formData.roles.join(',') as Role,
         message: formData.message,
       });
       console.log({ data });

@@ -3,3 +3,5 @@ export const CONFIGS = {
   PROVIDER_INFURA_KEY: process.env.NEXT_PUBLIC_PROVIDER_INFURA_KEY ?? '',
   PROVIDER_ALCHEMY_KEY: process.env.NEXT_PUBLIC_PROVIDER_ALCHEMY_KEY ?? '',
 };
+
+console.log('CONFIGS:', { CONFIGS });
