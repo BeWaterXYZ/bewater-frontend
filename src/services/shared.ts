@@ -15,8 +15,8 @@ export interface GroupingRequestFull extends GroupingRequest {
   id: GroupingRequestId;
   status: string;
   teamId: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   recipient?: UserProfile;
   sender?: UserProfile;
   team: Pick<Team, 'id' | 'name'>;

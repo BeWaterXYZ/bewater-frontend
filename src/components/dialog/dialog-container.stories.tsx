@@ -40,7 +40,7 @@ TeamJoin.args = {
         tags: [],
       },
       status: 'ACTIVE',
-      challengeId: 1,
+      challengeId: '1',
       openingRoles: [],
       skills: [],
       teamMembers: [],
