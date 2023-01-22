@@ -12,7 +12,7 @@ export default function HomeFooter() {
       <div
         className={clsx(
           'absolute top-[297px] left-1/2 -translate-x-1/2 w-[92vw] h-[92vw]',
-          'bg-social blur-[135.938px]',
+          'bg-social blur-[135.938px] rounded-full',
         )}
       />
       <div

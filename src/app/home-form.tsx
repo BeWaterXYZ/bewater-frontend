@@ -21,7 +21,8 @@ export const Input = React.forwardRef(function Input(
   return (
     <div
       className={clsx(
-        'flex flex-row items-center h-[50px] border border-white/5 rounded-xl',
+        'flex flex-row items-center h-[50px] bg-white/5',
+        'border border-white/5 rounded-xl desc-3 placeholder-white/50',
         success ? 'bg-white/20 justify-center' : 'justify-between',
       )}
     >

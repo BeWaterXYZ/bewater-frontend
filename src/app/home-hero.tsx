@@ -6,21 +6,21 @@ export default function HomeHero() {
   return (
     <div
       data-block="hero"
-      className={clsx('w-full h-screen overflow-hidden select-none')}
+      className={clsx('relative w-full h-screen overflow-hidden select-none')}
     >
       <div
         className={clsx(
-          'w-full h-[162%] absolute -top-[82%] left-1/2 -translate-x-1/2',
+          'w-[102.5vw] h-[102.5vw] rounded-full absolute -top-[72vw] left-1/2 -translate-x-1/2',
           'bg-hero blur-[150px]',
         )}
       />
       <div
         className={clsx(
-          'absolute top-0 left-0 z-10',
-          'w-full h-full flex flex-col justify-center items-center gap-16',
+          'relative z-10',
+          'w-screen h-screen flex flex-col items-center gap-16',
         )}
       >
-        <BeWater className="w-[138px] h-[148px] shrink-0" />
+        <BeWater className="w-[138px] h-[148px] shrink-0 mt-[30vh]" />
         <div
           className={clsx(
             'font-primary text-[24px] md:text-[32px] leading-normal font-bold',
