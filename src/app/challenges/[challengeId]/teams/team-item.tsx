@@ -11,7 +11,7 @@ interface TeamItemProps {
 export function TeamItem({ challenge, team }: TeamItemProps) {
   return (
     <Link href={`/challenges/${challenge.id}/teams/${team.id}`}>
-      <div className=" border border-gray-400/20  text-left bg-[#0B0C24] rounded ">
+      <div className=" border border-gray-400/20  text-left bg-[#0B0C24] rounded h-full flex flex-col ">
         <div className="bg-[#1A1C40] p-4">
           <div className="">
             <div className="flex items-center ">
@@ -29,8 +29,8 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
           </div>
           <div className="body-2 text-grey"> {team.name}</div>
         </div>
-        <div className="p-4">
-          <div className="flex gap-1">
+        <div className="flex flex-col p-4 h-full">
+          <div className="flex gap-1 flex-wrap flex-1">
             {team.skills.map((skill) => (
               <TagSkill label={skill} key={skill}></TagSkill>
             ))}

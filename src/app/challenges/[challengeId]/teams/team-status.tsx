@@ -24,7 +24,7 @@ export let TeamStatus = ({ team }: { team: Team }) => {
     // openDialog('team_join', { teamId: '123' });
   };
 
-  if (isMyTeam) {
+  if (isAuthed() && isMyTeam) {
     return (
       <div className="flex items-center">
         <Image
