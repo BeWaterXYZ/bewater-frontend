@@ -1,8 +1,8 @@
 import { Aspect } from '@/components/aspect';
 import { Challenge } from '@/services/challenge';
 import { formatMMMDDYYYY } from '@/utils/date';
+import { unsplash } from '@/utils/unsplash';
 import Link from 'next/link';
-import { unsplash } from '../../utils/unsplash';
 
 interface ChallengeListProps {
   challenges: Challenge[];

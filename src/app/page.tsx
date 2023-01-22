@@ -1,13 +1,19 @@
-import Link from 'next/link';
+import HomeBrief from './home-brief';
+import HomeHero from './home-hero';
+import HomeWhat from './home-what';
+import HomeHow from './home-how';
+import HomePartner from './home-partner';
+import HomeFooter from './home-footer';
 
 export default function Home() {
   return (
-    <div>
-      <div className="text-center h-[400px] flex justify-center items-center ">
-        <Link href="/challenges" className="body-2 ">
-          go to /challenges
-        </Link>
-      </div>
-    </div>
+    <>
+      <HomeHero />
+      <HomeBrief />
+      <HomeWhat />
+      <HomeHow />
+      <HomePartner />
+      <HomeFooter />
+    </>
   );
 }

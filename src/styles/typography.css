@@ -51,4 +51,14 @@
   .mono-5 {
     @apply font-secondary text-[10px] leading-normal font-normal text-white;
   }
+
+  .desc-1 {
+    @apply font-third text-[18px] leading-normal font-normal text-white;
+  }
+  .desc-2 {
+    @apply font-third text-[16px] leading-normal font-normal text-white;
+  }
+  .desc-3 {
+    @apply font-third text-[14px] leading-normal font-normal text-white;
+  }
 }
