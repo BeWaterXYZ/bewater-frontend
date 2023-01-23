@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 
 import Logo from '@/components/logos/bewater_black.svg';
@@ -7,7 +5,6 @@ import Logo from '@/components/logos/bewater_black.svg';
 import { Nav } from './nav';
 import dynamic from 'next/dynamic';
 import { HeaderScrollHelper } from './scroll-helper';
-import { usePathname } from 'next/navigation';
 
 interface HeaderImplProps {
   logo: React.ReactNode;
@@ -48,8 +45,7 @@ const BeWaterLogo = () => {
 };
 
 export const Header = () => {
-  const pathname = usePathname();
-  return pathname !== '/' ? (
+  return (
     <HeaderImpl logo={<BeWaterLogo />} nav={<Nav />} user={<UserArea />} />
-  ) : null;
+  );
 };
