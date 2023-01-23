@@ -7,10 +7,9 @@ interface AlertProps {
 }
 
 export function Alert({ alert }: AlertProps) {
-  console.log({ alert });
   return (
     <AlertDialog.Root open>
-      <AlertDialog.Portal className="flex ">
+      <AlertDialog.Portal>
         <AlertDialog.Overlay className="DialogOverlay" />
         <AlertDialog.Content className="DialogContent flex flex-col w-[300px]">
           <AlertDialog.Title className="heading-5">

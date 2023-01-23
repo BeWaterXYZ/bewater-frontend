@@ -6,6 +6,5 @@ interface AlertContainerProps {
 }
 
 export function AlertContainer({ alert }: AlertContainerProps) {
-  console.log('AlertContainer', alert);
   return alert ? <AlertComponent alert={alert} /> : null;
 }
