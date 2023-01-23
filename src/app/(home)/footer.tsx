@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import Bewater from '@/components/logos/bewater-white-x.svg';
-import HomeForm from './home-form';
+import HomeForm from './form';
 import Link from 'next/link';
 
 export default function HomeFooter() {
