@@ -1,11 +1,11 @@
-import { Header } from '@/components/header';
 import '../styles/index.css';
-import { Dumpster } from './dumpster';
 import { QueryProvider } from './query';
-import { JetBrains_Mono } from '@next/font/google';
+import { JetBrains_Mono, Manrope } from '@next/font/google';
 import localFont from '@next/font/local';
-import { Footer } from '@/components/footer';
 import Script from 'next/script';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
+import { Dumpster } from './dumpster';
 
 const fontPrimary = localFont({
   src: [
@@ -33,6 +33,11 @@ const fontSecondary = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '700'],
 });
+const fontThird = Manrope({
+  variable: '--font-third',
+  subsets: ['latin'],
+  weight: ['400'],
+});
 export default function RootLayout({
   children,
 }: {
@@ -41,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontSecondary.variable} ${fontPrimary.variable}`}
+      className={`${fontSecondary.variable} ${fontPrimary.variable} ${fontThird.variable}`}
     >
       <head />
       <body>
@@ -62,7 +67,7 @@ export default function RootLayout({
            window.dataLayer = window.dataLayer || [];
            function gtag(){dataLayer.push(arguments);}
            gtag('js', new Date());
-         
+
            gtag('config', 'G-60J539690M');
         `}
         </Script>
