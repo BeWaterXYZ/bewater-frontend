@@ -24,7 +24,7 @@ export default function HomeBrief() {
         <div className="heading-3 leading-tight">{`Open Innovation Platform you`}</div>
         <div className="heading-3 leading-tight">
           {`need to grow your `}
-          <span className="bg-brief text-transparent bg-clip-text">{`ecosystem`}</span>
+          <span className="bg-[linear-gradient(180deg,_#D0B6FF_0%,_#284CCD_100%)] text-transparent bg-clip-text">{`ecosystem`}</span>
         </div>
         <div
           className={clsx('mt-5 desc-1 opacity-70')}

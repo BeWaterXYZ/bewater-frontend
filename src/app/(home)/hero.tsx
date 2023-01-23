@@ -11,7 +11,8 @@ export default function HomeHero() {
       <div
         className={clsx(
           'w-[102.5vw] h-[102.5vw] rounded-full absolute -top-[72vw] left-1/2 -translate-x-1/2',
-          'bg-hero blur-[150px]',
+          'blur-[150px]',
+          'bg-[linear-gradient(232.15deg,_#CE6A9C_14.72%,_#7949D0_31.61%,_#314AE8_67.38%,_#36C8FF_84.91%)]',
         )}
       />
       <div
@@ -24,7 +25,7 @@ export default function HomeHero() {
         <div
           className={clsx(
             'font-primary text-[24px] md:text-[32px] leading-normal font-bold',
-            'shrink-0 bg-slogan bg-clip-text text-transparent',
+            'shrink-0 bg-[linear-gradient(180deg,_#FFFFFF_0%,_rgba(255,255,255,0.5)_100%)] bg-clip-text text-transparent',
           )}
         >
           {`I Builder Therefore I Am`}

@@ -29,13 +29,7 @@ module.exports = {
         15: '0.15',
       },
       backgroundImage: {
-        hero: 'linear-gradient(232.15deg, #CE6A9C 14.72%, #7949D0 31.61%, #314AE8 67.38%, #36C8FF 84.91%)',
-        slogan:
-          'linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0.5) 100%)',
-        brief: 'linear-gradient(180deg, #D0B6FF 0%, #284CCD 100%)',
         card: 'linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05))',
-        social:
-          'linear-gradient(232.15deg, #CE6A9C 14.72%, #7949D0 31.61%, #314AE8 67.38%, #36C8FF 84.91%)',
       },
       boxShadow: {
         border: '0px 0px 4px #E4E4E4',
