@@ -13,7 +13,7 @@ export interface GroupingRequest {
 }
 export interface GroupingRequestFull extends GroupingRequest {
   id: GroupingRequestId;
-  status: string;
+  status: 'PENDING' | 'REVOKED' | 'ACCEPTED' | 'DECLINED';
   teamId: number;
   createdAt: string;
   updatedAt: string;

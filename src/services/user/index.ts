@@ -1,5 +1,6 @@
 import { APIResponse } from '@/types/response';
 import { useQuery } from '@tanstack/react-query';
+import { compareDesc, parseISO } from 'date-fns';
 
 import { agentAuthed } from '../agent';
 import { GroupingRequestFull } from '../shared';
@@ -81,4 +82,10 @@ export async function getAllGroupingRequest() {
     sentInvitations: GroupingRequestFull[];
   }>(`/user/requests`);
   return data;
+}
+
+export function sortGroupingRequest(reqs: GroupingRequestFull[]) {
+  return reqs.sort((a, b) => {
+    return compareDesc(parseISO(a.createdAt), parseISO(b.createdAt));
+  });
 }

@@ -1,5 +1,6 @@
 'use client';
 import { Avatar } from '@/components/avatar';
+import { useNavigator } from '@/hooks/useNavigator';
 import {
   revokeGroupingRequest,
   acceptGroupingRequest,
@@ -15,17 +16,21 @@ export function GroupingRequestNotification({
   req: GroupingRequestFull;
   sentOrReceived: boolean;
 }) {
+  const router = useNavigator();
   const revoke = async (id: GroupingRequestId) => {
     const data = await revokeGroupingRequest(id);
     console.log(data);
+    router.refresh();
   };
   const approve = async (id: GroupingRequestId) => {
     const data = await acceptGroupingRequest(id);
     console.log(data);
+    router.refresh();
   };
   const reject = async (id: GroupingRequestId) => {
     const data = await declineGroupingRequest(id);
     console.log(data);
+    router.refresh();
   };
   return (
     <div
@@ -63,22 +68,28 @@ export function GroupingRequestNotification({
           </p>
         </div>
       </div>
-
-      {sentOrReceived ? (
-        <div className="gap-2 flex flex-col">
-          <button className="btn btn-primary" onClick={() => revoke(req.id)}>
-            Revoke
-          </button>
-        </div>
+      {req.status === 'PENDING' ? (
+        sentOrReceived ? (
+          <div className="gap-2 flex flex-col">
+            <button className="btn btn-primary" onClick={() => revoke(req.id)}>
+              Revoke
+            </button>
+          </div>
+        ) : (
+          <div className="gap-2 flex flex-col">
+            <button className="btn btn-primary" onClick={() => approve(req.id)}>
+              Accept
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => reject(req.id)}
+            >
+              Deline
+            </button>
+          </div>
+        )
       ) : (
-        <div className="gap-2 flex flex-col">
-          <button className="btn btn-primary" onClick={() => approve(req.id)}>
-            Accept
-          </button>
-          <button className="btn btn-secondary" onClick={() => reject(req.id)}>
-            Deline
-          </button>
-        </div>
+        <div className="body-3">{req.status}</div>
       )}
     </div>
   );
