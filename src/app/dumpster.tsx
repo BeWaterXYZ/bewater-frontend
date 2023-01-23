@@ -1,4 +1,6 @@
 'use client';
+import { AlertContainer } from '@/components/alert';
+import { useAlertStore } from '@/components/alert/store';
 import { DialogContainer } from '@/components/dialog';
 import { useDialogStore } from '@/components/dialog/store';
 import { LoadingContainer } from '@/components/loading';
@@ -11,11 +13,13 @@ export function Dumpster() {
   const dialogs = useDialogStore((s) => s.dialogs);
   const closeDialog = useDialogStore((s) => s.close);
   const loading = useLoadingStore((s) => s.loading);
+  const alert = useAlertStore((s) => s.alert);
   return (
     <>
       <DialogContainer dialogs={dialogs} closeDialog={closeDialog} />
       <ToastContainer toasts={toasts} />
       <LoadingContainer loading={loading} />
+      <AlertContainer alert={alert} />
     </>
   );
 }

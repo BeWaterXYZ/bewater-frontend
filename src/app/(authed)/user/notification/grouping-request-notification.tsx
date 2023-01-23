@@ -1,4 +1,5 @@
 'use client';
+import { useAlert } from '@/components/alert/store';
 import { Avatar } from '@/components/avatar';
 import { useNavigator } from '@/hooks/useNavigator';
 import {
@@ -17,19 +18,24 @@ export function GroupingRequestNotification({
   sentOrReceived: boolean;
 }) {
   const router = useNavigator();
+  const { confirm } = useAlert();
   const revoke = async (id: GroupingRequestId) => {
+    let confirmed = await confirm({
+      title: 'are you sure',
+      description: 'You are going to revoke the request',
+      okCopy: 'confirm',
+      cancelCopy: 'cancel',
+    });
+    if (!confirmed) return;
     const data = await revokeGroupingRequest(id);
-    console.log(data);
     router.refresh();
   };
   const approve = async (id: GroupingRequestId) => {
     const data = await acceptGroupingRequest(id);
-    console.log(data);
     router.refresh();
   };
   const reject = async (id: GroupingRequestId) => {
     const data = await declineGroupingRequest(id);
-    console.log(data);
     router.refresh();
   };
   return (
