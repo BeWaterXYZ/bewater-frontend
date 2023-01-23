@@ -189,16 +189,3 @@ export async function sendTeamApplication(
   const { data } = await agentAuthed.post(`/team/${teamId}/request`, request);
   return data;
 }
-
-export async function revokeGroupingRequest(requestId: GroupingRequestId) {
-  const { data } = await agentAuthed.put(`/team/request/${requestId}/revoke`);
-  return data;
-}
-export async function acceptGroupingRequest(requestId: GroupingRequestId) {
-  const { data } = await agentAuthed.put(`/team/request/${requestId}/accept`);
-  return data;
-}
-export async function declineGroupingRequest(requestId: GroupingRequestId) {
-  const { data } = await agentAuthed.put(`/team/request/${requestId}/decline`);
-  return data;
-}

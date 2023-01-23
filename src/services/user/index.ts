@@ -1,9 +1,10 @@
 import { APIResponse } from '@/types/response';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { compareDesc, parseISO } from 'date-fns';
 
 import { agentAuthed } from '../agent';
-import { GroupingRequestFull } from '../shared';
+import { GroupingRequestFull, GroupingRequestId } from '../shared';
+
 export type UserID = string;
 
 export interface UserProfile {
@@ -40,7 +41,7 @@ export function useFetchUser(userId?: UserID) {
 
 export function useFetchGroupingRequest(userId?: UserID) {
   return useQuery({
-    queryKey: ['user', 'request', userId],
+    queryKey: ['user', 'requests', userId],
     enabled: !!userId,
     queryFn: async () => {
       return getAllGroupingRequest();
@@ -87,5 +88,44 @@ export async function getAllGroupingRequest() {
 export function sortGroupingRequest(reqs: GroupingRequestFull[]) {
   return reqs.sort((a, b) => {
     return compareDesc(parseISO(a.createdAt), parseISO(b.createdAt));
+  });
+}
+
+export async function revokeGroupingRequest(requestId: GroupingRequestId) {
+  const { data } = await agentAuthed.put(`/team/request/${requestId}/revoke`);
+  return data;
+}
+
+export async function acceptGroupingRequest(requestId: GroupingRequestId) {
+  const { data } = await agentAuthed.put(`/team/request/${requestId}/accept`);
+  return data;
+}
+export async function declineGroupingRequest(requestId: GroupingRequestId) {
+  const { data } = await agentAuthed.put(`/team/request/${requestId}/decline`);
+  return data;
+}
+
+export function useRevokeGroupingRequest() {
+  const queryClient = useQueryClient();
+  return useMutation(revokeGroupingRequest, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(['user', 'requests']);
+    },
+  });
+}
+export function useAcceptGroupingRequest() {
+  const queryClient = useQueryClient();
+  return useMutation(acceptGroupingRequest, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(['user', 'requests']);
+    },
+  });
+}
+export function useDeclineGroupingRequest() {
+  const queryClient = useQueryClient();
+  return useMutation(declineGroupingRequest, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(['user', 'requests']);
+    },
   });
 }

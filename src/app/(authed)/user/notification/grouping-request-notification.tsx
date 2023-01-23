@@ -1,13 +1,14 @@
 'use client';
+import { useAlert } from '@/components/alert/store';
 import { Avatar } from '@/components/avatar';
-import { useNavigator } from '@/hooks/useNavigator';
 import {
-  revokeGroupingRequest,
-  acceptGroupingRequest,
-  declineGroupingRequest,
-} from '@/services/challenge';
+  useRevokeGroupingRequest,
+  useAcceptGroupingRequest,
+  useDeclineGroupingRequest,
+} from '@/services/user';
 import { GroupingRequestFull, GroupingRequestId } from '@/services/shared';
 import { formatDistance, parseISO } from 'date-fns';
+import { useLoadingStoreAction } from '@/components/loading/store';
 
 export function GroupingRequestNotification({
   req,
@@ -16,21 +17,48 @@ export function GroupingRequestNotification({
   req: GroupingRequestFull;
   sentOrReceived: boolean;
 }) {
-  const router = useNavigator();
+  const { confirm } = useAlert();
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
+
+  const revokeMutation = useRevokeGroupingRequest();
   const revoke = async (id: GroupingRequestId) => {
-    const data = await revokeGroupingRequest(id);
-    console.log(data);
-    router.refresh();
+    let confirmed = await confirm({
+      title: 'are you sure',
+      description: 'You are going to revoke the request',
+      okCopy: 'confirm',
+      cancelCopy: 'cancel',
+    });
+    if (!confirmed) return;
+    try {
+      showLoading();
+      await revokeMutation.mutateAsync(id);
+    } catch (err) {
+    } finally {
+      dismissLoading();
+    }
   };
+
+  const acceptMutation = useAcceptGroupingRequest();
   const approve = async (id: GroupingRequestId) => {
-    const data = await acceptGroupingRequest(id);
-    console.log(data);
-    router.refresh();
+    try {
+      showLoading();
+      await acceptMutation.mutateAsync(id);
+    } catch (err) {
+    } finally {
+      dismissLoading();
+    }
   };
+
+  const declineMutation = useDeclineGroupingRequest();
+
   const reject = async (id: GroupingRequestId) => {
-    const data = await declineGroupingRequest(id);
-    console.log(data);
-    router.refresh();
+    try {
+      showLoading();
+      await declineMutation.mutateAsync(id);
+    } catch (err) {
+    } finally {
+      dismissLoading();
+    }
   };
   return (
     <div
