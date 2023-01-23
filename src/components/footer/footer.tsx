@@ -1,14 +1,18 @@
+'use client';
+
 import clsx from 'clsx';
 
 import Discord from '@/components/logos/discord.svg';
 import Twitter from '@/components/logos/twitter.svg';
+import { usePathname } from 'next/navigation';
 
 interface Props {
   className?: string;
 }
 
 export const Footer = ({ className }: Props) => {
-  return (
+  const pathname = usePathname();
+  return pathname !== '/' ? (
     <footer className={clsx('w-full heading-5  ', className)}>
       <div className="container mx-auto py-6 flex flex-col gap-2 justify-between items-center md:flex-row md:items-start">
         <div className="body-3 text-grey">
@@ -20,5 +24,5 @@ export const Footer = ({ className }: Props) => {
         </div>
       </div>
     </footer>
-  );
+  ) : null;
 };

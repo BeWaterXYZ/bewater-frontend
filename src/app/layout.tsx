@@ -3,6 +3,9 @@ import { QueryProvider } from './query';
 import { JetBrains_Mono, Manrope } from '@next/font/google';
 import localFont from '@next/font/local';
 import Script from 'next/script';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
+import { Dumpster } from './dumpster';
 
 const fontPrimary = localFont({
   src: [
@@ -47,7 +50,14 @@ export default function RootLayout({
     >
       <head />
       <body>
-        <QueryProvider>{children}</QueryProvider>
+        <QueryProvider>
+          <div className="min-h-[100vh] flex flex-col bg-night">
+            <Header />
+            <div className="flex-1">{children}</div>
+            <Footer />
+            <Dumpster />
+          </div>
+        </QueryProvider>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-60J539690M"
           strategy="afterInteractive"
