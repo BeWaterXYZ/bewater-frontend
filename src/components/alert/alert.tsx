@@ -11,7 +11,7 @@ export function Alert({ alert }: AlertProps) {
     <AlertDialog.Root open>
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="DialogOverlay z-40" />
-        <AlertDialog.Content className="DialogContent  z-50 flex flex-col w-[300px]">
+        <AlertDialog.Content className="DialogContent  z-50 flex flex-col w-[300px] md:w-[400px]">
           <AlertDialog.Title className="heading-5">
             {alert.title}
           </AlertDialog.Title>

@@ -10,30 +10,38 @@ import { GroupingRequestFull, GroupingRequestId } from '@/services/shared';
 import { formatDistance, parseISO } from 'date-fns';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
+  let teamLink = (
+    <strong className="text-white hover:underline">
+      <Link
+        href={`/challenges/${req.team.challenge.id}/teams/${req.team.id}`}
+        className=""
+      >
+        {req.team.name}
+      </Link>
+    </strong>
+  );
   return sentOrReceived ? (
     req.type === 'APPLICATION' ? (
-      <p className="body-3 text-grey">
-        You wanted to join{' '}
-        <strong className="text-white">{req.team.name} </strong>
-      </p>
+      <p className="body-3 text-grey">You wanted to join {teamLink}</p>
     ) : (
       <p className="body-3 text-grey">
         You invited{' '}
         <strong className="text-white">{req.recipient?.fullName}</strong> to
-        join <strong className="text-white">{req.team.name} </strong>
+        join {teamLink}
       </p>
     )
   ) : req.type === 'APPLICATION' ? (
     <p className="body-3 text-grey">
       <strong className="text-white">{req.sender!.fullName}</strong> wanted to
-      join <strong className="text-white">{req.team.name} </strong>
+      join {teamLink}
     </p>
   ) : (
     <p className="body-3 text-grey">
       <strong className="text-white">{req.sender!.fullName}</strong> has invited
-      you to join <strong className="text-white">{req.team.name} </strong>
+      you to join {teamLink}
     </p>
   );
 }
@@ -93,6 +101,8 @@ export function GroupingRequestNotification({
       okCopy: 'confirm',
       cancelCopy: 'cancel',
     });
+    if (!confirmed) return;
+
     try {
       showLoading();
       await declineMutation.mutateAsync(id);
@@ -124,7 +134,12 @@ export function GroupingRequestNotification({
         <div className="">
           <p className="body-5 text-grey">
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
-            {req.team.challenge.title}
+            <Link
+              href={`/challenges/${req.team.challenge.id}`}
+              className="hover:underline"
+            >
+              {req.team.challenge.title}
+            </Link>
           </p>
         </div>
         <div className="flex-1 bg-white/5 p-2 my-4">
