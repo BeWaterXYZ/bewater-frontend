@@ -8,11 +8,14 @@ export default function Page() {
 
   const { error, data, isLoading } = useFetchGroupingRequest(user.userId);
 
-  if (error || isLoading) return null;
+  if (error || isLoading || !data) return null;
   return (
     <div>
       <div className="flex flex-col gap-3">
-        {sortGroupingRequest(data!.receivedApplications).map((req) => {
+        {sortGroupingRequest([
+          ...data.receivedApplications,
+          ...data.receivedInvitations,
+        ]).map((req) => {
           return (
             <GroupingRequestNotification
               key={req.id}

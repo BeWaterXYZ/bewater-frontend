@@ -1,11 +1,13 @@
+import { useAlert, useAlertStore } from '@/components/alert/store';
 import { Avatar } from '@/components/avatar';
 import { TagRole } from '@/components/tag';
 import { teamRemoveMember } from '@/services/challenge';
 
-import { Dialogs, useDialogStore } from '../store';
+import { Dialogs, useDialogStore } from '../../store';
+import { InviteMember } from './invite-member';
 
 interface TeamManageMemberDialogProps {
-  data: Dialogs['team_manage_member'];
+  data: NonNullable<Dialogs['team_manage_member']>;
   close: () => void;
 }
 
@@ -16,15 +18,24 @@ export default function TeamManageMemberDialog({
   let updateDialog = useDialogStore((s) => s.open);
   let nonLeaders = data?.teamMembers.filter((m) => !m.isLeader)!;
 
+  const { confirm } = useAlert();
   let removeMember = async (userId: string) => {
-    const team = await teamRemoveMember(data?.id!, userId);
+    let confirmed = await confirm({
+      title: 'are you sure',
+      description: 'You are going to remove this member',
+      okCopy: 'confirm',
+      cancelCopy: 'cancel',
+    });
+    if (!confirmed) return;
+
+    const team = await teamRemoveMember(data.id, userId);
     updateDialog('team_manage_member', team);
   };
 
   return (
     <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="heading-6">Manage Members</p>
-
+      <InviteMember team={data} close={close} />
       {nonLeaders.map((m) => (
         <div
           key={m.userId}

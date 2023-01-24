@@ -17,7 +17,7 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
           <Toast.Root
             key={toast.id}
             className={clsx(
-              'rounded shadow-sm p-4 relative bg-gray-800 border border-[#1E293B]',
+              'z-100 rounded shadow-sm p-4 relative bg-gray-800 border border-[#1E293B]',
             )}
           >
             <div className="flex flex-row gap-2">

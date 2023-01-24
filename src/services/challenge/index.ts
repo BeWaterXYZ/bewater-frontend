@@ -182,7 +182,7 @@ export async function teamRemoveMember(teamId: TeamID, userId: UserID) {
   return data.team;
 }
 
-export async function sendTeamApplication(
+export async function sendGroupingRequest(
   teamId: Pick<Team, 'id'>['id'],
   request: Omit<GroupingRequest, 'senderId'>,
 ) {
