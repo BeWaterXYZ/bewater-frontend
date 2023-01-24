@@ -1,5 +1,5 @@
 import { Aspect } from '@/components/aspect';
-import { getChallengeById, getChallenges } from '@/services/challenge';
+import { getChallengeById } from '@/services/challenge';
 import { formatMoney } from '@/utils/numeral';
 import { unsplash } from '@/utils/unsplash';
 import clsx from 'clsx';
@@ -133,11 +133,4 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
     </div>
   );
-}
-
-export async function generateStaticParams() {
-  const challenges = await getChallenges();
-  return challenges.map((c) => ({
-    challengeId: c.id.toString(),
-  }));
 }
