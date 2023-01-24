@@ -49,7 +49,10 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 </Link>
               </li>
               <li className="border-t p-4 py-2 border-[#1E293B] ">
-                <Link href="/user/notification" className="body-2">
+                <Link
+                  href="/user/notifications/requests/received"
+                  className="body-2"
+                >
                   Notifications
                 </Link>
               </li>

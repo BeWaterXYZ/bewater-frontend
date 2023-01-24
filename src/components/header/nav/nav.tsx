@@ -6,14 +6,15 @@ import { nav } from '../links';
 
 import { MenuItemType } from '../links';
 
-type NavItemProps = { item: MenuItemType };
+type NavItemProps = { item: MenuItemType; underline?: boolean };
 
-export function NavItem({ item }: NavItemProps) {
+export function NavItem({ item, underline = false }: NavItemProps) {
   return (
     <Link
       href={item.path ?? '/'}
-      className={clsx(' flex items-center h-full body-2 outline-none ', {
+      className={clsx(' flex items-center h-full body-2 outline-none py-2', {
         'text-day [text-shadow:0_0_10px_theme(colors.day)]': item.active,
+        'border-b-2 border-day': item.active && underline,
       })}
     >
       {item.label}
