@@ -1,4 +1,4 @@
-import { Milestone } from '@/services/challenge';
+import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, isSameDay, parseISO } from 'date-fns';
 

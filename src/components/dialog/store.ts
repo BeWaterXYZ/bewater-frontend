@@ -1,4 +1,4 @@
-import { Challenge, Team } from '@/services/challenge';
+import { Challenge, Team } from '@/services/types';
 import create from 'zustand';
 
 export type Dialogs = {

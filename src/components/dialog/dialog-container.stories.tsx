@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { DialogContainer } from './index';
-import { Challenge } from '@/services/challenge';
+import { Challenge } from '@/services/types';
 
 export default {
   title: 'Base/DialogContainer',

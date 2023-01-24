@@ -1,5 +1,5 @@
 import { Aspect } from '@/components/aspect';
-import { Challenge } from '@/services/challenge';
+import { Challenge } from '@/services/types';
 import { formatMMMDDYYYY } from '@/utils/date';
 import { unsplash } from '@/utils/unsplash';
 import Link from 'next/link';

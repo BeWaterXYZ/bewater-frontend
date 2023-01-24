@@ -1,5 +1,5 @@
 import { APIResponse } from '@/types/response';
-import { agentAnon } from '../agent';
+import { agentAnon } from './agent';
 
 interface SubmitEmailToWaitinglistResponse extends APIResponse {
   email: string;

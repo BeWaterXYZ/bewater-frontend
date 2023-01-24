@@ -1,4 +1,4 @@
-import { Challenge } from '@/services/challenge';
+import { Challenge } from '@/services/types';
 import { formatMMMDDYYYY } from '@/utils/date';
 
 interface ChallengeHeroProps {

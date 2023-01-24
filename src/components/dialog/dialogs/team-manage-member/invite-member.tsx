@@ -1,9 +1,8 @@
 import { Input, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
-import { Role } from '@/components/tag';
 import { useToastStore } from '@/components/toast/store';
-import { sendGroupingRequest, Team } from '@/services/challenge';
-import { GroupingRequest } from '@/services/shared';
+import { sendGroupingRequest } from '@/services/grouping-request';
+import { Team } from '@/services/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';

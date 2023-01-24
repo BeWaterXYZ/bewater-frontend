@@ -5,8 +5,8 @@ import {
   useRevokeGroupingRequest,
   useAcceptGroupingRequest,
   useDeclineGroupingRequest,
-} from '@/services/user';
-import { GroupingRequestFull, GroupingRequestId } from '@/services/shared';
+} from '@/services/grouping-request';
+import { GroupingRequestFull, GroupingRequestId } from '@/services/types';
 import { formatDistance, parseISO } from 'date-fns';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import clsx from 'clsx';

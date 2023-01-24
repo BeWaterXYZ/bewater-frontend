@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { isBrowser } from '@/constants';
 
 import useQueryAwareRouter from './useQueryAwareRouter';
-import { Challenge, ChallengeID, TeamID } from '@/services/challenge';
+import { ChallengeID, TeamID } from '@/services/types';
 
 export function useNavigator() {
   const router = useQueryAwareRouter();

@@ -1,92 +1,6 @@
 import { ProjectTag, Role, Skill } from '@/components/tag';
-import { agentAnon, agentAuthed } from '../agent';
-import { UserID, UserProfile } from '../user';
-import { GroupingRequest } from '../shared';
-
-export type ChallengeID = string;
-export interface Challenge {
-  id: ChallengeID;
-  title: string;
-  description: string;
-  requirements: string[];
-  startTime: string;
-  endTime: string;
-  teamUpDeadline: string;
-  totalAward: number;
-  awardCurrency: string;
-  status: 'DRAFT' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED';
-  location: string;
-  judgeIDs: string[];
-  userIDs: string[];
-  awards: Award[];
-  milestones: Milestone[];
-  judges: Judge[];
-  sponsorships: Sponsorship[];
-}
-
-export interface Award {
-  awardName: string;
-  amount: number;
-  count: number;
-}
-
-export interface Judge {
-  id: string;
-  name: string;
-  title: string;
-  organization: string;
-  avatarURI: string;
-  challengeIDs: number[];
-}
-
-export interface Milestone {
-  dueDate: string;
-  stageName: string;
-}
-
-export interface Sponsorship {
-  id: number;
-  amount: number;
-  currency: string;
-  challengeId: number;
-  sponsorId: string;
-  sponsor: Sponsor;
-}
-
-export interface Sponsor {
-  id: string;
-  sponsorName: string;
-  logoURI: string;
-}
-
-export type TeamID = string;
-
-export interface Team {
-  id: TeamID;
-  name: string;
-  status: string;
-  challengeId: ChallengeID;
-  openingRoles: Role[];
-  skills: Skill[];
-  teamMembers: TeamMember[];
-  project: Project;
-}
-export interface Project {
-  id: string;
-  name: string;
-  description: string;
-  tags: string[];
-  status: string;
-  teamId: string;
-}
-export interface TeamMember {
-  id: string;
-  teamId: number;
-  userId: UserID;
-  teamRole: Role;
-  isLeader: boolean;
-  userProfile: UserProfile;
-}
+import { agentAnon, agentAuthed } from './agent';
+import { Challenge, ChallengeID, Team, TeamID, UserID } from './types';
 
 export interface CreateTeamRequest {
   name: string;
@@ -168,12 +82,4 @@ export async function teamRemoveMember(teamId: TeamID, userId: UserID) {
     },
   );
   return data.team;
-}
-
-export async function sendGroupingRequest(
-  teamId: Pick<Team, 'id'>['id'],
-  request: Omit<GroupingRequest, 'senderId'>,
-) {
-  const { data } = await agentAuthed.post(`/team/${teamId}/request`, request);
-  return data;
 }

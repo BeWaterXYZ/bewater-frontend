@@ -2,7 +2,7 @@
 
 import { useDialogStore } from '@/components/dialog/store';
 import { useNavigator } from '@/hooks/useNavigator';
-import { Team } from '@/services/challenge';
+import { Team } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';
 import { MouseEventHandler } from 'react';

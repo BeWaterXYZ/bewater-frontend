@@ -1,29 +1,29 @@
 import { Input, Select, TextArea } from '@/components/form/control';
 import {
+  ProjectTagOptions,
   RoleOptions,
   SkillOptions,
-  ProjectTagOptions,
 } from '@/components/tag/data';
 
 import { Dialogs } from '../store';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { useToastStore } from '@/components/toast/store';
 import { useLoadingStoreAction } from '@/components/loading/store';
+import { useToastStore } from '@/components/toast/store';
 import {
-  createTeam,
   CreateTeamRequest,
-  dismissTeam,
-  Team,
   updateTeam,
   UpdateTeamRequest,
 } from '@/services/challenge';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { useNavigator } from '@/hooks/useNavigator';
-import { useQueryClient } from '@tanstack/react-query';
-import { useMutaionCreateTeam } from '@/services/challenge/query';
+import {
+  useMutaionCreateTeam,
+  useMutaionDismissTeam,
+} from '@/services/challenge.query';
+import { Team } from '@/services/types';
 
 const schema = z
   .object({
@@ -72,16 +72,16 @@ export default function TeamCreateDialog({
   data,
   close,
 }: TeamCreateDialogProps) {
-  const queryClient = useQueryClient();
   const isEditing = !!data.team;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
   const router = useNavigator();
   const createTeamMutaion = useMutaionCreateTeam();
+  const dismissTeamMutation = useMutaionDismissTeam();
   const onDismiss = async () => {
     showLoading();
     try {
-      await dismissTeam(data.team!.id);
+      await dismissTeamMutation.mutateAsync(data.team!.id);
       router.gotoTeamList(data.team!.challengeId);
       close();
       addToast({
@@ -113,6 +113,7 @@ export default function TeamCreateDialog({
           title: 'team updated',
           description: '',
         });
+        router.refresh();
       } else {
         let payload = {
           name: formData.name,
@@ -135,7 +136,6 @@ export default function TeamCreateDialog({
           description: '',
         });
       }
-      router.refresh();
       close();
     } catch (err) {
       console.log(err);

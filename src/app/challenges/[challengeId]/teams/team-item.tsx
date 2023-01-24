@@ -1,6 +1,5 @@
-import { Avatar } from '@/components/avatar';
 import { TagRole, TagSkill } from '@/components/tag';
-import { Challenge, Team } from '@/services/challenge';
+import { Challenge, Team } from '@/services/types';
 import Link from 'next/link';
 import { TeamStatus } from './team-status';
 

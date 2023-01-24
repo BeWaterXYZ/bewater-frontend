@@ -1,6 +1,6 @@
 import { Avatar } from '@/components/avatar';
 import { TagRole } from '@/components/tag';
-import { TeamMember } from '@/services/challenge';
+import { TeamMember } from '@/services/types';
 
 interface TeamMemberProps {
   member: TeamMember;

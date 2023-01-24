@@ -1,7 +1,7 @@
 'use client';
 import { useDialogStore } from '@/components/dialog/store';
 import { useNavigator } from '@/hooks/useNavigator';
-import { Challenge } from '@/services/challenge';
+import { Challenge } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
 
 export function CreateTeamButton({ challenge }: { challenge: Challenge }) {

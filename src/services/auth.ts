@@ -1,7 +1,7 @@
-import { agentAnon } from '../agent';
+import { agentAnon } from './agent';
 
 import { APIResponse } from '@/types/response';
-import { UserProfile } from '../user';
+import { UserProfile } from './types';
 
 /** GetLoginMessage */
 export interface GetLoginMessageRequest {
