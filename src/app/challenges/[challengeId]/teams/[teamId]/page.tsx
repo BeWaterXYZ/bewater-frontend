@@ -94,10 +94,3 @@ export default async function Page({ params }: any) {
     </div>
   );
 }
-export async function generateStaticParams({ params }: any) {
-  const { challengeId } = challengeSchema.parse(params);
-  const teams = await getChallengeTeams(challengeId);
-  return teams.map((t) => ({
-    teamId: t.id.toString(),
-  }));
-}
