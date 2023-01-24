@@ -2,7 +2,7 @@ import { Select, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { RoleOptions, Role } from '@/components/tag';
 import { useToastStore } from '@/components/toast/store';
-import { sendTeamApplication } from '@/services/challenge';
+import { sendGroupingRequest } from '@/services/challenge';
 import { useAuthStore } from '@/stores/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -49,7 +49,7 @@ export default function TeamJoinDialog({
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
-      const data = await sendTeamApplication(team.id, {
+      const data = await sendGroupingRequest(team.id, {
         type: 'APPLICATION',
         // senderId: currentUser.userId!,
         recipientId: leaders[0].userId,

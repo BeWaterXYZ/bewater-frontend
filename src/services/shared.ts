@@ -6,7 +6,6 @@ export type GroupingRequestId = string;
 
 export interface GroupingRequest {
   type: 'APPLICATION' | 'INVITATION';
-  senderId: UserID;
   recipientId: UserID;
   teamRole: Role;
   message: string;
@@ -18,6 +17,7 @@ export interface GroupingRequestFull extends GroupingRequest {
   createdAt: string;
   updatedAt: string;
   recipient?: UserProfile;
+  senderId: UserID;
   sender?: UserProfile;
   team: Pick<Team, 'id' | 'name'> & {
     challenge: Pick<Challenge, 'id' | 'title'>;
