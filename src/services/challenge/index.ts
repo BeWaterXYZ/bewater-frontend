@@ -1,7 +1,7 @@
 import { ProjectTag, Role, Skill } from '@/components/tag';
 import { agentAnon, agentAuthed } from '../agent';
 import { UserID, UserProfile } from '../user';
-import { GroupingRequest, GroupingRequestId } from '../shared';
+import { GroupingRequest } from '../shared';
 
 export type ChallengeID = string;
 export interface Challenge {
@@ -110,8 +110,6 @@ export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
     {
-      cache: 'force-cache',
-      next: { revalidate: 10 },
       params: {
         startTime: '2022-01-01T19:54:35.308Z',
         endTime: '2023-12-20T19:54:35.308Z',
@@ -124,10 +122,7 @@ export async function getChallenges() {
 export async function getChallengeById(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
-    {
-      cache: 'force-cache',
-      next: { revalidate: 10 },
-    },
+    {},
   );
   return data.challenge;
 }
@@ -135,17 +130,10 @@ export async function getChallengeById(challengeId: ChallengeID) {
 export async function getChallengeTeams(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ teams: Team[] }>(
     `/challenge/${challengeId}/teams`,
-    {
-      cache: 'force-cache',
-      next: { revalidate: 10 },
-    },
+    {},
   );
   return data.teams;
 }
-
-// const sleep = (ms:number) => new Promise(res=>setTimeout(() => {
-//   res(ms)
-// }, ms))
 
 export async function getTeam(teamId: TeamID) {
   const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`, {

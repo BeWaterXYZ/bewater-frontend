@@ -22,6 +22,8 @@ import {
 } from '@/services/challenge';
 
 import { useNavigator } from '@/hooks/useNavigator';
+import { useQueryClient } from '@tanstack/react-query';
+import { useMutaionCreateTeam } from '@/services/challenge/query';
 
 const schema = z
   .object({
@@ -70,10 +72,12 @@ export default function TeamCreateDialog({
   data,
   close,
 }: TeamCreateDialogProps) {
+  const queryClient = useQueryClient();
   const isEditing = !!data.team;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
   const router = useNavigator();
+  const createTeamMutaion = useMutaionCreateTeam();
   const onDismiss = async () => {
     showLoading();
     try {
@@ -121,9 +125,8 @@ export default function TeamCreateDialog({
           leaderRole: formData.role[0],
         } as CreateTeamRequest;
 
-        let res = await createTeam(payload);
+        let res = await createTeamMutaion.mutateAsync(payload);
 
-        console.log(payload);
         router.gotoTeam(data.challenge!.id, res.team.id);
 
         addToast({

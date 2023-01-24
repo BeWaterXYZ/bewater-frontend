@@ -1,14 +1,40 @@
-import { TeamItem } from './team-item';
+'use client';
+import { Loading } from '@/components/loading/loading';
+import { Team } from '@/services/challenge';
+import {
+  useFetchChallengeById,
+  useFetchChallengeTeams,
+} from '@/services/challenge/query';
+import { UserID } from '@/services/user';
+import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';
-import { CreateTeamButton } from './create-team-button';
 import { challengeSchema } from '../param-schema';
-import { getChallengeById, getChallengeTeams } from '@/services/challenge';
 import { Countdown } from './countdown';
+import { CreateTeamButton } from './create-team-button';
+import { TeamItem } from './team-item';
 
-export default async function ChallengeTeams({ params }: any) {
+function sortTeam(teams: Team[], userId?: UserID) {
+  if (!userId) return teams;
+  return teams.sort((a, b) => {
+    let isInATeam = a.teamMembers.some((m) => m.userId === userId);
+    let isInBTeam = b.teamMembers.some((m) => m.userId === userId);
+
+    if (isInATeam && !isInBTeam) return -1;
+    else if (isInBTeam && !isInATeam) return 1;
+    else return 0;
+  });
+}
+
+export default function ChallengeTeams({ params }: any) {
+  const user = useAuthStore((s) => s.user);
   const { challengeId } = challengeSchema.parse(params);
-  const challenge = await getChallengeById(challengeId);
-  const teams = await getChallengeTeams(challengeId);
+  const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
+  let { data: teams, isLoading: isLoadingTeam } =
+    useFetchChallengeTeams(challengeId);
+  if (isLoading || isLoadingTeam) return <Loading />;
+  if (!challenge || !teams) return null;
+
+  teams = sortTeam(teams, user.userId);
   const team_len = teams.length;
   const team_active_len = teams.filter((t) => t.status === 'ACTIVE').length;
   return (
