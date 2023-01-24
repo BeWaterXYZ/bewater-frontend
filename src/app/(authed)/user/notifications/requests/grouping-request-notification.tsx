@@ -45,6 +45,22 @@ function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
     </p>
   );
 }
+function getStatus(req: GroupingRequestFull, sentOrReceived: boolean) {
+  switch (req.status) {
+    case 'ACCEPTED':
+      return sentOrReceived
+        ? 'Your request has been accepted'
+        : "You've accepted this request";
+    case 'DECLINED':
+      return sentOrReceived
+        ? 'Your request has been declined'
+        : "You've accepted this declined ";
+    case 'REVOKED':
+      return sentOrReceived
+        ? 'Your request has been revoked'
+        : 'The request has been revoked';
+  }
+}
 
 export function GroupingRequestNotification({
   req,
@@ -172,7 +188,9 @@ export function GroupingRequestNotification({
             </div>
           )
         ) : (
-          <div className="body-3 text-[#64748B] body-5">{req.status}</div>
+          <div className="body-3 text-[#64748B] body-5">
+            {getStatus(req, sentOrReceived)}
+          </div>
         )}
       </div>
     </div>

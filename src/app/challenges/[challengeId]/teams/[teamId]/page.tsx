@@ -15,6 +15,7 @@ export default async function Page({ params }: any) {
   const team = await getTeam(teamId);
   const leaders = team.teamMembers.filter((m) => m.isLeader);
   const members = team.teamMembers.filter((m) => !m.isLeader);
+
   return (
     <div>
       <div className="my-4">
