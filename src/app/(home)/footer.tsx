@@ -28,24 +28,24 @@ export default function HomeFooter() {
           <div className="flex flex-row gap-5">
             <Link href="https://twitter.com/BeWaterOfficial" target="_blank">
               <Image
-                fill
-                className="w-9 h-9"
+                width={36}
+                height={36}
                 src="/home/social-twitter.svg"
                 alt="bewater twitter"
               />
             </Link>
             <Link href="https://t.co/oPJUASWXjh" target="_blank">
               <Image
-                fill
-                className="w-9 h-9"
+                width={36}
+                height={36}
                 src="/home/social-discord.svg"
                 alt="bewater discord"
               />
             </Link>
             <Link href="https://t.co/9ZWZzzYdVq" target="_blank">
               <Image
-                fill
-                className="w-9 h-9"
+                width={36}
+                height={36}
                 src="/home/social-telegram.svg"
                 alt="bewater telegram"
               />

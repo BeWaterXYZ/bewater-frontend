@@ -43,8 +43,8 @@ export const Input = React.forwardRef(function Input(
             type="submit"
           >
             <Image
-              fill
-              className="w-4 h-4"
+              width={16}
+              height={16}
               src="/home/social-arrow-right.svg"
               alt=""
               aria-hidden

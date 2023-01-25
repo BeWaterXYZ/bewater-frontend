@@ -36,12 +36,12 @@ export default function HomePartner() {
       <div className="w-full flex flex-row justify-around flex-wrap gap-8">
         {logos.map((logo, i) => (
           <div
-            className="w-[178px] h-[90px] flex justify-center items-center"
+            className="w-[178px] h-[90px] flex justify-center items-center relative"
             key={logo.name}
           >
             <Image
               fill
-              className="h-8 object-cover"
+              className="!h-8 object-contain"
               src={logo.url}
               alt={logo.name}
             />
