@@ -1,7 +1,7 @@
 import { useAlert, useAlertStore } from '@/components/alert/store';
 import { Avatar } from '@/components/avatar';
 import { TagRole } from '@/components/tag';
-import { teamRemoveMember } from '@/services/challenge';
+import { teamRemoveMember } from '@/services/team';
 
 import { Dialogs, useDialogStore } from '../../store';
 import { InviteMember } from './invite-member';

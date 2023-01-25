@@ -1,10 +1,10 @@
 import { TagRole, TagSkill } from '@/components/tag';
-import { getChallengeTeams, getTeam } from '@/services/challenge';
-import Link from 'next/link';
-import { TeamMember } from './team-member';
-import Image from 'next/image';
-import { challengeSchema, challengeTeamSchema } from '../../param-schema';
+import { getTeam } from '@/services/team';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import Link from 'next/link';
+import { challengeTeamSchema } from '../../param-schema';
+import { TeamMember } from './team-member';
 
 const TeamMenu = dynamic(() => import('./team-menu'), {
   ssr: false,

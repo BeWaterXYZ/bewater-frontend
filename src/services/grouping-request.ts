@@ -1,4 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { compareDesc, parseISO } from 'date-fns';
 import { agentAuthed } from './agent';
 import {
@@ -44,29 +43,4 @@ export async function acceptGroupingRequest(requestId: GroupingRequestId) {
 export async function declineGroupingRequest(requestId: GroupingRequestId) {
   const { data } = await agentAuthed.put(`/team/request/${requestId}/decline`);
   return data;
-}
-
-export function useRevokeGroupingRequest() {
-  const queryClient = useQueryClient();
-  return useMutation(revokeGroupingRequest, {
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(['user', 'requests']);
-    },
-  });
-}
-export function useAcceptGroupingRequest() {
-  const queryClient = useQueryClient();
-  return useMutation(acceptGroupingRequest, {
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(['user', 'requests']);
-    },
-  });
-}
-export function useDeclineGroupingRequest() {
-  const queryClient = useQueryClient();
-  return useMutation(declineGroupingRequest, {
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(['user', 'requests']);
-    },
-  });
 }

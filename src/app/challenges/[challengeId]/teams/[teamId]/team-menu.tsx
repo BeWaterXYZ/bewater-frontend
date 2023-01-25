@@ -2,7 +2,7 @@
 
 import { useDialogStore } from '@/components/dialog/store';
 import { useNavigator } from '@/hooks/useNavigator';
-import { teamRemoveMember } from '@/services/challenge';
+import { teamRemoveMember } from '@/services/team';
 import { Team } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
 

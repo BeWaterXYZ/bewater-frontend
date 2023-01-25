@@ -1,9 +1,7 @@
 'use client';
 import { Loading } from '@/components/loading/loading';
-import {
-  useFetchChallengeById,
-  useFetchChallengeTeams,
-} from '@/services/challenge.query';
+import { useFetchChallengeById } from '@/services/challenge.query';
+import { useFetchChallengeTeams } from '@/services/useFetchChallengeTeams';
 import { UserID, Team } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';

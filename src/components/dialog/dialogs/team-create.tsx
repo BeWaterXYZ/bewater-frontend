@@ -4,7 +4,7 @@ import { Dialogs } from '../store';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
-import { updateTeam } from '@/services/challenge';
+import { updateTeam } from '@/services/team';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -19,7 +19,7 @@ import { useNavigator } from '@/hooks/useNavigator';
 import {
   useMutaionCreateTeam,
   useMutaionDismissTeam,
-} from '@/services/challenge.query';
+} from '@/services/useFetchChallengeTeams';
 import { Team } from '@/services/types';
 
 const schema = z
