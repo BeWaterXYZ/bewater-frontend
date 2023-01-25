@@ -5,7 +5,7 @@ import {
   useRevokeGroupingRequest,
   useAcceptGroupingRequest,
   useDeclineGroupingRequest,
-} from '@/services/useRevokeGroupingRequest';
+} from '@/services/grouping-request.query';
 import { GroupingRequestFull, GroupingRequestId } from '@/services/types';
 import { formatDistance, parseISO } from 'date-fns';
 import { useLoadingStoreAction } from '@/components/loading/store';

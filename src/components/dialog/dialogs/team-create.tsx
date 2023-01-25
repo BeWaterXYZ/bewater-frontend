@@ -19,7 +19,7 @@ import { useNavigator } from '@/hooks/useNavigator';
 import {
   useMutaionCreateTeam,
   useMutaionDismissTeam,
-} from '@/services/useFetchChallengeTeams';
+} from '@/services/team.query';
 import { Team } from '@/services/types';
 
 const schema = z
