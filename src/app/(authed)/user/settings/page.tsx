@@ -1,6 +1,6 @@
 'use client';
 import { AvatarWithEditor } from '@/components/avatar';
-import { Skill, TagRole, TagSkill } from '@/components/tag';
+import { TagRole, TagSkill } from '@/components/tag';
 import { useLoadingWhen } from '@/components/loading/store';
 import { useFetchUser } from '@/services/user';
 import { useAuthStore } from '@/stores/auth';

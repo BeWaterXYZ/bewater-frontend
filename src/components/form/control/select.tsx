@@ -3,18 +3,19 @@ import clsx from 'clsx';
 import type { FieldError, Merge } from 'react-hook-form';
 import { Controller } from 'react-hook-form';
 import RSelect, { ClassNamesConfig } from 'react-select';
-import { Option } from '@/components/tag';
-interface SelectProps extends React.ComponentPropsWithoutRef<'select'> {
+import { OptionItem } from '@/constants/options/types';
+interface SelectProps<T extends string>
+  extends React.ComponentPropsWithoutRef<'select'> {
   label?: string;
   name: string;
   error?: FieldError | Merge<FieldError, (FieldError | undefined)[]>;
   control: any;
-  options: Option[];
+  options: OptionItem<T>[];
   isMulti?: boolean;
 }
 
-export const Select = React.forwardRef(function TextArea(
-  props: SelectProps,
+export const Select = React.forwardRef(function TextArea<T extends string>(
+  props: SelectProps<T>,
   ref: ForwardedRef<HTMLSelectElement>,
 ) {
   const {
@@ -29,7 +30,7 @@ export const Select = React.forwardRef(function TextArea(
     value,
   } = props;
   const id = useId();
-  const styles: ClassNamesConfig<Option> = {
+  const styles: ClassNamesConfig<OptionItem<T>> = {
     control: ({ isFocused }) => {
       return clsx('control !p-0 !flex !shadow-none ', {
         error: error,

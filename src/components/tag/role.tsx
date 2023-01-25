@@ -1,14 +1,15 @@
 'use client';
+import { RoleSetOptions, RoleUnion } from '@/constants/options/role';
+import { OptionItem } from '@/constants/options/types';
 import clsx from 'clsx';
-import { RoleOptions, Role, Option } from './data';
 import { Tag } from './tag';
 
-const mapsTagRole = RoleOptions.reduce((prev, cur) => {
+const mapsTagRole = RoleSetOptions.reduce((prev, cur) => {
   prev[cur.value] = cur;
   return prev;
-}, {} as { [index: string]: Option });
+}, {} as { [index: string]: OptionItem<RoleUnion> });
 interface TagRoleProps {
-  label: Role;
+  label: RoleUnion;
   simple?: boolean;
   onClick?: () => void;
 }

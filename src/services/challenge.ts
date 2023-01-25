@@ -1,4 +1,6 @@
-import { ProjectTag, Role, Skill } from '@/components/tag';
+import { ProjectTagUnion } from '@/constants/options/project-tag';
+import { RoleUnion } from '@/constants/options/role';
+import { SkillUnion } from '@/constants/options/skill';
 import { agentAnon, agentAuthed } from './agent';
 import { Challenge, ChallengeID, Team, TeamID, UserID } from './types';
 
@@ -6,19 +8,19 @@ export interface CreateTeamRequest {
   name: string;
   projectName: string;
   projectDescription: string;
-  projectTags: ProjectTag[];
+  projectTags: ProjectTagUnion[];
   challengeId: ChallengeID;
-  openingRoles: Role[];
-  skills: Skill[];
-  leaderRole: Role;
+  openingRoles: RoleUnion[];
+  skills: SkillUnion[];
+  leaderRole: RoleUnion;
 }
 export interface UpdateTeamRequest {
   name: string;
   projectName: string;
   projectDescription: string;
-  projectTags: ProjectTag[];
-  openingRoles: Role[];
-  skills: Skill[];
+  projectTags: ProjectTagUnion[];
+  openingRoles: RoleUnion[];
+  skills: SkillUnion[];
 }
 export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(

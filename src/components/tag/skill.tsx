@@ -1,14 +1,15 @@
 'use client';
+import { SkillSetOptions, SkillUnion } from '@/constants/options/skill';
+import { OptionItem } from '@/constants/options/types';
 import clsx from 'clsx';
-import { Skill, SkillOptions, Option } from './data';
 import { Tag } from './tag';
 
-const mapsTagSkill = SkillOptions.reduce((prev, cur) => {
+const mapsTagSkill = SkillSetOptions.reduce((prev, cur) => {
   prev[cur.value] = cur;
   return prev;
-}, {} as { [index: string]: Option });
+}, {} as { [index: string]: OptionItem<SkillUnion> });
 interface TagSkillProps {
-  label: Skill;
+  label: SkillUnion;
   onClick?: () => void;
 }
 

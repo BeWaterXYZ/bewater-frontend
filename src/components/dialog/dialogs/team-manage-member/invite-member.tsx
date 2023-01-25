@@ -1,6 +1,7 @@
-import { Input, TextArea } from '@/components/form/control';
+import { Input, Select, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
+import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
 import { sendGroupingRequest } from '@/services/grouping-request';
 import { Team } from '@/services/types';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,8 +10,9 @@ import { z } from 'zod';
 
 const schema = z.object({
   user: z.string(),
-
-  // users: z.array(z.string()).min(1, { message: '' }),
+  role: z
+    .array(RoleSetScheme)
+    .max(1, { message: 'You can only choose one role' }),
   message: z.string().min(3, 'At least 3 characters'),
 });
 
@@ -22,6 +24,7 @@ export function useTeamCreateForm() {
     defaultValues: {
       user: 'ef43dd28-d010-4937-be55-e14d4390095b',
       message: '',
+      role: [],
     },
   });
 }
@@ -36,11 +39,10 @@ export function InviteMember({ team, close }: InviteMemberProps) {
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
-      // Fix me
       const data = await sendGroupingRequest(team.id, {
         type: 'INVITATION',
         recipientId: formData.user,
-        teamRole: 'Frontend Developer',
+        teamRole: formData.role[0],
         message: formData.message,
       });
       addToast({
@@ -69,24 +71,30 @@ export function InviteMember({ team, close }: InviteMemberProps) {
   return (
     <div>
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
-        <div className="flex gap-2">
-          <div className="flex-1">
-            <Input
-              label=""
-              error={errors['user']}
-              placeholder="user id"
-              {...register('user')}
-            ></Input>
-          </div>
+        <Input
+          label="Name"
+          error={errors['user']}
+          placeholder="user id"
+          {...register('user')}
+        ></Input>
+        <Select
+          label="You’ll invite him/her to play "
+          required
+          isMulti
+          options={RoleSetOptions}
+          error={errors['role']}
+          control={control}
+          {...register('role')}
+        />
+        <TextArea
+          label="Include a message"
+          error={errors['message']}
+          placeholder="write a request message..."
+          {...register('message')}
+        ></TextArea>
+
+        <div className="flex justify-end">
           <button className="btn btn-secondary">Invite</button>
-        </div>
-        <div>
-          <TextArea
-            label=""
-            error={errors['message']}
-            placeholder="write a request message..."
-            {...register('message')}
-          ></TextArea>
         </div>
       </form>
     </div>

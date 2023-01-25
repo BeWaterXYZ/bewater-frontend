@@ -1,7 +1,7 @@
 import { Select, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
-import { RoleOptions, Role } from '@/components/tag';
 import { useToastStore } from '@/components/toast/store';
+import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
 import { sendGroupingRequest } from '@/services/grouping-request';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -12,7 +12,7 @@ import { Dialogs } from '../store';
 const schema = z
   .object({
     roles: z
-      .array(z.string())
+      .array(RoleSetScheme)
       .max(1, { message: 'You can only choose one role' }),
     message: z.string().min(3, 'At least 3 characters'),
   })
@@ -41,7 +41,6 @@ export default function TeamJoinDialog({
 }: TeamJoinDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
-  // const currentUser = useAuthStore((s) => s.user);
 
   const leaders = team.teamMembers.filter((m) => m.isLeader);
 
@@ -50,9 +49,8 @@ export default function TeamJoinDialog({
     try {
       const data = await sendGroupingRequest(team.id, {
         type: 'APPLICATION',
-        // senderId: currentUser.userId!,
         recipientId: leaders[0].userId,
-        teamRole: formData.roles.join(',') as Role,
+        teamRole: formData.roles[0],
         message: formData.message,
       });
       console.log({ data });
@@ -89,7 +87,7 @@ export default function TeamJoinDialog({
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
         <Select
           label="You're going to play"
-          options={RoleOptions}
+          options={RoleSetOptions}
           error={errors['roles']}
           control={control}
           isMulti

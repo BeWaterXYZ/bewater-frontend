@@ -1,23 +1,20 @@
 import { Input, Select, TextArea } from '@/components/form/control';
-import {
-  ProjectTagOptions,
-  RoleOptions,
-  SkillOptions,
-} from '@/components/tag/data';
 
 import { Dialogs } from '../store';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
-import {
-  CreateTeamRequest,
-  updateTeam,
-  UpdateTeamRequest,
-} from '@/services/challenge';
+import { updateTeam } from '@/services/challenge';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+import {
+  ProjectTagSetOptions,
+  ProjectTagSetScheme,
+} from '@/constants/options/project-tag';
+import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
+import { SkillSetOptions, SkillSetScheme } from '@/constants/options/skill';
 import { useNavigator } from '@/hooks/useNavigator';
 import {
   useMutaionCreateTeam,
@@ -31,17 +28,17 @@ const schema = z
     title: z.string().min(3, { message: 'At least 3 characters' }),
     description: z.string(),
     role: z
-      .array(z.string())
+      .array(RoleSetScheme)
       .max(1, { message: 'You can only choose one role' }),
     tags: z
-      .array(z.string())
+      .array(ProjectTagSetScheme)
       .max(3, { message: 'You can only choose 3 skills' }),
     roles: z
-      .array(z.string())
+      .array(RoleSetScheme)
       .min(1, { message: 'choose at least one role' })
       .max(5, { message: 'You can only choose 5 roles' }),
     skills: z
-      .array(z.string())
+      .array(SkillSetScheme)
       .max(10, { message: 'You can only choose 10 skills' }),
   })
   .required();
@@ -55,7 +52,7 @@ export function useTeamCreateForm(team?: Team) {
       name: team?.name ?? '',
       title: team?.project.name ?? '',
       description: team?.project.description ?? '',
-      role: team ? ['whatever'] : [],
+      role: team ? ['Frontend Developer'] : [],
       tags: team?.project.tags ?? [],
       roles: team?.openingRoles ?? [],
       skills: team?.skills ?? [],
@@ -106,7 +103,7 @@ export default function TeamCreateDialog({
           projectTags: formData.tags,
           openingRoles: formData.roles,
           skills: formData.skills,
-        } as UpdateTeamRequest;
+        };
         let res = await updateTeam(data.team?.id!, payload);
         addToast({
           type: 'success',
@@ -124,7 +121,7 @@ export default function TeamCreateDialog({
           openingRoles: formData.roles,
           skills: formData.skills,
           leaderRole: formData.role[0],
-        } as CreateTeamRequest;
+        };
 
         let res = await createTeamMutaion.mutateAsync(payload);
 
@@ -172,7 +169,7 @@ export default function TeamCreateDialog({
           label="Project Tag"
           required
           isMulti
-          options={ProjectTagOptions}
+          options={ProjectTagSetOptions}
           error={errors['tags']}
           control={control}
           {...register('tags')}
@@ -188,7 +185,7 @@ export default function TeamCreateDialog({
             label="You’re going to play"
             required
             isMulti
-            options={RoleOptions}
+            options={RoleSetOptions}
             error={errors['role']}
             control={control}
             {...register('role')}
@@ -197,7 +194,7 @@ export default function TeamCreateDialog({
 
         <Select
           label="Roles Needed"
-          options={RoleOptions}
+          options={RoleSetOptions}
           error={errors['roles']}
           control={control}
           isMulti
@@ -206,7 +203,7 @@ export default function TeamCreateDialog({
 
         <Select
           label="Skill Needed"
-          options={SkillOptions}
+          options={SkillSetOptions}
           error={errors['skills']}
           control={control}
           isMulti

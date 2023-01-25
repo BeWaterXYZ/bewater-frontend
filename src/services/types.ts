@@ -1,8 +1,10 @@
-import { Role, Skill } from '@/components/tag';
-
 /**
  * User
  */
+
+import { ProjectTagUnion } from '@/constants/options/project-tag';
+import { RoleUnion } from '@/constants/options/role';
+import { SkillUnion } from '@/constants/options/skill';
 
 export type UserID = string;
 
@@ -84,8 +86,8 @@ export interface Team {
   name: string;
   status: string;
   challengeId: ChallengeID;
-  openingRoles: Role[];
-  skills: Skill[];
+  openingRoles: RoleUnion[];
+  skills: SkillUnion[];
   teamMembers: TeamMember[];
   project: Project;
 }
@@ -93,7 +95,7 @@ export interface Project {
   id: string;
   name: string;
   description: string;
-  tags: string[];
+  tags: ProjectTagUnion[];
   status: string;
   teamId: string;
 }
@@ -101,7 +103,7 @@ export interface TeamMember {
   id: string;
   teamId: number;
   userId: UserID;
-  teamRole: Role;
+  teamRole: RoleUnion;
   isLeader: boolean;
   userProfile: UserProfile;
 }
@@ -114,7 +116,7 @@ export type GroupingRequestId = string;
 export interface GroupingRequest {
   type: 'APPLICATION' | 'INVITATION';
   recipientId: UserID;
-  teamRole: Role;
+  teamRole: RoleUnion;
   message: string;
 }
 export interface GroupingRequestFull extends GroupingRequest {
