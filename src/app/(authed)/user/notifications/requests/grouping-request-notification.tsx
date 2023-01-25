@@ -188,7 +188,7 @@ export function GroupingRequestNotification({
             </div>
           )
         ) : (
-          <div className="body-3 text-[#64748B] body-5">
+          <div className="body-3 text-grey body-5">
             {getStatus(req, sentOrReceived)}
           </div>
         )}

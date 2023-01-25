@@ -39,7 +39,7 @@ export default function TeamManageMemberDialog({
       {nonLeaders.map((m) => (
         <div
           key={m.userId}
-          className="flex p-2 gap-2 border-b border-b-[#1E293B]"
+          className="flex p-2 gap-2 border-b border-b-midnight"
         >
           <Avatar
             size="small"

@@ -58,7 +58,7 @@ export const FormUserSettings = ({ data, className }: Props) => {
     >
       <p className="heading-6">Edit your profile</p>
 
-      <hr className="border-[#1E293B] my-6" />
+      <hr className="border-midnight my-6" />
 
       <p className="body-2 text-gray-400/30 my-6">Basic Information</p>
       <Input

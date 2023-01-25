@@ -1,6 +1,6 @@
 @layer components {
   .control {
-    @apply block body-3 py-2 px-2 box-border !border !border-solid !border-[#1E293B] !bg-night
+    @apply block body-3 py-2 px-2 box-border !border !border-solid !border-midnight !bg-night
     rounded-sm w-full  mr-4 transition duration-[.15s]
     ease-in-out  text-white
     hover:!border-gray-400 focus:!border-day focus:outline-none;
