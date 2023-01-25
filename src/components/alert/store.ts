@@ -5,6 +5,7 @@ export interface Alert {
   description?: string;
   okCopy: string;
   cancelCopy: string;
+  type?: 'info' | 'warning';
   callback?: (result: boolean) => void;
 }
 

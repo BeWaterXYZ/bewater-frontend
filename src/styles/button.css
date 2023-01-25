@@ -12,6 +12,6 @@
     @apply border-[#2F3153] bg-[#2F3153] text-white;
   }
   .btn-danger {
-    @apply border-danger bg-night text-danger;
+    @apply border-danger bg-danger text-white;
   }
 }

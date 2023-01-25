@@ -21,6 +21,7 @@ import {
   useMutaionDismissTeam,
 } from '@/services/team.query';
 import { Team } from '@/services/types';
+import { useAlert } from '@/components/alert/store';
 
 const schema = z
   .object({
@@ -75,8 +76,19 @@ export default function TeamCreateDialog({
   const router = useNavigator();
   const createTeamMutaion = useMutaionCreateTeam();
   const dismissTeamMutation = useMutaionDismissTeam();
+  const { confirm } = useAlert();
+
   const onDismiss = async () => {
+    let confirmed = await confirm({
+      title: 'are you sure',
+      description: 'You are going to dismiss the team',
+      okCopy: 'Dismiss',
+      cancelCopy: 'cancel',
+      type: 'warning',
+    });
+    if (!confirmed) return;
     showLoading();
+
     try {
       await dismissTeamMutation.mutateAsync(data.team!.id);
       router.gotoTeamList(data.team!.challengeId);
