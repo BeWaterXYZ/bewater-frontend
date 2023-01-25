@@ -15,7 +15,9 @@ export function useMutaionCreateTeam() {
   const queryClient = useQueryClient();
   return useMutation(createTeam, {
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(['challenges', data.team.challengeId]);
+      if (data?.team?.challengeId) {
+        queryClient.invalidateQueries(['challenges', data.team.challengeId]);
+      }
     },
   });
 }

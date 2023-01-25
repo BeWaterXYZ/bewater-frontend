@@ -7,11 +7,19 @@ import {
   Team,
 } from './types';
 
+interface SendGroupingRequestResponse {
+  groupingRequest?: GroupingRequestFull;
+  newRequest: boolean;
+}
+
 export async function sendGroupingRequest(
   teamId: Pick<Team, 'id'>['id'],
   request: Omit<GroupingRequest, 'senderId'>,
 ) {
-  const { data } = await agentAuthed.post(`/team/${teamId}/request`, request);
+  const { data } = await agentAuthed.post<SendGroupingRequestResponse>(
+    `/team/${teamId}/request`,
+    request,
+  );
   return data;
 }
 

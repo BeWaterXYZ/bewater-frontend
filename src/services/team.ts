@@ -1,6 +1,12 @@
 import { agentAnon, agentAuthed } from './agent';
-import { ChallengeID, Team, TeamID, UserID } from './types';
+import { ChallengeID, Team, TeamID, UserID, UserProfile } from './types';
 import { CreateTeamRequest, UpdateTeamRequest } from './challenge';
+
+interface CreateTeamResponse {
+  team?: Team;
+  teamLeader?: UserProfile;
+  leaderAlreadyInChallenge: boolean;
+}
 
 export async function getChallengeTeams(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ teams: Team[] }>(
@@ -19,7 +25,7 @@ export async function getTeam(teamId: TeamID) {
 }
 
 export async function createTeam(payload: CreateTeamRequest) {
-  const { data } = await agentAuthed.post<{ team: Team }>(`/team`, payload);
+  const { data } = await agentAuthed.post<CreateTeamResponse>(`/team`, payload);
   return data;
 }
 export async function updateTeam(teamId: TeamID, payload: UpdateTeamRequest) {

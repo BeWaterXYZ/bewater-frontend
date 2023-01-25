@@ -53,12 +53,19 @@ export default function TeamJoinDialog({
         teamRole: formData.roles[0],
         message: formData.message,
       });
-      console.log({ data });
-      addToast({
-        type: 'success',
-        title: 'Request sent!',
-        description: 'please wait for team leader to approve',
-      });
+      if (data.newRequest) {
+        addToast({
+          type: 'success',
+          title: 'Request sent!',
+          description: 'please wait for team leader to approve',
+        });
+      } else {
+        addToast({
+          type: 'warning',
+          title: 'Request not sent!',
+          description: 'You have pending requests',
+        });
+      }
     } catch (err) {
       addToast({
         type: 'error',

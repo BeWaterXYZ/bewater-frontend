@@ -96,6 +96,9 @@ export default function TeamCreateDialog({
     showLoading();
     try {
       if (isEditing) {
+        /**
+         *  edit team
+         */
         let payload = {
           name: formData.name,
           projectName: formData.title,
@@ -112,6 +115,9 @@ export default function TeamCreateDialog({
         });
         router.refresh();
       } else {
+        /**
+         * create new team
+         */
         let payload = {
           name: formData.name,
           projectName: formData.title,
@@ -124,14 +130,21 @@ export default function TeamCreateDialog({
         };
 
         let res = await createTeamMutaion.mutateAsync(payload);
+        if (res.leaderAlreadyInChallenge) {
+          addToast({
+            type: 'error',
+            title: 'Already in challenge',
+            description: 'You already have a team',
+          });
+        } else if (res.team) {
+          router.gotoTeam(data.challenge!.id, res.team.id);
 
-        router.gotoTeam(data.challenge!.id, res.team.id);
-
-        addToast({
-          type: 'success',
-          title: 'team created',
-          description: '',
-        });
+          addToast({
+            type: 'success',
+            title: 'team created',
+            description: '',
+          });
+        }
       }
       close();
     } catch (err) {

@@ -57,7 +57,7 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
           </Toast.Root>
         ))}
 
-        <Toast.Viewport className="absolute flex flex-col gap-3 bottom-0 right-0 p-4" />
+        <Toast.Viewport className="z-50 fixed flex flex-col gap-3 bottom-0 right-0 p-4" />
       </Toast.Provider>
     </div>
   );
