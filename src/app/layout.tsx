@@ -34,7 +34,7 @@ const fontSecondary = JetBrains_Mono({
   weight: ['400', '500', '700'],
 });
 const fontThird = Manrope({
-  variable: '--font-third',
+  variable: '--font-tertiary',
   subsets: ['latin'],
   weight: ['400'],
 });
