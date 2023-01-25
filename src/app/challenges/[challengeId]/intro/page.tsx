@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { challengeSchema } from '../param-schema';
 import { Timeline } from './timeline';
 
+export const revalidate = 60;
+
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = challengeSchema.parse(params);
   const challenge = await getChallengeById(challengeId);

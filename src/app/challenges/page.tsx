@@ -1,6 +1,8 @@
 import { getChallenges } from '@/services/challenge';
 import { ChallengeList } from './challenge-list';
 
+export const revalidate = 60;
+
 async function getChallengesByStatus() {
   let challenges = await getChallenges();
 
