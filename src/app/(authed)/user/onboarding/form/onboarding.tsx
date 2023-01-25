@@ -22,31 +22,28 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useOnboardingForm();
-  const onSubmit = useCallback(
-    (data: Inputs) => {
-      showLoading();
-      submitCreateUserProfile({
-        ...data,
-        userId: user.userId!,
-        walletAddress: user.walletAddress!,
+  const onSubmit = (data: Inputs) => {
+    showLoading();
+    submitCreateUserProfile({
+      ...data,
+      userId: user.userId!,
+      walletAddress: user.walletAddress!,
+    })
+      .then((res) => {
+        onComplete();
       })
-        .then((res) => {
-          onComplete();
-        })
-        .catch((error) => {
-          console.error(error);
-          addToast({
-            title: 'An error occurs',
-            description: 'Create user failed, please visit the site later',
-            type: 'error',
-          });
-        })
-        .finally(() => {
-          dismissLoading();
+      .catch((error) => {
+        console.error(error);
+        addToast({
+          title: 'An error occurs',
+          description: 'Create user failed, please visit the site later',
+          type: 'error',
         });
-    },
-    [user, addToast],
-  );
+      })
+      .finally(() => {
+        dismissLoading();
+      });
+  };
   return (
     <form
       method="post"

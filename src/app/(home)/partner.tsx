@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import Image from 'next/image';
 
 const logos = [
   {
@@ -38,7 +39,12 @@ export default function HomePartner() {
             className="w-[178px] h-[90px] flex justify-center items-center"
             key={logo.name}
           >
-            <img className="h-8 object-cover" src={logo.url} alt={logo.name} />
+            <Image
+              fill
+              className="h-8 object-cover"
+              src={logo.url}
+              alt={logo.name}
+            />
           </div>
         ))}
       </div>

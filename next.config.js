@@ -9,7 +9,9 @@ const nextConfig = {
     appDir: true,
   },
   reactStrictMode: true,
-
+  images: {
+    domains: ['source.unsplash.com'],
+  },
   // swcMinify: true,
 
   // // Disabling Next.js ESLint check with custom one as there is

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import create from 'zustand';
+import { create } from 'zustand';
 type State = {
   loading: boolean;
 };
@@ -27,5 +27,6 @@ export function useLoadingWhen(loading: boolean) {
 
   useEffect(() => {
     loading ? showLoading() : dismissLoading();
+    // eslint-disable-next-line
   }, [loading]);
 }

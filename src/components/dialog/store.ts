@@ -1,5 +1,5 @@
 import { Challenge, Team } from '@/services/types';
-import create from 'zustand';
+import { create } from 'zustand';
 
 export type Dialogs = {
   metamask_not_support?: boolean;

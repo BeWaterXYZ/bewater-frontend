@@ -7,12 +7,12 @@ import { isBrowser } from '@/constants';
 const searchParamsToCarryOver = ['redirect'];
 
 export default function useQueryAwareRouter() {
-  const delegate = useRouter();
+  const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   return useMemo(
-    () => new QueryAwareRouterImpl(delegate, searchParams, pathname ?? ''),
-    [delegate],
+    () => new QueryAwareRouterImpl(router, searchParams, pathname ?? ''),
+    [router, searchParams, pathname],
   );
 }
 

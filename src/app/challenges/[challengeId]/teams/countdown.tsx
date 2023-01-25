@@ -29,7 +29,7 @@ export function Countdown({ deadline }: { deadline: string }) {
     }, 1000);
 
     return () => clearInterval(t);
-  }, []);
+  }, [deadlineDate]);
 
   return (
     <span className="mono-1 tabular-nums text-[24px]">{durationStr} </span>

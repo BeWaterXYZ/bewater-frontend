@@ -3,6 +3,7 @@ import { getChallengeById } from '@/services/challenge';
 import { formatMoney } from '@/utils/numeral';
 import { unsplash } from '@/utils/unsplash';
 import clsx from 'clsx';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { challengeSchema } from '../param-schema';
@@ -53,7 +54,8 @@ export default async function ChallengeIntro({ params }: any) {
                   })}
                 >
                   <Aspect ratio={3}>
-                    <img
+                    <Image
+                      fill
                       src={unsplash('sponsor')}
                       alt="crypto"
                       className="object-cover w-full h-full"
@@ -100,7 +102,8 @@ export default async function ChallengeIntro({ params }: any) {
               return (
                 <div key={judge.id} className="max-w-xs">
                   <Aspect ratio={1 / 1}>
-                    <img
+                    <Image
+                      fill
                       src={unsplash('women')}
                       className="object-cover w-full h-full rounded"
                       alt=""

@@ -7,6 +7,7 @@ import { useHomeForm, Inputs } from './use-home-form';
 import { submitEmailToWaitingList } from '@/services/email';
 import { IconCheck } from '@/components/icons';
 import { useToggle } from 'react-use';
+import Image from 'next/image';
 
 interface Props extends React.ComponentPropsWithoutRef<'input'> {
   error?: FieldError;
@@ -41,7 +42,8 @@ export const Input = React.forwardRef(function Input(
             className="p-4 border-none select-none outline-none"
             type="submit"
           >
-            <img
+            <Image
+              fill
               className="w-4 h-4"
               src="/home/social-arrow-right.svg"
               alt=""

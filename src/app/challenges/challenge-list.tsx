@@ -2,6 +2,7 @@ import { Aspect } from '@/components/aspect';
 import { Challenge } from '@/services/types';
 import { formatMMMDDYYYY } from '@/utils/date';
 import { unsplash } from '@/utils/unsplash';
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface ChallengeListProps {
@@ -29,7 +30,8 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
               <div className="w-full lg:w-1/3 flex lg:justify-end">
                 <div className="w-48 rounded overflow-hidden ">
                   <Aspect ratio={5 / 2}>
-                    <img
+                    <Image
+                      fill
                       src={unsplash()}
                       alt="crypto"
                       className="object-cover w-full h-full"

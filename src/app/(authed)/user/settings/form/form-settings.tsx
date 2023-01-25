@@ -31,7 +31,7 @@ export const FormUserSettings = ({ data, className }: Props) => {
     defaultValues: data?.userProfile,
   });
 
-  const onSubmit = useCallback((submitData: FieldValues) => {
+  const onSubmit = (submitData: FieldValues) => {
     showLoading();
     submitUpdateUserProfile({
       ...submitData,
@@ -49,8 +49,7 @@ export const FormUserSettings = ({ data, className }: Props) => {
       .finally(() => {
         dismissLoading();
       });
-  }, []);
-  console.log(register('userName', { required: 'Username is required.' }));
+  };
   return (
     <form
       method="post"

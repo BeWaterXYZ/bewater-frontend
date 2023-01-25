@@ -16,7 +16,8 @@ export function useRequireAuthed() {
       dismissLoading();
       router.goToConnectWallet();
     }
-  }, [isAuthed, router]);
+    // eslint-disable-next-line
+  }, []);
 
   return isAuthed;
 }

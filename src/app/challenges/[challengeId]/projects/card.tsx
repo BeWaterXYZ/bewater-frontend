@@ -1,4 +1,5 @@
 import { Aspect } from '@/components/aspect';
+import Image from 'next/image';
 
 export function Card() {
   let url =
@@ -6,7 +7,7 @@ export function Card() {
   return (
     <div>
       <Aspect ratio={4 / 3}>
-        <img src={url} alt="crypto" className="object-cover w-full h-full" />
+        <Image fill src={url} alt="crypto" className="object-cover" />
       </Aspect>
       <div className="p-4 bg-white/5 border-l border-r border-b border-[#1E293B]">
         <h2 className="heading-6">Awesome DeFi Idea</h2>
