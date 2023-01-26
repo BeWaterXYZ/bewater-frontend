@@ -12,10 +12,13 @@ export function NavItem({ item, underline = false }: NavItemProps) {
   return (
     <Link
       href={item.path ?? '/'}
-      className={clsx(' flex items-center h-full body-2 outline-none py-2', {
-        'text-day [text-shadow:0_0_10px_theme(colors.day)]': item.active,
-        'border-b-2 border-day': item.active && underline,
-      })}
+      className={clsx(
+        ' flex items-center h-full body-2 font-bold outline-none py-2',
+        {
+          'text-day [text-shadow:0_0_10px_theme(colors.day)]': item.active,
+          'border-b-2 border-day': item.active && underline,
+        },
+      )}
     >
       {item.label}
     </Link>
