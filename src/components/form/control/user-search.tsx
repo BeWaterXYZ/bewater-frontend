@@ -27,8 +27,10 @@ const Option = (props: OptionProps<UserProfile>) => {
           />
         </div>
         <div className="flex flex-col justify-around">
-          <div className="body-5 ">{data.fullName ?? data.userName}</div>
-          <div className="body-5  text-grey">@{data.userName}</div>
+          <div className="body-5 text-grey-400">
+            {data.fullName ?? data.userName}
+          </div>
+          <div className="body-5 text-grey-600">@{data.userName}</div>
         </div>
       </div>
     </components.Option>
@@ -59,7 +61,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
   const id = useId();
   const styles: ClassNamesConfig<UserProfile> = {
     control: ({ isFocused }) => {
-      return clsx('control !p-0 !flex !shadow-none ', {
+      return clsx('control !p-0 !flex !shadow-none', {
         error: error,
         '!border-day hover:!border-day': isFocused,
       });
@@ -74,7 +76,10 @@ export const UserSearch = React.forwardRef(function UserSearch_(
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
-        <label className="block body-3 py-1 text-grey font-bold " htmlFor={id}>
+        <label
+          className="block body-3 py-1 text-grey-500 font-bold"
+          htmlFor={id}
+        >
           {label}
           {required && ' *'}
         </label>

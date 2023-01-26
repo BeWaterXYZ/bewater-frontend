@@ -20,7 +20,7 @@ export default async function Page({ params }: any) {
     <div>
       <div className="my-4">
         <Link
-          className="body-3 text-grey"
+          className="body-3 text-grey-400"
           href={`/challenges/${challengeId}/teams`}
         >
           {'< Team List'}
@@ -57,7 +57,7 @@ export default async function Page({ params }: any) {
       </div>
       <div className="mb-8">
         <div className="mb-8">
-          <p className="body-3 text-grey font-bold my-4"> Team Leader</p>
+          <p className="body-3 text-grey-500 font-bold my-4"> Team Leader</p>
 
           <div className="flex my-4">
             {leaders.map((member) => (
@@ -67,7 +67,7 @@ export default async function Page({ params }: any) {
         </div>
 
         <div>
-          <p className="body-3 text-grey font-bold my-4"> Members</p>
+          <p className="body-3 text-grey-500 font-bold my-4"> Members</p>
           <div className="flex my-4 gap-3 flex-wrap">
             {members.map((member) => (
               <TeamMember key={member.id} member={member} />
@@ -77,19 +77,19 @@ export default async function Page({ params }: any) {
       </div>
 
       <div className="mb-16">
-        <p className="body-3 text-grey font-bold "> Project Overview</p>
+        <p className="body-3 text-grey-500 font-bold"> Project Overview</p>
         <div className="flex items-center py-2">
           <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
           {team.project.tags.map((tag) => (
             <span
               key={tag}
-              className="mono-4 border rounded p-[1px] m-1  uppercase px-1 text-[#CBD5E1] border-[#94A3B8]"
+              className="mono-4 border rounded p-[1px] m-1 uppercase px-1 text-grey-300 border-grey-400"
             >
               {tag}
             </span>
           ))}
         </div>
-        <p className="body-4 text-[#CBD5E1]">{team.project.description}</p>
+        <p className="body-4 text-grey-300">{team.project.description}</p>
       </div>
     </div>
   );

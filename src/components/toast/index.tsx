@@ -39,17 +39,17 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
                 <Toast.Title className="body-3 font-bold">
                   {toast.title}
                 </Toast.Title>
-                <Toast.Description className="body-4 text-grey">
+                <Toast.Description className="body-4 text-grey-400">
                   {toast.description}
                 </Toast.Description>
               </div>
               <div className="w-20">
                 <Toast.Close>
                   <button
-                    className="absolute z-10 top-4 right-4 rounded-full  p-1 "
+                    className="absolute z-10 top-4 right-4 rounded-full p-1"
                     aria-label="Close"
                   >
-                    <Cross2Icon className=" text-grey" />
+                    <Cross2Icon className="text-grey-400" />
                   </button>
                 </Toast.Close>
               </div>

@@ -34,7 +34,7 @@ export default async function ChallengeIntro({ params }: any) {
               >
                 <div className="flex-1">
                   <p className="body-3 py-2">{award.awardName}</p>
-                  <div className="flex justify-between body-4 text-grey">
+                  <div className="flex justify-between body-4 text-grey-400">
                     <p>{formatMoney(award.amount)}</p>
                     <p>x {award.count}</p>
                   </div>
@@ -49,7 +49,7 @@ export default async function ChallengeIntro({ params }: any) {
               {sponsorships.map((sponsorship, index) => (
                 <div
                   key={sponsorship.id}
-                  className={clsx('border border-grey', {
+                  className={clsx('border border-grey-400', {
                     'col-span-2': index === 0,
                   })}
                 >
@@ -65,7 +65,7 @@ export default async function ChallengeIntro({ params }: any) {
                     className={clsx('flex justify-center items-end h-6', {
                       'bg-gradient-to-r from-[#F62584] to-[#480CA7]':
                         index === 0,
-                      'bg-grey': index !== 0,
+                      'bg-grey-400': index !== 0,
                     })}
                   >
                     <div className="body-3">
