@@ -31,7 +31,7 @@ export default function HomeWhat() {
       >
         {contents.map((content, i) => (
           <div
-            className="w-full xl:w-[376px] p-[22px] bg-white/5  hover:bg-white/[15] border border-white/10 rounded"
+            className="w-full xl:w-[376px] p-[22px] bg-white/5 hover:bg-white/[0.15] border border-white/10 rounded"
             key={content.title}
           >
             <div className="w-full h-[219px] bg-placeholder">Placeholder</div>

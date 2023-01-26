@@ -27,7 +27,6 @@ module.exports = {
         grey: '#64748B',
         placeholder: '#1A1B33',
       },
-
       gridTemplateColumns: {
         300: 'repeat(auto-fit, minmax(300px, 1fr))',
         100: 'repeat(auto-fit, minmax(100px, 1fr))',

@@ -3,24 +3,28 @@ import Image from 'next/image';
 
 const logos = [
   {
-    name: 'Google',
-    url: '/home/partner-google.svg',
+    name: 'abcde',
+    url: '/home/partner-abcde.svg',
+    w: 185.12,
+    h: 64,
   },
   {
-    name: 'Netflix',
-    url: '/home/partner-netflix.svg',
+    name: 'metatrust-labs',
+    url: '/home/partner-metatrust-labs.svg',
+    w: 269.81,
+    h: 56,
   },
   {
-    name: 'Dropbox',
-    url: '/home/partner-dropbox.svg',
+    name: 'scalingx',
+    url: '/home/partner-scalingx.svg',
+    w: 219,
+    h: 48,
   },
   {
-    name: 'Spotify',
-    url: '/home/partner-spotify.svg',
-  },
-  {
-    name: 'Slack',
-    url: '/home/partner-slack.svg',
+    name: 'contentos',
+    url: '/home/partner-contentos.svg',
+    w: 201.52,
+    h: 44,
   },
 ];
 
@@ -33,15 +37,17 @@ export default function HomePartner() {
       <div className="heading-6 opacity-30 pb-5 text-center">
         Envision The Future With Our Valued Partners
       </div>
-      <div className="w-full flex flex-row justify-around flex-wrap gap-8">
+      <div className="w-full flex flex-row flex-wrap justify-center gap-10">
         {logos.map((logo, i) => (
           <div
-            className="w-[178px] h-[90px] flex justify-center items-center relative"
+            // height of the container should be the largest one of the logos
+            className="h-[64px] flex justify-center items-center relative"
             key={logo.name}
           >
             <Image
-              fill
-              className="!h-8 object-contain"
+              width={logo.w}
+              height={logo.h}
+              className="object-contain"
               src={logo.url}
               alt={logo.name}
             />
