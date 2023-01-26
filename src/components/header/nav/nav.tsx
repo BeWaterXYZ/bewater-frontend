@@ -8,15 +8,14 @@ import { MenuItemType } from '../links';
 
 type NavItemProps = { item: MenuItemType; underline?: boolean };
 
-export function NavItem({ item, underline = false }: NavItemProps) {
+export function NavItem({ item }: NavItemProps) {
   return (
     <Link
       href={item.path ?? '/'}
       className={clsx(
         ' flex items-center h-full body-2 font-bold outline-none py-2',
         {
-          'text-day [text-shadow:0_0_10px_theme(colors.day)]': item.active,
-          'border-b-2 border-day': item.active && underline,
+          'text-day [text-shadow:0_0_6px_theme(colors.day)]': item.active,
         },
       )}
     >
@@ -44,6 +43,7 @@ export const NavImpl = ({ items }: NavImplProps) => {
     </ul>
   );
 };
+
 export const Nav = () => {
   const segments = useSelectedLayoutSegments();
 
