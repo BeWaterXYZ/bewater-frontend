@@ -22,6 +22,7 @@ export type Inputs = z.infer<typeof schema>;
 
 export function useTeamJoinForm() {
   return useForm<Inputs>({
+    mode: 'onBlur',
     resolver: zodResolver(schema),
     defaultValues: {
       roles: [],
@@ -97,7 +98,6 @@ export default function TeamJoinDialog({
           options={RoleSetOptions}
           error={errors['roles']}
           control={control}
-          isMulti
           {...register('roles')}
         />
         <TextArea

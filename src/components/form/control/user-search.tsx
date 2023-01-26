@@ -12,12 +12,26 @@ import {
 } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
-  label?: string;
-  name: string;
-  error?: FieldError;
-  control: any;
-}
+const Option = (props: OptionProps<UserProfile>) => {
+  let { data } = props;
+  return (
+    <components.Option {...props}>
+      <div className="flex gap-2">
+        <div>
+          <Avatar
+            size="small"
+            src={data.avatarURI}
+            walletAddress={data.walletAddress}
+          />
+        </div>
+        <div className="flex flex-col justify-around">
+          <div className="body-5 ">{data.fullName ?? data.userName}</div>
+          <div className="body-5  text-grey">@{data.userName}</div>
+        </div>
+      </div>
+    </components.Option>
+  );
+};
 
 const promiseOptions = (inputValue: string) =>
   new Promise<UserProfile[]>((resolve) => {
@@ -45,28 +59,14 @@ const promiseOptions = (inputValue: string) =>
     }, 1000);
   });
 
-const Option = (props: OptionProps<UserProfile>) => {
-  let { data } = props;
-  return (
-    <components.Option {...props}>
-      <div className="flex gap-2">
-        <div>
-          <Avatar
-            size="small"
-            src={data.avatarURI}
-            walletAddress={data.walletAddress}
-          />
-        </div>
-        <div className="flex flex-col justify-around">
-          <div className="body-5 ">{data.fullName ?? data.userName}</div>
-          <div className="body-5  text-grey">@{data.userName}</div>
-        </div>
-      </div>
-    </components.Option>
-  );
-};
-
 let cacheOptions: UserProfile[] = [];
+
+interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
+  label?: string;
+  name: string;
+  error?: FieldError;
+  control: any;
+}
 
 export const UserSearch = React.forwardRef(function UserSearch_(
   props: UserSearchProps,
@@ -101,7 +101,6 @@ export const UserSearch = React.forwardRef(function UserSearch_(
         name={name}
         control={control}
         render={({ field }) => {
-          console.log({ field });
           return (
             <AsyncSelect
               id={id}
@@ -116,7 +115,6 @@ export const UserSearch = React.forwardRef(function UserSearch_(
                 val_ && field.onChange(val_.userId);
               }}
               loadOptions={promiseOptions}
-              defaultOptions
               cacheOptions
               components={{
                 Option,

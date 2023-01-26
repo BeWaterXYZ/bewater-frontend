@@ -82,7 +82,6 @@ export function InviteMember({ team, close }: InviteMemberProps) {
         <Select
           label="You’ll invite him/her to play "
           required
-          isMulti
           options={RoleSetOptions}
           error={errors['role']}
           control={control}

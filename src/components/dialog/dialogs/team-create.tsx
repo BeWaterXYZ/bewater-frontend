@@ -193,7 +193,6 @@ export default function TeamCreateDialog({
         <Select
           label="Project Tag"
           required
-          isMulti
           options={ProjectTagSetOptions}
           error={errors['tags']}
           control={control}
@@ -209,7 +208,6 @@ export default function TeamCreateDialog({
           <Select
             label="You’re going to play"
             required
-            isMulti
             options={RoleSetOptions}
             error={errors['role']}
             control={control}
@@ -222,7 +220,6 @@ export default function TeamCreateDialog({
           options={RoleSetOptions}
           error={errors['roles']}
           control={control}
-          isMulti
           {...register('roles')}
         />
 
@@ -231,7 +228,6 @@ export default function TeamCreateDialog({
           options={SkillSetOptions}
           error={errors['skills']}
           control={control}
-          isMulti
           {...register('skills')}
         />
         <div className="flex justify-between">

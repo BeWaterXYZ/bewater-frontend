@@ -11,24 +11,13 @@ interface SelectProps<T extends string>
   error?: FieldError | Merge<FieldError, (FieldError | undefined)[]>;
   control: any;
   options: OptionItem<T>[];
-  isMulti?: boolean;
 }
 
 export const Select = React.forwardRef(function Select_<T extends string>(
   props: SelectProps<T>,
   ref: ForwardedRef<HTMLSelectElement>,
 ) {
-  const {
-    isMulti = false,
-    options,
-    label,
-    name,
-    error,
-    className,
-    required,
-    control,
-    value,
-  } = props;
+  const { options, label, name, error, className, required, control } = props;
   const id = useId();
   const styles: ClassNamesConfig<OptionItem<T>> = {
     control: ({ isFocused }) => {
@@ -58,34 +47,21 @@ export const Select = React.forwardRef(function Select_<T extends string>(
       <Controller
         name={name}
         control={control}
-        render={({ field }) =>
-          isMulti ? (
-            <RSelect
-              id={id}
-              isMulti
-              classNames={styles}
-              options={options}
-              noOptionsMessage={() => 'no options'}
-              value={options.filter((c) =>
-                (field.value ?? []).includes(c.value),
-              )}
-              onChange={(val) =>
-                val &&
-                field.onChange(Array.from(val.values()).map((d) => d.value))
-              }
-            />
-          ) : (
-            <RSelect
-              id={id}
-              isMulti={false}
-              classNames={styles}
-              options={options}
-              noOptionsMessage={() => 'no options'}
-              value={options.find((c) => c.value === value)}
-              onChange={(val) => val && field.onChange(val.value)}
-            />
-          )
-        }
+        render={({ field }) => (
+          <RSelect
+            id={id}
+            isMulti={true}
+            classNames={styles}
+            options={options}
+            noOptionsMessage={() => 'no options'}
+            value={options.filter((c) => (field.value ?? []).includes(c.value))}
+            onChange={(val) =>
+              val &&
+              field.onChange(Array.from(val.values()).map((d) => d.value))
+            }
+            onBlur={field.onBlur}
+          />
+        )}
       />
       <div
         className={clsx('whitespace-nowrap body-4 py-1 text-danger', {
