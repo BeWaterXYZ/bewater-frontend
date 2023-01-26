@@ -7,7 +7,7 @@ interface Props extends React.ComponentPropsWithoutRef<'input'> {
   error?: FieldError;
 }
 
-export const Input = React.forwardRef(function Input(
+export const Input = React.forwardRef(function Input_(
   props: Props,
   ref: React.ForwardedRef<HTMLInputElement>,
 ) {

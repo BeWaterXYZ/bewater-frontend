@@ -14,7 +14,7 @@ interface SelectProps<T extends string>
   isMulti?: boolean;
 }
 
-export const Select = React.forwardRef(function TextArea<T extends string>(
+export const Select = React.forwardRef(function Select_<T extends string>(
   props: SelectProps<T>,
   ref: ForwardedRef<HTMLSelectElement>,
 ) {
@@ -65,6 +65,7 @@ export const Select = React.forwardRef(function TextArea<T extends string>(
               isMulti
               classNames={styles}
               options={options}
+              noOptionsMessage={() => 'no options'}
               value={options.filter((c) =>
                 (field.value ?? []).includes(c.value),
               )}
@@ -79,6 +80,7 @@ export const Select = React.forwardRef(function TextArea<T extends string>(
               isMulti={false}
               classNames={styles}
               options={options}
+              noOptionsMessage={() => 'no options'}
               value={options.find((c) => c.value === value)}
               onChange={(val) => val && field.onChange(val.value)}
             />

@@ -1,4 +1,5 @@
 import { Input, Select, TextArea } from '@/components/form/control';
+import { UserSearch } from '@/components/form/control/user-search';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
 import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
@@ -71,12 +72,13 @@ export function InviteMember({ team, close }: InviteMemberProps) {
   return (
     <div>
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
-        <Input
+        <UserSearch
           label="Name"
+          required
           error={errors['user']}
-          placeholder="user id"
+          control={control}
           {...register('user')}
-        ></Input>
+        />
         <Select
           label="You’ll invite him/her to play "
           required
