@@ -22,7 +22,7 @@ module.exports = {
       colors: {
         night: '#04051B',
         midnight: '#1E293B',
-        day: '#00CCCC',
+        day: '#00ffff',
         danger: '#F43F5E',
         grey: '#64748B',
         placeholder: '#1A1B33',

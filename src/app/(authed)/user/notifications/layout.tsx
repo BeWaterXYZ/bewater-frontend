@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="flex-1 lg:border-r  border-r-white/20 pr-8">
           <nav className=" h-full w-full  ">
             <Link
-              href="/user/notification/requests"
+              href="/user/notifications/requests/received"
               className="body-3 p-4 bg-[#0F172A] inline-block w-full"
             >
               Invitation & Application

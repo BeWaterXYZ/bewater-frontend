@@ -13,7 +13,7 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
     <ul>
       {challenges.map((challenge) => (
         <li key={challenge.id} className="my-2">
-          <Link href={`/challenges/${challenge.id}/intro`}>
+          <Link href={`/challenges/${challenge.id}`}>
             <div className="flex  flex-wrap  py-8 ">
               <div className="w-full lg:w-1/3  flex flex-col justify-between ">
                 <div className="body-2">
