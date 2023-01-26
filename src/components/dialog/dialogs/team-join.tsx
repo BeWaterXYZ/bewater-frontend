@@ -89,7 +89,7 @@ export default function TeamJoinDialog({
       <p className="heading-6">Request to Join The Team</p>
 
       <p className="body-3 text-grey my-1  mt-4 font-bold">Team Name</p>
-      <p className="body-3 my-1">Dream team</p>
+      <p className="body-3 my-1">{team.name}</p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
         <Select
@@ -100,7 +100,6 @@ export default function TeamJoinDialog({
           isMulti
           {...register('roles')}
         />
-
         <TextArea
           label="Include a message"
           error={errors['message']}

@@ -1,12 +1,17 @@
-import React, { ForwardedRef, useId } from 'react';
-import clsx from 'clsx';
-import type { FieldError, Merge } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
-import RSelect, { ClassNamesConfig } from 'react-select';
-import AsyncSelect from 'react-select/async';
-import { OptionItem } from '@/constants/options/types';
+import { Avatar } from '@/components/avatar';
 import { UserProfile } from '@/services/types';
-import { getMockUserProfile } from '../../../__mock__/user';
+import clsx from 'clsx';
+import React, { ForwardedRef, useId } from 'react';
+import type { FieldError } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
+import {
+  ClassNamesConfig,
+  components,
+  OptionProps,
+  SingleValue,
+} from 'react-select';
+import AsyncSelect from 'react-select/async';
+
 interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
   label?: string;
   name: string;
@@ -17,9 +22,51 @@ interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
 const promiseOptions = (inputValue: string) =>
   new Promise<UserProfile[]>((resolve) => {
     setTimeout(() => {
-      resolve([getMockUserProfile('andy'), getMockUserProfile('bob')]);
+      let data = [
+        {
+          userId: 'userid-1',
+          walletAddress: '0x043uasfdnk1498143asfk1234',
+          email: 'bewater-user@gmail.com',
+          userName: 'bewater-user',
+          fullName: 'Andy Bewater',
+          label: 'Andy Bewater',
+        },
+        {
+          userId: 'userid-2',
+          walletAddress: '0x043uasfdnk1498143asfk1234',
+          email: 'bewater-user@gmail.com',
+          userName: 'bewater-user',
+          fullName: 'Bob Bewater',
+          label: 'Bob Bewater',
+        },
+      ];
+      cacheOptions = data;
+      resolve(data);
     }, 1000);
   });
+
+const Option = (props: OptionProps<UserProfile>) => {
+  let { data } = props;
+  return (
+    <components.Option {...props}>
+      <div className="flex gap-2">
+        <div>
+          <Avatar
+            size="small"
+            src={data.avatarURI}
+            walletAddress={data.walletAddress}
+          />
+        </div>
+        <div className="flex flex-col justify-around">
+          <div className="body-5 ">{data.fullName ?? data.userName}</div>
+          <div className="body-5  text-grey">@{data.userName}</div>
+        </div>
+      </div>
+    </components.Option>
+  );
+};
+
+let cacheOptions: UserProfile[] = [];
 
 export const UserSearch = React.forwardRef(function UserSearch_(
   props: UserSearchProps,
@@ -37,9 +84,9 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
     singleValue: () => 'body-4',
-
-    menu: () => '!bg-night',
-    option: () => '!text-white hover:!bg-day !bg-transparent',
+    menu: () => '!bg-[#0F1021] !border !border-midnight ',
+    option: () => '!text-white hover:!bg-midnight !bg-transparent',
+    input: () => '!text-white',
   };
   return (
     <div className={clsx('block pb-2', className)}>
@@ -53,22 +100,30 @@ export const UserSearch = React.forwardRef(function UserSearch_(
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <AsyncSelect
-            id={id}
-            isMulti={false}
-            classNames={styles}
-            placeholder="Search username, email or wallet address"
-            loadingMessage={() => 'loading'}
-            noOptionsMessage={() => 'no options'}
-            onChange={(val) => {
-              console.log({ val });
-              val && field.onChange(val.userId);
-            }}
-            components={{}}
-            loadOptions={promiseOptions}
-          />
-        )}
+        render={({ field }) => {
+          console.log({ field });
+          return (
+            <AsyncSelect
+              id={id}
+              isMulti={false}
+              classNames={styles}
+              placeholder="Search username, email or wallet address"
+              loadingMessage={() => 'searching'}
+              noOptionsMessage={() => 'no options'}
+              value={cacheOptions.find((op) => op.userId === field.value)}
+              onChange={(val) => {
+                let val_ = val as SingleValue<UserProfile>;
+                val_ && field.onChange(val_.userId);
+              }}
+              loadOptions={promiseOptions}
+              defaultOptions
+              cacheOptions
+              components={{
+                Option,
+              }}
+            />
+          );
+        }}
       />
       <div
         className={clsx('whitespace-nowrap body-4 py-1 text-danger', {

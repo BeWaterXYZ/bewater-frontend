@@ -1,8 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { getMockUserProfile } from '@/__mock__/user';
-
 import { FormUserSettings } from './form-settings';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -27,6 +25,12 @@ Normal.args = {
     status: 200,
     error: [],
     userExist: true,
-    userProfile: getMockUserProfile('testUserId'),
+    userProfile: {
+      userId: 'userid-1',
+      walletAddress: '0x043uasfdnk1498143asfk1234',
+      email: 'bewater-user@gmail.com',
+      userName: 'bewater-user',
+      fullName: 'Andy Bewater',
+    },
   },
 };

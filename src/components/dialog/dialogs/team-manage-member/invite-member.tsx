@@ -23,7 +23,7 @@ export function useTeamCreateForm() {
   return useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      user: 'ef43dd28-d010-4937-be55-e14d4390095b',
+      user: '',
       message: '',
       role: [],
     },
