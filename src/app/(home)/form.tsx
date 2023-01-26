@@ -83,7 +83,7 @@ export default function HomeForm() {
   return (
     <form
       className={clsx(
-        'w-full p-6 bg-card bg-white/5 select-none',
+        'w-full p-6  bg-white/5 select-none',
         'border border-solid border-white/10 rounded-[20px]',
       )}
       method="post"

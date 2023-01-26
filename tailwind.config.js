@@ -27,15 +27,7 @@ module.exports = {
         grey: '#64748B',
         placeholder: '#1A1B33',
       },
-      opacity: {
-        15: '0.15',
-      },
-      backgroundImage: {
-        card: 'linear-gradient(0deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05))',
-      },
-      boxShadow: {
-        border: '0px 0px 4px #E4E4E4',
-      },
+
       gridTemplateColumns: {
         300: 'repeat(auto-fit, minmax(300px, 1fr))',
         100: 'repeat(auto-fit, minmax(100px, 1fr))',

@@ -20,7 +20,7 @@ const schema = z
 
 export type Inputs = z.infer<typeof schema>;
 
-export function useTeamCreateForm() {
+export function useTeamJoinForm() {
   return useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -63,7 +63,7 @@ export default function TeamJoinDialog({
         addToast({
           type: 'warning',
           title: 'Request not sent!',
-          description: 'You have pending requests',
+          description: 'You are already in a team',
         });
       }
     } catch (err) {
@@ -82,7 +82,7 @@ export default function TeamJoinDialog({
     register,
     handleSubmit,
     formState: { errors },
-  } = useTeamCreateForm();
+  } = useTeamJoinForm();
 
   return (
     <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">

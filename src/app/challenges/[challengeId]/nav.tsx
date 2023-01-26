@@ -6,28 +6,33 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 let links = [
   {
     label: 'Introduction',
-    path: '/intro',
+    path: '/',
+    segment: '(intro)',
   },
   {
     label: 'Teams',
     path: '/teams',
+    segment: 'teams',
   },
   {
     label: 'Projects',
     path: '/projects',
+    segment: 'projects',
   },
   {
     label: 'Result',
     path: '/result',
+    segment: 'result',
   },
 ];
 
 export function ChallengeNav({ challengeId }: { challengeId: string }) {
   let segment = useSelectedLayoutSegment();
+  console.log({ segment });
   return (
     <nav className="w-full body-3 flex justify-center border-b border-gray-600 mb-4">
       {links.map((link) => {
-        let isAcitve = segment && link.path.includes(segment);
+        let isAcitve = segment && link.segment === segment;
 
         return (
           <Link

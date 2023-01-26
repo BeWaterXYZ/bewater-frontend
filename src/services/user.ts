@@ -15,7 +15,7 @@ export interface CreateUserProfileResponse extends APIResponse {
 }
 
 export interface UpdateUserProfileResponse extends APIResponse {
-  userProfile: UserProfile | undefined;
+  userProfile?: UserProfile;
 }
 
 export function useFetchUser(userId?: UserID) {
@@ -58,7 +58,7 @@ export async function submitUpdateUserProfile(
     Partial<Omit<UserProfile, 'userId'>>,
 ) {
   const { data } = await agentAuthed.put<UpdateUserProfileResponse>(
-    `/user/${userProfile.userId}`,
+    `/user`,
     userProfile,
   );
   return data;
