@@ -22,7 +22,7 @@ export function Nav() {
   }));
 
   return (
-    <nav className="flex gap-4 border-b border-b-white/20 mb-4">
+    <nav className="flex gap-4 border-b border-b-white/20 mb-4  bg-night">
       {items.map((link) => (
         <NavItem item={link} key={link.path} underline />
       ))}

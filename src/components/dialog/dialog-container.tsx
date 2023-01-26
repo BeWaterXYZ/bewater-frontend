@@ -18,6 +18,7 @@ const dialogMaps: DialogMap = {
   team_join: dynamic(() => import('./dialogs/team-join')),
   team_create: dynamic(() => import('./dialogs/team-create')),
   team_manage_member: dynamic(() => import('./dialogs/team-manage-member')),
+  team_invite_member: dynamic(() => import('./dialogs/team-invite-member')),
 };
 
 export function DialogContainer({

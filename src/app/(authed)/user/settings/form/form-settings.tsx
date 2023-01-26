@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import { useCallback } from 'react';
 
 import {
   GetUserProfileByIdResponse,
@@ -10,9 +9,30 @@ import { User } from '@/stores/auth';
 import type { FieldValues } from 'react-hook-form';
 import { Input, TextArea } from '@/components/form/control';
 import { SocialLink } from '@/components/form/social-link';
-import { useSettingsForm } from './use-settings-form';
 import { useToastStore } from '@/components/toast/store';
 import { useLoadingStoreAction } from '@/components/loading/store';
+
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+
+const schema = z
+  .object({
+    email: z.string().email(),
+    userName: z.string().min(3, { message: 'At least 3 characters' }),
+    bio: z.string().optional(),
+    fullName: z.string().min(3, { message: 'At least 3 characters' }),
+  })
+  .required();
+
+export type Inputs = z.infer<typeof schema>;
+
+export function useSettingsForm(config: Parameters<typeof useForm<Inputs>>[0]) {
+  return useForm<Inputs>({
+    resolver: zodResolver(schema),
+    ...config,
+  });
+}
 
 interface Props {
   user: User;
@@ -79,7 +99,6 @@ export const FormUserSettings = ({ data, className }: Props) => {
         label="Bio"
         rows={3}
         placeholder="Content"
-        required
         error={errors['bio']}
         {...register('bio', { required: 'Bio is required.' })}
       />

@@ -8,7 +8,8 @@ import { Team } from '@/services/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
+import { Dialogs, useDialogStore } from '../../store';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
 const schema = z.object({
   user: z.string(),
   role: z
@@ -30,17 +31,22 @@ export function useTeamCreateForm() {
   });
 }
 
-interface InviteMemberProps {
-  team: Team;
+interface InviteMemberDialogProps {
+  data: NonNullable<Dialogs['team_invite_member']>;
   close: () => void;
 }
-export function InviteMember({ team, close }: InviteMemberProps) {
+export default function InviteMemberDialog({
+  data,
+  close,
+}: InviteMemberDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
+  let showDialog = useDialogStore((s) => s.open);
+
   const addToast = useToastStore((s) => s.add);
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
-      const data = await sendGroupingRequest(team.id, {
+      const res = await sendGroupingRequest(data.id, {
         type: 'INVITATION',
         recipientId: formData.user,
         teamRole: formData.role[0],
@@ -69,8 +75,20 @@ export function InviteMember({ team, close }: InviteMemberProps) {
     handleSubmit,
     formState: { errors },
   } = useTeamCreateForm();
+
+  const gotoManangeMember = () => {
+    showDialog('team_manage_member', data);
+    close();
+  };
   return (
-    <div>
+    <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
+      <div>
+        <button className="heading-6" onClick={gotoManangeMember}>
+          <ArrowLeftIcon className="inline" width={20} height={20} /> Invite a
+          new member
+        </button>
+      </div>
+
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
         <UserSearch
           label="Name"

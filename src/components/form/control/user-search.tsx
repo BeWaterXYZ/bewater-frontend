@@ -1,5 +1,7 @@
 import { Avatar } from '@/components/avatar';
 import { UserProfile } from '@/services/types';
+import { searchUsers } from '@/services/user';
+import { Atomic_Age } from '@next/font/google';
 import clsx from 'clsx';
 import React, { ForwardedRef, useId } from 'react';
 import type { FieldError } from 'react-hook-form';
@@ -33,31 +35,12 @@ const Option = (props: OptionProps<UserProfile>) => {
   );
 };
 
-const promiseOptions = (inputValue: string) =>
-  new Promise<UserProfile[]>((resolve) => {
-    setTimeout(() => {
-      let data = [
-        {
-          userId: 'userid-1',
-          walletAddress: '0x043uasfdnk1498143asfk1234',
-          email: 'bewater-user@gmail.com',
-          userName: 'bewater-user',
-          fullName: 'Andy Bewater',
-          label: 'Andy Bewater',
-        },
-        {
-          userId: 'userid-2',
-          walletAddress: '0x043uasfdnk1498143asfk1234',
-          email: 'bewater-user@gmail.com',
-          userName: 'bewater-user',
-          fullName: 'Bob Bewater',
-          label: 'Bob Bewater',
-        },
-      ];
-      cacheOptions = data;
-      resolve(data);
-    }, 1000);
-  });
+const promiseOptions = async (inputValue: string) => {
+  let data = await searchUsers(inputValue);
+  data = data.map((d) => ({ ...d, label: d.fullName }));
+  cacheOptions = data;
+  return data;
+};
 
 let cacheOptions: UserProfile[] = [];
 
@@ -83,7 +66,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
-    singleValue: () => 'body-4',
+    singleValue: () => 'body-4 text-white',
     menu: () => '!bg-[#0F1021] !border !border-midnight ',
     option: () => '!text-white hover:!bg-midnight !bg-transparent',
     input: () => '!text-white',

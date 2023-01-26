@@ -7,9 +7,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         Notification Center
       </p>
 
-      <div className="flex gap-6 flex-wrap">
-        <div className="flex-1 lg:border-r  border-r-white/20 pr-8">
-          <nav className=" h-full w-full  ">
+      <div className="flex gap-6 flex-wrap  ">
+        <div className="w-full lg:w-[240px] lg:border-r  border-r-white/20 pr-0 lg:pr-8  sticky top-[86px] ">
+          <nav className=" w-full  lg:sticky  lg:top-[72px] ">
             <Link
               href="/user/notifications/requests/received"
               className="body-3 p-4 bg-[#0F172A] inline-block w-full"
@@ -18,7 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </Link>
           </nav>
         </div>
-        <div className="flex-1 lg:flex-[3]">{children}</div>
+        <div className="w-full lg:w-auto lg:flex-1 ">{children}</div>
       </div>
     </div>
   );

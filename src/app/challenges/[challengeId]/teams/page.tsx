@@ -49,7 +49,7 @@ export default function ChallengeTeams({ params }: any) {
               />
             </div>
             <div className="flex flex-col justify-around">
-              <p className="body-1 text-[#701A75]">
+              <p className="body-1 text-[#701A75] font-bold">
                 TEAM FORMATION WILL END IN
               </p>
               <p className="heading-5">

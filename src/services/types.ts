@@ -24,6 +24,7 @@ export type ChallengeID = string;
 export interface Challenge {
   id: ChallengeID;
   title: string;
+  hostName: string;
   description: string;
   requirements: string[];
   startTime: string;

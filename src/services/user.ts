@@ -63,3 +63,13 @@ export async function submitUpdateUserProfile(
   );
   return data;
 }
+
+export async function searchUsers(keyword: string) {
+  const { data } = await agentAuthed.get<{ users: UserProfile[] }>(
+    '/user/search',
+    {
+      params: { keyword },
+    },
+  );
+  return data.users ?? [];
+}

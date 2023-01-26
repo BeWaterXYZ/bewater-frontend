@@ -6,6 +6,7 @@ export type Dialogs = {
   team_join?: Team;
   team_create?: { challenge?: Challenge; team?: Team };
   team_manage_member?: Team;
+  team_invite_member?: Team;
 };
 
 type State = {

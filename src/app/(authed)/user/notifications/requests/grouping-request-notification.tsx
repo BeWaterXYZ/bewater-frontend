@@ -54,7 +54,7 @@ function getStatus(req: GroupingRequestFull, sentOrReceived: boolean) {
     case 'DECLINED':
       return sentOrReceived
         ? 'Your request has been declined'
-        : "You've accepted this declined ";
+        : "You've declined this request ";
     case 'REVOKED':
       return sentOrReceived
         ? 'Your request has been revoked'
