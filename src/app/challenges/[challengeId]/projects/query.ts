@@ -1,31 +1,28 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export function useQueryBuilder() {
-  const searchParams = useSearchParams();
+  const sp = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const maps: { [key: string]: string } = {};
-  searchParams.forEach((v, key) => {
-    maps[key] = v;
-  });
+  const usp = new URLSearchParams(sp.toString());
 
+  const isOn = (key: string, value: string) => {
+    let on = usp.get(key)?.split(',').includes(value);
+    return !!on;
+  };
+
+  const toggle = (key: string, value: string) => {
+    let vals = usp.get(key)?.split(',') ?? [];
+    if (vals?.includes(value)) {
+      usp.set(key, vals.filter((v) => v !== value).join(','));
+    } else {
+      usp.set(key, [...vals, value].join(','));
+    }
+
+    router.push(pathname + '?' + usp.toString());
+  };
   return {
-    isOn(key: string, value: string) {
-      return maps[key] === value;
-    },
-    toggle(key: string, value: string) {
-      if (maps[key] === value) {
-        delete maps[key];
-      } else {
-        maps[key] = value;
-      }
-      router.push(
-        pathname +
-          '?' +
-          Object.keys(maps)
-            .map((k) => `${k}=${maps[k]}`)
-            .join('&'),
-      );
-    },
+    isOn,
+    toggle,
   };
 }

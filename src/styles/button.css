@@ -1,6 +1,6 @@
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center h-9 body-3  px-4 border border-solid rounded-sm cursor-pointer w-auto  box-border hover:brightness-90 transition duration-[.15s] ease-out;
+    @apply whitespace-nowrap inline-flex items-center justify-center h-9 body-3  px-4 border border-solid rounded-sm cursor-pointer w-auto  box-border hover:brightness-90 transition duration-[.15s] ease-out;
   }
   .btn-primary {
     @apply border-day bg-day text-night;

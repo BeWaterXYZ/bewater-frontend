@@ -1,7 +1,7 @@
 import { FilterArea } from './filter-area';
 import { ProjectList } from './project-list';
 
-import { querySchema } from './type';
+import { querySchema } from '../search-param-schema';
 
 export default function ChallengeProjects({ params, searchParams }: any) {
   console.log('ChallengeProjects', { params, searchParams });

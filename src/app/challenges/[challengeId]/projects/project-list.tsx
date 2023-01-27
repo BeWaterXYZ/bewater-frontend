@@ -1,5 +1,5 @@
 import { Card } from './card';
-import { QueryType } from './type';
+import { QueryType } from '../search-param-schema';
 
 export function ProjectList({ query }: { query: QueryType }) {
   return (

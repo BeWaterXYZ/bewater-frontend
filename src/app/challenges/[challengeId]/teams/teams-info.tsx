@@ -15,7 +15,7 @@ export function ChallengeTeamsInfo({
   const team_active_len = teams.filter((t) => t.status === 'ACTIVE').length;
 
   return (
-    <div className="my-2 gap-4 flex justify-between flex-col lg:flex-row">
+    <div className="my-10  gap-10 flex justify-between flex-col lg:flex-row">
       <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#310D37] to-[#310d3700] border border-[#310D37]">
         <div>
           <Image
