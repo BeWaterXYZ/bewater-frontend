@@ -39,18 +39,18 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </div>
             <ul className="font-medium ">
               <li className="border-t p-4 py-2 border-midnight ">
-                <Link href="/user/profile" className="body-2">
+                <Link href="/profile" className="body-2">
                   Your Profile
                 </Link>
               </li>
               <li className="border-t p-4 py-2 border-midnight">
-                <Link href="/user/settings" className="body-2">
+                <Link href="/settings" className="body-2">
                   Account Settings
                 </Link>
               </li>
               <li className="border-t p-4 py-2 border-midnight ">
                 <Link
-                  href="/user/notifications/requests/received"
+                  href="/notifications/requests/received"
                   className="body-2"
                 >
                   Notifications

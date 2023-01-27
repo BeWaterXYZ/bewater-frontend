@@ -21,10 +21,10 @@ export const nav: MenuItemType[] = [
 export const user: MenuItemType[] = [
   {
     label: 'Your Profile',
-    path: '/user/profile',
+    path: '/profile',
   },
   {
     label: 'Account Settings',
-    path: '/user/settings',
+    path: '/settings',
   },
 ];

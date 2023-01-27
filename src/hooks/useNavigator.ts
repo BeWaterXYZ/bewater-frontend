@@ -8,11 +8,11 @@ import { ChallengeID, TeamID } from '@/services/types';
 export function useNavigator() {
   const router = useQueryAwareRouter();
   const goToUserProfile = useCallback(() => {
-    router.push('/user/profile');
+    router.push('/profile');
   }, [router]);
 
   const goToUserSettings = useCallback(() => {
-    router.push('/user/settings');
+    router.push('/settings');
   }, [router]);
 
   const goToConnectWallet = useCallback(() => {
@@ -20,7 +20,7 @@ export function useNavigator() {
   }, [router]);
 
   const goToWelcome = useCallback(() => {
-    router.push('/user/onboarding');
+    router.push('/onboarding');
   }, [router]);
 
   const goToExternal = useCallback((url: string) => {
@@ -28,7 +28,7 @@ export function useNavigator() {
   }, []);
 
   const gotoAfterConnect = useCallback(() => {
-    router.gotoRedirect('/user/settings');
+    router.gotoRedirect('/settings');
   }, [router]);
   const refresh = useCallback(() => {
     router.refresh();
