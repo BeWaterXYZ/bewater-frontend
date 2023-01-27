@@ -26,6 +26,9 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
     showLoading();
     submitCreateUserProfile({
       ...data,
+      // fix , todo
+      roles: [],
+      skills: [],
       userId: user.userId!,
       walletAddress: user.walletAddress!,
     })

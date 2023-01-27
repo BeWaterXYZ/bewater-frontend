@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 
-let links = [
+const links = [
   {
     label: 'Introduction',
     path: '/',
@@ -24,7 +24,7 @@ let links = [
     path: '/result',
     segment: 'result',
   },
-];
+] as const;
 
 export function ChallengeNav({ challengeId }: { challengeId: string }) {
   let segment = useSelectedLayoutSegment();

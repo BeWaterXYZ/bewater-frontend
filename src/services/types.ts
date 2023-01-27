@@ -12,9 +12,12 @@ export interface UserProfile {
   userId: UserID;
   email: string;
   walletAddress: string;
-  userName?: string | undefined;
-  avatarURI?: string | undefined;
-  fullName?: string | undefined;
+  userName?: string;
+  avatarURI?: string;
+  fullName?: string;
+  bio?: string;
+  roles: RoleUnion[];
+  skills: SkillUnion[];
 }
 
 /**

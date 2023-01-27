@@ -44,7 +44,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                 </Link>
               </li>
               <li className="border-t p-4 py-2 border-midnight">
-                <Link href="/settings" className="body-2">
+                <Link href="/settings/basic" className="body-2">
                   Account Settings
                 </Link>
               </li>

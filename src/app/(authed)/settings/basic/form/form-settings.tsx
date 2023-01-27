@@ -7,11 +7,11 @@ import {
 import { User } from '@/stores/auth';
 
 import type { FieldValues } from 'react-hook-form';
-import { Input, TextArea } from '@/components/form/control';
-import { SocialLink } from '@/components/form/social-link';
+import { Input, Select, TextArea } from '@/components/form/control';
 import { useToastStore } from '@/components/toast/store';
 import { useLoadingStoreAction } from '@/components/loading/store';
-
+import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
+import { SkillSetOptions, SkillSetScheme } from '@/constants/options/skill';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -22,6 +22,13 @@ const schema = z
     userName: z.string().min(3, { message: 'At least 3 characters' }),
     bio: z.string().optional(),
     fullName: z.string().min(3, { message: 'At least 3 characters' }),
+    roles: z
+      .array(RoleSetScheme)
+      .min(1, { message: 'choose at least one role' })
+      .max(5, { message: 'You can only choose 5 roles' }),
+    skills: z
+      .array(SkillSetScheme)
+      .max(10, { message: 'You can only choose 10 skills' }),
   })
   .required();
 
@@ -37,18 +44,18 @@ export function useSettingsForm(config: Parameters<typeof useForm<Inputs>>[0]) {
 interface Props {
   user: User;
   data: GetUserProfileByIdResponse;
-  className?: string;
 }
 
-export const FormUserSettings = ({ data, className }: Props) => {
+export const FormUserSettings = ({ data }: Props) => {
   const addToast = useToastStore((s) => s.add);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useSettingsForm({
-    defaultValues: data?.userProfile,
+    defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
   });
 
   const onSubmit = (submitData: FieldValues) => {
@@ -73,14 +80,9 @@ export const FormUserSettings = ({ data, className }: Props) => {
   return (
     <form
       method="post"
-      className={clsx('', className)}
+      className={clsx('mt-8')}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <p className="heading-6">Edit your profile</p>
-
-      <hr className="border-midnight my-6" />
-
-      <p className="body-2 text-gray-400/30 my-6">Basic Information</p>
       <Input
         label="Username"
         placeholder="Enter your username"
@@ -102,24 +104,21 @@ export const FormUserSettings = ({ data, className }: Props) => {
         error={errors['bio']}
         {...register('bio', { required: 'Bio is required.' })}
       />
-      <Input
-        name="address"
-        label="Wallet Address"
-        value={data?.userProfile?.walletAddress}
-        placeholder=""
-        readOnly
-        disabled
+      <Select
+        label="Roles "
+        options={RoleSetOptions}
+        error={errors['roles']}
+        control={control}
+        {...register('roles')}
       />
-      <Input
-        label="Email"
-        placeholder="Enter your email"
-        required
-        error={errors['email']}
-        {...register('email', { required: 'Email is required.' })}
+
+      <Select
+        label="Skill "
+        options={SkillSetOptions}
+        error={errors['skills']}
+        control={control}
+        {...register('skills')}
       />
-      {/* <SocialLink name="github" label="Github" />
-      <SocialLink name="discord" label="Discord" />
-      <SocialLink name="twitter" label="Twitter" /> */}
 
       <button className="btn btn-primary" type="submit">
         Save Changes
