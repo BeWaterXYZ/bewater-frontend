@@ -12,7 +12,7 @@ export function useNavigator() {
   }, [router]);
 
   const goToUserSettings = useCallback(() => {
-    router.push('/settings');
+    router.push('/settings/basic');
   }, [router]);
 
   const goToConnectWallet = useCallback(() => {
@@ -28,8 +28,9 @@ export function useNavigator() {
   }, []);
 
   const gotoAfterConnect = useCallback(() => {
-    router.gotoRedirect('/settings');
+    router.gotoRedirect('/settings/basic');
   }, [router]);
+
   const refresh = useCallback(() => {
     router.refresh();
   }, [router]);
