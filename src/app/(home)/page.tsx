@@ -4,7 +4,6 @@ import HomeWhat from './what';
 import HomeHow from './how';
 import HomePartner from './partner';
 import HomeFooter from './footer';
-import './home.css';
 export default function Home() {
   return (
     <>
