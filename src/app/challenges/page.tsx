@@ -14,23 +14,23 @@ async function getChallengesByStatus() {
 export default async function ChallengePage() {
   const { active, upcoming, completed } = await getChallengesByStatus();
   return (
-    <div className="container my-4 pt-20">
+    <div className="container pt-[88px] lg:px-[13.8%]">
       {active.length > 0 && (
-        <div className="border-b py-4">
-          <h2 className="heading-5">Happening Now</h2>
+        <div className="pt-16">
+          <h2 className="heading-5 pb-4">Happening Now</h2>
           <ChallengeList challenges={active} />
         </div>
       )}
       {upcoming.length > 0 && (
-        <div className="border-b py-4">
-          <h2 className="heading-5">Up Next</h2>
+        <div className="pt-16">
+          <h2 className="heading-5 pb-4">Up Next</h2>
           <ChallengeList challenges={upcoming} />
         </div>
       )}
 
       {completed.length > 0 && (
-        <div className="border-b py-4">
-          <h2 className="heading-5">Completed</h2>
+        <div className="pt-16">
+          <h2 className="heading-5 pb-4">Completed</h2>
           <ChallengeList challenges={completed} />
         </div>
       )}

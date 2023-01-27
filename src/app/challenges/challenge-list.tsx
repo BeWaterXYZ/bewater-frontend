@@ -12,10 +12,10 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
   return (
     <ul>
       {challenges.map((challenge) => (
-        <li key={challenge.id} className="my-2">
+        <li key={challenge.id} className="border-b border-grey-800">
           <Link href={`/challenges/${challenge.id}`}>
-            <div className="flex  flex-wrap  py-8 ">
-              <div className="w-full lg:w-1/3  flex flex-col justify-between ">
+            <div className="flex flex-wrap py-8">
+              <div className="w-full lg:w-1/3 flex flex-col justify-between">
                 <div className="body-2">
                   {`${formatMMMDDYYYY(challenge.startTime)} - ${formatMMMDDYYYY(
                     challenge.endTime,
@@ -23,12 +23,12 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
                 </div>
                 <div className="body-2 invisible">{challenge.status} </div>
               </div>
-              <div className="w-full lg:w-1/3  flex flex-col justify-between ">
+              <div className="w-full lg:w-1/3 flex flex-col justify-between">
                 <div className="body-2">{challenge.title}</div>
                 <div className="body-2 invisible">xxxx xxx xxxx</div>
               </div>
               <div className="w-full lg:w-1/3 flex lg:justify-end">
-                <div className="w-48 rounded overflow-hidden ">
+                <div className="w-48 rounded overflow-hidden">
                   <Aspect ratio={5 / 2}>
                     <Image
                       fill
