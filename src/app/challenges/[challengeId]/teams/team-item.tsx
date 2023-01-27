@@ -1,7 +1,8 @@
-import { TagRole, TagSkill } from '@/components/tag';
+import { TagSkill } from '@/components/tag';
 import { Challenge, Team } from '@/services/types';
 import Link from 'next/link';
 import { TeamStatus } from './team-status';
+import { TeamRoleReadiness } from './team-role-readiness';
 
 interface TeamItemProps {
   challenge: Challenge;
@@ -14,7 +15,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
         <div className="bg-[#1A1C40] p-4">
           <div className="">
             <div className="flex items-center ">
-              <h2 className="body-2 font-bold">{team.project.name}</h2>
+              <h2 className="body-2 font-bold pr-3">{team.project.name}</h2>
 
               {team.project.tags.map((tag) => (
                 <span
@@ -37,11 +38,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
           <div className="flex justify-between items-end">
             <div>
               <div className="float-left">
-                <div className="flex gap-2 rounded border border-[#333568] p-1 px-2 ">
-                  {team.openingRoles.map((role) => (
-                    <TagRole label={role} key={role} simple></TagRole>
-                  ))}
-                </div>
+                <TeamRoleReadiness team={team} />
               </div>
             </div>
             <div className="flex justify-center items-center">
