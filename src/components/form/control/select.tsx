@@ -38,7 +38,10 @@ export const Select = React.forwardRef(function Select_<T extends string>(
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
-        <label className="block body-3 py-1 text-grey font-bold " htmlFor={id}>
+        <label
+          className="block body-3 py-1 text-grey-500 font-bold "
+          htmlFor={id}
+        >
           {label}
           {required && ' *'}
         </label>

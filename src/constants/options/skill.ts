@@ -43,7 +43,7 @@ export const SkillSetOptions: OptionItem<SkillUnion>[] = SkillSet.map(
     value: skill,
     classes: {
       container: '!rounded-full !bg-midnight  body-4',
-      text: '!text-[#94A3B8]',
+      text: '!text-grey-400',
     },
   }),
 );
