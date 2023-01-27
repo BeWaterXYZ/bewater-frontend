@@ -10,6 +10,7 @@ import { TeamItem } from './team-item';
 import { TeamFilter } from './team-filter';
 import { ChallengeTeamsInfo } from './teams-info';
 import { querySchema } from '../search-param-schema';
+import { useSearchParams } from 'next/navigation';
 
 function filterAndSortTeam(
   teams: Team[],
@@ -35,6 +36,8 @@ function filterAndSortTeam(
 }
 
 export default function ChallengeTeams({ params, searchParams }: any) {
+  // fix searchParams wont work for clicking back button on browser
+  const sp = useSearchParams();
   const user = useAuthStore((s) => s.user);
 
   const { challengeId } = challengeSchema.parse(params);
@@ -45,7 +48,8 @@ export default function ChallengeTeams({ params, searchParams }: any) {
   if (isLoading || isLoadingTeam) return <Loading />;
   if (!challenge || !teams) return null;
 
-  const { status, tag } = querySchema.parse(searchParams);
+  console.log(Object.fromEntries(sp));
+  const { status, tag } = querySchema.parse(Object.fromEntries(sp));
   const teamsFilteredSorted = filterAndSortTeam(
     teams,
     status,
