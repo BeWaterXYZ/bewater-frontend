@@ -11,13 +11,24 @@ interface SelectProps<T extends string>
   error?: FieldError | Merge<FieldError, (FieldError | undefined)[]>;
   control: any;
   options: OptionItem<T>[];
+  maxSelections?: number;
 }
 
 export const Select = React.forwardRef(function Select_<T extends string>(
   props: SelectProps<T>,
   ref: ForwardedRef<HTMLSelectElement>,
 ) {
-  const { options, label, name, error, className, required, control } = props;
+  const {
+    options,
+    label,
+    name,
+    error,
+    className,
+    required,
+    control,
+    maxSelections,
+  } = props;
+
   const id = useId();
   const styles: ClassNamesConfig<OptionItem<T>> = {
     control: ({ isFocused }) => {
@@ -57,11 +68,18 @@ export const Select = React.forwardRef(function Select_<T extends string>(
             classNames={styles}
             options={options}
             noOptionsMessage={() => 'no options'}
-            value={options.filter((c) => (field.value ?? []).includes(c.value))}
-            onChange={(val) =>
-              val &&
-              field.onChange(Array.from(val.values()).map((d) => d.value))
-            }
+            value={(field.value ?? []).map((value: string) =>
+              options.find((op) => value === op.value),
+            )}
+            onChange={(val) => {
+              let values = Array.from(val.values()).map((d) => d.value);
+              if (maxSelections) {
+                while (values.length > maxSelections) {
+                  values.shift();
+                }
+              }
+              field.onChange(values);
+            }}
             onBlur={field.onBlur}
           />
         )}

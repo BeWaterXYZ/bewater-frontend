@@ -58,24 +58,25 @@ export const FormUserSettings = ({ data }: Props) => {
     defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
   });
 
-  const onSubmit = (submitData: FieldValues) => {
+  const onSubmit = async (submitData: FieldValues) => {
     showLoading();
-    submitUpdateUserProfile({
-      ...submitData,
-      userId: data?.userProfile?.userId!,
-    })
-      .then(() => {
-        addToast({
-          title: 'Saved!',
-          type: 'success',
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        dismissLoading();
+    try {
+      await submitUpdateUserProfile({
+        ...submitData,
+        userId: data?.userProfile?.userId!,
       });
+      addToast({
+        title: 'Saved!',
+        type: 'success',
+      });
+    } catch (err) {
+      addToast({
+        title: 'Save failed',
+        type: 'error',
+      });
+    } finally {
+      dismissLoading();
+    }
   };
   return (
     <form

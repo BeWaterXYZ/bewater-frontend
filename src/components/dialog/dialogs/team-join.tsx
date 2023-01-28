@@ -94,6 +94,8 @@ export default function TeamJoinDialog({
 
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
         <Select
+          required
+          maxSelections={1}
           label="You're going to play"
           options={RoleSetOptions}
           error={errors['roles']}

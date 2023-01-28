@@ -11,6 +11,9 @@
   .btn-secondary {
     @apply border-[#2F3153] bg-[#2F3153] text-white;
   }
+  .btn-secondary-invert{
+    @apply border-[#2F3153] bg-transparent text-white;
+  }
   .btn-danger {
     @apply border-danger bg-danger text-white;
   }

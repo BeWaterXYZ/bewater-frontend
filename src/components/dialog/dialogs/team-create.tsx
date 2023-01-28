@@ -193,6 +193,7 @@ export default function TeamCreateDialog({
         <Select
           label="Project Tag"
           required
+          maxSelections={3}
           options={ProjectTagSetOptions}
           error={errors['tags']}
           control={control}
@@ -208,6 +209,7 @@ export default function TeamCreateDialog({
           <Select
             label="You’re going to play"
             required
+            maxSelections={1}
             options={RoleSetOptions}
             error={errors['role']}
             control={control}
@@ -217,6 +219,7 @@ export default function TeamCreateDialog({
 
         <Select
           label="Roles Needed"
+          maxSelections={4}
           options={RoleSetOptions}
           error={errors['roles']}
           control={control}
@@ -225,6 +228,7 @@ export default function TeamCreateDialog({
 
         <Select
           label="Skill Needed"
+          maxSelections={10}
           options={SkillSetOptions}
           error={errors['skills']}
           control={control}
