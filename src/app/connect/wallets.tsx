@@ -56,7 +56,8 @@ export function WalletOptions() {
         } else {
           addToast({
             title: 'You are not in whitelist',
-            description: 'We are not open yet',
+            description:
+              'Stay tuned, we’re launching soon. Join waitlist to get notified when we launch',
             type: 'error',
           });
         }
