@@ -33,13 +33,17 @@ export async function connectWallet(connector: Connector) {
   }
 }
 
-export async function startSignMsgAndVerify(address: string, chainId: number) {
+export async function getSignMessage(address: string, chainId: number) {
   const messageParams = {
     walletAddress: address,
     chain: `${chainId}`,
     network: 'evm',
   };
-  const { message } = await submitGetLoginMessage(messageParams);
+  const { message, isWhitelisted } = await submitGetLoginMessage(messageParams);
+  return { message, isWhitelisted };
+}
+
+export async function verifyMessage(message: string) {
   const signature = await signMessage({ message });
   const { token, userId, userProfile } = await submitVerifySignedMessage({
     message,

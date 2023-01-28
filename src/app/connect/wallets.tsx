@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 import { useDialogStore } from '@/components/dialog/store';
 
-import { connectWallet, startSignMsgAndVerify } from './connect';
+import { connectWallet, getSignMessage, verifyMessage } from './connect';
 
 import type { Connector } from 'wagmi';
 import { useLoadingStoreAction } from '@/components/loading/store';
@@ -36,20 +36,29 @@ export function WalletOptions() {
       showLoading();
       const { address, chainId } = await connectWallet(connector);
       if (address && chainId) {
-        const { token, userId, userProfile } = await startSignMsgAndVerify(
+        const { message, isWhitelisted } = await getSignMessage(
           address,
           chainId,
         );
 
-        setAuthState({
-          token,
-          user: { userId, walletAddress: address, isNewUser: !userProfile },
-        });
+        if (isWhitelisted && message) {
+          const { token, userId, userProfile } = await verifyMessage(message);
+          setAuthState({
+            token,
+            user: { userId, walletAddress: address, isNewUser: !userProfile },
+          });
 
-        if (!userProfile) {
-          navigator.goToWelcome();
+          if (!userProfile) {
+            navigator.goToWelcome();
+          } else {
+            navigator.gotoAfterConnect();
+          }
         } else {
-          navigator.gotoAfterConnect();
+          addToast({
+            title: 'You are not in whitelist',
+            description: 'We are not open yet',
+            type: 'error',
+          });
         }
       }
     } catch (error) {
@@ -65,17 +74,17 @@ export function WalletOptions() {
 
   return (
     <>
-      <div className="min-h-[200px]">
+      <div className="min-h-[200px] w-[300px]">
         <button
           className={clsx(
-            'btn btn-primary-invert w-full h-12 flex flex-row justify-center items-center px-4 gap-x-4',
+            'btn btn-primary-invert mono-4  w-full h-12 flex flex-row justify-center items-center px-4 gap-x-4',
           )}
           key={connector.id}
           onClick={() => void onConnectorClick(connector)}
         >
           {/* <Logo code={connector.name} /> */}
           {/* <span className="body-2">{connector.name}</span> */}
-          <span className="body-2 text-day uppercase">Connect Wallet</span>
+          <span className=" text-day uppercase">Connect Wallet</span>
         </button>
       </div>
     </>

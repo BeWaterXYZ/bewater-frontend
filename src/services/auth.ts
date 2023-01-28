@@ -11,7 +11,8 @@ export interface GetLoginMessageRequest {
 }
 
 export interface GetLoginMessageResponse extends APIResponse {
-  message: string;
+  message?: string;
+  isWhitelisted: boolean;
 }
 
 /** VerifySignedMessage */
