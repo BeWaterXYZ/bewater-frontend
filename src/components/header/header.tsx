@@ -1,10 +1,8 @@
 import Link from 'next/link';
-
-import Logo from '@/components/logos/bewater_black.svg';
-
 import { Nav } from './nav';
 import dynamic from 'next/dynamic';
 import { HeaderScrollHelper } from './scroll-helper';
+import Image from 'next/image';
 
 interface HeaderImplProps {
   logo: React.ReactNode;
@@ -39,7 +37,12 @@ export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
 const BeWaterLogo = () => {
   return (
     <Link href="/">
-      <Logo className="object-contain shrink-0 cursor-pointer " />
+      <Image
+        src="/logo/bewater_black.svg"
+        width={140}
+        height={40}
+        alt="bewater logo"
+      />
     </Link>
   );
 };

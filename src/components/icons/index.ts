@@ -6,4 +6,3 @@ export { default as IconSettings } from './settings';
 export { default as IconWallet } from './wallet';
 export { default as IconAlert } from './alert';
 export { default as IconCheck } from './check';
-export { default as IconStar } from './star';

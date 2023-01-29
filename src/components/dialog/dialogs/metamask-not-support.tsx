@@ -1,5 +1,3 @@
-import { Logo } from '@/components/logos';
-
 import { Dialogs } from '../store';
 
 interface MetaMaskNotSupportDialogProps {
@@ -12,7 +10,6 @@ export default function MetaMaskNotSupportDialog(
 ) {
   return (
     <div className="flex flex-col justify-center items-center ">
-      <Logo className="w-12 h-12" code="metamask" />
       <div className="heading-5 mt-5 mb-8 text-black">
         MetaMask is not found.
       </div>
