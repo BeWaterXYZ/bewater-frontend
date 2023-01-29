@@ -16,9 +16,9 @@ export default function Page() {
 
   if (isLoading) return null;
 
+  // fix me
   if (error) {
-    console.error(error);
-    return <div>Error occurs!</div>;
+    throw error;
   }
 
   return (
