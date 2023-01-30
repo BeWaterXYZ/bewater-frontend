@@ -22,14 +22,14 @@ export default async function ChallengeIntro({ params }: any) {
 
       <div className=" flex flex-wrap gap-8 ">
         <div className="w-full lg:flex-1 order-2 lg:order-1">
-          <h3 className="body-3 my-8 ">Awards</h3>
+          <h3 className="body-3 font-bold mb-8">Prize Rewards</h3>
 
-          <div className="border border-gray-700 p-4 mb-4">
+          <div className="border border-grey-700 p-4 mb-4">
             {awards.map((award, index) => (
               <div
                 key={index}
                 className={clsx('flex p-3  mb-2 ', {
-                  'border-b border-b-gray-700': index !== awards.length - 1,
+                  'border-b border-b-grey-700': index !== awards.length - 1,
                 })}
               >
                 <div className="flex-1">
@@ -44,7 +44,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
 
           <div className="max-w-full">
-            <h3 className="body-3 my-4">Organizer & Sponsors</h3>
+            <h3 className="body-3 font-bold my-4">Organizer & Sponsors</h3>
             <div className="grid gap-4 grid-cols-2">
               {sponsorships.map((sponsorship, index) => (
                 <div
@@ -79,56 +79,56 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
 
         <div className="w-full lg:flex-[3] order-1 lg:order-2">
-          <h3 className="body-3 my-8 ">Description</h3>
-          <p className="body-3 text-gray-400">{challenge.description}</p>
-          <hr className="my-4 border-gray-700" />
-          <h3 className="body-3 my-8">Requirements</h3>
+          <h3 className="body-3 font-bold mb-8">Description</h3>
+          <p className="body-3 text-grey-400">{challenge.description}</p>
+          <hr className="my-4 border-grey-800" />
+          <h3 className="body-3 font-bold my-8">Requirements</h3>
           <ul>
             {challenge.requirements.map((r) => (
               <li key={r} className="list-disc list-inside">
-                <span className="body-3 text-gray-400">{r}</span>
+                <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
           </ul>
-          <hr className="my-4 border-gray-700" />
+          <hr className="my-4 border-grey-800" />
 
-          <h3 className="body-3 my-8">Location</h3>
-          <p className="body-3 text-gray-400">{challenge.location}</p>
-          <hr className="my-4 border-gray-700" />
+          <h3 className="body-3 font-bold my-8">Location</h3>
+          <p className="body-3 text-grey-400">{challenge.location}</p>
+          <hr className="my-4 border-grey-800" />
 
-          <h3 className="body-3 my-8">Speaker & Judges</h3>
-          <div className="grid gap-5 grid-cols-100">
-            {challenge.judges.map((judge) => {
-              return (
-                <div key={judge.id} className="max-w-xs">
-                  <Aspect ratio={1 / 1}>
-                    <Image
-                      fill
-                      src={unsplash('women')}
-                      className="object-cover w-full h-full rounded"
-                      alt=""
-                    />
-                  </Aspect>
-                  <p className="body-3 mt-6">{judge.name}</p>
-                  <p className="body-4 text-gray-400">{judge.organization}</p>
-                </div>
-              );
-            })}
+          <h3 className="body-3 font-bold my-8">Speaker & Judges</h3>
+          <div className="flex flex-row flex-wrap gap-8">
+            {challenge.judges
+              .concat(challenge.judges)
+              .concat(challenge.judges)
+              .map((judge) => {
+                return (
+                  <div key={judge.id} className="w-[150px]">
+                    <Aspect ratio={1 / 1}>
+                      <Image
+                        fill
+                        src={unsplash('women')}
+                        className="object-cover w-full h-full"
+                        alt={judge.name}
+                      />
+                    </Aspect>
+                    <p className="body-3 mt-6">{judge.name}</p>
+                    <p className="body-4 text-grey-400">{judge.organization}</p>
+                  </div>
+                );
+              })}
           </div>
-          <hr className="my-4 border-gray-700" />
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center py-12">
-        <p className="heading-4 py-4">
-          Interested? Make your team and embrace it.
-        </p>
-        <p className="body-2 text-gray-400  py-4">
+      <div className="flex flex-col justify-center items-center pt-[194px] pb-[160px]">
+        <p className="heading-4">Interested? Make your team and embrace it.</p>
+        <p className="body-2 text-grey-400  pt-5 pb-8">
           Join over 4,000+ hackers all over the world.
         </p>
-        <div className="py-4">
+        <div>
           <Link
             href={`/challenges/${challengeId}/teams`}
-            className="btn btn-primary-invert uppercase w-64"
+            className="btn mono-4 text-day border-day uppercase w-64 py-4"
           >
             Go to team page
           </Link>
