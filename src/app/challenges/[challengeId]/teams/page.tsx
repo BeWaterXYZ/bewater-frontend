@@ -2,16 +2,24 @@
 import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
-import { UserID, Team, UserProfile } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
-import { challengeSchema } from '../param-schema';
-import { CreateTeamButton } from './create-team-button';
-import { TeamItem } from './team-item';
-import { TeamFilter } from './team-filter';
-import { ChallengeTeamsInfo } from './teams-info';
-import { querySchema } from '../search-param-schema';
-import { useSearchParams } from 'next/navigation';
+import { Team, UserProfile } from '@/services/types';
 import { useFetchUser } from '@/services/user';
+import { useAuthStore } from '@/stores/auth';
+import { useSearchParams } from 'next/navigation';
+import { challengeSchema } from '../param-schema';
+import { querySchema } from '../search-param-schema';
+import { CreateTeamButton } from './create-team-button';
+import { TeamFilter } from './team-filter';
+import { TeamItem } from './team-item';
+import { ChallengeTeamsInfo } from './teams-info';
+
+function getOpeningRoles(user: UserProfile, team: Team) {
+  return team.openingRoles.filter(
+    (role) =>
+      !team.teamMembers.some((tm) => tm.teamRole === role) &&
+      user.roles.includes(role),
+  );
+}
 
 function filterAndSortTeam(
   teams: Team[],
@@ -38,12 +46,16 @@ function filterAndSortTeam(
 
     if (isInATeam && !isInBTeam) return -1;
     else if (isInBTeam && !isInATeam) return 1;
-    else return 0;
+    else {
+      let aAvailableRoles = getOpeningRoles(userProfile, a);
+      let bAvailableRoles = getOpeningRoles(userProfile, b);
+      return bAvailableRoles.length - aAvailableRoles.length;
+    }
   });
 }
 
-export default function ChallengeTeams({ params, searchParams }: any) {
-  // fix searchParams wont work for clicking back button on browser
+export default function ChallengeTeams({ params }: any) {
+  // fix. searchParams wont work for clicking back button on browser
   const sp = useSearchParams();
   const user = useAuthStore((s) => s.user);
   const { data: userResponse } = useFetchUser(user.userId);

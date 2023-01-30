@@ -28,7 +28,6 @@ const links = [
 
 export function ChallengeNav({ challengeId }: { challengeId: string }) {
   let segment = useSelectedLayoutSegment();
-  console.log({ segment });
   return (
     <nav className="w-full body-3 flex justify-center border-b border-white/20 mb-4">
       {links.map((link) => {

@@ -2,6 +2,7 @@ import { FilterArea } from './filter-area';
 import { ProjectList } from './project-list';
 
 import { querySchema } from '../search-param-schema';
+import { getChallenges } from '@/services/challenge';
 
 export default function ChallengeProjects({ params, searchParams }: any) {
   console.log('ChallengeProjects', { params, searchParams });
@@ -18,4 +19,12 @@ export default function ChallengeProjects({ params, searchParams }: any) {
       </div>
     </div>
   );
+}
+
+export const revalidate = 60;
+export async function generateStaticParams() {
+  const challenges = await getChallenges();
+  return challenges.map((c) => ({
+    challengeId: c.id.toString(),
+  }));
 }
