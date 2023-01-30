@@ -20,7 +20,7 @@ export default async function ChallengeIntro({ params }: any) {
         <Timeline milestones={challenge.milestones} />
       </div>
 
-      <div className=" flex flex-wrap gap-8 ">
+      <div className=" flex flex-wrap gap-16">
         <div className="w-full lg:flex-1 order-2 lg:order-1">
           <h3 className="body-3 font-bold mb-8">Prize Rewards</h3>
 
@@ -98,25 +98,22 @@ export default async function ChallengeIntro({ params }: any) {
 
           <h3 className="body-3 font-bold my-8">Speaker & Judges</h3>
           <div className="flex flex-row flex-wrap gap-8">
-            {challenge.judges
-              .concat(challenge.judges)
-              .concat(challenge.judges)
-              .map((judge) => {
-                return (
-                  <div key={judge.id} className="w-[150px]">
-                    <Aspect ratio={1 / 1}>
-                      <Image
-                        fill
-                        src={unsplash('women')}
-                        className="object-cover w-full h-full"
-                        alt={judge.name}
-                      />
-                    </Aspect>
-                    <p className="body-3 mt-6">{judge.name}</p>
-                    <p className="body-4 text-grey-400">{judge.organization}</p>
-                  </div>
-                );
-              })}
+            {challenge.judges.map((judge) => {
+              return (
+                <div key={judge.id} className="w-[150px]">
+                  <Aspect ratio={1 / 1}>
+                    <Image
+                      fill
+                      src={unsplash('women')}
+                      className="object-cover w-full h-full"
+                      alt={judge.name}
+                    />
+                  </Aspect>
+                  <p className="body-3 mt-6">{judge.name}</p>
+                  <p className="body-4 text-grey-400">{judge.organization}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
