@@ -36,7 +36,7 @@ const fontSecondary = JetBrains_Mono({
 const fontThird = Manrope({
   variable: '--font-tertiary',
   subsets: ['latin'],
-  weight: ['400'],
+  weight: ['300', '400'],
 });
 export default function RootLayout({
   children,
