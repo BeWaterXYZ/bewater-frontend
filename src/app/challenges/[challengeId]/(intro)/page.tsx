@@ -24,7 +24,7 @@ export default async function ChallengeIntro({ params }: any) {
         <div className="w-full lg:flex-1 order-2 lg:order-1">
           <h3 className="body-3 font-bold mb-8">Prize Rewards</h3>
 
-          <div className="border border-grey-700 p-4 mb-4">
+          <div className="border border-grey-700 p-4">
             {awards.map((award, index) => (
               <div
                 key={index}
@@ -44,7 +44,9 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
 
           <div className="max-w-full">
-            <h3 className="body-3 font-bold my-4">Organizer & Sponsors</h3>
+            <h3 className="body-3 font-bold mt-10 mb-8">
+              Organizer & Sponsors
+            </h3>
             <div className="grid gap-4 grid-cols-2">
               {sponsorships.map((sponsorship, index) => (
                 <div
