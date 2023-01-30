@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 import {
+  checkUsername,
   GetUserProfileByIdResponse,
   submitUpdateUserProfile,
 } from '@/services/user';
@@ -16,37 +17,33 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
-const schema = z
-  .object({
-    email: z.string().email(),
-    userName: z.string().min(3, { message: 'At least 3 characters' }),
-    bio: z.string().optional(),
-    fullName: z.string().min(3, { message: 'At least 3 characters' }),
-    roles: z
-      .array(RoleSetScheme)
-      .min(1, { message: 'choose at least one role' })
-      .max(5, { message: 'You can only choose 5 roles' }),
-    skills: z
-      .array(SkillSetScheme)
-      .max(10, { message: 'You can only choose 10 skills' }),
-  })
-  .required();
-
-export type Inputs = z.infer<typeof schema>;
-
-export function useSettingsForm(config: Parameters<typeof useForm<Inputs>>[0]) {
-  return useForm<Inputs>({
-    resolver: zodResolver(schema),
-    ...config,
-  });
-}
-
 interface Props {
   user: User;
   data: GetUserProfileByIdResponse;
 }
 
 export const FormUserSettings = ({ data }: Props) => {
+  const schema = z
+    .object({
+      userName: z
+        .string()
+        .min(3, { message: 'At least 3 characters' })
+        .refine(checkUsername(data.userProfile?.userName ?? ''), {
+          message: 'The user name is taken',
+        }),
+      bio: z.string().optional(),
+      fullName: z.string().min(3, { message: 'At least 3 characters' }),
+      roles: z
+        .array(RoleSetScheme)
+        .max(5, { message: 'You can only choose 5 roles' }),
+      skills: z
+        .array(SkillSetScheme)
+        .max(10, { message: 'You can only choose 10 skills' }),
+    })
+    .required();
+
+  type Inputs = z.infer<typeof schema>;
+
   const addToast = useToastStore((s) => s.add);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const {
@@ -54,7 +51,8 @@ export const FormUserSettings = ({ data }: Props) => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useSettingsForm({
+  } = useForm<Inputs>({
+    resolver: zodResolver(schema),
     defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
   });
 
@@ -63,7 +61,6 @@ export const FormUserSettings = ({ data }: Props) => {
     try {
       await submitUpdateUserProfile({
         ...submitData,
-        userId: data?.userProfile?.userId!,
       });
       addToast({
         title: 'Saved!',

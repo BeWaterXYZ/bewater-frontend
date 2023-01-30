@@ -45,12 +45,12 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
               </div>
               <div className="w-20">
                 <Toast.Close>
-                  <button
+                  <div
                     className="absolute z-10 top-4 right-4 rounded-full p-1"
                     aria-label="Close"
                   >
                     <Cross2Icon className="text-grey-400" />
-                  </button>
+                  </div>
                 </Toast.Close>
               </div>
             </div>

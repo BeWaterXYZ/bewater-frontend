@@ -2,7 +2,7 @@
 import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
-import { UserID, Team } from '@/services/types';
+import { UserID, Team, UserProfile } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
 import { challengeSchema } from '../param-schema';
 import { CreateTeamButton } from './create-team-button';
@@ -11,23 +11,30 @@ import { TeamFilter } from './team-filter';
 import { ChallengeTeamsInfo } from './teams-info';
 import { querySchema } from '../search-param-schema';
 import { useSearchParams } from 'next/navigation';
+import { useFetchUser } from '@/services/user';
 
 function filterAndSortTeam(
   teams: Team[],
   status?: string,
   tag?: string,
-  userId?: UserID,
+  userProfile?: UserProfile,
 ) {
   let res = teams;
 
+  /**
+   * filtering
+   */
   if (tag) {
     res = res.filter((t) => t.project.tags.some((pt) => tag.includes(pt)));
   }
 
-  if (!userId) return res;
+  /**
+   * sorting
+   */
+  if (!userProfile) return res;
   return res.sort((a, b) => {
-    let isInATeam = a.teamMembers.some((m) => m.userId === userId);
-    let isInBTeam = b.teamMembers.some((m) => m.userId === userId);
+    let isInATeam = a.teamMembers.some((m) => m.userId === userProfile.userId);
+    let isInBTeam = b.teamMembers.some((m) => m.userId === userProfile.userId);
 
     if (isInATeam && !isInBTeam) return -1;
     else if (isInBTeam && !isInATeam) return 1;
@@ -39,7 +46,7 @@ export default function ChallengeTeams({ params, searchParams }: any) {
   // fix searchParams wont work for clicking back button on browser
   const sp = useSearchParams();
   const user = useAuthStore((s) => s.user);
-
+  const { data: userResponse } = useFetchUser(user.userId);
   const { challengeId } = challengeSchema.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   let { data: teams, isLoading: isLoadingTeam } =
@@ -48,13 +55,12 @@ export default function ChallengeTeams({ params, searchParams }: any) {
   if (isLoading || isLoadingTeam) return <Loading />;
   if (!challenge || !teams) return null;
 
-  console.log(Object.fromEntries(sp));
   const { status, tag } = querySchema.parse(Object.fromEntries(sp));
   const teamsFilteredSorted = filterAndSortTeam(
     teams,
     status,
     tag,
-    user.userId,
+    userResponse?.userProfile,
   );
 
   return (

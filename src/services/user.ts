@@ -1,7 +1,7 @@
 import { APIResponse } from '@/types/response';
 import { useQuery } from '@tanstack/react-query';
 
-import { agentAuthed } from './agent';
+import { agentAnon, agentAuthed } from './agent';
 import { getAllGroupingRequest } from './grouping-request';
 import { UserID, UserProfile } from './types';
 
@@ -54,8 +54,7 @@ export async function submitCreateUserProfile(userProfile: UserProfile) {
 }
 
 export async function submitUpdateUserProfile(
-  userProfile: Pick<UserProfile, 'userId'> &
-    Partial<Omit<UserProfile, 'userId'>>,
+  userProfile: Partial<UserProfile>,
 ) {
   const { data } = await agentAuthed.put<UpdateUserProfileResponse>(
     `/user`,
@@ -72,4 +71,13 @@ export async function searchUsers(keyword: string) {
     },
   );
   return data.users ?? [];
+}
+export function checkUsername(currentUserName: string) {
+  return async function (username: string) {
+    if (username === currentUserName) return true;
+    const { data } = await agentAnon.get<{ userNameAvailable: boolean }>(
+      `/user/availability/${username}`,
+    );
+    return data.userNameAvailable;
+  };
 }
