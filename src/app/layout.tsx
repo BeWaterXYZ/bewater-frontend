@@ -31,7 +31,7 @@ const fontPrimary = localFont({
 const fontSecondary = JetBrains_Mono({
   variable: '--font-secondary',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: 'variable',
 });
 export default function RootLayout({
   children,

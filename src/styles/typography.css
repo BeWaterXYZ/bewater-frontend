@@ -53,7 +53,7 @@
   }
 
   .mono-display-1 {
-    @apply font-secondary text-[24px] leading-normal font-normal text-white;
+    @apply font-secondary text-[24px] leading-normal font-bold text-white;
   }
   .mono-display-2 {
     @apply font-secondary text-[20px] leading-normal font-normal text-white;
