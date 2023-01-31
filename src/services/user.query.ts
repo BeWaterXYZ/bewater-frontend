@@ -1,18 +1,31 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { getAllGroupingRequest } from './grouping-request';
 import { UserID } from './types';
-import { getUserProfile, submitUpdateUserProfile, updateEmail } from './user';
+import {
+  getUserProfile,
+  getUserProfileFull,
+  submitUpdateUserProfile,
+  updateEmail,
+} from './user';
 
 export function useFetchUser(userId?: UserID) {
   return useQuery({
     queryKey: ['user', userId],
     enabled: !!userId,
     queryFn: async () => {
-      return getUserProfile(userId!);
+      return getUserProfile();
     },
   });
 }
-
+export function useFetchUserFull(userId?: UserID) {
+  return useQuery({
+    queryKey: ['user', userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getUserProfileFull(userId!);
+    },
+  });
+}
 export function useFetchGroupingRequest(userId?: UserID) {
   return useQuery({
     queryKey: ['user', 'requests', userId],

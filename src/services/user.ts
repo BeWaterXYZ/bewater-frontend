@@ -19,13 +19,16 @@ export interface UpdateUserProfileResponse extends APIResponse {
   userProfile?: UserProfile;
 }
 
-export async function getUserProfile(userId: UserID) {
+export async function getUserProfile() {
+  const { data } = await agentAuthed.get<GetUserProfileByIdResponse>(`/user`);
+  return data;
+}
+export async function getUserProfileFull(userId: UserID) {
   const { data } = await agentAuthed.get<GetUserProfileByIdResponse>(
     `/user/${userId}`,
   );
   return data;
 }
-
 export async function getEmailVerificationCode(emailAddress: string) {
   const { data } = await agentAuthed.post<{ sentVerificationCode: boolean }>(
     '/user/email',

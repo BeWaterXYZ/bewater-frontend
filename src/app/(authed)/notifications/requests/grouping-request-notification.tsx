@@ -6,11 +6,23 @@ import {
   useAcceptGroupingRequest,
   useDeclineGroupingRequest,
 } from '@/services/grouping-request.query';
-import { GroupingRequestFull, GroupingRequestId } from '@/services/types';
+import {
+  GroupingRequestFull,
+  GroupingRequestId,
+  UserProfile,
+} from '@/services/types';
 import { formatDistance, parseISO } from 'date-fns';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import clsx from 'clsx';
 import Link from 'next/link';
+
+function getUserLink(userProfile: UserProfile) {
+  return (
+    <strong className="text-white hover:underline">
+      <Link href={`/user/${userProfile.userId}`}>{userProfile.fullName}</Link>
+    </strong>
+  );
+}
 
 function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
   let teamLink = (
@@ -28,20 +40,16 @@ function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
       <p className="body-3 text-grey-400">You wanted to join {teamLink}</p>
     ) : (
       <p className="body-3 text-grey-400">
-        You invited{' '}
-        <strong className="text-white">{req.recipient?.fullName}</strong> to
-        join {teamLink}
+        You invited {getUserLink(req.recipient!)} to join {teamLink}
       </p>
     )
   ) : req.type === 'APPLICATION' ? (
     <p className="body-3 text-grey-400">
-      <strong className="text-white">{req.sender!.fullName}</strong> wanted to
-      join {teamLink}
+      {getUserLink(req.sender!)} wanted to join {teamLink}
     </p>
   ) : (
     <p className="body-3 text-grey-400">
-      <strong className="text-white">{req.sender!.fullName}</strong> has invited
-      you to join {teamLink}
+      {getUserLink(req.sender!)} has invited you to join {teamLink}
     </p>
   );
 }
