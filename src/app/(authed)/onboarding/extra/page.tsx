@@ -1,7 +1,7 @@
 'use client';
 import { useLoadingWhen } from '@/components/loading/store';
 import { useNavigator } from '@/hooks/useNavigator';
-import { useFetchUser } from '@/services/user';
+import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import { FormOnboardingExtra } from './form';
 export default function Page() {

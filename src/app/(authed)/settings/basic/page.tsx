@@ -1,8 +1,7 @@
 'use client';
 import { AvatarWithEditor } from '@/components/avatar';
-import { TagRole, TagSkill } from '@/components/tag';
 import { useLoadingWhen } from '@/components/loading/store';
-import { useFetchUser } from '@/services/user';
+import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 
 import { FormUserSettings } from './form/form-settings';

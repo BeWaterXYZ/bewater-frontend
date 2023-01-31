@@ -50,7 +50,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     <div className={clsx('block pb-2', className)}>
       {label ? (
         <label
-          className="block body-3 py-1 text-grey-500 font-bold "
+          className="block body-4 py-1 text-grey-500 font-bold "
           htmlFor={id}
         >
           {label}

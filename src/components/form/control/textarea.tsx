@@ -17,7 +17,7 @@ export const TextArea = React.forwardRef(function TextArea(
     <div className={clsx('block pb-2', className)}>
       {label ? (
         <label
-          className="block body-3 py-1 text-grey-500 font-bold"
+          className="block body-4 py-1 text-grey-500 font-bold"
           htmlFor={id}
         >
           {label}

@@ -3,7 +3,7 @@ import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
 import { Team, UserProfile } from '@/services/types';
-import { useFetchUser } from '@/services/user';
+import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import { useSearchParams } from 'next/navigation';
 import { challengeSchema } from '../param-schema';

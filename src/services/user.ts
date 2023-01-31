@@ -1,8 +1,6 @@
 import { APIResponse } from '@/types/response';
-import { useQuery } from '@tanstack/react-query';
 
 import { agentAnon, agentAuthed } from './agent';
-import { getAllGroupingRequest } from './grouping-request';
 import { UserID, UserProfile } from './types';
 
 export interface GetUserProfileByIdResponse extends APIResponse {
@@ -19,26 +17,6 @@ export interface CreateUserProfileResponse extends APIResponse {
 
 export interface UpdateUserProfileResponse extends APIResponse {
   userProfile?: UserProfile;
-}
-
-export function useFetchUser(userId?: UserID) {
-  return useQuery({
-    queryKey: ['user', userId],
-    enabled: !!userId,
-    queryFn: async () => {
-      return getUserProfile(userId!);
-    },
-  });
-}
-
-export function useFetchGroupingRequest(userId?: UserID) {
-  return useQuery({
-    queryKey: ['user', 'requests', userId],
-    enabled: !!userId,
-    queryFn: async () => {
-      return getAllGroupingRequest();
-    },
-  });
 }
 
 export async function getUserProfile(userId: UserID) {
