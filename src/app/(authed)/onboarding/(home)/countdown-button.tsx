@@ -5,7 +5,7 @@ import clsx from 'clsx';
 export function CountdownButton(
   props: React.ComponentPropsWithoutRef<'button'>,
 ) {
-  const copy = 'Send Code';
+  const copy = 'Verify';
   const waitingCopy = 'Resend';
   const [countdown, setCountdown] = useState(0);
   const onClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
