@@ -21,8 +21,7 @@ yarn >= 1.22.15
   * `yarn export`
 * Lint everything
   * `yarn lint`
-* View UI Components in Storybook
-  * `yarn storybook`
+
 
 ### .env file
 ```
@@ -38,11 +37,7 @@ NEXT_PUBLIC_BASE_PATH=
 ENVIRONMENT=local
 ```
 
-Example url:
-`http://localhost:3000/connect`
 
-Storybook Review Url:
-`https://www.chromatic.com/library?appId=6385af5a3bf0976c3f78ac1e`
 
 ## Github Workflows
 For CI (triggered at PR), we should
