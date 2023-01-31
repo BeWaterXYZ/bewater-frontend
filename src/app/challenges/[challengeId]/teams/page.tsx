@@ -23,7 +23,7 @@ function getOpeningRoles(user: UserProfile, team: Team) {
 
 function filterAndSortTeam(
   teams: Team[],
-  status?: string,
+  role?: string,
   tag?: string,
   userProfile?: UserProfile,
 ) {
@@ -34,6 +34,9 @@ function filterAndSortTeam(
    */
   if (tag) {
     res = res.filter((t) => t.project.tags.some((pt) => tag.includes(pt)));
+  }
+  if (role) {
+    res = res.filter((t) => t.openingRoles.some((pt) => role.includes(pt)));
   }
 
   /**
@@ -67,10 +70,10 @@ export default function ChallengeTeams({ params }: any) {
   if (isLoading || isLoadingTeam) return <Loading />;
   if (!challenge || !teams) return null;
 
-  const { status, tag } = querySchema.parse(Object.fromEntries(sp));
+  const { status, tag, role } = querySchema.parse(Object.fromEntries(sp));
   const teamsFilteredSorted = filterAndSortTeam(
     teams,
-    status,
+    role,
     tag,
     userResponse?.userProfile,
   );

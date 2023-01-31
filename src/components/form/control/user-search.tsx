@@ -1,7 +1,6 @@
 import { Avatar } from '@/components/avatar';
 import { UserProfile } from '@/services/types';
 import { searchUsers } from '@/services/user';
-import { Atomic_Age } from '@next/font/google';
 import clsx from 'clsx';
 import React, { ForwardedRef, useId } from 'react';
 import type { FieldError } from 'react-hook-form';
@@ -10,11 +9,12 @@ import {
   ClassNamesConfig,
   components,
   OptionProps,
+  SingleValueProps,
   SingleValue,
 } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-const Option = (props: OptionProps<UserProfile>) => {
+const OptionComp = (props: OptionProps<UserProfile>) => {
   let { data } = props;
   return (
     <components.Option {...props}>
@@ -34,6 +34,19 @@ const Option = (props: OptionProps<UserProfile>) => {
         </div>
       </div>
     </components.Option>
+  );
+};
+
+const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
+  return (
+    <div className=" flex gap-2 pl-2" style={{ gridArea: '1/1/2/3' }}>
+      <Avatar
+        size="mini"
+        src={props.data.avatarURI}
+        walletAddress={props.data.walletAddress}
+      />
+      <span className="body-4 text-grey-400"> {props.data.fullName}</span>
+    </div>
   );
 };
 
@@ -68,7 +81,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
-    singleValue: () => 'body-4 text-white',
+    singleValue: () => 'body-4 !text-white',
     menu: () => '!bg-[#0F1021] !border !border-midnight ',
     option: () => '!text-white hover:!bg-midnight !bg-transparent',
     input: () => '!text-white',
@@ -105,7 +118,8 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               loadOptions={promiseOptions}
               cacheOptions
               components={{
-                Option,
+                Option: OptionComp,
+                SingleValue: SingleValueComp,
               }}
             />
           );

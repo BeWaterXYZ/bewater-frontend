@@ -5,7 +5,7 @@ import Image from 'next/image';
 interface Props {
   walletAddress?: string;
   src?: string;
-  size?: 'large' | 'small' | 'medium';
+  size?: 'large' | 'small' | 'medium' | 'mini';
   className?: string;
   onClick?: () => void;
 }
@@ -24,6 +24,7 @@ export const Avatar = ({
         'w-40 h-40': size === 'large',
         'w-12 h-12': size === 'medium',
         'w-10 h-10': size === 'small',
+        'w-5 h-5': size === 'mini',
         className,
       })}
     >
