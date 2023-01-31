@@ -44,12 +44,11 @@ class QueryAwareRouterImpl {
     return this.router.push(finalURL, options);
   }
   pushWithRedirect(url: string) {
-    console.log(url);
     let { searchParams, pathname } = new URL(url, window.location.origin);
     searchParams.set('redirect', this.pathname);
     this.router.push(pathname + '?' + searchParams.toString());
   }
-  gotoRedirect(fallbackURL: string) {
+  gotoRedirectWithFallback(fallbackURL: string) {
     let goto = this.searchParams.get('redirect') ?? fallbackURL;
     this.router.push(goto);
   }

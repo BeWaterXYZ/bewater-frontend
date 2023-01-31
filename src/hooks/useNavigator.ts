@@ -26,9 +26,11 @@ export function useNavigator() {
   const goToExternal = useCallback((url: string) => {
     isBrowser && window.open(url);
   }, []);
-
+  const gotoOnboardingExtra = useCallback(() => {
+    router.push('/onboarding/extra');
+  }, [router]);
   const gotoAfterConnect = useCallback(() => {
-    router.gotoRedirect('/settings/basic');
+    router.gotoRedirectWithFallback('/settings/basic');
   }, [router]);
 
   const refresh = useCallback(() => {
@@ -54,6 +56,7 @@ export function useNavigator() {
     goToConnectWallet,
     goToWelcome,
     gotoAfterConnect,
+    gotoOnboardingExtra,
     refresh,
     gotoTeam,
     gotoTeamList,

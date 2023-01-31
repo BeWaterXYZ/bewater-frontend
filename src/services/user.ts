@@ -12,6 +12,9 @@ export interface GetUserProfileByIdResponse extends APIResponse {
 
 export interface CreateUserProfileResponse extends APIResponse {
   userId: UserID;
+  createUserProfile: boolean;
+  verified: boolean;
+  userProfile?: UserProfile;
 }
 
 export interface UpdateUserProfileResponse extends APIResponse {
@@ -45,9 +48,18 @@ export async function getUserProfile(userId: UserID) {
   return data;
 }
 
+export async function getEmailVerificationCode(emailAddress: string) {
+  const { data } = await agentAuthed.post<{ sentVerificationCode: boolean }>(
+    '/user/email',
+    null,
+    { params: { emailAddress } },
+  );
+  return data;
+}
+
 export async function submitCreateUserProfile(userProfile: UserProfile) {
   const { data } = await agentAuthed.post<CreateUserProfileResponse>(
-    '/user',
+    '/user/email/create',
     userProfile,
   );
   return data;

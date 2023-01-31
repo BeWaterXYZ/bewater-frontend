@@ -56,11 +56,11 @@ export const FormUserSettings = ({ data }: Props) => {
     defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
   });
 
-  const onSubmit = async (submitData: FieldValues) => {
+  const onSubmit = async (formData: FieldValues) => {
     showLoading();
     try {
       await submitUpdateUserProfile({
-        ...submitData,
+        ...formData,
       });
       addToast({
         title: 'Saved!',
@@ -118,9 +118,11 @@ export const FormUserSettings = ({ data }: Props) => {
         {...register('skills')}
       />
 
-      <button className="btn btn-primary" type="submit">
-        Save Changes
-      </button>
+      <div className="flex justify-end">
+        <button className="btn btn-primary" type="submit">
+          Save Changes
+        </button>
+      </div>
     </form>
   );
 };
