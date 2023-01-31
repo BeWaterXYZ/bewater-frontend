@@ -24,5 +24,4 @@ src/**/*.svg
 *.woff2
 *.gitkeep
 
-storybook-static
-build-storybook.log
+
