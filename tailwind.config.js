@@ -17,7 +17,6 @@ module.exports = {
       fontFamily: {
         primary: ['var(--font-primary)', ...fontFamily.sans],
         secondary: ['var(--font-secondary)', ...fontFamily.sans],
-        tertiary: ['var(--font-tertiary)', ...fontFamily.sans],
       },
       colors: {
         night: '#04051B',
@@ -31,6 +30,8 @@ module.exports = {
           400: '#94A3B8',
           500: '#64748B',
           600: '#475569',
+          700: '#334155',
+          800: '#1E293B',
         },
         placeholder: '#1A1B33',
       },

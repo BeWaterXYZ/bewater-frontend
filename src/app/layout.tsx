@@ -1,6 +1,6 @@
 import '../styles/index.css';
 import { QueryProvider } from './query';
-import { JetBrains_Mono, Manrope } from '@next/font/google';
+import { JetBrains_Mono } from '@next/font/google';
 import localFont from '@next/font/local';
 import Script from 'next/script';
 import { Header } from '@/components/header';
@@ -31,12 +31,7 @@ const fontPrimary = localFont({
 const fontSecondary = JetBrains_Mono({
   variable: '--font-secondary',
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
-});
-const fontThird = Manrope({
-  variable: '--font-tertiary',
-  subsets: ['latin'],
-  weight: ['400'],
+  weight: 'variable',
 });
 export default function RootLayout({
   children,
@@ -46,7 +41,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fontSecondary.variable} ${fontPrimary.variable} ${fontThird.variable}`}
+      className={`${fontSecondary.variable} ${fontPrimary.variable}`}
     >
       <head />
       <body>

@@ -37,11 +37,11 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
   return (
     // TODO: use line-gradient to replace border-grey-400 as design
-    <div className="body-1 text-center border border-grey-400 flex justify-between items-center p-10 lg:px-32">
+    <div className="body-1 text-center border border-grey-400 flex justify-between items-center p-12 lg:px-32 lg:my-24">
       {data.map((node, index) =>
         node.type === 'date' ? (
           <div className="w-4 flex flex-col items-center" key={index}>
-            <p className="whitespace-nowrap body-3">{node.stage}</p>
+            <p className="whitespace-nowrap body-3 font-bold">{node.stage}</p>
             {index === data.length - 1 ? (
               <div className="my-4 relative -top-[2px] w-4 h-0  px-1  border-t-[6px] border-b-[6px] rounded-sm border-white border-l-4 border-r-4   border-r-transparent">
                 <div className="w-[1px] h-3 bg-white absolute top-1 -left-1"></div>
@@ -54,7 +54,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
                 })}
               ></div>
             )}
-            <p className="mono-3 whitespace-nowrap">{node.date}</p>
+            <p className="mono-2 whitespace-nowrap">{node.date}</p>
           </div>
         ) : (
           <div

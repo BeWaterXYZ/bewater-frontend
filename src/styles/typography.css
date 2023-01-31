@@ -52,13 +52,10 @@
     @apply font-secondary text-[10px] leading-normal font-normal text-white;
   }
 
-  .desc-1 {
-    @apply font-tertiary text-[18px] leading-normal font-normal text-white;
+  .mono-display-1 {
+    @apply font-secondary text-[24px] leading-normal font-bold text-white;
   }
-  .desc-2 {
-    @apply font-tertiary text-[16px] leading-normal font-normal text-white;
-  }
-  .desc-3 {
-    @apply font-tertiary text-[14px] leading-normal font-normal text-white;
+  .mono-display-2 {
+    @apply font-secondary text-[20px] leading-normal font-normal text-white;
   }
 }

@@ -29,7 +29,7 @@ const links = [
 export function ChallengeNav({ challengeId }: { challengeId: string }) {
   let segment = useSelectedLayoutSegment();
   return (
-    <nav className="w-full body-3 flex justify-center border-b border-white/20 mb-4">
+    <nav className="w-full body-3 flex justify-center border-b border-white/20">
       {links.map((link) => {
         let isAcitve = segment && link.segment === segment;
 
@@ -38,7 +38,7 @@ export function ChallengeNav({ challengeId }: { challengeId: string }) {
             key={link.path}
             href={`/challenges/${challengeId}${link.path}`}
             className={clsx('py-3 mx-3 text-center', {
-              'text-day border-b-2 border-day  [text-shadow:0_0_10px_theme(colors.day)]':
+              'text-day border-b-2 border-day [text-shadow:0_0_6px_theme(colors.day)]':
                 isAcitve,
             })}
           >
