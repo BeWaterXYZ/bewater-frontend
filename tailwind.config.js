@@ -17,7 +17,6 @@ module.exports = {
       fontFamily: {
         primary: ['var(--font-primary)', ...fontFamily.sans],
         secondary: ['var(--font-secondary)', ...fontFamily.sans],
-        tertiary: ['var(--font-tertiary)', ...fontFamily.sans],
       },
       colors: {
         night: '#04051B',
