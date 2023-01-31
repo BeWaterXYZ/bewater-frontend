@@ -8,14 +8,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "build-icons": "rm -rf ./src/components/icons/* && node -r esm ./scripts/build-icons",
     "lint": "next lint",
     "prettier": "prettier --write .",
     "prettier:check": "prettier -c .",
-    "lint-staged": "lint-staged",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "lint-staged": "lint-staged"
   },
   "engines": {
     "node": ">=16.8.0",
