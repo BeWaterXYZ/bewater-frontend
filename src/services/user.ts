@@ -43,6 +43,23 @@ export async function submitCreateUserProfile(userProfile: UserProfile) {
   return data;
 }
 
+export async function updateEmail({
+  emailAddress,
+  verificationCode,
+}: {
+  emailAddress: string;
+  verificationCode: string;
+}) {
+  const { data } = await agentAuthed.put<{
+    verified?: boolean;
+    updated?: boolean;
+    userProfile?: UserProfile;
+  }>('/user/email/update', null, {
+    params: { emailAddress, verificationCode },
+  });
+  return data;
+}
+
 export async function submitUpdateUserProfile(
   userProfile: Partial<UserProfile>,
 ) {

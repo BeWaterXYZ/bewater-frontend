@@ -1,5 +1,6 @@
 'use client';
 
+import { CountdownButton } from '@/components/countdown-button';
 import { Input } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
@@ -14,7 +15,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { CountdownButton } from './countdown-button';
 
 const schema = z
   .object({

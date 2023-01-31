@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { getAllGroupingRequest } from './grouping-request';
 import { UserID } from './types';
-import { getUserProfile, submitUpdateUserProfile } from './user';
+import { getUserProfile, submitUpdateUserProfile, updateEmail } from './user';
 
 export function useFetchUser(userId?: UserID) {
   return useQuery({
@@ -26,6 +26,15 @@ export function useFetchGroupingRequest(userId?: UserID) {
 export function useMutaionUpdateUserProfile() {
   const queryClient = useQueryClient();
   return useMutation(submitUpdateUserProfile, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(['user', data.userProfile?.userId]);
+    },
+  });
+}
+
+export function useMutationUpdateEmail() {
+  const queryClient = useQueryClient();
+  return useMutation(updateEmail, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries(['user', data.userProfile?.userId]);
     },

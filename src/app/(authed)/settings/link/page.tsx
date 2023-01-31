@@ -1,11 +1,12 @@
 'use client';
+import { useDialogStore } from '@/components/dialog/store';
 import { useLoadingWhen } from '@/components/loading/store';
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
-
+  const showDialog = useDialogStore((s) => s.open);
   const { error, data, isLoading } = useFetchUser(user.userId);
 
   useLoadingWhen(isLoading);
@@ -17,6 +18,10 @@ export default function Page() {
     throw error;
   }
   if (!data) return null;
+
+  const changeEmail = () => {
+    showDialog('email_change', true);
+  };
 
   return (
     <div className="flex flex-row h-full container flex-wrap min-h-[50vh]">
@@ -48,7 +53,9 @@ export default function Page() {
           </div>
 
           <div>
-            <button className="btn btn-secondary-invert">Change</button>
+            <button className="btn btn-secondary-invert" onClick={changeEmail}>
+              Change
+            </button>
           </div>
         </div>
       </div>
