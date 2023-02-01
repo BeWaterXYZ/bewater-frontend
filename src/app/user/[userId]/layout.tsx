@@ -3,8 +3,14 @@ import { TagRole, TagSkill } from '@/components/tag';
 import { getUserProfileFull } from '@/services/user';
 import { maskWalletAddress } from '@/utils/wallet-adress';
 import { userSchema } from './param-schema';
-
-export default async function page({ params }: any) {
+import { Nav } from './nav';
+export default async function page({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: any;
+}) {
   const { userId } = userSchema.parse(params);
   const profile = await getUserProfileFull(userId);
   if (!profile) return null;
@@ -46,7 +52,10 @@ export default async function page({ params }: any) {
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-auto flex-1"></div>
+        <div className="w-full lg:w-auto flex-1">
+          <Nav userId={userId} />
+          {children}
+        </div>
       </div>
     </div>
   );

@@ -6,9 +6,13 @@ import { nav } from '../links';
 
 import { MenuItemType } from '../links';
 
-type NavItemProps = { item: MenuItemType; underline?: boolean };
+type NavItemProps = {
+  item: MenuItemType;
+  underline?: boolean;
+  className?: string;
+};
 
-export function NavItem({ item }: NavItemProps) {
+export function NavItem({ item, underline, className }: NavItemProps) {
   return (
     <Link
       href={item.path ?? '/'}
@@ -16,7 +20,9 @@ export function NavItem({ item }: NavItemProps) {
         ' flex items-center h-full body-2 font-bold outline-none py-2',
         {
           'text-day [text-shadow:0_0_6px_theme(colors.day)]': item.active,
+          'border-b-2 border-b-day': underline && item.active,
         },
+        className,
       )}
     >
       {item.label}

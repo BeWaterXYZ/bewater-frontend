@@ -1,7 +1,7 @@
 import { APIResponse } from '@/types/response';
 
 import { agentAnon, agentAuthed } from './agent';
-import { UserID, UserProfile } from './types';
+import { UserID, UserProfile, UserProfileFull } from './types';
 
 export interface GetUserProfileByIdResponse extends APIResponse {
   userExist: boolean;
@@ -24,7 +24,7 @@ export async function getUserProfile() {
   return data;
 }
 export async function getUserProfileFull(userId: UserID) {
-  const { data } = await agentAuthed.get<GetUserProfileByIdResponse>(
+  const { data } = await agentAuthed.get<{ userProfile: UserProfileFull }>(
     `/user/${userId}`,
   );
   return data.userProfile;

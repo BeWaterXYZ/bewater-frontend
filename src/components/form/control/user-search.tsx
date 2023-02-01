@@ -41,11 +41,14 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
   return (
     <div className=" flex gap-2 pl-2" style={{ gridArea: '1/1/2/3' }}>
       <Avatar
-        className="w-8 h-8"
+        className="w-5 h-5"
         src={props.data.avatarURI}
         walletAddress={props.data.walletAddress}
       />
-      <span className="body-4 text-grey-400"> {props.data.fullName}</span>
+      <span className="body-4 text-grey-400">
+        {' '}
+        {props.data.fullName ?? props.data.userName}
+      </span>
     </div>
   );
 };

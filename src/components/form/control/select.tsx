@@ -43,11 +43,11 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     multiValue: ({ data }) => data.classes.container,
     multiValueLabel: ({ data }) => data.classes.text,
     multiValueRemove: () => 'hover:!bg-transparent',
-    menu: () => '!bg-night',
-    option: () => '!text-white hover:!bg-day !bg-transparent',
+    menu: () => '!bg-[#0F1021] !border !border-midnight',
+    option: () => '!text-white hover:!bg-midnight !bg-transparent',
   };
   return (
-    <div className={clsx('block pb-2', className)}>
+    <div className={clsx('block ', className)}>
       {label ? (
         <label
           className="block body-4 py-1 text-grey-500 font-bold "
@@ -67,6 +67,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
             isMulti={true}
             classNames={styles}
             options={options}
+            maxMenuHeight={148}
             noOptionsMessage={() => 'no options'}
             value={(field.value ?? []).map((value: string) =>
               options.find((op) => value === op.value),
@@ -85,7 +86,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
         )}
       />
       <div
-        className={clsx('whitespace-nowrap body-4 py-1 text-danger', {
+        className={clsx('whitespace-nowrap body-4  text-danger', {
           invisible: !error,
         })}
       >

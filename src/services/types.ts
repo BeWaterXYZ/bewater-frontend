@@ -20,6 +20,10 @@ export interface UserProfile {
   skills: SkillUnion[];
 }
 
+export interface UserProfileFull extends UserProfile {
+  teamMembers: TeamMember[];
+}
+
 /**
  *  Challenge
  */
@@ -94,6 +98,7 @@ export interface Team {
   skills: SkillUnion[];
   teamMembers: TeamMember[];
   project: Project;
+  challenge?: Challenge;
 }
 export interface Project {
   id: string;
@@ -110,6 +115,7 @@ export interface TeamMember {
   teamRole: RoleUnion;
   isLeader: boolean;
   userProfile: UserProfile;
+  team?: Team;
 }
 
 /**

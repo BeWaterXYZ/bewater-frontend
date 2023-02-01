@@ -14,7 +14,7 @@ export const TextArea = React.forwardRef(function TextArea(
   const { label, name, error, className, required, ...restProps } = props;
   const id = useId();
   return (
-    <div className={clsx('block pb-2', className)}>
+    <div className={clsx('block ', className)}>
       {label ? (
         <label
           className="block body-4 py-1 text-grey-500 font-bold"
@@ -35,7 +35,7 @@ export const TextArea = React.forwardRef(function TextArea(
       ></textarea>
 
       <div
-        className={clsx('whitespace-nowrap body-4 py-1 text-danger', {
+        className={clsx('whitespace-nowrap body-4  text-danger', {
           invisible: !error,
         })}
       >

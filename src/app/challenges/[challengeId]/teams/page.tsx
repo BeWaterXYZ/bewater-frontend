@@ -5,6 +5,7 @@ import { useFetchChallengeTeams } from '@/services/team.query';
 import { Team, UserProfile } from '@/services/types';
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
+import clsx from 'clsx';
 import { useSearchParams } from 'next/navigation';
 import { challengeSchema } from '../param-schema';
 import { querySchema } from '../search-param-schema';
@@ -87,9 +88,10 @@ export default function ChallengeTeams({ params }: any) {
         </div>
         <div className="w-full lg:w-auto flex-1">
           <div className="flex justify-between">
-            <div className="body-3">
+            <div className={clsx('body-3', { invisible: !!user })}>
               ✨ Log in to see the teams that match you best!
             </div>
+
             <div>
               <CreateTeamButton challenge={challenge} />
             </div>
