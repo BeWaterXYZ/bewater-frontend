@@ -15,11 +15,11 @@ export default function TeamMenu({ team }: TeamMenuProps) {
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const navigator = useNavigator();
   const showDialog = useDialogStore((s) => s.open);
-  const isJoined = team.teamMembers.some((m) => m.userId === user.userId);
+  const isJoined = team.teamMembers.some((m) => m.userId === user?.userId);
 
   const isLeader = team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userId === user.userId);
+    .some((m) => m.userId === user?.userId);
 
   const requestJoin = () => {
     if (!isAuthed()) {
@@ -36,7 +36,7 @@ export default function TeamMenu({ team }: TeamMenuProps) {
   };
 
   const quitTeam = async () => {
-    const res = await teamRemoveMember(team.id, user.userId!);
+    const res = await teamRemoveMember(team.id, user?.userId!);
     router.refresh();
   };
   return (

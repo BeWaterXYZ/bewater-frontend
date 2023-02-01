@@ -22,10 +22,10 @@ export default function Page() {
         {/* fix me  */}
         {mounted && (
           <p className="break-words body-2 text-grey-500 my-4">
-            {user.walletAddress}
+            {user?.walletAddress}
           </p>
         )}
-        <FormOnboarding user={user} onComplete={onComplete} />
+        <FormOnboarding user={user!} onComplete={onComplete} />
       </div>
     </div>
   );

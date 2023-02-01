@@ -3,7 +3,6 @@
 import { Select } from '@/components/form/control';
 import { useToastStore } from '@/components/toast/store';
 import { useMutaionUpdateUserProfile } from '@/services/user.query';
-import { User } from '@/stores/auth';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 
@@ -12,6 +11,7 @@ import { SkillSetOptions, SkillSetScheme } from '@/constants/options/skill';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { UserProfile } from '@/services/types';
 
 const schema = z
   .object({
@@ -28,7 +28,7 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 interface Props {
-  user: User;
+  user: UserProfile;
   onComplete: () => void;
 }
 

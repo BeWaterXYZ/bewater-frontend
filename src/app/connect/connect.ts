@@ -43,14 +43,13 @@ export async function getSignMessage(address: string, chainId: number) {
 
 export async function verifyMessage(message: string, walletAddress: string) {
   const signature = await signMessage({ message });
-  const { token, userId, userProfile } = await submitVerifySignedMessage({
+  const { token, userProfile } = await submitVerifySignedMessage({
     walletAddress,
     signature,
   });
 
   return {
     token,
-    userId,
     userProfile,
   };
 }

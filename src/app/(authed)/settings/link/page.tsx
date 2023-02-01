@@ -7,7 +7,7 @@ import Image from 'next/image';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
   const showDialog = useDialogStore((s) => s.open);
-  const { error, data, isLoading } = useFetchUser(user.userId);
+  const { error, data, isLoading } = useFetchUser(user?.userId);
 
   useLoadingWhen(isLoading);
 

@@ -7,7 +7,7 @@ import { GroupingRequestNotification } from '../grouping-request-notification';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
 
-  const { error, data, isLoading } = useFetchGroupingRequest(user.userId);
+  const { error, data, isLoading } = useFetchGroupingRequest(user?.userId);
 
   if (error || isLoading || !data) return null;
   return (
@@ -21,7 +21,7 @@ export default function Page() {
             <GroupingRequestNotification
               key={req.id}
               req={req}
-              sentOrReceived={req.senderId === user.userId}
+              sentOrReceived={req.senderId === user?.userId}
             />
           );
         })}

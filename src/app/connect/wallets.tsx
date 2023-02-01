@@ -42,13 +42,10 @@ export function WalletOptions() {
         );
 
         if (isWhitelisted && message) {
-          const { token, userId, userProfile } = await verifyMessage(
-            message,
-            address,
-          );
+          const { token, userProfile } = await verifyMessage(message, address);
           setAuthState({
             token,
-            user: { userId, walletAddress: address, isNewUser: !userProfile },
+            user: userProfile,
           });
 
           if (!userProfile) {

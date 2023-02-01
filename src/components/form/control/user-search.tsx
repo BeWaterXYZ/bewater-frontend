@@ -21,7 +21,7 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
       <div className="flex gap-2">
         <div>
           <Avatar
-            size="small"
+            className="w-10 h-10"
             src={data.avatarURI}
             walletAddress={data.walletAddress}
           />
@@ -41,7 +41,7 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
   return (
     <div className=" flex gap-2 pl-2" style={{ gridArea: '1/1/2/3' }}>
       <Avatar
-        size="mini"
+        className="w-8 h-8"
         src={props.data.avatarURI}
         walletAddress={props.data.walletAddress}
       />

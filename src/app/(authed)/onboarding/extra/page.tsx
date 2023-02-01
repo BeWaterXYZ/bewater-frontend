@@ -6,7 +6,7 @@ import { useAuthStore } from '@/stores/auth';
 import { FormOnboardingExtra } from './form';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
-  const { data, isLoading } = useFetchUser(user.userId);
+  const { data, isLoading } = useFetchUser(user?.userId);
   const navigator = useNavigator();
   const onComplete = () => {
     navigator.gotoAfterConnect();
@@ -29,7 +29,7 @@ export default function Page() {
           help others recognize you.
         </p>
 
-        <FormOnboardingExtra user={user} onComplete={onComplete} />
+        <FormOnboardingExtra user={user!} onComplete={onComplete} />
       </div>
     </div>
   );

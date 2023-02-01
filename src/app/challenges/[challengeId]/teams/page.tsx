@@ -61,7 +61,7 @@ export default function ChallengeTeams({ params }: any) {
   // fix. searchParams wont work for clicking back button on browser
   const sp = useSearchParams();
   const user = useAuthStore((s) => s.user);
-  const { data: userResponse } = useFetchUser(user.userId);
+  const { data: userResponse } = useFetchUser(user?.userId);
   const { challengeId } = challengeSchema.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   let { data: teams, isLoading: isLoadingTeam } =

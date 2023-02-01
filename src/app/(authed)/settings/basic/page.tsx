@@ -9,7 +9,7 @@ import { FormUserSettings } from './form/form-settings';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
 
-  const { error, data, isLoading } = useFetchUser(user.userId);
+  const { error, data, isLoading } = useFetchUser(user?.userId);
 
   useLoadingWhen(isLoading);
 
@@ -26,7 +26,7 @@ export default function Page() {
         walletAddress={data?.userProfile?.walletAddress}
         src={data?.userProfile?.avatarURI}
       />
-      <FormUserSettings user={user} data={data!} />
+      <FormUserSettings user={user!} data={data!} />
     </div>
   );
 }

@@ -4,12 +4,12 @@ import { CountdownButton } from '@/components/countdown-button';
 import { Input } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
+import { UserProfile } from '@/services/types';
 import {
   checkUsername,
   getEmailVerificationCode,
   submitCreateUserProfile,
 } from '@/services/user';
-import { User } from '@/stores/auth';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -33,7 +33,7 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 interface Props {
-  user: User;
+  user: UserProfile;
   onComplete: () => void;
 }
 

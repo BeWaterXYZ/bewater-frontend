@@ -15,6 +15,6 @@ export default function UserArea() {
       Connect
     </Link>
   ) : (
-    <UserMenu user={user} />
+    <UserMenu user={user!} />
   );
 }

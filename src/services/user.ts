@@ -27,7 +27,7 @@ export async function getUserProfileFull(userId: UserID) {
   const { data } = await agentAuthed.get<GetUserProfileByIdResponse>(
     `/user/${userId}`,
   );
-  return data;
+  return data.userProfile;
 }
 export async function getEmailVerificationCode(emailAddress: string) {
   const { data } = await agentAuthed.post<{ sentVerificationCode: boolean }>(

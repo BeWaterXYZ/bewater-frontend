@@ -10,7 +10,7 @@ export function TeamMember({ member }: TeamMemberProps) {
     <div className="flex gap-3">
       <div>
         <Avatar
-          size="medium"
+          className="w-12 h-12"
           src={member.userProfile.avatarURI}
           walletAddress={member.userProfile.walletAddress}
         />

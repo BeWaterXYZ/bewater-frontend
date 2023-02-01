@@ -12,7 +12,7 @@ export let TeamStatus = ({ team }: { team: Team }) => {
   const user = useAuthStore((s) => s.user);
   const navigator = useNavigator();
   const openDialog = useDialogStore((s) => s.open);
-  const isMyTeam = team.teamMembers.some((m) => m.userId === user.userId);
+  const isMyTeam = team.teamMembers.some((m) => m.userId === user?.userId);
 
   let handleClick: MouseEventHandler<HTMLButtonElement> = (e) => {
     // e.stopPropagation();

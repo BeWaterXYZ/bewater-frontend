@@ -16,7 +16,7 @@ export const AvatarWithEditor = ({ src, walletAddress, className }: Props) => {
         className,
       )}
     >
-      <Avatar src={src} size="large" walletAddress={walletAddress} />
+      <Avatar src={src} className="w-48 h-48" walletAddress={walletAddress} />
       <button className="btn btn-secondary">
         {src ? 'Change Avatar' : 'Upload Avatar'}
       </button>

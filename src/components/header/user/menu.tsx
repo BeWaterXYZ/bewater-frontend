@@ -4,10 +4,11 @@ import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
 import { Avatar } from '@/components/avatar';
 
-import { useAuthStore, User } from '@/stores/auth';
+import { useAuthStore } from '@/stores/auth';
+import { UserProfile } from '@/services/types';
 
 interface UserMenuProps {
-  user: User;
+  user: UserProfile;
 }
 export const UserMenu = ({ user }: UserMenuProps) => {
   const clearStore = useAuthStore((s) => s.clear);
@@ -22,7 +23,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
             <Avatar
-              size="small"
+              className="w-10 h-10"
               src={user.avatarURI}
               walletAddress={user.walletAddress}
             />
@@ -39,7 +40,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
             </div>
             <ul className="font-medium ">
               <li className="border-t p-4 py-2 border-midnight ">
-                <Link href="/profile" className="body-2">
+                <Link href={`/user/${user.userId}`} className="body-2">
                   Your Profile
                 </Link>
               </li>

@@ -46,7 +46,7 @@ export default function TeamManageMemberDialog({
             className="flex p-2 gap-2 border-b border-b-midnight"
           >
             <Avatar
-              size="small"
+              className="w-10 h-10"
               walletAddress={m.userProfile.walletAddress}
               src={m.userProfile.avatarURI}
             />

@@ -5,7 +5,6 @@ import {
   GetUserProfileByIdResponse,
   submitUpdateUserProfile,
 } from '@/services/user';
-import { User } from '@/stores/auth';
 
 import type { FieldValues } from 'react-hook-form';
 import { Input, Select, TextArea } from '@/components/form/control';
@@ -16,9 +15,10 @@ import { SkillSetOptions, SkillSetScheme } from '@/constants/options/skill';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { UserProfile } from '@/services/types';
 
 interface Props {
-  user: User;
+  user: UserProfile;
   data: GetUserProfileByIdResponse;
 }
 

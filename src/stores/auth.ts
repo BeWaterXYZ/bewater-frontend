@@ -3,18 +3,12 @@ import { createJSONStorage, persist } from 'zustand/middleware';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 import { isBrowser } from '@/constants';
-
-export type User = {
-  userId?: string;
-  walletAddress?: string;
-  isNewUser?: boolean;
-  avatarURI?: string;
-};
+import { UserProfile } from '@/services/types';
 
 interface State {
   token: string;
   expireAt: number;
-  user: User;
+  user?: UserProfile;
 }
 
 interface Actions {
@@ -38,7 +32,7 @@ const dummyStorage = {
 };
 const init = {
   token: '',
-  user: {},
+  user: undefined,
   expireAt: 0,
 };
 export const useAuthStore = create<State & Actions>()(

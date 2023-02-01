@@ -148,7 +148,7 @@ export function GroupingRequestNotification({
     >
       <div>
         <Avatar
-          size="small"
+          className="w-12 h-12"
           src={req.sender?.avatarURI}
           walletAddress={req.sender?.walletAddress}
         />
