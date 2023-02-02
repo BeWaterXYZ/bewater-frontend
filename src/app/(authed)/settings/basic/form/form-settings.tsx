@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { UserProfile } from '@/services/types';
+import { useMutationUpdateUserProfile } from '@/services/user.query';
 
 interface Props {
   user: UserProfile;
@@ -23,10 +24,14 @@ interface Props {
 }
 
 export const FormUserSettings = ({ data }: Props) => {
+  // todo , make scheme reusable
   const schema = z
     .object({
       userName: z
         .string()
+        .regex(/^[A-Za-z0-9)_]*$/, {
+          message: 'only support alphanumeric and underscore',
+        })
         .min(3, { message: 'At least 3 characters' })
         .refine(checkUsername(data.userProfile?.userName ?? ''), {
           message: 'The user name is taken',
@@ -55,11 +60,12 @@ export const FormUserSettings = ({ data }: Props) => {
     resolver: zodResolver(schema),
     defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
   });
+  const mutation = useMutationUpdateUserProfile();
 
   const onSubmit = async (formData: FieldValues) => {
     showLoading();
     try {
-      await submitUpdateUserProfile({
+      await mutation.mutateAsync({
         ...formData,
       });
       addToast({

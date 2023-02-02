@@ -22,6 +22,9 @@ const schema = z
     verificationCode: z.string().min(6, { message: '6 digits code' }),
     userName: z
       .string()
+      .regex(/^[A-Za-z0-9)_]*$/, {
+        message: 'only support alphanumeric and underscore',
+      })
       .min(3, { message: 'At least 3 characters' })
       .refine(checkUsername(''), {
         message: 'The user name is taken',

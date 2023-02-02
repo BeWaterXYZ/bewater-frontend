@@ -36,7 +36,7 @@ export function useFetchGroupingRequest(userId?: UserID) {
   });
 }
 
-export function useMutaionUpdateUserProfile() {
+export function useMutationUpdateUserProfile() {
   const queryClient = useQueryClient();
   return useMutation(submitUpdateUserProfile, {
     onSuccess: (data, variables, context) => {

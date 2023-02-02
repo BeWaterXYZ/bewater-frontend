@@ -2,6 +2,7 @@ import { useAlert } from '@/components/alert/store';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { TagRole } from '@/components/tag';
 import { RoleSetOptions, RoleUnion } from '@/constants/options/role';
+import { useOutsideClick } from '@/hooks/useClickOutside';
 import { useNavigator } from '@/hooks/useNavigator';
 import {
   getTeam,
@@ -17,8 +18,9 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
   const showDialog = useDialogStore((s) => s.open);
   const router = useNavigator();
   const { showLoading, dismissLoading } = useLoadingStoreAction();
-
   const [editing, editingSet] = useState(false);
+  const ref = useOutsideClick(() => editingSet(false));
+
   const { confirm } = useAlert();
   let removeMember = async (userId: string) => {
     let confirmed = await confirm({
@@ -71,6 +73,7 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
         <div
           className="absolute top-0 right-0 bg-[#0F1021] border border-grey-800  z-10"
           onClick={() => editingSet(false)}
+          ref={ref}
         >
           <div className="p-2">
             {RoleSetOptions.map((role) => {

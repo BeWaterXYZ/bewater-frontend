@@ -2,7 +2,7 @@
 
 import { Select } from '@/components/form/control';
 import { useToastStore } from '@/components/toast/store';
-import { useMutaionUpdateUserProfile } from '@/services/user.query';
+import { useMutationUpdateUserProfile } from '@/services/user.query';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 
@@ -35,7 +35,7 @@ interface Props {
 export const FormOnboardingExtra = ({ user, onComplete }: Props) => {
   const addToast = useToastStore((s) => s.add);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
-  const mutation = useMutaionUpdateUserProfile();
+  const mutation = useMutationUpdateUserProfile();
   const {
     register,
     handleSubmit,
