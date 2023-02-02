@@ -109,3 +109,4 @@ export default function ChallengeTeams({ params }: any) {
     </div>
   );
 }
+export const dynamic = 'force-dynamic';

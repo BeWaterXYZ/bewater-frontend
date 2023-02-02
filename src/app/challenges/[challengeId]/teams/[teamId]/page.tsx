@@ -1,12 +1,12 @@
 import { TagRole, TagSkill } from '@/components/tag';
 import { getChallengeTeams, getTeam } from '@/services/team';
-import dynamic from 'next/dynamic';
+import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { challengeSchema, challengeTeamSchema } from '../../param-schema';
 import { TeamMember } from './team-member';
 
-const TeamMenu = dynamic(() => import('./team-menu'), {
+const TeamMenu = dynamicLoad(() => import('./team-menu'), {
   ssr: false,
 });
 
@@ -95,12 +95,4 @@ export default async function Page({ params }: any) {
   );
 }
 
-export const revalidate = 0;
-
-export async function generateStaticParams({ params }: any) {
-  const { challengeId } = challengeSchema.parse(params);
-  const teams = await getChallengeTeams(challengeId);
-  return teams.map((t) => ({
-    teamId: t.id.toString(),
-  }));
-}
+export const dynamic = 'force-dynamic';

@@ -20,3 +20,4 @@ export default async function Layout({
     </div>
   );
 }
+export const dynamic = 'force-dynamic';
