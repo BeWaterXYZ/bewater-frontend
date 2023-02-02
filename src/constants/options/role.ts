@@ -29,8 +29,8 @@ export const RoleSetOptions: OptionItem<RoleUnion>[] = RoleSet.map((role) => ({
   label: role,
   value: role,
   classes: {
-    container: styleMap[role],
-    text: 'body-4 !text-white',
+    container: styleMap[role] + ' h-5 !my-0',
+    text: 'body-4 !text-white leading-5 !py-0',
   },
 }));
 

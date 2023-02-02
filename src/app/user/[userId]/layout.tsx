@@ -35,16 +35,16 @@ export default async function page({
             </div>
           </div>
 
-          <div className="border-b border-b-grey-800 my-3 py-3 ">
-            <p className="body-4 font-bold">Roles</p>
+          <div className="border-b border-b-grey-800 my-2 py-4 ">
+            <p className="body-4 font-bold mb-3">Roles</p>
             <div className="flex gap-2 flex-wrap">
               {profile.roles.map((role) => (
                 <TagRole label={role} key={role} />
               ))}
             </div>
           </div>
-          <div className="border-b border-b-grey-800 my-3 py-3">
-            <p className="body-4 font-bold">Skills</p>
+          <div className="border-b border-b-grey-800 my-2 py-4">
+            <p className="body-4 font-bold mb-3">Skills</p>
             <div className="flex gap-2 flex-wrap">
               {profile.skills.map((skill) => (
                 <TagSkill label={skill} key={skill} />
@@ -53,7 +53,7 @@ export default async function page({
           </div>
         </div>
         <div className="w-full lg:w-auto flex-1">
-          <Nav userId={userId} />
+          {/* <Nav userId={userId} /> */}
           {children}
         </div>
       </div>

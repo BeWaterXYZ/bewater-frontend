@@ -2,9 +2,13 @@ import { Avatar } from '@/components/avatar';
 import { TagRole } from '@/components/tag';
 import { TeamMember } from '@/services/types';
 import Image from 'next/image';
+import Link from 'next/link';
 export function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <div className="w-[300px] h-[140px] rounded bg-[#0B0C24] border border-[#24254E] p-4 flex flex-col justify-between">
+    <Link
+      href={`/challenges/${member.team?.challengeId}/teams/${member.teamId}`}
+      className=" w-[300px] h-[140px] rounded bg-[#0B0C24] border border-[#24254E] p-4 flex flex-col justify-between"
+    >
       <div>
         <div className="pb-2 flex gap-2">
           {member.isLeader ? (
@@ -32,6 +36,6 @@ export function TeamCard({ member }: { member: TeamMember }) {
           );
         })}
       </div>
-    </div>
+    </Link>
   );
 }
