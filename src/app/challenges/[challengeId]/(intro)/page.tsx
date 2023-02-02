@@ -136,11 +136,3 @@ export default async function ChallengeIntro({ params }: any) {
     </div>
   );
 }
-
-export const revalidate = 60;
-export async function generateStaticParams() {
-  const challenges = await getChallenges();
-  return challenges.map((c) => ({
-    challengeId: c.id.toString(),
-  }));
-}

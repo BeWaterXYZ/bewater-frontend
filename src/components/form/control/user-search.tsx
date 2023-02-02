@@ -1,5 +1,5 @@
 import { Avatar } from '@/components/avatar';
-import { UserProfile } from '@/services/types';
+import { UserID, UserProfile } from '@/services/types';
 import { searchUsers } from '@/services/user';
 import clsx from 'clsx';
 import React, { ForwardedRef, useId } from 'react';
@@ -53,18 +53,22 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
   );
 };
 
-const promiseOptions = async (inputValue: string) => {
-  let data = await searchUsers(inputValue);
-  data = data.map((d) => ({ ...d, label: d.fullName }));
-  cacheOptions = data;
-  return data;
-};
+const searchUserByKeyword =
+  (toExclude: UserID[]) => async (inputValue: string) => {
+    let data = await searchUsers(inputValue);
+    data = data
+      .filter((up) => !toExclude.includes(up.userId))
+      .map((d) => ({ ...d, label: d.fullName }));
+    cacheOptions = data;
+    return data;
+  };
 
 let cacheOptions: UserProfile[] = [];
 
 interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
   label?: string;
   name: string;
+  exclude?: UserID[];
   error?: FieldError;
   control: any;
 }
@@ -73,7 +77,17 @@ export const UserSearch = React.forwardRef(function UserSearch_(
   props: UserSearchProps,
   ref: ForwardedRef<HTMLSelectElement>,
 ) {
-  const { label, name, error, className, required, control, value } = props;
+  const {
+    label,
+    name,
+    error,
+    className,
+    required,
+    control,
+    value,
+    exclude = [],
+  } = props;
+  console.log({ exclude });
   const id = useId();
   const styles: ClassNamesConfig<UserProfile> = {
     control: ({ isFocused }) => {
@@ -115,10 +129,11 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               noOptionsMessage={() => 'no options'}
               value={cacheOptions.find((op) => op.userId === field.value)}
               onChange={(val) => {
-                let val_ = val as SingleValue<UserProfile>;
-                val_ && field.onChange(val_.userId);
+                val &&
+                  field.onChange((val as SingleValue<UserProfile>)?.userId);
               }}
-              loadOptions={promiseOptions}
+              loadOptions={searchUserByKeyword(exclude)}
+              defaultOptions
               cacheOptions
               components={{
                 Option: OptionComp,

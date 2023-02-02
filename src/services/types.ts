@@ -33,6 +33,7 @@ export interface Challenge {
   title: string;
   hostName: string;
   description: string;
+  bannerUrl: string;
   requirements: string[];
   startTime: string;
   endTime: string;

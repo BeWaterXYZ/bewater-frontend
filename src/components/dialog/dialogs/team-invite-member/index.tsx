@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Dialogs, useDialogStore } from '../../store';
 import { ArrowLeftIcon } from '@radix-ui/react-icons';
+import { AxiosError } from 'axios';
 const schema = z.object({
   user: z.string(),
   role: z
@@ -46,7 +47,7 @@ export default function InviteMemberDialog({
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
-      const res = await sendGroupingRequest(data.id, {
+      await sendGroupingRequest(data.id, {
         type: 'INVITATION',
         recipientId: formData.user,
         teamRole: formData.role[0],
@@ -58,6 +59,7 @@ export default function InviteMemberDialog({
         description: 'please wait for team member to accept',
       });
     } catch (err) {
+      console.log(err);
       addToast({
         type: 'error',
         title: 'Request not sent!',
@@ -93,6 +95,7 @@ export default function InviteMemberDialog({
         <UserSearch
           label="Name"
           required
+          exclude={data.teamMembers.map((tm) => tm.userId)}
           error={errors['user']}
           control={control}
           {...register('user')}

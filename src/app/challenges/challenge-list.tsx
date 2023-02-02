@@ -32,7 +32,7 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
                   <Aspect ratio={5 / 2}>
                     <Image
                       fill
-                      src={unsplash()}
+                      src={challenge.bannerUrl ?? unsplash()}
                       alt="crypto"
                       className="object-cover w-full h-full"
                     />
