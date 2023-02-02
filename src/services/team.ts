@@ -1,6 +1,14 @@
 import { agentAnon, agentAuthed } from './agent';
-import { ChallengeID, Team, TeamID, UserID, UserProfile } from './types';
+import {
+  ChallengeID,
+  Team,
+  TeamID,
+  TeamMember,
+  UserID,
+  UserProfile,
+} from './types';
 import { CreateTeamRequest, UpdateTeamRequest } from './challenge';
+import { RoleUnion } from '@/constants/options/role';
 
 interface CreateTeamResponse {
   team?: Team;
@@ -49,4 +57,19 @@ export async function teamRemoveMember(teamId: TeamID, userId: UserID) {
     },
   );
   return data.team;
+}
+
+export async function teamUpdateMemberRole(
+  teamId: TeamID,
+  userId: UserID,
+  teamRole: RoleUnion,
+) {
+  const { data } = await agentAuthed.put<{ teamMember: TeamMember }>(
+    `/team/${teamId}/updateMember`,
+    {
+      userId,
+      teamRole,
+    },
+  );
+  return data.teamMember;
 }

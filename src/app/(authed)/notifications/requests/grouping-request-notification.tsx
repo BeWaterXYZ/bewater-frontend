@@ -15,6 +15,7 @@ import { formatDistance, parseISO } from 'date-fns';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useToastStore } from '@/components/toast/store';
 
 function getUserLink(userProfile: UserProfile) {
   return (
@@ -79,6 +80,7 @@ export function GroupingRequestNotification({
 }) {
   const { confirm } = useAlert();
   const { showLoading, dismissLoading } = useLoadingStoreAction();
+  const addToast = useToastStore((s) => s.add);
 
   const revokeMutation = useRevokeGroupingRequest();
   const revoke = async (id: GroupingRequestId) => {
@@ -109,7 +111,13 @@ export function GroupingRequestNotification({
     if (!confirmed) return;
     try {
       showLoading();
-      await acceptMutation.mutateAsync(id);
+      const res = await acceptMutation.mutateAsync(id);
+      if (!res.success) {
+        addToast({
+          type: 'error',
+          title: res.reason ?? 'please try again later',
+        });
+      }
     } catch (err) {
     } finally {
       dismissLoading();

@@ -45,7 +45,9 @@ export async function revokeGroupingRequest(requestId: GroupingRequestId) {
 }
 
 export async function acceptGroupingRequest(requestId: GroupingRequestId) {
-  const { data } = await agentAuthed.put(`/team/request/${requestId}/accept`);
+  const { data } = await agentAuthed.put<{ success: boolean; reason: string }>(
+    `/team/request/${requestId}/accept`,
+  );
   return data;
 }
 export async function declineGroupingRequest(requestId: GroupingRequestId) {

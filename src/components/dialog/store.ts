@@ -18,7 +18,10 @@ export type DialogsKeys = keyof Dialogs;
 export type CloseDialogFunc = <T extends DialogsKeys>(name: T) => void;
 
 type Actions = {
-  open: <T extends DialogsKeys>(name: T, data: Dialogs[T]) => void;
+  open: <T extends DialogsKeys>(
+    name: T,
+    data: Dialogs[T] | ((v: Dialogs[T]) => Dialogs[T]),
+  ) => void;
   close: CloseDialogFunc;
 };
 
@@ -31,7 +34,12 @@ export const useDialogStore = create<State & Actions>((set) => ({
     email_change: undefined,
   },
   open: (name, data) =>
-    set((old) => ({ dialogs: { ...old.dialogs, [name]: data } })),
+    set((old) => ({
+      dialogs: {
+        ...old.dialogs,
+        [name]: typeof data === 'function' ? data(old.dialogs[name]) : data,
+      },
+    })),
 
   close: (name) =>
     set((old) => ({ dialogs: { ...old.dialogs, [name]: undefined } })),

@@ -110,7 +110,7 @@ export interface Project {
 }
 export interface TeamMember {
   id: string;
-  teamId: number;
+  teamId: TeamID;
   userId: UserID;
   teamRole: RoleUnion;
   isLeader: boolean;
