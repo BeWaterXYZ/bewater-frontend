@@ -25,10 +25,7 @@ export async function getChallengeTeams(challengeId: ChallengeID) {
 }
 
 export async function getTeam(teamId: TeamID) {
-  const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`, {
-    cache: 'force-cache',
-    next: { revalidate: 10 },
-  });
+  const { data } = await agentAnon.get<{ team: Team }>(`/team/${teamId}`);
   return data.team;
 }
 

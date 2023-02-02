@@ -95,7 +95,7 @@ export default async function Page({ params }: any) {
   );
 }
 
-export const revalidate = 60;
+export const revalidate = 0;
 
 export async function generateStaticParams({ params }: any) {
   const { challengeId } = challengeSchema.parse(params);
