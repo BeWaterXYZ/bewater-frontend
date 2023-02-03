@@ -7,7 +7,7 @@ const links = [
   {
     label: 'Introduction',
     path: '/',
-    segment: '(intro)',
+    segment: null,
   },
   {
     label: 'Teams',
@@ -28,10 +28,11 @@ const links = [
 
 export function ChallengeNav({ challengeId }: { challengeId: string }) {
   let segment = useSelectedLayoutSegment();
+
   return (
     <nav className="w-full body-3 flex justify-center border-b border-white/20">
       {links.map((link) => {
-        let isAcitve = segment && link.segment === segment;
+        let isAcitve = link.segment === segment;
 
         return (
           <Link
