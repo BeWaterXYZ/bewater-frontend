@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { challengeSchema } from '../param-schema';
+import { challengeSchema } from './param-schema';
 import { Timeline } from './timeline';
 
 export default async function ChallengeIntro({ params }: any) {

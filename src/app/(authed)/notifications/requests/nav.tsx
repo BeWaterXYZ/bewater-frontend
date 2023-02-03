@@ -6,11 +6,11 @@ import { useSelectedLayoutSegments } from 'next/navigation';
 export function Nav() {
   const links = [
     {
-      path: '/user/notifications/requests/received',
+      path: '/notifications/requests/received',
       label: 'Received',
     },
     {
-      path: '/user/notifications/requests/sent',
+      path: '/notifications/requests/sent',
       label: 'Sent',
     },
   ];

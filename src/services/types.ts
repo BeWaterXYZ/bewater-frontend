@@ -37,7 +37,6 @@ export interface Challenge {
   requirements: string[];
   startTime: string;
   endTime: string;
-  teamUpDeadline: string;
   totalAward: number;
   awardCurrency: string;
   status: 'DRAFT' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED';
@@ -67,7 +66,7 @@ export interface Judge {
 
 export interface Milestone {
   dueDate: string;
-  stageName: string;
+  stageName: 'Teaming' | 'Project Submission';
 }
 
 export interface Sponsorship {

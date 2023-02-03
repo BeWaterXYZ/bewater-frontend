@@ -1,7 +1,20 @@
 'use client';
-import { Team, Challenge } from '@/services/types';
+import { Team, Challenge, Milestone } from '@/services/types';
+import { compareDesc, parseISO } from 'date-fns';
+import { compareAsc } from 'date-fns/esm';
 import Image from 'next/image';
 import { Countdown } from './countdown';
+
+function getCurMileStone(milestones: Milestone[]) {
+  return milestones.filter(
+    (ms) => compareDesc(parseISO(ms.dueDate), new Date()) < 0,
+  )[0];
+}
+
+const wordingMap: Record<Milestone['stageName'], string> = {
+  Teaming: 'TEAM FORMATION WILL END IN',
+  'Project Submission': 'SUBMISSION WILL END IN',
+};
 
 interface ChallengeTeamsInfoProps {
   teams: Team[];
@@ -13,6 +26,9 @@ export function ChallengeTeamsInfo({
 }: ChallengeTeamsInfoProps) {
   const team_len = teams.length;
   const team_active_len = teams.filter((t) => t.status === 'ACTIVE').length;
+  const curMileStone = getCurMileStone(challenge.milestones);
+
+  console.log(curMileStone);
 
   return (
     <div className="my-10  gap-10 flex justify-between flex-col lg:flex-row">
@@ -27,12 +43,12 @@ export function ChallengeTeamsInfo({
           />
         </div>
         <div className="flex flex-col justify-around">
-          <p className="body-1 text-[#701A75] font-bold">
-            TEAM FORMATION WILL END IN
+          <p className="body-2 text-[#701A75] font-bold">
+            {wordingMap[curMileStone.stageName]}
           </p>
           <p className="heading-5">
             {' '}
-            <Countdown deadline={challenge.teamUpDeadline} />
+            <Countdown deadline={curMileStone.dueDate} />
           </p>
         </div>
       </div>
@@ -45,18 +61,34 @@ export function ChallengeTeamsInfo({
             height={80}
           />
         </div>
-        <div className="flex flex-col justify-around">
-          <p className="body-2 ">
-            <strong className="heading-4">{team_len}</strong> teams are ready to
-            challenge
-          </p>
-          <p className="body-2 ">
-            <strong className="heading-4   text-[#F62584] ">
-              {team_active_len}
-            </strong>{' '}
-            teams are looking for builders
-          </p>
-        </div>
+        {curMileStone.stageName === 'Teaming' ? (
+          <div className="flex flex-col justify-around">
+            <p className="body-2 ">
+              <strong className="heading-4">{team_len}</strong> teams are ready
+              to challenge
+            </p>
+            <p className="body-2 ">
+              <strong className="heading-4   bg-[linear-gradient(150.64deg,_#F62584_0%,_#480CA7_100%)] [background-clip:text] [-webkit-text-fill-color:transparent] ">
+                {team_active_len}
+              </strong>{' '}
+              teams are looking for builders
+            </p>
+          </div>
+        ) : null}
+
+        {curMileStone.stageName === 'Project Submission' ? (
+          <div className="flex flex-col justify-around">
+            <p className="body-2 text-[#3730A3] font-bold">
+              TEAM FORMATION HAS ENDED
+            </p>
+            <p className="body-2 ">
+              <strong className="heading-4  bg-[linear-gradient(150.64deg,_#F62584_0%,_#480CA7_100%)] [background-clip:text] [-webkit-text-fill-color:transparent]">
+                {team_len}
+              </strong>{' '}
+              teams in this challenge
+            </p>
+          </div>
+        ) : null}
       </div>
     </div>
   );
