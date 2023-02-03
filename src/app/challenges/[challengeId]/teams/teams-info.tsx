@@ -1,7 +1,6 @@
 'use client';
-import { Team, Challenge, Milestone } from '@/services/types';
+import { Challenge, Milestone, Team } from '@/services/types';
 import { compareDesc, parseISO } from 'date-fns';
-import { compareAsc } from 'date-fns/esm';
 import Image from 'next/image';
 import { Countdown } from './countdown';
 
@@ -28,10 +27,10 @@ export function ChallengeTeamsInfo({
   const team_active_len = teams.filter((t) => t.status === 'ACTIVE').length;
   const curMileStone = getCurMileStone(challenge.milestones);
 
-  console.log(curMileStone);
+  if (!curMileStone) return null;
 
   return (
-    <div className="my-10  gap-10 flex justify-between flex-col lg:flex-row">
+    <div className="mt-10 my-6  gap-10 flex justify-between flex-col lg:flex-row">
       <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#310D37] to-[#310d3700] border border-[#310D37]">
         <div>
           <Image

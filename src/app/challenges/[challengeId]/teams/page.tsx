@@ -71,7 +71,7 @@ export default function ChallengeTeams({ params }: any) {
   if (isLoading || isLoadingTeam) return <Loading />;
   if (!challenge || !teams) return null;
 
-  const { status, tag, role } = querySchema.parse(Object.fromEntries(sp));
+  const { tag, role } = querySchema.parse(Object.fromEntries(sp));
   const teamsFilteredSorted = filterAndSortTeam(
     teams,
     role,
@@ -82,7 +82,7 @@ export default function ChallengeTeams({ params }: any) {
   return (
     <div className="body-1 text-center">
       <ChallengeTeamsInfo challenge={challenge} teams={teams} />
-      <div className="flex flex-wrap gap-10">
+      <div className="flex flex-wrap gap-10 pt-4">
         <div className="w-full lg:w-[200px]">
           <TeamFilter teams={teams} />
         </div>
