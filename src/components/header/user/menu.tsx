@@ -13,7 +13,6 @@ interface UserMenuProps {
 export const UserMenu = ({ user }: UserMenuProps) => {
   const clearStore = useAuthStore((s) => s.clear);
   const logout = () => {
-    // fix me
     clearStore();
     window.location.href = '/';
   };

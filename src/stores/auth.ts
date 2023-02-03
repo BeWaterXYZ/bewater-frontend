@@ -9,6 +9,7 @@ interface State {
   token: string;
   expireAt: number;
   user?: UserProfile;
+  walletAddress: string;
 }
 
 interface Actions {
@@ -34,6 +35,7 @@ const init = {
   token: '',
   user: undefined,
   expireAt: 0,
+  walletAddress: '',
 };
 export const useAuthStore = create<State & Actions>()(
   persist(

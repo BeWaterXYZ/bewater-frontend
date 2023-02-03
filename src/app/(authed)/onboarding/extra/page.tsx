@@ -29,7 +29,7 @@ export default function Page() {
           help others recognize you.
         </p>
 
-        <FormOnboardingExtra user={user!} onComplete={onComplete} />
+        <FormOnboardingExtra onComplete={onComplete} />
       </div>
     </div>
   );

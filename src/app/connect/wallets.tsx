@@ -46,6 +46,7 @@ export function WalletOptions() {
           setAuthState({
             token,
             user: userProfile,
+            walletAddress: address,
           });
 
           if (!userProfile) {

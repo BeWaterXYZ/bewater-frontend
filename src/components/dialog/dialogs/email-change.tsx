@@ -130,7 +130,7 @@ export default function EmailChangeDialog({
               {...register('email')}
             />
           </div>
-          <div className="relative -top-[3px]">
+          <div className="relative top-[4px]">
             <CountdownButton onClick={sendEmail} />
           </div>
         </div>

@@ -24,11 +24,10 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 interface Props {
-  user: UserProfile;
   onComplete: () => void;
 }
 
-export const FormOnboardingExtra = ({ user, onComplete }: Props) => {
+export const FormOnboardingExtra = ({ onComplete }: Props) => {
   const addToast = useToastStore((s) => s.add);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const mutation = useMutationUpdateUserProfile();

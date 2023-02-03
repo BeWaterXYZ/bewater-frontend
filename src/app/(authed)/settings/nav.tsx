@@ -16,7 +16,6 @@ const links = [
 
 export function Nav() {
   let segment = useSelectedLayoutSegment();
-  console.log({ segment });
   return (
     <nav className=" w-full flex flex-row lg:flex-col ">
       {links.map((link) => (

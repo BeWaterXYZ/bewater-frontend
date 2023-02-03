@@ -38,7 +38,9 @@ export async function getEmailVerificationCode(emailAddress: string) {
   return data;
 }
 
-export async function submitCreateUserProfile(userProfile: UserProfile) {
+export async function submitCreateUserProfile(
+  userProfile: Partial<UserProfile>,
+) {
   const { data } = await agentAuthed.post<CreateUserProfileResponse>(
     '/user/email/create',
     userProfile,

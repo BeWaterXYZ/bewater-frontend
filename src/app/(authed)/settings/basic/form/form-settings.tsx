@@ -25,7 +25,6 @@ interface Props {
 }
 
 export const FormUserSettings = ({ data }: Props) => {
-  // todo , make scheme reusable
   const schema = z
     .object({
       userName: validationSchema.userName(data.userProfile?.userName ?? ''),

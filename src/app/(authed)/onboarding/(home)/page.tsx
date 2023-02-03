@@ -7,7 +7,7 @@ import { FormOnboarding } from './form';
 
 export default function Page() {
   const [mounted, setMounted] = useState(false);
-  const user = useAuthStore((s) => s.user);
+  const walletAddress = useAuthStore((s) => s.walletAddress);
   const navigator = useNavigator();
   const onComplete = () => {
     navigator.gotoOnboardingExtra();
@@ -22,10 +22,10 @@ export default function Page() {
         {/* fix me  */}
         {mounted && (
           <p className="break-words body-2 text-grey-500 my-4">
-            {user?.walletAddress}
+            {walletAddress}
           </p>
         )}
-        <FormOnboarding user={user!} onComplete={onComplete} />
+        <FormOnboarding onComplete={onComplete} />
       </div>
     </div>
   );

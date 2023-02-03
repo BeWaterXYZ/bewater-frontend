@@ -11,6 +11,7 @@ import {
   getEmailVerificationCode,
   submitCreateUserProfile,
 } from '@/services/user';
+import { useAuthStore } from '@/stores/auth';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -29,13 +30,14 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 interface Props {
-  user: UserProfile;
   onComplete: () => void;
 }
 
-export const FormOnboarding = ({ user, onComplete }: Props) => {
+export const FormOnboarding = ({ onComplete }: Props) => {
   const [verificationCodeSent, verificationCodeSentSet] = useState(false);
   const addToast = useToastStore((s) => s.add);
+  const walletAddress = useAuthStore((s) => s.walletAddress);
+  const setAuthState = useAuthStore((s) => s.setState);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const {
     register,
@@ -46,18 +48,15 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
     mode: 'onBlur',
     resolver: zodResolver(schema),
   });
-  const onSubmit = async (data: Inputs) => {
+  const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
       let res = await submitCreateUserProfile({
-        ...data,
-        // fix , todo
-        roles: [],
-        skills: [],
-        userId: user.userId!,
-        walletAddress: user.walletAddress!,
+        ...formData,
+        walletAddress,
       });
       if (res.userProfile) {
+        setAuthState({ user: res.userProfile });
         onComplete();
       } else if (!res.verified) {
         addToast({
@@ -73,9 +72,10 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
         });
       }
     } catch (err) {
+      console.error(err);
       addToast({
         title: 'An error occurs',
-        description: 'Create user failed, please visit the site later',
+        description: 'Create user failed, please visit the site later ',
         type: 'error',
       });
     } finally {
@@ -143,7 +143,7 @@ export const FormOnboarding = ({ user, onComplete }: Props) => {
             {...register('email')}
           />
         </div>
-        <div className="relative -top-[3px]">
+        <div className="relative top-[3px]">
           <CountdownButton onClick={sendEmail} />
         </div>
       </div>
