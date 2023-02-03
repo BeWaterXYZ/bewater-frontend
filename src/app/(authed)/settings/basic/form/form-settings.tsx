@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { UserProfile } from '@/services/types';
 import { useMutationUpdateUserProfile } from '@/services/user.query';
+import { validationSchema } from '@/schema';
 
 interface Props {
   user: UserProfile;
@@ -27,23 +28,11 @@ export const FormUserSettings = ({ data }: Props) => {
   // todo , make scheme reusable
   const schema = z
     .object({
-      userName: z
-        .string()
-        .regex(/^[A-Za-z0-9)_]*$/, {
-          message: 'only support alphanumeric and underscore',
-        })
-        .min(3, { message: 'At least 3 characters' })
-        .refine(checkUsername(data.userProfile?.userName ?? ''), {
-          message: 'The user name is taken',
-        }),
-      bio: z.string().optional(),
-      fullName: z.string().min(3, { message: 'At least 3 characters' }),
-      roles: z
-        .array(RoleSetScheme)
-        .max(5, { message: 'You can only choose 5 roles' }),
-      skills: z
-        .array(SkillSetScheme)
-        .max(10, { message: 'You can only choose 10 skills' }),
+      userName: validationSchema.userName(data.userProfile?.userName ?? ''),
+      bio: validationSchema.bio,
+      fullName: validationSchema.fullName,
+      roles: validationSchema.roles,
+      skills: validationSchema.skills,
     })
     .required();
 

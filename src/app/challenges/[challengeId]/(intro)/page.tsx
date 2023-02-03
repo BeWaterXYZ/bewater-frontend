@@ -105,7 +105,8 @@ export default async function ChallengeIntro({ params }: any) {
                 <div key={judge.id} className="w-[150px]">
                   <Aspect ratio={1 / 1}>
                     <Image
-                      fill
+                      height={150}
+                      width={150}
                       src={unsplash('women')}
                       className="object-cover w-full h-full"
                       alt={judge.name}
@@ -127,7 +128,7 @@ export default async function ChallengeIntro({ params }: any) {
         <div>
           <Link
             href={`/challenges/${challengeId}/teams`}
-            className="btn mono-4 text-day border-day uppercase w-64 py-4"
+            className="btn btn-primary-invert mono-4 text-day  uppercase w-64 py-6"
           >
             Go to team page
           </Link>

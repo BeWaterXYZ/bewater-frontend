@@ -2,6 +2,7 @@ import { Select, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
 import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
+import { validationSchema } from '@/schema';
 import { sendGroupingRequest } from '@/services/grouping-request';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -11,10 +12,8 @@ import { Dialogs } from '../store';
 
 const schema = z
   .object({
-    roles: z
-      .array(RoleSetScheme)
-      .max(1, { message: 'You can only choose one role' }),
-    message: z.string().min(3, 'At least 3 characters'),
+    roles: validationSchema.role,
+    message: validationSchema.text,
   })
   .required();
 

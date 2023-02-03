@@ -22,25 +22,17 @@ import {
 } from '@/services/team.query';
 import { Team } from '@/services/types';
 import { useAlert } from '@/components/alert/store';
+import { validationSchema } from '@/schema';
 
 const schema = z
   .object({
-    name: z.string().min(3, { message: 'At least 3 characters' }),
-    title: z.string().min(3, { message: 'At least 3 characters' }),
-    description: z.string(),
-    role: z
-      .array(RoleSetScheme)
-      .max(1, { message: 'You can only choose one role' }),
-    tags: z
-      .array(ProjectTagSetScheme)
-      .max(3, { message: 'You can only choose 3 skills' }),
-    roles: z
-      .array(RoleSetScheme)
-      .min(1, { message: 'choose at least one role' })
-      .max(5, { message: 'You can only choose 5 roles' }),
-    skills: z
-      .array(SkillSetScheme)
-      .max(10, { message: 'You can only choose 10 skills' }),
+    name: validationSchema.text,
+    title: validationSchema.text,
+    description: validationSchema.text,
+    role: validationSchema.role,
+    tags: validationSchema.tags,
+    roles: validationSchema.roles,
+    skills: validationSchema.skills,
   })
   .required();
 

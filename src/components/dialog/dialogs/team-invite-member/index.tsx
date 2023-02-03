@@ -1,22 +1,20 @@
-import { Input, Select, TextArea } from '@/components/form/control';
+import { Select, TextArea } from '@/components/form/control';
 import { UserSearch } from '@/components/form/control/user-search';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
-import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
+import { RoleSetOptions } from '@/constants/options/role';
+import { validationSchema } from '@/schema';
 import { sendGroupingRequest } from '@/services/grouping-request';
-import { Team } from '@/services/types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ArrowLeftIcon } from '@radix-ui/react-icons';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Dialogs, useDialogStore } from '../../store';
-import { ArrowLeftIcon } from '@radix-ui/react-icons';
-import { AxiosError } from 'axios';
+
 const schema = z.object({
   user: z.string(),
-  role: z
-    .array(RoleSetScheme)
-    .max(1, { message: 'You can only choose one role' }),
-  message: z.string().min(3, 'At least 3 characters'),
+  role: validationSchema.role,
+  message: validationSchema.text,
 });
 
 export type Inputs = z.infer<typeof schema>;

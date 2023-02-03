@@ -4,6 +4,7 @@ import { CountdownButton } from '@/components/countdown-button';
 import { Input } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
+import { validationSchema } from '@/schema';
 import { UserProfile } from '@/services/types';
 import {
   checkUsername,
@@ -18,18 +19,10 @@ import { z } from 'zod';
 
 const schema = z
   .object({
-    email: z.string().email(),
-    verificationCode: z.string().min(6, { message: '6 digits code' }),
-    userName: z
-      .string()
-      .regex(/^[A-Za-z0-9)_]*$/, {
-        message: 'only support alphanumeric and underscore',
-      })
-      .min(3, { message: 'At least 3 characters' })
-      .refine(checkUsername(''), {
-        message: 'The user name is taken',
-      }),
-    fullName: z.string().min(3, { message: 'At least 3 characters' }),
+    email: validationSchema.email,
+    verificationCode: validationSchema.verificationCode,
+    userName: validationSchema.userName(''),
+    fullName: validationSchema.fullName,
   })
   .required();
 

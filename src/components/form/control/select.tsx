@@ -40,7 +40,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
     singleValue: () => 'body-4',
-    multiValue: ({ data }) => data.classes.container,
+    multiValue: ({ data }) => data.classes.container + ' !my-1',
     multiValueLabel: ({ data }) => data.classes.text,
     multiValueRemove: () => 'hover:!bg-transparent',
     menu: () => '!bg-[#0F1021] !border !border-midnight',
@@ -61,29 +61,39 @@ export const Select = React.forwardRef(function Select_<T extends string>(
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
-          <RSelect
-            id={id}
-            isMulti={true}
-            classNames={styles}
-            options={options}
-            maxMenuHeight={148}
-            noOptionsMessage={() => 'no options'}
-            value={(field.value ?? []).map((value: string) =>
-              options.find((op) => value === op.value),
-            )}
-            onChange={(val) => {
-              let values = Array.from(val.values()).map((d) => d.value);
-              if (maxSelections) {
-                while (values.length > maxSelections) {
-                  values.shift();
+        render={({ field }) => {
+          let cur = field.value ?? [];
+
+          let reachMax = maxSelections ? cur.length === maxSelections : false;
+          let showOptions = !reachMax || maxSelections === 1;
+          return (
+            <RSelect
+              id={id}
+              isMulti={true}
+              classNames={styles}
+              options={showOptions ? options : []}
+              maxMenuHeight={148}
+              noOptionsMessage={() => {
+                if (cur.length === maxSelections)
+                  return 'You have reached max selections';
+                return 'no options';
+              }}
+              value={cur.map((value: string) =>
+                options.find((op) => value === op.value),
+              )}
+              onChange={(val) => {
+                let values = Array.from(val.values()).map((d) => d.value);
+                if (maxSelections) {
+                  while (values.length > maxSelections) {
+                    values.shift();
+                  }
                 }
-              }
-              field.onChange(values);
-            }}
-            onBlur={field.onBlur}
-          />
-        )}
+                field.onChange(values);
+              }}
+              onBlur={field.onBlur}
+            />
+          );
+        }}
       />
       <div
         className={clsx('whitespace-nowrap body-4  text-danger', {

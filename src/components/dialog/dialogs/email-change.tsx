@@ -3,6 +3,7 @@ import { Input, Select, TextArea } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
 import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
+import { validationSchema } from '@/schema';
 import { sendGroupingRequest } from '@/services/grouping-request';
 import { getEmailVerificationCode } from '@/services/user';
 import { useMutationUpdateEmail } from '@/services/user.query';
@@ -15,8 +16,8 @@ import { Dialogs } from '../store';
 
 const schema = z
   .object({
-    email: z.string().email(),
-    verificationCode: z.string().min(6, { message: '6 digits code' }),
+    email: validationSchema.email,
+    verificationCode: validationSchema.verificationCode,
   })
   .required();
 

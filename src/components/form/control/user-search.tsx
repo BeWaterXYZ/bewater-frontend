@@ -9,8 +9,8 @@ import {
   ClassNamesConfig,
   components,
   OptionProps,
-  SingleValueProps,
   SingleValue,
+  SingleValueProps,
 } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
@@ -87,7 +87,6 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     value,
     exclude = [],
   } = props;
-  console.log({ exclude });
   const id = useId();
   const styles: ClassNamesConfig<UserProfile> = {
     control: ({ isFocused }) => {

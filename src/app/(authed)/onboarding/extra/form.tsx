@@ -12,16 +12,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { UserProfile } from '@/services/types';
+import { validationSchema } from '@/schema';
 
 const schema = z
   .object({
-    roles: z
-      .array(RoleSetScheme)
-      .min(1, { message: 'choose at least one role' })
-      .max(5, { message: 'You can only choose 5 roles' }),
-    skills: z
-      .array(SkillSetScheme)
-      .max(10, { message: 'You can only choose 10 skills' }),
+    roles: validationSchema.roles,
+    skills: validationSchema.skills,
   })
   .required();
 
