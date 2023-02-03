@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import raxios from './redaxios';
 import { useAuthStore } from '@/stores/auth';
 import { CONFIGS } from '@/config';
 
@@ -17,10 +16,8 @@ const agentAuthed = axios.create({
 
 agentAuthed.interceptors.request.use(requestInterceptor);
 
-const agentAnon = raxios.create({
+const agentAnon = axios.create({
   baseURL: CONFIGS.API_ENDPOINT,
-  //make sure this fetch is the one from next.js
-  fetch: fetch,
 });
 
 export { agentAuthed, agentAnon };
