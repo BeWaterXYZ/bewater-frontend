@@ -14,7 +14,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
       <div className=" border border-gray-400/20  text-left bg-[#0B0C24] rounded h-full flex flex-col ">
         <div className="bg-[#1A1C40] p-4">
           <div className="">
-            <div className="flex items-center ">
+            <div className="flex items-center flex-wrap">
               <h2 className="body-2 font-bold pr-3">{team.project.name}</h2>
 
               {team.project.tags.map((tag) => (
