@@ -6,7 +6,7 @@ import {
   useSearchParams,
   useSelectedLayoutSegments,
 } from 'next/navigation';
-import { useQueryBuilder } from './query';
+import { useQueryBuilder } from '../query';
 
 {
   /* <button

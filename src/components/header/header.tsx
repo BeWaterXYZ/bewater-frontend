@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Nav } from './nav';
-import dynamic from 'next/dynamic';
+import dynamicLoad from 'next/dynamic';
 import { HeaderScrollHelper } from './scroll-helper';
 import Image from 'next/image';
 
@@ -10,7 +10,7 @@ interface HeaderImplProps {
   user: React.ReactNode;
 }
 
-const UserArea = dynamic(() => import('./user'), {
+const UserArea = dynamicLoad(() => import('./user'), {
   ssr: false,
 });
 

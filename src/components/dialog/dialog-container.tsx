@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import dynamicLoad from 'next/dynamic';
 import { ComponentType } from 'react';
 
 import { Dialog } from './dialog';
@@ -14,12 +14,14 @@ type DialogMap = Record<
 >;
 
 const dialogMaps: DialogMap = {
-  metamask_not_support: dynamic(() => import('./dialogs/metamask-not-support')),
-  team_join: dynamic(() => import('./dialogs/team-join')),
-  team_create: dynamic(() => import('./dialogs/team-create')),
-  team_manage_member: dynamic(() => import('./dialogs/team-manage-member')),
-  team_invite_member: dynamic(() => import('./dialogs/team-invite-member')),
-  email_change: dynamic(() => import('./dialogs/email-change')),
+  metamask_not_support: dynamicLoad(
+    () => import('./dialogs/metamask-not-support'),
+  ),
+  team_join: dynamicLoad(() => import('./dialogs/team-join')),
+  team_create: dynamicLoad(() => import('./dialogs/team-create')),
+  team_manage_member: dynamicLoad(() => import('./dialogs/team-manage-member')),
+  team_invite_member: dynamicLoad(() => import('./dialogs/team-invite-member')),
+  email_change: dynamicLoad(() => import('./dialogs/email-change')),
 };
 
 export function DialogContainer({

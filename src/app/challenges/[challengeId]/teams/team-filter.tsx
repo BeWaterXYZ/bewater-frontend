@@ -3,7 +3,7 @@ import { ProjectTagSet } from '@/constants/options/project-tag';
 import { RoleSet } from '@/constants/options/role';
 import { Team } from '@/services/types';
 import clsx from 'clsx';
-import { useQueryBuilder } from '../projects/query';
+import { useQueryBuilder } from '../query';
 
 function FilterTag({
   keyword,
