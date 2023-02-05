@@ -26,7 +26,7 @@ export default function Page() {
   return (
     <div className="flex flex-row h-full container flex-wrap min-h-[50vh]">
       <div className="w-full mt-6 flex flex-col gap-3">
-        <div className="rounded p-3 border border-midnight bg-[#0B0C24] flex gap-2 ">
+        <div className="rounded p-3 border border-gray-800 bg-[#0B0C24] flex gap-2 ">
           <div className="flex  p-2">
             <Image
               src="/icons/wallet.svg"
@@ -43,7 +43,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="rounded p-3 border border-midnight bg-[#0B0C24] flex gap-2 justify-between ">
+        <div className="rounded p-3 border border-gray-800 bg-[#0B0C24] flex gap-2 justify-between ">
           <div className="flex  p-2">
             <Image src="/icons/email.svg" width={24} height={24} alt="email" />
           </div>

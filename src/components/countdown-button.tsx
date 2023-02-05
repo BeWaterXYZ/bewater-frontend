@@ -24,7 +24,7 @@ export function CountdownButton(
   };
   return (
     <button
-      className={clsx('btn btn-secondary', { 'text-grey-400': countdown > 0 })}
+      className={clsx('btn btn-secondary', { 'text-gray-400': countdown > 0 })}
       type="button"
       onClick={onClick}
     >

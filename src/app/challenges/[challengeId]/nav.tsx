@@ -39,7 +39,7 @@ export function ChallengeNav({ challengeId }: { challengeId: string }) {
             key={link.path}
             href={`/challenges/${challengeId}${link.path}`}
             className={clsx('py-3 mx-3 text-center', {
-              'text-day border-b-2 border-day [text-shadow:0_0_6px_theme(colors.day)]':
+              'text-brand-500 border-b-2 border-brand-500 [text-shadow:0_0_6px_theme(colors.brand.500)]':
                 isAcitve,
             })}
           >

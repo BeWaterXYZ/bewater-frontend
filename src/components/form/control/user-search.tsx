@@ -27,10 +27,10 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
           />
         </div>
         <div className="flex flex-col justify-around">
-          <div className="body-5 text-grey-400">
+          <div className="body-5 text-gray-400">
             {data.fullName ?? data.userName}
           </div>
-          <div className="body-5 text-grey-600">@{data.userName}</div>
+          <div className="body-5 text-gray-600">@{data.userName}</div>
         </div>
       </div>
     </components.Option>
@@ -45,7 +45,7 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
         src={props.data.avatarURI}
         walletAddress={props.data.walletAddress}
       />
-      <span className="body-4 text-grey-400">
+      <span className="body-4 text-gray-400">
         {' '}
         {props.data.fullName ?? props.data.userName}
       </span>
@@ -92,21 +92,21 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     control: ({ isFocused }) => {
       return clsx('control !p-0 !flex !shadow-none', {
         error: error,
-        '!border-day hover:!border-day': isFocused,
+        '!border-brand-500 hover:!border-brand-500': isFocused,
       });
     },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
     singleValue: () => 'body-4 !text-white',
-    menu: () => '!bg-[#0F1021] !border !border-midnight ',
-    option: () => '!text-white hover:!bg-midnight !bg-transparent',
+    menu: () => '!bg-[#0F1021] !border !border-gray-800 ',
+    option: () => '!text-white hover:!bg-gray-800 !bg-transparent',
     input: () => '!text-white',
   };
   return (
     <div className={clsx('block pb-2', className)}>
       {label ? (
         <label
-          className="block body-3 py-1 text-grey-500 font-bold"
+          className="block body-3 py-1 text-gray-500 font-bold"
           htmlFor={id}
         >
           {label}

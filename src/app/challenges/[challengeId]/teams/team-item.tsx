@@ -27,7 +27,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
               ))}
             </div>
           </div>
-          <div className="body-2 text-grey-300"> {team.name}</div>
+          <div className="body-2 text-gray-300"> {team.name}</div>
         </div>
         <div className="flex flex-col p-4 h-full">
           <div className="flex gap-1 flex-wrap flex-1 pb-4">

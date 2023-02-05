@@ -7,15 +7,15 @@
     }
   }
   .btn-primary {
-    @apply border-day bg-day text-night hover:bg-[#00CCCC] hover:border-[#00CCCC];
+    @apply border-brand-500 bg-brand-500 text-night hover:bg-brand-600 hover:border-brand-600;
     &[disabled] {
-      @apply bg-[#006666] border-[#006666] text-[#94A3B8];
+      @apply bg-brand-800 border-brand-800 text-gray-400;
     }
   }
   .btn-primary-invert {
-    @apply border-day bg-night text-day  hover:border-[#00CCCC];
+    @apply border-brand-500 bg-night text-brand-500  hover:border-brand-600;
     &[disabled] {
-      @apply border-[#006666]  text-[#94A3B8];
+      @apply border-brand-800  text-gray-400;
     }
   }
   .btn-secondary {

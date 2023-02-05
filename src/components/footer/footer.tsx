@@ -8,7 +8,7 @@ export const Footer = ({}: Props) => {
   return (
     <footer id="main-footer" className={clsx('w-full heading-5  ')}>
       <div className="container mx-auto py-8 flex flex-col gap-2 justify-between items-center md:flex-row md:items-start">
-        <div className="body-4 text-grey-100">
+        <div className="body-4 text-gray-100">
           © {new Date().getFullYear()} BeWater. All Rights Reserved.
         </div>
         <div className="flex flex-row gap-x-4 items-center justify-end">

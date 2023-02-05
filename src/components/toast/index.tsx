@@ -17,7 +17,7 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
           <Toast.Root
             key={toast.id}
             className={clsx(
-              'z-100 rounded shadow-sm p-4 relative bg-gray-800 border border-midnight',
+              'z-100 rounded shadow-sm p-4 relative bg-gray-800 border border-gray-800',
             )}
           >
             <div className="flex flex-row gap-2">
@@ -39,7 +39,7 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
                 <Toast.Title className="body-3 font-bold">
                   {toast.title}
                 </Toast.Title>
-                <Toast.Description className="body-4 text-grey-400">
+                <Toast.Description className="body-4 text-gray-400">
                   {toast.description}
                 </Toast.Description>
               </div>
@@ -49,7 +49,7 @@ export function ToastContainer({ toasts }: ToastContainerProps) {
                     className="absolute z-10 top-4 right-4 rounded-full p-1"
                     aria-label="Close"
                   >
-                    <Cross2Icon className="text-grey-400" />
+                    <Cross2Icon className="text-gray-400" />
                   </div>
                 </Toast.Close>
               </div>

@@ -21,7 +21,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
           ) : null}
           <TagRole label={member.teamRole} />
         </div>
-        <div className="body-3 text-grey-500">at {member.team?.name}</div>
+        <div className="body-3 text-gray-500">at {member.team?.name}</div>
       </div>
       <div className="flex ">
         {(member.team?.teamMembers ?? []).map((m, index) => {

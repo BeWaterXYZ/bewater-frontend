@@ -38,18 +38,18 @@ function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
   );
   return sentOrReceived ? (
     req.type === 'APPLICATION' ? (
-      <p className="body-3 text-grey-400">You wanted to join {teamLink}</p>
+      <p className="body-3 text-gray-400">You wanted to join {teamLink}</p>
     ) : (
-      <p className="body-3 text-grey-400">
+      <p className="body-3 text-gray-400">
         You invited {getUserLink(req.recipient!)} to join {teamLink}
       </p>
     )
   ) : req.type === 'APPLICATION' ? (
-    <p className="body-3 text-grey-400">
+    <p className="body-3 text-gray-400">
       {getUserLink(req.sender!)} wanted to join {teamLink}
     </p>
   ) : (
-    <p className="body-3 text-grey-400">
+    <p className="body-3 text-gray-400">
       {getUserLink(req.sender!)} has invited you to join {teamLink}
     </p>
   );
@@ -164,7 +164,7 @@ export function GroupingRequestNotification({
       <div className="flex flex-1 flex-col justify-around">
         <div className="">{title}</div>
         <div className="">
-          <p className="body-5 text-grey-500">
+          <p className="body-5 text-gray-500">
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
             <Link
               href={`/challenges/${req.team.challenge.id}`}
@@ -175,7 +175,7 @@ export function GroupingRequestNotification({
           </p>
         </div>
         <div className="flex-1 bg-white/5 p-2 my-4">
-          <p className="body-4 text-grey-400">{req.message} </p>
+          <p className="body-4 text-gray-400">{req.message} </p>
         </div>
         {req.status === 'PENDING' ? (
           sentOrReceived ? (
@@ -204,7 +204,7 @@ export function GroupingRequestNotification({
             </div>
           )
         ) : (
-          <div className="body-3 text-grey-500 body-5">
+          <div className="body-3 text-gray-500 body-5">
             {getStatus(req, sentOrReceived)}
           </div>
         )}

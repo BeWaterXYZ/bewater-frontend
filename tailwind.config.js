@@ -18,11 +18,14 @@ module.exports = {
         secondary: ['var(--font-secondary)', ...fontFamily.sans],
       },
       colors: {
-        night: '#04051B',
-        midnight: '#1E293B',
-        day: '#00ffff',
+        brand: {
+          500: '#00FFFF',
+          600: '#00CCCC',
+          800: '#006666',
+        },
         danger: '#F43F5E',
-        grey: {
+        night: '#04051B',
+        gray: {
           100: '#F1F5F9',
           200: '#E2E8F0',
           300: '#CBD5E1',

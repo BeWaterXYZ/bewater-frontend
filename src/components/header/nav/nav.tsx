@@ -19,8 +19,9 @@ export function NavItem({ item, underline, className }: NavItemProps) {
       className={clsx(
         ' flex items-center h-full body-2 font-bold outline-none py-2',
         {
-          'text-day [text-shadow:0_0_6px_theme(colors.day)]': item.active,
-          'border-b-2 border-b-day': underline && item.active,
+          'text-brand-500 [text-shadow:0_0_6px_theme(colors.brand.500)]':
+            item.active,
+          'border-b-2 border-b-brand-500': underline && item.active,
         },
         className,
       )}

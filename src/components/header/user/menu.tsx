@@ -27,7 +27,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               walletAddress={user.walletAddress}
             />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content className="absolute top-[100%] rounded right-0 body-2 w-60 border border-midnight bg-night  shadow-midnight">
+          <NavigationMenu.Content className="absolute top-[100%] rounded right-0 body-2 w-60 border border-gray-800 bg-night  shadow-gray-800">
             <div className="p-4">
               <p className="body-2">
                 {user.walletAddress?.substring(0, 8)} ...
@@ -38,17 +38,17 @@ export const UserMenu = ({ user }: UserMenuProps) => {
               </p>
             </div>
             <ul className="font-medium ">
-              <li className="border-t p-4 py-2 border-midnight ">
+              <li className="border-t p-4 py-2 border-gray-800 ">
                 <Link href={`/user/${user.userId}`} className="body-2">
                   Your Profile
                 </Link>
               </li>
-              <li className="border-t p-4 py-2 border-midnight">
+              <li className="border-t p-4 py-2 border-gray-800">
                 <Link href="/settings/basic" className="body-2">
                   Account Settings
                 </Link>
               </li>
-              <li className="border-t p-4 py-2 border-midnight ">
+              <li className="border-t p-4 py-2 border-gray-800 ">
                 <Link
                   href="/notifications/requests/received"
                   className="body-2"
@@ -56,7 +56,7 @@ export const UserMenu = ({ user }: UserMenuProps) => {
                   Notifications
                 </Link>
               </li>
-              <li className="border-t p-4 py-2 border-midnight">
+              <li className="border-t p-4 py-2 border-gray-800">
                 <button className="body-2" onClick={logout}>
                   Disconnect
                 </button>

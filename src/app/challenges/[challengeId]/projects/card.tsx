@@ -9,7 +9,7 @@ export function Card() {
       <Aspect ratio={4 / 3}>
         <Image fill src={url} alt="crypto" className="object-cover" />
       </Aspect>
-      <div className="p-4 bg-white/5 border-l border-r border-b border-midnight">
+      <div className="p-4 bg-white/5 border-l border-r border-b border-gray-800">
         <h2 className="heading-6">Awesome DeFi Idea</h2>
         <p className="body-3 text-gray-400 text-left">
           Yet another Layer 2 Idea is placeholder text used in commonly used in

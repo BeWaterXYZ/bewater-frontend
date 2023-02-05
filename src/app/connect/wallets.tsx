@@ -84,7 +84,7 @@ export function WalletOptions() {
           key={connector.id}
           onClick={() => void onConnectorClick(connector)}
         >
-          <span className=" text-day uppercase">Connect Wallet</span>
+          <span className=" text-brand-500 uppercase">Connect Wallet</span>
         </button>
       </div>
     </>

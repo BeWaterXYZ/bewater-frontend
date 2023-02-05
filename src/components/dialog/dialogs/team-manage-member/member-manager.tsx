@@ -71,7 +71,7 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
       {editing ? (
         //  {/* edting */}
         <div
-          className="absolute top-0 right-0 bg-[#0F1021] border border-grey-800  z-10"
+          className="absolute top-0 right-0 bg-[#0F1021] border border-gray-800  z-10"
           onClick={() => editingSet(false)}
           ref={ref}
         >
@@ -80,7 +80,7 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
               return (
                 <div
                   key={role.value}
-                  className="flex gap-2 justify-between py-1 hover:bg-grey-600 cursor-pointer"
+                  className="flex gap-2 justify-between py-1 hover:bg-gray-600 cursor-pointer"
                   onClick={updateRole(role.value)}
                 >
                   <TagRole label={role.value} />
@@ -92,7 +92,7 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
             })}
           </div>
           {member.isLeader ? null : (
-            <div className="border-t border-t-grey-800 p-2 flex gap-2 items-center">
+            <div className="border-t border-t-gray-800 p-2 flex gap-2 items-center">
               <Cross1Icon className="text-danger"></Cross1Icon>
               <button
                 className="bdoy-4 text-danger"

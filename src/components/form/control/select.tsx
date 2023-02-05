@@ -34,7 +34,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     control: ({ isFocused }) => {
       return clsx('control !p-0 !flex !shadow-none ', {
         error: error,
-        '!border-day hover:!border-day': isFocused,
+        '!border-brand-500 hover:!border-brand-500': isFocused,
       });
     },
     clearIndicator: () => '!hidden',
@@ -43,14 +43,14 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     multiValue: ({ data }) => data.classes.container + ' !my-1',
     multiValueLabel: ({ data }) => data.classes.text,
     multiValueRemove: () => 'hover:!bg-transparent',
-    menu: () => '!bg-[#0F1021] !border !border-midnight',
-    option: () => '!text-white hover:!bg-midnight !bg-transparent',
+    menu: () => '!bg-[#0F1021] !border !border-gray-800',
+    option: () => '!text-white hover:!bg-gray-800 !bg-transparent',
   };
   return (
     <div className={clsx('block ', className)}>
       {label ? (
         <label
-          className="block body-4 py-1 text-grey-500 font-bold "
+          className="block body-4 py-1 text-gray-500 font-bold "
           htmlFor={id}
         >
           {label}

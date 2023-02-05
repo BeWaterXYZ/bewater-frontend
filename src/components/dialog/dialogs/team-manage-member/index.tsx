@@ -19,7 +19,7 @@ export default function TeamManageMemberDialog({
 
   return (
     <div className="flex flex-col justify-center w-[80vw] max-w-md">
-      <p className="heading-6 text-grey-200">Manage Members</p>
+      <p className="heading-6 text-gray-200">Manage Members</p>
       <div className="mt-4">
         {data?.teamMembers.map((m) => (
           <TeamMemberRow key={m.id} member={m} />
@@ -27,7 +27,7 @@ export default function TeamManageMemberDialog({
       </div>
 
       <div className="py-4">
-        <button className="text-grey-500 body-5" onClick={gotoInviteMember}>
+        <button className="text-gray-500 body-5" onClick={gotoInviteMember}>
           + Invite a new member
         </button>
       </div>

@@ -148,7 +148,7 @@ export const FormOnboarding = ({ onComplete }: Props) => {
         </div>
       </div>
       {verificationCodeSent ? (
-        <p className="body-5 text-grey-500">
+        <p className="body-5 text-gray-500">
           We’ve just sent you a temporary verification code. Please check your
           inbox and paste the code below.
         </p>

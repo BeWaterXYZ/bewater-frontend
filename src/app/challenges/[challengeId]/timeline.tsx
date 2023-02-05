@@ -31,12 +31,12 @@ function prepareData(milestones: Milestone[]) {
 }
 
 const glowing =
-  "h-[10px] w-[10px] rounded-full bg-day  shadow-[0_0_0_2px_white,_0_0_0_3px_theme('colors.day'),_0_0_14px_2px_white]";
+  "h-[10px] w-[10px] rounded-full bg-brand-500  shadow-[0_0_0_2px_white,_0_0_0_3px_theme('colors.brand.500'),_0_0_14px_2px_white]";
 
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
   return (
-    <div className="body-1 text-center border border-[#334155] flex justify-between items-center p-12 lg:px-32 lg:my-24">
+    <div className="body-1 text-center border border-gray-700 flex justify-between items-center p-12 lg:px-32 lg:my-24">
       {data.map((node, index) =>
         node.type === 'date' ? (
           <div className="w-4 flex flex-col items-center" key={index}>
@@ -48,7 +48,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
             ) : (
               <div
                 className={clsx('w-4 h-4 rounded-full bg-white my-4', {
-                  '!bg-day': node.passed,
+                  '!bg-brand-500': node.passed,
                   [glowing]: node.isOn,
                 })}
               ></div>
@@ -62,7 +62,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
             style={{ flexGrow: node.duration, flexBasis: 100 }}
           >
             <div
-              className="bg-day h-full "
+              className="bg-brand-500 h-full "
               style={{ width: node.progress! * 100 + '%' }}
             ></div>
             {node.progress! > 0 && node.progress! < 1 && (

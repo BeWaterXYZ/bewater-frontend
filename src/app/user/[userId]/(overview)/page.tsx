@@ -16,7 +16,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <div className="mb-8">
-        <p className="body-2 text-grey-500 font-bold">Challenges</p>
+        <p className="body-2 text-gray-500 font-bold">Challenges</p>
         <div className="flex gap-4 flex-wrap my-4 flex-col lg:flex-row ">
           {profile.teamMembers.map((tm) => {
             return (
@@ -45,7 +45,7 @@ export default async function Page({ params }: any) {
         </div>
       </div>
       <div>
-        <p className="body-2 text-grey-500 font-bold">Teamwork</p>
+        <p className="body-2 text-gray-500 font-bold">Teamwork</p>
         <div className="flex gap-4 flex-wrap my-4">
           {profile.teamMembers.map((tm) => {
             return <TeamCard member={tm} key={tm.id} />;
