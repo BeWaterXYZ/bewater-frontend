@@ -1,18 +1,34 @@
 @layer components {
   .btn {
-    @apply whitespace-nowrap inline-flex items-center justify-center h-9 body-3  px-4 border border-solid rounded-sm cursor-pointer w-auto  box-border hover:brightness-90 transition duration-[.15s] ease-out leading-9;
+    @apply whitespace-nowrap inline-flex items-center justify-center h-9 body-3  px-4 border border-solid rounded-sm cursor-pointer w-auto  box-border  transition duration-[.15s] ease-out leading-9;
+
+    &[disabled] {
+      @apply cursor-not-allowed;
+    }
   }
   .btn-primary {
-    @apply border-day bg-day text-night;
+    @apply border-day bg-day text-night hover:bg-[#00CCCC] hover:border-[#00CCCC];
+    &[disabled] {
+      @apply bg-[#006666] border-[#006666] text-[#94A3B8];
+    }
   }
-  .btn-primary-invert{
-    @apply border-day bg-night text-day;
+  .btn-primary-invert {
+    @apply border-day bg-night text-day  hover:border-[#00CCCC];
+    &[disabled] {
+      @apply border-[#006666]  text-[#94A3B8];
+    }
   }
   .btn-secondary {
-    @apply border-[#2F3153] bg-[#2F3153] text-white;
+    @apply border-[#2F3153] bg-[#2F3153] text-white hover:bg-[#373969] hover:border-[#373969];
+    &[disabled] {
+      @apply bg-[#25263C] border-[#25263C] text-[#565769];
+    }
   }
-  .btn-secondary-invert{
-    @apply border-[#2F3153] bg-transparent text-white;
+  .btn-secondary-invert {
+    @apply border-[#2F3153] bg-transparent text-white hover:border-[#373969];
+    &[disabled] {
+      @apply border-[#25263C] text-[#565769];
+    }
   }
   .btn-danger {
     @apply border-danger bg-danger text-white;

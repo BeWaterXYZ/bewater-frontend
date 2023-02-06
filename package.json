@@ -64,10 +64,5 @@
     "prettier": "^2.7.1",
     "tailwindcss": "^3.1.7",
     "typescript": "^4.9.4"
-  },
-  "browserslist": [
-    "last 10 version",
-    "not dead",
-    "iOS >= 10"
-  ]
+  }
 }

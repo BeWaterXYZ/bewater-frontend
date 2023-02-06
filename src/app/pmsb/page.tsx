@@ -22,7 +22,33 @@ export default function PoorMansStorybook() {
             <button className="btn btn-danger">Test button</button>
           </div>
         </div>
-
+        <div className="bg-night  p-2">
+          <div className="py-2">
+            <button className="btn btn-primary" disabled>
+              Test button
+            </button>
+          </div>
+          <div className="py-2">
+            <button className="btn btn-primary-invert" disabled>
+              Test button
+            </button>
+          </div>
+          <div className="py-2">
+            <button className="btn btn-secondary" disabled>
+              Test button
+            </button>
+          </div>
+          <div className="py-2">
+            <button className="btn btn-secondary-invert" disabled>
+              Test button
+            </button>
+          </div>
+          <div className="py-2">
+            <button className="btn btn-danger" disabled>
+              Test button
+            </button>
+          </div>
+        </div>
         <div>
           <Image src="/icons/check.svg" alt="" height={48} width={48} />
           <Image src="/icons/warning.svg" alt="" height={48} width={48} />

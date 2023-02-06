@@ -36,8 +36,7 @@ const glowing =
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
   return (
-    // TODO: use line-gradient to replace border-grey-400 as design
-    <div className="body-1 text-center border border-grey-400 flex justify-between items-center p-12 lg:px-32 lg:my-24">
+    <div className="body-1 text-center border border-[#334155] flex justify-between items-center p-12 lg:px-32 lg:my-24">
       {data.map((node, index) =>
         node.type === 'date' ? (
           <div className="w-4 flex flex-col items-center" key={index}>
