@@ -37,3 +37,5 @@ export default async function ChallengePage() {
     </div>
   );
 }
+
+export const revalidate = 60;

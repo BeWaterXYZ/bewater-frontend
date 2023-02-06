@@ -3,6 +3,7 @@ import { Team } from '@/services/types';
 import clsx from 'clsx';
 
 export function TeamRoleReadiness({ team }: { team: Team }) {
+  if (team.openingRoles.length === 0) return null;
   let rolesData = team.openingRoles
     .map((role) => ({
       role,
