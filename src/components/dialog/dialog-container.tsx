@@ -1,8 +1,9 @@
 import dynamicLoad from 'next/dynamic';
 import { ComponentType } from 'react';
+import { Loading } from '../loading/loading';
 
 import { Dialog } from './dialog';
-import { Dialogs, DialogsKeys, CloseDialogFunc } from './store';
+import { CloseDialogFunc, Dialogs, DialogsKeys } from './store';
 interface DialogContainerProps {
   dialogs: Dialogs;
   closeDialog: CloseDialogFunc;
@@ -17,12 +18,30 @@ const dialogMaps: DialogMap = {
   metamask_not_support: dynamicLoad(
     () => import('./dialogs/metamask-not-support'),
   ),
-  team_join: dynamicLoad(() => import('./dialogs/team-join')),
-  team_create: dynamicLoad(() => import('./dialogs/team-create')),
-  team_manage_member: dynamicLoad(() => import('./dialogs/team-manage-member')),
-  team_invite_member: dynamicLoad(() => import('./dialogs/team-invite-member')),
-  email_change: dynamicLoad(() => import('./dialogs/email-change')),
-  team_filter: dynamicLoad(() => import('./dialogs/team-filter')),
+  team_join: dynamicLoad(() => import('./dialogs/team-join'), {
+    loading: () => <Loading />,
+  }),
+  team_create: dynamicLoad(() => import('./dialogs/team-create'), {
+    loading: () => <Loading />,
+  }),
+  team_manage_member: dynamicLoad(
+    () => import('./dialogs/team-manage-member'),
+    {
+      loading: () => <Loading />,
+    },
+  ),
+  team_invite_member: dynamicLoad(
+    () => import('./dialogs/team-invite-member'),
+    {
+      loading: () => <Loading />,
+    },
+  ),
+  email_change: dynamicLoad(() => import('./dialogs/email-change'), {
+    loading: () => <Loading />,
+  }),
+  team_filter: dynamicLoad(() => import('./dialogs/team-filter'), {
+    loading: () => <Loading />,
+  }),
 };
 
 export function DialogContainer({
