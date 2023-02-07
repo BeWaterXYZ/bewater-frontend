@@ -1,4 +1,5 @@
 'use client';
+import { useDialogStore } from '@/components/dialog/store';
 import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
@@ -6,6 +7,7 @@ import { Team, UserProfile } from '@/services/types';
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import clsx from 'clsx';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { challengeSchema } from '../param-schema';
 import { querySchema } from '../search-param-schema';
@@ -62,6 +64,7 @@ export default function ChallengeTeams({ params }: any) {
   // fix. searchParams wont work for clicking back button on browser
   const sp = useSearchParams();
   const user = useAuthStore((s) => s.user);
+  const showDialog = useDialogStore((s) => s.open);
   const { data: userResponse } = useFetchUser(user?.userId);
   const { challengeId } = challengeSchema.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
@@ -79,20 +82,35 @@ export default function ChallengeTeams({ params }: any) {
     userResponse?.userProfile,
   );
 
+  const showFilter = () => {
+    showDialog('team_filter', teams);
+  };
+
   return (
     <div className="body-1 text-center">
       <ChallengeTeamsInfo challenge={challenge} teams={teams} />
       <div className="flex flex-wrap gap-10 pt-4">
-        <div className="w-full lg:w-[200px]">
+        <div className="w-full lg:w-[200px] hidden lg:block">
           <TeamFilter teams={teams} />
         </div>
         <div className="w-full lg:w-auto flex-1">
-          <div className="flex justify-between">
-            <div className={clsx('body-3', { invisible: !!user })}>
+          <div className="flex justify-between flex-col-reverse lg:flex-row">
+            <div className={clsx('body-3  lg:block py-2', { hidden: !!user })}>
               ✨ Log in to see the teams that match you best!
             </div>
-
-            <div>
+            <div className="flex justify-between w-full lg:w-auto">
+              <button
+                className="lg:hidden btn btn-secondary-invert gap-1"
+                onClick={showFilter}
+              >
+                <Image
+                  src="/icons/filter.svg"
+                  height={16}
+                  width={16}
+                  alt="filter"
+                />
+                <span>Filter</span>
+              </button>
               <CreateTeamButton challenge={challenge} />
             </div>
           </div>

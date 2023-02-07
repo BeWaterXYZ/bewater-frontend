@@ -7,6 +7,7 @@ export type Dialogs = {
   team_create?: { challenge?: Challenge; team?: Team };
   team_manage_member?: Team;
   team_invite_member?: Team;
+  team_filter?: Team[];
   email_change?: boolean;
 };
 
@@ -31,6 +32,7 @@ export const useDialogStore = create<State & Actions>((set) => ({
     team_join: undefined,
     team_create: undefined,
     team_manage_member: undefined,
+    team_filter: undefined,
     email_change: undefined,
   },
   open: (name, data) =>

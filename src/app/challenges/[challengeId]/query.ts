@@ -21,8 +21,12 @@ export function useQueryBuilder() {
 
     router.push(pathname + '?' + usp.toString());
   };
+  const clear = () => {
+    router.push(pathname!);
+  };
   return {
     isOn,
     toggle,
+    clear,
   };
 }

@@ -10,18 +10,19 @@ function FilterTag({
   value,
   label,
   amount,
+  on,
+  toggle,
 }: {
   keyword: string;
   value: string;
   label: string;
   amount?: number;
+  on: boolean;
+  toggle: (key: string, value: string) => void;
 }) {
-  let { toggle, isOn } = useQueryBuilder();
-
   let onToggle = (key: string, value: string) => () => {
     toggle(key, value);
   };
-  let on = isOn(keyword, value);
   return (
     <div className="w-full flex justify-between">
       <label
@@ -33,7 +34,7 @@ function FilterTag({
         <input
           className="mr-2 w-4 h-4 block"
           type="checkbox"
-          checked={isOn(keyword, value)}
+          checked={on}
           onChange={onToggle(keyword, value)}
         ></input>
         <span>{label}</span>
@@ -72,6 +73,8 @@ function prepareTeamReadinessFilterData(teams: Team[]) {
   return data;
 }
 export function TeamFilter({ teams }: { teams: Team[] }) {
+  let { toggle, isOn } = useQueryBuilder();
+
   let tagsData = prepareProjectTagFilterData(teams);
   // let readinessData = prepareTeamReadinessFilterData(teams);
   let rolesData = prepareRoleFilterData(teams);
@@ -105,6 +108,8 @@ export function TeamFilter({ teams }: { teams: Team[] }) {
                 value={item.tag}
                 label={item.tag}
                 amount={item.amount}
+                on={isOn('role', item.tag)}
+                toggle={toggle}
               />
             );
           })}
@@ -122,6 +127,8 @@ export function TeamFilter({ teams }: { teams: Team[] }) {
                 value={item.tag}
                 label={item.tag}
                 amount={item.amount}
+                on={isOn('tag', item.tag)}
+                toggle={toggle}
               />
             );
           })}

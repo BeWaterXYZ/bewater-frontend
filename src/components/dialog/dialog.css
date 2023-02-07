@@ -4,7 +4,7 @@
     animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .DialogContent {
-    @apply z-30 bg-[#141527] rounded-md shadow-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-h-[200px]  p-5;
+    @apply z-30 bg-[#141527] rounded-md shadow-md fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-h-[200px] min-w-[200px] p-5;
     animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
