@@ -3,6 +3,7 @@ import { Challenge, Team } from '@/services/types';
 import Link from 'next/link';
 import { TeamStatus } from './team-status';
 import { TeamRoleReadiness } from './team-role-readiness';
+import { TagProjectTag } from '@/components/tag/project-tag';
 
 interface TeamItemProps {
   challenge: Challenge;
@@ -16,14 +17,8 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
           <div className="">
             <div className="flex items-center flex-wrap">
               <h2 className="body-2 font-bold pr-3">{team.project.name}</h2>
-
               {team.project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="mono-4 border rounded p-[1px] m-1 opacity-80 uppercase px-1"
-                >
-                  {tag}
-                </span>
+                <TagProjectTag key={tag} label={tag} />
               ))}
             </div>
           </div>

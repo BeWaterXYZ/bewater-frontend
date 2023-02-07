@@ -1,9 +1,10 @@
 import { TagRole, TagSkill } from '@/components/tag';
+import { TagProjectTag } from '@/components/tag/project-tag';
 import { getChallengeTeams, getTeam } from '@/services/team';
 import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { challengeSchema, challengeTeamSchema } from '../../param-schema';
+import { segmentSchema } from '../../param-schema';
 import { TeamMember } from './team-member';
 
 const TeamMenu = dynamicLoad(() => import('./team-menu'), {
@@ -11,7 +12,8 @@ const TeamMenu = dynamicLoad(() => import('./team-menu'), {
 });
 
 export default async function Page({ params }: any) {
-  const { challengeId, teamId } = challengeTeamSchema.parse(params);
+  const { challengeId } = segmentSchema.challengeId.parse(params);
+  const { teamId } = segmentSchema.teamId.parse(params);
   const team = await getTeam(teamId);
   const leaders = team.teamMembers.filter((m) => m.isLeader);
   const members = team.teamMembers.filter((m) => !m.isLeader);
@@ -81,12 +83,7 @@ export default async function Page({ params }: any) {
         <div className="flex items-center py-2">
           <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
           {team.project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="mono-4 border rounded p-[1px] m-1 uppercase px-1 text-grey-300 border-grey-400"
-            >
-              {tag}
-            </span>
+            <TagProjectTag key={tag} label={tag} />
           ))}
         </div>
         <p className="body-4 text-grey-300">{team.project.description}</p>

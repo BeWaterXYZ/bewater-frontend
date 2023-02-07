@@ -9,7 +9,7 @@ import { useAuthStore } from '@/stores/auth';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import { challengeSchema } from '../param-schema';
+import { segmentSchema } from '../param-schema';
 import { querySchema } from '../search-param-schema';
 import { CreateTeamButton } from './create-team-button';
 import { TeamFilter } from './team-filter';
@@ -66,7 +66,7 @@ export default function ChallengeTeams({ params }: any) {
   const user = useAuthStore((s) => s.user);
   const showDialog = useDialogStore((s) => s.open);
   const { data: userResponse } = useFetchUser(user?.userId);
-  const { challengeId } = challengeSchema.parse(params);
+  const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   let { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);

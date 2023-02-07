@@ -6,11 +6,11 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { challengeSchema } from './param-schema';
+import { segmentSchema } from './param-schema';
 import { Timeline } from './timeline';
 
 export default async function ChallengeIntro({ params }: any) {
-  const { challengeId } = challengeSchema.parse(params);
+  const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { awards, sponsorships } = challenge;
 

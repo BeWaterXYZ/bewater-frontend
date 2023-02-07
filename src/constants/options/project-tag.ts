@@ -21,15 +21,16 @@ export const ProjectTagSet = [
   'Others',
 ] as const;
 
-export type ProjectTagUnion = typeof ProjectTagSet[number];
+export type ProjectTagUnion = (typeof ProjectTagSet)[number];
 
 export const ProjectTagSetOptions: OptionItem<ProjectTagUnion>[] =
   ProjectTagSet.map((tag) => ({
     label: tag,
     value: tag,
     classes: {
-      container: 'mono-4 border !rounded  m-1 !bg-transparent uppercase !px-1',
-      text: '!text-white !p-[1px]',
+      container:
+        'mono-4 border border-grey-300 !rounded  m-1 !bg-transparent uppercase !px-1',
+      text: '!text-grey-300 ',
     },
   }));
 

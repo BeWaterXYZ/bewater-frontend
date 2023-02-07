@@ -10,13 +10,18 @@ export default function Page() {
   const { error, data, isLoading } = useFetchGroupingRequest(user?.userId);
 
   if (error || isLoading || !data) return null;
+
+  let requests = sortGroupingRequest([
+    ...data.sentApplications,
+    ...data.sentInvitations,
+  ]);
   return (
     <div>
       <div className="flex flex-col gap-3">
-        {sortGroupingRequest([
-          ...data.sentApplications,
-          ...data.sentInvitations,
-        ]).map((req) => {
+        {requests.length === 0 ? (
+          <div className="body-1">No notifications</div>
+        ) : null}
+        {requests.map((req) => {
           return (
             <GroupingRequestNotification
               key={req.id}
