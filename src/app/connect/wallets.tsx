@@ -76,7 +76,7 @@ export function WalletOptions() {
 
   return (
     <>
-      <div className="min-h-[200px] w-[300px]">
+      <div className="my-4 w-[300px]">
         <button
           className={clsx(
             'btn btn-primary-invert mono-4  w-full h-12 flex flex-row justify-center items-center px-4 gap-x-4',
