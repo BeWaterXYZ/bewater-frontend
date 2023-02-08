@@ -22,14 +22,13 @@ function parse(
   });
 }
 
-async function uploadToNFTStorage(ffile: formidable.File) {
-  const content = await fs.promises.readFile(ffile.filepath);
-  const type = mime.getType(ffile.filepath);
-  const filename = ''; //path.basename(ffile.filepath);
+async function uploadToNFTStorage(filepath: string) {
+  const content = await fs.promises.readFile(filepath);
+  const type = mime.getType(filepath);
+  const filename = path.basename(filepath);
   const image = new File([content], filename, {
     type: type!,
   });
-  console.log({ filename });
   const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
   return nftstorage.storeBlob(image);
 }
@@ -42,8 +41,10 @@ export default async function handler(
 
   try {
     const { files } = await parse(req, { keepExtensions: true });
-    const rest = await uploadToNFTStorage(files.avatar as formidable.File);
-    res.status(200).json({ cid: rest });
+    // avatar must match the file name on frontend.
+    const filepath = (files.avatar as formidable.File).filepath;
+    const cid = await uploadToNFTStorage(filepath);
+    res.status(200).json({ cid });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ error: 'Internal Server Error' });
