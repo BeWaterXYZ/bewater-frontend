@@ -9,20 +9,26 @@ interface Props {
   onClick?: () => void;
 }
 
+function translateSRC(src?: string) {
+  return src?.startsWith('ipfs://')
+    ? src.replace('ipfs://', 'https://') + '.ipfs.nftstorage.link'
+    : src;
+}
+
 export const Avatar = ({
   walletAddress = '',
   src,
   className,
   onClick,
 }: Props) => {
-  const randomColor = getRandomColor(walletAddress.toLowerCase());
+  let transaltedSrc = translateSRC(src);
   return (
     <div className={clsx('relative', className)}>
-      {src ? (
+      {transaltedSrc ? (
         <Image
           fill
           className="w-full h-full rounded-full cursor-pointer object-cover"
-          src={src}
+          src={transaltedSrc}
           alt="avatar"
         />
       ) : (
@@ -31,7 +37,11 @@ export const Avatar = ({
             'w-full h-full rounded-full cursor-pointer',
             className,
           )}
-          style={{ backgroundImage: `linear-gradient(${randomColor}, #fff)` }}
+          style={{
+            backgroundImage: `linear-gradient(${getRandomColor(
+              walletAddress.toLowerCase(),
+            )}, #fff)`,
+          }}
           onClick={onClick}
         ></div>
       )}

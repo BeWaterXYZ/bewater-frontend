@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/stores/auth';
 import { CONFIGS } from '@/config';
+import { isBrowser } from '@/constants';
 
 const requestInterceptor = (config: AxiosRequestConfig) => {
   const accessToken = useAuthStore.getState().token;
@@ -20,4 +21,8 @@ const agentAnon = axios.create({
   baseURL: CONFIGS.API_ENDPOINT,
 });
 
-export { agentAuthed, agentAnon };
+const agentNext = axios.create({
+  baseURL: isBrowser ? window.location.origin : '',
+});
+
+export { agentAuthed, agentAnon, agentNext };
