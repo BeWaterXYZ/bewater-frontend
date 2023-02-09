@@ -8,5 +8,5 @@ export default function RootLayout({
 }) {
   useRequireAuthed();
 
-  return <div className="pt-20">{children}</div>;
+  return <div className="pt-24 lg:pt-20">{children}</div>;
 }

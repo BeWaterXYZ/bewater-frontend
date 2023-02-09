@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import { uploadFile } from '@/services/ipfs';
 import { useMutationUpdateUserProfile } from '@/services/user.query';
 import { Cross1Icon } from '@radix-ui/react-icons';

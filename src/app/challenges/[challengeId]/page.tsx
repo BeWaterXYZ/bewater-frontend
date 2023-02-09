@@ -15,7 +15,7 @@ export default async function ChallengeIntro({ params }: any) {
   const { awards, sponsorships } = challenge;
 
   return (
-    <div className="container  p-4 body-1">
+    <div className="container ">
       <div className="hidden lg:block">
         <Timeline milestones={challenge.milestones} />
       </div>

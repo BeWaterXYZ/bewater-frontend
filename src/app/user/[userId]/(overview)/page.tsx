@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import { TagRole, TagSkill } from '@/components/tag';
 import { getUserProfileFull } from '@/services/user';
 import { unsplash } from '@/utils/unsplash';

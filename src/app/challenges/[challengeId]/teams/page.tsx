@@ -87,7 +87,7 @@ export default function ChallengeTeams({ params }: any) {
   };
 
   return (
-    <div className="body-1 text-center">
+    <div className="container text-center">
       <ChallengeTeamsInfo challenge={challenge} teams={teams} />
       <div className="flex flex-wrap gap-10 pt-4">
         <div className="w-full lg:w-[200px] hidden lg:block">

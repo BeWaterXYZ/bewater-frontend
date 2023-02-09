@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import { TagRole } from '@/components/tag';
 import { TeamMember } from '@/services/types';
 import Image from 'next/image';

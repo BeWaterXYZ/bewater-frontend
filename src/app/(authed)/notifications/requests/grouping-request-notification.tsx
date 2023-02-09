@@ -1,6 +1,6 @@
 'use client';
 import { useAlert } from '@/components/alert/store';
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import {
   useRevokeGroupingRequest,
   useAcceptGroupingRequest,

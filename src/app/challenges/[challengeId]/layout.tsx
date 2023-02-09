@@ -18,7 +18,7 @@ export default async function Layout({
     <div>
       <ChallengeHero challenge={challenge} />
       <ChallengeNav challengeId={params.challengeId} />
-      <div className="container">{children}</div>
+      <div>{children}</div>
     </div>
   );
 }

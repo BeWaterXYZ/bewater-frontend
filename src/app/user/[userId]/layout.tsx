@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import { TagRole, TagSkill } from '@/components/tag';
 import { getUserProfileFull } from '@/services/user';
 import { maskWalletAddress } from '@/utils/wallet-adress';
@@ -16,7 +16,7 @@ export default async function page({
   if (!profile) return null;
 
   return (
-    <div className="container my-4 pt-20">
+    <div className="container my-4 pt-24 lg:pt-20 ">
       <div className="flex flex-wrap gap-10">
         <div className="w-full lg:w-[200px]">
           <div className="flex flex-row lg:flex-col gap-4">

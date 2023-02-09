@@ -1,5 +1,5 @@
 'use client';
-import { AvatarWithEditor } from '@/components/avatar';
+import { AvatarWithEditor } from '@/components/avatar/avatar-with-editor';
 import { useLoadingWhen } from '@/components/loading/store';
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';

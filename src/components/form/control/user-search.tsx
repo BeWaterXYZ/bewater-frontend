@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import { UserID, UserProfile } from '@/services/types';
 import { searchUsers } from '@/services/user';
 import clsx from 'clsx';

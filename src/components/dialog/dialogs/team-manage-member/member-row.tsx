@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 import { TeamMember } from '@/services/types';
 import { TeamMemberManager } from './member-manager';
 

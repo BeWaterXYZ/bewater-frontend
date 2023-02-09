@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 
-import { Avatar } from '@/components/avatar';
+import { Avatar } from '@/components/avatar/avatar';
 
 import { useAuthStore } from '@/stores/auth';
 import { UserProfile } from '@/services/types';

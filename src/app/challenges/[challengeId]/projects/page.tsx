@@ -8,7 +8,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   const query = querySchema.parse(searchParams);
 
   return (
-    <div className="flex flex-wrap gap-10 pt-4">
+    <div className="container flex flex-wrap gap-10 pt-4">
       <div className="w-full lg:w-[200px] hidden lg:block">
         <FilterArea />
       </div>
