@@ -29,7 +29,7 @@ export default async function Page({ params }: any) {
         </Link>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-col lg:flex-row">
         <div className="heading-6 mb-4">{team.name}</div>
 
         <div>

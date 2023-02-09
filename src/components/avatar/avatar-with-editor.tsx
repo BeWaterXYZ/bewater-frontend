@@ -1,19 +1,18 @@
 'use client';
-import clsx from 'clsx';
 
 import { Avatar } from '@/components/avatar';
-import { ChangeEventHandler } from 'react';
 import { uploadFile } from '@/services/ipfs';
 import { useMutationUpdateUserProfile } from '@/services/user.query';
+import { Cross1Icon } from '@radix-ui/react-icons';
+import Image from 'next/image';
+import { ChangeEventHandler } from 'react';
 import { useLoadingStoreAction } from '../loading/store';
-
 interface Props {
   src?: string;
   walletAddress?: string;
-  className?: string;
 }
 
-export const AvatarWithEditor = ({ src, walletAddress, className }: Props) => {
+export const AvatarWithEditor = ({ src, walletAddress }: Props) => {
   const mutaion = useMutationUpdateUserProfile();
   const { showLoading, dismissLoading } = useLoadingStoreAction();
 
@@ -34,24 +33,45 @@ export const AvatarWithEditor = ({ src, walletAddress, className }: Props) => {
       dismissLoading();
     }
   };
+  const onRemoveAvatar = async () => {
+    try {
+      showLoading();
+      await mutaion.mutateAsync({
+        avatarURI: ``,
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      dismissLoading();
+    }
+  };
   return (
-    <div
-      className={clsx(
-        'inline-flex flex-col gap-y-4 items-center h-auto w-[216px]',
-        className,
-      )}
-    >
+    <div className=" flex items-center gap-4">
       <Avatar src={src} className="w-48 h-48" walletAddress={walletAddress} />
-      <label htmlFor="upload" className="btn btn-secondary">
-        <span aria-hidden="true">Change</span>
-        <input
-          type="file"
-          id="upload"
-          name="avatar"
-          className="hidden"
-          onChange={onFileSelect}
-        />
-      </label>
+      <div className="flex flex-col gap-3">
+        <label htmlFor="upload" className="btn btn-secondary">
+          <Image
+            src="/icons/pen.svg"
+            height={12}
+            width={12}
+            alt="edit"
+            className="mr-2"
+          />
+          <span aria-hidden="true">Change</span>
+          <input
+            type="file"
+            id="upload"
+            name="avatar"
+            className="hidden"
+            onChange={onFileSelect}
+          />
+        </label>
+
+        <button className="btn btn-secondary-invert" onClick={onRemoveAvatar}>
+          <Cross1Icon className="text-white mr-2" height={12} width={12} />
+          Remove
+        </button>
+      </div>
     </div>
   );
 };

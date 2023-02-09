@@ -37,7 +37,7 @@ export default function Page() {
           </div>
           <div className="flex flex-col justify-around">
             <p className="body-4 text-gray-500 font-bold">Wallet Address</p>
-            <p className="body-4 text-gray-300 break-words">
+            <p className="body-4 text-gray-300 break-all">
               {data.userProfile?.walletAddress}
             </p>
           </div>
