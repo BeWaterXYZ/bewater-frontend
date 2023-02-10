@@ -81,24 +81,26 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
 
         <div className="w-full lg:flex-[3] order-1 lg:order-2">
-          <h3 className="body-3 font-bold mb-8">Description</h3>
+          <h3 className="body-3 font-bold my-8 mb-4 lg:mt-0 lg:mb-8">
+            Description
+          </h3>
           <p className="body-3 text-grey-400">{challenge.description}</p>
-          <hr className="my-4 border-grey-800" />
-          <h3 className="body-3 font-bold my-8">Requirements</h3>
+          <hr className="my-8 border-grey-800" />
+          <h3 className="body-3 font-bold my-4 lg:my-8">Requirements</h3>
           <ul>
             {challenge.requirements.map((r) => (
-              <li key={r} className="list-disc list-inside">
-                <span className="body-3 text-grey-400">{r}</span>
+              <li key={r} className="list-disc list-inside text-gray-400">
+                <span className="body-3 text-gray-400">{r}</span>
               </li>
             ))}
           </ul>
-          <hr className="my-4 border-grey-800" />
+          <hr className="my-8 border-grey-800" />
 
-          <h3 className="body-3 font-bold my-8">Location</h3>
+          <h3 className="body-3 font-bold my-4 lg:my-8">Location</h3>
           <p className="body-3 text-grey-400">{challenge.location}</p>
-          <hr className="my-4 border-grey-800" />
+          <hr className="my-8 border-grey-800" />
 
-          <h3 className="body-3 font-bold my-8">Speaker & Judges</h3>
+          <h3 className="body-3 font-bold my-4 lg:my-8">Speaker & Judges</h3>
           <div className="flex flex-row flex-wrap gap-8">
             {challenge.judges.map((judge) => {
               return (
@@ -120,7 +122,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-center items-center pt-[194px] pb-[160px]">
+      <div className="flex flex-col justify-center items-center py-20 lg:pt-[194px] lg:pb-[160px]">
         <p className="heading-4">Interested? Make your team and embrace it.</p>
         <p className="body-2 text-grey-400  pt-5 pb-8">
           Join over 4,000+ hackers all over the world.
