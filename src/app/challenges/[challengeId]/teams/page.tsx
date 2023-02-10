@@ -10,7 +10,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { segmentSchema } from '../param-schema';
-import { querySchema } from '../search-param-schema';
+import { querySchema } from '../../../../components/filter/search-param-schema';
 import { CreateTeamButton } from './create-team-button';
 import { TeamFilter } from './team-filter';
 import { TeamItem } from './team-item';
@@ -68,7 +68,7 @@ export default function ChallengeTeams({ params }: any) {
   const { data: userResponse } = useFetchUser(user?.userId);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
-  let { data: teams, isLoading: isLoadingTeam } =
+  const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);
 
   if (isLoading || isLoadingTeam) return <Loading />;

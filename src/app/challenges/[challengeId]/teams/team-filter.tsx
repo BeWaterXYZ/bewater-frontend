@@ -1,81 +1,16 @@
 'use client';
-import { ProjectTagSet } from '@/constants/options/project-tag';
-import { RoleSet } from '@/constants/options/role';
+import { FilterTag } from '@/components/filter/FilterTag';
+import {
+  prepareProjectTagFilterData,
+  prepareRoleFilterData,
+} from '@/components/filter/util';
 import { Team } from '@/services/types';
-import clsx from 'clsx';
 import { useQueryBuilder } from '../query';
 
-function FilterTag({
-  keyword,
-  value,
-  label,
-  amount,
-  on,
-  toggle,
-}: {
-  keyword: string;
-  value: string;
-  label: string;
-  amount?: number;
-  on: boolean;
-  toggle: (key: string, value: string) => void;
-}) {
-  let onToggle = (key: string, value: string) => () => {
-    toggle(key, value);
-  };
-  return (
-    <div className="w-full flex justify-between">
-      <label
-        className={clsx(
-          'body-4 flex items-center my-1 cursor-pointer',
-          on ? 'text-white' : 'text-[#94A3B8]',
-        )}
-      >
-        <input
-          className="mr-2 w-4 h-4 block"
-          type="checkbox"
-          checked={on}
-          onChange={onToggle(keyword, value)}
-        ></input>
-        <span>{label}</span>
-      </label>
-      <div className={clsx('body-4', on ? 'text-white' : 'text-[#94A3B8]')}>
-        {amount}
-      </div>
-    </div>
-  );
-}
-
-function prepareProjectTagFilterData(teams: Team[]) {
-  let data = ProjectTagSet.map((tag) => ({
-    tag,
-    amount: teams.filter((team) => team.project.tags.includes(tag)).length,
-  }));
-
-  return data;
-}
-
-function prepareRoleFilterData(teams: Team[]) {
-  let data = RoleSet.map((role) => ({
-    tag: role,
-    amount: teams.filter((team) => team.openingRoles.includes(role)).length,
-  }));
-  return data;
-}
-
-function prepareTeamReadinessFilterData(teams: Team[]) {
-  let notReady = teams.filter((t) => t.teamMembers.length < 5).length;
-  let data = [
-    { tag: 'Opening', amount: notReady },
-    { tag: 'Ready', amount: teams.length - notReady },
-  ];
-
-  return data;
-}
 export function TeamFilter({ teams }: { teams: Team[] }) {
   let { toggle, isOn } = useQueryBuilder();
 
-  let tagsData = prepareProjectTagFilterData(teams);
+  let tagsData = prepareProjectTagFilterData(teams.map((t) => t.project));
   // let readinessData = prepareTeamReadinessFilterData(teams);
   let rolesData = prepareRoleFilterData(teams);
   return (

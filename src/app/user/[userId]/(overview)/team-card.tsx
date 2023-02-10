@@ -1,4 +1,4 @@
-import { Avatar } from '@/components/avatar/avatar';
+import { TeamAvatarRow } from '@/components/molecules/team-avatar-row';
 import { TagRole } from '@/components/tag';
 import { TeamMember } from '@/services/types';
 import Image from 'next/image';
@@ -24,17 +24,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
         <div className="body-3 text-grey-500">at {member.team?.name}</div>
       </div>
       <div className="flex ">
-        {(member.team?.teamMembers ?? []).map((m, index) => {
-          return (
-            <div key={m.id} className="relative" style={{ left: -8 * index }}>
-              <Avatar
-                src={m.userProfile.avatarURI}
-                walletAddress={m.userProfile.walletAddress}
-                className="w-8 h-8"
-              />
-            </div>
-          );
-        })}
+        <TeamAvatarRow teamMembers={member.team?.teamMembers ?? []} />
       </div>
     </Link>
   );

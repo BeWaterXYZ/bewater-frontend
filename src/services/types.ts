@@ -107,6 +107,7 @@ export interface Project {
   tags: ProjectTagUnion[];
   status: string;
   teamId: string;
+  team: Team;
 }
 export interface TeamMember {
   id: string;

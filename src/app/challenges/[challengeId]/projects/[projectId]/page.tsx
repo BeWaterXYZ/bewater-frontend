@@ -13,7 +13,7 @@ export default async function Page({ params }: any) {
   const { projectId } = segmentSchema.projectId.parse(params);
 
   return (
-    <div>
+    <div className="container">
       <div className="my-4">
         <Link
           className="body-3 text-grey-400"
