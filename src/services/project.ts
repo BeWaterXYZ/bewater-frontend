@@ -1,5 +1,5 @@
 import { agentAnon } from './agent';
-import { ChallengeID, Project } from './types';
+import { ChallengeID, Project, ProjectId } from './types';
 
 export async function getChallengeTProjects(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ projects: Project[] }>(
@@ -7,4 +7,8 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
     {},
   );
   return data.projects;
+}
+export async function getProject(projectId: ProjectId) {
+  const { data } = await agentAnon.get<Project>(`/project/${projectId}`, {});
+  return data;
 }

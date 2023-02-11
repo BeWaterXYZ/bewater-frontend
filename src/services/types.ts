@@ -100,8 +100,10 @@ export interface Team {
   project: Project;
   challenge?: Challenge;
 }
+
+export type ProjectId = string;
 export interface Project {
-  id: string;
+  id: ProjectId;
   name: string;
   description: string;
   tags: ProjectTagUnion[];

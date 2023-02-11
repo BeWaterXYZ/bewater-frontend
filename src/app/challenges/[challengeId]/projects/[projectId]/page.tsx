@@ -1,6 +1,7 @@
 import { Aspect } from '@/components/aspect';
 import { TagRole, TagSkill } from '@/components/tag';
 import { TagProjectTag } from '@/components/tag/project-tag';
+import { getProject } from '@/services/project';
 import { getChallengeTeams, getTeam } from '@/services/team';
 import { unsplash } from '@/utils/unsplash';
 import dynamicLoad from 'next/dynamic';
@@ -11,7 +12,7 @@ import { segmentSchema } from '../../param-schema';
 export default async function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { projectId } = segmentSchema.projectId.parse(params);
-
+  const project = await getProject(projectId);
   return (
     <div className="container">
       <div className="my-4">
@@ -35,17 +36,13 @@ export default async function Page({ params }: any) {
           </Aspect>
         </div>
         <div className="flex-1">
-          <p className="heading-6">Yet another Layer 2 Idea</p>
-          <p className="body-3 text-grey-500 my-3">Dream team</p>
-          <p className="body-3 text-grey-300 my-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa
-            mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien
-            fringilla, mattis ligula test liquid consectetur, ultrices mauris.
-            Maecenas vitae mattis tellus.
-          </p>
+          <p className="heading-6">{project.name}</p>
+          <p className="body-3 text-grey-500 my-3">{project.team.name}</p>
+          <p className="body-3 text-grey-300 my-3">{project.description}</p>
           <div>
-            <TagProjectTag label="Account Abstraction" />
-            <TagProjectTag label="Data/Analytics" />
+            {project.tags.map((tag) => (
+              <TagProjectTag label={tag} key={tag} />
+            ))}
           </div>
         </div>
       </div>
