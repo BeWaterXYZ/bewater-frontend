@@ -1,14 +1,13 @@
 import { Aspect } from '@/components/aspect';
+import { TeamMember } from '@/components/molecules/team-member';
 import { TagProjectTag } from '@/components/tag/project-tag';
 import { getProject } from '@/services/project';
 import { unsplash } from '@/utils/unsplash';
+import { formatDistance, parseISO } from 'date-fns';
+import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
-import dynamicLoad from 'next/dynamic';
-import { formatDistance, parseISO } from 'date-fns';
-import { TeamMember } from '../../../../../components/molecules/team-member';
-import { ArrowRightIcon, PlusIcon } from '@radix-ui/react-icons';
 
 const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
   ssr: false,
