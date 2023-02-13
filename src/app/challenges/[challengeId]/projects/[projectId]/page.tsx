@@ -1,13 +1,21 @@
 import { Aspect } from '@/components/aspect';
-import { TagRole, TagSkill } from '@/components/tag';
 import { TagProjectTag } from '@/components/tag/project-tag';
 import { getProject } from '@/services/project';
-import { getChallengeTeams, getTeam } from '@/services/team';
 import { unsplash } from '@/utils/unsplash';
-import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
+import dynamicLoad from 'next/dynamic';
+import { formatDistance, parseISO } from 'date-fns';
+import { TeamMember } from '../../../../../components/molecules/team-member';
+import { ArrowRightIcon, PlusIcon } from '@radix-ui/react-icons';
+
+const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
+  ssr: false,
+});
+const ProjectMedia = dynamicLoad(() => import('./project-media'), {
+  ssr: false,
+});
 
 export default async function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
@@ -28,7 +36,7 @@ export default async function Page({ params }: any) {
         <div className="w-full lg:w-[400px]">
           <Aspect ratio={3 / 2}>
             <Image
-              src={unsplash('conference')}
+              src={project?.mediaURLs?.[0] ?? unsplash('conference')}
               fill
               alt="project"
               className="object-cover"
@@ -36,8 +44,15 @@ export default async function Page({ params }: any) {
           </Aspect>
         </div>
         <div className="flex-1">
-          <p className="heading-6">{project.name}</p>
-          <p className="body-3 text-grey-500 my-3">{project.team.name}</p>
+          <div className="flex justify-between">
+            <p className="heading-6">{project.name}</p>
+            <ProjectMenu project={project} />
+          </div>
+          <p className="body-3 text-grey-500 my-3">
+            {project.team.name} · Updated{' '}
+            {formatDistance(parseISO(project.updatedAt), Date.now())}
+          </p>
+
           <p className="body-3 text-grey-300 my-3">{project.description}</p>
           <div>
             {project.tags.map((tag) => (
@@ -45,6 +60,25 @@ export default async function Page({ params }: any) {
             ))}
           </div>
         </div>
+      </div>
+      <div className="my-4">
+        <h3 className="body-3 font-bold text-grey-500">Media</h3>
+        <ProjectMedia project={project} />
+      </div>
+
+      <div className="my-4">
+        <h3 className="body-3 font-bold text-grey-500">Members</h3>
+        <div className="my-4">
+          {project.team.teamMembers.map((m) => (
+            <TeamMember member={m} key={m.userId} />
+          ))}
+        </div>
+        <Link
+          className="body-3 text-day uppercase "
+          href={`/challenges/${project.team.challengeId}/teams/${project.team.id}`}
+        >
+          {'CHECK TEAM DETAIL ->'}
+        </Link>
       </div>
     </div>
   );

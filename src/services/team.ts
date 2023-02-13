@@ -33,7 +33,10 @@ export async function createTeam(payload: CreateTeamRequest) {
   const { data } = await agentAuthed.post<CreateTeamResponse>(`/team`, payload);
   return data;
 }
-export async function updateTeam(teamId: TeamID, payload: UpdateTeamRequest) {
+export async function updateTeam(
+  teamId: TeamID,
+  payload: Partial<UpdateTeamRequest>,
+) {
   const { data } = await agentAuthed.put<{ team: Team }>(
     `/team/${teamId}`,
     payload,

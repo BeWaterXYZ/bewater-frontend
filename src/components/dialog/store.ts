@@ -1,4 +1,4 @@
-import { Challenge, Team } from '@/services/types';
+import { Challenge, Project, Team } from '@/services/types';
 import { create } from 'zustand';
 
 export type Dialogs = {
@@ -9,6 +9,7 @@ export type Dialogs = {
   team_invite_member?: Team;
   team_filter?: Team[];
   email_change?: boolean;
+  project_edit?: Project;
 };
 
 type State = {
@@ -33,6 +34,7 @@ export const useDialogStore = create<State & Actions>((set) => ({
     team_create: undefined,
     team_manage_member: undefined,
     team_filter: undefined,
+    project_edit: undefined,
     email_change: undefined,
   },
   open: (name, data) =>

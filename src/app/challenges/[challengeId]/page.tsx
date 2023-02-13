@@ -87,7 +87,7 @@ export default async function ChallengeIntro({ params }: any) {
           <h3 className="body-3 font-bold my-8">Requirements</h3>
           <ul>
             {challenge.requirements.map((r) => (
-              <li key={r} className="list-disc list-inside">
+              <li key={r} className="list-disc list-inside text-grey-400">
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}

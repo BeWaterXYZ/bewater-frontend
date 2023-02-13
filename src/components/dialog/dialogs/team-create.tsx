@@ -165,7 +165,7 @@ export default function TeamCreateDialog({
   } = useTeamCreateForm(data.team);
   return (
     <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
-      <p className="body-2 mb-4">Create A Team</p>
+      <p className="body-2 mb-4">{isEditing ? 'Edit Team' : 'Create A Team'}</p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
         <Input

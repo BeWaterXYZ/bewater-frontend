@@ -41,3 +41,6 @@ export function createUnionSchema<T extends readonly Primitive[]>(values: T) {
 // type EmptyType = z.infer<typeof emptySchema>;
 // type SingletonType = z.infer<typeof singletonSchema>;
 // type ManyType = z.infer<typeof manySchema>;
+
+export type OptionalExceptFor<T, TRequired extends keyof T> = Partial<T> &
+  Pick<T, TRequired>;

@@ -1,3 +1,4 @@
+import { TeamMember } from '@/components/molecules/team-member';
 import { TagRole, TagSkill } from '@/components/tag';
 import { TagProjectTag } from '@/components/tag/project-tag';
 import { getChallengeTeams, getTeam } from '@/services/team';
@@ -5,7 +6,6 @@ import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
-import { TeamMember } from './team-member';
 
 const TeamMenu = dynamicLoad(() => import('./team-menu'), {
   ssr: false,
@@ -19,7 +19,7 @@ export default async function Page({ params }: any) {
   const members = team.teamMembers.filter((m) => !m.isLeader);
 
   return (
-    <div>
+    <div className="container">
       <div className="my-4">
         <Link
           className="body-3 text-grey-400"

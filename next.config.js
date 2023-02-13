@@ -16,6 +16,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.nftstorage.link',
       },
+      {
+        protocol: 'https',
+        hostname: '**.amazonaws.com',
+      },
     ],
   },
   // swcMinify: true,

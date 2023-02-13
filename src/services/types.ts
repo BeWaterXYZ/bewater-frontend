@@ -110,6 +110,8 @@ export interface Project {
   status: string;
   teamId: string;
   team: Team;
+  mediaURLs: string[];
+  updatedAt: string;
 }
 export interface TeamMember {
   id: string;
