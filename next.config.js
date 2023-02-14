@@ -20,6 +20,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.amazonaws.com',
       },
+      {
+        protocol: 'https',
+        hostname: '**.gradproject.xyz',
+      },
     ],
   },
   // swcMinify: true,

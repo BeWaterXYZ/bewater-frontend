@@ -26,6 +26,7 @@ export default function Page() {
   return (
     <div className="flex flex-row h-full container flex-wrap min-h-[50vh]">
       <div className="w-full mt-6 flex flex-col gap-3">
+        {/* wallet address  */}
         <div className="rounded p-3 border border-midnight bg-[#0B0C24] flex gap-2 ">
           <div className="flex  p-2">
             <Image
@@ -42,7 +43,7 @@ export default function Page() {
             </p>
           </div>
         </div>
-
+        {/* email */}
         <div className="rounded p-3 border border-midnight bg-[#0B0C24] flex gap-2 justify-between ">
           <div className="flex  p-2">
             <Image src="/icons/email.svg" width={24} height={24} alt="email" />
@@ -51,7 +52,26 @@ export default function Page() {
             <p className="body-4 text-gray-500 font-bold">Email</p>
             <p className="body-4 text-gray-300">{data.userProfile?.email}</p>
           </div>
-
+          <div>
+            <button className="btn btn-secondary-invert" onClick={changeEmail}>
+              Change
+            </button>
+          </div>
+        </div>
+        {/* github */}
+        <div className="rounded p-3 border border-midnight bg-[#0B0C24] flex gap-2 justify-between ">
+          <div className="flex  p-2">
+            <Image
+              src="/icons/company/github.svg"
+              width={24}
+              height={24}
+              alt="email"
+            />
+          </div>
+          <div className="flex flex-col justify-around flex-1">
+            <p className="body-4 text-gray-500 font-bold">Github</p>
+            <p className="body-4 text-gray-300">{data.userProfile?.email}</p>
+          </div>
           <div>
             <button className="btn btn-secondary-invert" onClick={changeEmail}>
               Change

@@ -1,11 +1,11 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import { useAuthStore } from '@/stores/auth';
 import { CONFIGS } from '@/config';
 import { isBrowser } from '@/constants';
 
-const requestInterceptor = (config: AxiosRequestConfig) => {
+const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   const accessToken = useAuthStore.getState().token;
-  if (config.headers) {
+  if (!!accessToken && !!config.headers) {
     config.headers['authorization'] = `Bearer ${accessToken}`;
   }
   return config;

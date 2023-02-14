@@ -5,7 +5,6 @@ import { UserMenu } from './menu';
 
 export default function UserArea() {
   const isAuthed = useAuthStore((s) => s.isAuthed);
-  const user = useAuthStore((s) => s.user);
 
   return !isAuthed() ? (
     <Link
@@ -14,7 +13,7 @@ export default function UserArea() {
     >
       Connect
     </Link>
-  ) : user ? (
-    <UserMenu user={user!} />
-  ) : null;
+  ) : (
+    <UserMenu />
+  );
 }

@@ -6,16 +6,18 @@ import { Avatar } from '@/components/avatar/avatar';
 
 import { useAuthStore } from '@/stores/auth';
 import { UserProfile } from '@/services/types';
+import { useFetchUser } from '@/services/user.query';
 
-interface UserMenuProps {
-  user: UserProfile;
-}
-export const UserMenu = ({ user }: UserMenuProps) => {
+export const UserMenu = () => {
   const clearStore = useAuthStore((s) => s.clear);
+  const userId = useAuthStore((s) => s.user?.userId);
+  const { error, data, isLoading } = useFetchUser(userId);
   const logout = () => {
     clearStore();
     window.location.href = '/';
   };
+  if (isLoading || error) return null;
+  const user = data?.userProfile!;
   return (
     <NavigationMenu.Root className="relative">
       <NavigationMenu.List className="list-none">
