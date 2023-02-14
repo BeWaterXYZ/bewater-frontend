@@ -45,6 +45,9 @@ const dialogMaps: DialogMap = {
   project_edit: dynamicLoad(() => import('./dialogs/project-edit'), {
     loading: () => <Loading />,
   }),
+  project_filter: dynamicLoad(() => import('./dialogs/project-filter'), {
+    loading: () => <Loading />,
+  }),
 };
 
 export function DialogContainer({

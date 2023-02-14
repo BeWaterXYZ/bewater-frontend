@@ -9,6 +9,7 @@ export type Dialogs = {
   team_invite_member?: Team;
   team_filter?: Team[];
   email_change?: boolean;
+  project_filter?: Project[];
   project_edit?: Project;
 };
 
@@ -28,15 +29,7 @@ type Actions = {
 };
 
 export const useDialogStore = create<State & Actions>((set) => ({
-  dialogs: {
-    metamask_not_support: undefined,
-    team_join: undefined,
-    team_create: undefined,
-    team_manage_member: undefined,
-    team_filter: undefined,
-    project_edit: undefined,
-    email_change: undefined,
-  },
+  dialogs: {},
   open: (name, data) =>
     set((old) => ({
       dialogs: {

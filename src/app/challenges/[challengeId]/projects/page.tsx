@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { useAuthStore } from '@/stores/auth';
 import { useState } from 'react';
 import { SearchInput } from '../../../../components/molecules/search-input';
+import { useDialogStore } from '@/components/dialog/store';
 function filterAndSortProject(
   projects: Project[],
   userProfile?: UserProfile,
@@ -56,6 +57,7 @@ function filterAndSortProject(
 
 export default function ChallengeProjects({ params, searchParams }: any) {
   const sp = useSearchParams();
+  const showDialog = useDialogStore((s) => s.open);
   const user = useAuthStore((s) => s.user);
   const [search, searchSet] = useState('');
   const [sort, sortSet] = useState(false);
@@ -73,7 +75,9 @@ export default function ChallengeProjects({ params, searchParams }: any) {
     search,
     sort,
   });
-
+  const showFilter = () => {
+    showDialog('project_filter', projects);
+  };
   return (
     <div className="container flex flex-wrap gap-10 pt-4">
       <div className="w-full lg:w-[200px] hidden lg:block">
@@ -82,7 +86,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
       <div className="w-full lg:w-auto flex-1">
         {/* search and filter bar  */}
         <div className="flex justify-between py-4">
-          <div className="hidden lg:block">
+          <div className="hidden lg:block invisible">
             <button className="body-3 flex gap-1">
               <Image
                 src="/icons/sort.svg"
@@ -101,7 +105,10 @@ export default function ChallengeProjects({ params, searchParams }: any) {
               />
             </div>
             <div className="flex lg:hidden justify-between gap-2">
-              <button className="btn btn-secondary-invert w-full gap-1">
+              <button
+                className="btn btn-secondary-invert w-full gap-1"
+                onClick={showFilter}
+              >
                 <Image
                   src="/icons/filter.svg"
                   height={16}
@@ -110,7 +117,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
                 />
                 Filter
               </button>
-              <button className="btn btn-secondary-invert w-full gap-1">
+              <button className="btn btn-secondary-invert w-full gap-1 invisible">
                 <Image
                   src="/icons/sort.svg"
                   height={16}

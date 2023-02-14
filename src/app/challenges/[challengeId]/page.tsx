@@ -20,7 +20,7 @@ export default async function ChallengeIntro({ params }: any) {
         <Timeline milestones={challenge.milestones} />
       </div>
 
-      <div className=" flex flex-wrap gap-16">
+      <div className=" flex flex-wrap gap-16 mt-8">
         <div className="w-full lg:flex-1 order-2 lg:order-1">
           <h3 className="body-3 font-bold mb-8">Prize Rewards</h3>
 
@@ -121,8 +121,10 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center pt-[194px] pb-[160px]">
-        <p className="heading-4">Interested? Make your team and embrace it.</p>
-        <p className="body-2 text-grey-400  pt-5 pb-8">
+        <p className="heading-4 text-center">
+          Interested? Make your team and embrace it.
+        </p>
+        <p className="body-2 text-grey-400  pt-5 pb-8 text-center">
           Join over 4,000+ hackers all over the world.
         </p>
         <div>

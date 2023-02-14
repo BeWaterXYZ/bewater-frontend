@@ -8,7 +8,7 @@ import { unsplash } from '@/utils/unsplash';
 
 export function ProjectItem({ project }: { project: Project }) {
   return (
-    <div className="rounded border border-[#24254E] relative max-w-[450px]">
+    <div className="rounded border border-[#24254E] relative max-w-[450px] overflow-hidden flex flex-col">
       <Link
         href={`challenges/${project.team.challengeId}/projects/${project.id}`}
       >
@@ -26,7 +26,7 @@ export function ProjectItem({ project }: { project: Project }) {
           ))}
         </div>
       </Link>
-      <div className="p-4 bg-white/5 h-full">
+      <div className="p-4 bg-white/5 flex-1">
         <Link
           href={`challenges/${project.team.challengeId}/projects/${project.id}`}
         >
