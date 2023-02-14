@@ -21,7 +21,7 @@ export function WalletOptions() {
   const navigator = useNavigator();
   const { connectors } = useConnect();
 
-  const connector = connectors.filter((c) => c.ready)[0];
+  const availableConnectors = connectors.filter((c) => c.ready);
 
   const onConnectorClick = async (connector: Connector) => {
     if (!connector.ready) {
@@ -76,16 +76,18 @@ export function WalletOptions() {
 
   return (
     <>
-      <div className="my-4 w-[300px]">
-        <button
-          className={clsx(
-            'btn btn-primary-invert mono-4  w-full h-12 flex flex-row justify-center items-center px-4 gap-x-4',
-          )}
-          key={connector.id}
-          onClick={() => void onConnectorClick(connector)}
-        >
-          <span className=" text-day uppercase">Connect Wallet</span>
-        </button>
+      <div className="my-4 w-[300px] flex flex-col gap-4">
+        {availableConnectors.map((connector) => (
+          <button
+            className={clsx('btn btn-primary-invert mono-4  w-full h-12')}
+            key={connector.id}
+            onClick={() => void onConnectorClick(connector)}
+          >
+            <span className=" text-day uppercase">
+              Connect {connector.name}
+            </span>
+          </button>
+        ))}
       </div>
     </>
   );
