@@ -12,7 +12,7 @@ import type { Connector } from 'wagmi';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useNavigator } from '@/hooks/useNavigator';
 
-export function WalletOptions() {
+export default function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
   const openDialog = useDialogStore((s) => s.open);
   const clearToast = useToastStore((s) => s.clear);
@@ -22,15 +22,10 @@ export function WalletOptions() {
   const { connectors } = useConnect();
 
   const availableConnectors = connectors.filter((c) => c.ready);
-
+  console.log('availableConnectors', availableConnectors.length);
   const onConnectorClick = async (connector: Connector) => {
-    if (!connector.ready) {
-      if (connector.id === 'metaMask') {
-        openDialog('metamask_not_support', true);
-        // openModal('metamask');
-        return;
-      }
-    }
+    console.log(connector.name);
+
     try {
       clearToast();
       showLoading();

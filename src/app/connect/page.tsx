@@ -2,7 +2,9 @@
 import { WagmiConfig } from 'wagmi';
 
 import { createWagmiClient } from './createWagmiClient';
-import { WalletOptions } from './wallets';
+import dynamicLoad from 'next/dynamic';
+
+const WalletOptions = dynamicLoad(() => import('./wallets'), { ssr: false });
 
 const wagmiClient = createWagmiClient();
 

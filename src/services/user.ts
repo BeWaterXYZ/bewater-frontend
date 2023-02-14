@@ -93,3 +93,14 @@ export function checkUsername(currentUserName: string) {
     return data.userNameAvailable;
   };
 }
+
+export async function getSocialConnections() {
+  const { data } = await agentAuthed.get<{
+    socialAccounts: { platform: string; handle: string }[];
+  }>('/user/social');
+  return data.socialAccounts;
+}
+export async function disconnectSocialConnections(platform: string) {
+  const { data } = await agentAuthed.post(`/auth/oauth/disconnect/${platform}`);
+  return data;
+}

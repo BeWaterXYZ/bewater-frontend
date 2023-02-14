@@ -1,4 +1,4 @@
-import { agentAnon } from './agent';
+import { agentAnon, agentAuthed } from './agent';
 
 import { APIResponse } from '@/types/response';
 import { UserProfile } from './types';
@@ -45,5 +45,15 @@ export async function submitVerifySignedMessage({
       walletAddress,
     },
   );
+  return data;
+}
+
+export async function getOAuthUrl(query: {
+  platform: string;
+  redirectURI: string;
+}) {
+  const { data } = await agentAuthed.get('/auth/oauth', {
+    params: query,
+  });
   return data;
 }

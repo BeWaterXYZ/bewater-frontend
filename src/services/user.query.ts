@@ -2,6 +2,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { getAllGroupingRequest } from './grouping-request';
 import { UserID } from './types';
 import {
+  getSocialConnections,
   getUserProfile,
   getUserProfileFull,
   submitUpdateUserProfile,
@@ -19,10 +20,19 @@ export function useFetchUser(userId?: UserID) {
 }
 export function useFetchUserFull(userId?: UserID) {
   return useQuery({
-    queryKey: ['user', userId],
+    queryKey: ['user', userId, 'full'],
     enabled: !!userId,
     queryFn: async () => {
       return getUserProfileFull(userId!);
+    },
+  });
+}
+export function useFetchUserSocialConnections(userId?: UserID) {
+  return useQuery({
+    queryKey: ['user', 'social', userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getSocialConnections();
     },
   });
 }

@@ -13,7 +13,7 @@ import {
 } from '@/services/auth';
 
 export async function connectWallet(connector: Connector) {
-  console.log('start to connect wallet...');
+  console.log('start to connect wallet...', connector);
   const account = getAccount();
   console.log('account:', { account });
   if (account.isConnected) {
