@@ -39,12 +39,7 @@ export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
 const BeWaterLogo = () => {
   return (
     <Link href="/">
-      <Image
-        src="/logo/bewater_black.svg"
-        width={140}
-        height={40}
-        alt="bewater logo"
-      />
+      <Image src="/logo/logo.svg" width={128} height={24} alt="bewater logo" />
     </Link>
   );
 };
