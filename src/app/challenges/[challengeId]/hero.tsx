@@ -15,8 +15,8 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
           challenge.endTime,
         )}`}
       </h1>
-      <div className="absolute z-10 hidden lg:block lg:w-[100px] lg:h-[1388px] left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
-      <div className="absolute z-10 hidden lg:block lg:w-[100px] lg:h-[1388px] left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
+      <div className="absolute  hidden lg:block lg:w-[100px] lg:h-[1388px] left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
+      <div className="absolute  hidden lg:block lg:w-[100px] lg:h-[1388px] left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
     </div>
   );
 }

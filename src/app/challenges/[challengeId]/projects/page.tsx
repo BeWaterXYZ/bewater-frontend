@@ -6,42 +6,59 @@ import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeProjects } from '@/services/project.query';
 import Loading from '../loading';
 import { ProjectFilter } from './project-filter';
-import { Project } from '@/services/types';
+import { Project, UserProfile } from '@/services/types';
 import { useSearchParams } from 'next/navigation';
-import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
-function SearchInput() {
-  return (
-    <div className="flex items-center gap-2 border border-grey-800  h-[36x] py-1 rounded-sm">
-      <div>
-        <MagnifyingGlassIcon className="text-grey-800" height={20} width={20} />
-      </div>
-      <input
-        className="bg-transparent block flex-1 outline-none text-white"
-        placeholder="Search for team or project name"
-      />
-    </div>
-  );
-}
-
-function filterAndSortProject(projects: Project[], tag?: string) {
+import { useAuthStore } from '@/stores/auth';
+import { useState } from 'react';
+import { SearchInput } from '../../../../components/molecules/search-input';
+function filterAndSortProject(
+  projects: Project[],
+  userProfile?: UserProfile,
+  options?: {
+    tag?: string;
+    search?: string;
+    sort?: boolean;
+  },
+) {
   let res = projects;
 
   /**
    * filtering
    */
-  if (tag) {
-    res = res.filter((p) => p.tags.some((pt) => tag.includes(pt)));
+  if (options?.tag) {
+    res = res.filter((p) => p.tags.some((pt) => options.tag!.includes(pt)));
+  }
+  if (options?.search) {
+    res = res.filter(
+      (p) =>
+        p.team.name.toLowerCase().includes(options.search!.toLowerCase()) ||
+        p.name.toLowerCase().includes(options.search!.toLowerCase()),
+    );
   }
   /**
    * sorting
    */
-  return res;
+  if (!userProfile) return res;
+  return res.sort((a, b) => {
+    let isInATeam = a.team.teamMembers.some(
+      (m) => m.userProfile.userId === userProfile.userId,
+    );
+    let isInBTeam = b.team.teamMembers.some(
+      (m) => m.userProfile.userId === userProfile.userId,
+    );
+
+    if (isInATeam && !isInBTeam) return -1;
+    else if (isInBTeam && !isInATeam) return 1;
+    else return 0;
+  });
 }
 
 export default function ChallengeProjects({ params, searchParams }: any) {
   const sp = useSearchParams();
-
+  const user = useAuthStore((s) => s.user);
+  const [search, searchSet] = useState('');
+  const [sort, sortSet] = useState(false);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: projects, isLoading: isLoadingProject } =
@@ -51,7 +68,11 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   if (!challenge || !projects) return null;
 
   const { tag } = querySchema.parse(Object.fromEntries(sp));
-  const projectsFilteredSorted = filterAndSortProject(projects, tag);
+  const projectsFilteredSorted = filterAndSortProject(projects, user, {
+    tag,
+    search,
+    sort,
+  });
 
   return (
     <div className="container flex flex-wrap gap-10 pt-4">
@@ -74,7 +95,10 @@ export default function ChallengeProjects({ params, searchParams }: any) {
           </div>
           <div className="w-full lg:w-auto flex  flex-col gap-4">
             <div className="lg:min-w-[300px]">
-              <SearchInput />
+              <SearchInput
+                value={search}
+                onChange={(e) => searchSet(e.target.value)}
+              />
             </div>
             <div className="flex lg:hidden justify-between gap-2">
               <button className="btn btn-secondary-invert w-full gap-1">

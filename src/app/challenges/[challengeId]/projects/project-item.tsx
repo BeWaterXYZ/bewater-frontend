@@ -26,7 +26,7 @@ export function ProjectItem({ project }: { project: Project }) {
           ))}
         </div>
       </Link>
-      <div className="p-4 bg-white/5 ">
+      <div className="p-4 bg-white/5 h-full">
         <Link
           href={`challenges/${project.team.challengeId}/projects/${project.id}`}
         >

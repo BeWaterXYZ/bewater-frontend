@@ -80,12 +80,21 @@ export default async function Page({ params }: any) {
 
       <div className="mb-16">
         <p className="body-3 text-grey-500 font-bold"> Project Overview</p>
-        <div className="flex items-center py-2">
-          <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
-          {team.project.tags.map((tag) => (
-            <TagProjectTag key={tag} label={tag} />
-          ))}
+        <div className="flex justify-between flex-wrap">
+          <div className="flex items-center py-2">
+            <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
+            {team.project.tags.map((tag) => (
+              <TagProjectTag key={tag} label={tag} />
+            ))}
+          </div>
+          <Link
+            href={`/challenges/${challengeId}/projects/${team.project.id}`}
+            className="body-3 text-day"
+          >
+            {'CHECK DETAIL ->'}
+          </Link>
         </div>
+
         <p className="body-4 text-grey-300">{team.project.description}</p>
       </div>
     </div>
