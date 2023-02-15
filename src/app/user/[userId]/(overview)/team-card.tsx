@@ -5,10 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 export function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <Link
-      href={`/challenges/${member.team?.challengeId}/teams/${member.teamId}`}
-      className=" w-[300px] h-[140px] rounded bg-[#0B0C24] border border-[#24254E] p-4 flex flex-col justify-between"
-    >
+    <div className=" h-[140px] rounded bg-[#0B0C24] border border-[#24254E] p-4 flex flex-col justify-between">
       <div>
         <div className="pb-2 flex gap-2">
           {member.isLeader ? (
@@ -21,11 +18,18 @@ export function TeamCard({ member }: { member: TeamMember }) {
           ) : null}
           <TagRole label={member.teamRole} />
         </div>
-        <div className="body-3 text-grey-500">at {member.team?.name}</div>
+        <div className="body-3 text-grey-500">
+          {'at '}
+          <Link
+            href={`/challenges/${member.team?.challengeId}/teams/${member.teamId}`}
+          >
+            {member.team?.name}
+          </Link>
+        </div>
       </div>
       <div className="flex ">
         <TeamAvatarRow teamMembers={member.team?.teamMembers ?? []} />
       </div>
-    </Link>
+    </div>
   );
 }

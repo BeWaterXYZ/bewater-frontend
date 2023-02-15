@@ -1,12 +1,11 @@
 'use client';
-import Link from 'next/link';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import Link from 'next/link';
 
 import { Avatar } from '@/components/avatar/avatar';
 
-import { useAuthStore } from '@/stores/auth';
-import { UserProfile } from '@/services/types';
 import { useFetchUser } from '@/services/user.query';
+import { useAuthStore } from '@/stores/auth';
 
 export const UserMenu = () => {
   const clearStore = useAuthStore((s) => s.clear);

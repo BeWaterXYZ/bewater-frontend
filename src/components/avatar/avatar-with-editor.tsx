@@ -62,6 +62,7 @@ export const AvatarWithEditor = ({ src, walletAddress }: Props) => {
             type="file"
             id="upload"
             name="avatar"
+            accept="image/*"
             className="hidden"
             onChange={onFileSelect}
           />

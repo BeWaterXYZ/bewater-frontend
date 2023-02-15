@@ -8,17 +8,22 @@ import { TeamCard } from './team-card';
 import Image from 'next/image';
 import { Aspect } from '@/components/aspect';
 import Link from 'next/link';
+import { uniqBy } from 'remeda';
 
 export default async function Page({ params }: any) {
   const { userId } = userSchema.parse(params);
   const profile = await getUserProfileFull(userId);
   if (!profile) return null;
+  const uniqTeamMembers = uniqBy(
+    profile.teamMembers,
+    (tm) => tm.team?.challengeId,
+  );
   return (
     <div>
       <div className="mb-8">
         <p className="body-2 text-grey-500 font-bold">Challenges </p>
         <div className="flex gap-4 flex-wrap my-4 flex-col lg:flex-row ">
-          {profile.teamMembers.map((tm) => {
+          {uniqTeamMembers.map((tm) => {
             return (
               <Link
                 href={`/challenges/${tm.team?.challengeId}`}
@@ -46,7 +51,7 @@ export default async function Page({ params }: any) {
       </div>
       <div>
         <p className="body-2 text-grey-500 font-bold">Teamwork</p>
-        <div className="flex gap-4 flex-wrap my-4">
+        <div className="grid grid-cols-300 gap-4  my-4">
           {profile.teamMembers.map((tm) => {
             return <TeamCard member={tm} key={tm.id} />;
           })}
