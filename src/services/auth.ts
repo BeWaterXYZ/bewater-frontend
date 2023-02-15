@@ -52,8 +52,9 @@ export async function getOAuthUrl(query: {
   platform: string;
   redirectURI: string;
 }) {
-  const { data } = await agentAuthed.get('/auth/oauth', {
-    params: query,
-  });
+  const { data } = await agentAuthed.post<{ oauthURL: string }>(
+    '/auth/oauth',
+    query,
+  );
   return data;
 }

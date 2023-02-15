@@ -7,6 +7,7 @@ import {
   getUserProfileFull,
   submitUpdateUserProfile,
   updateEmail,
+  disconnectSocialConnections,
 } from './user';
 
 export function useFetchUser(userId?: UserID) {
@@ -60,6 +61,15 @@ export function useMutationUpdateEmail() {
   return useMutation(updateEmail, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries(['user', data.userProfile?.userId]);
+    },
+  });
+}
+
+export function useMutationDisconnectSocialConnection() {
+  const queryClient = useQueryClient();
+  return useMutation(disconnectSocialConnections, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(['user', 'social']);
     },
   });
 }

@@ -1,17 +1,23 @@
 'use client';
 import { useDialogStore } from '@/components/dialog/store';
-import { useLoadingWhen } from '@/components/loading/store';
+import {
+  useLoadingStoreAction,
+  useLoadingWhen,
+} from '@/components/loading/store';
 import { getOAuthUrl } from '@/services/auth';
 import {
   useFetchUser,
   useFetchUserSocialConnections,
+  useMutationDisconnectSocialConnection,
 } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
+  const { showLoading, dismissLoading } = useLoadingStoreAction();
   const showDialog = useDialogStore((s) => s.open);
   const { data: userProfile, isLoading } = useFetchUser(user?.userId);
+  const mutation = useMutationDisconnectSocialConnection();
   const { data: socialConnections, isLoading: isLoading2 } =
     useFetchUserSocialConnections(user?.userId);
 
@@ -24,17 +30,21 @@ export default function Page() {
   const changeEmail = () => {
     showDialog('email_change', true);
   };
-  const connect = (platform: string) => {
-    let data = getOAuthUrl({
+  const connect = async (platform: string) => {
+    showLoading();
+    let data = await getOAuthUrl({
       platform: platform,
       redirectURI: window.location.href,
     });
+    window.location.href = data.oauthURL;
   };
-  const disconnect = (platform: string) => {
-    let data = getOAuthUrl({
-      platform: platform,
-      redirectURI: window.location.href,
-    });
+  const disconnect = async (platform: string) => {
+    showLoading();
+    try {
+      await mutation.mutateAsync(platform);
+    } finally {
+      dismissLoading();
+    }
   };
 
   return (
@@ -75,9 +85,9 @@ export default function Page() {
           </div>
         </div>
         {/* github figma */}
-        {['github', 'figma'].map((platform) => {
+        {['GitHub', 'Figma'].map((platform) => {
           let connection = socialConnections?.find(
-            (c) => c.platform === platform,
+            (c) => c.platform.toLowerCase() === platform.toLowerCase(),
           );
           return (
             <div
@@ -86,7 +96,7 @@ export default function Page() {
             >
               <div className="flex  p-2">
                 <Image
-                  src={`/icons/company/${platform}.svg`}
+                  src={`/icons/company/${platform.toLowerCase()}.svg`}
                   width={24}
                   height={24}
                   alt={platform}
