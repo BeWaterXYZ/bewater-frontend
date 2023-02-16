@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 
 export default function PoorMansStorybook() {
@@ -7,7 +8,14 @@ export default function PoorMansStorybook() {
       <div className="flex flex-wrap">
         <div className="bg-night  p-2">
           <div className="py-2">
-            <button className="btn btn-primary">Test button</button>
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                throw new Error('Sentry Frontend Error');
+              }}
+            >
+              Test button
+            </button>
           </div>
           <div className="py-2">
             <button className="btn btn-primary-invert">Test button</button>
@@ -105,24 +113,6 @@ export default function PoorMansStorybook() {
           <p className="body-4">The quick brown fox jumps over the lazy dog</p>
         </div>
 
-        <div className="py-2">
-          <p className="body-5">The quick brown fox jumps over the lazy dog</p>
-        </div>
-        <hr />
-
-        <p className="body-1">mono</p>
-        <div className="py-2">
-          <p className="body-1">The quick brown fox jumps over the lazy dog</p>
-        </div>
-        <div className="py-2">
-          <p className="body-2">The quick brown fox jumps over the lazy dog</p>
-        </div>
-        <div className="py-2">
-          <p className="body-3">The quick brown fox jumps over the lazy dog</p>
-        </div>
-        <div className="py-2">
-          <p className="body-4">The quick brown fox jumps over the lazy dog</p>
-        </div>
         <div className="py-2">
           <p className="body-5">The quick brown fox jumps over the lazy dog</p>
         </div>
