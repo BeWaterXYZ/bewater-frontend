@@ -16,24 +16,35 @@ export default async function ChallengePage() {
   return (
     <div className="container my-4 pt-20">
       {active.length > 0 && (
-        <div className="border-b py-4">
-          <h2 className="heading-5">Happening Now</h2>
+        <div className=" py-4">
+          <div className="flex gap-2 items-center">
+            <h2 className="heading-5 uppercase">Happening</h2>
+            <div className="w-5 h-4 body-5 bg-day text-night rounded-full text-center leading-4">
+              {active.length}
+            </div>
+          </div>
           <ChallengeList challenges={active} />
         </div>
       )}
       {upcoming.length > 0 && (
-        <div className="border-b py-4">
-          <h2 className="heading-5">Up Next</h2>
+        <div className=" py-4">
+          <div className="flex gap-2 items-center">
+            <h2 className="heading-5 uppercase">Up Next</h2>
+            <div className="w-5 h-4 body-5 bg-day text-night rounded-full text-center leading-4">
+              {active.length}
+            </div>
+          </div>
+
           <ChallengeList challenges={upcoming} />
         </div>
       )}
-
-      {completed.length > 0 && (
+      {/* todo , fixme  */}
+      {/* {completed.length > 0 && (
         <div className="border-b py-4">
           <h2 className="heading-5">Completed</h2>
           <ChallengeList challenges={completed} />
         </div>
-      )}
+      )} */}
     </div>
   );
 }

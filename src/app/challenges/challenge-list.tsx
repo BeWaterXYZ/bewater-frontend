@@ -1,20 +1,12 @@
 import { Aspect } from '@/components/aspect';
 import { Challenge } from '@/services/types';
-import { formatMMMDDYYYY } from '@/utils/date';
+import { formatMMMDDYYYY, formatYYYYMMMDD } from '@/utils/date';
 import { unsplash } from '@/utils/unsplash';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface ChallengeListProps {
-  challenges: Challenge[];
-}
-export function ChallengeList({ challenges }: ChallengeListProps) {
-  return (
-    <ul>
-      {challenges.map((challenge) => (
-        <li key={challenge.id} className="my-2">
-          <Link href={`/challenges/${challenge.id}`}>
-            <div className="flex  flex-wrap  py-8 ">
+/**
+<div className="flex  flex-wrap  py-8 ">
               <div className="w-full lg:w-1/3  flex flex-col justify-between ">
                 <div className="body-2">
                   {`${formatMMMDDYYYY(challenge.startTime)} - ${formatMMMDDYYYY(
@@ -40,9 +32,39 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
                 </div>
               </div>
             </div>
+
+ */
+interface ChallengeListProps {
+  challenges: Challenge[];
+}
+export function ChallengeList({ challenges }: ChallengeListProps) {
+  return (
+    <div className="flex  gap-5 flex-col lg:flex-row my-8">
+      {challenges.map((challenge) => (
+        <div
+          key={challenge.id}
+          className="w-full border border-[#24254E] rounded overflow-hidden bg-[#0B0C24]"
+        >
+          <Link href={`/challenges/${challenge.id}`}>
+            <Aspect ratio={5 / 2}>
+              <Image
+                fill
+                src={challenge.bannerUrl ?? unsplash()}
+                alt="crypto"
+                className="object-cover w-full h-full"
+              />
+            </Aspect>
+            <div className="p-4">
+              <div className="mono-3">{challenge.title}</div>
+              <div className="mono-3 text-grey-500">
+                {`${formatYYYYMMMDD(challenge.startTime)} ->  ${formatYYYYMMMDD(
+                  challenge.endTime,
+                )}`}
+              </div>
+            </div>
           </Link>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

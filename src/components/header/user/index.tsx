@@ -2,8 +2,12 @@
 import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth';
 import { UserMenu } from './menu';
+import { NotificationBell } from './notification';
 
 export default function UserArea() {
+  // fix me . need user here to update this component
+  const user = useAuthStore((s) => s.user);
+  console.log(user);
   const isAuthed = useAuthStore((s) => s.isAuthed);
 
   return !isAuthed() ? (
@@ -14,6 +18,9 @@ export default function UserArea() {
       Connect
     </Link>
   ) : (
-    <UserMenu />
+    <div className="flex gap-4 items-center">
+      <NotificationBell />
+      <UserMenu />
+    </div>
   );
 }

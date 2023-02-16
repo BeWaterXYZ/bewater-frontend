@@ -23,7 +23,7 @@ export const UserMenu = () => {
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
             <Avatar
-              className="w-10 h-10"
+              className="w-8 h-8"
               src={user.avatarURI}
               walletAddress={user.walletAddress}
             />
