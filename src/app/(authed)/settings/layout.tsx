@@ -3,9 +3,7 @@ import { Nav } from './nav';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="h-full container">
-      <p className="heading-6 border-b border-b-white/20 py-4">
-        Account Setting
-      </p>
+      <p className="body-1 border-b border-b-white/20 py-4">Account Setting</p>
 
       <div className="flex gap-6 flex-wrap  ">
         <div className="w-full lg:w-[240px] lg:border-r  border-r-white/20 pr-0 lg:pr-8  pt-8 ">

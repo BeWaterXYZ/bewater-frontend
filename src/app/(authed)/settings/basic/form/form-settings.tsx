@@ -92,7 +92,7 @@ export const FormUserSettings = ({ data }: Props) => {
       <TextArea
         label="Bio"
         rows={3}
-        placeholder="Content"
+        placeholder="Introduce yourself :)"
         error={errors['bio']}
         {...register('bio', { required: 'Bio is required.' })}
       />
@@ -105,7 +105,7 @@ export const FormUserSettings = ({ data }: Props) => {
       />
 
       <Select
-        label="Skill "
+        label="Skills "
         options={SkillSetOptions}
         error={errors['skills']}
         control={control}

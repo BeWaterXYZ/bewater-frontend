@@ -18,6 +18,7 @@ export default async function Page({ params }: any) {
     profile.teamMembers,
     (tm) => tm.team?.challengeId,
   );
+
   return (
     <div>
       <div className="mb-8">

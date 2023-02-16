@@ -22,7 +22,6 @@ export default function WalletOptions() {
   const { connectors } = useConnect();
 
   const availableConnectors = connectors.filter((c) => c.ready);
-  console.log('availableConnectors', availableConnectors.length);
   const onConnectorClick = async (connector: Connector) => {
     console.log(connector.name);
 
@@ -71,7 +70,7 @@ export default function WalletOptions() {
 
   return (
     <>
-      <div className="my-4 w-[300px] flex flex-col gap-4">
+      <div className="my-4 w-full flex flex-col gap-4">
         {availableConnectors.map((connector) => (
           <button
             className={clsx('btn btn-primary-invert body-4  w-full h-12')}

@@ -13,7 +13,7 @@
     }
   }
   .btn-primary-invert {
-    @apply border-day bg-night text-day  hover:border-[#00CCCC];
+    @apply border-day bg-night text-day  hover:border-[#00CCCC] rounded-none;
     &[disabled] {
       @apply border-[#006666]  text-[#94A3B8];
     }

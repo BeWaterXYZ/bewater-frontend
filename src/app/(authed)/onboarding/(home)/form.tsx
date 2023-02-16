@@ -84,7 +84,6 @@ export const FormOnboarding = ({ onComplete }: Props) => {
   };
 
   const sendEmail = async () => {
-    console.log(errors);
     if (!errors.email) {
       let { email } = getValues();
       // start sending email

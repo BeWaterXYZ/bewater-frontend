@@ -8,6 +8,7 @@ import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
+import { ProjectAssets } from './project-assets';
 
 const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
   ssr: false,
@@ -65,19 +66,26 @@ export default async function Page({ params }: any) {
         <ProjectMedia project={project} />
       </div>
 
-      <div className="my-4">
-        <h3 className="body-3 font-bold text-grey-500">Members</h3>
-        <div className="my-4">
-          {project.team.teamMembers.map((m) => (
-            <TeamMember member={m} key={m.userId} />
-          ))}
+      <div className="flex flex-col lg:flex-row gap-10">
+        <div className="flex-[2]">
+          <ProjectAssets project={project} />
+          {/* members */}
+          <div className="my-4">
+            <h3 className="body-3 font-bold text-grey-500">Members</h3>
+            <div className="my-4">
+              {project.team.teamMembers.map((m) => (
+                <TeamMember member={m} key={m.userId} />
+              ))}
+            </div>
+            <Link
+              className="body-3 text-day uppercase "
+              href={`/challenges/${project.team.challengeId}/teams/${project.team.id}`}
+            >
+              {'CHECK TEAM DETAIL ->'}
+            </Link>
+          </div>
         </div>
-        <Link
-          className="body-3 text-day uppercase "
-          href={`/challenges/${project.team.challengeId}/teams/${project.team.id}`}
-        >
-          {'CHECK TEAM DETAIL ->'}
-        </Link>
+        <div className="flex-[3]"></div>
       </div>
     </div>
   );
