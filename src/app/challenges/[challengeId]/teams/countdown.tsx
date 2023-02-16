@@ -32,6 +32,6 @@ export function Countdown({ deadline }: { deadline: string }) {
   }, [deadlineDate]);
 
   return (
-    <span className="mono-1 tabular-nums text-[24px]">{durationStr} </span>
+    <span className="body-1 tabular-nums text-[24px]">{durationStr} </span>
   );
 }

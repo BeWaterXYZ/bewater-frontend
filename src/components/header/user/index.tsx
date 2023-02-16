@@ -13,7 +13,7 @@ export default function UserArea() {
   return !isAuthed() ? (
     <Link
       href="/connect"
-      className="btn btn-primary-invert h-12 py-4 px-8 uppercase mono-4 text-day "
+      className="btn btn-primary-invert h-12 py-4 px-8 uppercase body-4 text-day "
     >
       Connect
     </Link>

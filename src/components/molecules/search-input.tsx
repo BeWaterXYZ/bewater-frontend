@@ -9,7 +9,7 @@ export function SearchInput(props: SearchInputProps) {
         <MagnifyingGlassIcon className="text-grey-800" height={20} width={20} />
       </div>
       <input
-        className="pl-8 border border-grey-800 bg-transparent block flex-1 outline-none text-white  h-[36x] py-1 rounded focus:border-day"
+        className="body-4 pl-8 border border-grey-800 bg-transparent block flex-1 outline-none text-white  h-[36x] py-1 rounded focus:border-day"
         placeholder="Search for team or project name"
         {...props}
       />

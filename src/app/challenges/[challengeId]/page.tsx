@@ -130,7 +130,7 @@ export default async function ChallengeIntro({ params }: any) {
         <div>
           <Link
             href={`/challenges/${challengeId}/teams`}
-            className="btn btn-primary-invert mono-4 text-day  uppercase w-64 py-6"
+            className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
           >
             Go to team page
           </Link>

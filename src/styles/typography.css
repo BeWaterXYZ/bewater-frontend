@@ -21,41 +21,19 @@
   }
 
   .body-1 {
-    @apply font-primary text-[18px] leading-normal font-medium text-white;
-  }
-  .body-2 {
-    @apply font-primary text-[16px] leading-normal font-normal text-white;
-  }
-  .body-3 {
-    @apply font-primary text-[14px] leading-normal font-normal text-white;
-  }
-  .body-4 {
-    @apply font-primary text-[12px] leading-normal font-normal text-white;
-  }
-  .body-5 {
-    @apply font-primary text-[10px] leading-normal font-normal text-white;
-  }
-
-  .mono-1 {
     @apply font-secondary text-[18px] leading-normal font-medium text-white;
   }
-  .mono-2 {
+  .body-2 {
     @apply font-secondary text-[16px] leading-normal font-normal text-white;
   }
-  .mono-3 {
+  .body-3 {
     @apply font-secondary text-[14px] leading-normal font-normal text-white;
   }
-  .mono-4 {
+  .body-4 {
     @apply font-secondary text-[12px] leading-normal font-normal text-white;
   }
-  .mono-5 {
+  .body-5 {
     @apply font-secondary text-[10px] leading-normal font-normal text-white;
   }
 
-  .mono-display-1 {
-    @apply font-secondary text-[24px] leading-normal font-bold text-white;
-  }
-  .mono-display-2 {
-    @apply font-secondary text-[20px] leading-normal font-normal text-white;
-  }
 }

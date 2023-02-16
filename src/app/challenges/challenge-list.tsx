@@ -55,8 +55,8 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
               />
             </Aspect>
             <div className="p-4">
-              <div className="mono-3">{challenge.title}</div>
-              <div className="mono-3 text-grey-500">
+              <div className="body-3 py-1">{challenge.title}</div>
+              <div className="body-3 text-grey-500">
                 {`${formatYYYYMMMDD(challenge.startTime)} ->  ${formatYYYYMMMDD(
                   challenge.endTime,
                 )}`}

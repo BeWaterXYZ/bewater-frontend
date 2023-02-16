@@ -17,7 +17,7 @@ export function NavItem({ item, underline, className }: NavItemProps) {
     <Link
       href={item.path ?? '/'}
       className={clsx(
-        ' flex items-center h-full body-2 font-bold outline-none py-2',
+        ' flex items-center h-full body-2 font-bold outline-none py-2 uppercase',
         {
           'text-day [text-shadow:0_0_6px_theme(colors.day)]': item.active,
           'border-b-2 border-b-day': underline && item.active,

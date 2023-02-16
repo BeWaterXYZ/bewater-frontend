@@ -112,19 +112,19 @@ export default function PoorMansStorybook() {
 
         <p className="body-1">mono</p>
         <div className="py-2">
-          <p className="mono-1">The quick brown fox jumps over the lazy dog</p>
+          <p className="body-1">The quick brown fox jumps over the lazy dog</p>
         </div>
         <div className="py-2">
-          <p className="mono-2">The quick brown fox jumps over the lazy dog</p>
+          <p className="body-2">The quick brown fox jumps over the lazy dog</p>
         </div>
         <div className="py-2">
-          <p className="mono-3">The quick brown fox jumps over the lazy dog</p>
+          <p className="body-3">The quick brown fox jumps over the lazy dog</p>
         </div>
         <div className="py-2">
-          <p className="mono-4">The quick brown fox jumps over the lazy dog</p>
+          <p className="body-4">The quick brown fox jumps over the lazy dog</p>
         </div>
         <div className="py-2">
-          <p className="mono-5">The quick brown fox jumps over the lazy dog</p>
+          <p className="body-5">The quick brown fox jumps over the lazy dog</p>
         </div>
       </div>
     </div>

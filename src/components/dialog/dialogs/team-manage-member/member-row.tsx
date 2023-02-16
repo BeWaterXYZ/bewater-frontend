@@ -17,7 +17,7 @@ export function TeamMemberRow({ member }: { member: TeamMember }) {
         <p className="body-4 text-grey-300">
           {member.userProfile.fullName ?? member.userProfile.userName}
         </p>
-        <p className="mono-4 text-grey-500">@{member.userProfile.userName}</p>
+        <p className="body-4 text-grey-500">@{member.userProfile.userName}</p>
       </div>
       <div className="flex-1" />
       <div className="flex items-center">

@@ -18,7 +18,7 @@ export default async function ChallengePage() {
       {active.length > 0 && (
         <div className=" py-4">
           <div className="flex gap-2 items-center">
-            <h2 className="heading-5 uppercase">Happening</h2>
+            <h2 className="body-1 text-[24px] uppercase">Happening</h2>
             <div className="w-5 h-4 body-5 bg-day text-night rounded-full text-center leading-4">
               {active.length}
             </div>
@@ -29,7 +29,7 @@ export default async function ChallengePage() {
       {upcoming.length > 0 && (
         <div className=" py-4">
           <div className="flex gap-2 items-center">
-            <h2 className="heading-5 uppercase">Up Next</h2>
+            <h2 className="body-1 text-[24px] uppercase">Up Next</h2>
             <div className="w-5 h-4 body-5 bg-day text-night rounded-full text-center leading-4">
               {active.length}
             </div>

@@ -42,7 +42,7 @@ export default async function Page({ params }: any) {
                   <p className="body-2 font-bold pb-2">
                     {tm.team?.challenge?.title}
                   </p>
-                  <p className="mono-3">{tm.team?.challenge?.description}</p>
+                  <p className="body-3">{tm.team?.challenge?.description}</p>
                 </div>
               </Link>
             );
