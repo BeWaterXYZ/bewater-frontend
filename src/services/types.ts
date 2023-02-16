@@ -19,9 +19,14 @@ export interface UserProfile {
   roles: RoleUnion[];
   skills: SkillUnion[];
 }
-
+export interface SocialAuth {
+  platform: 'GitHub' | 'Figma';
+  authStatus: 'AUTHORIZED';
+  handle: string;
+}
 export interface UserProfileFull extends UserProfile {
   teamMembers: TeamMember[];
+  socialAuths: SocialAuth[];
 }
 
 /**

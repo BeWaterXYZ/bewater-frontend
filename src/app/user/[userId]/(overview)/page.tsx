@@ -23,29 +23,32 @@ export default async function Page({ params }: any) {
     <div>
       <div className="mb-8">
         <p className="body-2 text-grey-500 font-bold">Challenges </p>
-        <div className="flex gap-4 flex-wrap my-4 flex-col lg:flex-row ">
+        <div className="grid grid-cols-300 gap-4 my-4">
           {uniqTeamMembers.map((tm) => {
             return (
-              <Link
-                href={`/challenges/${tm.team?.challengeId}`}
-                className="flex-1  rounded bg-[#0B0C24] border border-[#24254E] "
+              <div
                 key={tm.id}
+                className="rounded bg-[#0B0C24] border border-[#24254E] overflow-hidden "
               >
-                <Aspect ratio={2}>
-                  <Image
-                    src={tm.team?.challenge?.bannerUrl ?? unsplash('event')}
-                    fill
-                    alt={tm.team?.challenge?.description ?? ''}
-                  />
-                </Aspect>
-
-                <div className="p-4 ">
-                  <p className="body-2 font-bold pb-2">
-                    {tm.team?.challenge?.title}
-                  </p>
-                  <p className="body-3">{tm.team?.challenge?.description}</p>
-                </div>
-              </Link>
+                <Link
+                  href={`/challenges/${tm.team?.challengeId}`}
+                  className="block"
+                >
+                  <Aspect ratio={2}>
+                    <Image
+                      src={tm.team?.challenge?.bannerUrl ?? unsplash('event')}
+                      fill
+                      alt={tm.team?.challenge?.description ?? ''}
+                    />
+                  </Aspect>
+                  <div className="p-4 ">
+                    <p className="body-2 font-bold pb-2">
+                      {tm.team?.challenge?.title}
+                    </p>
+                    <p className="body-3">{tm.team?.challenge?.description}</p>
+                  </div>
+                </Link>
+              </div>
             );
           })}
         </div>

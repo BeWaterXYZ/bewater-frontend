@@ -4,6 +4,17 @@ import { getUserProfileFull } from '@/services/user';
 import { maskWalletAddress } from '@/utils/wallet-adress';
 import { userSchema } from './param-schema';
 import { Nav } from './nav';
+import Link from 'next/link';
+import Image from 'next/image';
+import { SocialAuth } from '@/services/types';
+
+function getSocialConnectLink(con: SocialAuth) {
+  if (con.platform.toLowerCase() === 'github')
+    return `https://github.com/${con.handle}`;
+  if (con.platform.toLowerCase() === 'figma')
+    return `https://figma.com/@${con.handle}`;
+  return '';
+}
 export default async function page({
   children,
   params,
@@ -14,7 +25,6 @@ export default async function page({
   const { userId } = userSchema.parse(params);
   const profile = await getUserProfileFull(userId);
   if (!profile) return null;
-
   return (
     <div className="container my-4 pt-24 lg:pt-20 ">
       <div className="flex flex-wrap gap-10">
@@ -32,6 +42,20 @@ export default async function page({
                 {maskWalletAddress(profile.walletAddress)}
               </p>
               <p className="body-4 py-4">{profile.bio}</p>
+              <div className="flex gap-3">
+                {profile.socialAuths
+                  .filter((con) => con.authStatus === 'AUTHORIZED')
+                  .map((con) => (
+                    <Link href={getSocialConnectLink(con)} key={con.platform}>
+                      <Image
+                        src={`/icons/company/${con.platform.toLowerCase()}.svg`}
+                        alt={con.platform}
+                        height={20}
+                        width={20}
+                      />
+                    </Link>
+                  ))}
+              </div>
             </div>
           </div>
 
