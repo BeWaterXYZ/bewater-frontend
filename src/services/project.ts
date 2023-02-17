@@ -1,7 +1,6 @@
 import { OptionalExceptFor } from '@/types/utils';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { agentAnon, agentAuthed } from './agent';
-import { ChallengeID, Project, ProjectId } from './types';
+import { ChallengeID, Project, ProjectId, TeamID } from './types';
 
 export async function getChallengeTProjects(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ projects: Project[] }>(
@@ -21,4 +20,14 @@ export async function updateProject(project: OptionalExceptFor<Project, 'id'>) {
     project,
   );
   return data.project;
+}
+
+export async function getGitHubRepos(teamId: TeamID) {
+  const { data } = await agentAuthed.post<{
+    repos: {
+      fullName: string;
+      url: string;
+    }[];
+  }>(`/project/github/${teamId}`);
+  return data.repos;
 }

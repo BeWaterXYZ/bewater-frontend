@@ -1,6 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getChallengeTProjects, getProject, updateProject } from './project';
-import { ChallengeID, ProjectId } from './types';
+import {
+  getChallengeTProjects,
+  getGitHubRepos,
+  getProject,
+  updateProject,
+} from './project';
+import { ChallengeID, ProjectId, TeamID } from './types';
 
 export function useFetchChallengeProjects(challengeId: ChallengeID) {
   return useQuery({
@@ -16,6 +21,15 @@ export function useFetchProject(projectId: ProjectId) {
     queryKey: ['project', projectId],
     queryFn: async () => {
       return getProject(projectId);
+    },
+  });
+}
+
+export function useFetchProjectGitHubRepos(teamId: TeamID) {
+  return useQuery({
+    queryKey: ['project', 'repos', teamId],
+    queryFn: async () => {
+      return getGitHubRepos(teamId);
     },
   });
 }
