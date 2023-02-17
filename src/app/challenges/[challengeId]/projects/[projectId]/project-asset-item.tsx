@@ -1,4 +1,5 @@
 'use client';
+import { useAlert } from '@/components/alert/store';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useNavigator } from '@/hooks/useNavigator';
 import { updateProject } from '@/services/project';
@@ -28,6 +29,7 @@ export function AssetItem({
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const [editing, editingSet] = useState(false);
   const [newValue, newValueSet] = useState(value);
+  const { confirm } = useAlert();
 
   const save = async () => {
     showLoading();
@@ -39,6 +41,26 @@ export function AssetItem({
       });
     } finally {
       editingSet(false);
+      dismissLoading();
+    }
+  };
+  const disconnectGithub = async () => {
+    let confirmed = await confirm({
+      title: 'are you sure',
+      description: 'You are going to disconnect github',
+      okCopy: 'confirm',
+      cancelCopy: 'cancel',
+    });
+    if (!confirmed) return;
+
+    showLoading();
+    try {
+      await mutation.mutateAsync({
+        id: project.id,
+        teamId: project.teamId,
+        [field]: null,
+      });
+    } finally {
       dismissLoading();
     }
   };
@@ -82,16 +104,16 @@ export function AssetItem({
           </div>
           {!readonly ? (
             <div>
-              {value ? (
+              {field === 'githubURI' ? (
                 <button
-                  className="btn btn-secondary"
-                  onClick={() => editingSet(true)}
+                  className="btn btn-secondary-invert"
+                  onClick={disconnectGithub}
                 >
-                  Edit
+                  Disconnect
                 </button>
               ) : (
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-secondary-invert"
                   onClick={() => editingSet(true)}
                 >
                   Edit
