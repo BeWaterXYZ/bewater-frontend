@@ -83,7 +83,7 @@ export const FormUserSettings = ({ data }: Props) => {
         {...register('userName', { required: 'Username is required.' })}
       />
       <Input
-        label="Full name"
+        label="Full Name"
         placeholder="Enter your full name"
         required
         error={errors['fullName']}
@@ -112,7 +112,7 @@ export const FormUserSettings = ({ data }: Props) => {
         {...register('skills')}
       />
 
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-4 mb-20">
         <button className="btn btn-primary" type="submit">
           Save Changes
         </button>

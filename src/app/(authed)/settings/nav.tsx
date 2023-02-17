@@ -17,14 +17,17 @@ const links = [
 export function Nav() {
   let segment = useSelectedLayoutSegment();
   return (
-    <nav className=" w-full flex flex-row lg:flex-col ">
+    <nav className=" w-full flex flex-row lg:flex-col gap-3 ">
       {links.map((link) => (
         <Link
           key={link.path}
           href={link.path}
-          className={clsx('body-3 p-4 inline-block w-full', {
-            'bg-[#0F172A] ': segment && link.path.includes(segment),
-          })}
+          className={clsx(
+            'body-3 text-grey-400 p-3 lg:p-4 inline-block w-full rounded-sm text-center',
+            segment && link.path.includes(segment)
+              ? 'bg-[#0F172A] '
+              : 'border lg:border-none border-grey-800',
+          )}
         >
           {link.label}
         </Link>

@@ -17,12 +17,12 @@ export default function Page() {
             Hi! Welcome to BeWater.
           </div>
           <WalletOptions />
-          <div className="body-5   text-left text-gray-400">
-            By signing in or connecting wallet, you agree to our{' '}
-            <span className="font-bold text-white">Terms of Service</span> and
+          <div className="body-5 leading-4  text-left text-gray-400">
+            By connecting wallet, you agree to our{' '}
+            <span className=" text-white">Terms of Service</span> and
             acknowledge that you have read our{' '}
-            <span className="font-bold text-white">Privacy Policy</span> and{' '}
-            <span className="font-bold text-white">Cookie Use</span>.
+            <span className=" text-white">Privacy Policy</span> and{' '}
+            <span className=" text-white">Cookie Use</span>.
           </div>
         </WagmiConfig>
       </div>

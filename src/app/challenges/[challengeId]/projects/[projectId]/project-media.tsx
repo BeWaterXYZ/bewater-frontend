@@ -1,6 +1,7 @@
 'use client';
 import { useNavigator } from '@/hooks/useNavigator';
 import { updateProject } from '@/services/project';
+import { useMutationUpdateProject } from '@/services/project.query';
 import { Project } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
 import { PlusIcon } from '@radix-ui/react-icons';
@@ -14,11 +15,12 @@ interface ProjectMediaProps {
 }
 export default function ProjectMedia({ project }: ProjectMediaProps) {
   const user = useAuthStore((s) => s.user);
+  const mutation = useMutationUpdateProject();
+
   const router = useNavigator();
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
     .some((m) => m.userProfile.userId === user?.userId);
-  console.log({ project, isLeader });
 
   const [medias, mediaSet] = useState<Media[]>(() =>
     project.mediaURLs.map((img) => ({
@@ -69,15 +71,13 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
       if (!changed) return;
       if (medias.some((media) => media.status === 'uploading')) return null;
 
-      updateProject({
+      await mutation.mutateAsync({
         id: project.id,
         teamId: project.teamId,
         mediaURLs: medias
           .filter((media) => media.status !== 'failed')
           .map((media) => media.url!),
       });
-
-      router.refresh();
     };
 
     checkThenUpdateProfile();

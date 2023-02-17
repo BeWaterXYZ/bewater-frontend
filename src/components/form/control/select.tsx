@@ -43,7 +43,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     multiValue: ({ data }) => data.classes.container + ' !my-1',
     multiValueLabel: ({ data }) => data.classes.text,
     multiValueRemove: () => 'hover:!bg-transparent',
-    menu: () => '!bg-[#0F1021] !border !border-midnight',
+    menu: () => '!bg-[#0F1021] !rounded-sm !border !border-midnight',
     option: () => '!text-white hover:!bg-midnight !bg-transparent',
   };
   return (

@@ -48,7 +48,7 @@ export default async function page({
                   .map((con) => (
                     <Link href={getSocialConnectLink(con)} key={con.platform}>
                       <Image
-                        src={`/icons/company/${con.platform.toLowerCase()}.svg`}
+                        src={`/icons/${con.platform.toLowerCase()}.svg`}
                         alt={con.platform}
                         height={20}
                         width={20}

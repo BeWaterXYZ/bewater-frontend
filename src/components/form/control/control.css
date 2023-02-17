@@ -7,6 +7,9 @@
     &[disabled] {
       @apply cursor-not-allowed pointer-events-none bg-gray-400/10 text-gray-400/50;
     }
+    &::placeholder{
+      @apply text-grey-600
+    }
     &.error {
       @apply border-danger placeholder:text-danger;
     }

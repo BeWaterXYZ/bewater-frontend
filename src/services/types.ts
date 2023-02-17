@@ -117,6 +117,10 @@ export interface Project {
   team: Team;
   mediaURLs: string[];
   updatedAt: string;
+  deckURI?: string;
+  videoURI?: string;
+  demoURI?: string;
+  githubURI?: string;
 }
 export interface TeamMember {
   id: string;

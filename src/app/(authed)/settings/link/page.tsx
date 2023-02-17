@@ -96,7 +96,7 @@ export default function Page() {
             >
               <div className="flex  p-2">
                 <Image
-                  src={`/icons/company/${platform.toLowerCase()}.svg`}
+                  src={`/icons/${platform.toLowerCase()}.svg`}
                   width={24}
                   height={24}
                   alt={platform}

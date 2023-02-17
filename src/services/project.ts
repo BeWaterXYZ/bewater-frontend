@@ -1,4 +1,5 @@
 import { OptionalExceptFor } from '@/types/utils';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { agentAnon, agentAuthed } from './agent';
 import { ChallengeID, Project, ProjectId } from './types';
 
@@ -14,12 +15,10 @@ export async function getProject(projectId: ProjectId) {
   return data;
 }
 
-export async function updateProject(
-  project: OptionalExceptFor<Project, 'id' | 'mediaURLs'>,
-) {
-  const { data } = await agentAuthed.put<Project>(
+export async function updateProject(project: OptionalExceptFor<Project, 'id'>) {
+  const { data } = await agentAuthed.put<{ project: Project }>(
     `/project/${project.id}`,
     project,
   );
-  return data;
+  return data.project;
 }

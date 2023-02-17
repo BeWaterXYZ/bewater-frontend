@@ -1,7 +1,10 @@
+'use client';
 import { Aspect } from '@/components/aspect';
+import { useLoadingStoreAction } from '@/components/loading/store';
 import { TeamMember } from '@/components/molecules/team-member';
 import { TagProjectTag } from '@/components/tag/project-tag';
 import { getProject } from '@/services/project';
+import { useFetchProject } from '@/services/project.query';
 import { unsplash } from '@/utils/unsplash';
 import { formatDistance, parseISO } from 'date-fns';
 import dynamicLoad from 'next/dynamic';
@@ -9,6 +12,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
 import { ProjectAssets } from './project-assets';
+import { useLoadingWhen } from '@/components/loading/store';
+import { GithubStats } from './project-github-stats';
 
 const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
   ssr: false,
@@ -17,10 +22,14 @@ const ProjectMedia = dynamicLoad(() => import('./project-media'), {
   ssr: false,
 });
 
-export default async function Page({ params }: any) {
+export default function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { projectId } = segmentSchema.projectId.parse(params);
-  const project = await getProject(projectId);
+  const { data: project, isLoading } = useFetchProject(projectId);
+  useLoadingWhen(isLoading);
+
+  if (!project) return null;
+
   return (
     <div className="container">
       <div className="my-4">
@@ -74,7 +83,7 @@ export default async function Page({ params }: any) {
             <h3 className="body-3 font-bold text-grey-500">Members</h3>
             <div className="my-4">
               {project.team.teamMembers.map((m) => (
-                <TeamMember member={m} key={m.userId} />
+                <TeamMember member={m} key={m.userProfile.userId} />
               ))}
             </div>
             <Link
@@ -85,7 +94,9 @@ export default async function Page({ params }: any) {
             </Link>
           </div>
         </div>
-        <div className="flex-[3]"></div>
+        <div className="flex-[3]">
+          <GithubStats project={project} />
+        </div>
       </div>
     </div>
   );

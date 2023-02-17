@@ -70,10 +70,13 @@ export default function WalletOptions() {
 
   return (
     <>
-      <div className="my-4 w-full flex flex-col gap-4">
-        {availableConnectors.map((connector) => (
+      <div className="my-4 w-full flex flex-col ">
+        {availableConnectors.map((connector, index) => (
           <button
-            className={clsx('btn btn-primary-invert body-4  w-full h-12')}
+            style={{ top: index * -2 }}
+            className={clsx(
+              'relative btn btn-primary-invert body-4  w-full h-12',
+            )}
             key={connector.id}
             onClick={() => void onConnectorClick(connector)}
           >

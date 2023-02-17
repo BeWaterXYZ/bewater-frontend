@@ -47,7 +47,11 @@ export const AvatarWithEditor = ({ src, walletAddress }: Props) => {
   };
   return (
     <div className=" flex items-center gap-4">
-      <Avatar src={src} className="w-48 h-48" walletAddress={walletAddress} />
+      <Avatar
+        src={src}
+        className="w-30 h-30 lg:w-48 lg:h-48 "
+        walletAddress={walletAddress}
+      />
       <div className="flex flex-col gap-3">
         <label htmlFor="upload" className="btn btn-secondary">
           <Image

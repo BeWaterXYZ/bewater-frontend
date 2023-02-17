@@ -13,6 +13,9 @@ module.exports = {
       padding: '4vw',
     },
     extend: {
+      spacing: {
+        30: '7.5rem',
+      },
       fontFamily: {
         primary: ['var(--font-primary)', ...fontFamily.sans],
         secondary: ['var(--font-secondary)', ...fontFamily.sans],
