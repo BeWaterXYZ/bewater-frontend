@@ -156,3 +156,17 @@ export interface GroupingRequestFull extends GroupingRequest {
     challenge: Pick<Challenge, 'id' | 'title'>;
   };
 }
+
+export interface RepoStats {
+  languages: Record<string, number>;
+  openIssuesCount: number;
+  totalPullRequests: number;
+  totalCommits: number;
+  latestCommits: RepoLatestCommit[];
+}
+export interface RepoLatestCommit {
+  commitURI: string;
+  commitMessage: string;
+  commitAuthor: string;
+  commitDate: string;
+}

@@ -3,6 +3,7 @@ import {
   getChallengeTProjects,
   getGitHubRepos,
   getProject,
+  getProjectRepoStats,
   updateProject,
 } from './project';
 import { ChallengeID, ProjectId, TeamID } from './types';
@@ -30,6 +31,15 @@ export function useFetchProjectGitHubRepos(teamId: TeamID) {
     queryKey: ['project', 'repos', teamId],
     queryFn: async () => {
       return getGitHubRepos(teamId);
+    },
+  });
+}
+
+export function useFetchProjectRepoStats(teamId: TeamID, githubURI: string) {
+  return useQuery({
+    queryKey: ['project', 'repos-stats', teamId, githubURI],
+    queryFn: async () => {
+      return getProjectRepoStats(teamId, githubURI);
     },
   });
 }

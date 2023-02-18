@@ -1,6 +1,6 @@
 import { OptionalExceptFor } from '@/types/utils';
 import { agentAnon, agentAuthed } from './agent';
-import { ChallengeID, Project, ProjectId, TeamID } from './types';
+import { ChallengeID, Project, ProjectId, RepoStats, TeamID } from './types';
 
 export async function getChallengeTProjects(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ projects: Project[] }>(
@@ -27,9 +27,18 @@ export async function getGitHubRepos(teamId: TeamID) {
     repos: {
       fullName: string;
       url: string;
+      updatedAt: string;
     }[];
   }>(`/project/github/${teamId}`);
   return data.repos;
 }
 
-export async function getProjectStats() {}
+export async function getProjectRepoStats(teamId: TeamID, githubURI: string) {
+  const { data } = await agentAnon.get<RepoStats>('/project/stats', {
+    params: {
+      teamId,
+      githubURI,
+    },
+  });
+  return data;
+}
