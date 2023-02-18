@@ -21,7 +21,7 @@ export async function getChallengeTeams(challengeId: ChallengeID) {
     `/challenge/${challengeId}/teams`,
     {},
   );
-  return data.teams;
+  return data.teams ?? [];
 }
 
 export async function getTeam(teamId: TeamID) {

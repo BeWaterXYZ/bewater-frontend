@@ -31,3 +31,5 @@ export async function getGitHubRepos(teamId: TeamID) {
   }>(`/project/github/${teamId}`);
   return data.repos;
 }
+
+export async function getProjectStats() {}
