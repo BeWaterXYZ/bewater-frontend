@@ -13,6 +13,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useState } from 'react';
 import { SearchInput } from '../../../../components/molecules/search-input';
 import { useDialogStore } from '@/components/dialog/store';
+import { CreateTeamButton } from '../teams/create-team-button';
 function filterAndSortProject(
   projects: Project[],
   userProfile?: UserProfile,
@@ -78,6 +79,25 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   const showFilter = () => {
     showDialog('project_filter', projects);
   };
+
+  if (projects.length === 0) {
+    return (
+      <div className="container flex flex-col items-center justify-center gap-4 my-20">
+        <Image
+          src="/icons/no-project.svg"
+          height={115}
+          width={164}
+          alt="no teams"
+        />
+        <p className="body-1 text-[20px] text-center">No Projects Here yet</p>
+        <p className="body-2 text-grey-500 text-center">
+          Create yours and be the first challenger!
+        </p>
+        <CreateTeamButton challenge={challenge} />
+      </div>
+    );
+  }
+
   return (
     <div className="container flex flex-wrap gap-10 pt-4">
       <div className="w-full lg:w-[200px] hidden lg:block">

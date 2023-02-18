@@ -15,7 +15,6 @@ import { CreateTeamButton } from './create-team-button';
 import { TeamFilter } from './team-filter';
 import { TeamItem } from './team-item';
 import { ChallengeTeamsInfo } from './teams-info';
-
 function getOpeningRoles(user: UserProfile, team: Team) {
   return team.openingRoles.filter(
     (role) =>
@@ -85,6 +84,24 @@ export default function ChallengeTeams({ params }: any) {
   const showFilter = () => {
     showDialog('team_filter', teams);
   };
+
+  if (teams.length === 0) {
+    return (
+      <div className="container flex flex-col items-center justify-center gap-4 my-20">
+        <Image
+          src="/icons/no-team.svg"
+          height={115}
+          width={164}
+          alt="no teams"
+        />
+        <p className="body-1 text-[20px]  text-center">No Teams Here yet</p>
+        <p className="body-2 text-grey-500 text-center">
+          Create yours and be the first challenger!
+        </p>
+        <CreateTeamButton challenge={challenge} />
+      </div>
+    );
+  }
 
   return (
     <div className="container text-center">
