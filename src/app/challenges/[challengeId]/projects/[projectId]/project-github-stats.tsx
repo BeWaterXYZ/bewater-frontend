@@ -183,7 +183,7 @@ function GithubStatsDisplay({ project }: { project: Project }) {
         <ul>
           {data?.latestCommits.map((cm) => (
             <li
-              className="border-b border-b-grey-800 flex py-3 justify-between"
+              className="border-b border-b-grey-800 flex py-3 justify-between gap-1"
               key={cm.commitURI}
             >
               <div className="flex flex-col gap-2">
