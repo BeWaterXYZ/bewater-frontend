@@ -85,8 +85,8 @@ export default function ChallengeProjects({ params, searchParams }: any) {
       <div className="container flex flex-col items-center justify-center gap-4 my-20">
         <Image
           src="/icons/no-project.svg"
-          height={115}
-          width={164}
+          height={180}
+          width={270}
           alt="no teams"
         />
         <p className="body-1 text-[20px] text-center">No Projects Here yet</p>
