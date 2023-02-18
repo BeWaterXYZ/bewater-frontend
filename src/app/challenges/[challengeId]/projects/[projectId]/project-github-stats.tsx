@@ -165,7 +165,7 @@ function GithubStatsDisplay({ project }: { project: Project }) {
         </div>
         <div className="flex gap-3">
           <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
-            <p className="body-4 text-grey-500">Issues</p>
+            <p className="body-4 text-grey-500">Open Issues</p>
             <p className="body-3">{data?.openIssuesCount}</p>
           </div>
           <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
@@ -173,7 +173,7 @@ function GithubStatsDisplay({ project }: { project: Project }) {
             <p className="body-3">{data?.totalPullRequests}</p>
           </div>
           <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
-            <p className="body-4 text-grey-500">Issues</p>
+            <p className="body-4 text-grey-500">Commits</p>
             <p className="body-3">{data?.totalCommits}</p>
           </div>
         </div>
