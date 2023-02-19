@@ -14,16 +14,21 @@ const mapsTagSkill = ProjectTagSetOptions.reduce((prev, cur) => {
 
 interface TagProjectTagProps {
   label: ProjectTagUnion;
+  className?: string;
   onClick?: () => void;
 }
 
-export function TagProjectTag({ label, onClick }: TagProjectTagProps) {
+export function TagProjectTag({
+  label,
+  onClick,
+  className,
+}: TagProjectTagProps) {
   let option = mapsTagSkill[label];
   !option && console.log({ label });
   return (
     <Tag
       label={option.label}
-      classes={clsx(option.classes.container, option.classes.text)}
+      classes={clsx(option.classes.container, option.classes.text, className)}
       onClick={onClick}
     />
   );

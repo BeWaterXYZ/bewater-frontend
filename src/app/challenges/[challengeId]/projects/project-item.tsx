@@ -20,9 +20,13 @@ export function ProjectItem({ project }: { project: Project }) {
             className="object-cover"
           />
         </Aspect>
-        <div className="absolute top-[16px] right-[16px]">
+        <div className="absolute top-[8px] right-[8px]">
           {project.tags.map((tag) => (
-            <TagProjectTag label={tag} key={tag} />
+            <TagProjectTag
+              label={tag}
+              key={tag}
+              className="border-none !bg-[rgba(0,_0,_0,_0.3)] backdrop-blur-[2px]"
+            />
           ))}
         </div>
       </Link>

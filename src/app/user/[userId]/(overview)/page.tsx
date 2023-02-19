@@ -21,46 +21,52 @@ export default async function Page({ params }: any) {
 
   return (
     <div>
-      <div className="mb-8">
-        <p className="body-2 text-grey-500 font-bold">Challenges </p>
-        <div className="grid grid-cols-300 gap-4 my-4">
-          {uniqTeamMembers.map((tm) => {
-            return (
-              <div
-                key={tm.id}
-                className="rounded bg-[#0B0C24] border border-[#24254E] overflow-hidden "
-              >
-                <Link
-                  href={`/challenges/${tm.team?.challengeId}`}
-                  className="block"
+      {uniqTeamMembers.length > 0 ? (
+        <div className="mb-8">
+          <p className="body-2 text-grey-500 font-bold">Challenges </p>
+          <div className="flex flex-wrap gap-4 my-4">
+            {uniqTeamMembers.map((tm) => {
+              return (
+                <div
+                  key={tm.id}
+                  className="w-full lg:w-1/2 rounded bg-[#0B0C24] border border-[#24254E] overflow-hidden "
                 >
-                  <Aspect ratio={2}>
-                    <Image
-                      src={tm.team?.challenge?.bannerUrl ?? unsplash('event')}
-                      fill
-                      alt={tm.team?.challenge?.description ?? ''}
-                    />
-                  </Aspect>
-                  <div className="p-4 ">
-                    <p className="body-2 font-bold pb-2">
-                      {tm.team?.challenge?.title}
-                    </p>
-                    <p className="body-3">{tm.team?.challenge?.description}</p>
-                  </div>
-                </Link>
-              </div>
-            );
-          })}
+                  <Link
+                    href={`/challenges/${tm.team?.challengeId}`}
+                    className="block"
+                  >
+                    <Aspect ratio={2}>
+                      <Image
+                        src={tm.team?.challenge?.bannerUrl ?? unsplash('event')}
+                        fill
+                        alt={tm.team?.challenge?.description ?? ''}
+                      />
+                    </Aspect>
+                    <div className="p-4 ">
+                      <p className="body-2 font-bold pb-2">
+                        {tm.team?.challenge?.title}
+                      </p>
+                      <p className="body-3">
+                        {tm.team?.challenge?.description}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
-      <div>
-        <p className="body-2 text-grey-500 font-bold">Teamwork</p>
-        <div className="grid grid-cols-300 gap-4  my-4">
-          {profile.teamMembers.map((tm) => {
-            return <TeamCard member={tm} key={tm.id} />;
-          })}
+      ) : null}
+      {profile.teamMembers.length > 0 ? (
+        <div>
+          <p className="body-2 text-grey-500 font-bold">Teamwork</p>
+          <div className="flex flex-wrap gap-4  my-4">
+            {profile.teamMembers.map((tm) => {
+              return <TeamCard member={tm} key={tm.id} />;
+            })}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 }
