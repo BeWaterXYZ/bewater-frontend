@@ -16,6 +16,7 @@ import { useLoadingStoreAction } from '@/components/loading/store';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useToastStore } from '@/components/toast/store';
+import { useAuthStore } from '@/stores/auth';
 
 function getUserLink(userProfile: UserProfile) {
   return (
@@ -79,6 +80,7 @@ export function GroupingRequestNotification({
   sentOrReceived: boolean;
 }) {
   const { confirm } = useAlert();
+  const user = useAuthStore((s) => s.user);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
 
@@ -145,6 +147,7 @@ export function GroupingRequestNotification({
   };
 
   let title = getTitle(req, sentOrReceived);
+  let sender = sentOrReceived ? user! : req.sender!;
   return (
     <div
       key={req.id}
@@ -157,8 +160,8 @@ export function GroupingRequestNotification({
       <div>
         <Avatar
           className="w-12 h-12"
-          src={req.sender?.avatarURI}
-          walletAddress={req.sender?.walletAddress}
+          src={sender.avatarURI}
+          walletAddress={sender.walletAddress}
         />
       </div>
       <div className="flex flex-1 flex-col justify-around">

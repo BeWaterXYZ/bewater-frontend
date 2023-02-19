@@ -9,8 +9,8 @@ export const nav: MenuItemType[] = [
     path: '/challenges',
   },
   {
-    label: 'Showcase',
-    path: '/showcase',
+    label: 'Showcases',
+    path: '/showcases',
   },
   {
     label: 'Docs',
