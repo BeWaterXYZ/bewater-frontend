@@ -3,6 +3,7 @@
 import { Avatar } from '@/components/avatar/avatar';
 import { uploadFile } from '@/services/ipfs';
 import { useMutationUpdateUserProfile } from '@/services/user.query';
+import { CompressImage } from '@/utils/compress-image';
 import { Cross1Icon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import { ChangeEventHandler } from 'react';
@@ -22,7 +23,8 @@ export const AvatarWithEditor = ({ src, walletAddress }: Props) => {
     try {
       showLoading();
       const formData = new FormData();
-      formData.append('avatar', file);
+
+      formData.append('avatar', await CompressImage(file, 192));
       let res = await uploadFile(formData);
       await mutaion.mutateAsync({
         avatarURI: `ipfs://${res.cid}`,
