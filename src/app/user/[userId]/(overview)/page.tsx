@@ -21,9 +21,9 @@ export default async function Page({ params }: any) {
 
   return (
     <div>
-      {uniqTeamMembers.length > 0 ? (
-        <div className="mb-8">
-          <p className="body-2 text-grey-500 font-bold">Challenges </p>
+      <div className="mb-8">
+        <p className="body-2 text-grey-500 font-bold">Challenges </p>
+        {uniqTeamMembers.length > 0 ? (
           <div className="flex flex-wrap gap-4 my-4">
             {uniqTeamMembers.map((tm) => {
               return (
@@ -55,18 +55,27 @@ export default async function Page({ params }: any) {
               );
             })}
           </div>
-        </div>
-      ) : null}
-      {profile.teamMembers.length > 0 ? (
-        <div>
-          <p className="body-2 text-grey-500 font-bold">Teamwork</p>
+        ) : (
+          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+            Not in any challenges yet.
+          </div>
+        )}
+      </div>
+
+      <div>
+        <p className="body-2 text-grey-500 font-bold">Teamwork</p>
+        {profile.teamMembers.length > 0 ? (
           <div className="flex flex-wrap gap-4  my-4">
             {profile.teamMembers.map((tm) => {
               return <TeamCard member={tm} key={tm.id} />;
             })}
           </div>
-        </div>
-      ) : null}
+        ) : (
+          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+            Not in any teams yet.
+          </div>
+        )}
+      </div>
     </div>
   );
 }
