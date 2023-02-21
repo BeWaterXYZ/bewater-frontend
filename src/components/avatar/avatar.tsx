@@ -27,7 +27,8 @@ export const Avatar = ({
   return (
     <div className={clsx('relative', className)}>
       <Image
-        fill
+        width={200}
+        height={200}
         className="w-full h-full rounded-full cursor-pointer object-cover"
         src={transaltedSrc}
         alt="avatar"

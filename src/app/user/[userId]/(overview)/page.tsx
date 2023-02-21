@@ -38,7 +38,8 @@ export default async function Page({ params }: any) {
                     <Aspect ratio={2}>
                       <Image
                         src={tm.team?.challenge?.bannerUrl ?? unsplash('event')}
-                        fill
+                        width={640}
+                        height={320}
                         alt={tm.team?.challenge?.description ?? ''}
                       />
                     </Aspect>
