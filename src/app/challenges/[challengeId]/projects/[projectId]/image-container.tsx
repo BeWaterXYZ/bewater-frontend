@@ -13,6 +13,7 @@ export type Media = {
 export function ImageContainer({
   media,
   onRemove,
+  onClick,
   onUploadSuccess,
   onUploadFiled,
 }: {
@@ -20,6 +21,7 @@ export function ImageContainer({
   onRemove?: (id: number) => void;
   onUploadSuccess: (id: number, url: string) => void;
   onUploadFiled: (id: number) => void;
+  onClick: (id: number) => void;
 }) {
   useEffect(() => {
     let upload = async () => {
@@ -38,7 +40,10 @@ export function ImageContainer({
     media.status === 'uploading' && upload();
   }, []);
   return (
-    <div className="group rounded overflow-hidden relative ">
+    <div
+      className="group rounded overflow-hidden relative  cursor-pointer"
+      onClick={() => onClick(media.id)}
+    >
       {onRemove ? (
         <Cross1Icon
           onClick={() => onRemove(media.id)}

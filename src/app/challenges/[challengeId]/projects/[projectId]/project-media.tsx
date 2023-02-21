@@ -7,6 +7,7 @@ import { useAuthStore } from '@/stores/auth';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { ImageContainer, Media } from './image-container';
+import { ImageGallery } from './image-gallery';
 
 let counter = 0;
 
@@ -16,8 +17,7 @@ interface ProjectMediaProps {
 export default function ProjectMedia({ project }: ProjectMediaProps) {
   const user = useAuthStore((s) => s.user);
   const mutation = useMutationUpdateProject();
-
-  const router = useNavigator();
+  const [viewImage, viewImageSet] = useState<undefined | number>(undefined);
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
     .some((m) => m.userProfile.userId === user?.userId);
@@ -83,18 +83,30 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
     checkThenUpdateProfile();
   }, [medias, changed]);
 
+  const onImageClick = (id: number) => {
+    viewImageSet(id);
+  };
+  console.log(viewImage, viewImage !== undefined);
   return (
     <div className="py-4">
       <div className="flex gap-3 flex-wrap">
         {medias.map((media) => (
           <ImageContainer
             key={media.id}
+            onClick={onImageClick}
             media={media}
             onRemove={isLeader ? onRemove : undefined}
             onUploadFiled={onUploadFiled}
             onUploadSuccess={onUploadSuccess}
           />
         ))}
+
+        <ImageGallery
+          sources={project.mediaURLs}
+          show={viewImage !== undefined}
+          onClose={() => viewImageSet(undefined)}
+          firstToShow={medias.find((m) => m.id === viewImage)?.url!}
+        />
 
         {canUpload ? (
           <label
