@@ -1,6 +1,4 @@
 'use client';
-import { useNavigator } from '@/hooks/useNavigator';
-import { updateProject } from '@/services/project';
 import { useMutationUpdateProject } from '@/services/project.query';
 import { Project } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';

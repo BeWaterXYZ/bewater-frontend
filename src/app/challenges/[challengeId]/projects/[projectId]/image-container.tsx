@@ -46,7 +46,10 @@ export function ImageContainer({
     >
       {onRemove ? (
         <Cross1Icon
-          onClick={() => onRemove(media.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove(media.id);
+          }}
           className="group-hover:block hidden cursor-pointer text-white absolute top-[4px] right-[4px]"
           height={16}
           width={16}
