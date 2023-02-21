@@ -45,8 +45,9 @@ export default function Page({ params }: any) {
         <div className="w-full lg:w-[400px]">
           <Aspect ratio={3 / 2}>
             <Image
+              width={450}
+              height={300}
               src={project?.mediaURLs?.[0] ?? unsplash('conference')}
-              fill
               alt="project"
               className="object-cover"
             />
