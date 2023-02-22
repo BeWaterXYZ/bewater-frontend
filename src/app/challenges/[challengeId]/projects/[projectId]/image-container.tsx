@@ -41,9 +41,10 @@ export function ImageContainer({
   }, []);
   return (
     <div
-      className="group rounded overflow-hidden relative  cursor-pointer"
+      className="group rounded overflow-hidden relative  cursor-pointer "
       onClick={() => onClick(media.id)}
     >
+      <div className="absolute top-0 bottom-0 right-0 left-0 group-hover:bg-[rgba(4,_5,_27,_0.7)] group-hover:backdrop-blur-[2px]"></div>
       {onRemove ? (
         <Cross1Icon
           onClick={(e) => {

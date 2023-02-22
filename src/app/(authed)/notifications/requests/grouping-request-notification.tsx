@@ -87,10 +87,10 @@ export function GroupingRequestNotification({
   const revokeMutation = useRevokeGroupingRequest();
   const revoke = async (id: GroupingRequestId) => {
     let confirmed = await confirm({
-      title: 'are you sure',
+      title: 'Are you sure?',
       description: 'You are going to revoke the request',
-      okCopy: 'confirm',
-      cancelCopy: 'cancel',
+      okCopy: 'Confirm',
+      cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
     try {
@@ -105,10 +105,10 @@ export function GroupingRequestNotification({
   const acceptMutation = useAcceptGroupingRequest();
   const approve = async (id: GroupingRequestId) => {
     let confirmed = await confirm({
-      title: 'are you sure',
+      title: 'Are you sure?',
       description: 'You are going to accept the request',
-      okCopy: 'confirm',
-      cancelCopy: 'cancel',
+      okCopy: 'Confirm',
+      cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
     try {
@@ -130,10 +130,10 @@ export function GroupingRequestNotification({
 
   const reject = async (id: GroupingRequestId) => {
     let confirmed = await confirm({
-      title: 'are you sure',
+      title: 'Are you sure?',
       description: 'You are going to decline the request',
-      okCopy: 'confirm',
-      cancelCopy: 'cancel',
+      okCopy: 'Confirm',
+      cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
 

@@ -24,10 +24,10 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
   const { confirm } = useAlert();
   let removeMember = async (userId: string) => {
     let confirmed = await confirm({
-      title: 'are you sure',
+      title: 'Are you sure?',
       description: 'You are going to remove this member',
-      okCopy: 'confirm',
-      cancelCopy: 'cancel',
+      okCopy: 'Confirm',
+      cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
     showLoading();

@@ -14,11 +14,11 @@ export function Alert({ alert }: AlertProps) {
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="DialogOverlay z-40" />
         <AlertDialog.Content className="DialogContent  z-50 flex flex-col w-[300px] md:w-[400px]">
-          <AlertDialog.Title className="heading-5 text-center">
+          <AlertDialog.Title className="body-2 text-center">
             {alert.title}
           </AlertDialog.Title>
           <div className="flex-1" />
-          <AlertDialog.Description className="body-4 text-center">
+          <AlertDialog.Description className="body-3 text-center">
             {alert.description}
           </AlertDialog.Description>
           <div className="flex-1" />

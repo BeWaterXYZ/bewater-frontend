@@ -29,7 +29,7 @@ export default async function page({
     <div className="container my-4 pt-24 lg:pt-20 ">
       <div className="flex flex-wrap gap-10">
         <div className="w-full lg:w-[200px]">
-          <div className="flex flex-row lg:flex-col gap-4">
+          <div className="flex flex-row lg:flex-col gap-4 border-b border-b-grey-800 pb-6">
             <Avatar
               className="w-20 h-20 lg:w-48 lg:h-48"
               src={profile.avatarURI}
@@ -59,7 +59,7 @@ export default async function page({
             </div>
           </div>
 
-          <div className="border-b border-b-grey-800 my-2 py-4 ">
+          <div className="border-b border-b-grey-800 my-2 py-6 ">
             <p className="body-4 font-bold mb-3">Roles</p>
             <div className="flex gap-2 flex-wrap">
               {profile.roles.map((role) => (
@@ -67,7 +67,7 @@ export default async function page({
               ))}
             </div>
           </div>
-          <div className="border-b border-b-grey-800 my-2 py-4">
+          <div className="border-b border-b-grey-800 my-2 py-6">
             <p className="body-4 font-bold mb-3">Skills</p>
             <div className="flex gap-2 flex-wrap">
               {profile.skills.map((skill) => (

@@ -16,7 +16,6 @@ export function ImageGallery({
   show,
   onClose,
 }: ImageGalleryProps) {
-  console.log({ sources, firstToShow, show });
   const [trigger, triggerSet] = useState(false);
   useEffect(() => {
     if (show) {

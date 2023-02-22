@@ -32,7 +32,7 @@ export default function Page({ params }: any) {
 
   return (
     <div className="container">
-      <div className="my-4">
+      <div className="my-10">
         <Link
           className="body-3 text-grey-400"
           href={`/challenges/${challengeId}/projects`}
@@ -71,7 +71,7 @@ export default function Page({ params }: any) {
           </div>
         </div>
       </div>
-      <div className="my-4">
+      <div className="mt-10">
         <h3 className="body-3 font-bold text-grey-500">Media</h3>
         <ProjectMedia project={project} />
       </div>

@@ -72,10 +72,10 @@ export default function TeamCreateDialog({
 
   const onDismiss = async () => {
     let confirmed = await confirm({
-      title: 'are you sure',
+      title: 'Are you sure?',
       description: 'You are going to dismiss the team',
       okCopy: 'Dismiss',
-      cancelCopy: 'cancel',
+      cancelCopy: 'Cancel',
       type: 'warning',
     });
     if (!confirmed) return;

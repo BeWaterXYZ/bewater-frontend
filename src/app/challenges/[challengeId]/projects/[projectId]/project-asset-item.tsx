@@ -46,10 +46,10 @@ export function AssetItem({
   };
   const disconnectGithub = async () => {
     let confirmed = await confirm({
-      title: 'are you sure',
+      title: 'Are you sure?',
       description: 'You are going to disconnect github',
-      okCopy: 'confirm',
-      cancelCopy: 'cancel',
+      okCopy: 'Confirm',
+      cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
 
@@ -93,7 +93,9 @@ export function AssetItem({
                   href={value}
                   className="body-4 text-gray-300 overflow-hidden whitespace-nowrap overflow-ellipsis "
                 >
-                  {value}
+                  {field === 'githubURI'
+                    ? value.replace('https://github.com/', '')
+                    : value}
                 </Link>
               </>
             ) : (

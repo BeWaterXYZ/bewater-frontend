@@ -84,9 +84,8 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
   const onImageClick = (id: number) => {
     viewImageSet(id);
   };
-  console.log(viewImage, viewImage !== undefined);
   return (
-    <div className="py-4">
+    <div className="py-5">
       <div className="flex gap-3 flex-wrap">
         {medias.map((media) => (
           <ImageContainer
@@ -112,11 +111,11 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
             className="w-48 h-32 cursor-pointer rounded border border-dashed border-[#475569] flex flex-col justify-center items-center"
           >
             <PlusIcon className="text-white" height={32} width={32} />
-            <span className="body-4  text-grey-300" aria-hidden="true">
+            <span className="body-4  text-grey-300 my-1" aria-hidden="true">
               Up to 4 images
             </span>
             <span className="body-5 text-grey-500" aria-hidden="true">
-              PNG or JGP
+              PNG or JPG
             </span>
             <input
               type="file"
