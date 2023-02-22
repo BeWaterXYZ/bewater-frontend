@@ -57,7 +57,8 @@ export default async function ChallengeIntro({ params }: any) {
                 >
                   <Aspect ratio={3}>
                     <Image
-                      fill
+                      width={450}
+                      height={150}
                       src={unsplash('sponsor')}
                       alt="crypto"
                       className="object-cover w-full h-full"

@@ -1,3 +1,5 @@
-export default function Home() {
-  return <div className="heading-1"></div>;
+import { redirect } from 'next/navigation';
+export default async function Home() {
+  redirect('/challenges');
+  // ...
 }
