@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
 import { ProjectAssets } from './project-assets';
 import { useLoadingWhen } from '@/components/loading/store';
-import { GithubStats } from './project-github-stats';
+import { GithubStats } from './project-github';
 
 const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
   ssr: false,

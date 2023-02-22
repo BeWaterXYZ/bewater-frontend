@@ -1,0 +1,68 @@
+'use client';
+import { Loading } from '@/components/loading/loading';
+import { useFetchProjectRepoStats } from '@/services/project.query';
+import { Project, RepoStats } from '@/services/types';
+import { formatMMMDDYYYY } from '@/utils/date';
+import numeral from 'numeral';
+
+function getRepoLanguageStr(repoStats: RepoStats) {
+  let languages = Object.keys(repoStats.languages);
+  let loc = languages.reduce((prev, cur) => prev + repoStats.languages[cur], 0);
+  return languages
+    .map(
+      (l) =>
+        `${l}  ${numeral((repoStats.languages[l] * 100) / loc).format('0.0')}%`,
+    )
+    .join(' · ');
+}
+export function GithubStatsDisplay({ project }: { project: Project }) {
+  const { data, isLoading } = useFetchProjectRepoStats(
+    project.teamId,
+    project.githubURI!,
+  );
+  if (isLoading) return <Loading cover={false} />;
+  if (!data) return null;
+  return (
+    <div>
+      <div className="flex flex-col gap-3">
+        <div className="bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+          <p className="body-4 text-grey-500">Language Used</p>
+          <p className="body-3">{getRepoLanguageStr(data)}</p>
+        </div>
+        <div className="flex gap-3">
+          <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+            <p className="body-4 text-grey-500">Open Issues</p>
+            <p className="body-3">{data?.openIssuesCount}</p>
+          </div>
+          <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+            <p className="body-4 text-grey-500">Pull Requests</p>
+            <p className="body-3">{data?.totalPullRequests}</p>
+          </div>
+          <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+            <p className="body-4 text-grey-500">Commits</p>
+            <p className="body-3">{data?.totalCommits}</p>
+          </div>
+        </div>
+      </div>
+      <div className="mt-12">
+        <h3 className="body-3 font-bold text-grey-500  mb-2">Latest Commits</h3>
+        <ul>
+          {data?.latestCommits.map((cm) => (
+            <li
+              className="border-b border-b-grey-800 flex py-3 justify-between gap-1"
+              key={cm.commitURI}
+            >
+              <div className="flex flex-col gap-2">
+                <p className="body-3">{cm.commitMessage}</p>
+                <p className="body-4 text-grey-500">{cm.commitAuthor}</p>
+              </div>
+              <div className="body-3 text-grey-500 whitespace-nowrap">
+                {formatMMMDDYYYY(cm.commitDate)}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
