@@ -2,6 +2,7 @@ import { TeamMember } from '@/components/molecules/team-member';
 import { TagRole, TagSkill } from '@/components/tag';
 import { TagProjectTag } from '@/components/tag/project-tag';
 import { getChallengeTeams, getTeam } from '@/services/team';
+import { Metadata } from 'next';
 import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -102,3 +103,11 @@ export default async function Page({ params }: any) {
 }
 
 export const dynamic = 'force-dynamic';
+export async function generateMetadata({ params }: any): Promise<Metadata> {
+  const { teamId } = segmentSchema.teamId.parse(params);
+  const team = await getTeam(teamId);
+  return {
+    title: 'BeWater - ' + team.name,
+    description: team.project.description,
+  };
+}

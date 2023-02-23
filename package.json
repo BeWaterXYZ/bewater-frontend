@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
-    "@next/font": "^13.1.5",
+    "@next/font": "^13.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.2",
     "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-dialog": "^1.0.2",
@@ -45,7 +45,7 @@
     "lodash": "^4.17.21",
     "lokijs": "^1.5.12",
     "mime": "^3.0.0",
-    "next": "13.1.7-canary.27",
+    "next": "^13.2.0",
     "nft.storage": "^7.0.0",
     "numeral": "^2.0.6",
     "pino-pretty": "^9.3.0",

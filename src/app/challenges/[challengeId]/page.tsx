@@ -3,6 +3,7 @@ import { getChallengeById, getChallenges } from '@/services/challenge';
 import { formatMoney } from '@/utils/numeral';
 import { unsplash } from '@/utils/unsplash';
 import clsx from 'clsx';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -148,4 +149,12 @@ export async function generateStaticParams() {
     challengeId: c.id,
   }));
   return res;
+}
+export async function generateMetadata({ params }: any): Promise<Metadata> {
+  const { challengeId } = segmentSchema.challengeId.parse(params);
+  const challenge = await getChallengeById(challengeId);
+  return {
+    title: 'BeWater - ' + challenge.title,
+    description: challenge.description,
+  };
 }
