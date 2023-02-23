@@ -4,7 +4,7 @@ export function useQueryBuilder() {
   const sp = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
-  const usp = new URLSearchParams(sp.toString());
+  const usp = new URLSearchParams(sp?.toString());
 
   const isOn = (key: string, value: string) => {
     let on = usp.get(key)?.split(',').includes(value);

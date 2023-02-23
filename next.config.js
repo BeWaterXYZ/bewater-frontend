@@ -1,10 +1,10 @@
-/** @type {import('next').NextConfig} */
-
 const { withSentryConfig } = require('@sentry/nextjs');
 
 const isInGithubAction = !!process.env.GITHUB_ACTION;
 
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  swcMinify: false,
   experimental: {
     appDir: true,
   },
@@ -79,4 +79,4 @@ const configWithSentry = withSentryConfig(
   sentryWebpackPluginOptions,
 );
 
-module.exports = nextConfig; //isInGithubAction ? nextConfig : configWithSentry;
+module.exports = isInGithubAction ? nextConfig : configWithSentry;

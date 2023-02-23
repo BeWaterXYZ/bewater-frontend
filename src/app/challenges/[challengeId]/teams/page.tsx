@@ -4,7 +4,6 @@ import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
 import { Team, UserProfile } from '@/services/types';
-import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -25,20 +24,26 @@ function getOpeningRoles(user: UserProfile, team: Team) {
 
 function filterAndSortTeam(
   teams: Team[],
-  role?: string,
-  tag?: string,
   userProfile?: UserProfile,
+  options?: {
+    role?: string;
+    tag?: string;
+  },
 ) {
   let res = teams;
 
   /**
    * filtering
    */
-  if (tag) {
-    res = res.filter((t) => t.project.tags.some((pt) => tag.includes(pt)));
+  if (options?.tag) {
+    res = res.filter((t) =>
+      t.project.tags.some((pt) => options.tag!.includes(pt)),
+    );
   }
-  if (role) {
-    res = res.filter((t) => t.openingRoles.some((pt) => role.includes(pt)));
+  if (options?.role) {
+    res = res.filter((t) =>
+      t.openingRoles.some((pt) => options.role!.includes(pt)),
+    );
   }
 
   /**
@@ -64,7 +69,6 @@ export default function ChallengeTeams({ params }: any) {
   const sp = useSearchParams();
   const user = useAuthStore((s) => s.user);
   const showDialog = useDialogStore((s) => s.open);
-  const { data: userResponse } = useFetchUser(user?.userId);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: teams, isLoading: isLoadingTeam } =
@@ -73,13 +77,8 @@ export default function ChallengeTeams({ params }: any) {
   if (isLoading || isLoadingTeam) return <Loading />;
   if (!challenge || !teams) return null;
 
-  const { tag, role } = querySchema.parse(Object.fromEntries(sp));
-  const teamsFilteredSorted = filterAndSortTeam(
-    teams,
-    role,
-    tag,
-    userResponse?.userProfile,
-  );
+  const { tag, role } = querySchema.parse(Object.fromEntries(sp!));
+  const teamsFilteredSorted = filterAndSortTeam(teams, user, { role, tag });
 
   const showFilter = () => {
     showDialog('team_filter', teams);

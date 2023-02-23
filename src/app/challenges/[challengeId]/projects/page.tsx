@@ -70,7 +70,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   if (isLoading || isLoadingProject) return <Loading />;
   if (!challenge || !projects) return null;
 
-  const { tag } = querySchema.parse(Object.fromEntries(sp));
+  const { tag } = querySchema.parse(Object.fromEntries(sp!));
   const projectsFilteredSorted = filterAndSortProject(projects, user, {
     tag,
     search,

@@ -34,7 +34,7 @@ class QueryAwareRouterImpl {
     if (!isBrowser) return;
     let { searchParams, pathname } = new URL(url, window.location.origin);
     let finalParams = searchParamsToCarryOver.reduce((prev, cur) => {
-      let param = searchParams.get(cur) ?? this.searchParams.get(cur);
+      let param = searchParams.get(cur) ?? this.searchParams?.get(cur);
       if (param) {
         prev.set(cur, param);
       }
@@ -49,7 +49,7 @@ class QueryAwareRouterImpl {
     this.router.push(pathname + '?' + searchParams.toString());
   }
   gotoRedirectWithFallback(fallbackURL: string) {
-    let goto = this.searchParams.get('redirect') ?? fallbackURL;
+    let goto = this.searchParams?.get('redirect') ?? fallbackURL;
     this.router.push(goto);
   }
 
