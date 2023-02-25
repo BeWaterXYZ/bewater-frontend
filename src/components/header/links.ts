@@ -8,14 +8,14 @@ export const nav: MenuItemType[] = [
     label: 'Challenges',
     path: '/challenges',
   },
-  {
-    label: 'Showcases',
-    path: '/showcases',
-  },
-  {
-    label: 'Docs',
-    path: '/docs',
-  },
+  // {
+  //   label: 'Showcases',
+  //   path: '/showcases',
+  // },
+  // {
+  //   label: 'Docs',
+  //   path: '/docs',
+  // },
 ];
 
 export const user: MenuItemType[] = [

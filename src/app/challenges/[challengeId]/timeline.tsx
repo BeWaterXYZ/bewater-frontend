@@ -53,7 +53,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
                 })}
               ></div>
             )}
-            <p className="body-2 whitespace-nowrap">{node.date}</p>
+            <p className="body-3 whitespace-nowrap">{node.date}</p>
           </div>
         ) : (
           <div
