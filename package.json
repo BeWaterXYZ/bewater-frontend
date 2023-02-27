@@ -48,7 +48,7 @@
     "next": "^13.2.1",
     "nft.storage": "^7.0.0",
     "numeral": "^2.0.6",
-    "pino-pretty": "^9.3.0",
+    "pino-pretty": "^9.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.0",
