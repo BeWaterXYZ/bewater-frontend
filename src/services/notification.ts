@@ -5,11 +5,42 @@ import {
   GroupingRequestFull,
   GroupingRequestId,
   Team,
+  UserProfile,
 } from './types';
 
 interface SendGroupingRequestResponse {
   groupingRequest?: GroupingRequestFull;
   newRequest: boolean;
+}
+
+export interface OngoingNotifications {
+  pendingNotifications: OngoingNotification[];
+  readNotifications: OngoingNotification[];
+}
+export interface OngoingNotification {
+  id: string;
+  recipentId: string;
+  notificationMessageId: string;
+  status: 'PENDING';
+  notificationMessage: OngoingNotificationBody;
+}
+export interface OngoingNotificationBody {
+  id: string;
+  type:
+    | 'PROJECT_UPDATED'
+    | 'TEAM_UPDATED'
+    | 'CHALLENGE_UPDATED'
+    | 'MEMBER_REMOVED'
+    | 'MEMBER_JOINED'
+    | 'MEMBER_LEFT';
+  messageBody: null;
+  targetUserId: string;
+  teamId: string;
+  challengeId: null;
+  createdAt: string;
+  updatedAt: string;
+  targetUser: UserProfile;
+  team: Team;
 }
 
 export async function sendGroupingRequest(
@@ -34,7 +65,9 @@ export async function getAllGroupingRequest() {
 }
 
 export async function getAllOngoingNotifications() {
-  const { data } = await agentAuthed.get(`/user/notifications`);
+  const { data } = await agentAuthed.get<OngoingNotifications>(
+    `/user/notifications`,
+  );
   return data;
 }
 

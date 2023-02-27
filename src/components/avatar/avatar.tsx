@@ -8,7 +8,7 @@ interface Props {
   onClick?: () => void;
 }
 
-function translateSRC(src?: string, walletAddress?: string) {
+function translateImageSrc(src?: string, walletAddress?: string) {
   return src?.startsWith('ipfs://')
     ? src.replace('ipfs://', 'https://') + '.ipfs.nftstorage.link'
     : !src
@@ -22,7 +22,7 @@ export const Avatar = ({
   className,
   onClick,
 }: Props) => {
-  let transaltedSrc = translateSRC(src, walletAddress);
+  let transaltedSrc = translateImageSrc(src, walletAddress);
 
   return (
     <div className={clsx('relative', className)}>

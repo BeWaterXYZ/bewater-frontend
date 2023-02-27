@@ -25,7 +25,7 @@ export function Nav() {
           className={clsx(
             'body-3 p-4  inline-block w-full text-center lg:text-left whitespace-nowrap',
             segment && link.path.includes(segment)
-              ? 'bg-[#0F172A] '
+              ? 'bg-grey-900 '
               : 'border lg:border-none border-grey-800',
           )}
         >

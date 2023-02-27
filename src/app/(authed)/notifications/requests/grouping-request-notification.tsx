@@ -154,7 +154,7 @@ export function GroupingRequestNotification({
       className={clsx(
         'rounded border  border-[#334155]  p-4 flex gap-3 min-h-[120px]',
 
-        req.status === 'PENDING' ? 'bg-[#0F172A]' : 'bg-night',
+        req.status === 'PENDING' ? 'bg-grey-900' : 'bg-night',
       )}
     >
       <div>
