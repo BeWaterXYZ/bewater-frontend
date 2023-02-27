@@ -51,7 +51,7 @@
     "pino-pretty": "^9.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.43.0",
+    "react-hook-form": "^7.43.2",
     "react-select": "^5.7.0",
     "remeda": "^1.6.1",
     "wagmi": "^0.11.6",
