@@ -1,10 +1,8 @@
 import { CountdownButton } from '@/components/countdown-button';
-import { Input, Select, TextArea } from '@/components/form/control';
+import { Input } from '@/components/form/control';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
-import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
 import { validationSchema } from '@/schema';
-import { sendGroupingRequest } from '@/services/grouping-request';
 import { getEmailVerificationCode } from '@/services/user';
 import { useMutationUpdateEmail } from '@/services/user.query';
 import { zodResolver } from '@hookform/resolvers/zod';

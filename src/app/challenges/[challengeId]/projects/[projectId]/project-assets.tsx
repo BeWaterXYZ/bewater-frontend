@@ -39,28 +39,32 @@ export function ProjectAssets({ project }: { project: Project }) {
     return !!project[d.key];
   });
 
-  if (assetsToShow.length === 0) return null;
-
   return (
     <div className="my-4 mb-8">
       <h3 className="body-3 font-bold text-grey-500">Assets</h3>
-      <div className="w-full mt-6 flex flex-col gap-3">
-        {assetsToShow.map(({ label, key, icon }) => {
-          const link = project[key];
 
-          return (
-            <AssetItem
-              key={key}
-              project={project}
-              field={key}
-              value={link}
-              icon={icon}
-              label={label}
-              readonly={!isLeader}
-            />
-          );
-        })}
-      </div>
+      {assetsToShow.length > 0 ? (
+        <div className="w-full mt-6 flex flex-col gap-3">
+          {assetsToShow.map(({ label, key, icon }) => {
+            const link = project[key];
+            return (
+              <AssetItem
+                key={key}
+                project={project}
+                field={key}
+                value={link}
+                icon={icon}
+                label={label}
+                readonly={!isLeader}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="rounded border border-[#24254E] bg-[#0B0C24] mt-6 p-4 my-3 body-2 text-grey-600">
+          No assets yet.
+        </div>
+      )}
     </div>
   );
 }

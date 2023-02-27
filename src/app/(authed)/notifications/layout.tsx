@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Nav } from './nav';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -8,15 +8,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </p>
 
       <div className="flex gap-6 flex-wrap  ">
-        <div className="w-full lg:w-[240px] lg:border-r  border-r-white/20 pr-0 lg:pr-8  sticky top-[86px] ">
-          <nav className=" w-full  lg:sticky  lg:top-[72px] ">
-            <Link
-              href="/notifications/requests/received"
-              className="body-3 p-4 bg-[#0F172A] inline-block w-full"
-            >
-              Invitation & Application
-            </Link>
-          </nav>
+        <div className="w-full lg:w-[270px] lg:border-r  border-r-white/20 pr-0 lg:pr-8  sticky top-[86px] ">
+          <Nav />
         </div>
         <div className="w-full lg:w-auto lg:flex-1 ">{children}</div>
       </div>

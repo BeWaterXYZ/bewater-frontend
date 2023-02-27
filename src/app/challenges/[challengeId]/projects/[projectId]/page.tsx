@@ -41,7 +41,7 @@ export default function Page({ params }: any) {
         </Link>
       </div>
 
-      <div className="flex gap-10 flex-wrap">
+      <div className="flex flex-wrap rounded border border-[#24254E]">
         <div className="w-full lg:w-[400px]">
           <Aspect ratio={3 / 2}>
             <Image
@@ -53,9 +53,9 @@ export default function Page({ params }: any) {
             />
           </Aspect>
         </div>
-        <div className="flex-1">
-          <div className="flex justify-between">
-            <p className="heading-6">{project.name}</p>
+        <div className="flex-1 p-7">
+          <div className="flex justify-between ">
+            <p className="heading-6 ">{project.name}</p>
             <ProjectMenu project={project} />
           </div>
           <p className="body-3 text-grey-500 my-3">

@@ -1,5 +1,4 @@
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
-import { getAllGroupingRequest } from './grouping-request';
 import { UserID } from './types';
 import {
   getSocialConnections,
@@ -34,15 +33,6 @@ export function useFetchUserSocialConnections(userId?: UserID) {
     enabled: !!userId,
     queryFn: async () => {
       return getSocialConnections();
-    },
-  });
-}
-export function useFetchGroupingRequest(userId?: UserID) {
-  return useQuery({
-    queryKey: ['user', 'requests', userId],
-    enabled: !!userId,
-    queryFn: async () => {
-      return getAllGroupingRequest();
     },
   });
 }

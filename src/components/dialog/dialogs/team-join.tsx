@@ -3,7 +3,7 @@ import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
 import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
 import { validationSchema } from '@/schema';
-import { sendGroupingRequest } from '@/services/grouping-request';
+import { sendGroupingRequest } from '@/services/notification';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';

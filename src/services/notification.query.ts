@@ -1,10 +1,31 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   revokeGroupingRequest,
   acceptGroupingRequest,
   declineGroupingRequest,
-} from './grouping-request';
+  getAllOngoingNotifications,
+} from './notification';
+import { getAllGroupingRequest } from './notification';
+import { UserID } from './types';
 
+export function useFetchGroupingRequest(userId?: UserID) {
+  return useQuery({
+    queryKey: ['user', 'requests', userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getAllGroupingRequest();
+    },
+  });
+}
+export function useFetchOngoingNotifications(userId?: UserID) {
+  return useQuery({
+    queryKey: ['user', 'notifications', userId],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getAllOngoingNotifications();
+    },
+  });
+}
 export function useRevokeGroupingRequest() {
   const queryClient = useQueryClient();
   return useMutation(revokeGroupingRequest, {

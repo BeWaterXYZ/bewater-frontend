@@ -33,6 +33,11 @@ export async function getAllGroupingRequest() {
   return data;
 }
 
+export async function getAllOngoingNotifications() {
+  const { data } = await agentAuthed.get(`/user/notifications`);
+  return data;
+}
+
 export function sortGroupingRequest(reqs: GroupingRequestFull[]) {
   return reqs.sort((a, b) => {
     return compareDesc(parseISO(a.createdAt), parseISO(b.createdAt));

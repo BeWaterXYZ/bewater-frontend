@@ -1,6 +1,6 @@
 'use client';
-import { useFetchGroupingRequest } from '@/services/user.query';
-import { sortGroupingRequest } from '@/services/grouping-request';
+import { useFetchGroupingRequest } from '@/services/notification.query';
+import { sortGroupingRequest } from '@/services/notification';
 import { useAuthStore } from '@/stores/auth';
 import { GroupingRequestNotification } from '../grouping-request-notification';
 

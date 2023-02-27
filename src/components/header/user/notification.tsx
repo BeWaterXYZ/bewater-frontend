@@ -1,4 +1,4 @@
-import { useFetchGroupingRequest } from '@/services/user.query';
+import { useFetchGroupingRequest } from '@/services/notification.query';
 import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';
 import Link from 'next/link';

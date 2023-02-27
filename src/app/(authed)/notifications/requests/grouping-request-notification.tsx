@@ -5,7 +5,7 @@ import {
   useRevokeGroupingRequest,
   useAcceptGroupingRequest,
   useDeclineGroupingRequest,
-} from '@/services/grouping-request.query';
+} from '@/services/notification.query';
 import {
   GroupingRequestFull,
   GroupingRequestId,
