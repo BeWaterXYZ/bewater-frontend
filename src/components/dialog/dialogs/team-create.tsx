@@ -111,7 +111,7 @@ export default function TeamCreateDialog({
           openingRoles: formData.roles,
           skills: formData.skills,
         };
-        let res = await updateTeam(data.team?.id!, payload);
+        let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
           type: 'success',
           title: 'team updated',

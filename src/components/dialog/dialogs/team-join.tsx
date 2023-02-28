@@ -63,7 +63,7 @@ export default function TeamJoinDialog({
         addToast({
           type: 'warning',
           title: 'Request not sent!',
-          description: 'You are already in a team',
+          description: 'You are already in a team or you have pending request',
         });
       }
     } catch (err) {

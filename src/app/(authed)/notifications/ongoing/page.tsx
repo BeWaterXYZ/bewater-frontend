@@ -17,7 +17,48 @@ function generateNotification(ntf: OngoingNotification) {
             {msg.targetUser.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
-          <Link className="body-4" href={``}>
+          <Link
+            className="body-4"
+            href={`/challenges/${msg.challengeId}/projects/${msg.team.project.id}`}
+          >
+            {msg.team.project.name}
+          </Link>
+        </div>
+      );
+    case 'CHALLENGE_UPDATED':
+      return (
+        <div className="body-4">
+          <Link href={`/user/${msg.targetUser.userId}`}>
+            {msg.targetUser.userName}
+          </Link>
+          <span className="text-grey-500"> has updated </span>
+          <Link className="body-4" href={`/challenges/${msg.challengeId}`}>
+            {msg.team.project.name}
+          </Link>
+        </div>
+      );
+    case 'MEMBER_JOINED':
+    case 'MEMBER_REMOVED':
+    case 'MEMBER_LEFT':
+    case 'TEAM_UPDATED':
+      return (
+        <div className="body-4">
+          <Link href={`/user/${msg.targetUser.userId}`}>
+            {msg.targetUser.userName}
+          </Link>
+          <span className="text-grey-500">
+            {msg.type === 'TEAM_UPDATED'
+              ? ' has updated'
+              : msg.type === 'MEMBER_JOINED'
+              ? ' has joined '
+              : msg.type === 'MEMBER_LEFT'
+              ? ' has left '
+              : ' was removed '}
+          </span>
+          <Link
+            className="body-4"
+            href={`/challenges/${msg.challengeId}/teams/${msg.teamId}`}
+          >
             {msg.team.name}
           </Link>
         </div>
@@ -70,7 +111,7 @@ export default function Page() {
                       parseISO(ntf.notificationMessage.createdAt),
                       Date.now(),
                     )}{' '}
-                    ago · ETH Singapore 2023
+                    ago · {ntf.notificationMessage?.challenge?.title}
                   </span>
                 </div>
               </div>

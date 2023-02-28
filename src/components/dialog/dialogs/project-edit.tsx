@@ -4,19 +4,13 @@ import { Dialogs } from '../store';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
-import { updateTeam } from '@/services/team';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useAlert } from '@/components/alert/store';
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
-import { useNavigator } from '@/hooks/useNavigator';
 import { validationSchema } from '@/schema';
-import {
-  useMutaionCreateTeam,
-  useMutaionDismissTeam,
-} from '@/services/team.query';
+import { useMutationUpdateTeam } from '@/services/team.query';
 
 const schema = z
   .object({
@@ -39,37 +33,8 @@ export default function ProjectEditDialog({
 }: ProjectEditDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
-  const router = useNavigator();
-  const createTeamMutaion = useMutaionCreateTeam();
-  const dismissTeamMutation = useMutaionDismissTeam();
-  const { confirm } = useAlert();
+  const mutation = useMutationUpdateTeam();
 
-  const onDismiss = async () => {
-    let confirmed = await confirm({
-      title: 'Are you sure?',
-      description: 'You are going to dismiss the team',
-      okCopy: 'Dismiss',
-      cancelCopy: 'Cancel',
-      type: 'warning',
-    });
-    if (!confirmed) return;
-    showLoading();
-
-    try {
-      await dismissTeamMutation.mutateAsync(data.team!.id);
-      router.gotoTeamList(data.team!.challengeId);
-      close();
-      addToast({
-        type: 'success',
-        title: 'team dismissed',
-        description: '',
-      });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      dismissLoading();
-    }
-  };
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
@@ -78,13 +43,12 @@ export default function ProjectEditDialog({
         projectDescription: formData.description,
         projectTags: formData.tags,
       };
-      let res = await updateTeam(data.team?.id!, payload);
+      await mutation.mutateAsync({ teamId: data.team?.id!, payload });
       addToast({
         type: 'success',
         title: 'Project updated',
         description: '',
       });
-      router.refresh();
       close();
     } catch (err) {
       console.log(err);

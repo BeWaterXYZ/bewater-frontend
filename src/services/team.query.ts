@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createTeam, dismissTeam, getChallengeTeams } from './team';
+import { createTeam, dismissTeam, getChallengeTeams, updateTeam } from './team';
 import { ChallengeID } from './types';
 
 export function useFetchChallengeTeams(challengeId: ChallengeID) {
@@ -17,6 +17,20 @@ export function useMutaionCreateTeam() {
     onSuccess: (data, variables, context) => {
       if (data?.team?.challengeId) {
         queryClient.invalidateQueries(['challenges', data.team.challengeId]);
+      }
+    },
+  });
+}
+
+export function useMutationUpdateTeam() {
+  const queryClient = useQueryClient();
+  return useMutation(updateTeam, {
+    onSuccess: (data, variables, context) => {
+      if (data.challengeId) {
+        queryClient.invalidateQueries(['challenges', data.challengeId]);
+      }
+      if (data.project.id) {
+        queryClient.invalidateQueries(['project', data.project.id]);
       }
     },
   });

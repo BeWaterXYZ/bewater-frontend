@@ -1,13 +1,14 @@
 import { compareDesc, parseISO } from 'date-fns';
 import { agentAuthed } from './agent';
 import {
+  Challenge,
   GroupingRequest,
   GroupingRequestFull,
   GroupingRequestId,
   Team,
   UserProfile,
 } from './types';
-
+import { sortBy } from 'remeda';
 interface SendGroupingRequestResponse {
   groupingRequest?: GroupingRequestFull;
   newRequest: boolean;
@@ -37,6 +38,7 @@ export interface OngoingNotificationBody {
   targetUserId: string;
   teamId: string;
   challengeId: null;
+  challenge: Challenge;
   createdAt: string;
   updatedAt: string;
   targetUser: UserProfile;
@@ -65,9 +67,14 @@ export async function getAllGroupingRequest() {
 }
 
 export async function getAllOngoingNotifications() {
+  let sort = (ns: OngoingNotification[]) => {
+    return sortBy(ns, (n) => -parseISO(n.notificationMessage.createdAt));
+  };
   const { data } = await agentAuthed.get<OngoingNotifications>(
     `/user/notifications`,
   );
+  data.pendingNotifications = sort(data.pendingNotifications);
+  data.readNotifications = sort(data.readNotifications);
   return data;
 }
 
