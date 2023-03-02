@@ -33,7 +33,7 @@ function generateNotification(ntf: OngoingNotification) {
           </Link>
           <span className="text-grey-500"> has updated </span>
           <Link className="body-4" href={`/challenges/${msg.challengeId}`}>
-            {msg.team.project.name}
+            {msg.challenge.title}
           </Link>
         </div>
       );
@@ -53,7 +53,7 @@ function generateNotification(ntf: OngoingNotification) {
               ? ' has joined '
               : msg.type === 'MEMBER_LEFT'
               ? ' has left '
-              : ' was removed '}
+              : ' has been removed from '}
           </span>
           <Link
             className="body-4"

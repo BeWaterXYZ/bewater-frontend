@@ -25,6 +25,7 @@ export default async function page({
   const { userId } = userSchema.parse(params);
   const profile = await getUserProfileFull(userId);
   if (!profile) return null;
+  console.log(profile);
   return (
     <div className="container my-4 pt-24 lg:pt-20 ">
       <div className="flex flex-wrap gap-10">
