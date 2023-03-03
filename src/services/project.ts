@@ -10,8 +10,11 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
   return data.projects;
 }
 export async function getProject(projectId: ProjectId) {
-  const { data } = await agentAnon.get<Project>(`/project/${projectId}`, {});
-  return data;
+  const { data } = await agentAnon.get<{ project: Project }>(
+    `/project/${projectId}`,
+    {},
+  );
+  return data.project;
 }
 
 export async function updateProject(project: OptionalExceptFor<Project, 'id'>) {

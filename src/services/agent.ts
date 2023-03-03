@@ -23,12 +23,54 @@ const responseInterceptor = (error: AxiosError) => {
 
 const agentAuthed = axios.create({
   baseURL: CONFIGS.API_ENDPOINT,
+  transformResponse: [
+    (data) => {
+      let resp;
+
+      try {
+        resp = JSON.parse(data);
+      } catch (error) {
+        throw Error(
+          `[requestClient] Error parsing response JSON data - ${JSON.stringify(
+            error,
+          )}`,
+        );
+      }
+
+      if (resp.status_code === 200) {
+        return resp.data;
+      } else {
+        throw Error(`[requestClient] Request failed with reason -  ${data}`);
+      }
+    },
+  ],
 });
 
 agentAuthed.interceptors.request.use(requestInterceptor);
 agentAuthed.interceptors.response.use((resp) => resp, responseInterceptor);
 const agentAnon = axios.create({
   baseURL: CONFIGS.API_ENDPOINT,
+  transformResponse: [
+    (data) => {
+      let resp;
+
+      try {
+        resp = JSON.parse(data);
+      } catch (error) {
+        throw Error(
+          `[requestClient] Error parsing response JSON data - ${JSON.stringify(
+            error,
+          )}`,
+        );
+      }
+
+      if (resp.status_code === 200) {
+        return resp.data;
+      } else {
+        throw Error(`[requestClient] Request failed with reason -  ${data}`);
+      }
+    },
+  ],
 });
 
 const agentNext = axios.create({
