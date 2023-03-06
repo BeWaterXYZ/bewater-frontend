@@ -4,6 +4,7 @@ import { useToastStore } from '@/components/toast/store';
 import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
 import { validationSchema } from '@/schema';
 import { sendGroupingRequest } from '@/services/notification';
+import { errorResponseScheme, getErrorResp } from '@/utils/error-type';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -67,10 +68,12 @@ export default function TeamJoinDialog({
         });
       }
     } catch (err) {
+      let resp = getErrorResp(err);
+
       addToast({
         type: 'error',
         title: 'Request not sent!',
-        description: 'please try again later',
+        description: resp?.message ?? 'please try again later',
       });
     } finally {
       dismissLoading();

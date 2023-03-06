@@ -76,13 +76,10 @@ export async function submitUpdateUserProfile(
 }
 
 export async function searchUsers(keyword: string) {
-  const { data } = await agentAuthed.get<{ users: UserProfile[] }>(
-    '/user/search',
-    {
-      params: { keyword },
-    },
-  );
-  return data.users ?? [];
+  const { data } = await agentAuthed.get<UserProfile[]>('/user/search', {
+    params: { keyword },
+  });
+  return data ?? [];
 }
 export function checkUsername(currentUserName: string) {
   return async function (username: string) {

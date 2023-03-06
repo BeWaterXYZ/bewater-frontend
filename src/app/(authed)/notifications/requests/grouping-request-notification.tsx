@@ -17,6 +17,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { useToastStore } from '@/components/toast/store';
 import { useAuthStore } from '@/stores/auth';
+import { getErrorResp } from '@/utils/error-type';
 
 function getUserLink(userProfile: UserProfile) {
   return (
@@ -113,14 +114,13 @@ export function GroupingRequestNotification({
     if (!confirmed) return;
     try {
       showLoading();
-      const res = await acceptMutation.mutateAsync(id);
-      if (!res.success) {
-        addToast({
-          type: 'error',
-          title: res.reason ?? 'please try again later',
-        });
-      }
+      await acceptMutation.mutateAsync(id);
     } catch (err) {
+      let resp = getErrorResp(err);
+      addToast({
+        type: 'error',
+        title: resp?.message ?? 'please try again later',
+      });
     } finally {
       dismissLoading();
     }

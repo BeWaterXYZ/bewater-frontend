@@ -11,6 +11,7 @@ import { connectWallet, getSignMessage, verifyMessage } from './connect';
 import type { Connector } from 'wagmi';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useNavigator } from '@/hooks/useNavigator';
+import { getErrorResp } from '@/utils/error-type';
 
 export default function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
@@ -23,8 +24,6 @@ export default function WalletOptions() {
 
   const availableConnectors = connectors.filter((c) => c.ready);
   const onConnectorClick = async (connector: Connector) => {
-    console.log(connector.name);
-
     try {
       clearToast();
       showLoading();
@@ -35,7 +34,7 @@ export default function WalletOptions() {
           chainId,
         );
 
-        if (isWhitelisted && message) {
+        if (message) {
           const { token, userProfile } = await verifyMessage(message, address);
           setAuthState({
             token,
@@ -48,21 +47,24 @@ export default function WalletOptions() {
           } else {
             navigator.gotoAfterConnect();
           }
-        } else {
-          addToast({
-            title: 'You are not in whitelist',
-            description:
-              'Stay tuned, we’re launching soon. Join waitlist to get notified when we launch',
-            type: 'error',
-          });
         }
       }
     } catch (error) {
-      addToast({
-        title: 'Oops',
-        description: 'Connect Wallet Failed. Please try again.',
-        type: 'error',
-      });
+      const resp = getErrorResp(error);
+      if (resp?.error_code === 'NOT_WHITELISTED') {
+        addToast({
+          title: 'You are not in whitelist',
+          description:
+            'Stay tuned, we’re launching soon. Join waitlist to get notified when we launch',
+          type: 'error',
+        });
+      } else {
+        addToast({
+          title: 'Oops',
+          description: 'Connect Wallet Failed. Please try again.',
+          type: 'error',
+        });
+      }
     } finally {
       dismissLoading();
     }

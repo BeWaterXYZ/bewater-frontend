@@ -56,6 +56,7 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
 const searchUserByKeyword =
   (toExclude: UserID[]) => async (inputValue: string) => {
     let data = await searchUsers(inputValue);
+    console.log({ data });
     data = data
       .filter((up) => !toExclude.includes(up.userId))
       .map((d) => ({ ...d, label: d.fullName }));
