@@ -6,6 +6,24 @@ import Script from 'next/script';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Dumpster } from './dumpster';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    icons: '/icons/favicon.png',
+    title: 'BeWater - I Build Therefore I Am',
+    description: 'BeWater claim your SBT today!',
+    openGraph: {
+      title: 'BeWater - I Build Therefore I Am',
+      description: 'BeWater -  claim your SBT today!',
+      type: 'website',
+    },
+    twitter: {
+      title: 'BeWater - I Build Therefore I Am',
+      description: 'BeWater - claim your SBT today!',
+    },
+  };
+}
 
 const fontPrimary = localFont({
   src: [
