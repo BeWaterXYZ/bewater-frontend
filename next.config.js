@@ -24,6 +24,23 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.gradproject.xyz',
       },
+
+      {
+        protocol: 'https',
+        hostname: '**.nftstorage.link',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.ipfs-gateway.clou',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.pinata.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.4everland.io',
+      },
     ],
   },
   // swcMinify: true,
