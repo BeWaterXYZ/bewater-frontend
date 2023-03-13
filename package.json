@@ -27,7 +27,7 @@
     "@radix-ui/react-navigation-menu": "^1.1.1",
     "@radix-ui/react-toast": "^1.1.2",
     "@sentry/nextjs": "^7.38.0",
-    "@tanstack/react-query": "^4.24.9",
+    "@tanstack/react-query": "^4.26.1",
     "@types/formidable": "^2.0.5",
     "@types/fslightbox-react": "^1.4.2",
     "@types/mime": "^3.0.1",
