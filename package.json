@@ -55,7 +55,7 @@
     "react-select": "^5.7.0",
     "remeda": "^1.6.1",
     "wagmi": "^0.11.6",
-    "zod": "^3.20.6",
+    "zod": "^3.21.4",
     "zustand": "^4.3.2"
   },
   "devDependencies": {
