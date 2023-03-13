@@ -6610,10 +6610,10 @@ regexpp@^3.2.0:
   resolved "https://registry.yarnpkg.com/regexpp/-/regexpp-3.2.0.tgz#0425a2768d8f23bad70ca4b90461fa2f1213e1b2"
   integrity sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==
 
-remeda@^1.6.1:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/remeda/-/remeda-1.8.0.tgz#ba8d99026c3f3be6fd268bddb3ed06dddd8b0d05"
-  integrity sha512-zhrGQbeIVJhXArg8/USMkZQeD36rr62SAt96bw5aOBjo7V399rOn7FrgQRG5WfxO9zME09vOtOs5nx1UsZ/80A==
+remeda@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/remeda/-/remeda-1.9.0.tgz#f2dfc9055dd353e4a6c6495dbbbd53be394644d9"
+  integrity sha512-dQolqsREsfF8hV6f67wiS4q/DkdsGr714NM1MwYqdMJEStDwkug6UD7ALPbEX7O4vWR3dFW6qJomKxHYhkX5lA==
 
 require-directory@^2.1.1:
   version "2.1.1"
