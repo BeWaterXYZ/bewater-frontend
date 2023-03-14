@@ -178,7 +178,7 @@ export default function TeamCreateDialog({
         <Input
           label="Project title"
           required
-          placeholder="Enter your full name"
+          placeholder="Enter your project title"
           error={errors['title']}
           {...register('title')}
         />
