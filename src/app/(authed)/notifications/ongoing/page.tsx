@@ -37,30 +37,42 @@ function generateNotification(ntf: OngoingNotification) {
           </Link>
         </div>
       );
+    case 'MEMBER_ROLE_UPDATED':
+    case 'TEAM_DISMISSED':
     case 'MEMBER_JOINED':
     case 'MEMBER_REMOVED':
     case 'MEMBER_LEFT':
-    case 'TEAM_UPDATED':
+    case 'TEAM_INFO_UPDATED':
       return (
         <div className="body-4">
           <Link href={`/user/${msg.targetUser.userId}`}>
             {msg.targetUser.userName}
           </Link>
           <span className="text-grey-500">
-            {msg.type === 'TEAM_UPDATED'
-              ? ' has updated'
-              : msg.type === 'MEMBER_JOINED'
-              ? ' has joined '
-              : msg.type === 'MEMBER_LEFT'
-              ? ' has left '
-              : ' has been removed from '}
+            {msg.type === 'MEMBER_ROLE_UPDATED' ? (
+              <span>has been assigned a new role in </span>
+            ) : msg.type === 'TEAM_DISMISSED' ? (
+              ' has dismissed '
+            ) : msg.type === 'TEAM_INFO_UPDATED' ? (
+              ' has updated '
+            ) : msg.type === 'MEMBER_JOINED' ? (
+              ' has joined '
+            ) : msg.type === 'MEMBER_LEFT' ? (
+              ' has left '
+            ) : (
+              ' has been removed from '
+            )}
           </span>
-          <Link
-            className="body-4"
-            href={`/challenges/${msg.challengeId}/teams/${msg.teamId}`}
-          >
-            {msg.team.name}
-          </Link>
+          {msg.type === 'TEAM_DISMISSED' ? (
+            <span className="body-4">{msg.team.name}</span>
+          ) : (
+            <Link
+              className="body-4"
+              href={`/challenges/${msg.challengeId}/teams/${msg.teamId}`}
+            >
+              {msg.team.name}
+            </Link>
+          )}
         </div>
       );
   }
@@ -94,6 +106,7 @@ export default function Page() {
         {flattenNotifications.map((ntf) => {
           return (
             <div
+              id={`n-${ntf.id}`}
               key={ntf.id}
               className="bg-grey-900 p-4 border  border-grey-800 rounded-sm flex gap-4"
             >
