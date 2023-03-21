@@ -9,11 +9,11 @@ function transform(data: any) {
   try {
     resp = JSON.parse(data);
   } catch (error) {
-    console.error(data);
     throw Error(
-      `[requestClient] Error parsing response JSON data - ${JSON.stringify(
+      `[requestClient] Error parsing response JSON data - ${JSON.stringify({
         error,
-      )}`,
+        data,
+      })}`,
     );
   }
 
