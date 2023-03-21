@@ -117,18 +117,18 @@ export const FormOnboarding = ({ onComplete }: Props) => {
     <form
       method="post"
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-gray-500/20 p-7 rounded"
+      className="bg-gray-500/20 p-6 rounded"
     >
-      <p className="body-2 py-4">Set up your basic profile</p>
+      <p className="body-2 pb-6">Set up your basic profile</p>
 
       <Input
-        label="Username"
+        label="Username*"
         placeholder="Enter your username"
         error={errors['userName']}
         {...register('userName')}
       />
       <Input
-        label="Full name"
+        label="Full name*"
         placeholder="Enter your full name"
         error={errors['fullName']}
         {...register('fullName')}
@@ -136,7 +136,7 @@ export const FormOnboarding = ({ onComplete }: Props) => {
       <div className="flex items-center gap-2">
         <div className="flex-1">
           <Input
-            label="Email"
+            label="Email*"
             placeholder="Enter your email"
             error={errors['email']}
             {...register('email')}
@@ -153,13 +153,13 @@ export const FormOnboarding = ({ onComplete }: Props) => {
         </p>
       ) : null}
       <Input
-        label="Verification Code"
+        label="Verification Code*"
         placeholder="Enter verification code"
         error={errors['verificationCode']}
         {...register('verificationCode')}
       />
 
-      <button className="btn btn-primary w-full">Continue</button>
+      <button className="btn btn-primary w-full mt-6">Continue</button>
     </form>
   );
 };

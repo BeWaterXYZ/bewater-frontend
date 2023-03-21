@@ -21,7 +21,7 @@ export default function Page() {
         <h5 className="text-day  heading-5">Welcome aboard!</h5>
         {/* fix me  */}
         {mounted && (
-          <p className="break-words body-2 text-grey-500 my-4">
+          <p className="break-words body-2 text-grey-500 mt-4 mb-6">
             {walletAddress}
           </p>
         )}
