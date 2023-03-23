@@ -11,13 +11,16 @@ interface Props {
 }
 
 function useImageSrc(src?: string, walletAddress?: string) {
-  let [imageSrc, imageSrcSet] = useState(
-    !src
-      ? `https://www.gradproject.xyz/api/${walletAddress}`
-      : !src?.startsWith('ipfs://')
-      ? src
-      : undefined,
-  );
+  let [imageSrc, imageSrcSet] = useState(() => {
+    if (!src) {
+      return walletAddress
+        ? `https://www.gradproject.xyz/api/${walletAddress}`
+        : '/icons/fish.svg';
+    } else if (!src?.startsWith('ipfs://')) {
+      return src;
+    }
+    return undefined;
+  });
 
   useEffect(() => {
     let cid = src?.replace('ipfs://', '');
@@ -33,7 +36,7 @@ function useImageSrc(src?: string, walletAddress?: string) {
     Promise.race(promises).then((r) => {
       imageSrcSet(r);
     });
-  }, []);
+  }, [src]);
 
   return imageSrc;
 }

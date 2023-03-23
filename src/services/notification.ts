@@ -44,7 +44,7 @@ export interface OngoingNotificationBody {
   challenge: Challenge;
   createdAt: string;
   updatedAt: string;
-  targetUser: UserProfile;
+  targetUser?: UserProfile;
   team: Team;
 }
 

@@ -13,8 +13,8 @@ function generateNotification(ntf: OngoingNotification) {
     case 'PROJECT_UPDATED':
       return (
         <div className="body-4">
-          <Link href={`/user/${msg.targetUser.userId}`}>
-            {msg.targetUser.userName}
+          <Link href={`/user/${msg.targetUser?.userId}`}>
+            {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
           <Link
@@ -28,8 +28,8 @@ function generateNotification(ntf: OngoingNotification) {
     case 'CHALLENGE_UPDATED':
       return (
         <div className="body-4">
-          <Link href={`/user/${msg.targetUser.userId}`}>
-            {msg.targetUser.userName}
+          <Link href={`/user/${msg.targetUser?.userId}`}>
+            {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
           <Link className="body-4" href={`/challenges/${msg.challengeId}`}>
@@ -45,8 +45,8 @@ function generateNotification(ntf: OngoingNotification) {
     case 'TEAM_INFO_UPDATED':
       return (
         <div className="body-4">
-          <Link href={`/user/${msg.targetUser.userId}`}>
-            {msg.targetUser.userName}
+          <Link href={`/user/${msg.targetUser?.userId}`}>
+            {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500">
             {msg.type === 'MEMBER_ROLE_UPDATED' ? (
@@ -111,8 +111,10 @@ export default function Page() {
               className="bg-grey-900 p-4 border  border-grey-800 rounded-sm flex gap-4"
             >
               <Avatar
-                src={ntf.notificationMessage.targetUser.avatarURI}
-                walletAddress={ntf.notificationMessage.targetUser.walletAddress}
+                src={ntf.notificationMessage.targetUser?.avatarURI}
+                walletAddress={
+                  ntf.notificationMessage.targetUser?.walletAddress
+                }
                 className="w-8 h-8"
               />
               <div>
