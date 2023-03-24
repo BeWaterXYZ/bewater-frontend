@@ -55,8 +55,10 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
 
 const searchUserByKeyword =
   (toExclude: UserID[]) => async (inputValue: string) => {
+    if (!inputValue) {
+      return [];
+    }
     let data = await searchUsers(inputValue);
-    console.log({ data });
     data = data
       .filter((up) => !toExclude.includes(up.userId))
       .map((d) => ({ ...d, label: d.fullName }));
@@ -138,6 +140,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               components={{
                 Option: OptionComp,
                 SingleValue: SingleValueComp,
+                DropdownIndicator: () => null,
               }}
             />
           );
