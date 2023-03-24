@@ -27,7 +27,7 @@ export default function TeamManageMemberDialog({
       </div>
 
       <div className="py-4">
-        <button className="text-grey-500 body-5" onClick={gotoInviteMember}>
+        <button className="text-grey-500 body-4" onClick={gotoInviteMember}>
           + Invite a new member
         </button>
       </div>

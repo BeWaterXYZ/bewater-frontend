@@ -9,7 +9,7 @@ export function TeamMemberRow({ member }: { member: TeamMember }) {
       className="flex p-2 gap-2 border-b border-b-midnight"
     >
       <Avatar
-        className="w-10 h-10"
+        className="w-8 h-8"
         walletAddress={member.userProfile.walletAddress}
         src={member.userProfile.avatarURI}
       />
