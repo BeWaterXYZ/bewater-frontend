@@ -75,12 +75,12 @@ export function TeamMemberManager({ member }: { member: TeamMember }) {
           onClick={() => editingSet(false)}
           ref={ref}
         >
-          <div className="p-2">
+          <div>
             {RoleSetOptions.map((role) => {
               return (
                 <div
                   key={role.value}
-                  className="flex gap-2 justify-between py-1 hover:bg-grey-600 cursor-pointer"
+                  className="flex gap-2 justify-between p-1.5 hover:bg-grey-800 cursor-pointer"
                   onClick={updateRole(role.value)}
                 >
                   <TagRole label={role.value} />
