@@ -21,16 +21,16 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
       <div className="flex gap-2">
         <div>
           <Avatar
-            className="w-10 h-10"
+            className="w-8 h-8"
             src={data.avatarURI}
             walletAddress={data.walletAddress}
           />
         </div>
         <div className="flex flex-col justify-around">
-          <div className="body-5 text-grey-400">
+          <div className="body-4 text-grey-400">
             {data.fullName ?? data.userName}
           </div>
-          <div className="body-5 text-grey-600">@{data.userName}</div>
+          <div className="body-4 text-grey-600">@{data.userName}</div>
         </div>
       </div>
     </components.Option>
@@ -39,7 +39,7 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
 
 const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
   return (
-    <div className=" flex gap-2 pl-2" style={{ gridArea: '1/1/2/3' }}>
+    <div className=" flex gap-2" style={{ gridArea: '1/1/2/3' }}>
       <Avatar
         className="w-5 h-5"
         src={props.data.avatarURI}
@@ -55,8 +55,10 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
 
 const searchUserByKeyword =
   (toExclude: UserID[]) => async (inputValue: string) => {
+    if (!inputValue) {
+      return [];
+    }
     let data = await searchUsers(inputValue);
-    console.log({ data });
     data = data
       .filter((up) => !toExclude.includes(up.userId))
       .map((d) => ({ ...d, label: d.fullName }));
@@ -138,6 +140,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               components={{
                 Option: OptionComp,
                 SingleValue: SingleValueComp,
+                DropdownIndicator: () => null,
               }}
             />
           );

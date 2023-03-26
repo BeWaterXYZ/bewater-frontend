@@ -16,7 +16,7 @@ export function TeamMember({ member }: { member: TeamMember }) {
           />
         </div>
         <div className="flex items-start flex-col ">
-          <p className="body-3 font-bold">
+          <p className="body-3 font-bold mb-0.5">
             {member.userProfile.fullName ?? member.userProfile.userName}
           </p>
           <div>
