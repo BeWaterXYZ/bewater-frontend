@@ -194,14 +194,6 @@ export default async function ChallengeIntro({ params }: any) {
   );
 }
 
-export const revalidate = 60;
-export async function generateStaticParams() {
-  const challenges = await getChallenges();
-  const res = challenges.map((c) => ({
-    challengeId: c.id,
-  }));
-  return res;
-}
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
