@@ -24,6 +24,7 @@ function useImageSrc(src?: string, walletAddress?: string) {
 
   useEffect(() => {
     let cid = src?.replace('ipfs://', '');
+    if (!cid) return;
     let promises = IPFSGateways.map(
       (url) =>
         new Promise<string>((res, rej) => {
