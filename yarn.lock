@@ -986,17 +986,17 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@radix-ui/react-alert-dialog@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-alert-dialog/-/react-alert-dialog-1.0.2.tgz#03ab5a419a750e757af225c2416c30b253dc7117"
-  integrity sha512-0MtxV53FaEEBOKRgyLnEqHZKKDS5BldQ9oUBsKVXWI5FHbl2jp35qs+0aJET+K5hJDsc40kQUzP7g+wC7tqrqA==
+"@radix-ui/react-alert-dialog@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@radix-ui/react-alert-dialog/-/react-alert-dialog-1.0.3.tgz#892726f4e4441622535e68a632ec833211b46988"
+  integrity sha512-QXFy7+bhGi0u+paF2QbJeSCHZs4gLMJIPm6sajUamyW0fro6g1CaSGc5zmc4QmK2NlSGUrq8m+UsUqJYtzvXow==
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@radix-ui/primitive" "1.0.0"
     "@radix-ui/react-compose-refs" "1.0.0"
     "@radix-ui/react-context" "1.0.0"
-    "@radix-ui/react-dialog" "1.0.2"
-    "@radix-ui/react-primitive" "1.0.1"
+    "@radix-ui/react-dialog" "1.0.3"
+    "@radix-ui/react-primitive" "1.0.2"
     "@radix-ui/react-slot" "1.0.1"
 
 "@radix-ui/react-aspect-ratio@^1.0.1":
@@ -1032,28 +1032,7 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
 
-"@radix-ui/react-dialog@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-dialog/-/react-dialog-1.0.2.tgz#2d7a0bfed478afc40ed6fc78d0f53242af55284e"
-  integrity sha512-EKxxp2WNSmUPkx4trtWNmZ4/vAYEg7JkAfa1HKBUnaubw9eHzf1Orr9B472lJYaYz327RHDrd4R95fsw7VR8DA==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@radix-ui/primitive" "1.0.0"
-    "@radix-ui/react-compose-refs" "1.0.0"
-    "@radix-ui/react-context" "1.0.0"
-    "@radix-ui/react-dismissable-layer" "1.0.2"
-    "@radix-ui/react-focus-guards" "1.0.0"
-    "@radix-ui/react-focus-scope" "1.0.1"
-    "@radix-ui/react-id" "1.0.0"
-    "@radix-ui/react-portal" "1.0.1"
-    "@radix-ui/react-presence" "1.0.0"
-    "@radix-ui/react-primitive" "1.0.1"
-    "@radix-ui/react-slot" "1.0.1"
-    "@radix-ui/react-use-controllable-state" "1.0.0"
-    aria-hidden "^1.1.1"
-    react-remove-scroll "2.5.5"
-
-"@radix-ui/react-dialog@^1.0.3":
+"@radix-ui/react-dialog@1.0.3", "@radix-ui/react-dialog@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@radix-ui/react-dialog/-/react-dialog-1.0.3.tgz#a715bf30f35fcd80476c0a07fcc073c1968e6d3e"
   integrity sha512-owNhq36kNPqC2/a+zJRioPg6HHnTn5B/sh/NjTY8r4W9g1L5VJlrzZIVcBr7R9Mg8iLjVmh6MGgMlfoVf/WO/A==
@@ -1111,16 +1090,6 @@
   integrity sha512-UagjDk4ijOAnGu4WMUPj9ahi7/zJJqNZ9ZAiGPp7waUWJO0O1aWXi/udPphI0IUjvrhBsZJGSN66dR2dsueLWQ==
   dependencies:
     "@babel/runtime" "^7.13.10"
-
-"@radix-ui/react-focus-scope@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@radix-ui/react-focus-scope/-/react-focus-scope-1.0.1.tgz#faea8c25f537c5a5c38c50914b63722db0e7f951"
-  integrity sha512-Ej2MQTit8IWJiS2uuujGUmxXjF/y5xZptIIQnyd2JHLwtV0R2j9NRVoRj/1j/gJ7e3REdaBw4Hjf4a1ImhkZcQ==
-  dependencies:
-    "@babel/runtime" "^7.13.10"
-    "@radix-ui/react-compose-refs" "1.0.0"
-    "@radix-ui/react-primitive" "1.0.1"
-    "@radix-ui/react-use-callback-ref" "1.0.0"
 
 "@radix-ui/react-focus-scope@1.0.2":
   version "1.0.2"

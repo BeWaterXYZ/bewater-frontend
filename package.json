@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
-    "@radix-ui/react-alert-dialog": "^1.0.2",
+    "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-aspect-ratio": "^1.0.1",
     "@radix-ui/react-dialog": "^1.0.3",
     "@radix-ui/react-icons": "^1.2.0",
