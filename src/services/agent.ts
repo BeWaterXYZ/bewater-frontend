@@ -1,28 +1,15 @@
 import { CONFIGS } from '@/config';
 import { isBrowser } from '@/constants';
 import { useAuthStore } from '@/stores/auth';
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios, {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios';
 
-function transform(data: any) {
-  let resp;
-
-  try {
-    resp = JSON.parse(data);
-  } catch (error) {
-    throw Error(
-      `[requestClient] Error parsing response JSON data - ${JSON.stringify({
-        error,
-        data,
-      })}`,
-    );
-  }
-
-  if (resp.status_code === 200 && resp.status === 'SUCCESS') {
-    return resp.data;
-  } else {
-    throw resp;
-  }
-}
+/**
+ *  interceptors
+ */
 
 const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   const accessToken = useAuthStore.getState().token;
@@ -42,17 +29,39 @@ const responseInterceptor = (error: AxiosError) => {
   return Promise.reject(error);
 };
 
+const responseDataInterceptor = (resp: AxiosResponse) => {
+  if (resp.data.status === 'SUCCESS' && resp.data.status_code === 200) {
+    resp.data = resp.data.data;
+  } else {
+    throw resp;
+  }
+  return resp;
+};
+
+/**
+ *  agentAuthed
+ */
 const agentAuthed = axios.create({
   baseURL: CONFIGS.API_ENDPOINT,
-  transformResponse: [transform],
 });
 
 agentAuthed.interceptors.request.use(requestInterceptor);
-agentAuthed.interceptors.response.use((resp) => resp, responseInterceptor);
+agentAuthed.interceptors.response.use(
+  responseDataInterceptor,
+  responseInterceptor,
+);
+
+/**
+ *  agentAnon
+ */
 const agentAnon = axios.create({
   baseURL: CONFIGS.API_ENDPOINT,
-  transformResponse: [transform],
 });
+
+agentAnon.interceptors.response.use(
+  responseDataInterceptor,
+  responseInterceptor,
+);
 
 const agentNext = axios.create({
   baseURL: isBrowser ? window.location.origin : '',

@@ -5,10 +5,10 @@ export const errorResponseScheme = z.object({
   error_code: z.string(),
 });
 
-export function getErrorResp(err: unknown) {
+export function getErrorResp(err: any) {
   let resp;
   try {
-    resp = errorResponseScheme.parse(err);
+    resp = errorResponseScheme.parse(err.data);
   } catch (err) {}
   return resp;
 }
