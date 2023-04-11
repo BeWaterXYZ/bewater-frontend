@@ -41,11 +41,11 @@ export function ChallengeTeamsInfo({
             className="m-1"
           />
         </div>
-        <div className="flex flex-col justify-around">
-          <p className="body-2 text-[#701A75] font-bold uppercase">
-            {wordingMap[curMileStone.stageName]}
+        <div className="flex flex-col justify-around md:items-start">
+          <p className="body-2 text-[#701A75] font-bold uppercase mt-8 md:mt-0">
+            {wordingMap['Teaming']}
           </p>
-          <p className="heading-5">
+          <p className="heading-5 mt-2 md:mt-0">
             {' '}
             <Countdown deadline={curMileStone.dueDate} />
           </p>
@@ -78,7 +78,7 @@ export function ChallengeTeamsInfo({
         ) : null}
 
         {curMileStone.stageName === 'Project Submission' ? (
-          <div className="flex flex-col justify-around items-start">
+          <div className="flex flex-col justify-around md:items-start">
             <p className="body-2 text-[#3730A3] font-bold uppercase">
               TEAM FORMATION HAS ENDED
             </p>
