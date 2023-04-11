@@ -91,7 +91,7 @@ export default function TeamJoinDialog({
     <div className="flex flex-col justify-center w-[80vw] max-w-md">
       <p className="heading-6">Request to Join The Team</p>
 
-      <p className="body-3 text-grey-500 my-1 mt-4 font-bold">Team Name</p>
+      <p className="body-3 text-grey-500 my-1 mt-6 font-bold">Team Name</p>
       <p className="body-3 my-1">{team.name}</p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="mt-4">
@@ -111,15 +111,11 @@ export default function TeamJoinDialog({
           {...register('message')}
         ></TextArea>
 
-        <div className="mt-4 flex flex-row gap-4">
-          <button
-            className="btn btn-secondary w-full"
-            type="button"
-            onClick={close}
-          >
+        <div className="mt-4 flex flex-row gap-4 justify-end">
+          <button className="btn btn-secondary" type="button" onClick={close}>
             Cancel
           </button>
-          <button className="btn btn-primary w-full">Send request</button>
+          <button className="btn btn-primary">Send request</button>
         </div>
       </form>
     </div>
