@@ -1,16 +1,11 @@
 'use client';
 import { useLoadingWhen } from '@/components/loading/store';
-import { useNavigator } from '@/hooks/useNavigator';
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import { FormOnboardingExtra } from './form';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
   const { data, isLoading } = useFetchUser(user?.userId);
-  const navigator = useNavigator();
-  const onComplete = () => {
-    navigator.gotoAfterConnect();
-  };
 
   useLoadingWhen(isLoading);
 
@@ -29,7 +24,7 @@ export default function Page() {
           help others recognize you.
         </p>
 
-        <FormOnboardingExtra onComplete={onComplete} />
+        <FormOnboardingExtra />
       </div>
     </div>
   );
