@@ -20,11 +20,11 @@ import { useMutationUpdateUserProfile } from '@/services/user.query';
 import { validationSchema } from '@/schema';
 
 interface Props {
-  user: UserProfile;
   data: GetUserProfileByIdResponse;
 }
 
 export const FormUserSettings = ({ data }: Props) => {
+  console.log('FormUserSettings', { data });
   const schema = z
     .object({
       userName: validationSchema.userName(data.userProfile?.userName ?? ''),
