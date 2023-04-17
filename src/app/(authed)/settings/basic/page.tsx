@@ -11,9 +11,9 @@ export default function Page() {
 
   const { data, isLoading, isStale } = useFetchUser(user?.userId);
 
-  useLoadingWhen(isLoading || isStale);
+  useLoadingWhen(isLoading && isStale);
 
-  if (isLoading || isStale) return null;
+  if (isLoading && isStale) return null;
   return (
     <div className="pt-8">
       <AvatarWithEditor
