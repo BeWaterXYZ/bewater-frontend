@@ -41,6 +41,7 @@ export function useMutationUpdateUserProfile() {
   const queryClient = useQueryClient();
   return useMutation(submitUpdateUserProfile, {
     onSuccess: (data, variables, context) => {
+      console.log('useMutationUpdateUserProfile', data.userProfile?.userId);
       queryClient.invalidateQueries(['user', data.userProfile?.userId]);
     },
   });
