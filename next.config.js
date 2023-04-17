@@ -8,7 +8,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   images: {
     domains: ['source.unsplash.com', 'images.unsplash.com', 'ipfs.io'],
     remotePatterns: [
