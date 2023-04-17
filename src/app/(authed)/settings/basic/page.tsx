@@ -9,11 +9,11 @@ import { FormUserSettings } from './form/form-settings';
 export default function Page() {
   const user = useAuthStore((s) => s.user);
 
-  const { data, isLoading, isStale } = useFetchUser(user?.userId);
+  const { data, isLoading } = useFetchUser(user?.userId);
 
-  useLoadingWhen(isLoading && isStale);
+  useLoadingWhen(isLoading);
 
-  if (isLoading && isStale) return null;
+  if (isLoading) return null;
   return (
     <div className="pt-8">
       <AvatarWithEditor
