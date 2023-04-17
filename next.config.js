@@ -8,7 +8,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
     domains: ['source.unsplash.com', 'images.unsplash.com', 'ipfs.io'],
     remotePatterns: [
@@ -31,7 +31,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '**.ipfs-gateway.clou',
+        hostname: '**.ipfs-gateway.cloud',
       },
       {
         protocol: 'https',
