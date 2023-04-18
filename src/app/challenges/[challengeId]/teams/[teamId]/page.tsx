@@ -21,7 +21,7 @@ export default async function Page({ params }: any) {
 
   return (
     <div className="container">
-      <div className="my-4">
+      <div className="mt-10 mb-[22px]">
         <Link
           className="body-3 text-grey-400"
           href={`/challenges/${challengeId}/teams`}
@@ -30,14 +30,14 @@ export default async function Page({ params }: any) {
         </Link>
       </div>
 
-      <div className="flex justify-between flex-col lg:flex-row">
-        <div className="heading-6 mb-4">{team.name}</div>
+      <div className="flex justify-between flex-col lg:flex-row ">
+        <div className="heading-6 ">{team.name}</div>
 
         <div>
           <TeamMenu team={team} />
         </div>
       </div>
-      <div className="border border-[#24254E] rounded bg-[#0B0C24] p-4 flex gap-4 my-4 justify-center mb-8">
+      <div className="border border-[#24254E] rounded bg-[#0B0C24] p-4 flex gap-4 my-10 justify-center">
         <div>
           <Image
             src="/challenge/wanted.svg"
@@ -60,7 +60,7 @@ export default async function Page({ params }: any) {
       </div>
       <div className="mb-8">
         <div className="mb-8">
-          <p className="body-3 text-grey-500 font-bold my-4"> Team Leader</p>
+          <p className="body-3 text-grey-500 font-bold my-5"> Team Leader</p>
 
           <div className="flex my-4">
             {leaders.map((member) => (
@@ -70,7 +70,7 @@ export default async function Page({ params }: any) {
         </div>
 
         <div>
-          <p className="body-3 text-grey-500 font-bold my-4"> Members</p>
+          <p className="body-3 text-grey-500 font-bold my-5"> Members</p>
           <div className="flex my-4 gap-3 flex-wrap">
             {members.map((member) => (
               <TeamMember key={member.id} member={member} />
@@ -80,9 +80,9 @@ export default async function Page({ params }: any) {
       </div>
 
       <div className="mb-16">
-        <p className="body-3 text-grey-500 font-bold"> Project Overview</p>
-        <div className="flex justify-between flex-wrap">
-          <div className="flex items-center py-2">
+        <p className="body-3 text-grey-500 font-bold my-5"> Project Overview</p>
+        <div className="flex justify-between flex-wrap mb-3">
+          <div className="flex items-center ">
             <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
             {team.project.tags.map((tag) => (
               <TagProjectTag key={tag} label={tag} />

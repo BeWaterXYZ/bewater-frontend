@@ -1,6 +1,7 @@
 'use client';
 import { AlertContainer } from '@/components/alert';
 import { useAlertStore } from '@/components/alert/store';
+import { CallbackErrorHandler } from '@/components/callback-error';
 import { DialogContainer } from '@/components/dialog';
 import { useDialogStore } from '@/components/dialog/store';
 import { LoadingContainer } from '@/components/loading';
@@ -20,6 +21,7 @@ export function Dumpster() {
       <ToastContainer toasts={toasts} />
       <LoadingContainer loading={loading} />
       <AlertContainer alert={alert} />
+      <CallbackErrorHandler />
     </>
   );
 }

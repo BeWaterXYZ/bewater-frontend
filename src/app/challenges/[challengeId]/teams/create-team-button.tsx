@@ -6,11 +6,10 @@ import { useAuthStore } from '@/stores/auth';
 
 export function CreateTeamButton({ challenge }: { challenge: Challenge }) {
   const showDialog = useDialogStore((s) => s.open);
-  const isAuthed = useAuthStore((s) => s.isAuthed);
   const navigator = useNavigator();
 
   const onClick = () => {
-    if (!isAuthed()) {
+    if (!useAuthStore.getState().token) {
       navigator.goToConnectWallet();
       return;
     }

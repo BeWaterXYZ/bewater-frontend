@@ -12,7 +12,7 @@ export const RoleSet = [
   'Data Analyst',
 ] as const;
 
-export type RoleUnion = typeof RoleSet[number];
+export type RoleUnion = (typeof RoleSet)[number];
 
 const styleMap: Record<RoleUnion, string> = {
   'Product Manager': '!bg-[#713F12] !border-[#A16207] border',
@@ -30,7 +30,7 @@ export const RoleSetOptions: OptionItem<RoleUnion>[] = RoleSet.map((role) => ({
   value: role,
   classes: {
     container: styleMap[role] + ' h-5 my-0',
-    text: 'body-4 !text-white leading-5 !py-0',
+    text: 'body-4 !text-white leading-4 !py-0',
   },
 }));
 

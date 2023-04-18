@@ -5,6 +5,7 @@
 import { ProjectTagUnion } from '@/constants/options/project-tag';
 import { RoleUnion } from '@/constants/options/role';
 import { SkillUnion } from '@/constants/options/skill';
+import { string } from 'zod';
 
 export type UserID = string;
 
@@ -52,6 +53,12 @@ export interface Challenge {
   milestones: Milestone[];
   judges: Judge[];
   sponsorships: Sponsorship[];
+  socialLinks: {
+    twitterURI?: string;
+    discordURI?: string;
+    officialWebsiteURI?: string;
+    email?: string;
+  };
 }
 
 export interface Award {

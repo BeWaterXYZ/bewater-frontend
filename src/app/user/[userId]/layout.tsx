@@ -3,7 +3,6 @@ import { TagRole, TagSkill } from '@/components/tag';
 import { getUserProfileFull } from '@/services/user';
 import { maskWalletAddress } from '@/utils/wallet-adress';
 import { userSchema } from './param-schema';
-import { Nav } from './nav';
 import Link from 'next/link';
 import Image from 'next/image';
 import { SocialAuth } from '@/services/types';
@@ -77,10 +76,7 @@ export default async function page({
             </div>
           </div>
         </div>
-        <div className="w-full lg:w-auto flex-1">
-          {/* <Nav userId={userId} /> */}
-          {children}
-        </div>
+        <div className="w-full lg:w-auto flex-1">{children}</div>
       </div>
     </div>
   );

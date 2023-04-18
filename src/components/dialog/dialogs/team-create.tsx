@@ -9,20 +9,17 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import {
-  ProjectTagSetOptions,
-  ProjectTagSetScheme,
-} from '@/constants/options/project-tag';
-import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
-import { SkillSetOptions, SkillSetScheme } from '@/constants/options/skill';
+import { useAlert } from '@/components/alert/store';
+import { ProjectTagSetOptions } from '@/constants/options/project-tag';
+import { RoleSetOptions } from '@/constants/options/role';
+import { SkillSetOptions } from '@/constants/options/skill';
 import { useNavigator } from '@/hooks/useNavigator';
+import { validationSchema } from '@/schema';
 import {
   useMutaionCreateTeam,
   useMutaionDismissTeam,
 } from '@/services/team.query';
 import { Team } from '@/services/types';
-import { useAlert } from '@/components/alert/store';
-import { validationSchema } from '@/schema';
 
 const schema = z
   .object({
@@ -67,7 +64,7 @@ export default function TeamCreateDialog({
   const addToast = useToastStore((s) => s.add);
   const router = useNavigator();
   const createTeamMutaion = useMutaionCreateTeam();
-  const dismissTeamMutation = useMutaionDismissTeam();
+  const dismissTeamMutation = useMutaionDismissTeam(data.team?.challengeId);
   const { confirm } = useAlert();
 
   const onDismiss = async () => {
@@ -178,7 +175,7 @@ export default function TeamCreateDialog({
         <Input
           label="Project title"
           required
-          placeholder="Enter your full name"
+          placeholder="Enter your project title"
           error={errors['title']}
           {...register('title')}
         />

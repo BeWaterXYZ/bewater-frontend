@@ -48,6 +48,7 @@ export function useMutationUpdateProject() {
   const queryClient = useQueryClient();
   return useMutation(updateProject, {
     onSuccess: (data, variables, context) => {
+      console.log({ data });
       queryClient.invalidateQueries(['project', data.id]);
     },
   });

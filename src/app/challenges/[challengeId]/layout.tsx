@@ -11,8 +11,6 @@ export default async function Layout({
   params: { challengeId: string };
 }) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
-  // fix me .seems like nextjs bug
-  if (challengeId === '%5BchallengeId%5D') return null;
   const challenge = await getChallengeById(challengeId);
   return (
     <div>

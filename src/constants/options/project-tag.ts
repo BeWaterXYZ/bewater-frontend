@@ -30,7 +30,7 @@ export const ProjectTagSetOptions: OptionItem<ProjectTagUnion>[] =
     classes: {
       container:
         'body-4 border border-grey-300 !rounded  m-1 !bg-transparent uppercase !px-1',
-      text: '!text-grey-300 ',
+      text: '!text-grey-300 !p-0',
     },
   }));
 

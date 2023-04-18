@@ -117,9 +117,9 @@ export const FormOnboarding = ({ onComplete }: Props) => {
     <form
       method="post"
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-gray-500/20 p-7 rounded"
+      className="bg-gray-500/20 p-6 rounded"
     >
-      <p className="body-2 py-4">Set up your basic profile</p>
+      <p className="body-2 pb-6">Set up your basic profile</p>
 
       <Input
         label="Username"
@@ -159,7 +159,7 @@ export const FormOnboarding = ({ onComplete }: Props) => {
         {...register('verificationCode')}
       />
 
-      <button className="btn btn-primary w-full">Continue</button>
+      <button className="btn btn-primary w-full mt-6">Continue</button>
     </form>
   );
 };

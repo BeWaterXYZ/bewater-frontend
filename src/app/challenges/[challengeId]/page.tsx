@@ -22,32 +22,84 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
 
       <div className=" flex flex-wrap gap-16 mt-8">
-        <div className="w-full lg:flex-1 order-2 lg:order-1">
-          <h3 className="body-3 font-bold mb-8">Prize Rewards</h3>
+        <div className="w-full lg:flex-1 order-2 lg:order-1 flex flex-col gap-8">
+          <div className="max-w-full">
+            <h3 className="body-3 font-bold mb-8">Official Links</h3>
+            <div className="w-full my-4">
+              {challenge.socialLinks.twitterURI ? (
+                <div className="flex border-b border-b-grey-800 py-4 gap-3">
+                  <Image
+                    src="/icons/twitter.svg"
+                    height="20"
+                    width="20"
+                    alt="twitter"
+                  ></Image>
+                  <p className="body-3"> {challenge.socialLinks.twitterURI} </p>
+                </div>
+              ) : null}
+              {challenge.socialLinks.discordURI ? (
+                <div className="flex border-b border-b-grey-800 py-4 gap-3">
+                  <Image
+                    src="/icons/discord.svg"
+                    height="20"
+                    width="20"
+                    alt="discord"
+                  ></Image>
+                  <p className="body-3"> {challenge.socialLinks.discordURI} </p>
+                </div>
+              ) : null}
 
-          <div className="border border-grey-700 p-4">
-            {awards.map((award, index) => (
-              <div
-                key={index}
-                className={clsx('flex p-3  mb-2 ', {
-                  'border-b border-b-grey-700': index !== awards.length - 1,
-                })}
-              >
-                <div className="flex-1">
-                  <p className="body-3 py-2">{award.awardName}</p>
-                  <div className="flex justify-between body-4 text-grey-400">
-                    <p>{formatMoney(award.amount)}</p>
-                    <p>x {award.count}</p>
+              {challenge.socialLinks.officialWebsiteURI ? (
+                <div className="flex border-b border-b-grey-800 py-4 gap-3">
+                  <Image
+                    src="/icons/globe.svg"
+                    height="20"
+                    width="20"
+                    alt="twitter"
+                  ></Image>
+                  <p className="body-3">
+                    {challenge.socialLinks.officialWebsiteURI}
+                  </p>
+                </div>
+              ) : null}
+              {challenge.socialLinks.email ? (
+                <div className="flex border-b border-b-grey-800 py-4 gap-3">
+                  <Image
+                    src="/icons/email.svg"
+                    height="20"
+                    width="20"
+                    alt="twitter"
+                  ></Image>
+                  <p className="body-3"> {challenge.socialLinks.email} </p>
+                </div>
+              ) : null}
+            </div>
+          </div>
+          <div className="max-w-full">
+            <h3 className="body-3 font-bold mb-8">Prize Rewards</h3>
+
+            <div className="border border-grey-700 p-4">
+              {awards.map((award, index) => (
+                <div
+                  key={index}
+                  className={clsx('flex p-3  mb-2 ', {
+                    'border-b border-b-grey-700': index !== awards.length - 1,
+                  })}
+                >
+                  <div className="flex-1">
+                    <p className="body-3 py-2">{award.awardName}</p>
+                    <div className="flex justify-between body-4 text-grey-400">
+                      <p>{formatMoney(award.amount)}</p>
+                      <p>x {award.count}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
           <div className="max-w-full">
-            <h3 className="body-3 font-bold mt-10 mb-8">
-              Organizer & Sponsors
-            </h3>
+            <h3 className="body-3 font-bold mb-8">Organizer & Sponsors</h3>
             <div className="grid gap-4 grid-cols-2">
               {sponsorships.map((sponsorship, index) => (
                 <div
@@ -142,14 +194,6 @@ export default async function ChallengeIntro({ params }: any) {
   );
 }
 
-export const revalidate = 60;
-export async function generateStaticParams() {
-  const challenges = await getChallenges();
-  const res = challenges.map((c) => ({
-    challengeId: c.id,
-  }));
-  return res;
-}
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);

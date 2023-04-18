@@ -6,13 +6,13 @@ import { useMutationUpdateUserProfile } from '@/services/user.query';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 
-import { RoleSetOptions, RoleSetScheme } from '@/constants/options/role';
-import { SkillSetOptions, SkillSetScheme } from '@/constants/options/skill';
+import { RoleSetOptions } from '@/constants/options/role';
+import { SkillSetOptions } from '@/constants/options/skill';
+import { useNavigator } from '@/hooks/useNavigator';
+import { validationSchema } from '@/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { UserProfile } from '@/services/types';
-import { validationSchema } from '@/schema';
 
 const schema = z
   .object({
@@ -23,12 +23,10 @@ const schema = z
 
 export type Inputs = z.infer<typeof schema>;
 
-interface Props {
-  onComplete: () => void;
-}
-
-export const FormOnboardingExtra = ({ onComplete }: Props) => {
+export const FormOnboardingExtra = () => {
   const addToast = useToastStore((s) => s.add);
+  const navigator = useNavigator();
+
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const mutation = useMutationUpdateUserProfile();
   const {
@@ -47,6 +45,7 @@ export const FormOnboardingExtra = ({ onComplete }: Props) => {
       await mutation.mutateAsync({
         ...formData,
       });
+      console.log('go to settings page');
       onComplete();
       addToast({
         title: 'Saved!',
@@ -60,6 +59,10 @@ export const FormOnboardingExtra = ({ onComplete }: Props) => {
     } finally {
       dismissLoading();
     }
+  };
+
+  const onComplete = () => {
+    navigator.gotoAfterConnect();
   };
   return (
     <form

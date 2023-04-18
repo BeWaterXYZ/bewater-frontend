@@ -1,6 +1,6 @@
 const { withSentryConfig } = require('@sentry/nextjs');
 
-const isDEV = !!process.env.NODE_ENV === 'development';
+const isDEV = process.env.NODE_ENV === 'development';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -23,6 +23,23 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**.gradproject.xyz',
+      },
+
+      {
+        protocol: 'https',
+        hostname: '**.nftstorage.link',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.ipfs-gateway.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.pinata.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.4everland.io',
       },
     ],
   },
@@ -78,5 +95,5 @@ const configWithSentry = withSentryConfig(
   { ...nextConfig, ...sentryModuleExports },
   sentryWebpackPluginOptions,
 );
-
+console.log({ isDEV });
 module.exports = isDEV ? nextConfig : configWithSentry;

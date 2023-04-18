@@ -35,11 +35,11 @@ export function useMutationUpdateTeam() {
     },
   });
 }
-export function useMutaionDismissTeam() {
+export function useMutaionDismissTeam(challengeId?: ChallengeID) {
   const queryClient = useQueryClient();
   return useMutation(dismissTeam, {
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(['challenges', data.challengeId]);
+      queryClient.invalidateQueries(['challenges', challengeId]);
     },
   });
 }

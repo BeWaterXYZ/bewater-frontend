@@ -29,11 +29,14 @@ export interface OngoingNotificationBody {
   id: string;
   type:
     | 'PROJECT_UPDATED'
-    | 'TEAM_UPDATED'
+    | 'TEAM_INFO_UPDATED'
     | 'CHALLENGE_UPDATED'
     | 'MEMBER_REMOVED'
     | 'MEMBER_JOINED'
-    | 'MEMBER_LEFT';
+    | 'MEMBER_LEFT'
+    | 'MEMBER_ROLE_UPDATED'
+    | 'TEAM_DISMISSED';
+
   messageBody: null;
   targetUserId: string;
   teamId: string;
@@ -41,7 +44,7 @@ export interface OngoingNotificationBody {
   challenge: Challenge;
   createdAt: string;
   updatedAt: string;
-  targetUser: UserProfile;
+  targetUser?: UserProfile;
   team: Team;
 }
 

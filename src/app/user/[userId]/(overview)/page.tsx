@@ -1,14 +1,11 @@
-import { Avatar } from '@/components/avatar/avatar';
-import { TagRole, TagSkill } from '@/components/tag';
+import { Aspect } from '@/components/aspect';
 import { getUserProfileFull } from '@/services/user';
 import { unsplash } from '@/utils/unsplash';
-import { maskWalletAddress } from '@/utils/wallet-adress';
-import { userSchema } from '../param-schema';
-import { TeamCard } from './team-card';
 import Image from 'next/image';
-import { Aspect } from '@/components/aspect';
 import Link from 'next/link';
 import { uniqBy } from 'remeda';
+import { userSchema } from '../param-schema';
+import { TeamCard } from './team-card';
 
 export default async function Page({ params }: any) {
   const { userId } = userSchema.parse(params);

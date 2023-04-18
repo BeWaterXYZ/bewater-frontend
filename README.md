@@ -39,14 +39,4 @@ ENVIRONMENT=local
 
 
 
-## Github Workflows
-For CI (triggered at PR), we should
-* run eslint
-* run all the tests (Not done yet)
-* run build
 
-For CD (triggered by create new release with tag), we should
-* run eslint
-* run all the tests
-* deploy the project
-  * build & publish directly to QA Server
