@@ -38,13 +38,16 @@ export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
 
 const BeWaterLogo = () => {
   return (
-    <Link href="/">
+    <Link href="/" className="block relative">
       <Image
         src="/logo/bewater-h.svg"
         width={120}
         height={24}
         alt="bewater logo"
       />
+      <div className="body-5 text-day absolute left-full top-[-12px] rounded-full p-[1px] bg-gradient-to-r from-[#057382]  to-[#66FFFF]">
+        <div className="bg-night rounded-full px-1">Alpha</div>
+      </div>
     </Link>
   );
 };
