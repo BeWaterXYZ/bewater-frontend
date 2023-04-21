@@ -46,7 +46,7 @@ const BeWaterLogo = () => {
         alt="bewater logo"
       />
       <div className="body-5 text-day absolute left-full top-[-12px] rounded-full p-[1px] bg-gradient-to-r from-[#057382]  to-[#66FFFF]">
-        <div className="bg-night rounded-full px-1">Alpha</div>
+        <div className="bg-night rounded-full px-[6px]">Alpha</div>
       </div>
     </Link>
   );
