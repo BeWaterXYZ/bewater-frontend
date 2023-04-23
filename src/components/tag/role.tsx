@@ -24,7 +24,7 @@ export function TagRole({ label, onClick, simple = false }: TagRoleProps) {
     <Tag
       label={simple ? '' : option.label}
       title={option.label}
-      classes={clsx(option.classes.container, option.classes.text, {
+      classes={clsx(option.classes.tag, option.classes.text, {
         '!rounded-full !w-4 !h-4 !block !p-0': simple,
       })}
       onClick={onClick}

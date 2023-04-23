@@ -25,12 +25,24 @@ const styleMap: Record<RoleUnion, string> = {
   'Data Analyst': '!bg-[#4C1D95] !border-[#6D28D9] border',
 };
 
+const tagStyleMap: Record<RoleUnion, string> = {
+  'Product Manager': '!bg-[#3B82F6]',
+  Designer: '!bg-[#831843]',
+  'Frontend Developer': '!bg-[#14532D]',
+  'Backend Developer': '!bg-[#1E3A8A]',
+  'Blockchain Developer': '!bg-[#312E81]',
+  'Full Stack Developer': '!bg-[#164E63]',
+  'Security Engineer': '!bg-[#701A75]',
+  'Data Analyst': '!bg-[#4C1D95]',
+};
+
 export const RoleSetOptions: OptionItem<RoleUnion>[] = RoleSet.map((role) => ({
   label: role,
   value: role,
   classes: {
     container: styleMap[role] + ' h-5 my-0',
     text: 'body-4 !text-white leading-4 !py-0',
+    tag: tagStyleMap[role],
   },
 }));
 
