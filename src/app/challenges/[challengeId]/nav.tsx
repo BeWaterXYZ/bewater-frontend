@@ -30,7 +30,7 @@ export function ChallengeNav({ challengeId }: { challengeId: string }) {
   let segment = useSelectedLayoutSegment();
 
   return (
-    <nav className="w-full body-3 flex justify-center border-b border-white/20 sticky top-20">
+    <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[112px] md:top-[72px] z-100">
       {links.map((link) => {
         let isAcitve = link.segment === segment;
 
