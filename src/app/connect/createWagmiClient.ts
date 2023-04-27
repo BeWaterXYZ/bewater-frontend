@@ -32,7 +32,7 @@ export function createWagmiClient() {
       new WalletConnectConnector({
         chains,
         options: {
-          qrcode: true,
+          projectId: CONFIGS.WALLETCONNECT_PROJECT_ID,
         },
       }),
     ],
