@@ -55,7 +55,7 @@ export function ChallengeNav({ challenge }: { challenge: Challenge }) {
             {link.label}
           </Link>
         ) : (
-          <span className="py-3 mx-3 text-center uppercase text-white/50 ">
+          <span className="py-3 mx-3 text-center uppercase text-white/30 ">
             {link.label}
           </span>
         );
