@@ -9,11 +9,13 @@ import Link from 'next/link';
 
 import { segmentSchema } from './param-schema';
 import { Timeline } from './timeline';
+import { isMileStoneEnabled } from './utils';
 
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { awards, sponsorships } = challenge;
+  const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   return (
     <div className="container ">
@@ -181,14 +183,16 @@ export default async function ChallengeIntro({ params }: any) {
         <p className="body-2 text-grey-400  pt-5 pb-8 text-center">
           Join over 4,000+ hackers all over the world.
         </p>
-        <div>
-          <Link
-            href={`/challenges/${challengeId}/teams`}
-            className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
-          >
-            Go to team page
-          </Link>
-        </div>
+        {isTeamingEnabled ? (
+          <div>
+            <Link
+              href={`/challenges/${challengeId}/teams`}
+              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
+            >
+              Go to team page
+            </Link>
+          </div>
+        ) : null}
       </div>
     </div>
   );

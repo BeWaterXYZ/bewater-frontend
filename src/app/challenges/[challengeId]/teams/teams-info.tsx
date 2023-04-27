@@ -13,6 +13,9 @@ function getCurMileStone(milestones: Milestone[]) {
 const wordingMap: Record<Milestone['stageName'], string> = {
   Teaming: 'TEAM FORMATION WILL END IN',
   'Project Submission': 'SUBMISSION WILL END IN',
+  Preparation: '',
+  Result: '',
+  Review: '',
 };
 
 interface ChallengeTeamsInfoProps {

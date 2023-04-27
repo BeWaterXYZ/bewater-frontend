@@ -78,7 +78,12 @@ export interface Judge {
 
 export interface Milestone {
   dueDate: string;
-  stageName: 'Teaming' | 'Project Submission';
+  stageName:
+    | 'Preparation'
+    | 'Teaming'
+    | 'Project Submission'
+    | 'Review'
+    | 'Result';
 }
 
 export interface Sponsorship {
