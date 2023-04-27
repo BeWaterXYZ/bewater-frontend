@@ -38,7 +38,7 @@ export function ChallengeNav({ challenge }: { challenge: Challenge }) {
   console.log(challenge.milestones);
 
   return (
-    <nav className="w-full body-3 flex justify-center border-b border-white/20">
+    <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[110px] md:top-[70px] z-10">
       {links.map((link) => {
         let isAcitve = link.segment === segment;
         let isEnabled = isMileStoneEnabled(link.milestone, challenge);
