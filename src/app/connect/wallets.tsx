@@ -26,7 +26,7 @@ export default function WalletOptions() {
   const onConnectorClick = async (connector: Connector) => {
     try {
       clearToast();
-      showLoading();
+      // showLoading();
       const { address, chainId } = await connectWallet(connector);
       if (address && chainId) {
         const { message, isWhitelisted } = await getSignMessage(
@@ -66,7 +66,7 @@ export default function WalletOptions() {
         });
       }
     } finally {
-      dismissLoading();
+      // dismissLoading();
     }
   };
 
