@@ -29,14 +29,12 @@ function getUserLink(userProfile: UserProfile) {
 
 function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
   let teamLink = (
-    <strong className="text-white hover:underline">
-      <Link
-        href={`/challenges/${req.team.challenge.id}/teams/${req.team.id}`}
-        className=""
-      >
-        {req.team.name}
-      </Link>
-    </strong>
+    <Link
+      href={`/challenges/${req.team.challenge.id}/teams/${req.team.id}`}
+      className="text-white hover:underline"
+    >
+      {req.team.name}
+    </Link>
   );
   return sentOrReceived ? (
     req.type === 'APPLICATION' ? (

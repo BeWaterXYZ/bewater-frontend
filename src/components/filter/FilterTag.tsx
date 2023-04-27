@@ -28,7 +28,7 @@ export function FilterTag({
         )}
       >
         <input
-          className="mr-2 w-4 h-4 block"
+          className="mr-2 w-4 h-4 block accent-[#00FFFF]"
           type="checkbox"
           checked={on}
           onChange={onToggle(keyword, value)}
