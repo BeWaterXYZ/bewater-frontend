@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { segmentSchema } from './param-schema';
 import { Timeline } from './timeline';
 import { isMileStoneEnabled } from './utils';
+import { PrizeSection } from './prize-section';
 
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
@@ -28,26 +29,7 @@ export default async function ChallengeIntro({ params }: any) {
         <p className="body-2 text-white">{challenge.description}</p>
       </div>
       <div className="my-10">
-        {/* <h3 className="body-3 font-bold mb-8">Prize Rewards</h3> */}
-
-        <div className="border border-grey-700 p-4">
-          {awards.map((award, index) => (
-            <div
-              key={index}
-              className={clsx('flex p-3  mb-2 ', {
-                'border-b border-b-grey-700': index !== awards.length - 1,
-              })}
-            >
-              <div className="flex-1">
-                <p className="body-3 py-2">{award.awardName}</p>
-                <div className="flex justify-between body-4 text-grey-400">
-                  <p>{formatMoney(award.amount)}</p>
-                  <p>x {award.count}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <PrizeSection />
       </div>
       <div>
         <h3 className="heading-4 font-bold my-8 text-center">
