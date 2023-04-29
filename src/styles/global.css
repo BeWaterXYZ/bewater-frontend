@@ -13,11 +13,11 @@
   display: inline-flex;
   flex-direction: column;
   max-width: 240px;
-  min-width: 140px;
+  min-width: 100px;
   width: 20vw;
-  gap: 16px;
+  /* gap: 16px; */
   align-items: center;
-  padding: 28px 20px;
+  /* padding: 28px 20px; */
   border-radius: 4px;
   background: linear-gradient(to bottom, rgba(255,255,255,.08), rgba(255,255,255,0));
   color: #2bafff;
