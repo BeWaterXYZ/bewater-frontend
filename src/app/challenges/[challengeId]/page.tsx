@@ -26,7 +26,9 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
 
       <div className="flex flex-col md:flex-row md:gap-20 items-center">
-        <div className="heading-3 whitespace-nowrap py-4">赛事简介</div>
+        <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
+          赛事简介
+        </div>
         <div className="body-2 text-white">
           {challenge.description.split('\n').map((s) => (
             <p className="py-3" key={s}>
@@ -35,14 +37,14 @@ export default async function ChallengeIntro({ params }: any) {
           ))}
         </div>
       </div>
-      <div className="my-10">
+      <div className="">
         <PrizeSection />
       </div>
       <div>
-        <h3 className="heading-4 font-bold my-8 text-center">
-          Speaker & Judges
+        <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+          大赛评审团
         </h3>
-        <div className="flex flex-row flex-wrap gap-8">
+        <div className="flex flex-row flex-wrap gap-8 justify-center">
           {challenge.judges.map((judge) => {
             return (
               <div key={judge.id} className="w-[150px]">
@@ -64,7 +66,7 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
       <div className="w-full flex gap-8 flex-col md:flex-row my-16">
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-          <h3 className="heading-5 font-bold mb-8">Requirements & Rules</h3>
+          <h3 className="heading-5 font-bold mb-8">参赛要求</h3>
           <ul>
             {challenge.requirements.map((r) => (
               <li key={r} className="list-disc list-inside text-grey-400">
@@ -74,7 +76,7 @@ export default async function ChallengeIntro({ params }: any) {
           </ul>
         </div>
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-          <h3 className="heading-5 font-bold mb-8">Judging Criteria</h3>
+          <h3 className="heading-5 font-bold mb-8">评审维度</h3>
           <ul>
             {challenge.requirements.map((r) => (
               <li key={r} className="list-disc list-inside text-grey-400">
@@ -139,12 +141,16 @@ export default async function ChallengeIntro({ params }: any) {
       </div> */}
 
       <Sponsors />
-      <div className="flex flex-col justify-center items-center pt-[194px] pb-[160px]">
-        <p className="heading-4 text-center">
-          Interested? Make your team and embrace it.
+      <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
+        <p className="heading-6 md:heading-4 text-center">
+          {isTeamingEnabled
+            ? 'Interested? Make your team and embrace it.'
+            : '现在加入 BeWater，为创新和改变贡献出自己的力量'}
         </p>
-        <p className="body-2 text-grey-400  pt-5 pb-8 text-center">
-          Join over 4,000+ hackers all over the world.
+        <p className="body-3 md:body-2 text-grey-400  pt-5 pb-8 text-center">
+          {isTeamingEnabled
+            ? 'Join over 4,000+ hackers all over the world.'
+            : '已有近 25000 名预注册的开发者和设计师领取了 BeWater 早鸟徽章'}
         </p>
         {isTeamingEnabled ? (
           <div>
@@ -155,7 +161,16 @@ export default async function ChallengeIntro({ params }: any) {
               Go to team page
             </Link>
           </div>
-        ) : null}
+        ) : (
+          <div>
+            <Link
+              href={`/connect`}
+              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
+            >
+              加入 BeWater
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
