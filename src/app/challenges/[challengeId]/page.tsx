@@ -11,6 +11,7 @@ import { segmentSchema } from './param-schema';
 import { Timeline } from './timeline';
 import { isMileStoneEnabled } from './utils';
 import { PrizeSection } from './prize-section';
+import { Sponsors } from './sponsors';
 
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
@@ -24,8 +25,8 @@ export default async function ChallengeIntro({ params }: any) {
         <Timeline milestones={challenge.milestones} />
       </div>
 
-      <div className="flex gap-4 items-center">
-        <div className="heading-3">TL;DR</div>
+      <div className="flex flex-col md:flex-row md:gap-20 items-center">
+        <div className="heading-3 whitespace-nowrap py-4">赛事简介</div>
         <div className="body-2 text-white">
           {challenge.description.split('\n').map((s) => (
             <p className="py-3" key={s}>
@@ -84,96 +85,60 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
 
-      <div className="w-full lg:flex-1 order-2 lg:order-1 flex flex-col gap-8">
-        <div className="max-w-full">
-          <h3 className="heading-4 font-bold my-8 text-center">
-            Official Links
-          </h3>
-          <div className="w-full my-4">
-            {challenge.socialLinks.twitterURI ? (
-              <div className="flex border-b border-b-grey-800 py-4 gap-3">
-                <Image
-                  src="/icons/twitter.svg"
-                  height="20"
-                  width="20"
-                  alt="twitter"
-                ></Image>
-                <p className="body-3"> {challenge.socialLinks.twitterURI} </p>
-              </div>
-            ) : null}
-            {challenge.socialLinks.discordURI ? (
-              <div className="flex border-b border-b-grey-800 py-4 gap-3">
-                <Image
-                  src="/icons/discord.svg"
-                  height="20"
-                  width="20"
-                  alt="discord"
-                ></Image>
-                <p className="body-3"> {challenge.socialLinks.discordURI} </p>
-              </div>
-            ) : null}
+      {/* <div className="max-w-full">
+        <h3 className="heading-4 font-bold my-8 text-center">Official Links</h3>
+        <div className="w-full my-4">
+          {challenge.socialLinks.twitterURI ? (
+            <div className="flex border-b border-b-grey-800 py-4 gap-3">
+              <Image
+                src="/icons/twitter.svg"
+                height="20"
+                width="20"
+                alt="twitter"
+              ></Image>
+              <p className="body-3"> {challenge.socialLinks.twitterURI} </p>
+            </div>
+          ) : null}
+          {challenge.socialLinks.discordURI ? (
+            <div className="flex border-b border-b-grey-800 py-4 gap-3">
+              <Image
+                src="/icons/discord.svg"
+                height="20"
+                width="20"
+                alt="discord"
+              ></Image>
+              <p className="body-3"> {challenge.socialLinks.discordURI} </p>
+            </div>
+          ) : null}
 
-            {challenge.socialLinks.officialWebsiteURI ? (
-              <div className="flex border-b border-b-grey-800 py-4 gap-3">
-                <Image
-                  src="/icons/globe.svg"
-                  height="20"
-                  width="20"
-                  alt="twitter"
-                ></Image>
-                <p className="body-3">
-                  {challenge.socialLinks.officialWebsiteURI}
-                </p>
-              </div>
-            ) : null}
-            {challenge.socialLinks.email ? (
-              <div className="flex border-b border-b-grey-800 py-4 gap-3">
-                <Image
-                  src="/icons/email.svg"
-                  height="20"
-                  width="20"
-                  alt="twitter"
-                ></Image>
-                <p className="body-3"> {challenge.socialLinks.email} </p>
-              </div>
-            ) : null}
-          </div>
+          {challenge.socialLinks.officialWebsiteURI ? (
+            <div className="flex border-b border-b-grey-800 py-4 gap-3">
+              <Image
+                src="/icons/globe.svg"
+                height="20"
+                width="20"
+                alt="twitter"
+              ></Image>
+              <p className="body-3">
+                {challenge.socialLinks.officialWebsiteURI}
+              </p>
+            </div>
+          ) : null}
+          {challenge.socialLinks.email ? (
+            <div className="flex border-b border-b-grey-800 py-4 gap-3">
+              <Image
+                src="/icons/email.svg"
+                height="20"
+                width="20"
+                alt="twitter"
+              ></Image>
+              <p className="body-3"> {challenge.socialLinks.email} </p>
+            </div>
+          ) : null}
         </div>
+      </div> */}
 
-        <div className="max-w-full">
-          <h3 className="body-3 font-bold mb-8">Organizer & Sponsors</h3>
-          <div className="grid gap-4 grid-cols-2">
-            {sponsorships.map((sponsorship, index) => (
-              <div
-                key={sponsorship.id}
-                className={clsx('border border-grey-400', {
-                  'col-span-2': index === 0,
-                })}
-              >
-                <Aspect ratio={3}>
-                  <Image
-                    width={450}
-                    height={150}
-                    src={unsplash('sponsor')}
-                    alt="crypto"
-                    className="object-cover w-full h-full"
-                  />
-                </Aspect>
-                <div
-                  className={clsx('flex justify-center items-end h-6', {
-                    'bg-gradient-to-r from-[#F62584] to-[#480CA7]': index === 0,
-                    'bg-grey-400': index !== 0,
-                  })}
-                >
-                  <div className="body-3">
-                    {formatMoney(sponsorship.amount)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <Sponsors />
       <div className="flex flex-col justify-center items-center pt-[194px] pb-[160px]">
         <p className="heading-4 text-center">
           Interested? Make your team and embrace it.
