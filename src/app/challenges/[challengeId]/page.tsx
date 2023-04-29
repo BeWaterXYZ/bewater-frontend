@@ -26,7 +26,13 @@ export default async function ChallengeIntro({ params }: any) {
 
       <div className="flex gap-4 items-center">
         <div className="heading-3">TL;DR</div>
-        <p className="body-2 text-white">{challenge.description}</p>
+        <div className="body-2 text-white">
+          {challenge.description.split('\n').map((s) => (
+            <p className="py-3" key={s}>
+              {s}
+            </p>
+          ))}
+        </div>
       </div>
       <div className="my-10">
         <PrizeSection />

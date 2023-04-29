@@ -33,5 +33,6 @@ export const validationSchema = {
     .max(10, { message: 'You can only choose 10 skills' }),
   tags: z
     .array(ProjectTagSetScheme)
-    .max(3, { message: 'You can only choose 3 skills' }),
+    .min(1, { message: 'You need to choose one tag' })
+    .max(1, { message: 'You can only choose one tag' }),
 };
