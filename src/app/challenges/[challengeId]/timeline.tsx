@@ -36,7 +36,7 @@ const glowing =
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
   return (
-    <div className="body-1 text-center border border-[#334155] flex justify-between items-center p-12 lg:px-32 lg:my-16">
+    <div className="body-1 text-center border border-midnight flex justify-between items-center p-12 lg:px-32 lg:mt-[100px]">
       {data.map((node, index) =>
         node.type === 'date' ? (
           <div className="w-4 flex flex-col items-center" key={index}>

@@ -20,7 +20,7 @@ export default async function ChallengeIntro({ params }: any) {
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   return (
-    <div className="container ">
+    <div className="container flex flex-col gap-30">
       <div className="hidden lg:block">
         <Timeline milestones={challenge.milestones} />
       </div>
