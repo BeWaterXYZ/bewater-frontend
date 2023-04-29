@@ -55,7 +55,7 @@ export const Avatar = ({
       <img
         width={200}
         height={200}
-        className="w-full h-full rounded-full cursor-pointer object-cover"
+        className="w-full h-full rounded-full cursor-pointer object-cover hover:opacity-75 transition-opacity ease-out"
         src={imageSrc}
         alt="avatar"
       />
