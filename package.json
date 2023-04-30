@@ -53,6 +53,7 @@
     "react-fast-marquee": "^1.5.2",
     "react-hook-form": "^7.43.9",
     "react-select": "^5.7.0",
+    "react-wrap-balancer": "^0.4.1",
     "remeda": "^1.9.0",
     "wagmi": "^0.11.6",
     "zod": "^3.21.4",

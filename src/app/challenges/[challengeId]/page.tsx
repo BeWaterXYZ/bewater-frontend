@@ -13,6 +13,8 @@ import { isMileStoneEnabled } from './utils';
 import { PrizeSection } from './prize-section';
 import { Sponsors } from './sponsors';
 
+import Balancer from 'react-wrap-balancer';
+
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
@@ -152,14 +154,18 @@ export default async function ChallengeIntro({ params }: any) {
       <Sponsors />
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
         <p className="heading-6 md:heading-4 text-center">
-          {isTeamingEnabled
-            ? 'Interested? Make your team and embrace it.'
-            : '现在加入 BeWater，为创新和改变贡献出自己的力量'}
+          <Balancer ratio={0.9}>
+            {isTeamingEnabled
+              ? 'Interested? Make your team and embrace it.'
+              : '现在加入 BeWater，为创新和改变贡献出自己的力量'}
+          </Balancer>
         </p>
-        <p className="body-3 md:body-2 text-grey-400  pt-5 pb-8 text-center">
-          {isTeamingEnabled
-            ? 'Join over 4,000+ hackers all over the world.'
-            : '已有近 25000 名预注册的开发者和设计师领取了 BeWater 早鸟徽章'}
+        <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
+          <Balancer>
+            {isTeamingEnabled
+              ? 'Join over 4,000+ hackers all over the world.'
+              : '已有近 25000 名预注册的开发者和设计师领取了 BeWater 早鸟徽章'}
+          </Balancer>
         </p>
         {isTeamingEnabled ? (
           <div>
