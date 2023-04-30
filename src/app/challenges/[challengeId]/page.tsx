@@ -16,6 +16,7 @@ import { Sponsors } from './sponsors';
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
+  console.log({ challenge });
   const { awards, sponsorships } = challenge;
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
@@ -67,23 +68,23 @@ export default async function ChallengeIntro({ params }: any) {
       <div className="w-full flex gap-8 flex-col md:flex-row my-16">
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
           <h3 className="heading-5 font-bold mb-8">参赛要求</h3>
-          <ul>
+          <ol className="list-decimal">
             {challenge.requirements.map((r) => (
-              <li key={r} className="list-disc list-inside text-grey-400">
+              <li key={r} className="list-inside text-grey-400">
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
           <h3 className="heading-5 font-bold mb-8">评审维度</h3>
-          <ul>
-            {challenge.requirements.map((r) => (
-              <li key={r} className="list-disc list-inside text-grey-400">
+          <ol className="list-decimal">
+            {challenge.reviewDimension.map((r) => (
+              <li key={r} className=" list-inside text-grey-400">
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </div>
       </div>
 

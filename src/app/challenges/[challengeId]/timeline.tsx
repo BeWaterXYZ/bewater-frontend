@@ -2,6 +2,14 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, isSameDay, parseISO } from 'date-fns';
 
+const labelMaps: Record<Milestone['stageName'], string> = {
+  Preparation: '赛事信息公布',
+  Teaming: '创建团队信息及提交项目',
+  'Project Submission': '项目初筛',
+  Review: '线上评审',
+  Result: '公布结果',
+};
+
 function prepareData(milestones: Milestone[]) {
   let nodes = [];
   let today = new Date();
@@ -40,7 +48,9 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
       {data.map((node, index) =>
         node.type === 'date' ? (
           <div className="w-4 flex flex-col items-center" key={index}>
-            <p className="whitespace-nowrap body-3 font-bold">{node.stage}</p>
+            <p className="whitespace-nowrap body-3 font-bold">
+              {labelMaps[node.stage!]}
+            </p>
             {index === data.length - 1 ? (
               <div className="my-4 relative -top-[2px] w-4 h-0  px-1  border-t-[6px] border-b-[6px] rounded-sm border-white border-l-4 border-r-4   border-r-transparent">
                 <div className="w-[1px] h-3 bg-white absolute top-1 -left-1"></div>

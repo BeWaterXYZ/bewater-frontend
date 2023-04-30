@@ -41,6 +41,7 @@ export interface Challenge {
   description: string;
   bannerUrl: string;
   requirements: string[];
+  reviewDimension: string[];
   startTime: string;
   endTime: string;
   totalAward: number;
