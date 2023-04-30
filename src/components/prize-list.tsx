@@ -20,7 +20,7 @@ export default function PrizeList({ title }: PrizeListProps) {
         <div className="flex flex-col gap-1 w-full">
           <p className="body-3 ">二等奖</p>
           <div className="flex flex-row justify-between">
-            <p className="body-3 text-white/60">$2,500</p>
+            <p className="body-3 text-white/60">$1,700</p>
             <p className="body-3 text-white/60">x1</p>
           </div>
         </div>
@@ -28,7 +28,7 @@ export default function PrizeList({ title }: PrizeListProps) {
         <div className="flex flex-col gap-1 w-full">
           <p className="body-3 ">三等奖</p>
           <div className="flex flex-row justify-between">
-            <p className="body-3 text-white/60">$2,500</p>
+            <p className="body-3 text-white/60">$800</p>
             <p className="body-3 text-white/60">x1</p>
           </div>
         </div>
