@@ -8,13 +8,16 @@ const sponsors_tier1 = [
   '/sponsors/cointime.png',
 ];
 
-const sponsors_tier2 = ['/sponsors/BIXIN.png'];
+const sponsors_tier2 = [
+  '/sponsors/BIXIN.png',
+  '/sponsors/ChainIDE.png',
+  '/sponsors/memoworld.png',
+];
 
 const sponsors_tier3 = [
   '/sponsors/noncegeek.png',
   '/sponsors/sf.png',
   '/sponsors/moledao.png',
-  '/sponsors/memoworld.png',
   '/sponsors/abga.png',
 ];
 
