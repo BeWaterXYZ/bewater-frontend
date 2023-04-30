@@ -50,23 +50,24 @@ export default async function ChallengeIntro({ params }: any) {
         <div className="flex flex-row flex-wrap gap-8 justify-center">
           {challenge.judges.map((judge) => {
             return (
-              <div key={judge.id} className="w-[150px]">
+              <div key={judge.id} className="w-[180px]">
                 <Aspect ratio={1 / 1}>
                   <Image
                     height={150}
                     width={150}
-                    src={unsplash('women')}
+                    src={judge.avatarURI ?? unsplash('man')}
                     className="object-cover w-full h-full"
                     alt={judge.name}
                   />
                 </Aspect>
                 <p className="body-3 mt-6">{judge.name}</p>
                 <p className="body-4 text-grey-400">{judge.organization}</p>
+                <p className="body-4 text-grey-400">{judge.title}</p>
               </div>
             );
           })}
-          <div className="w-[150px]">
-            <div className="w-[150px] h-[150px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
+          <div className="w-[180px]">
+            <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
               Coming Soon
             </div>
             <p className="body-3 mt-6 w-full text-grey-400">
