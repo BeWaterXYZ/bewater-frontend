@@ -46,7 +46,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/challenges/bewater-web3-cn',
+        source: '/challenges/bewater-web3-zh',
         destination: '/challenges/63c82bd12ddc570f32ada868',
       },
     ];
