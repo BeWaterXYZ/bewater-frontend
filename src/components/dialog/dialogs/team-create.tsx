@@ -182,7 +182,7 @@ export default function TeamCreateDialog({
         <Select
           label="Project Tag"
           required
-          maxSelections={3}
+          maxSelections={1}
           options={ProjectTagSetOptions}
           error={errors['tags']}
           control={control}

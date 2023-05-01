@@ -13,6 +13,9 @@ function getCurMileStone(milestones: Milestone[]) {
 const wordingMap: Record<Milestone['stageName'], string> = {
   Teaming: 'TEAM FORMATION WILL END IN',
   'Project Submission': 'SUBMISSION WILL END IN',
+  Preparation: '',
+  Result: '',
+  Review: '',
 };
 
 interface ChallengeTeamsInfoProps {
@@ -41,11 +44,11 @@ export function ChallengeTeamsInfo({
             className="m-1"
           />
         </div>
-        <div className="flex flex-col justify-around">
-          <p className="body-2 text-[#701A75] font-bold">
-            {wordingMap[curMileStone.stageName]}
+        <div className="flex flex-col justify-around md:items-start">
+          <p className="body-2 text-[#701A75] font-bold uppercase mt-8 md:mt-0">
+            {wordingMap['Teaming']}
           </p>
-          <p className="heading-5">
+          <p className="heading-5 mt-2 md:mt-0">
             {' '}
             <Countdown deadline={curMileStone.dueDate} />
           </p>
@@ -62,30 +65,32 @@ export function ChallengeTeamsInfo({
         </div>
         {curMileStone.stageName === 'Teaming' ? (
           <div className="flex flex-col justify-around">
-            <p className="body-2 ">
-              <strong className="heading-4">{team_len}</strong> teams are ready
-              to challenge
-            </p>
-            <p className="body-2 ">
-              <strong className="heading-4   bg-[linear-gradient(150.64deg,_#F62584_0%,_#480CA7_100%)] [background-clip:text] [-webkit-text-fill-color:transparent] ">
+            <div className="inline-flex items-center body-2">
+              <strong className="text-[30px] text-indigo-200">
+                {team_len}
+              </strong>
+              <p className=" uppercase ml-2 ">teams are ready to challenge</p>
+            </div>
+            <div className="inline-flex items-center body-2">
+              <strong className="text-[30px] text-indigo-200  bg-[linear-gradient(150.64deg,_#F62584_0%,_#480CA7_100%)] [background-clip:text] [-webkit-text-fill-color:transparent]">
                 {team_active_len}
-              </strong>{' '}
-              teams are looking for builders
-            </p>
+              </strong>
+              <p className=" uppercase ml-2 ">teams are looking for builders</p>
+            </div>
           </div>
         ) : null}
 
         {curMileStone.stageName === 'Project Submission' ? (
-          <div className="flex flex-col justify-around">
-            <p className="body-2 text-[#3730A3] font-bold">
+          <div className="flex flex-col justify-around md:items-start">
+            <p className="body-2 text-[#3730A3] font-bold uppercase">
               TEAM FORMATION HAS ENDED
             </p>
-            <p className="body-2 ">
-              <strong className="heading-4  bg-[linear-gradient(150.64deg,_#F62584_0%,_#480CA7_100%)] [background-clip:text] [-webkit-text-fill-color:transparent]">
+            <div className="inline-flex items-center body-2">
+              <strong className="text-[30px] text-indigo-200  bg-[linear-gradient(150.64deg,_#F62584_0%,_#480CA7_100%)] [background-clip:text] [-webkit-text-fill-color:transparent]">
                 {team_len}
-              </strong>{' '}
-              teams in this challenge
-            </p>
+              </strong>
+              <p className=" uppercase ml-2 ">teams in this challenge</p>
+            </div>
           </div>
         ) : null}
       </div>

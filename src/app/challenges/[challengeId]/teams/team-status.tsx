@@ -2,12 +2,23 @@
 
 import { Team } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
+import { useNavigator } from '@/hooks/useNavigator';
+import { useDialogStore } from '@/components/dialog/store';
 import Image from 'next/image';
 
 export let TeamStatus = ({ team }: { team: Team }) => {
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const user = useAuthStore((s) => s.user);
+  const showDialog = useDialogStore((s) => s.open);
+  const navigator = useNavigator();
   const isMyTeam = team.teamMembers.some((m) => m.userId === user?.userId);
+  const requestJoin = () => {
+    if (!isAuthed()) {
+      navigator.goToConnectWallet();
+      return;
+    }
+    showDialog('team_join', team);
+  };
 
   if (isAuthed() && isMyTeam) {
     return (
@@ -23,5 +34,9 @@ export let TeamStatus = ({ team }: { team: Team }) => {
       </div>
     );
   }
-  return <button className="btn btn-secondary w-28">JOIN</button>;
+  return (
+    <button className="btn btn-secondary w-28" onClick={requestJoin}>
+      JOIN
+    </button>
+  );
 };

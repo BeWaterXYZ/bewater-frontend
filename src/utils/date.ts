@@ -3,5 +3,5 @@ export function formatMMMDDYYYY(date: string) {
   return format(parseISO(date), 'MMM do, yyyy');
 }
 export function formatYYYYMMMDD(date: string) {
-  return format(parseISO(date), 'yyyy/MM/dd');
+  return format(parseISO(date), 'yyyy.MM.dd');
 }

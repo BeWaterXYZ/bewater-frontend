@@ -2,23 +2,12 @@ import { createUnionSchema } from '@/types/utils';
 import { OptionItem } from './types';
 
 export const ProjectTagSet = [
-  'Account Abstraction',
-  'Public Goods',
+  'GameFi',
   'DeFi',
   'NFT',
-  'Gaming',
-  'GameFi',
-  'DAO Tooling',
-  'Layer 2',
-  'Wallet/Payments',
-  'Developer Tool',
-  'Data/Analytics',
-  'Audio/Video',
-  'Social Network',
-  'SocialFi',
-  'Zero Knowledge Proofs',
-  'Metaverse',
-  'Others',
+  'Web3 Security',
+  'Zero Knowledge',
+  'DAO Tool',
 ] as const;
 
 export type ProjectTagUnion = (typeof ProjectTagSet)[number];

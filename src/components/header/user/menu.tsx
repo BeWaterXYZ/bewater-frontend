@@ -35,7 +35,7 @@ export const UserMenu = () => {
             </Link>
           </NavigationMenu.Trigger>
           {!isLoading && (
-            <NavigationMenu.Content className="absolute top-[100%] rounded right-0 body-2 w-60 border border-midnight bg-night  shadow-midnight">
+            <NavigationMenu.Content className="absolute top-[100%] z-[11] rounded right-0 body-2 w-60 border border-midnight bg-night  shadow-midnight">
               <div className="p-4">
                 <p className="body-2">
                   {walletAddress?.substring(0, 8)} ...

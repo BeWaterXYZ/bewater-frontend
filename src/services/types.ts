@@ -41,6 +41,7 @@ export interface Challenge {
   description: string;
   bannerUrl: string;
   requirements: string[];
+  reviewDimension: string[];
   startTime: string;
   endTime: string;
   totalAward: number;
@@ -78,7 +79,12 @@ export interface Judge {
 
 export interface Milestone {
   dueDate: string;
-  stageName: 'Teaming' | 'Project Submission';
+  stageName:
+    | 'Preparation'
+    | 'Teaming'
+    | 'Project Submission'
+    | 'Review'
+    | 'Result';
 }
 
 export interface Sponsorship {

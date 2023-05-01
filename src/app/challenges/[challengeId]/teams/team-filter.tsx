@@ -15,7 +15,7 @@ export function TeamFilter({ teams }: { teams: Team[] }) {
   let rolesData = prepareRoleFilterData(teams);
   return (
     <div className="text-left">
-      <div className="body-3 mb-4">Filter</div>
+      <div className="body-3 mb-4 mt-2">Filter</div>
       {/* <div className="my-2">
         <p className="body-5 uppercase my-4 ">Status</p>
         {readinessData.map((item) => {

@@ -15,7 +15,7 @@ export default async function Layout({
   return (
     <div>
       <ChallengeHero challenge={challenge} />
-      <ChallengeNav challengeId={params.challengeId} />
+      <ChallengeNav challenge={challenge} />
       <div>{children}</div>
     </div>
   );
