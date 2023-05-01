@@ -26,7 +26,7 @@ export default async function ChallengeIntro({ params }: any) {
     <div className="container flex flex-col gap-16 md:gap-30">
       <Timeline milestones={challenge.milestones} />
 
-      <div className="flex flex-col md:flex-row md:gap-20 items-center my-10 md:my-16">
+      <div className="flex flex-col md:flex-row md:gap-20 items-center my-10">
         <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
           赛事简介
         </div>
