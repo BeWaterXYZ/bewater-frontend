@@ -19,6 +19,7 @@ const sponsors_tier3 = [
   '/sponsors/sf.png',
   '/sponsors/moledao.png',
   '/sponsors/abga.png',
+  '/sponsors/thuba.png',
 ];
 
 export function Sponsors() {
