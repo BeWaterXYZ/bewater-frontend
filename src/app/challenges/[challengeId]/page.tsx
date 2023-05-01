@@ -89,9 +89,9 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
           <h3 className="heading-5 font-bold mb-8">评审维度</h3>
-          <p className="body-3 text-grey-400">
+          {/* <p className="body-3 text-grey-400">
             本次 BeWater Web3 创新大赛评审的打分将从以下几个维度给出综合评价:
-          </p>
+          </p> */}
           <ol className="list-decimal">
             {challenge.reviewDimension.map((r) => (
               <li key={r} className=" list-inside text-grey-400">
