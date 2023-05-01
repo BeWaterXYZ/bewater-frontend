@@ -46,7 +46,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
   return (
     <>
-      <div className="hidden md:flex body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 lg:mt-[100px] ">
+      <div className="hidden md:flex body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 mt-[100px] ">
         {data.map((node, index) =>
           node.type === 'date' ? (
             <div className="w-4 flex flex-col items-center" key={index}>
@@ -84,7 +84,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
           ),
         )}
       </div>
-      <div className="flex md:hidden flex-col body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 lg:mt-[100px] pr-[280px] mt-[50px] h-[450px] ">
+      <div className="flex md:hidden flex-col body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 lg:mt-[100px] pr-[280px] mt-16 h-[450px] ">
         {data.map((node, index) =>
           node.type === 'date' ? (
             <div

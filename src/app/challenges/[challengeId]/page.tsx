@@ -23,10 +23,10 @@ export default async function ChallengeIntro({ params }: any) {
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   return (
-    <div className="container flex flex-col gap-10 md:gap-30">
+    <div className="container flex flex-col gap-16 md:gap-30">
       <Timeline milestones={challenge.milestones} />
 
-      <div className="flex flex-col md:flex-row md:gap-20 items-center">
+      <div className="flex flex-col md:flex-row md:gap-20 items-center my-10 md:my-16">
         <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
           赛事简介
         </div>
@@ -41,11 +41,11 @@ export default async function ChallengeIntro({ params }: any) {
       <div className="">
         <PrizeSection />
       </div>
-      <div>
+      <div className="mt-16">
         <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
           大赛评审团
         </h3>
-        <div className="flex flex-row flex-wrap gap-8 justify-center">
+        <div className="flex flex-row flex-wrap gap-6 justify-center">
           {challenge.judges.map((judge) => {
             return (
               <div key={judge.id} className="w-[180px]">
@@ -58,7 +58,7 @@ export default async function ChallengeIntro({ params }: any) {
                     alt={judge.name}
                   />
                 </Aspect>
-                <p className="body-3 mt-6">{judge.name}</p>
+                <p className="body-3 mt-4 mb-2">{judge.name}</p>
                 <p className="body-4 text-grey-400">{judge.organization}</p>
                 <p className="body-4 text-grey-400">{judge.title}</p>
               </div>
@@ -66,9 +66,11 @@ export default async function ChallengeIntro({ params }: any) {
           })}
           <div className="w-[180px]">
             <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
-              Coming Soon
+              Coming
+              <br />
+              Soon
             </div>
-            <p className="body-3 mt-6 w-full text-grey-400">
+            <p className="body-3 mt-6 w-full text-center text-grey-400">
               更多评委即将揭晓...
             </p>
           </div>
