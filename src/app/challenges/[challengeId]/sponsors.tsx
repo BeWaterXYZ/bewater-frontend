@@ -9,6 +9,7 @@ const sponsors_tier1 = [
 ];
 
 const sponsors_tier2 = [
+  '/sponsors/hamster.png',
   '/sponsors/BIXIN.png',
   '/sponsors/ChainIDE.png',
   '/sponsors/memoworld.png',
