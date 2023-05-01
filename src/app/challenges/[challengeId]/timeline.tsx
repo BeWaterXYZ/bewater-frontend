@@ -40,7 +40,7 @@ function prepareData(milestones: Milestone[]) {
 }
 
 const glowing =
-  "h-[10px] w-[10px] rounded-full bg-day  shadow-[0_0_0_2px_white,_0_0_0_3px_theme('colors.day'),_0_0_14px_2px_white]";
+  "rounded-full bg-day  shadow-[0_0_0_1px_theme('colors.day')_inset,_0_0_0_3px_white_inset]";
 
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
