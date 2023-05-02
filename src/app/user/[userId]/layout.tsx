@@ -14,7 +14,7 @@ function getSocialConnectLink(con: SocialAuth) {
     return `https://figma.com/@${con.handle}`;
   return '';
 }
-export default async function page({
+export default async function Layout({
   children,
   params,
 }: {
@@ -82,3 +82,4 @@ export default async function page({
   );
 }
 export const revalidate = 0;
+export const dynamic = 'force-dynamic';

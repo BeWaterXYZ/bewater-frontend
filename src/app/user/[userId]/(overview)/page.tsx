@@ -77,3 +77,6 @@ export default async function Page({ params }: any) {
     </div>
   );
 }
+
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
