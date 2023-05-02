@@ -48,7 +48,7 @@ export default async function ChallengeIntro({ params }: any) {
         <div className="flex flex-row flex-wrap gap-6 justify-center">
           {challenge.judges.map((judge) => {
             return (
-              <div key={judge.id} className="w-[180px]">
+              <div key={judge.id} className="w-[180px] mb-2">
                 <Aspect ratio={1 / 1}>
                   <Image
                     height={150}
@@ -64,7 +64,7 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
             );
           })}
-          <div className="w-[180px]">
+          <div className="w-[180px] mb-2">
             <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
               Coming
               <br />
