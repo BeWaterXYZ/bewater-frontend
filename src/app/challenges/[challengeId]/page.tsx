@@ -26,11 +26,11 @@ export default async function ChallengeIntro({ params }: any) {
     <div className="container flex flex-col gap-16 md:gap-30">
       <Timeline milestones={challenge.milestones} />
 
-      <div className="flex flex-col md:flex-row md:gap-20 items-center my-10">
+      <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center my-10">
         <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
           赛事简介
         </div>
-        <div className="body-2 text-white">
+        <div className="body-3 md:body-2 text-white">
           {challenge.description.split('\n').map((s) => (
             <p className="py-3" key={s}>
               {s}
@@ -48,7 +48,7 @@ export default async function ChallengeIntro({ params }: any) {
         <div className="flex flex-row flex-wrap gap-6 justify-center">
           {challenge.judges.map((judge) => {
             return (
-              <div key={judge.id} className="w-[180px]">
+              <div key={judge.id} className="w-[180px] mb-2">
                 <Aspect ratio={1 / 1}>
                   <Image
                     height={150}
@@ -64,7 +64,7 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
             );
           })}
-          <div className="w-[180px]">
+          <div className="w-[180px] mb-2">
             <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
               Coming
               <br />
