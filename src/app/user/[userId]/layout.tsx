@@ -22,6 +22,7 @@ export default async function Layout({
   params: any;
 }) {
   const { userId } = userSchema.parse(params);
+  console.log('fechting user full profile', userId);
   const profile = await getUserProfileFull(userId);
   if (!profile) return null;
   console.log(profile);
