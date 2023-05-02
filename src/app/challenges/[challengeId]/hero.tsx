@@ -11,7 +11,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   return (
-    <div className=" relative overflow-hidden pb-8 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-[url(/challenge/bg.png)] bg-cover bg-center">
+    <div className=" relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-[url(/challenge/bg.png)] bg-cover ">
       {challenge.hostName === 'BeWater' ? (
         <Image
           src="/logo/bewater-h.svg"
@@ -42,13 +42,13 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
         </div>
       ) : (
         <div className="mt-6 md:mt-12">
-          <div className="btn btn-primary-invert body-4 text-day/70 border-day/20 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/20 hover:cursor-default bg-transparent">
+          <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent">
             {'队伍信息及项目提交将于 5 月 5 日开放'}
           </div>
         </div>
       )}
-      {/* <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
-      <div className="absolute  block w-[100px] h-[1388px] left-[10%] md:left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" /> */}
+      <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
+      <div className="absolute  block w-[100px] h-[1388px] left-[10%] md:left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
     </div>
   );
 }

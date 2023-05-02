@@ -26,16 +26,53 @@ export default async function ChallengeIntro({ params }: any) {
     <div className="container flex flex-col gap-16 md:gap-30">
       <Timeline milestones={challenge.milestones} />
 
-      <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center my-10">
-        <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
-          赛事简介
+      <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
+        <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center ">
+          <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
+            赛事简介
+          </div>
+          <div className="body-3 md:body-2 text-white">
+            {challenge.description.split('\n').map((s) => (
+              <p className="py-3" key={s}>
+                {s}
+              </p>
+            ))}
+          </div>
         </div>
-        <div className="body-3 md:body-2 text-white">
-          {challenge.description.split('\n').map((s) => (
-            <p className="py-3" key={s}>
-              {s}
-            </p>
-          ))}
+        <div>
+          <Link
+            href={`https://t.me/bewater_zh`}
+            target="_blank"
+            className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
+          >
+            <div className="flex flex-row gap-4 items-center">
+              <svg
+                fill="#00ffff"
+                height="800px"
+                width="800px"
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 189.473 189.473"
+                className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out"
+              >
+                <g>
+                  <path
+                    d="M152.531,179.476c-1.48,0-2.95-0.438-4.211-1.293l-47.641-32.316l-25.552,18.386c-2.004,1.441-4.587,1.804-6.914,0.972
+		c-2.324-0.834-4.089-2.759-4.719-5.146l-12.83-48.622L4.821,93.928c-2.886-1.104-4.8-3.865-4.821-6.955
+		c-0.021-3.09,1.855-5.877,4.727-7.02l174.312-69.36c0.791-0.336,1.628-0.53,2.472-0.582c0.302-0.018,0.605-0.018,0.906-0.001
+		c1.748,0.104,3.465,0.816,4.805,2.13c0.139,0.136,0.271,0.275,0.396,0.42c1.11,1.268,1.72,2.814,1.835,4.389
+		c0.028,0.396,0.026,0.797-0.009,1.198c-0.024,0.286-0.065,0.571-0.123,0.854L159.898,173.38c-0.473,2.48-2.161,4.556-4.493,5.523
+		C154.48,179.287,153.503,179.476,152.531,179.476z M104.862,130.579l42.437,28.785L170.193,39.24l-82.687,79.566l17.156,11.638
+		C104.731,130.487,104.797,130.533,104.862,130.579z M69.535,124.178l5.682,21.53l12.242-8.809l-16.03-10.874
+		C70.684,125.521,70.046,124.893,69.535,124.178z M28.136,86.782l31.478,12.035c2.255,0.862,3.957,2.758,4.573,5.092l3.992,15.129
+		c0.183-1.745,0.974-3.387,2.259-4.624L149.227,38.6L28.136,86.782z"
+                  />
+                </g>
+              </svg>
+              加入 Telegram 华语交流群
+            </div>
+          </Link>
         </div>
       </div>
       <div className="">
