@@ -1,5 +1,7 @@
+'use client';
 import { Aspect } from '@/components/aspect';
-import { getUserProfileFull } from '@/services/user';
+import { useLoadingWhen } from '@/components/loading/store';
+import { useFetchUserFull } from '@/services/user.query';
 import { unsplash } from '@/utils/unsplash';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -7,9 +9,11 @@ import { uniqBy } from 'remeda';
 import { userSchema } from './param-schema';
 import { TeamCard } from './team-card';
 
-export default async function Page({ params }: any) {
+export default function Page({ params }: any) {
   const { userId } = userSchema.parse(params);
-  const profile = await getUserProfileFull(userId);
+  const { data: profile, isLoading } = useFetchUserFull(userId);
+  useLoadingWhen(isLoading);
+
   if (!profile) return null;
   const uniqTeamMembers = uniqBy(
     profile.teamMembers,
