@@ -5,12 +5,9 @@ import { UserMenu } from './menu';
 import { NotificationBell } from './notification';
 
 export default function UserArea() {
-  // fix me . need user here to update this component
-  const user = useAuthStore((s) => s.user);
-  console.log(user);
-  const isAuthed = useAuthStore((s) => s.isAuthed);
+  const token = useAuthStore((s) => s.token);
 
-  return !isAuthed() ? (
+  return !token ? (
     <Link
       href="/connect"
       className="btn btn-primary-invert h-10 py-4 px-8 uppercase body-4 text-day "

@@ -1,27 +1,25 @@
 import { Aspect } from '@/components/aspect';
-import { getChallengeById, getChallenges } from '@/services/challenge';
-import { formatMoney } from '@/utils/numeral';
+import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
-import clsx from 'clsx';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import dynamicLoad from 'next/dynamic';
 import { segmentSchema } from './param-schema';
-import { Timeline } from './timeline';
-import { isMileStoneEnabled } from './utils';
 import { PrizeSection } from './prize-section';
 import { Sponsors } from './sponsors';
+import { Timeline } from './timeline';
+import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
 
+const ConnectButton = dynamicLoad(() => import('./connect-button'), {
+  ssr: false,
+});
 export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
-  console.log({ challenge });
-  const { awards, sponsorships } = challenge;
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
-
   return (
     <div className="container flex flex-col gap-16 md:gap-30">
       <Timeline milestones={challenge.milestones} />
@@ -139,59 +137,6 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
 
-      {/* <div className="max-w-full">
-        <h3 className="heading-4 font-bold my-8 text-center">Official Links</h3>
-        <div className="w-full my-4">
-          {challenge.socialLinks.twitterURI ? (
-            <div className="flex border-b border-b-grey-800 py-4 gap-3">
-              <Image
-                src="/icons/twitter.svg"
-                height="20"
-                width="20"
-                alt="twitter"
-              ></Image>
-              <p className="body-3"> {challenge.socialLinks.twitterURI} </p>
-            </div>
-          ) : null}
-          {challenge.socialLinks.discordURI ? (
-            <div className="flex border-b border-b-grey-800 py-4 gap-3">
-              <Image
-                src="/icons/discord.svg"
-                height="20"
-                width="20"
-                alt="discord"
-              ></Image>
-              <p className="body-3"> {challenge.socialLinks.discordURI} </p>
-            </div>
-          ) : null}
-
-          {challenge.socialLinks.officialWebsiteURI ? (
-            <div className="flex border-b border-b-grey-800 py-4 gap-3">
-              <Image
-                src="/icons/globe.svg"
-                height="20"
-                width="20"
-                alt="twitter"
-              ></Image>
-              <p className="body-3">
-                {challenge.socialLinks.officialWebsiteURI}
-              </p>
-            </div>
-          ) : null}
-          {challenge.socialLinks.email ? (
-            <div className="flex border-b border-b-grey-800 py-4 gap-3">
-              <Image
-                src="/icons/email.svg"
-                height="20"
-                width="20"
-                alt="twitter"
-              ></Image>
-              <p className="body-3"> {challenge.socialLinks.email} </p>
-            </div>
-          ) : null}
-        </div>
-      </div> */}
-
       <Sponsors />
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
         <p className="heading-6 md:heading-4 text-center">
@@ -218,14 +163,7 @@ export default async function ChallengeIntro({ params }: any) {
             </Link>
           </div>
         ) : (
-          <div>
-            <Link
-              href={`/connect`}
-              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
-            >
-              加入 BeWater
-            </Link>
-          </div>
+          <ConnectButton />
         )}
       </div>
     </div>
