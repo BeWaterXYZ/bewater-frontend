@@ -1,11 +1,13 @@
+'use client';
 import { Avatar } from '@/components/avatar/avatar';
+import { useLoadingWhen } from '@/components/loading/store';
 import { TagRole, TagSkill } from '@/components/tag';
-import { getUserProfileFull } from '@/services/user';
-import { maskWalletAddress } from '@/utils/wallet-adress';
-import { userSchema } from './param-schema';
-import Link from 'next/link';
-import Image from 'next/image';
 import { SocialAuth } from '@/services/types';
+import { useFetchUserFull } from '@/services/user.query';
+import { maskWalletAddress } from '@/utils/wallet-adress';
+import Image from 'next/image';
+import Link from 'next/link';
+import { userSchema } from './param-schema';
 
 function getSocialConnectLink(con: SocialAuth) {
   if (con.platform.toLowerCase() === 'github')
@@ -14,7 +16,7 @@ function getSocialConnectLink(con: SocialAuth) {
     return `https://figma.com/@${con.handle}`;
   return '';
 }
-export default async function Layout({
+export default function Layout({
   children,
   params,
 }: {
@@ -22,9 +24,12 @@ export default async function Layout({
   params: any;
 }) {
   const { userId } = userSchema.parse(params);
-  const profile = await getUserProfileFull(userId);
+  console.log('fechting user full profile', userId);
+  const { data: profile, isLoading } = useFetchUserFull(userId);
+  useLoadingWhen(isLoading);
+
   if (!profile) return null;
-  console.log(profile);
+
   return (
     <div className="container my-4 pt-24 lg:pt-20 ">
       <div className="flex flex-wrap gap-10">
@@ -81,5 +86,3 @@ export default async function Layout({
     </div>
   );
 }
-export const revalidate = 0;
-export const dynamic = 'force-dynamic';
