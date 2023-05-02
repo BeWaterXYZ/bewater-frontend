@@ -78,12 +78,13 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
                 style={{ width: node.progress! * 100 + '%' }}
               ></div>
               {node.progress! > 0 && node.progress! < 1 && (
-                <div className={glowing}> </div>
+                <div className={clsx(glowing, 'w-4 h-4')}> </div>
               )}
             </div>
           ),
         )}
       </div>
+      {/* mobile view */}
       <div className="flex md:hidden flex-col body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 lg:mt-[100px] pr-[280px] mt-16 h-[450px] ">
         {data.map((node, index) =>
           node.type === 'date' ? (
@@ -116,15 +117,15 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
           ) : (
             <div
               key={index}
-              className="flex-1 w-1 bg-white flex justify-start items-center relative"
+              className="flex-1 w-1 bg-white flex flex-col justify-start items-center relative"
               style={{ flexGrow: node.duration, flexBasis: 20 }}
             >
               <div
-                className="bg-day h-full "
-                style={{ width: node.progress! * 100 + '%' }}
+                className="bg-day w-full "
+                style={{ height: node.progress! * 100 + '%' }}
               ></div>
               {node.progress! > 0 && node.progress! < 1 && (
-                <div className={glowing}> </div>
+                <div className={clsx(glowing, 'w-4 h-4')}> </div>
               )}
             </div>
           ),
