@@ -4,7 +4,7 @@ import { unsplash } from '@/utils/unsplash';
 import Image from 'next/image';
 import Link from 'next/link';
 import { uniqBy } from 'remeda';
-import { userSchema } from '../param-schema';
+import { userSchema } from './param-schema';
 import { TeamCard } from './team-card';
 
 export default async function Page({ params }: any) {
