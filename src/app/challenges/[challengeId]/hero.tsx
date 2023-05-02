@@ -11,7 +11,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   return (
-    <div className=" relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-[url(/challenge/bg.png)] bg-cover bg-center">
+    <div className=" relative overflow-hidden pb-8 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-[url(/challenge/bg.png)] bg-cover bg-center">
       {challenge.hostName === 'BeWater' ? (
         <Image
           src="/logo/bewater-h.svg"
