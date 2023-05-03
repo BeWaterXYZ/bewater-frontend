@@ -47,9 +47,13 @@ export const UserMenu = () => {
               </div>
               <ul className="font-medium ">
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
-                  <a href={`/user/${user.userId}`} className="body-2">
+                  <Link
+                    prefetch={false}
+                    href={`/user/${user.userId}`}
+                    className="body-2"
+                  >
                     Your Profile
-                  </a>
+                  </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link href="/settings/basic" className="body-2">
