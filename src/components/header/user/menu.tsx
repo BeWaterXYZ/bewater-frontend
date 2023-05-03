@@ -56,12 +56,17 @@ export const UserMenu = () => {
                   </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
-                  <Link href="/settings/basic" className="body-2">
+                  <Link
+                    prefetch={false}
+                    href="/settings/basic"
+                    className="body-2"
+                  >
                     Account Settings
                   </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
+                    prefetch={false}
                     href="/notifications/requests/received"
                     className="body-2"
                   >
