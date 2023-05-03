@@ -23,7 +23,7 @@ export const UserMenu = () => {
   const user = data?.userProfile!;
   return (
     <NavigationMenu.Root className="relative">
-      <div className="opacity-50 absolute">
+      <div className="opacity-0 absolute">
         <Link href={`/user/${user.userId}`} className="body-2">
           .
         </Link>
