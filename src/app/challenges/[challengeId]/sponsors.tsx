@@ -25,6 +25,7 @@ const sponsors_tier3 = [
   '/sponsors/thuba.png',
   '/sponsors/lxdao.png',
   '/sponsors/tokeninsight.png',
+  '/sponsors/nextme.png',
 ];
 
 export function Sponsors() {
