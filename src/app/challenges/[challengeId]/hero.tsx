@@ -11,7 +11,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   return (
-    <div className=" relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-[url(/challenge/bg.png)] bg-cover ">
+    <div className=" relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-[url(/challenge/bg.png)] bg-cover bg-center ">
       {challenge.hostName === 'BeWater' ? (
         <Image
           src="/logo/bewater-h.svg"
@@ -42,7 +42,8 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
         </div>
       ) : (
         <div className="mt-6 md:mt-12">
-          <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent">
+          {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
+          <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
             {'队伍信息及项目提交将于 5 月 5 日开放'}
           </div>
         </div>
