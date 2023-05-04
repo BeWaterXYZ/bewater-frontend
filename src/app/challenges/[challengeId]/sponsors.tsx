@@ -30,6 +30,7 @@ const sponsors_tier3 = [
   '/sponsors/4seas.png',
   '/sponsors/movewave.png',
   '/sponsors/cryptosquare.png',
+  '/sponsors/foresight.png',
 ];
 
 export function Sponsors() {
