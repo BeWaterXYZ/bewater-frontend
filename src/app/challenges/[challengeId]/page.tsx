@@ -182,5 +182,18 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   return {
     title: 'BeWater - ' + challenge.title,
     description: challenge.description,
+    twitter: {
+      site: 'BeWater',
+      card: 'summary_large_image',
+      title: 'BeWater - ' + challenge.title,
+      description: challenge.description,
+      images: `/challenge/og/${challengeId}.png`,
+    },
+    openGraph: {
+      type: 'website',
+      title: 'BeWater - ' + challenge.title,
+      description: challenge.description,
+      images: `/challenge/og/${challengeId}.png`,
+    },
   };
 }
