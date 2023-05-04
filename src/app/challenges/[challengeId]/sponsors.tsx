@@ -26,6 +26,7 @@ const sponsors_tier3 = [
   '/sponsors/lxdao.png',
   '/sponsors/tokeninsight.png',
   '/sponsors/nextme.png',
+  '/sponsors/builderdao.png',
 ];
 
 export function Sponsors() {
