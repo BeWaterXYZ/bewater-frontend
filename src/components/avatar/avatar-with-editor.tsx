@@ -35,18 +35,7 @@ export const AvatarWithEditor = ({ src, walletAddress }: Props) => {
       dismissLoading();
     }
   };
-  const onRemoveAvatar = async () => {
-    try {
-      showLoading();
-      await mutaion.mutateAsync({
-        avatarURI: ``,
-      });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dismissLoading();
-    }
-  };
+
   return (
     <div className=" flex items-center gap-4">
       <Avatar
@@ -73,11 +62,6 @@ export const AvatarWithEditor = ({ src, walletAddress }: Props) => {
             onChange={onFileSelect}
           />
         </label>
-
-        <button className="btn btn-secondary-invert" onClick={onRemoveAvatar}>
-          <Cross1Icon className="text-white mr-2" height={12} width={12} />
-          Remove
-        </button>
       </div>
     </div>
   );

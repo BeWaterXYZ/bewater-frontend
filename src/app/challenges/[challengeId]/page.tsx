@@ -116,7 +116,10 @@ export default async function ChallengeIntro({ params }: any) {
           <h3 className="heading-5 font-bold mb-8">参赛要求</h3>
           <ol className="list-decimal">
             {challenge.requirements.map((r) => (
-              <li key={r} className="list-inside text-grey-400">
+              <li
+                key={r}
+                className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+              >
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
@@ -129,7 +132,10 @@ export default async function ChallengeIntro({ params }: any) {
           </p> */}
           <ol className="list-decimal">
             {challenge.reviewDimension.map((r) => (
-              <li key={r} className=" list-inside text-grey-400">
+              <li
+                key={r}
+                className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+              >
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
