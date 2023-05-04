@@ -14,15 +14,26 @@ export const UserMenu = () => {
     s?.walletAddress,
   ]);
 
-  const { error, data, isLoading } = useFetchUser(userId);
+  const { data, isLoading } = useFetchUser(userId);
   const logout = () => {
     clearStore();
     window.location.href = '/';
   };
-  if (error) return null;
+  if (!data) return null;
   const user = data?.userProfile!;
   return (
     <NavigationMenu.Root className="relative">
+      <div className="opacity-0 absolute">
+        <Link href={`/user/${user.userId}`} className="body-2">
+          .
+        </Link>
+        <Link href="/settings/basic" className="body-2">
+          .
+        </Link>
+        <Link href="/notifications/requests/received" className="body-2">
+          .
+        </Link>
+      </div>
       <NavigationMenu.List className="list-none">
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
@@ -47,26 +58,17 @@ export const UserMenu = () => {
               </div>
               <ul className="font-medium ">
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
-                  <Link
-                    prefetch={false}
-                    href={`/user/${user.userId}`}
-                    className="body-2"
-                  >
+                  <Link href={`/user/${user.userId}`} className="body-2">
                     Your Profile
                   </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
-                  <Link
-                    prefetch={false}
-                    href="/settings/basic"
-                    className="body-2"
-                  >
+                  <Link href="/settings/basic" className="body-2">
                     Account Settings
                   </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
-                    prefetch={false}
                     href="/notifications/requests/received"
                     className="body-2"
                   >
