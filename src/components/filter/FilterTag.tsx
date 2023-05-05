@@ -35,7 +35,12 @@ export function FilterTag({
         ></input>
         <span>{label}</span>
       </label>
-      <div className={clsx('body-4', on ? 'text-white' : 'text-[#94A3B8]')}>
+      <div
+        className={clsx(
+          'body-4 w-[30px] text-center',
+          on ? 'text-white' : 'text-[#94A3B8]',
+        )}
+      >
         {amount}
       </div>
     </div>

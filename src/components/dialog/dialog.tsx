@@ -17,7 +17,7 @@ export function Dialog({
           {children}
           <RadixDialog.Close asChild>
             <button
-              className="absolute flex justify-center items-center z-10 top-5 right-6 rounded-full border  border-white/30 w-[30px] h-[30px]"
+              className="absolute flex justify-center items-center z-10 top-5 right-5 rounded-full border  border-white/30 w-[30px] h-[30px]"
               aria-label="Close"
             >
               <Cross2Icon className=" text-white" />
