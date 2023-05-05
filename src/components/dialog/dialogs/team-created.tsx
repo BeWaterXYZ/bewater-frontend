@@ -18,7 +18,10 @@ export default function TeamCreatedDialog({
   let share = () => {
     if (!window) return;
     let usp = new URLSearchParams();
-    usp.append('text', '我在 BeWater Web3 创新大赛上创建了队伍! 快来加入吧!');
+    usp.append(
+      'text',
+      `我在 ${data.challenge.title} 上创建了队伍! 快来加入吧!`,
+    );
 
     usp.append('url', url);
     usp.append('hashtags', 'BeWaterWeb3Challenge');
