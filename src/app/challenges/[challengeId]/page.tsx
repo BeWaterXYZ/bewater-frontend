@@ -12,6 +12,7 @@ import { Timeline } from './timeline';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
+import { CONFIGS } from '@/config';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -187,13 +188,13 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       card: 'summary_large_image',
       title: 'BeWater - ' + challenge.title,
       description: challenge.description,
-      images: `/challenge/og/${challengeId}.png`,
+      images: CONFIGS.HOME_URL + `/challenge/og/${challengeId}.png`,
     },
     openGraph: {
       type: 'website',
       title: 'BeWater - ' + challenge.title,
       description: challenge.description,
-      images: `/challenge/og/${challengeId}.png`,
+      images: CONFIGS.HOME_URL + `/challenge/og/${challengeId}.png`,
     },
   };
 }

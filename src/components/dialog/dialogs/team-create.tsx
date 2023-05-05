@@ -1,6 +1,6 @@
 import { Input, Select, TextArea } from '@/components/form/control';
 
-import { Dialogs } from '../store';
+import { Dialogs, useDialogStore } from '../store';
 
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useToastStore } from '@/components/toast/store';
@@ -66,6 +66,7 @@ export default function TeamCreateDialog({
   const createTeamMutaion = useMutaionCreateTeam();
   const dismissTeamMutation = useMutaionDismissTeam(data.team?.challengeId);
   const { confirm } = useAlert();
+  const showDialog = useDialogStore((s) => s.open);
 
   const onDismiss = async () => {
     let confirmed = await confirm({
@@ -140,10 +141,15 @@ export default function TeamCreateDialog({
         } else if (res.team) {
           router.gotoTeam(data.challenge!.id, res.team.id);
 
-          addToast({
-            type: 'success',
-            title: 'team created',
-            description: '',
+          // addToast({
+          //   type: 'success',
+          //   title: 'team created',
+          //   description: '',
+          // });
+
+          showDialog('team_created', {
+            challenge: data.challenge!,
+            teamId: res.team.id,
           });
         }
       }
