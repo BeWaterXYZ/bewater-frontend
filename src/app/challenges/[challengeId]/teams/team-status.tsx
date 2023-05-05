@@ -28,7 +28,7 @@ export let TeamStatus = ({ team }: { team: Team }) => {
           height={16}
           width={16}
           alt="star"
-          className="mx-1"
+          className="mx-2"
         />
         <p className="body-2">My Team</p>
       </div>
