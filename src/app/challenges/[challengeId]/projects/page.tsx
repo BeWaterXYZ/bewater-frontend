@@ -99,11 +99,11 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   }
 
   return (
-    <div className="container flex flex-wrap gap-10 pt-4">
+    <div className="container flex flex-wrap gap-10 pt-10">
       <div className="w-full lg:w-[200px] hidden lg:block">
         <ProjectFilter projects={projects} />
       </div>
-      <div className="w-full lg:w-auto flex-1">
+      <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
         <div className="flex justify-between py-4">
           <div className="hidden lg:block invisible">

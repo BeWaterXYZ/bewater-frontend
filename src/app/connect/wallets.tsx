@@ -72,17 +72,17 @@ export default function WalletOptions() {
 
   return (
     <>
-      <div className="my-4 w-full flex flex-col ">
+      <div className="my-4 w-full flex flex-col gap-[1px]">
         {availableConnectors.map((connector, index) => (
           <button
             style={{ top: index * -2 }}
             className={clsx(
-              'relative btn btn-primary-invert body-4  w-full h-12',
+              'group relative btn btn-primary-invert body-4 box-border w-full h-12',
             )}
             key={connector.id}
             onClick={() => void onConnectorClick(connector)}
           >
-            <span className=" text-day uppercase">
+            <span className=" text-day uppercase group-hover:text-night">
               Connect {connector.name}
             </span>
           </button>
