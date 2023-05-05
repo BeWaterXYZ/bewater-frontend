@@ -1,26 +1,14 @@
 import { CONFIGS } from '@/config';
 import { getChallengeById } from '@/services/challenge';
 import { Metadata } from 'next';
-import { ChallengeHero } from './hero';
-import { ChallengeNav } from './nav';
-import { segmentSchema } from './param-schema';
+import { segmentSchema } from '../param-schema';
 
 export default async function Layout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { challengeId: string };
 }) {
-  const { challengeId } = segmentSchema.challengeId.parse(params);
-  const challenge = await getChallengeById(challengeId);
-  return (
-    <div>
-      <ChallengeHero challenge={challenge} />
-      <ChallengeNav challenge={challenge} />
-      <div>{children}</div>
-    </div>
-  );
+  return children;
 }
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {

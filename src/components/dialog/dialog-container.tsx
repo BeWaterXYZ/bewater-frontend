@@ -24,6 +24,9 @@ const dialogMaps: DialogMap = {
   team_create: dynamicLoad(() => import('./dialogs/team-create'), {
     loading: () => <Loading />,
   }),
+  team_created: dynamicLoad(() => import('./dialogs/team-created'), {
+    loading: () => <Loading />,
+  }),
   team_manage_member: dynamicLoad(
     () => import('./dialogs/team-manage-member'),
     {

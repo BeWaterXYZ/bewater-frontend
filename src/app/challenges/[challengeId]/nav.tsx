@@ -57,7 +57,7 @@ export function ChallengeNav({ challenge }: { challenge: Challenge }) {
         ) : (
           <span
             key={link.path}
-            className="py-3 mx-3 text-center uppercase text-white/30 "
+            className="py-3 mx-3 text-center uppercase text-white/30 cursor-not-allowed"
           >
             {link.label}
           </span>

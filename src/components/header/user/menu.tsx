@@ -19,7 +19,9 @@ export const UserMenu = () => {
     clearStore();
     window.location.href = '/';
   };
+
   if (!data) return null;
+
   const user = data?.userProfile!;
   return (
     <NavigationMenu.Root className="relative">
@@ -37,13 +39,21 @@ export const UserMenu = () => {
       <NavigationMenu.List className="list-none">
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
-            <Link href={isLoading ? '/onboarding' : '/settings/basic'}>
+            {isLoading ? (
+              <Link href="/onboarding">
+                <Avatar
+                  className="w-8 h-8 hover:opacity-75"
+                  src={!isLoading ? user?.avatarURI : ''}
+                  walletAddress={walletAddress}
+                />
+              </Link>
+            ) : (
               <Avatar
                 className="w-8 h-8 hover:opacity-75"
                 src={!isLoading ? user?.avatarURI : ''}
                 walletAddress={walletAddress}
               />
-            </Link>
+            )}
           </NavigationMenu.Trigger>
           {!isLoading && (
             <NavigationMenu.Content className="absolute top-[100%] z-[11] rounded right-0 body-2 w-60 border border-midnight bg-night  shadow-midnight">

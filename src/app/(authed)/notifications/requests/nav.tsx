@@ -24,7 +24,12 @@ export function Nav() {
   return (
     <nav className="flex gap-4 border-b border-b-white/20 mb-4  bg-night">
       {items.map((link) => (
-        <NavItem item={link} key={link.path} underline />
+        <NavItem
+          item={link}
+          key={link.path}
+          underline
+          className="mr-3 font-normal"
+        />
       ))}
     </nav>
   );

@@ -1,10 +1,9 @@
 import { Aspect } from '@/components/aspect';
 import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
-import { Metadata } from 'next';
+import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import dynamicLoad from 'next/dynamic';
 import { segmentSchema } from './param-schema';
 import { PrizeSection } from './prize-section';
 import { Sponsors } from './sponsors';
@@ -116,7 +115,10 @@ export default async function ChallengeIntro({ params }: any) {
           <h3 className="heading-5 font-bold mb-8">参赛要求</h3>
           <ol className="list-decimal">
             {challenge.requirements.map((r) => (
-              <li key={r} className="list-inside text-grey-400">
+              <li
+                key={r}
+                className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+              >
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
@@ -129,7 +131,10 @@ export default async function ChallengeIntro({ params }: any) {
           </p> */}
           <ol className="list-decimal">
             {challenge.reviewDimension.map((r) => (
-              <li key={r} className=" list-inside text-grey-400">
+              <li
+                key={r}
+                className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+              >
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
@@ -168,13 +173,4 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
     </div>
   );
-}
-
-export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const { challengeId } = segmentSchema.challengeId.parse(params);
-  const challenge = await getChallengeById(challengeId);
-  return {
-    title: 'BeWater - ' + challenge.title,
-    description: challenge.description,
-  };
 }
