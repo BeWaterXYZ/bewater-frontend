@@ -137,7 +137,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
                 />
                 Filter
               </button>
-              <button className="btn btn-secondary-invert w-full gap-1 invisible">
+              {/* <button className="btn btn-secondary-invert w-full gap-1 invisible">
                 <Image
                   src="/icons/sort.svg"
                   height={16}
@@ -145,7 +145,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
                   alt="filter"
                 />
                 Sort
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
