@@ -112,9 +112,10 @@ export default function ChallengeTeams({ params }: any) {
         <div className="w-full lg:w-auto flex-1 mb-30">
           <div className="flex justify-between flex-col-reverse lg:flex-row">
             <div
-              className={clsx('body-3  lg:block py-2', {
+              className={clsx('body-3 mt-8 lg:block py-2 text-left', {
                 '!invisible': !!user,
                 'h-0': !!user,
+                'mt-0': !!user,
               })}
             >
               ✨ Log in to see the teams that match you best!
