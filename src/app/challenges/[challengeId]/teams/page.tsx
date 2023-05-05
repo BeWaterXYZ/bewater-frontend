@@ -114,6 +114,7 @@ export default function ChallengeTeams({ params }: any) {
             <div
               className={clsx('body-3  lg:block py-2', {
                 '!invisible': !!user,
+                'h-0': !!user,
               })}
             >
               ✨ Log in to see the teams that match you best!

@@ -30,7 +30,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
               <TagSkill label={skill} key={skill}></TagSkill>
             ))}
           </div>
-          <div className="flex justify-between items-end">
+          <div className="flex justify-between items-center">
             <div>
               <div className="float-left">
                 <TeamRoleReadiness team={team} />

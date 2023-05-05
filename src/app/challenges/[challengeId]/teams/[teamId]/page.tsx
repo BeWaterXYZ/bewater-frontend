@@ -79,7 +79,7 @@ export default async function Page({ params }: any) {
         </div>
       </div>
 
-      <div className="mb-16">
+      <div className="mb-30">
         <p className="body-3 text-grey-500 font-bold my-5"> Project Overview</p>
         <div className="flex justify-between flex-wrap mb-3">
           <div className="flex items-center ">
