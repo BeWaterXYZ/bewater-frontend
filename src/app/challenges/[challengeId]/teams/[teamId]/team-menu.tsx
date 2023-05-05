@@ -3,6 +3,7 @@
 import { useAlert } from '@/components/alert/store';
 import { useDialogStore } from '@/components/dialog/store';
 import { useNavigator } from '@/hooks/useNavigator';
+import { useFetchChallengeById } from '@/services/challenge.query';
 import { teamRemoveMember } from '@/services/team';
 import { Team } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
@@ -12,7 +13,7 @@ interface TeamMenuProps {
 }
 export default function TeamMenu({ team }: TeamMenuProps) {
   const { confirm } = useAlert();
-
+  const { data: challenge } = useFetchChallengeById(team.challengeId);
   const router = useNavigator();
   const user = useAuthStore((s) => s.user);
   const isAuthed = useAuthStore((s) => s.isAuthed);
@@ -48,29 +49,48 @@ export default function TeamMenu({ team }: TeamMenuProps) {
     await teamRemoveMember(team.id, user?.userId!);
     router.refresh();
   };
+
+  const share = () => {
+    if (!window) return;
+    let url =
+      window.location.origin +
+      `/challenges/${team.challengeId}/teams/${team.id}`;
+
+    let usp = new URLSearchParams();
+    usp.append(
+      'text',
+      isJoined
+        ? `我在 ${challenge!.title} 上创建了队伍! 快来加入吧!`
+        : `快来加入 我在 ${challenge!.title} 上发现的队伍吧!`,
+    );
+
+    usp.append('url', url);
+    usp.append('hashtags', 'BeWaterWeb3Challenge');
+    let twitterURL = 'http://twitter.com/share?' + usp.toString();
+    window!.open(twitterURL, '_blank')!.focus();
+  };
   return (
-    <div>
+    <div className="flex gap-2">
+      <button className="btn btn-secondary" onClick={share}>
+        Share
+      </button>
       {!isAuthed() || !isJoined ? (
-        <div>
-          <button className="btn btn-primary" onClick={requestJoin}>
-            Request to join
-          </button>
-        </div>
+        <button className="btn btn-primary" onClick={requestJoin}>
+          Request to join
+        </button>
       ) : isLeader ? (
-        <div className="flex gap-2">
+        <>
           <button className="btn btn-secondary" onClick={manageMembers}>
             Manage Members
           </button>
           <button className="btn btn-secondary" onClick={editTeam}>
             Edit
           </button>
-        </div>
+        </>
       ) : (
-        <div>
-          <button className="btn btn-danger" onClick={quitTeam}>
-            Quit
-          </button>
-        </div>
+        <button className="btn btn-danger" onClick={quitTeam}>
+          Quit
+        </button>
       )}
     </div>
   );
