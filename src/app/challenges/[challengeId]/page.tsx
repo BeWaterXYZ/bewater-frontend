@@ -1,10 +1,9 @@
 import { Aspect } from '@/components/aspect';
 import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
-import { Metadata } from 'next';
+import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import dynamicLoad from 'next/dynamic';
 import { segmentSchema } from './param-schema';
 import { PrizeSection } from './prize-section';
 import { Sponsors } from './sponsors';
@@ -12,7 +11,6 @@ import { Timeline } from './timeline';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
-import { CONFIGS } from '@/config';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -175,26 +173,4 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
     </div>
   );
-}
-
-export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const { challengeId } = segmentSchema.challengeId.parse(params);
-  const challenge = await getChallengeById(challengeId);
-  return {
-    title: 'BeWater - ' + challenge.title,
-    description: challenge.description,
-    twitter: {
-      site: 'BeWater',
-      card: 'summary_large_image',
-      title: 'BeWater - ' + challenge.title,
-      description: challenge.description,
-      images: CONFIGS.HOME_URL + `/challenge/og/${challengeId}.png`,
-    },
-    openGraph: {
-      type: 'website',
-      title: 'BeWater - ' + challenge.title,
-      description: challenge.description,
-      images: CONFIGS.HOME_URL + `/challenge/og/${challengeId}.png`,
-    },
-  };
 }
