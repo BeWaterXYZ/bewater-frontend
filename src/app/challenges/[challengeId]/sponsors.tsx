@@ -15,6 +15,7 @@ const sponsors_tier2 = [
   '/sponsors/memoworld.png',
   '/sponsors/bodl.png',
   '/sponsors/filecoin.png',
+  '/sponsors/hkust.png',
 ];
 
 const sponsors_tier3 = [
