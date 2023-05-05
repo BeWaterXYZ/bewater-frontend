@@ -75,6 +75,7 @@ export interface Judge {
   organization: string;
   avatarURI: string;
   challengeIDs: number[];
+  order: number;
 }
 
 export interface Milestone {
