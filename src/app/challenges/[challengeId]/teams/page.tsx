@@ -109,7 +109,7 @@ export default function ChallengeTeams({ params }: any) {
         <div className="w-full lg:w-[200px] hidden lg:block">
           <TeamFilter teams={teams} />
         </div>
-        <div className="w-full lg:w-auto flex-1">
+        <div className="w-full lg:w-auto flex-1 mb-30">
           <div className="flex justify-between flex-col-reverse lg:flex-row">
             <div
               className={clsx('body-3  lg:block py-2', {
