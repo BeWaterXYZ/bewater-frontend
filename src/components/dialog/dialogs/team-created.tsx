@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialogs } from '../store';
 
 interface TeamCreateDialogProps {
@@ -20,7 +20,7 @@ export default function TeamCreatedDialog({
     let usp = new URLSearchParams();
     usp.append(
       'text',
-      `我在 ${data.challenge.title} 上创建了队伍! 快来加入吧!`,
+      `我在 ${data.challenge.title} 上创建了队伍！快来加入吧！`,
     );
 
     usp.append('url', url);
@@ -36,26 +36,40 @@ export default function TeamCreatedDialog({
       function (error) {},
     );
   };
+
+  useEffect(() => {
+    if (copied) {
+      let timer = setTimeout(() => {
+        setCopied(false);
+      }, 2000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [copied]);
+
   return (
-    <div className="flex flex-col justify-center  w-[570px]    bg-[url(/challenge/team_created.png)] bg-cover h-[288px]  -m-5">
+    <div className="flex flex-col justify-center  w-[343px] md:w-[570px] bg-[url(/challenge/team_created.png)] bg-cover bg-center -m-5">
       <div className="p-5 flex flex-col justify-around items-center">
-        <h2 className="heading-5 mt-4 text-center">
+        <h2 className="heading-6 md:heading-5 mt-10 text-center">
           You’ve successfully joined <br />
           {data.challenge.title}
         </h2>
 
         <button
           onClick={share}
-          className="flex  body-4 text-day items-center rounded gap-2 p-3 border border-day/30 bg-day/10 my-8 hover:bg-day/30"
+          className="flex  body-4 text-day items-center rounded gap-3 p-3 border border-day/30 bg-day/10 my-6 md:my-8 hover:bg-day/30 active:bg-day/20 transition duration-[.15s] ease-out"
         >
           <Image src="/icons/twitter.svg" height={20} width={20} alt="filter" />
           Share on Twitter
         </button>
 
-        <div className="p-2 flex gap-2 justify-between items-center body-3 border border-white/50 rounded-sm ">
-          <span className="break-all">{url}</span>
+        <div className="p-2 flex gap-2 justify-between items-center body-3 border border-white/50 rounded-sm w-full">
+          <span className="overflow-hidden whitespace-nowrap text-ellipsis">
+            {url}
+          </span>
           {copied ? (
-            <span className="body-5 text-white/50 break-keep">Copied</span>
+            <span className="body-5 text-white/50 break-keep">COPIED!</span>
           ) : (
             <Image
               src="/icons/copy.svg"
@@ -63,6 +77,7 @@ export default function TeamCreatedDialog({
               width={20}
               alt="filter"
               onClick={copyLink}
+              className="cursor-pointer"
             />
           )}
         </div>
