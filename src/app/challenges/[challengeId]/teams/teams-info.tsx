@@ -45,7 +45,7 @@ export function ChallengeTeamsInfo({
           />
         </div>
         <div className="flex flex-col justify-around md:items-start">
-          <p className="body-2 text-[#701A75] font-bold uppercase mt-8 md:mt-0">
+          <p className="body-2 text-[#701A75] font-bold uppercase mt-8 lg:mt-0">
             {wordingMap['Teaming']}
           </p>
           <p className="heading-5 mt-2 md:mt-0">
@@ -61,6 +61,7 @@ export function ChallengeTeamsInfo({
             alt="Picture of the author"
             width={80}
             height={80}
+            className="m-1"
           />
         </div>
         {curMileStone.stageName === 'Teaming' ? (
@@ -81,8 +82,8 @@ export function ChallengeTeamsInfo({
         ) : null}
 
         {curMileStone.stageName === 'Project Submission' ? (
-          <div className="flex flex-col justify-around md:items-start">
-            <p className="body-2 text-[#3730A3] font-bold uppercase">
+          <div className="flex flex-col justify-around md:items-start ">
+            <p className="body-2 text-[#3730A3] font-bold uppercase mt-8 lg:mt-0">
               TEAM FORMATION HAS ENDED
             </p>
             <div className="inline-flex items-center body-2">

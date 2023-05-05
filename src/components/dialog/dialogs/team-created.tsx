@@ -36,14 +36,14 @@ export default function TeamCreatedDialog({
   return (
     <div className="flex flex-col justify-center  w-[570px]    bg-[url(/challenge/team_created.png)] bg-cover h-[288px]  -m-5">
       <div className="p-5 flex flex-col justify-around items-center">
-        <h2 className="heading-5 mt-4">
+        <h2 className="heading-5 mt-4 text-center">
           You’ve successfully joined <br />
           {data.challenge.title}
         </h2>
 
         <button
           onClick={share}
-          className="flex  body-4 text-day  rounded gap-2 p-3 border border-day/30 bg-day/10 my-8"
+          className="flex  body-4 text-day items-center rounded gap-2 p-3 border border-day/30 bg-day/10 my-8 hover:bg-day/30"
         >
           <Image src="/icons/twitter.svg" height={20} width={20} alt="filter" />
           Share on Twitter

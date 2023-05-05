@@ -128,9 +128,6 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
           <h3 className="heading-5 font-bold mb-8">评审维度</h3>
-          {/* <p className="body-3 text-grey-400">
-            本次 BeWater Web3 创新大赛评审的打分将从以下几个维度给出综合评价:
-          </p> */}
           <ol className="list-decimal">
             {challenge.reviewDimension.map((r) => (
               <li
@@ -149,14 +146,14 @@ export default async function ChallengeIntro({ params }: any) {
         <p className="heading-6 md:heading-4 text-center">
           <Balancer ratio={0.9}>
             {isTeamingEnabled
-              ? 'Interested? Make your team and embrace it.'
+              ? '对赛事感兴趣？快组建你的梦幻团队加入我们'
               : '现在加入 BeWater，为创新和改变贡献出自己的力量'}
           </Balancer>
         </p>
         <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
           <Balancer>
             {isTeamingEnabled
-              ? 'Join over 4,000+ hackers all over the world.'
+              ? '已有近 25000 名预注册的开发者和设计师领取了 BeWater 早鸟徽章'
               : '已有近 25000 名预注册的开发者和设计师领取了 BeWater 早鸟徽章'}
           </Balancer>
         </p>
@@ -166,7 +163,7 @@ export default async function ChallengeIntro({ params }: any) {
               href={`/challenges/${challengeId}/teams`}
               className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
             >
-              Go to team page
+              前往队伍页面
             </Link>
           </div>
         ) : (
