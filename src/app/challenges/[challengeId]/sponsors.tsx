@@ -34,6 +34,7 @@ const sponsors_tier3 = [
   '/sponsors/panews.png',
   '/sponsors/icewhale.png',
   '/sponsors/dataverse.png',
+  '/sponsors/blockbeats.png',
 ];
 
 export function Sponsors() {
