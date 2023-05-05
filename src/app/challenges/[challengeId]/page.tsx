@@ -80,24 +80,26 @@ export default async function ChallengeIntro({ params }: any) {
           大赛评审团
         </h3>
         <div className="flex flex-row flex-wrap gap-6 justify-center">
-          {challenge.judges.map((judge) => {
-            return (
-              <div key={judge.id} className="w-[180px] mb-2">
-                <Aspect ratio={1 / 1}>
-                  <Image
-                    height={150}
-                    width={150}
-                    src={judge.avatarURI ?? unsplash('man')}
-                    className="object-cover w-full h-full"
-                    alt={judge.name}
-                  />
-                </Aspect>
-                <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                <p className="body-4 text-grey-400">{judge.organization}</p>
-                <p className="body-4 text-grey-400">{judge.title}</p>
-              </div>
-            );
-          })}
+          {challenge.judges
+            .sort((a, b) => a.order - b.order)
+            .map((judge) => {
+              return (
+                <div key={judge.id} className="w-[180px] mb-2">
+                  <Aspect ratio={1 / 1}>
+                    <Image
+                      height={150}
+                      width={150}
+                      src={judge.avatarURI ?? unsplash('man')}
+                      className="object-cover w-full h-full"
+                      alt={judge.name}
+                    />
+                  </Aspect>
+                  <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                  <p className="body-4 text-grey-400">{judge.organization}</p>
+                  <p className="body-4 text-grey-400">{judge.title}</p>
+                </div>
+              );
+            })}
           <div className="w-[180px] mb-2">
             <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
               Coming
