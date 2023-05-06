@@ -32,7 +32,7 @@ export function Countdown({ deadline }: { deadline: string }) {
   }, [deadlineDate]);
 
   return (
-    <span className="body-1 tabular-nums text-[24px] uppercase">
+    <span className="body-1 tabular-nums text-[24px] uppercase text-fuchsia-200">
       {durationStr}{' '}
     </span>
   );

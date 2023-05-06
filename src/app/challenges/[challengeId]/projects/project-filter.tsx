@@ -9,8 +9,8 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
 
   let tagsData = prepareProjectTagFilterData(projects);
   return (
-    <div className="text-left">
-      <div className="body-3 mb-4">Filter</div>
+    <div className="text-left pt-4">
+      <div className="body-3 mb-7">Filter</div>
 
       <div className="my-2">
         <p className="body-5 uppercase my-4">Tags</p>
