@@ -55,7 +55,7 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
     );
     changedSet(true);
   };
-  const onUploadFiled = (id: number) => {
+  const onUploadFailed = (id: number) => {
     mediaSet((medias) =>
       medias.map((media) =>
         media.id === id ? { ...media, status: 'failed' } : media,
@@ -93,7 +93,7 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
             onClick={onImageClick}
             media={media}
             onRemove={isLeader ? onRemove : undefined}
-            onUploadFiled={onUploadFiled}
+            onUploadFailed={onUploadFailed}
             onUploadSuccess={onUploadSuccess}
           />
         ))}

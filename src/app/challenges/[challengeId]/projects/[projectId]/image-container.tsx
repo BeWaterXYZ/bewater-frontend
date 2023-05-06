@@ -1,4 +1,3 @@
-'use client';
 import { Loading } from '@/components/loading/loading';
 import { getStorageUpload } from '@/services/storage';
 import { Cross1Icon } from '@radix-ui/react-icons';
@@ -15,25 +14,28 @@ export function ImageContainer({
   onRemove,
   onClick,
   onUploadSuccess,
-  onUploadFiled,
+  onUploadFailed,
 }: {
   media: Media;
   onRemove?: (id: number) => void;
   onUploadSuccess: (id: number, url: string) => void;
-  onUploadFiled: (id: number) => void;
+  onUploadFailed: (id: number) => void;
   onClick: (id: number) => void;
 }) {
   useEffect(() => {
     let upload = async () => {
       try {
         let data = await getStorageUpload();
-        await fetch(data.presignedURL, {
+        let res = await fetch(data.presignedURL, {
           method: 'PUT',
           body: media.file,
         });
+        if (res.status !== 200) {
+          throw new Error('upload file not OK 200');
+        }
         onUploadSuccess(media.id, data.mediaURL);
       } catch (err) {
-        onUploadFiled(media.id);
+        onUploadFailed(media.id);
       }
     };
 
