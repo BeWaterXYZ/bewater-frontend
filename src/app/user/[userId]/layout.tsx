@@ -50,6 +50,7 @@ export default function Layout({
               <div className="flex gap-3">
                 {profile.socialAuths
                   .filter((con) => con.authStatus === 'AUTHORIZED')
+                  .filter((con) => con.platform !== 'Figma')
                   .map((con) => (
                     <Link href={getSocialConnectLink(con)} key={con.platform}>
                       <Image
