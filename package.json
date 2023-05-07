@@ -35,7 +35,7 @@
     "clsx": "^1.2.1",
     "color": "^4.2.3",
     "compressorjs": "^1.1.1",
-    "date-fns": "^2.29.3",
+    "date-fns": "^2.30.0",
     "encoding": "^0.1.13",
     "ethers": "^5.7.2",
     "formidable": "^2.1.1",
