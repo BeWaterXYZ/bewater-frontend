@@ -104,10 +104,14 @@ export default async function Page({ params }: any) {
 
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const { teamId } = segmentSchema.teamId.parse(params);
-  const team = await getTeam(teamId);
-  return {
-    title: 'BeWater - ' + team.name,
-    description: team.project.description,
-  };
+  try {
+    const { teamId } = segmentSchema.teamId.parse(params);
+    const team = await getTeam(teamId);
+    return {
+      title: 'BeWater - ' + team.name,
+      description: team.project.description,
+    };
+  } catch (err) {
+    return {};
+  }
 }
