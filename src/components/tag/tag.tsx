@@ -14,7 +14,7 @@ export function Tag({ label, classes, onClick, title }: TagProps) {
     <div
       title={title ?? label}
       className={clsx(
-        'whitespace-nowrap inline-block rounded-sm h-5    text-white px-2 leading-4',
+        'whitespace-nowrap inline-block rounded-sm text-white px-2 leading-4',
         classes,
       )}
     >
