@@ -53,9 +53,9 @@ export default function RootLayout({
       lang="en"
       className={`${fontSecondary.variable} ${fontPrimary.variable}`}
     >
-      <noscript>hello</noscript>
       <head />
       <body>
+        <noscript>hello</noscript>
         <QueryProvider>
           <div className="min-h-[100vh] flex flex-col bg-night">
             <Header />
