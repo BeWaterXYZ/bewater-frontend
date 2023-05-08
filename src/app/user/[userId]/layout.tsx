@@ -24,7 +24,6 @@ export default function Layout({
   params: any;
 }) {
   const { userId } = userSchema.parse(params);
-  console.log('fechting user full profile', userId);
   const { data: profile, isLoading } = useFetchUserFull(userId);
   useLoadingWhen(isLoading);
 

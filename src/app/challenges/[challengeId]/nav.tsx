@@ -35,14 +35,12 @@ const links = [
 export function ChallengeNav({ challenge }: { challenge: Challenge }) {
   let challengeId = challenge.id;
   let segment = useSelectedLayoutSegment();
-  console.log(challenge.milestones);
 
   return (
     <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[72px] md:top-[72px] z-10">
       {links.map((link) => {
         let isAcitve = link.segment === segment;
         let isEnabled = isMileStoneEnabled(link.milestone, challenge);
-        console.log(link.label, isEnabled);
         return isEnabled ? (
           <Link
             key={link.path}
