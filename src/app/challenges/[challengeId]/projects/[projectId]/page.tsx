@@ -49,7 +49,7 @@ export default function Page({ params }: any) {
               height={300}
               src={project?.mediaURLs?.[0] ?? unsplash('conference')}
               alt="project"
-              className="object-cover"
+              className="object-cover block w-full h-full"
             />
           </Aspect>
         </div>

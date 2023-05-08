@@ -18,6 +18,7 @@ export function ProjectItem({ project }: { project: Project }) {
             height={300}
             src={project.mediaURLs[0] ?? unsplash('project')}
             alt={project.description}
+            className="object-cover block w-full h-full"
           />
         </Aspect>
         <div className="absolute top-[8px] right-[8px] flex gap-2">
