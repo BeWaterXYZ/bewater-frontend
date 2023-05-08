@@ -92,13 +92,19 @@ export default async function Page({ params }: any) {
           </div>
           <Link
             href={`/challenges/${challengeId}/projects/${team.project.id}`}
-            className="body-3 flex items-center h-7 text-day whitespace-nowrap"
+            className="body-3 hidden lg:flex items-center h-7 text-day whitespace-nowrap "
           >
             {'CHECK DETAIL ->'}
           </Link>
         </div>
 
         <p className="body-4 text-grey-300">{team.project.description}</p>
+        <Link
+          href={`/challenges/${challengeId}/projects/${team.project.id}`}
+          className="body-3 flex lg:hidden mt-3 items-center h-7 text-day whitespace-nowrap "
+        >
+          {'CHECK DETAIL ->'}
+        </Link>
       </div>
     </div>
   );
