@@ -36,7 +36,9 @@ function generateNotification(ntf: OngoingNotification) {
             className="body-4"
             href={`/challenges/${msg.team.challenge?.id}`}
           >
+
             {msg.team.challenge?.title}
+
           </Link>
         </div>
       );
