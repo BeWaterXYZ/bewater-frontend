@@ -24,7 +24,6 @@ interface Props {
 }
 
 export const FormUserSettings = ({ data }: Props) => {
-  console.log('FormUserSettings', { data });
   const schema = z
     .object({
       userName: validationSchema.userName(data.userProfile?.userName ?? ''),

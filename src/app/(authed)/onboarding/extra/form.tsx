@@ -45,7 +45,6 @@ export const FormOnboardingExtra = () => {
       await mutation.mutateAsync({
         ...formData,
       });
-      console.log('go to settings page');
       onComplete();
       addToast({
         title: 'Saved!',

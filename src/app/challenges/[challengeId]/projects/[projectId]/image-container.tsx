@@ -69,7 +69,7 @@ export function ImageContainer({
             ? media.url!
             : URL.createObjectURL(media.file!)
         }
-        className="object-cover block w-45 h-32"
+        className="object-cover block w-48 h-32"
         alt="project"
         width={192}
         height={128}

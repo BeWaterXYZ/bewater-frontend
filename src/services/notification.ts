@@ -39,7 +39,6 @@ export interface OngoingNotificationBody {
 
   targetUserId: string;
   teamId: string;
-  challenge: Challenge;
   createdAt: string;
   updatedAt: string;
   targetUser?: UserProfile;

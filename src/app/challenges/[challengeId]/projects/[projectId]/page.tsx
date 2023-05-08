@@ -49,7 +49,7 @@ export default function Page({ params }: any) {
               height={300}
               src={project?.mediaURLs?.[0] ?? unsplash('conference')}
               alt="project"
-              className="object-cover"
+              className="object-cover block w-full h-full"
             />
           </Aspect>
         </div>
@@ -77,12 +77,12 @@ export default function Page({ params }: any) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-10 mb-30">
-        <div className="flex-[2]">
+        <div className="flex-[2] lg:max-w-[400px]">
           <ProjectAssets project={project} />
           {/* members */}
-          <div className="my-4">
+          <div className="">
             <h3 className="body-3 font-bold text-grey-500">Members</h3>
-            <div className="my-4">
+            <div className="my-5">
               {project.team.teamMembers.map((m) => (
                 <TeamMember member={m} key={m.userProfile.userId} />
               ))}

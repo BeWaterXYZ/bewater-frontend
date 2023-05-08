@@ -40,11 +40,11 @@ export function ProjectAssets({ project }: { project: Project }) {
   });
 
   return (
-    <div className="my-4 mb-8">
+    <div className="mb-10">
       <h3 className="body-3 font-bold text-grey-500">Assets</h3>
 
       {assetsToShow.length > 0 ? (
-        <div className="w-full mt-6 flex flex-col gap-3">
+        <div className="w-full mt-5 flex flex-col gap-3">
           {assetsToShow.map(({ label, key, icon }) => {
             const link = project[key];
             return (
@@ -61,7 +61,7 @@ export function ProjectAssets({ project }: { project: Project }) {
           })}
         </div>
       ) : (
-        <div className="rounded border border-[#24254E] bg-[#0B0C24] mt-6 p-4 my-3 body-2 text-grey-600">
+        <div className="rounded border border-[#24254E] bg-[#0B0C24] mt-5 p-4 my-3 body-2 text-grey-600">
           No assets yet.
         </div>
       )}

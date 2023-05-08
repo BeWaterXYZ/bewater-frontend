@@ -30,8 +30,8 @@ export default async function Page({ params }: any) {
         </Link>
       </div>
 
-      <div className="flex justify-between flex-col lg:flex-row ">
-        <div className="heading-6 ">{team.name}</div>
+      <div className="flex justify-between flex-col lg:flex-row gap-3">
+        <div className="heading-6 break-words">{team.name}</div>
 
         <div>
           <TeamMenu team={team} />
@@ -81,22 +81,30 @@ export default async function Page({ params }: any) {
 
       <div className="mb-30">
         <p className="body-3 text-grey-500 font-bold my-5"> Project Overview</p>
-        <div className="flex justify-between flex-wrap mb-3">
-          <div className="flex items-center ">
-            <h2 className="body-2 font-bold mr-2">{team.project.name} </h2>
+        <div className="flex justify-between  flex-col lg:flex-row gap-3 mb-3">
+          <div className="flex items-center flex-wrap gap-2">
+            <h2 className="body-2 font-bold break-words">
+              {team.project.name}{' '}
+            </h2>
             {team.project.tags.map((tag) => (
               <TagProjectTag key={tag} label={tag} />
             ))}
           </div>
           <Link
             href={`/challenges/${challengeId}/projects/${team.project.id}`}
-            className="body-3 text-day"
+            className="body-3 hidden lg:flex items-center h-7 text-day whitespace-nowrap "
           >
             {'CHECK DETAIL ->'}
           </Link>
         </div>
 
         <p className="body-4 text-grey-300">{team.project.description}</p>
+        <Link
+          href={`/challenges/${challengeId}/projects/${team.project.id}`}
+          className="body-3 flex lg:hidden mt-3 items-center h-7 text-day whitespace-nowrap "
+        >
+          {'CHECK DETAIL ->'}
+        </Link>
       </div>
     </div>
   );
@@ -104,10 +112,14 @@ export default async function Page({ params }: any) {
 
 export const dynamic = 'force-dynamic';
 export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const { teamId } = segmentSchema.teamId.parse(params);
-  const team = await getTeam(teamId);
-  return {
-    title: 'BeWater - ' + team.name,
-    description: team.project.description,
-  };
+  try {
+    const { teamId } = segmentSchema.teamId.parse(params);
+    const team = await getTeam(teamId);
+    return {
+      title: 'BeWater - ' + team.name,
+      description: team.project.description,
+    };
+  } catch (err) {
+    return {};
+  }
 }
