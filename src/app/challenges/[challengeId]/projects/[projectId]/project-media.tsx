@@ -85,12 +85,10 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
     viewImageSet(id);
   };
   return (
-    <div className="py-5">
+    <div className="pt-5 pb-10">
       {medias.length === 0 && !canUpload && (
-        <div className="mt-6">
-          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
-            Not uploaded images yet.
-          </div>
+        <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 body-2 text-grey-600">
+          Not uploaded images yet.
         </div>
       )}
       <div className="flex gap-3 flex-wrap">
