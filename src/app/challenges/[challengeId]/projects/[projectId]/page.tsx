@@ -77,7 +77,7 @@ export default function Page({ params }: any) {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-10 mb-30">
-        <div className="flex-[2]">
+        <div className="flex-[2] lg:max-w-[400px]">
           <ProjectAssets project={project} />
           {/* members */}
           <div className="">

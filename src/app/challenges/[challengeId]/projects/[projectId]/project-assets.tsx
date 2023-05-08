@@ -44,7 +44,7 @@ export function ProjectAssets({ project }: { project: Project }) {
       <h3 className="body-3 font-bold text-grey-500">Assets</h3>
 
       {assetsToShow.length > 0 ? (
-        <div className="w-full mt-6 flex flex-col gap-3">
+        <div className="w-full mt-5 flex flex-col gap-3">
           {assetsToShow.map(({ label, key, icon }) => {
             const link = project[key];
             return (
