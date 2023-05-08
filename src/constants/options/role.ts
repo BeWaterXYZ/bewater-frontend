@@ -10,6 +10,7 @@ export const RoleSet = [
   'Full Stack Developer',
   'Security Engineer',
   'Data Analyst',
+  'Others',
 ] as const;
 
 export type RoleUnion = (typeof RoleSet)[number];
@@ -23,6 +24,7 @@ const styleMap: Record<RoleUnion, string> = {
   'Full Stack Developer': '!bg-[#164E63] !border-[#0E7490] border',
   'Security Engineer': '!bg-[#701A75] !border-[#A21CAF] border',
   'Data Analyst': '!bg-[#4C1D95] !border-[#6D28D9] border',
+  Others: '!bg-[#0F172A] !border-[#374151] border',
 };
 
 export const RoleSetOptions: OptionItem<RoleUnion>[] = RoleSet.map((role) => ({
