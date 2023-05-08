@@ -86,6 +86,13 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
   };
   return (
     <div className="py-5">
+      {medias.length === 0 && !canUpload && (
+        <div className="mt-6">
+          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+            Not uploaded images yet.
+          </div>
+        </div>
+      )}
       <div className="flex gap-3 flex-wrap">
         {medias.map((media) => (
           <ImageContainer
