@@ -11,9 +11,9 @@ export function GithubStats({ project }: { project: Project }) {
     .filter((m) => m.isLeader)
     .some((m) => m.userProfile.userId === user?.userId);
   return (
-    <div className="my-4 mb-8">
+    <div className="">
       <h3 className="body-3 font-bold text-grey-500">Github Stats</h3>
-      <div className="mt-6">
+      <div className="mt-5">
         {projectHasConnectedGithub ? (
           <GithubStatsDisplay project={project} />
         ) : isLeader ? (
