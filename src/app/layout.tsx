@@ -53,6 +53,7 @@ export default function RootLayout({
       lang="en"
       className={`${fontSecondary.variable} ${fontPrimary.variable}`}
     >
+      <noscript>hello</noscript>
       <head />
       <body>
         <QueryProvider>
