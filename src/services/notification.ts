@@ -37,11 +37,8 @@ export interface OngoingNotificationBody {
     | 'MEMBER_ROLE_UPDATED'
     | 'TEAM_DISMISSED';
 
-  messageBody: null;
   targetUserId: string;
   teamId: string;
-  challengeId: null;
-  challenge: Challenge;
   createdAt: string;
   updatedAt: string;
   targetUser?: UserProfile;
