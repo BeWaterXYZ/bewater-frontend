@@ -10,7 +10,7 @@ export function ProjectItem({ project }: { project: Project }) {
   return (
     <div className="rounded border border-[#24254E] relative max-w-[450px] overflow-hidden flex flex-col">
       <Link
-        href={`challenges/${project.team.challengeId}/projects/${project.id}`}
+        href={`/challenges/${project.team.challengeId}/projects/${project.id}`}
       >
         <Aspect ratio={3 / 2}>
           <Image
