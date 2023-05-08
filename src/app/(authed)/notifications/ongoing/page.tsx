@@ -19,7 +19,7 @@ function generateNotification(ntf: OngoingNotification) {
           <span className="text-grey-500"> has updated </span>
           <Link
             className="body-4"
-            href={`/challenges/${msg.challengeId}/projects/${msg.team.project.id}`}
+            href={`/challenges/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
           >
             {msg.team.project.name}
           </Link>
@@ -32,7 +32,10 @@ function generateNotification(ntf: OngoingNotification) {
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
-          <Link className="body-4" href={`/challenges/${msg.challengeId}`}>
+          <Link
+            className="body-4"
+            href={`/challenges/${msg.team.challenge?.id}`}
+          >
             {msg.challenge.title}
           </Link>
         </div>
@@ -68,7 +71,7 @@ function generateNotification(ntf: OngoingNotification) {
           ) : (
             <Link
               className="body-4"
-              href={`/challenges/${msg.challengeId}/teams/${msg.teamId}`}
+              href={`/challenges/${msg.team.challenge?.id}/teams/${msg.teamId}`}
             >
               {msg.team.name}
             </Link>
@@ -126,7 +129,7 @@ export default function Page() {
                       parseISO(ntf.notificationMessage.createdAt),
                       Date.now(),
                     )}{' '}
-                    ago · {ntf.notificationMessage?.challenge?.title}
+                    ago · {ntf.notificationMessage?.team.challenge?.title}
                   </span>
                 </div>
               </div>
