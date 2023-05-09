@@ -11,7 +11,10 @@ interface TeamItemProps {
 }
 export function TeamItem({ challenge, team }: TeamItemProps) {
   return (
-    <Link href={`/challenges/${challenge.id}/teams/${team.id}`}>
+    <Link
+      prefetch={false}
+      href={`/challenges/${challenge.id}/teams/${team.id}`}
+    >
       <div className=" border border-gray-400/20  text-left bg-[#0B0C24] rounded h-full flex flex-col ">
         <div className="bg-[#1A1C40] p-4">
           <div className="">

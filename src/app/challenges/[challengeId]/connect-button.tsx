@@ -9,6 +9,7 @@ export default function ConnectButton() {
   return !token ? (
     <div>
       <Link
+        prefetch={false}
         href={`/connect`}
         className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
       >

@@ -16,7 +16,7 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
           key={challenge.id}
           className="w-full border border-[#24254E] rounded overflow-hidden bg-[#0B0C24]"
         >
-          <Link href={`/challenges/${challenge.id}`}>
+          <Link prefetch={false} href={`/challenges/${challenge.id}`}>
             <Aspect ratio={5 / 2}>
               <Image
                 width={640}

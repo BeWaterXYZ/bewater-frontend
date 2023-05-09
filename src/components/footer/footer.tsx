@@ -12,7 +12,7 @@ export const Footer = ({}: Props) => {
           © {new Date().getFullYear()} BeWater. All Rights Reserved.
         </div>
         <div className="flex flex-row gap-x-4 items-center justify-end">
-          <Link href="https://t.co/oPJUASWXjh" target="_blank">
+          <Link prefetch={false} href="https://t.co/oPJUASWXjh" target="_blank">
             <Image
               src="/icons/footer-discord.svg"
               width={24}
@@ -20,7 +20,11 @@ export const Footer = ({}: Props) => {
               alt="discord"
             />
           </Link>
-          <Link href="https://twitter.com/BeWaterOfficial" target="_blank">
+          <Link
+            prefetch={false}
+            href="https://twitter.com/BeWaterOfficial"
+            target="_blank"
+          >
             <Image
               src="/icons/footer-twitter.svg"
               width={24}

@@ -25,22 +25,22 @@ export const UserMenu = () => {
   const user = data?.userProfile!;
   return (
     <NavigationMenu.Root className="relative">
-      <div className="opacity-0 absolute">
-        <Link href={`/user/${user.userId}`} className="body-2">
+      {/* <div className="opacity-0 absolute">
+        <Link prefetch = {false} href={`/user/${user.userId}`} className="body-2">
           .
         </Link>
-        <Link href="/settings/basic" className="body-2">
+        <Link prefetch = {false} href="/settings/basic" className="body-2">
           .
         </Link>
-        <Link href="/notifications/requests/received" className="body-2">
+        <Link prefetch = {false} href="/notifications/requests/received" className="body-2">
           .
         </Link>
-      </div>
+      </div> */}
       <NavigationMenu.List className="list-none">
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
             {isLoading ? (
-              <Link href="/onboarding">
+              <Link prefetch={false} href="/onboarding">
                 <Avatar
                   className="w-8 h-8 hover:opacity-75"
                   src={!isLoading ? user?.avatarURI : ''}
@@ -68,17 +68,26 @@ export const UserMenu = () => {
               </div>
               <ul className="font-medium ">
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
-                  <Link href={`/user/${user.userId}`} className="body-2">
+                  <Link
+                    prefetch={false}
+                    href={`/user/${user.userId}`}
+                    className="body-2"
+                  >
                     Your Profile
                   </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
-                  <Link href="/settings/basic" className="body-2">
+                  <Link
+                    prefetch={false}
+                    href="/settings/basic"
+                    className="body-2"
+                  >
                     Account Settings
                   </Link>
                 </li>
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
+                    prefetch={false}
                     href="/notifications/requests/received"
                     className="body-2"
                   >

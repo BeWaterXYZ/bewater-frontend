@@ -10,6 +10,7 @@ export function ProjectItem({ project }: { project: Project }) {
   return (
     <div className="rounded border border-[#24254E] relative max-w-[450px] overflow-hidden flex flex-col">
       <Link
+        prefetch={false}
         href={`/challenges/${project.team.challengeId}/projects/${project.id}`}
       >
         <Aspect ratio={3 / 2}>
@@ -37,6 +38,7 @@ export function ProjectItem({ project }: { project: Project }) {
       </Link>
       <div className="p-4 bg-white/5 flex-1 flex flex-col">
         <Link
+          prefetch={false}
           href={`challenges/${project.team.challengeId}/projects/${project.id}`}
         >
           <h2 className="heading-6 mb-2">{project.name}</h2>
@@ -46,6 +48,7 @@ export function ProjectItem({ project }: { project: Project }) {
         </Link>
         <div className="h-[20px] invisible flex-1">_</div>
         <Link
+          prefetch={false}
           href={`challenges/${project.team.challengeId}/teams/${project.teamId}`}
           className="body-3 text-left mb-2"
         >

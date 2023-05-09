@@ -23,6 +23,7 @@ export default async function Page({ params }: any) {
     <div className="container">
       <div className="mt-10 mb-[22px]">
         <Link
+          prefetch={false}
           className="body-3 text-grey-400"
           href={`/challenges/${challengeId}/teams`}
         >
@@ -91,6 +92,7 @@ export default async function Page({ params }: any) {
             ))}
           </div>
           <Link
+            prefetch={false}
             href={`/challenges/${challengeId}/projects/${team.project.id}`}
             className="body-3 hidden lg:flex items-center h-7 text-day whitespace-nowrap "
           >
@@ -100,6 +102,7 @@ export default async function Page({ params }: any) {
 
         <p className="body-4 text-grey-300">{team.project.description}</p>
         <Link
+          prefetch={false}
           href={`/challenges/${challengeId}/projects/${team.project.id}`}
           className="body-3 flex lg:hidden mt-3 items-center h-7 text-day whitespace-nowrap "
         >

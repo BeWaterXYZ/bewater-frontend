@@ -8,6 +8,7 @@ export function TeamAvatarRow({ teamMembers }: { teamMembers: TeamMember[] }) {
       {teamMembers.map((m, index) => {
         return (
           <Link
+            prefetch={false}
             href={`/user/${m.userProfile.userId}`}
             key={m.userProfile.userId}
           >
