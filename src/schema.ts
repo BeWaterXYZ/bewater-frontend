@@ -20,6 +20,7 @@ export const validationSchema = {
   fullName: z.string().min(3, { message: 'At least 3 characters' }),
   // general text field
   text: z.string().min(3, { message: 'At least 3 characters' }),
+  userId: z.string().min(1, { message: 'Please choose one user' }),
   bio: z.string().optional(),
   roles: z
     .array(RoleSetScheme)

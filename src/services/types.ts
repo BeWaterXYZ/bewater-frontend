@@ -155,7 +155,7 @@ export interface GroupingRequest {
   type: 'APPLICATION' | 'INVITATION';
   recipientId: UserID;
   teamRole: RoleUnion;
-  message: string;
+  message?: string;
 }
 export interface GroupingRequestFull extends GroupingRequest {
   id: GroupingRequestId;
