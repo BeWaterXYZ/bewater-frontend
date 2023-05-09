@@ -179,12 +179,14 @@ export function GroupingRequestNotification({
             </Link>
           </p>
         </div>
-        <div className="flex-1 bg-white/5 p-2 my-4">
-          <p className="body-4 text-grey-400">{req.message} </p>
-        </div>
+        {req.message ? (
+          <div className="flex-1 bg-white/5 p-2 my-4">
+            <p className="body-4 text-grey-400">{req.message} </p>
+          </div>
+        ) : null}
         {req.status === 'PENDING' ? (
           sentOrReceived ? (
-            <div className="gap-3 flex">
+            <div className="gap-3 flex mt-2">
               <button
                 className="btn btn-primary"
                 onClick={() => revoke(req.id)}
@@ -193,7 +195,7 @@ export function GroupingRequestNotification({
               </button>
             </div>
           ) : (
-            <div className="gap-3 flex">
+            <div className="gap-3 flex mt-2">
               <button
                 className="btn btn-primary"
                 onClick={() => approve(req.id)}
