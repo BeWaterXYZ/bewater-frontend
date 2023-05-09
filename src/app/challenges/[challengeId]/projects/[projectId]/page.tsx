@@ -74,7 +74,13 @@ export default function Page({ params }: any) {
             {formatDistance(parseISO(project.updatedAt), Date.now())}
           </p>
 
-          <p className="body-3 text-grey-300 my-3">{project.description}</p>
+          <div className="body-3 text-grey-300 my-3">
+            {project.description.split('\n').map((s, i) => (
+              <p key={i} className="py-2">
+                {s}
+              </p>
+            ))}
+          </div>
           <div>
             {project.tags.map((tag) => (
               <TagProjectTag label={tag} key={tag} />
