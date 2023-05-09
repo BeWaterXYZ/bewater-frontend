@@ -34,6 +34,7 @@ export default function Page({ params }: any) {
     <div className="container">
       <div className="my-10">
         <Link
+          prefetch={false}
           className="body-3 text-grey-400"
           href={`/challenges/${challengeId}/projects`}
         >
@@ -88,6 +89,7 @@ export default function Page({ params }: any) {
               ))}
             </div>
             <Link
+              prefetch={false}
               className="body-3 text-day uppercase "
               href={`/challenges/${project.team.challengeId}/teams/${project.team.id}`}
             >

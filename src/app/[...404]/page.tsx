@@ -10,7 +10,7 @@ export default function NotFound() {
         <p className="body-2 text-grey-500">
           We couldn’t find the page you’re looking for.
         </p>
-        <Link className="btn btn-primary" href="/">
+        <Link prefetch={false} className="btn btn-primary" href="/">
           Go back
         </Link>
       </div>

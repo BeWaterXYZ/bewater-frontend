@@ -33,6 +33,7 @@ export default function Page({ params }: any) {
                   className="w-full lg:w-1/2 rounded bg-[#0B0C24] border border-[#24254E] overflow-hidden "
                 >
                   <Link
+                    prefetch={false}
                     href={`/challenges/${tm.team?.challengeId}`}
                     className="block"
                   >

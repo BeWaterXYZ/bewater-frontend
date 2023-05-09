@@ -9,6 +9,7 @@ export default function UserArea() {
 
   return !token ? (
     <Link
+      prefetch={false}
       href="/connect"
       className="btn btn-primary-invert h-10 py-4 px-8 uppercase body-4 text-day "
     >

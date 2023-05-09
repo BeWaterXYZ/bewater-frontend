@@ -22,7 +22,9 @@ import { getErrorResp } from '@/utils/error-type';
 function getUserLink(userProfile: UserProfile) {
   return (
     <strong className="text-white hover:underline">
-      <Link href={`/user/${userProfile.userId}`}>{userProfile.fullName}</Link>
+      <Link prefetch={false} href={`/user/${userProfile.userId}`}>
+        {userProfile.fullName}
+      </Link>
     </strong>
   );
 }
@@ -30,6 +32,7 @@ function getUserLink(userProfile: UserProfile) {
 function getTitle(req: GroupingRequestFull, sentOrReceived: boolean) {
   let teamLink = (
     <Link
+      prefetch={false}
       href={`/challenges/${req.team.challenge.id}/teams/${req.team.id}`}
       className="text-white hover:underline"
     >
@@ -168,6 +171,7 @@ export function GroupingRequestNotification({
           <p className="body-5 text-grey-500">
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
             <Link
+              prefetch={false}
               href={`/challenges/${req.team.challenge.id}`}
               className="hover:underline"
             >

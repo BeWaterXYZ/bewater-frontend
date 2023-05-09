@@ -20,6 +20,7 @@ export function Nav() {
     <nav className=" w-full flex flex-row lg:flex-col gap-4 lg:sticky  lg:top-[72px] ">
       {links.map((link) => (
         <Link
+          prefetch={false}
           key={link.path}
           href={link.path}
           className={clsx(

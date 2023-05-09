@@ -38,6 +38,7 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
         <div>
           <Link
+            prefetch={false}
             href={`https://t.me/bewater_zh`}
             target="_blank"
             className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
@@ -160,6 +161,7 @@ export default async function ChallengeIntro({ params }: any) {
         {isTeamingEnabled ? (
           <div>
             <Link
+              prefetch={false}
               href={`/challenges/${challengeId}/teams`}
               className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
             >

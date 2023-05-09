@@ -51,7 +51,11 @@ export default function Layout({
                   .filter((con) => con.authStatus === 'AUTHORIZED')
                   .filter((con) => con.platform !== 'Figma')
                   .map((con) => (
-                    <Link href={getSocialConnectLink(con)} key={con.platform}>
+                    <Link
+                      prefetch={false}
+                      href={getSocialConnectLink(con)}
+                      key={con.platform}
+                    >
                       <Image
                         src={`/icons/${con.platform.toLowerCase()}.svg`}
                         alt={con.platform}

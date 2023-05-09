@@ -39,7 +39,7 @@ export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
 const BeWaterLogo = () => {
   return (
     <div className="flex flex-row relative">
-      <Link href="https://bewater.xyz">
+      <Link prefetch={false} href="https://bewater.xyz">
         <Image
           src="/logo/bewater-h.svg"
           width={120}
@@ -52,7 +52,7 @@ const BeWaterLogo = () => {
           </div>
         </div>
       </Link>
-      <Link href="/">
+      <Link prefetch={false} href="/">
         <div className="absolute left-[164px] hidden sm:flex flex-row gap-2 items-center">
           <div className="text-white body-2 font-bold">/</div>
           <div className="text-day body-2 font-bold uppercase [text-shadow:0_0_6px_theme(colors.day)]">

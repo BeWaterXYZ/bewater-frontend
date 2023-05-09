@@ -13,11 +13,12 @@ function generateNotification(ntf: OngoingNotification) {
     case 'PROJECT_UPDATED':
       return (
         <div className="body-4">
-          <Link href={`/user/${msg.targetUser?.userId}`}>
+          <Link prefetch={false} href={`/user/${msg.targetUser?.userId}`}>
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
           <Link
+            prefetch={false}
             className="body-4"
             href={`/challenges/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
           >
@@ -28,11 +29,12 @@ function generateNotification(ntf: OngoingNotification) {
     case 'CHALLENGE_UPDATED':
       return (
         <div className="body-4">
-          <Link href={`/user/${msg.targetUser?.userId}`}>
+          <Link prefetch={false} href={`/user/${msg.targetUser?.userId}`}>
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
           <Link
+            prefetch={false}
             className="body-4"
             href={`/challenges/${msg.team.challenge?.id}`}
           >
@@ -48,7 +50,7 @@ function generateNotification(ntf: OngoingNotification) {
     case 'TEAM_INFO_UPDATED':
       return (
         <div className="body-4">
-          <Link href={`/user/${msg.targetUser?.userId}`}>
+          <Link prefetch={false} href={`/user/${msg.targetUser?.userId}`}>
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500">
@@ -70,6 +72,7 @@ function generateNotification(ntf: OngoingNotification) {
             <span className="body-4">{msg.team.name}</span>
           ) : (
             <Link
+              prefetch={false}
               className="body-4"
               href={`/challenges/${msg.team.challenge?.id}/teams/${msg.teamId}`}
             >

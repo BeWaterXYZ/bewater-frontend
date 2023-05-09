@@ -34,6 +34,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
       {isTeamingEnabled ? (
         <div className="mt-6 md:mt-12">
           <Link
+            prefetch={false}
             href={`/challenges/${challenge.id}/teams`}
             className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
           >

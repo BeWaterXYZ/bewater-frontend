@@ -16,6 +16,7 @@ export default function Page({ params }: any) {
         Results announced after challenge ends and judging.
       </p>
       <Link
+        prefetch={false}
         className="btn btn-primary"
         href={`/challenges/${challengeId}/projects`}
       >
