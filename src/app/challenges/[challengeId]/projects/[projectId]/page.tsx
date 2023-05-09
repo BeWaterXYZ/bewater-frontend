@@ -44,7 +44,16 @@ export default function Page({ params }: any) {
 
       <div className="flex flex-wrap rounded border border-[#24254E]">
         <div className="w-full lg:w-[400px]">
-          {screen.width <= 1024 ? (
+          <div className="hidden lg:block h-full relative">
+            <img
+              width={450}
+              height={300}
+              src={project?.mediaURLs?.[0] ?? unsplash('conference')}
+              alt="project"
+              className="object-cover block h-full absolute w-full top-0 left-0"
+            />
+          </div>
+          <div className="block lg:hidden">
             <Aspect ratio={3 / 2}>
               <Image
                 width={450}
@@ -54,15 +63,7 @@ export default function Page({ params }: any) {
                 className="object-cover block w-full h-full"
               />
             </Aspect>
-          ) : (
-            <Image
-              width={450}
-              height={300}
-              src={project?.mediaURLs?.[0] ?? unsplash('conference')}
-              alt="project"
-              className="object-cover block w-full h-full"
-            />
-          )}
+          </div>
         </div>
         <div className="flex-1 p-7">
           <div className="flex justify-between ">
