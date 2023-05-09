@@ -31,36 +31,38 @@ export default async function Page({ params }: any) {
         </Link>
       </div>
 
-      <div className="flex justify-between flex-col lg:flex-row gap-3">
+      <div className="flex justify-between flex-col lg:flex-row gap-3 mb-10">
         <div className="heading-6 break-words">{team.name}</div>
 
         <div>
           <TeamMenu team={team} />
         </div>
       </div>
-      <div className="border border-[#24254E] rounded bg-[#0B0C24] p-4 flex gap-4 my-10 justify-center">
-        <div>
-          <Image
-            src="/challenge/wanted.svg"
-            alt="Picture of the author"
-            width={80}
-            height={80}
-          />
-        </div>
-        <div className="flex-1 flex flex-col justify-around">
-          <p className="body-3"> We still Need...</p>
-          <div className="flex gap-2 flex-wrap">
-            {team.openingRoles.map((role) => (
-              <TagRole label={role} key={role} />
-            ))}
-            {team.skills.map((skill) => (
-              <TagSkill label={skill} key={skill} />
-            ))}
+      {team.openingRoles.length > 0 && (
+        <div className="border border-[#24254E] rounded bg-[#0B0C24] p-4 flex gap-4 mb-10 justify-center">
+          <div>
+            <Image
+              src="/challenge/wanted.svg"
+              alt="Picture of the author"
+              width={80}
+              height={80}
+            />
+          </div>
+          <div className="flex-1 flex flex-col justify-around">
+            <p className="body-3"> We still Need...</p>
+            <div className="flex gap-2 flex-wrap">
+              {team.openingRoles.map((role) => (
+                <TagRole label={role} key={role} />
+              ))}
+              {team.skills.map((skill) => (
+                <TagSkill label={skill} key={skill} />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="mb-8">
-        <div className="mb-8">
+      )}
+      <div className="mb-10">
+        <div className="mb-10">
           <p className="body-3 text-grey-500 font-bold my-5"> Team Leader</p>
 
           <div className="flex my-4">
@@ -71,18 +73,18 @@ export default async function Page({ params }: any) {
         </div>
 
         <div>
-          <p className="body-3 text-grey-500 font-bold my-5"> Members </p>
-          <div className="flex my-4 gap-3 flex-wrap">
-            {members.length > 0 ? (
-              members.map((member) => (
+          <p className="body-3 text-grey-500 font-bold my-5"> Members</p>
+          {members.length > 0 ? (
+            <div className="flex my-4 gap-3 flex-wrap">
+              {members.map((member) => (
                 <TeamMember key={member.id} member={member} />
-              ))
-            ) : (
-              <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
-                No other members yet.
-              </div>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded border border-[#24254E] bg-[#0B0C24] mt-5 p-4 my-3 w-min body-2 text-grey-600 whitespace-nowrap">
+              No other members yet.
+            </div>
+          )}
         </div>
       </div>
 
