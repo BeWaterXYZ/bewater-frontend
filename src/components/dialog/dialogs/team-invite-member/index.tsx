@@ -12,23 +12,12 @@ import { z } from 'zod';
 import { Dialogs, useDialogStore } from '../../store';
 
 const schema = z.object({
-  user: z.string(),
+  user: validationSchema.userId,
   role: validationSchema.role,
-  message: validationSchema.text,
+  message: z.string().optional(),
 });
 
-export type Inputs = z.infer<typeof schema>;
-
-export function useTeamCreateForm() {
-  return useForm<Inputs>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      user: '',
-      message: '',
-      role: [],
-    },
-  });
-}
+type Inputs = z.infer<typeof schema>;
 
 interface InviteMemberDialogProps {
   data: NonNullable<Dialogs['team_invite_member']>;
@@ -74,7 +63,14 @@ export default function InviteMemberDialog({
     register,
     handleSubmit,
     formState: { errors },
-  } = useTeamCreateForm();
+  } = useForm<Inputs>({
+    resolver: zodResolver(schema),
+    defaultValues: {
+      user: '',
+      message: '',
+      role: [],
+    },
+  });
 
   const gotoManangeMember = () => {
     showDialog('team_manage_member', data);
