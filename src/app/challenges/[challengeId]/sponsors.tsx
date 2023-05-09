@@ -16,6 +16,7 @@ const sponsors_tier2 = [
   '/sponsors/bodl.png',
   '/sponsors/filecoin.png',
   '/sponsors/hkust.png',
+  '/sponsors/talentre.png',
 ];
 
 const sponsors_tier3 = [
@@ -36,6 +37,7 @@ const sponsors_tier3 = [
   '/sponsors/icewhale.png',
   '/sponsors/dataverse.png',
   '/sponsors/blockbeats.png',
+  '/sponsors/blockacademy.png',
 ];
 
 export function Sponsors() {
