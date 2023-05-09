@@ -71,11 +71,17 @@ export default async function Page({ params }: any) {
         </div>
 
         <div>
-          <p className="body-3 text-grey-500 font-bold my-5"> Members</p>
+          <p className="body-3 text-grey-500 font-bold my-5"> Members </p>
           <div className="flex my-4 gap-3 flex-wrap">
-            {members.map((member) => (
-              <TeamMember key={member.id} member={member} />
-            ))}
+            {members.length > 0 ? (
+              members.map((member) => (
+                <TeamMember key={member.id} member={member} />
+              ))
+            ) : (
+              <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+                No other members yet.
+              </div>
+            )}
           </div>
         </div>
       </div>
