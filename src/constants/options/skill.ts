@@ -35,11 +35,11 @@ export const SkillSet = [
   'Illustration',
 ] as const;
 
-export type SkillUnion = typeof SkillSet[number];
+export type SkillUnion = (typeof SkillSet)[number];
 
 export const SkillSetOptions: OptionItem<SkillUnion>[] = SkillSet.map(
   (skill) => ({
-    label: '#' + skill,
+    label: skill,
     value: skill,
     classes: {
       container: '!rounded-full !bg-midnight  h-5  my-0',

@@ -18,7 +18,7 @@ export function Loading({ cover = true }: Props) {
         )}
       >
         <div className="relative inline-block w-20 h-20" role="status">
-          <div className="absolute border-4 border-solid border-blue-600 rounded-full animate-spin-ripple" />
+          <div className="absolute border-4 border-solid border-day rounded-full animate-spin-ripple" />
           <div className="absolute border-4 border-solid  rounded-full animate-spin-ripple -animation-delay-500" />
           <span className="sr-only">Loading...</span>
         </div>

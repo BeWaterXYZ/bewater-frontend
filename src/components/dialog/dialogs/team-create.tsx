@@ -85,7 +85,7 @@ export default function TeamCreateDialog({
       close();
       addToast({
         type: 'success',
-        title: 'team dismissed',
+        title: 'Team dismissed',
         description: '',
       });
     } catch (err) {
@@ -112,7 +112,7 @@ export default function TeamCreateDialog({
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
           type: 'success',
-          title: 'team updated',
+          title: 'Team info updated',
           description: '',
         });
         router.refresh();
