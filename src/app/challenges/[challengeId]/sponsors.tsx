@@ -39,6 +39,8 @@ const sponsors_tier3 = [
   '/sponsors/blockbeats.png',
   '/sponsors/blockacademy.png',
   '/sponsors/catastrophy.png',
+  '/sponsors/bitpush.png',
+  '/sponsors/amphi.png',
 ];
 
 export function Sponsors() {

@@ -1,9 +1,9 @@
 'use client';
 import { Aspect } from '@/components/aspect';
-import { useLoadingStoreAction } from '@/components/loading/store';
+import { useLoadingWhen } from '@/components/loading/store';
 import { TeamMember } from '@/components/molecules/team-member';
 import { TagProjectTag } from '@/components/tag/project-tag';
-import { getProject } from '@/services/project';
+import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchProject } from '@/services/project.query';
 import { unsplash } from '@/utils/unsplash';
 import { formatDistance, parseISO } from 'date-fns';
@@ -12,7 +12,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
 import { ProjectAssets } from './project-assets';
-import { useLoadingWhen } from '@/components/loading/store';
 import { GithubStats } from './project-github';
 
 const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
@@ -26,13 +25,32 @@ export default function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { projectId } = segmentSchema.projectId.parse(params);
   const { data: project, isLoading } = useFetchProject(projectId);
+  const { data: challenge } = useFetchChallengeById(challengeId);
   useLoadingWhen(isLoading);
 
-  if (!project) return null;
+  if (!project || !challenge) return null;
+
+  const share = () => {
+    if (!window) return;
+    let url =
+      window.location.origin +
+      `/challenges/${challenge.id}/projects/${project.id}`;
+
+    let usp = new URLSearchParams();
+    usp.append(
+      'text',
+      `快来加入 我在 ${challenge.title} 上发现的 "${project.name}" 项目吧!`,
+    );
+
+    usp.append('url', url);
+    usp.append('hashtags', 'BeWaterWeb3Challenge');
+    let twitterURL = 'http://twitter.com/share?' + usp.toString();
+    window!.open(twitterURL, '_blank')!.focus();
+  };
 
   return (
     <div className="container">
-      <div className="my-10">
+      <div className="my-10 flex justify-between">
         <Link
           prefetch={false}
           className="body-3 text-grey-400"
@@ -40,11 +58,23 @@ export default function Page({ params }: any) {
         >
           {'< Project List'}
         </Link>
+        <button className="btn btn-secondary" onClick={share}>
+          Share
+        </button>
       </div>
 
       <div className="flex flex-wrap rounded border border-[#24254E]">
         <div className="w-full lg:w-[400px]">
-          {screen.width <= 1024 ? (
+          <div className="hidden lg:block h-full relative">
+            <img
+              width={450}
+              height={300}
+              src={project?.mediaURLs?.[0] ?? unsplash('conference')}
+              alt="project"
+              className="object-cover block h-full absolute w-full top-0 left-0"
+            />
+          </div>
+          <div className="block lg:hidden">
             <Aspect ratio={3 / 2}>
               <Image
                 width={450}
@@ -54,15 +84,7 @@ export default function Page({ params }: any) {
                 className="object-cover block w-full h-full"
               />
             </Aspect>
-          ) : (
-            <Image
-              width={450}
-              height={300}
-              src={project?.mediaURLs?.[0] ?? unsplash('conference')}
-              alt="project"
-              className="object-cover block w-full h-full"
-            />
-          )}
+          </div>
         </div>
         <div className="flex-1 p-7">
           <div className="flex justify-between ">
