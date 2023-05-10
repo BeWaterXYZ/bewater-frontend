@@ -17,13 +17,17 @@ function generateNotification(ntf: OngoingNotification) {
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
-          <Link
-            prefetch={false}
-            className="body-4"
-            href={`/challenges/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
-          >
-            {msg.team.project.name}
-          </Link>
+          {msg.team.status === 'DISMISSED' ? (
+            <span className="body-4">{msg.team.name}</span>
+          ) : (
+            <Link
+              prefetch={false}
+              className="body-4"
+              href={`/challenges/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
+            >
+              {msg.team.project.name}
+            </Link>
+          )}
         </div>
       );
     case 'CHALLENGE_UPDATED':
@@ -68,7 +72,7 @@ function generateNotification(ntf: OngoingNotification) {
               ' has been removed from '
             )}
           </span>
-          {msg.type === 'TEAM_DISMISSED' ? (
+          {msg.type === 'TEAM_DISMISSED' || msg.team.status === 'DISMISSED' ? (
             <span className="body-4">{msg.team.name}</span>
           ) : (
             <Link
