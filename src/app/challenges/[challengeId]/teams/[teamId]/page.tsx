@@ -108,7 +108,14 @@ export default async function Page({ params }: any) {
           </Link>
         </div>
 
-        <p className="body-4 text-grey-300">{team.project.description}</p>
+        <p className="body-4 text-grey-300">
+          {team.project.description.split('\n').map((s, i) => (
+            <p key={i} className="py-2">
+              {s}
+            </p>
+          ))}
+        </p>
+
         <Link
           prefetch={false}
           href={`/challenges/${challengeId}/projects/${team.project.id}`}
