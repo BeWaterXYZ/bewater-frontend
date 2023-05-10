@@ -20,6 +20,7 @@ import {
   useMutaionDismissTeam,
 } from '@/services/team.query';
 import { Team } from '@/services/types';
+import { useState } from 'react';
 
 const schema = z
   .object({
@@ -67,6 +68,7 @@ export default function TeamCreateDialog({
   const dismissTeamMutation = useMutaionDismissTeam(data.team?.challengeId);
   const { confirm } = useAlert();
   const showDialog = useDialogStore((s) => s.open);
+  const [isCallingAPI, setIsCallingAPI] = useState(false);
 
   const onDismiss = async () => {
     let confirmed = await confirm({
@@ -96,6 +98,7 @@ export default function TeamCreateDialog({
   };
   const onSubmit = async (formData: Inputs) => {
     showLoading();
+    setIsCallingAPI(true);
     try {
       if (isEditing) {
         /**
@@ -158,6 +161,7 @@ export default function TeamCreateDialog({
       console.log(err);
     } finally {
       dismissLoading();
+      setIsCallingAPI(false);
     }
   };
   const {
@@ -242,13 +246,14 @@ export default function TeamCreateDialog({
           <div className="flex-1" />
           <div className="flex gap-2">
             <button
+              disabled={isCallingAPI}
               className="btn btn-secondary "
               type="button"
               onClick={close}
             >
               Cancel
             </button>
-            <button className="btn btn-primary ">
+            <button className="btn btn-primary " disabled={isCallingAPI}>
               {isEditing ? 'Update' : 'Create'}
             </button>
           </div>
