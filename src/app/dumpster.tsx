@@ -8,6 +8,9 @@ import { LoadingContainer } from '@/components/loading';
 import { useLoadingStore } from '@/components/loading/store';
 import { ToastContainer } from '@/components/toast';
 import { useToastStore } from '@/components/toast/store';
+import { useNavigator } from '@/hooks/useNavigator';
+import { useAuthStore } from '@/stores/auth';
+import { useEffect } from 'react';
 
 export function Dumpster() {
   const toasts = useToastStore((s) => s.toasts);
@@ -15,6 +18,14 @@ export function Dumpster() {
   const closeDialog = useDialogStore((s) => s.close);
   const loading = useLoadingStore((s) => s.loading);
   const alert = useAlertStore((s) => s.alert);
+  const { token, user } = useAuthStore((s) => s);
+  const navigator = useNavigator();
+
+  useEffect(() => {
+    if (token && !user) {
+      navigator.goToWelcome();
+    }
+  }, []);
   return (
     <>
       <DialogContainer dialogs={dialogs} closeDialog={closeDialog} />
