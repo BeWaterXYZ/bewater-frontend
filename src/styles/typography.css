@@ -19,7 +19,9 @@
   .heading-6 {
     @apply font-primary text-[20px] leading-normal font-bold text-white;
   }
-
+  .body-0 {
+    @apply font-secondary text-[20px] leading-normal font-medium text-white;
+  }
   .body-1 {
     @apply font-secondary text-[18px] leading-normal font-medium text-white;
   }

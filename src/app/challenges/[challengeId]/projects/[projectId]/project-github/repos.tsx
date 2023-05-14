@@ -38,7 +38,7 @@ export function ProjectConnectGithub({ project }: { project: Project }) {
 
   if (isLoading) return <Loading cover={false} />;
   return (
-    <div className="p-6 rounded bg-[#0B0C24] border border-grey-800 flex flex-col gap-4">
+    <div className="p-6 rounded bg-latenight border border-grey-800 flex flex-col gap-4">
       <div className="flex justify-between">
         <div className="flex gap-2 items-center">
           <Image src="/icons/github.svg" alt="github" height={20} width={20} />

@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { segmentSchema } from '../param-schema';
 import Link from 'next/link';
+import { ResultCard } from './result-card';
+
 export default function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   return (
@@ -22,6 +24,13 @@ export default function Page({ params }: any) {
       >
         Back to Projects
       </Link>
+
+      <div className=" flex  flex-col gap-2">
+        <p className="heading-1 ">WIP</p>
+        <ResultCard teamId="645b64ee8db4e33248edec10" thumbnail score={99} />
+
+        <ResultCard teamId="645b64ee8db4e33248edec10" score={99} />
+      </div>
     </div>
   );
 }

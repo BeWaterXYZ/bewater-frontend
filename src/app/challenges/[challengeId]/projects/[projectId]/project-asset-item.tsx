@@ -65,7 +65,7 @@ export function AssetItem({
     }
   };
   return (
-    <div className="rounded p-3 border border-midnight bg-[#0B0C24] flex gap-2 justify-between ">
+    <div className="rounded p-3 border border-midnight bg-latenight flex gap-2 justify-between ">
       <div className="flex  p-2">
         <Image src={`/icons/${icon}.svg`} width={24} height={24} alt={label} />
       </div>

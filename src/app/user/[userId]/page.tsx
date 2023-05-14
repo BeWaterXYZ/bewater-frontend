@@ -30,7 +30,7 @@ export default function Page({ params }: any) {
               return (
                 <div
                   key={tm.id}
-                  className="w-full lg:w-1/2 rounded bg-[#0B0C24] border border-[#24254E] overflow-hidden "
+                  className="w-full lg:w-1/2 rounded bg-latenight border border-[#24254E] overflow-hidden "
                 >
                   <Link
                     prefetch={false}
@@ -59,7 +59,7 @@ export default function Page({ params }: any) {
             })}
           </div>
         ) : (
-          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+          <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
             Not in any challenges yet.
           </div>
         )}
@@ -74,7 +74,7 @@ export default function Page({ params }: any) {
             })}
           </div>
         ) : (
-          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+          <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
             Not in any teams yet.
           </div>
         )}

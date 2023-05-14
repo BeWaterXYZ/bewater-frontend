@@ -26,6 +26,7 @@ module.exports = {
       },
       colors: {
         night: '#04051B',
+        latenight: '#0B0C24',
         midnight: '#1E293B',
         day: '#00ffff',
         danger: '#F43F5E',

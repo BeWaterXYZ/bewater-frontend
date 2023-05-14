@@ -19,7 +19,7 @@ export default function Page() {
     <div>
       <div className="flex flex-col gap-3">
         {requests.length === 0 ? (
-          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+          <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
             No notifications yet.
           </div>
         ) : null}

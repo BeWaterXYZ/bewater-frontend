@@ -27,22 +27,22 @@ export function GithubStatsDisplay({ project }: { project: Project }) {
   return (
     <div>
       <div className="flex flex-col gap-3">
-        <div className="bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+        <div className="bg-latenight border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
           <p className="body-4 text-grey-500">Language Used</p>
           <div className="body-3 flex flex-wrap ">
             {getRepoLanguageStats(data)}
           </div>
         </div>
         <div className="flex gap-3">
-          <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+          <div className="flex-1 bg-latenight border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
             <p className="body-4 text-grey-500">Open Issues</p>
             <p className="body-3 ">{data?.openIssuesCount}</p>
           </div>
-          <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+          <div className="flex-1 bg-latenight border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
             <p className="body-4 text-grey-500">Pull Requests</p>
             <p className="body-3">{data?.totalPullRequests}</p>
           </div>
-          <div className="flex-1 bg-[#0B0C24] border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
+          <div className="flex-1 bg-latenight border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
             <p className="body-4 text-grey-500">Commits</p>
             <p className="body-3">{data?.totalCommits}</p>
           </div>
