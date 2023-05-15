@@ -39,7 +39,7 @@ export default async function Page({ params }: any) {
         </div>
       </div>
       {team.openingRoles.length > 0 && (
-        <div className="border border-[#24254E] rounded bg-[#0B0C24] p-4 flex gap-4 mb-10 justify-center">
+        <div className="border border-[#24254E] rounded bg-latenight p-4 flex gap-4 mb-10 justify-center">
           <div>
             <Image
               src="/challenge/wanted.svg"
@@ -81,7 +81,7 @@ export default async function Page({ params }: any) {
               ))}
             </div>
           ) : (
-            <div className="rounded border border-[#24254E] bg-[#0B0C24] mt-5 p-4 my-3 w-min body-2 text-grey-600 whitespace-nowrap">
+            <div className="rounded border border-[#24254E] bg-latenight mt-5 p-4 my-3 w-min body-2 text-grey-600 whitespace-nowrap">
               No other members yet.
             </div>
           )}

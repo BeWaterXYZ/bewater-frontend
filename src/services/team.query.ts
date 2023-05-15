@@ -1,12 +1,26 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createTeam, dismissTeam, getChallengeTeams, updateTeam } from './team';
-import { ChallengeID } from './types';
+import {
+  createTeam,
+  dismissTeam,
+  getChallengeTeams,
+  getTeam,
+  updateTeam,
+} from './team';
+import { ChallengeID, TeamID } from './types';
 
 export function useFetchChallengeTeams(challengeId: ChallengeID) {
   return useQuery({
     queryKey: ['challenges', challengeId, 'teams'],
     queryFn: async () => {
       return getChallengeTeams(challengeId);
+    },
+  });
+}
+export function useFetchTeam(teamId: TeamID) {
+  return useQuery({
+    queryKey: ['teams', teamId],
+    queryFn: async () => {
+      return getTeam(teamId);
     },
   });
 }

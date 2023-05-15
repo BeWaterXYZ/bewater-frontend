@@ -14,7 +14,7 @@ export function ChallengeList({ challenges }: ChallengeListProps) {
       {challenges.map((challenge) => (
         <div
           key={challenge.id}
-          className="w-full border border-[#24254E] rounded overflow-hidden bg-[#0B0C24]"
+          className="w-full border border-[#24254E] rounded overflow-hidden bg-latenight"
         >
           <Link prefetch={false} href={`/challenges/${challenge.id}`}>
             <Aspect ratio={5 / 2}>

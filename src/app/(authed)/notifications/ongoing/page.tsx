@@ -104,7 +104,7 @@ export default function Page() {
 
   if (flattenNotifications.length === 0)
     return (
-      <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+      <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
         No notifications yet.
       </div>
     );

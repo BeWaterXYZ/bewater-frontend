@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 export function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <div className="w-full lg:w-1/3 h-[140px] rounded bg-[#0B0C24] border border-[#24254E] p-4 flex flex-col justify-between ">
+    <div className="w-full lg:w-1/3 h-[140px] rounded bg-latenight border border-[#24254E] p-4 flex flex-col justify-between ">
       <div>
         <div className="pb-2 flex gap-2">
           {member.isLeader ? (

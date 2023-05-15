@@ -19,7 +19,7 @@ export function GithubStats({ project }: { project: Project }) {
         ) : isLeader ? (
           <GithubStatsSetup project={project} />
         ) : (
-          <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 my-3 body-2 text-grey-600">
+          <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
             Not linked GitHub yet.
           </div>
         )}

@@ -19,6 +19,7 @@ const sponsors_tier2 = [
   '/sponsors/talentre.png',
   '/sponsors/knn3.png',
   '/sponsors/memolabs.png',
+  '/sponsors/looksrare.png',
 ];
 
 const sponsors_tier3 = [

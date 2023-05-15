@@ -61,7 +61,7 @@ export function ProjectAssets({ project }: { project: Project }) {
           })}
         </div>
       ) : (
-        <div className="rounded border border-[#24254E] bg-[#0B0C24] mt-5 p-4 my-3 body-2 text-grey-600">
+        <div className="rounded border border-[#24254E] bg-latenight mt-5 p-4 my-3 body-2 text-grey-600">
           No assets yet.
         </div>
       )}

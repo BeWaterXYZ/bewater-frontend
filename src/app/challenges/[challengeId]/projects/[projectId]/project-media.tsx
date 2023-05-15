@@ -87,7 +87,7 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
   return (
     <div className="pt-5 pb-10">
       {medias.length === 0 && !canUpload && (
-        <div className="rounded border border-[#24254E] bg-[#0B0C24] p-4 body-2 text-grey-600">
+        <div className="rounded border border-[#24254E] bg-latenight p-4 body-2 text-grey-600">
           Not uploaded images yet.
         </div>
       )}

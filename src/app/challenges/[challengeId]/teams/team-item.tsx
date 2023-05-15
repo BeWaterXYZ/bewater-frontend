@@ -15,7 +15,7 @@ export function TeamItem({ challenge, team }: TeamItemProps) {
       prefetch={false}
       href={`/challenges/${challenge.id}/teams/${team.id}`}
     >
-      <div className=" border border-gray-400/20  text-left bg-[#0B0C24] rounded h-full flex flex-col ">
+      <div className=" border border-gray-400/20  text-left bg-latenight rounded h-full flex flex-col ">
         <div className="bg-[#1A1C40] p-4">
           <div className="">
             <div className="flex items-center flex-wrap">
