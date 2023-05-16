@@ -12,6 +12,7 @@ import type { Connector } from 'wagmi';
 import { useLoadingStoreAction } from '@/components/loading/store';
 import { useNavigator } from '@/hooks/useNavigator';
 import { getErrorResp } from '@/utils/error-type';
+import { connect } from 'http2';
 
 export default function WalletOptions() {
   const addToast = useToastStore((s) => s.add);
@@ -24,9 +25,12 @@ export default function WalletOptions() {
 
   const availableConnectors = connectors.filter((c) => c.ready);
   const onConnectorClick = async (connector: Connector) => {
+    console.log({ connector });
     try {
       clearToast();
-      showLoading();
+      if (connector.id === 'metaMask') {
+        showLoading();
+      }
       const { address, chainId } = await connectWallet(connector);
       if (address && chainId) {
         const { message, isWhitelisted } = await getSignMessage(

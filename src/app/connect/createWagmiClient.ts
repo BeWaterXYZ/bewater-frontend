@@ -1,15 +1,16 @@
-import { configureChains, createClient, mainnet } from 'wagmi';
+import { configureChains, createConfig } from 'wagmi';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { publicProvider } from 'wagmi/providers/public';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { infuraProvider } from 'wagmi/providers/infura';
-
+import { mainnet } from '@wagmi/core/chains';
 import { CONFIGS } from '@/config';
+import { createPublicClient, http } from 'viem';
 
 export function createWagmiClient() {
-  const { chains, provider, webSocketProvider } = configureChains(
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
     [mainnet],
     [
       alchemyProvider({ apiKey: CONFIGS.PROVIDER_ALCHEMY_KEY }),
@@ -18,9 +19,16 @@ export function createWagmiClient() {
     ],
   );
 
+  console.log(chains);
+
   // Set up client
-  const client = createClient({
+  const client = createConfig({
     autoConnect: true,
+    publicClient: createPublicClient({
+      chain: mainnet,
+      transport: http(),
+    }),
+    webSocketPublicClient,
     connectors: [
       new MetaMaskConnector({ chains }),
       new CoinbaseWalletConnector({
@@ -32,12 +40,10 @@ export function createWagmiClient() {
       new WalletConnectConnector({
         chains,
         options: {
-          qrcode: true,
+          projectId: CONFIGS.WALLETCONNECT_PROJECT_ID,
         },
       }),
     ],
-    provider,
-    webSocketProvider,
   });
 
   return client;

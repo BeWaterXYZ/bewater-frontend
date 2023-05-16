@@ -42,7 +42,10 @@ export async function getSignMessage(address: string, chainId: number) {
 }
 
 export async function verifyMessage(message: string, walletAddress: string) {
+  console.log('start sign msg');
   const signature = await signMessage({ message });
+  console.log('end sign msg', signature);
+
   const { token, userProfile } = await submitVerifySignedMessage({
     walletAddress,
     signature,
