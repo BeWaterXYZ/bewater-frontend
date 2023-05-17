@@ -23,8 +23,9 @@ const sponsors_tier2 = [
 ];
 
 const sponsors_tier3 = [
-  '/sponsors/noncegeek.png',
   '/sponsors/sf.png',
+  '/sponsors/csdn.png',
+  '/sponsors/noncegeek.png',
   '/sponsors/moledao.png',
   '/sponsors/abga.png',
   '/sponsors/thuba.png',
