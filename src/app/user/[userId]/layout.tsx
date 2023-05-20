@@ -1,9 +1,7 @@
-'use client';
 import { Avatar } from '@/components/avatar/avatar';
-import { useLoadingWhen } from '@/components/loading/store';
 import { TagRole, TagSkill } from '@/components/tag';
 import { SocialAuth } from '@/services/types';
-import { useFetchUserFull } from '@/services/user.query';
+import { getUserProfileFull } from '@/services/user';
 import { maskWalletAddress } from '@/utils/wallet-adress';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,7 +14,7 @@ function getSocialConnectLink(con: SocialAuth) {
     return `https://figma.com/@${con.handle}`;
   return '';
 }
-export default function Layout({
+export default async function Layout({
   children,
   params,
 }: {
@@ -24,8 +22,7 @@ export default function Layout({
   params: any;
 }) {
   const { userId } = userSchema.parse(params);
-  const { data: profile, isLoading } = useFetchUserFull(userId);
-  useLoadingWhen(isLoading);
+  const profile = await getUserProfileFull(userId);
 
   if (!profile) return null;
 
@@ -90,3 +87,5 @@ export default function Layout({
     </div>
   );
 }
+
+export const dynamic = 'force-dynamic';

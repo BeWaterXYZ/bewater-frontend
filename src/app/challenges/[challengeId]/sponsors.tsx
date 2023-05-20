@@ -20,11 +20,13 @@ const sponsors_tier2 = [
   '/sponsors/knn3.png',
   '/sponsors/memolabs.png',
   '/sponsors/looksrare.png',
+  '/sponsors/debox.png',
 ];
 
 const sponsors_tier3 = [
-  '/sponsors/noncegeek.png',
   '/sponsors/sf.png',
+  '/sponsors/csdn.png',
+  '/sponsors/noncegeek.png',
   '/sponsors/moledao.png',
   '/sponsors/abga.png',
   '/sponsors/thuba.png',
