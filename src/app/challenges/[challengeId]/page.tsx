@@ -101,16 +101,6 @@ export default async function ChallengeIntro({ params }: any) {
                 </div>
               );
             })}
-          <div className="w-[180px] mb-2">
-            <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
-              Coming
-              <br />
-              Soon
-            </div>
-            <p className="body-3 mt-6 w-full text-center text-grey-400">
-              更多评委即将揭晓...
-            </p>
-          </div>
         </div>
       </div>
       <div className="w-full flex gap-8 flex-col md:flex-row my-16">
