@@ -37,10 +37,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.pinata.cloud',
       },
-      {
-        protocol: 'https',
-        hostname: '**.4everland.io',
-      },
+      // {
+      //   protocol: 'https',
+      //   hostname: '**.4everland.io',
+      // },
     ],
   },
   async rewrites() {
