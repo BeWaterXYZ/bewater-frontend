@@ -12,13 +12,13 @@ export function CreateTeamButton({ challenge }: { challenge: Challenge }) {
   const addToast = useToastStore((s) => s.add);
   const baoMingEndTime = '2023-05-25T10:00:00.000Z'; // 北京时间18点
 
-  const [buttonCando, setbuttonCando] = useState(
+  const [buttonCando, setButtonCando] = useState(
     new Date(baoMingEndTime) > new Date(),
   );
 
   const onClick = () => {
     if (new Date(baoMingEndTime) < new Date()) {
-      setbuttonCando(false);
+      setButtonCando(false);
       addToast({
         type: 'warning',
         title: '报名时间已截止，请关注我们之后的赛事',
@@ -36,7 +36,7 @@ export function CreateTeamButton({ challenge }: { challenge: Challenge }) {
   return (
     <button
       className="btn btn-primary"
-      disabled={buttonCando ? false : true}
+      disabled={!buttonCando}
       onClick={onClick}
     >
       Create a team
