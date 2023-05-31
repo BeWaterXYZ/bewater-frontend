@@ -10,7 +10,15 @@ export function CreateTeamButton({ challenge }: { challenge: Challenge }) {
   const showDialog = useDialogStore((s) => s.open);
   const navigator = useNavigator();
   const addToast = useToastStore((s) => s.add);
-  const baoMingEndTime = '2023-05-25T10:00:00.000Z'; // 北京时间18点
+  let baoMingEndTime = ''; // 北京时间 2023-06-25T10:00:00.000Z
+
+  for (const it of challenge.milestones) {
+    if (it.stageName === 'Review') {
+      baoMingEndTime = it.dueDate;
+    }
+  }
+
+  baoMingEndTime = `${baoMingEndTime}T10:00:00.000Z`;
 
   const [buttonCando, setButtonCando] = useState(
     new Date(baoMingEndTime) > new Date(),
