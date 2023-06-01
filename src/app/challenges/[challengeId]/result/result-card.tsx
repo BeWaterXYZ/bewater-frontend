@@ -11,7 +11,7 @@ import Link from 'next/link';
 interface ResultCardProps {
   teamId: TeamID;
   thumbnail?: boolean;
-  score: number;
+  score?: number;
 }
 export function ResultCard({
   teamId,
@@ -42,9 +42,11 @@ export function ResultCard({
           >
             {team.project.name}
           </Link>
-          <div className="absolute top-0 right-0 w-10 h-10 rounded-[3px] body-4 bg-[#1A1C40]   p-3">
-            {score}
-          </div>
+          {score ? (
+            <div className="absolute top-0 right-0 w-10 h-10 rounded-[3px] body-4 bg-[#1A1C40]   p-3">
+              {score}
+            </div>
+          ) : null}
           <div className="flex items-center gap-2 py-2">
             {team.project.tags.map((tag) => (
               <TagProjectTag key={tag} label={tag} />
