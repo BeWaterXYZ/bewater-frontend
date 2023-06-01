@@ -24,12 +24,11 @@ export function ResultCard({
   return (
     <div className="flex flex-col md:flex-row rounded overflow-hidden">
       {thumbnail ? (
-        <div className=" h-[216px]  overflow-hidden">
+        <div className="relative h-[216px] w-[320px]  overflow-hidden">
           <Image
             src={team.project.mediaURLs[0] ?? unsplash('project')}
             alt="github"
-            height={216}
-            width={320}
+            fill
           />
         </div>
       ) : null}

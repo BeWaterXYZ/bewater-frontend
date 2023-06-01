@@ -1,92 +1,87 @@
 import Image from 'next/image';
-import { segmentSchema } from '../param-schema';
-import Link from 'next/link';
 import { ResultCard } from './result-card';
+import './style.css';
 const winners = [
   {
     track: 'GameFi',
+    icon: '🎮',
     teams: [
       '646db5d1cb0a91f0eb425474',
       '6455ab6179c1ffd9a29f9374',
       '645a55cc4b5a8bfcd7bf9029',
     ],
+    scores: [99, 98, 97],
   },
   {
     track: 'DeFi',
+    icon: '🎮',
     teams: [
       '6455007579c1ffd9a29f9339',
       '64679790cb0a91f0eb42528d',
       '64671f0dcb0a91f0eb425208 ',
     ],
+    scores: [99, 98, 97],
   },
   {
     track: 'NFT',
+    icon: '🐵',
     teams: [
       '64550bee79c1ffd9a29f934a',
       '645b0bc74b5a8bfcd7bf906e',
       '6461a5631a7b44c927a1a0b8',
     ],
+    scores: [99, 98, 97],
   },
   {
     track: 'Web3 Security & Infra',
+    icon: '🔒',
     teams: [
       '6468a689cb0a91f0eb425318',
       '6455d86179c1ffd9a29f93c3',
       '645862b7a994c9b0176a8284',
     ],
+    scores: [99, 98, 97],
   },
   {
     track: 'ZK',
+    icon: '🤷',
     teams: [
       '64663df4cb0a91f0eb425114',
       '64664619cb0a91f0eb42511f',
       '64662bf6cb0a91f0eb4250fa',
     ],
+    scores: [99, 98, 97],
   },
   {
     track: 'DAO Tool',
+    icon: '⚒️',
     teams: [
       '645a8f9e4b5a8bfcd7bf903a',
       '646b75c2cb0a91f0eb425399',
       '6457a29ca994c9b0176a824a',
     ],
+    scores: [99, 98, 97],
   },
 ];
 export default function Page({ params }: any) {
-  const { challengeId } = segmentSchema.challengeId.parse(params);
   return (
     <>
-      {/* <div className="container flex flex-col items-center justify-center gap-4 my-20">
-        <Image
-          src="/icons/no-result.svg"
-          height={180}
-          width={270}
-          alt="no teams"
-        />
-        <p className="body-1 text-[20px] text-center">Results Coming Soon!</p>
-        <p className="body-2 text-grey-500 text-center">
-          Results announced after challenge ends and judging.
-        </p>
-        <Link
-          prefetch={false}
-          className="btn btn-primary"
-          href={`/challenges/${challengeId}/projects`}
-        >
-          Back to Projects
-        </Link>
-      </div> */}
+      <div className="flex justify-center">
+        <div className="relative body-2 text-center my-10 p-6 m-auto">
+          ✨ 18 of 400 teams won a total prize pool of{' '}
+          <span className="text-day">$30,000</span>{' '}
+          <div
+            className="absolute w-full h-[1px] bottom-0 left-0"
+            style={{ background: 'linear-gradient(to right, #01DCBA,#7F30CB' }}
+          ></div>
+        </div>
+      </div>
       {winners.map((w) => {
         return (
           <div className="container" key={w.track}>
-            <h2 className="text-center heading-4 my-4 mt-24">{w.track}</h2>
-            <p
-              className="body-2 text-center text-clip  [-webkit-text-fill-color:transparent] my-4 mb-8"
-              style={{
-                WebkitBackgroundClip: 'text',
-                background:
-                  'linear-gradient(51.06deg, #9358F7 0.87%, #7B78F2 25.96%, #6197EE 49.23%, #45B5E9 74.93%, #10D7E2 97.48%)',
-              }}
-            >
+            <h2 className="text-center heading-4 my-4 mt-24">{w.icon}</h2>
+            <h2 className="text-center heading-4 my-4 ">{w.track}</h2>
+            <p className="rp-text-gradient body-2 text-center my-4 mb-8 ">
               $5,000 Granted to 3 projects
             </p>
             {/* first place  */}
@@ -108,7 +103,7 @@ export default function Page({ params }: any) {
                   className="object-contain"
                 />
               </div>
-              <ResultCard teamId={w.teams[0]} thumbnail />
+              <ResultCard teamId={w.teams[0]} thumbnail score={w.scores[0]} />
               <div className="w-full flex justify-center  my-4">
                 <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
                   $2,500
@@ -119,7 +114,7 @@ export default function Page({ params }: any) {
             <div className="relative my-8 w-full flex flex-col md:flex-row gap-8">
               {/* second place */}
               <div
-                className="relative w-full p-10 rounded-xl flex flex-wrap  justify-center md:justify-between"
+                className="relative w-full pb-16 md:pb-10 p-10  rounded-xl flex flex-wrap  justify-center md:justify-between"
                 style={{
                   background:
                     'linear-gradient(256.33deg, #0C1E60 0.53%, #190E38 100%)',
@@ -137,7 +132,7 @@ export default function Page({ params }: any) {
                   />
                 </div>
                 <div className="flex-1">
-                  <ResultCard teamId={w.teams[1]} />
+                  <ResultCard teamId={w.teams[1]} score={w.scores[1]} />
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
@@ -148,7 +143,7 @@ export default function Page({ params }: any) {
               {/* third place */}
 
               <div
-                className="relative w-full p-10 rounded-xl flex flex-wrap  justify-center md:justify-between"
+                className="relative w-full pb-16 md:pb-10  p-10 rounded-xl flex flex-wrap  justify-center md:justify-between"
                 style={{
                   background:
                     'linear-gradient(256.33deg, #06385B 0.53%, #0F0E38 100%)',
@@ -166,7 +161,7 @@ export default function Page({ params }: any) {
                   />
                 </div>
                 <div className="flex-1">
-                  <ResultCard teamId={w.teams[2]} />
+                  <ResultCard teamId={w.teams[2]} score={w.scores[2]} />
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
