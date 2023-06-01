@@ -14,7 +14,7 @@ const winners = [
   },
   {
     track: 'DeFi',
-    icon: '🎮',
+    icon: '🌐',
     teams: [
       '6455007579c1ffd9a29f9339',
       '64679790cb0a91f0eb42528d',
@@ -24,7 +24,7 @@ const winners = [
   },
   {
     track: 'NFT',
-    icon: '🐵',
+    icon: '🎨',
     teams: [
       '64550bee79c1ffd9a29f934a',
       '645b0bc74b5a8bfcd7bf906e',
@@ -34,7 +34,7 @@ const winners = [
   },
   {
     track: 'Web3 Security & Infra',
-    icon: '🔒',
+    icon: '🔐',
     teams: [
       '6468a689cb0a91f0eb425318',
       '6455d86179c1ffd9a29f93c3',
@@ -44,7 +44,7 @@ const winners = [
   },
   {
     track: 'ZK',
-    icon: '🤷',
+    icon: '0⃣️',
     teams: [
       '64663df4cb0a91f0eb425114',
       '64664619cb0a91f0eb42511f',
@@ -54,7 +54,7 @@ const winners = [
   },
   {
     track: 'DAO Tool',
-    icon: '⚒️',
+    icon: '🛠',
     teams: [
       '645a8f9e4b5a8bfcd7bf903a',
       '646b75c2cb0a91f0eb425399',
@@ -86,10 +86,10 @@ export default function Page({ params }: any) {
             </p>
             {/* first place  */}
             <div
-              className="relative w-full  p-10  rounded-xl flex flex-col items-center "
+              className="relative w-full  pb-16 md:pb-10 p-10  rounded-xl flex flex-col items-center "
               style={{
                 background:
-                  'radial-gradient(23.73% 61.17% at 8.02% 11.08%, rgba(48, 83, 209, 0.3) 0%, rgba(34, 131, 187, 0) 99.99%, rgba(34, 132, 187, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(101.29% 198.2% at 50% -98.2%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 81.45%, rgba(0, 0, 0, 0.4) 100%), radial-gradient(173.35% 1719.94% at 4.11% 93%, #080336 0%, #7406CB 68.23%, #6B1162 100%)',
+                  ' radial-gradient(23.73% 61.17% at 8.02% 11.08%, rgba(48, 83, 209, 0.3) 0%, rgba(34, 131, 187, 0) 99.99%, rgba(34, 132, 187, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */, radial-gradient(101.29% 198.2% at 50% -98.2%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 81.45%, rgba(0, 0, 0, 0.4) 100%), radial-gradient(173.35% 1719.94% at 4.11% 93%, #080336 0%, #7406CB 68.23%, #6B1162 100%)',
               }}
             >
               <div
@@ -104,14 +104,14 @@ export default function Page({ params }: any) {
                 />
               </div>
               <ResultCard teamId={w.teams[0]} thumbnail score={w.scores[0]} />
-              <div className="w-full flex justify-center  my-4">
+              <div className="absolute md:static md:pt-8 w-full flex justify-center md:w-auto bottom-4 left-4">
                 <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
                   $2,500
                 </div>
               </div>
             </div>
 
-            <div className="relative my-8 w-full flex flex-col md:flex-row gap-8">
+            <div className="relative my-8 w-full flex flex-col  gap-8">
               {/* second place */}
               <div
                 className="relative w-full pb-16 md:pb-10 p-10  rounded-xl flex flex-wrap  justify-center md:justify-between"
@@ -132,7 +132,11 @@ export default function Page({ params }: any) {
                   />
                 </div>
                 <div className="flex-1">
-                  <ResultCard teamId={w.teams[1]} score={w.scores[1]} />
+                  <ResultCard
+                    teamId={w.teams[1]}
+                    thumbnail
+                    score={w.scores[1]}
+                  />
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
@@ -161,7 +165,11 @@ export default function Page({ params }: any) {
                   />
                 </div>
                 <div className="flex-1">
-                  <ResultCard teamId={w.teams[2]} score={w.scores[2]} />
+                  <ResultCard
+                    teamId={w.teams[2]}
+                    thumbnail
+                    score={w.scores[2]}
+                  />
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">

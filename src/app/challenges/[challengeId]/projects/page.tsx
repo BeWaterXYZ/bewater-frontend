@@ -1,6 +1,6 @@
 'use client';
 import { segmentSchema } from '../param-schema';
-import { querySchema } from '../../../../components/filter/search-param-schema';
+import { querySchema } from '@/components/filter/search-param-schema';
 import { ProjectItem } from './project-item';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeProjects } from '@/services/project.query';
@@ -11,7 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useAuthStore } from '@/stores/auth';
 import { useState } from 'react';
-import { SearchInput } from '../../../../components/molecules/search-input';
+import { SearchInput } from '@/components/molecules/search-input';
 import { useDialogStore } from '@/components/dialog/store';
 import { CreateTeamButton } from '../teams/create-team-button';
 function filterAndSortProject(

@@ -49,7 +49,7 @@ export default function TeamCreatedDialog({
   }, [copied]);
 
   return (
-    <div className="flex flex-col justify-center  w-[343px] md:w-[570px] bg-[url(/challenge/team_created.png)] bg-cover bg-center -m-5">
+    <div className="flex flex-col justify-center  w-[343px] md:w-[570px] bg-[url(/challenge/assets/team_created.png)] bg-cover bg-center -m-5">
       <div className="p-5 flex flex-col justify-around items-center">
         <h2 className="heading-6 md:heading-5 mt-10 text-center">
           You’ve successfully joined <br />

@@ -9,7 +9,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { segmentSchema } from '../param-schema';
-import { querySchema } from '../../../../components/filter/search-param-schema';
+import { querySchema } from '@/components/filter/search-param-schema';
 import { CreateTeamButton } from './create-team-button';
 import { TeamFilter } from './team-filter';
 import { TeamItem } from './team-item';

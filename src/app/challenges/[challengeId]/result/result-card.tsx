@@ -36,7 +36,7 @@ export function ResultCard({
         <div className="relative">
           <Link
             prefetch={false}
-            className="block body-0 text-ellipsis truncate"
+            className="block body-0 text-ellipsis truncate my-2 w-[80%]"
             href={`/challenges/${team.challengeId}/projects/${team.project.id}`}
           >
             {team.project.name}
@@ -46,11 +46,11 @@ export function ResultCard({
               {score}
             </div>
           ) : null}
-          <div className="flex items-center gap-2 py-2">
+          {/* <div className="flex items-center gap-2 py-2">
             {team.project.tags.map((tag) => (
               <TagProjectTag key={tag} label={tag} />
             ))}
-          </div>
+          </div> */}
           <p className="body-3 text-white/50 h-[40px] overflow-hidden">
             {team.project.description}
           </p>

@@ -42,7 +42,7 @@ export default async function Page({ params }: any) {
         <div className="border border-[#24254E] rounded bg-latenight p-4 flex gap-4 mb-10 justify-center">
           <div>
             <Image
-              src="/challenge/wanted.svg"
+              src="/challenge/assets/wanted.svg"
               alt="Picture of the author"
               width={80}
               height={80}
