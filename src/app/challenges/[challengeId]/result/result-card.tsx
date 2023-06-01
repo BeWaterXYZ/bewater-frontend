@@ -11,7 +11,7 @@ import Link from 'next/link';
 interface ResultCardProps {
   teamId: TeamID;
   thumbnail?: boolean;
-  score: number;
+  score?: number;
 }
 export function ResultCard({
   teamId,
@@ -24,17 +24,16 @@ export function ResultCard({
   return (
     <div className="flex flex-col md:flex-row rounded overflow-hidden">
       {thumbnail ? (
-        <div className=" h-[216px]  overflow-hidden">
+        <div className="relative h-[216px] w-[320px]  overflow-hidden">
           <Image
             src={team.project.mediaURLs[0] ?? unsplash('project')}
             alt="github"
-            height={216}
-            width={320}
+            fill
           />
         </div>
       ) : null}
-      <div className="h-[216px]  w-[320px] flex flex-col justify-between p-4 bg-latenight  shadow-[0px_10px_20px_rgba(0,_0,_0,_0.3)]">
-        <div>
+      <div className=" h-[216px]  w-[320px] flex flex-col justify-between p-4 bg-latenight  shadow-[0px_10px_20px_rgba(0,_0,_0,_0.3)]">
+        <div className="relative">
           <Link
             prefetch={false}
             className="block body-0 text-ellipsis truncate"
@@ -42,11 +41,12 @@ export function ResultCard({
           >
             {team.project.name}
           </Link>
-
-          <div className="flex items-center gap-2 py-2">
-            <div className="body-4 bg-[#006666] rounded py-[1px] p-2">
-              SCORE {score}
+          {score ? (
+            <div className="absolute top-0 right-0 w-10 h-10 rounded-[3px] body-4 bg-[#1A1C40]   p-3">
+              {score}
             </div>
+          ) : null}
+          <div className="flex items-center gap-2 py-2">
             {team.project.tags.map((tag) => (
               <TagProjectTag key={tag} label={tag} />
             ))}
@@ -73,7 +73,7 @@ export function ResultCard({
               </div>
             </div>
             <div className="w-1/2 flex gap-4 items-center justify-end">
-              {team.project.githubURI ? (
+              {/* {team.project.githubURI ? (
                 <div>
                   <a href={team.project.githubURI}>
                     <Image
@@ -84,12 +84,15 @@ export function ResultCard({
                     />
                   </a>
                 </div>
-              ) : null}
+              ) : null} */}
 
               {team.project.demoURI ? (
                 <div>
-                  <a className="btn btn-secondary" href={team.project.demoURI}>
-                    Demo
+                  <a
+                    className="btn btn-secondary-invert"
+                    href={`/challenges/${team.challengeId}/projects/${team.project.id}`}
+                  >
+                    Visit
                   </a>
                 </div>
               ) : null}
