@@ -24,7 +24,7 @@ export let TeamStatus = ({ team }: { team: Team }) => {
     return (
       <div className="flex items-center">
         <Image
-          src="/challenge/star.svg"
+          src="/challenge/assets/star.svg"
           height={16}
           width={16}
           alt="star"

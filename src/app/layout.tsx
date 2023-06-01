@@ -1,4 +1,4 @@
-import '../styles/index.css';
+import '@/styles/index.css';
 import { QueryProvider } from './query';
 import { JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';

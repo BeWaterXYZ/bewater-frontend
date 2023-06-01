@@ -1,7 +1,7 @@
 'use client';
 import { prepareProjectTagFilterData } from '@/components/filter/util';
 import { Project } from '@/services/types';
-import { FilterTag } from '../../../../components/filter/FilterTag';
+import { FilterTag } from '@/components/filter/FilterTag';
 import { useQueryBuilder } from '../query';
 
 export function ProjectFilter({ projects }: { projects: Project[] }) {

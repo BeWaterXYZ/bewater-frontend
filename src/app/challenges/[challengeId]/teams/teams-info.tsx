@@ -37,7 +37,7 @@ export function ChallengeTeamsInfo({
       <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#310D37] to-[#310d3700] border border-[#310D37]">
         <div>
           <Image
-            src="/challenge/clock.svg"
+            src="/challenge/assets/clock.svg"
             alt="Picture of the author"
             width={80}
             height={80}
@@ -57,7 +57,7 @@ export function ChallengeTeamsInfo({
       <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#1C104A] to-[#1c104a00] border border-[#1C104A]">
         <div>
           <Image
-            src="/challenge/team.svg"
+            src="/challenge/assets/team.svg"
             alt="Picture of the author"
             width={80}
             height={80}
