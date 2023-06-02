@@ -10,7 +10,7 @@ const winners = [
       '6455ab6179c1ffd9a29f9374',
       '645a55cc4b5a8bfcd7bf9029',
     ],
-    scores: [99, 98, 97],
+    scores: [undefined, undefined, undefined],
   },
   {
     track: 'DeFi',
@@ -20,7 +20,7 @@ const winners = [
       '64679790cb0a91f0eb42528d',
       '64671f0dcb0a91f0eb425208 ',
     ],
-    scores: [99, 98, 97],
+    scores: [undefined, undefined, undefined],
   },
   {
     track: 'NFT',
@@ -30,7 +30,7 @@ const winners = [
       '645b0bc74b5a8bfcd7bf906e',
       '6461a5631a7b44c927a1a0b8',
     ],
-    scores: [99, 98, 97],
+    scores: [undefined, undefined, undefined],
   },
   {
     track: 'Web3 Security & Infra',
@@ -40,7 +40,7 @@ const winners = [
       '6455d86179c1ffd9a29f93c3',
       '645862b7a994c9b0176a8284',
     ],
-    scores: [99, 98, 97],
+    scores: [undefined, undefined, undefined],
   },
   {
     track: 'ZK',
@@ -50,7 +50,7 @@ const winners = [
       '64664619cb0a91f0eb42511f',
       '64662bf6cb0a91f0eb4250fa',
     ],
-    scores: [99, 98, 97],
+    scores: [undefined, undefined, undefined],
   },
   {
     track: 'DAO Tool',
@@ -60,7 +60,7 @@ const winners = [
       '646b75c2cb0a91f0eb425399',
       '6457a29ca994c9b0176a824a',
     ],
-    scores: [99, 98, 97],
+    scores: [undefined, undefined, undefined],
   },
 ];
 export default function Page({ params }: any) {
@@ -68,7 +68,7 @@ export default function Page({ params }: any) {
     <>
       <div className="flex justify-center">
         <div className="relative body-2 text-center my-10 p-6 m-auto">
-          ✨ 18 of 400 teams won a total prize pool of{' '}
+          ✨ 18 of over 50 teams won a total prize pool of{' '}
           <span className="text-day">$30,000</span>{' '}
           <div
             className="absolute w-full h-[1px] bottom-0 left-0"
