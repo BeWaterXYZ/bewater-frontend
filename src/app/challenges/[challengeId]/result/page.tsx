@@ -68,7 +68,7 @@ export default function Page({ params }: any) {
     <>
       <div className="flex justify-center">
         <div className="relative body-2 text-center my-10 p-6 m-auto">
-          ✨ 18 of 400 teams won a total prize pool of{' '}
+          ✨ 18 of over 50 teams won a total prize pool of{' '}
           <span className="text-day">$30,000</span>{' '}
           <div
             className="absolute w-full h-[1px] bottom-0 left-0"
