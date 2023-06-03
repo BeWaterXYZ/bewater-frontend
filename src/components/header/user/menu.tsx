@@ -26,13 +26,13 @@ export const UserMenu = () => {
   return (
     <NavigationMenu.Root className="relative">
       {/* <div className="opacity-0 absolute">
-        <Link prefetch = {false} href={`/user/${user.userId}`} className="body-2">
+        <Link prefetch = {false} href={`/en/user/${user.userId}`} className="body-2">
           .
         </Link>
-        <Link prefetch = {false} href="/settings/basic" className="body-2">
+        <Link prefetch = {false} href="/en/settings/basic" className="body-2">
           .
         </Link>
-        <Link prefetch = {false} href="/notifications/requests/received" className="body-2">
+        <Link prefetch = {false} href="/en/notifications/requests/received" className="body-2">
           .
         </Link>
       </div> */}
@@ -40,7 +40,7 @@ export const UserMenu = () => {
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
             {isLoading ? (
-              <Link prefetch={false} href="/onboarding">
+              <Link prefetch={false} href="/en/onboarding">
                 <Avatar
                   className="w-8 h-8 hover:opacity-75"
                   src={!isLoading ? user?.avatarURI : ''}
@@ -70,7 +70,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href={`/user/${user.userId}`}
+                    href={`/en/user/${user.userId}`}
                     className="body-2"
                   >
                     Your Profile
@@ -79,7 +79,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href="/settings/basic"
+                    href="/en/settings/basic"
                     className="body-2"
                   >
                     Account Settings
@@ -88,7 +88,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href="/notifications/requests/received"
+                    href="/en/notifications/requests/received"
                     className="body-2"
                   >
                     Notifications
