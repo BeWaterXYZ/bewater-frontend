@@ -9,6 +9,7 @@ interface ChallengeListProps {
   challenges: Challenge[];
   lng: string;
 }
+
 export function ChallengeList({ challenges, lng }: ChallengeListProps) {
   return (
     <div className="flex  gap-5 flex-col lg:flex-row my-8">

@@ -90,7 +90,7 @@ export function ResultCard({
                 <div>
                   <a
                     className="btn btn-secondary"
-                    href={`/challenges/${team.challengeId}/projects/${team.project.id}`}
+                    href={`/en/challenges/${team.challengeId}/projects/${team.project.id}`}
                   >
                     Visit
                   </a>

@@ -5,10 +5,10 @@ const isDEV = process.env.NODE_ENV === 'development';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: false,
+  reactStrictMode: true,
   experimental: {
     appDir: true,
   },
-  reactStrictMode: true,
   images: {
     domains: ['source.unsplash.com', 'images.unsplash.com', 'ipfs.io'],
     remotePatterns: [

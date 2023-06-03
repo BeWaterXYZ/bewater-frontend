@@ -41,7 +41,6 @@ export default async function ChallengePage({
               {active.length}
             </div>
           </div>
-
           <ChallengeList challenges={upcoming} lng={lng} />
         </div>
       )}
