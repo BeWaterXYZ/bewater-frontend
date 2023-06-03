@@ -6,7 +6,7 @@ import { TagRole } from '@/components/tag';
 
 export function TeamMember({ member }: { member: TeamMember }) {
   return (
-    <Link prefetch={false} href={`/user/${member.userProfile.userId}`}>
+    <Link prefetch={false} href={`/en/user/${member.userProfile.userId}`}>
       <div className="flex gap-2 my-4">
         <div>
           <Avatar

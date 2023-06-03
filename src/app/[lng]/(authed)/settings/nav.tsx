@@ -1,0 +1,38 @@
+'use client';
+import clsx from 'clsx';
+import Link from 'next/link';
+import { useSelectedLayoutSegment } from 'next/navigation';
+
+const links = [
+  {
+    label: ' Basic Information',
+    path: '/en/settings/basic',
+  },
+  {
+    label: ' Linked Accounts',
+    path: '/en/settings/link',
+  },
+] as const;
+
+export function Nav() {
+  let segment = useSelectedLayoutSegment();
+  return (
+    <nav className=" w-full flex flex-row lg:flex-col gap-3 ">
+      {links.map((link) => (
+        <Link
+          prefetch={false}
+          key={link.path}
+          href={link.path}
+          className={clsx(
+            'body-3 text-grey-400 p-3 lg:p-4 inline-block w-full rounded-sm text-center',
+            segment && link.path.includes(segment)
+              ? 'bg-grey-900 '
+              : 'border lg:border-none border-grey-800',
+          )}
+        >
+          {link.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
