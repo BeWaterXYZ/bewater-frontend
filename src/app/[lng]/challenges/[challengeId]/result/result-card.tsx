@@ -89,7 +89,7 @@ export function ResultCard({
               {team.project.demoURI ? (
                 <div>
                   <a
-                    className="btn btn-secondary-invert"
+                    className="btn btn-secondary"
                     href={`/challenges/${team.challengeId}/projects/${team.project.id}`}
                   >
                     Visit
