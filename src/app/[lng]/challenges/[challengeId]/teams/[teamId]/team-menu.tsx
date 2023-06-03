@@ -10,14 +10,16 @@ import { useAuthStore } from '@/stores/auth';
 
 interface TeamMenuProps {
   team: Team;
+  lng: string;
 }
-export default function TeamMenu({ team }: TeamMenuProps) {
+
+export default function TeamMenu({ team, lng }: TeamMenuProps) {
   const { confirm } = useAlert();
   const { data: challenge } = useFetchChallengeById(team.challengeId);
-  const router = useNavigator();
+  const router = useNavigator(lng);
   const user = useAuthStore((s) => s.user);
   const isAuthed = useAuthStore((s) => s.isAuthed);
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
   const showDialog = useDialogStore((s) => s.open);
   const isJoined = team.teamMembers.some((m) => m.userId === user?.userId);
   const isLeader = team.teamMembers

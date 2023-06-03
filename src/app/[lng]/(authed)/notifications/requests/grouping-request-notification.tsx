@@ -19,8 +19,7 @@ import { useToastStore } from '@/components/toast/store';
 import { useAuthStore } from '@/stores/auth';
 import { getErrorResp } from '@/utils/error-type';
 
-// todo 给 lng 正确的值
-function getUserLink(userProfile: UserProfile, lng = 'en') {
+function getUserLink(userProfile: UserProfile, lng: string) {
   return (
     <strong className="text-white hover:underline">
       <Link prefetch={false} href={`/${lng}/user/${userProfile.userId}`}>
@@ -33,7 +32,7 @@ function getUserLink(userProfile: UserProfile, lng = 'en') {
 function getTitle(
   req: GroupingRequestFull,
   sentOrReceived: boolean,
-  lng = 'en',
+  lng: string,
 ) {
   let teamLink = (
     <Link
@@ -49,16 +48,16 @@ function getTitle(
       <p className="body-3 text-grey-400">You wanted to join {teamLink}</p>
     ) : (
       <p className="body-3 text-grey-400">
-        You invited {getUserLink(req.recipient!)} to join {teamLink}
+        You invited {getUserLink(req.recipient!, lng)} to join {teamLink}
       </p>
     )
   ) : req.type === 'APPLICATION' ? (
     <p className="body-3 text-grey-400">
-      {getUserLink(req.sender!)} wanted to join {teamLink}
+      {getUserLink(req.sender!, lng)} wanted to join {teamLink}
     </p>
   ) : (
     <p className="body-3 text-grey-400">
-      {getUserLink(req.sender!)} has invited you to join {teamLink}
+      {getUserLink(req.sender!, lng)} has invited you to join {teamLink}
     </p>
   );
 }
@@ -83,9 +82,11 @@ function getStatus(req: GroupingRequestFull, sentOrReceived: boolean) {
 export function GroupingRequestNotification({
   req,
   sentOrReceived,
+  lng,
 }: {
   req: GroupingRequestFull;
   sentOrReceived: boolean;
+  lng: string;
 }) {
   const { confirm } = useAlert();
   const user = useAuthStore((s) => s.user);
@@ -153,7 +154,7 @@ export function GroupingRequestNotification({
     }
   };
 
-  let title = getTitle(req, sentOrReceived);
+  let title = getTitle(req, sentOrReceived, lng);
   let sender = sentOrReceived ? user! : req.sender!;
   return (
     <div
@@ -178,7 +179,7 @@ export function GroupingRequestNotification({
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
             <Link
               prefetch={false}
-              href={`/en/challenges/${req.team.challenge.id}`}
+              href={`/${lng}/challenges/${req.team.challenge.id}`}
               className="hover:underline"
             >
               {req.team.challenge.title}

@@ -12,14 +12,14 @@ import { useNavigator } from '@/hooks/useNavigator';
 import { useAuthStore } from '@/stores/auth';
 import { useEffect } from 'react';
 
-export function Dumpster() {
+export function Dumpster({ lng }: { lng: string }) {
   const toasts = useToastStore((s) => s.toasts);
   const dialogs = useDialogStore((s) => s.dialogs);
   const closeDialog = useDialogStore((s) => s.close);
   const loading = useLoadingStore((s) => s.loading);
   const alert = useAlertStore((s) => s.alert);
   const { token, user } = useAuthStore((s) => s);
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
 
   useEffect(() => {
     if (token && !user) {

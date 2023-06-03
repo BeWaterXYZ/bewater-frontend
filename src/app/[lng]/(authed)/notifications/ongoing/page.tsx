@@ -98,7 +98,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
 }
 
 export default function Page({ params }: { params: { lng: string } }) {
-  let { lng = 'en' } = params || {};
+  const { lng = 'en' } = params || {};
 
   const user = useAuthStore((s) => s.user);
 

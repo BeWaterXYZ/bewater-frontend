@@ -22,7 +22,7 @@ export default function TeamManageMemberDialog({
       <p className="heading-6 text-grey-200">Manage Members</p>
       <div className="mt-4">
         {data?.teamMembers.map((m) => (
-          <TeamMemberRow key={m.id} member={m} />
+          <TeamMemberRow key={m.id} member={m} lng={'en'} />
         ))}
       </div>
 

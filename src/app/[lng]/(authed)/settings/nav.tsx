@@ -6,15 +6,15 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 const links = [
   {
     label: ' Basic Information',
-    path: '/en/settings/basic',
+    path: '/settings/basic',
   },
   {
     label: ' Linked Accounts',
-    path: '/en/settings/link',
+    path: '/settings/link',
   },
 ] as const;
 
-export function Nav() {
+export function Nav({ lng }: { lng: string }) {
   let segment = useSelectedLayoutSegment();
   return (
     <nav className=" w-full flex flex-row lg:flex-col gap-3 ">
@@ -22,7 +22,7 @@ export function Nav() {
         <Link
           prefetch={false}
           key={link.path}
-          href={link.path}
+          href={`/${lng}${link.path}`}
           className={clsx(
             'body-3 text-grey-400 p-3 lg:p-4 inline-block w-full rounded-sm text-center',
             segment && link.path.includes(segment)

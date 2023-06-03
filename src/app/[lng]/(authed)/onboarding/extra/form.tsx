@@ -23,9 +23,9 @@ const schema = z
 
 export type Inputs = z.infer<typeof schema>;
 
-export const FormOnboardingExtra = () => {
+export const FormOnboardingExtra = ({ lng }: { lng: string }) => {
   const addToast = useToastStore((s) => s.add);
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
 
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const mutation = useMutationUpdateUserProfile();

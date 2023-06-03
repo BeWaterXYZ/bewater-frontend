@@ -13,13 +13,13 @@ import { useLoadingStoreAction } from '@/components/loading/store';
 import { useNavigator } from '@/hooks/useNavigator';
 import { getErrorResp } from '@/utils/error-type';
 
-export default function WalletOptions() {
+export default function WalletOptions({ lng }: { lng: string }) {
   const addToast = useToastStore((s) => s.add);
   const openDialog = useDialogStore((s) => s.open);
   const clearToast = useToastStore((s) => s.clear);
   const setAuthState = useAuthStore((s) => s.setState);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
   const { connectors } = useConnect();
 
   const availableConnectors = connectors.filter((c) => c.ready);

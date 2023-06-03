@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { SearchInput } from '@/components/molecules/search-input';
 import { useDialogStore } from '@/components/dialog/store';
 import { CreateTeamButton } from '../teams/create-team-button';
+
 function filterAndSortProject(
   projects: Project[],
   userProfile?: UserProfile,
@@ -66,6 +67,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: projects, isLoading: isLoadingProject } =
     useFetchChallengeProjects(challengeId);
+  const { lng } = segmentSchema.lng.parse(params);
 
   if (isLoading || isLoadingProject) return <Loading />;
   if (!challenge || !projects) return null;
@@ -93,7 +95,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
         <p className="body-2 text-grey-500 text-center">
           Create yours and be the first challenger!
         </p>
-        <CreateTeamButton challenge={challenge} />
+        <CreateTeamButton challenge={challenge} lng={lng} />
       </div>
     );
   }

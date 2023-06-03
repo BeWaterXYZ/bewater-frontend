@@ -36,7 +36,7 @@ export default async function Page({ params }: any) {
         <div className="heading-6 break-words">{team.name}</div>
 
         <div>
-          <TeamMenu team={team} />
+          <TeamMenu team={team} lng={lng} />
         </div>
       </div>
       {team.openingRoles.length > 0 && (

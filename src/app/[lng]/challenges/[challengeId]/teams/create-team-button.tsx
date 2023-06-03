@@ -6,9 +6,15 @@ import { useAuthStore } from '@/stores/auth';
 import { useToastStore } from '@/components/toast/store';
 import { useState } from 'react';
 
-export function CreateTeamButton({ challenge }: { challenge: Challenge }) {
+export function CreateTeamButton({
+  challenge,
+  lng,
+}: {
+  challenge: Challenge;
+  lng: string;
+}) {
   const showDialog = useDialogStore((s) => s.open);
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
   const addToast = useToastStore((s) => s.add);
   let baoMingEndTime = ''; // 北京时间 2023-06-25T10:00:00.000Z
 

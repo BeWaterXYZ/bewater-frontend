@@ -98,7 +98,7 @@ export default function ChallengeTeams({ params }: any) {
         <p className="body-2 text-grey-500 text-center">
           Create yours and be the first challenger!
         </p>
-        <CreateTeamButton challenge={challenge} />
+        <CreateTeamButton challenge={challenge} lng={lng} />
       </div>
     );
   }
@@ -134,7 +134,7 @@ export default function ChallengeTeams({ params }: any) {
                 />
                 <span>Filter</span>
               </button>
-              <CreateTeamButton challenge={challenge} />
+              <CreateTeamButton challenge={challenge} lng={lng} />
             </div>
           </div>
 

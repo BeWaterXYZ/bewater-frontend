@@ -4,7 +4,9 @@ import { sortGroupingRequest } from '@/services/notification';
 import { useAuthStore } from '@/stores/auth';
 import { GroupingRequestNotification } from '../grouping-request-notification';
 
-export default function Page() {
+export default function Page({ params }: { params: { lng: string } }) {
+  const { lng = 'en' } = params || {};
+
   const user = useAuthStore((s) => s.user);
 
   const { error, data, isLoading } = useFetchGroupingRequest(user?.userId);
@@ -29,6 +31,7 @@ export default function Page() {
               key={req.id}
               req={req}
               sentOrReceived={req.senderId === user?.userId}
+              lng={lng}
             />
           );
         })}

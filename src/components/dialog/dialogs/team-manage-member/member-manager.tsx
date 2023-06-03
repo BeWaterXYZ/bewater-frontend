@@ -14,9 +14,15 @@ import { CaretDownIcon, CheckIcon, Cross1Icon } from '@radix-ui/react-icons';
 import { useState } from 'react';
 import { useDialogStore } from '../../store';
 
-export function TeamMemberManager({ member }: { member: TeamMember }) {
+export function TeamMemberManager({
+  member,
+  lng,
+}: {
+  member: TeamMember;
+  lng: string;
+}) {
   const showDialog = useDialogStore((s) => s.open);
-  const router = useNavigator();
+  const router = useNavigator(lng);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const [editing, editingSet] = useState(false);
   const ref = useOutsideClick(() => editingSet(false));

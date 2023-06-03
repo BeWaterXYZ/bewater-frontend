@@ -42,7 +42,7 @@ export function TeamItem({ challenge, team, lng }: TeamItemProps) {
               </div>
             </div>
             <div className="flex justify-center items-center">
-              <TeamStatus team={team} />
+              <TeamStatus team={team} lng={lng} />
             </div>
           </div>
         </div>

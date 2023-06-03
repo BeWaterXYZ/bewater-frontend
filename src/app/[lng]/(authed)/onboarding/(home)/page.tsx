@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react';
 
 import { FormOnboarding } from './form';
 
-export default function Page() {
+export default function Page({ params }: { params: { lng: string } }) {
+  const { lng = 'en' } = params || {};
+
   const [mounted, setMounted] = useState(false);
   const [walletAddress, onboarded] = useAuthStore((s) => [
     s.walletAddress,
     s.user ? true : false,
   ]);
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
   const onComplete = () => {
     navigator.gotoOnboardingExtra();
   };

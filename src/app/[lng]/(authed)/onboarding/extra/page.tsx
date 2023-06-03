@@ -3,7 +3,9 @@ import { useLoadingWhen } from '@/components/loading/store';
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import { FormOnboardingExtra } from './form';
-export default function Page() {
+
+export default function Page({ params }: { params: { lng: string } }) {
+  const { lng = 'en' } = params || {};
   const user = useAuthStore((s) => s.user);
   const { data, isLoading } = useFetchUser(user?.userId);
 
@@ -24,7 +26,7 @@ export default function Page() {
           help others recognize you.
         </p>
 
-        <FormOnboardingExtra />
+        <FormOnboardingExtra lng={lng} />
       </div>
     </div>
   );

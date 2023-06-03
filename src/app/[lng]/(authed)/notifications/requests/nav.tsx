@@ -3,14 +3,14 @@
 import { NavItem } from '@/components/header/nav';
 import { useSelectedLayoutSegments } from 'next/navigation';
 
-export function Nav() {
+export function Nav({ lng }: { lng: string }) {
   const links = [
     {
-      path: '/en/notifications/requests/received',
+      path: `/${lng}/notifications/requests/received`,
       label: 'Received',
     },
     {
-      path: '/en/notifications/requests/sent',
+      path: `/${lng}/notifications/requests/sent`,
       label: 'Sent',
     },
   ];

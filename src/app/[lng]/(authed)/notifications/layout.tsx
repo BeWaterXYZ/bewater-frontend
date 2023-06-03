@@ -7,7 +7,7 @@ export default function Layout({
   children: React.ReactNode;
   params: { lng: string };
 }) {
-  let { lng = 'en' } = params || {};
+  const { lng = 'en' } = params || {};
   return (
     <div className="h-full container">
       <p className="heading-6 border-b border-b-white/20 py-4 mb-8">

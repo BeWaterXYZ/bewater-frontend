@@ -1,4 +1,5 @@
 'use client';
+
 import { FilterTag } from '@/components/filter/FilterTag';
 import {
   prepareProjectTagFilterData,

@@ -72,7 +72,7 @@ export default function RootLayout({
             <Header />
             <div className="flex-1">{children}</div>
             <Footer />
-            <Dumpster />
+            <Dumpster lng={lng} />
           </div>
         </QueryProvider>
         <Script

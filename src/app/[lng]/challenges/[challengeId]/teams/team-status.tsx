@@ -6,11 +6,11 @@ import { useNavigator } from '@/hooks/useNavigator';
 import { useDialogStore } from '@/components/dialog/store';
 import Image from 'next/image';
 
-export let TeamStatus = ({ team }: { team: Team }) => {
+export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const user = useAuthStore((s) => s.user);
   const showDialog = useDialogStore((s) => s.open);
-  const navigator = useNavigator();
+  const navigator = useNavigator(lng);
   const isMyTeam = team.teamMembers.some((m) => m.userId === user?.userId);
   const requestJoin = () => {
     if (!isAuthed()) {
