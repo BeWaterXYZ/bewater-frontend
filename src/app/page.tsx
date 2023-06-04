@@ -1,14 +1,15 @@
-import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
-import Link from "next/link";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { SignedOutHome } from "./signed-out";
+import { Dashboard } from "./dashboard";
 export default async function Home() {
   return (
-    <main className="">
+    <div className="container my-4 pt-20 flex flex-1 ">
       <SignedIn>
-        <UserButton afterSignOutUrl="/" />
+          <Dashboard />
       </SignedIn>
       <SignedOut>
-        go to <Link href="/dashboard">dashboard</Link>
+        <SignedOutHome />
       </SignedOut>
-    </main>
+    </div>
   );
 }
