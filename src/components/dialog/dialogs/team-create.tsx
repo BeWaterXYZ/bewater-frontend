@@ -63,7 +63,7 @@ export default function TeamCreateDialog({
   const isEditing = !!data.team;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
-  const router = useNavigator();
+  const router = useNavigator('en');
   const createTeamMutaion = useMutaionCreateTeam();
   const dismissTeamMutation = useMutaionDismissTeam(data.team?.challengeId);
   const { confirm } = useAlert();
