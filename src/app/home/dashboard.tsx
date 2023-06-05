@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export function Dashboard() {
   return (
     <div className="w-full">
@@ -9,7 +11,9 @@ export function Dashboard() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16">
-        <div>left</div>
+        <div>
+          <Link href="/challenges/1">Challenge 1</Link>
+        </div>
         <div>right</div>
       </div>
     </div>
