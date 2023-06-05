@@ -1,32 +1,14 @@
 const sponsors_tier1 = [
-  '/sponsors/ABCDE.png',
-  '/sponsors/aliyun.png',
-  '/sponsors/ScalingX.png',
+  '/sponsors/debox.png',
   '/sponsors/particleNetwork.png',
-  '/sponsors/Metatrust.png',
-  '/sponsors/seedao.png',
-  '/sponsors/cointime.png',
+  '/sponsors/bewater.png',
 ];
 
-const sponsors_tier2 = [
-  '/sponsors/hamster.png',
-  '/sponsors/BIXIN.png',
-  '/sponsors/ChainIDE.png',
-  '/sponsors/memoworld.png',
-  '/sponsors/bodl.png',
-  '/sponsors/filecoin.png',
-  '/sponsors/hkust.png',
-  '/sponsors/talentre.png',
-  '/sponsors/knn3.png',
-  '/sponsors/memolabs.png',
-  '/sponsors/looksrare.png',
-  '/sponsors/debox.png',
-];
+const sponsors_tier2 = ['/sponsors/vip3.png', '/sponsors/sinohope.png'];
 
 const sponsors_tier3 = [
   '/sponsors/sf.png',
   '/sponsors/csdn.png',
-  '/sponsors/noncegeek.png',
   '/sponsors/moledao.png',
   '/sponsors/abga.png',
   '/sponsors/thuba.png',
