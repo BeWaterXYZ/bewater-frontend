@@ -1,5 +1,5 @@
-import { SignIn } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 
 export function SignedOutHome() {
   return (
@@ -13,8 +13,11 @@ export function SignedOutHome() {
             alt="host something"
           />
         </div>
-
-        <SignIn />
+        <div className="flex items-center">
+          <Link href="/sign-in" className="btn btn-primary w-64 h-12">
+            Sign In
+          </Link>
+        </div>
       </div>
     </div>
   );
