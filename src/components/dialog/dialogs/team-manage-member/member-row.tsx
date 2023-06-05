@@ -2,7 +2,13 @@ import { Avatar } from '@/components/avatar/avatar';
 import { TeamMember } from '@/services/types';
 import { TeamMemberManager } from './member-manager';
 
-export function TeamMemberRow({ member }: { member: TeamMember }) {
+export function TeamMemberRow({
+  member,
+  lng,
+}: {
+  member: TeamMember;
+  lng: string;
+}) {
   return (
     <div
       key={member.userId}
@@ -21,7 +27,7 @@ export function TeamMemberRow({ member }: { member: TeamMember }) {
       </div>
       <div className="flex-1" />
       <div className="flex items-center">
-        <TeamMemberManager member={member} />
+        <TeamMemberManager member={member} lng={lng} />
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export function TeamAvatarRow({ teamMembers }: { teamMembers: TeamMember[] }) {
         return (
           <Link
             prefetch={false}
-            href={`/user/${m.userProfile.userId}`}
+            href={`/en/user/${m.userProfile.userId}`}
             key={m.userProfile.userId}
           >
             <div key={m.id} className="relative" style={{ left: -8 * index }}>

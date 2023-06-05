@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 
+// todo lng 是参数
 export function NotificationBell() {
   const user = useAuthStore((s) => s.user);
 
@@ -17,7 +18,7 @@ export function NotificationBell() {
 
   return (
     <div className="relative -top-1">
-      <Link prefetch={false} href="/notifications/requests/received">
+      <Link prefetch={false} href="/en/notifications/requests/received">
         <Image
           src={hasNewNotifications ? '/icons/bell-dot.svg' : '/icons/bell.svg'}
           height={24}

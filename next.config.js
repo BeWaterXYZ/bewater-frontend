@@ -5,10 +5,10 @@ const isDEV = process.env.NODE_ENV === 'development';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   swcMinify: false,
+  reactStrictMode: true,
   experimental: {
     appDir: true,
   },
-  reactStrictMode: true,
   images: {
     domains: ['source.unsplash.com', 'images.unsplash.com', 'ipfs.io'],
     remotePatterns: [
@@ -46,9 +46,14 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/challenges/bewater-web3-zh',
-        destination: '/challenges/63c82bd12ddc570f32ada868',
+        source: '/en/challenges/bewater-web3-zh',
+        destination: '/en/challenges/63c82bd12ddc570f32ada868',
       },
+      {
+        source: '/zh/challenges/bewater-web3-zh',
+        destination: '/zh/challenges/63c82bd12ddc570f32ada868',
+      },
+      // todo更多语言
     ];
   },
   // swcMinify: true,
