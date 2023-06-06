@@ -3,6 +3,7 @@ import { JetBrains_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { QueryProvider } from "./query";
 
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-secondary",
@@ -22,16 +23,13 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={jetBrainsMono.className}>
-          <div className="min-h-[100vh] flex flex-col bg-night">
-            <Header />
-            <div className="flex-1 flex flex-col"> {children}</div>
-            <Footer />
-
-          </div>
-        </body>
-      </html>
+      <QueryProvider>
+        <html lang="en">
+          <body className={jetBrainsMono.className}>
+           {children}
+          </body>
+        </html>
+      </QueryProvider>
     </ClerkProvider>
   );
 }

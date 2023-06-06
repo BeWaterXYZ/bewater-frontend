@@ -12,7 +12,7 @@ export function Dashboard() {
 
       <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-16">
         <div>
-          <Link href="/challenges/1">Challenge 1</Link>
+          <Link href="/challenges/63c82bd12ddc570f32ada869">Challenge 1</Link>
         </div>
         <div>right</div>
       </div>

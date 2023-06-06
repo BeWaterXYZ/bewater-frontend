@@ -4,6 +4,9 @@ dependencies:
   '@clerk/nextjs':
     specifier: ^4.19.0
     version: 4.19.0(next@13.4.4)(react-dom@18.2.0)(react@18.2.0)
+  '@hookform/resolvers':
+    specifier: ^3.1.0
+    version: 3.1.0(react-hook-form@7.44.3)
   '@radix-ui/react-dialog':
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.4)(@types/react@18.2.8)(react-dom@18.2.0)(react@18.2.0)
@@ -13,6 +16,9 @@ dependencies:
   '@t3-oss/env-nextjs':
     specifier: ^0.4.0
     version: 0.4.0(typescript@5.1.3)(zod@3.21.4)
+  '@tanstack/react-query':
+    specifier: ^4.29.12
+    version: 4.29.12(react-dom@18.2.0)(react@18.2.0)
   '@types/node':
     specifier: 20.2.5
     version: 20.2.5
@@ -31,6 +37,9 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
+  date-fns:
+    specifier: ^2.30.0
+    version: 2.30.0
   eslint:
     specifier: 8.41.0
     version: 8.41.0
@@ -49,6 +58,9 @@ dependencies:
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
+  react-hook-form:
+    specifier: ^7.44.3
+    version: 7.44.3(react@18.2.0)
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
@@ -184,6 +196,14 @@ packages:
   /@eslint/js@8.41.0:
     resolution: {integrity: sha512-LxcyMGxwmTh2lY9FwHPGWOHmYFCZvbrFCBZL4FzSSsxsRPuhrYUg/49/0KDfW8tnIEaEHtfmn6+NPN+1DqaNmA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: false
+
+  /@hookform/resolvers@3.1.0(react-hook-form@7.44.3):
+    resolution: {integrity: sha512-z0A8K+Nxq+f83Whm/ajlwE6VtQlp/yPHZnXw7XWVPIGm1Vx0QV8KThU3BpbBRfAZ7/dYqCKKBNnQh85BkmBKkA==}
+    peerDependencies:
+      react-hook-form: ^7.0.0
+    dependencies:
+      react-hook-form: 7.44.3(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.10:
@@ -709,6 +729,28 @@ packages:
       '@t3-oss/env-core': 0.4.0(typescript@5.1.3)(zod@3.21.4)
       typescript: 5.1.3
       zod: 3.21.4
+    dev: false
+
+  /@tanstack/query-core@4.29.11:
+    resolution: {integrity: sha512-8C+hF6SFAb/TlFZyS9FItgNwrw4PMa7YeX+KQYe2ZAiEz6uzg6yIr+QBzPkUwZ/L0bXvGd1sufTm3wotoz+GwQ==}
+    dev: false
+
+  /@tanstack/react-query@4.29.12(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-zhcN6+zF6cxprxhTHQajHGlvxgK8npnp9uLe9yaWhGc6sYcPWXzyO4raL4HomUzQOPzu3jLvkriJQ7BOrDM8vA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.29.11
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
   /@types/body-parser@1.19.2:
@@ -1252,6 +1294,13 @@ packages:
 
   /damerau-levenshtein@1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
+    dev: false
+
+  /date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.22.3
     dev: false
 
   /debug@3.2.7:
@@ -2925,6 +2974,15 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /react-hook-form@7.44.3(react@18.2.0):
+    resolution: {integrity: sha512-/tHId6p2ViAka1wECMw8FEPn/oz/w226zehHrJyQ1oIzCBNMIJCaj6ZkQcv+MjDxYh9MWR7RQic7Qqwe4a5nkw==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -3500,6 +3558,14 @@ packages:
       detect-node-es: 1.1.0
       react: 18.2.0
       tslib: 2.5.2
+    dev: false
+
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /util-deprecate@1.0.2:
