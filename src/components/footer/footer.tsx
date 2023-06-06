@@ -1,12 +1,10 @@
-import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
+import clsx from "clsx";
+import Image from "next/image";
+import Link from "next/link";
 
-interface Props {}
-
-export const Footer = ({}: Props) => {
+export function Footer() {
   return (
-    <footer id="main-footer" className={clsx('w-full heading-5  ')}>
+    <footer id="main-footer" className={clsx("w-full heading-5  ")}>
       <div className="container mx-auto py-8 flex flex-col gap-6 justify-between items-center md:flex-row md:items-start">
         <div className="body-4 text-grey-100 uppercase">
           © {new Date().getFullYear()} BeWater. All Rights Reserved.
@@ -36,4 +34,4 @@ export const Footer = ({}: Props) => {
       </div>
     </footer>
   );
-};
+}

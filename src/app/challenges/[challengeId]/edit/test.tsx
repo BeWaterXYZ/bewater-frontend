@@ -12,7 +12,7 @@ export function TestEdit() {
         <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8">
           <Dialog.Title className="DialogTitle">Edit profile</Dialog.Title>
           <Dialog.Description className="DialogDescription">
-            Make changes to your profile here. Click save when you're done.
+            
           </Dialog.Description>
           <fieldset className="Fieldset">
             <label className="Label" htmlFor="name">
