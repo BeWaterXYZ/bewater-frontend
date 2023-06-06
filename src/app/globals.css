@@ -54,7 +54,7 @@ body {
     }
   }
   .btn-secondary-invert {
-    @apply border-[#2F3153] bg-transparent text-white hover:border-[#373969];
+    @apply border-white/50 bg-transparent text-white hover:border-[#373969];
     &[disabled] {
       @apply border-[#25263C] text-[#565769];
     }

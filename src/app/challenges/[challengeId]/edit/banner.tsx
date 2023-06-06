@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema } from "@/validations";
 import { z } from "zod";
+import { Challenge } from "@/services/types";
 
 const schema = z
   .object({
@@ -16,7 +17,7 @@ const schema = z
 
 export type Inputs = z.infer<typeof schema>;
 
-export function TestEdit() {
+export function EditBanner({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
   let [bg, bgSet] = useState<string[]>([]);
   let [hostImages, hostImagesSet] = useState<string[]>([]);
@@ -29,7 +30,7 @@ export function TestEdit() {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: "",
+      title: challenge.title,
     },
   });
 
@@ -40,7 +41,7 @@ export function TestEdit() {
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
       <Dialog.Trigger asChild>
-        <button className="Button violet">Edit profile</button>
+        <button className="btn btn-secondary-invert ">Edit </button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
