@@ -2,14 +2,14 @@ import React, { useId } from "react";
 import clsx from "clsx";
 import type { FieldError } from "react-hook-form";
 
-interface Props extends React.ComponentPropsWithoutRef<"input"> {
+interface Props extends React.ComponentPropsWithoutRef<"textarea"> {
   label?: string;
   error?: FieldError;
 }
 
-export const Input = React.forwardRef(function Input_(
+export const TextArea = React.forwardRef(function TextArea_(
   props: Props,
-  ref: React.ForwardedRef<HTMLInputElement>
+  ref: React.ForwardedRef<HTMLTextAreaElement>
 ) {
   const { label, name, error, className, required, ...restProps } = props;
   const id = useId();
@@ -24,7 +24,7 @@ export const Input = React.forwardRef(function Input_(
           {required && " *"}
         </label>
       ) : null}
-      <input
+      <textarea
         id={id}
         className={clsx(
           "w-full text-[14px] bg-night  block body-3 py-2 px-2  text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors",
@@ -35,7 +35,7 @@ export const Input = React.forwardRef(function Input_(
         ref={ref}
         {...restProps}
         name={name}
-      ></input>
+      ></textarea>
 
       <div
         className={clsx("absolute whitespace-nowrap text-[12px]  text-danger", {
