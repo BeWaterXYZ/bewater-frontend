@@ -1,4 +1,5 @@
 "use client";
+import { DatePicker } from "@/components/form/datepicker";
 import { Input } from "@/components/form/input";
 import { Radio } from "@/components/form/radio";
 import { TextArea } from "@/components/form/textarea";
@@ -96,6 +97,11 @@ export default function Page() {
               />
             </fieldset>
           )}
+          <div className="grid grid-col-2 gap-4">
+              <DatePicker />
+
+
+          </div>
 
           <div className="py-8 flex justify-end">
             <button className="btn btn-primary" type="submit">
