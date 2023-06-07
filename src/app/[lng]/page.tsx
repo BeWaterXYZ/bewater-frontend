@@ -11,8 +11,7 @@ export default async function Home({ params }: { params: { lng: string } }) {
     lng = fallbackLng;
   }
   if (active.length === 1) {
-    // return redirect(`/challenges/${active[0].id}`);
-    return redirect(`/${lng}/challenges/bewater-web3-zh`);
+    return redirect(`/challenges/${active[0].id}`);
   }
   return redirect(`/${lng}/challenges`);
 }

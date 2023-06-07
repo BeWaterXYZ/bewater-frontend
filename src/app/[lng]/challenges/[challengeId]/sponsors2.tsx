@@ -35,7 +35,7 @@ const sponsors_tier3 = [
   '/sponsors/cryptophd.png',
 ];
 
-export function Sponsors() {
+export function Sponsors2() {
   return (
     <div>
       <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">

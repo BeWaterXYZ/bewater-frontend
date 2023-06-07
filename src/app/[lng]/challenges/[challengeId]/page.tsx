@@ -12,6 +12,7 @@ import { Timeline } from './timeline';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
+import { Sponsors2 } from './sponsors2';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -195,7 +196,9 @@ export default async function ChallengeIntro({ params }: any) {
           </>
         ) : null}
       </div>
-      <Sponsors />
+      {challenge.id === '63c82bd12ddc570f32ada868' ? <Sponsors /> : null}
+      {challenge.id === '63c82bd12ddc570f32ada869' ? <Sponsors2 /> : null}
+
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
         <p className="heading-6 md:heading-4 text-center">
           <Balancer ratio={0.9}>
