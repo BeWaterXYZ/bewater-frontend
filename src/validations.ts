@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export let validationSchema = {
+export const validationSchema = {
   email: z.string().email(),
 
   fullName: z.string().min(2, { message: "At least 2 characters" }),

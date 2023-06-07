@@ -5,13 +5,13 @@ import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { QueryProvider } from "./query";
 
-let jetBrainsMono = JetBrains_Mono({
+const jetBrainsMono = JetBrains_Mono({
   variable: "--font-secondary",
   subsets: ["latin"],
   weight: "variable",
 });
 
-export let metadata = {
+export const metadata = {
   title: "BeWater Host website",
   description: "BeWater Host website",
 };

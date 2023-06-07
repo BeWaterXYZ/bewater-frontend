@@ -3,7 +3,7 @@ export type MenuItemType = {
   path?: string;
   active?: boolean;
 };
-export let nav: MenuItemType[] = [
+export const nav: MenuItemType[] = [
   {
     label: 'Challenges',
     path: '/challenges',
@@ -18,7 +18,7 @@ export let nav: MenuItemType[] = [
   // },
 ];
 
-export let user: MenuItemType[] = [
+export const user: MenuItemType[] = [
   {
     label: 'Your Profile',
     path: '/profile',

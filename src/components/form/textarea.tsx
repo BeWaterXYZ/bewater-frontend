@@ -7,12 +7,12 @@ interface Props extends React.ComponentPropsWithoutRef<"textarea"> {
   error?: FieldError;
 }
 
-export let TextArea = React.forwardRef(function TextArea_(
+export const TextArea = React.forwardRef(function TextArea_(
   props: Props,
   ref: React.ForwardedRef<HTMLTextAreaElement>
 ) {
-  let { label, name, error, className, required, ...restProps } = props;
-  let id = useId();
+  const { label, name, error, className, required, ...restProps } = props;
+  const id = useId();
   return (
     <div className={clsx("block group relative", className)}>
       {label ? (

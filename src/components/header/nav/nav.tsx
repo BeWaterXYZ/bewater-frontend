@@ -35,7 +35,7 @@ type NavImplProps = {
   items: MenuItemType[];
 };
 
-export let NavImpl = ({ items }: NavImplProps) => {
+export const NavImpl = ({ items }: NavImplProps) => {
   return (
     <ul
       className={clsx(
@@ -51,8 +51,8 @@ export let NavImpl = ({ items }: NavImplProps) => {
   );
 };
 
-export let Nav = () => {
-  let segments = useSelectedLayoutSegments();
+export const Nav = () => {
+  const segments = useSelectedLayoutSegments();
 
   let items = nav.map((n) => ({
     ...n,

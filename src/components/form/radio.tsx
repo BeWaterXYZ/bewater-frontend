@@ -12,7 +12,7 @@ interface RadioProps extends React.ComponentPropsWithoutRef<"input"> {
   control: any;
 }
 
-export let Radio = React.forwardRef(function Radio_(
+export const Radio = React.forwardRef(function Radio_(
   { options, name, onValueChange, control }: RadioProps,
   ref: any
 ) {

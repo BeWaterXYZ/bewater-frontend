@@ -9,7 +9,7 @@ import { validationSchema } from "@/validations";
 import { z } from "zod";
 import { Challenge } from "@/services/types";
 
-let schema = z
+const schema = z
   .object({
     title: validationSchema.text,
   })
@@ -37,7 +37,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
   let save = () => {
     // openSet(false);
   };
-  let onSubmit = async (formData: Inputs) => {};
+  const onSubmit = async (formData: Inputs) => {};
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
       <Dialog.Trigger asChild>

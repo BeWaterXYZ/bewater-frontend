@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-let nextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
       {

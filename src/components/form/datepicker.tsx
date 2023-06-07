@@ -7,12 +7,12 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   error?: FieldError;
 }
 
-export let DatePicker = React.forwardRef(function DatePicker_(
+export const DatePicker = React.forwardRef(function DatePicker_(
   props: Props,
   ref: React.ForwardedRef<HTMLInputElement>
 ) {
-  let { label, error, className, required, ...restProps } = props;
-  let id = useId();
+  const { label, error, className, required, ...restProps } = props;
+  const id = useId();
   return (
     <div className={clsx("block group relative", className)}>
       {label ? (

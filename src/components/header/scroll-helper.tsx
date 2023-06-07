@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 
 export function HeaderScrollHelper() {
-  let handleScroll = (e: Event) => {
+  const handleScroll = (e: Event) => {
     if (window.scrollY > 20) {
       document.querySelector('#main-header')?.classList.add('bg-night');
     } else {

@@ -11,8 +11,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function Page() {
-  let [isOnlineOnly, isOnlineOnlySet] = useState(true);
-  let schema = z.object({
+  const [isOnlineOnly, isOnlineOnlySet] = useState(true);
+  const schema = z.object({
     type: z.string(),
     title: validationSchema.text,
     hostName: validationSchema.text,

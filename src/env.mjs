@@ -1,7 +1,7 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
-export let env = createEnv({
+export const env = createEnv({
   /*
    * Serverside Environment variables, not available on the client.
    * Will throw if you access these variables on the client.

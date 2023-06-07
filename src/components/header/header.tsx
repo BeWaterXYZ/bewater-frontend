@@ -10,11 +10,11 @@ interface HeaderImplProps {
   user: React.ReactNode;
 }
 
-let UserArea = dynamicLoad(() => import('./user'), {
+const UserArea = dynamicLoad(() => import('./user'), {
   ssr: false,
 });
 
-export let HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
+export const HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
   return (
     <header
       id="main-header"
@@ -36,7 +36,7 @@ export let HeaderImpl = ({ logo, nav, user }: HeaderImplProps) => {
   );
 };
 
-let BeWaterLogo = () => {
+const BeWaterLogo = () => {
   return (
     <div className="flex flex-row relative">
       <Link prefetch={false} href="https://bewater.xyz">
@@ -64,7 +64,7 @@ let BeWaterLogo = () => {
   );
 };
 
-export let Header = () => {
+export const Header = () => {
   return (
     <HeaderImpl logo={<BeWaterLogo />} nav={<Nav />} user={<UserArea />} />
   );
