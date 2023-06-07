@@ -7,6 +7,8 @@ import { formatYYYYMMMDD } from "@/utils/date";
 import Link from "next/link";
 import { Timeline } from "../timeline";
 import { Aspect } from "@/components/aspect";
+import { EditMilestones } from "./edit/milestones";
+import { EditJudges } from "./edit/judges";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -61,7 +63,7 @@ export default function Page({ params }: any) {
       {/* timeline */}
       <div className="relative py-16 border-b border-dashed border-white/30">
         <div className="absolute top-4 right-4">
-          <EditBanner challenge={challenge} />
+          <EditMilestones challenge={challenge} />
         </div>
         <div className="container">
           <Timeline milestones={challenge.milestones} />
@@ -95,7 +97,7 @@ export default function Page({ params }: any) {
       {/* judges */}
       <div className="relative py-16 border-b border-dashed border-white/30">
         <div className="absolute top-4 right-4">
-          <EditBanner challenge={challenge} />
+          <EditJudges challenge={challenge} />
         </div>
         <div className="container">
           <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">

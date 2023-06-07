@@ -12,7 +12,6 @@ export const DatePicker = React.forwardRef(function DatePicker_(
   ref: React.ForwardedRef<HTMLInputElement>
 ) {
   const { label, error, className, required, ...restProps } = props;
-  console.log(restProps);
   const id = useId();
   return (
     <div className={clsx("block group relative", className)}>
