@@ -45,12 +45,12 @@ export default async function ChallengePage({
         </div>
       )}
       {/* todo , fixme  */}
-      {/* {completed.length > 0 && (
+      {completed.length > 0 && (
         <div className="border-b py-4">
           <h2 className="heading-5">Completed</h2>
           <ChallengeList challenges={completed} lng={lng} />
         </div>
-      )} */}
+      )}
     </div>
   );
 }

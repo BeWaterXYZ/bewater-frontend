@@ -21,9 +21,8 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
           <Link prefetch={false} href={`/${lng}/challenges/${challenge.id}`}>
             <Aspect ratio={5 / 2}>
               <Image
-                width={640}
-                height={256}
-                src={challenge.bannerUrl ?? unsplash()}
+                fill
+                src={`/challenge/assets/${challenge.id}.png`}
                 alt="crypto"
                 className="object-cover w-full h-full"
               />
