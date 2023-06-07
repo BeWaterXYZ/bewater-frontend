@@ -19,7 +19,9 @@ const ConnectButton = dynamicLoad(() => import('./connect-button'), {
 });
 
 export default async function ChallengeIntro({ params }: any) {
+  console.log(`params ${JSON.stringify(params)}`);
   const { challengeId } = segmentSchema.challengeId.parse(params);
+  console.log(`challengeId ${challengeId}`);
   const challenge = await getChallengeById(challengeId);
   const { lng } = segmentSchema.lng.parse(params);
 
@@ -78,8 +80,8 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
       <div className="">
-        {challenge.id === '63c82bd12ddc570f32ada868' ? <PrizeSection1 /> : null}
-        {challenge.id === '63c82bd12ddc570f32ada869' ? <PrizeSection2 /> : null}
+        {challenge.id === '1' ? <PrizeSection1 /> : null}
+        {challenge.id === '1' ? <PrizeSection2 /> : null}
       </div>
       <div className="mt-16">
         <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
@@ -121,29 +123,29 @@ export default async function ChallengeIntro({ params }: any) {
       <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
           <h3 className="heading-5 font-bold mb-8">参赛要求</h3>
-          <ol className="list-decimal">
-            {challenge.requirements.map((r) => (
+          <ul className="list-decimal">
+            {challenge.requirements.split('\n').map((r) => (
               <li
                 key={r}
-                className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
               >
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
         <div className="flex-1 p-8 bg-white/5 border border-grey-800">
           <h3 className="heading-5 font-bold mb-8">评审维度</h3>
-          <ol className="list-decimal">
-            {challenge.reviewDimension.map((r) => (
+          <ul className="list-decimal">
+            {challenge.reviewDimension.split('\n').map((r) => (
               <li
                 key={r}
-                className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
               >
                 <span className="body-3 text-grey-400">{r}</span>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
         {challenge.id === '63c82bd12ddc570f32ada869' ? (
           <>

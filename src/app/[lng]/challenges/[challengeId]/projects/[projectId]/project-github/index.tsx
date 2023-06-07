@@ -9,7 +9,7 @@ export function GithubStats({ project }: { project: Project }) {
   const user = useAuthStore((s) => s.user);
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.userId === user?.userId);
+    .some((m) => m.userProfile.externalId === user?.externalId);
   return (
     <div className="">
       <h3 className="body-3 font-bold text-grey-500">Github Stats</h3>

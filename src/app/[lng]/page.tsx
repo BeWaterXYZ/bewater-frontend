@@ -1,10 +1,11 @@
 import { getChallenges } from '@/services/challenge';
 import { redirect } from 'next/navigation';
 import { languages, fallbackLng } from '../i18n/settings';
+import { Challenge } from '@/services/types';
 
 export default async function Home({ params }: { params: { lng: string } }) {
   let challenges = await getChallenges();
-  let active = challenges.filter((c) => c.status === 'ACTIVE');
+  let active: Challenge[] = challenges.filter((c) => c.status === 'ACTIVE');
   let { lng = 'en' } = params || {};
 
   if (languages.indexOf(lng) < 0) {

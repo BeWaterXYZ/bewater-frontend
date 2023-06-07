@@ -51,8 +51,12 @@ function filterAndSortTeam(
    */
   if (!userProfile) return res;
   return res.sort((a, b) => {
-    let isInATeam = a.teamMembers.some((m) => m.userId === userProfile.userId);
-    let isInBTeam = b.teamMembers.some((m) => m.userId === userProfile.userId);
+    let isInATeam = a.teamMembers.some(
+      (m) => m.userId === userProfile.externalId,
+    );
+    let isInBTeam = b.teamMembers.some(
+      (m) => m.userId === userProfile.externalId,
+    );
 
     if (isInATeam && !isInBTeam) return -1;
     else if (isInBTeam && !isInATeam) return 1;

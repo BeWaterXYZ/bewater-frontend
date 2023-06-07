@@ -10,7 +10,7 @@ import { string } from 'zod';
 export type UserID = string;
 
 export interface UserProfile {
-  userId: UserID;
+  externalId: UserID;
   email: string;
   walletAddress: string;
   userName?: string;
@@ -40,8 +40,8 @@ export interface Challenge {
   hostName: string;
   description: string;
   bannerUrl: string;
-  requirements: string[];
-  reviewDimension: string[];
+  requirements: string;
+  reviewDimension: string;
   startTime: string;
   endTime: string;
   totalAward: number;

@@ -14,7 +14,7 @@ export default function ProjectMenu({ project }: ProjectMenuProps) {
   const user = useAuthStore((s) => s.user);
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.userId === user?.userId);
+    .some((m) => m.userProfile.externalId === user?.externalId);
   const onProjectEdit = () => {
     showDialog('project_edit', project);
   };
