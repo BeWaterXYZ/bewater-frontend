@@ -34,7 +34,7 @@ export const Radio = React.forwardRef(function Radio_(
               return (
                 <div
                   className={clsx(
-                    "flex-1 flex gap-2 items-center border border-white/10  p-4",
+                    "flex-1 flex gap-2 items-center rounded-sm border border-white/10  p-4",
                     field.value === op.value ? "bg-white/10" : "bg-white/[0.02]"
                   )}
                   key={id + op.value}
@@ -46,7 +46,7 @@ export const Radio = React.forwardRef(function Radio_(
                   >
                     <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[12px] after:h-[12px] after:rounded-full after:bg-white" />
                   </RadioGroup.Item>
-                  <label className="" htmlFor={id + op.value + "-item"}>
+                  <label className="text-[14px]" htmlFor={id + op.value + "-item"}>
                     {op.label}
                   </label>
                 </div>

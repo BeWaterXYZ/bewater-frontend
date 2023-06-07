@@ -27,7 +27,7 @@ export const Input = React.forwardRef(function Input_(
       <input
         id={id}
         className={clsx(
-          "w-full text-[14px] bg-night  block body-3 py-2 px-2  text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors",
+          "w-full text-[14px] bg-night  block body-3 py-2 px-2  rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors",
           {
             error: error,
           }

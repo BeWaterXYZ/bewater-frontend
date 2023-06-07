@@ -29,7 +29,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
         type="date"
         
         ref={ref}
-        className="datepicker w-full text-[14px] bg-night  block body-3 py-2 px-2  text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors"
+        className="datepicker w-full text-[14px] bg-night  block body-3 py-2 px-2 rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors"
         {...restProps}
       />
       <div

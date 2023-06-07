@@ -5,24 +5,23 @@ import { Radio } from "@/components/form/radio";
 import { TextArea } from "@/components/form/textarea";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function Page() {
   const [isOnlineOnly, isOnlineOnlySet] = useState(true);
-  const schema = z
-    .object({
-      title: validationSchema.text,
-      hostName: validationSchema.text,
-      description: validationSchema.text,
-      location: validationSchema.text,
-      city: z.string().optional(),
-      startTime: validationSchema.date,
-      endTime: validationSchema.date,
-    })
-   ;
-
+  const schema = z.object({
+    type: z.string(),
+    title: validationSchema.text,
+    hostName: validationSchema.text,
+    description: validationSchema.text,
+    location: z.string(),
+    city: validationSchema.text.optional(),
+    startTime: validationSchema.date,
+    endTime: validationSchema.date,
+  });
   type Inputs = z.infer<typeof schema>;
 
   let {
@@ -37,6 +36,7 @@ export default function Page() {
     resolver: zodResolver(schema),
     defaultValues: {
       location: "online",
+      type: "hackathon",
     },
   });
 
@@ -46,7 +46,7 @@ export default function Page() {
   watch((data) => {
     isOnlineOnlySet(data.location === "online");
   });
-  console.log(1,register('title'))
+  console.log(1, register("title"));
 
   return (
     <div className="container my-4 pt-20 flex flex-1 ">
@@ -56,6 +56,60 @@ export default function Page() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
+          <fieldset className="py-2">
+            <label className="block text-[12px] py-1 text-grey-500 font-bold  ">
+              Campaign Type
+            </label>
+            <Radio
+              control={control}
+              name="type"
+              onValueChange={(v) => setValue("location", v)}
+              options={[
+                {
+                  value: "hackathon",
+                  label: (
+                    <div className="flex flex-col md:flex-row items-center gap-2">
+                      <Image
+                        src="/assets/hackathon.png"
+                        width={64}
+                        height={64}
+                        alt="hackathon"
+                      />
+                      Hackathon
+                    </div>
+                  ),
+                },
+                {
+                  value: "demoday",
+                  label: (
+                    <div className="flex flex-col md:flex-row items-center gap-2">
+                      <Image
+                        src="/assets/demoday.png"
+                        width={64}
+                        height={64}
+                        alt="hackathon"
+                      />
+                      Demo day
+                    </div>
+                  ),
+                },
+                {
+                  value: "workshop",
+                  label: (
+                    <div className="flex flex-col md:flex-row items-center gap-2">
+                      <Image
+                        src="/assets/workshop.png"
+                        width={64}
+                        height={64}
+                        alt="hackathon"
+                      />
+                      Workshop
+                    </div>
+                  ),
+                },
+              ]}
+            />
+          </fieldset>
           <fieldset className="py-2">
             <Input
               label="Campaign Title"
