@@ -44,6 +44,20 @@ const nextConfig = {
     ],
   },
 
+  async rewrites() {
+    return [
+      {
+        source: '/en/challenges/bewater-web3-zh',
+        destination: '/en/challenges/1',
+      },
+      {
+        source: '/zh/challenges/bewater-web3-zh',
+        destination: '/zh/challenges/1',
+      },
+      // todo更多语言
+    ];
+  },
+
   // swcMinify: true,
 
   // // Disabling Next.js ESLint check with custom one as there is
