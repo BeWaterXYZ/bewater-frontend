@@ -2,7 +2,7 @@ import { agentAuthed } from "./agent";
 import { Challenge, ChallengeID } from "./types";
 
 export async function getChallenges() {
-  // const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
+  // let { data } = await agentAnon.get<{ challenges: Challenge[] }>(
   //   `/challenge/timerange`,
   //   {
   //     params: {
@@ -15,7 +15,7 @@ export async function getChallenges() {
 }
 
 export async function getChallengeById(challengeId: ChallengeID) {
-  const { data } = await agentAuthed.get<{ challenge: Challenge }>(
+  let { data } = await agentAuthed.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
     {}
   );

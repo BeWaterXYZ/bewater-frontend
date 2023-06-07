@@ -9,7 +9,7 @@ import { validationSchema } from "@/validations";
 import { z } from "zod";
 import { Challenge } from "@/services/types";
 
-const schema = z
+let schema = z
   .object({
     judges: z.array(
       z.object({
@@ -39,14 +39,14 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
       judges: challenge.judges,
     },
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  let { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
       name: "judges", // unique name for your Field Array
     }
   );
   console.log(errors);
-  const onSubmit = async (formData: Inputs) => {
+  let onSubmit = async (formData: Inputs) => {
     console.log({ formData });
   };
   return (

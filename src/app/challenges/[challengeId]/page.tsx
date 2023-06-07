@@ -12,7 +12,7 @@ import { EditJudges } from "./edit/judges";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
-  const { data: challenge } = useFetchChallengeById(challengeId);
+  let { data: challenge } = useFetchChallengeById(challengeId);
   console.log(challengeId, challenge);
   if (!challenge) return null;
 

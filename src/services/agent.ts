@@ -8,8 +8,8 @@ import { env } from "../env.mjs";
  *  interceptors
  */
 
-const requestInterceptor = (config: InternalAxiosRequestConfig) => {
-  const accessToken =
+let requestInterceptor = (config: InternalAxiosRequestConfig) => {
+  let accessToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlkZjFiMWNlLTEzYTItNDU2NS1iYWIwLThjMjBjYWNmMmQ1NiIsIndhbGxldEFkZHJlc3MiOiIweGMxNmZlMDY3NjYwYTVhYmFjZDE2N2Q4ZGFlMDdhZDIyNWM2YjE1MTAiLCJpYXQiOjE2ODYwMDc2NjYsImV4cCI6MTY4Njg3MTY2Nn0._M7joW_54g6iAQJjkXKr0bpgLMQVjpMQHclIBgytyDo";
   if (!!accessToken && !!config.headers) {
     config.headers["authorization"] = `Bearer ${accessToken}`;
@@ -17,13 +17,13 @@ const requestInterceptor = (config: InternalAxiosRequestConfig) => {
   return config;
 };
 
-const responseInterceptor = (error: AxiosError) => {
+let responseInterceptor = (error: AxiosError) => {
   if (error.response?.status === 401) {
   }
   return Promise.reject(error);
 };
 
-const responseDataInterceptor = (resp: AxiosResponse) => {
+let responseDataInterceptor = (resp: AxiosResponse) => {
   if (resp.data.status === "SUCCESS" && resp.data.status_code === 200) {
     resp.data = resp.data.data;
   } else {
@@ -35,7 +35,7 @@ const responseDataInterceptor = (resp: AxiosResponse) => {
 /**
  *  agentAuthed
  */
-const agentAuthed = axios.create({
+let agentAuthed = axios.create({
   baseURL: env.NEXT_PUBLIC_API_ENDPOINT,
 });
 

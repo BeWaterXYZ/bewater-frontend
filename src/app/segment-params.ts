@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const segmentSchema = {
+export let segmentSchema = {
   challengeId: z.object({
     challengeId: z.string(),
   }),

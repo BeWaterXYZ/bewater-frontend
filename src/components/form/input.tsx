@@ -7,12 +7,12 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   error?: FieldError;
 }
 
-export const Input = React.forwardRef(function Input_(
+export let Input = React.forwardRef(function Input_(
   props: Props,
   ref: React.ForwardedRef<HTMLInputElement>
 ) {
-  const { label, name, error, className, required, ...restProps } = props;
-  const id = useId();
+  let { label, name, error, className, required, ...restProps } = props;
+  let id = useId();
   return (
     <div className={clsx("block group relative", className)}>
       {label ? (

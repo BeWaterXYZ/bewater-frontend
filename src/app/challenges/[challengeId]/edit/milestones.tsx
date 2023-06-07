@@ -10,7 +10,7 @@ import { z } from "zod";
 import { Challenge } from "@/services/types";
 import { DatePicker } from "@/components/form/datepicker";
 
-const schema = z
+let schema = z
   .object({
     milestones: z.array(
       z.object({
@@ -40,7 +40,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
       milestones: challenge.milestones,
     },
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+  let { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control, // control props comes from useForm (optional: if you are using FormContext)
       name: "milestones", // unique name for your Field Array
@@ -49,7 +49,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
   let save = () => {
     // openSet(false);
   };
-  const onSubmit = async (formData: Inputs) => {
+  let onSubmit = async (formData: Inputs) => {
     console.log({ formData });
   };
   return (

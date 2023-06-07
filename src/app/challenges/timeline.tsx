@@ -2,7 +2,7 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 
-const labelMaps: Record<Milestone['stageName'], string> = {
+let labelMaps: Record<Milestone['stageName'], string> = {
   Preparation: '赛事信息公布',
   Teaming: '创建团队信息及提交项目',
   'Project Submission': '项目初筛',
@@ -39,7 +39,7 @@ function prepareData(milestones: Milestone[]) {
   return nodes;
 }
 
-const glowing =
+let glowing =
   "rounded-full bg-day  shadow-[0_0_0_1px_theme('colors.day')_inset,_0_0_0_3px_white_inset]";
 
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
