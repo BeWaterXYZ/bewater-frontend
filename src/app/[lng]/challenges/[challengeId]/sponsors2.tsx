@@ -7,7 +7,7 @@ const sponsors_tier1 = [
 const sponsors_tier2 = [
   '/sponsors/vip3.png',
   '/sponsors/sinohope.png',
-  'sponsors/club3.png',
+  '/sponsors/club3.png',
 ];
 
 const sponsors_tier3 = [
