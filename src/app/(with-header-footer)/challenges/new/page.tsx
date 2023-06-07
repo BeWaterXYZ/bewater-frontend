@@ -18,8 +18,10 @@ export default function Page() {
       description: validationSchema.text,
       location: validationSchema.text,
       city: z.string().optional(),
+      startTime: validationSchema.date,
+      endTime: validationSchema.date,
     })
-    .required();
+   ;
 
   type Inputs = z.infer<typeof schema>;
 
@@ -30,18 +32,21 @@ export default function Page() {
     formState: { errors },
     setValue,
     watch,
+    formState: a,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
       location: "online",
     },
   });
+
   let onSubmit = (formData: Inputs) => {
     console.log({ formData });
   };
   watch((data) => {
     isOnlineOnlySet(data.location === "online");
   });
+  console.log(1,register('title'))
 
   return (
     <div className="container my-4 pt-20 flex flex-1 ">
@@ -97,10 +102,17 @@ export default function Page() {
               />
             </fieldset>
           )}
-          <div className="grid grid-col-2 gap-4">
-              <DatePicker />
-
-
+          <div className="grid grid-cols-2 gap-4">
+            <DatePicker
+              label="Start Date"
+              {...register("startTime")}
+              error={errors["startTime"]}
+            />
+            <DatePicker
+              label="End Date"
+              {...register("endTime")}
+              error={errors["endTime"]}
+            />
           </div>
 
           <div className="py-8 flex justify-end">

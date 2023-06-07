@@ -6,7 +6,9 @@ export function Dashboard() {
       <div className="w-full flex justify-between">
         <div>filters</div>
         <div>
-          <button className="btn btn-primary">+ Draft a new campaign</button>
+          <Link href="/challenges/new" className="btn btn-primary">
+            + Draft a new campaign
+          </Link>
         </div>
       </div>
 

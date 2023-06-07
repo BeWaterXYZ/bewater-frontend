@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -26,7 +25,6 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
 
 @layer components {
   .btn {
@@ -63,4 +61,13 @@ body {
   .btn-danger {
     @apply border-danger bg-danger text-white;
   }
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  display: block;
+  background-color: rgba(0, 0, 0, 0);
+  width: 100%;
+  height: 100%;
 }
