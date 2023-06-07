@@ -9,6 +9,9 @@ import { Timeline } from "../timeline";
 import { Aspect } from "@/components/aspect";
 import { EditMilestones } from "./edit/milestones";
 import { EditJudges } from "./edit/judges";
+import { EditIntro } from "./edit/intro";
+import { EditRequirements } from "./edit/requirements";
+import { EditSponsors } from "./edit/sponsors";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -72,7 +75,7 @@ export default function Page({ params }: any) {
 
       <div className="relative py-16 border-b border-dashed border-white/30">
         <div className="absolute top-4 right-4">
-          <EditBanner challenge={challenge} />
+          <EditIntro challenge={challenge} />
         </div>
         <div className="container">
           <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
@@ -129,7 +132,7 @@ export default function Page({ params }: any) {
       {/* requirements  */}
       <div className="relative py-16 border-b border-dashed border-white/30">
         <div className="absolute top-4 right-4">
-          <EditBanner challenge={challenge} />
+          <EditRequirements challenge={challenge} />
         </div>
         <div className="container">
           <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
@@ -161,6 +164,14 @@ export default function Page({ params }: any) {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* sponsors  */}
+      <div className="relative py-16 border-b border-dashed border-white/30">
+        <div className="absolute top-4 right-4">
+          <EditSponsors challenge={challenge} />
+        </div>
+        <div className="container">sponsors here</div>
       </div>
     </div>
   );

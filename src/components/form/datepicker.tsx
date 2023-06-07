@@ -1,6 +1,7 @@
 import React, { useId } from "react";
 import clsx from "clsx";
 import type { FieldError } from "react-hook-form";
+import { CalendarIcon } from "@radix-ui/react-icons";
 
 interface Props extends React.ComponentPropsWithoutRef<"input"> {
   label?: string;
@@ -24,13 +25,20 @@ export const DatePicker = React.forwardRef(function DatePicker_(
           {required && " *"}
         </label>
       ) : null}
-      <input
-        type="date"
-        
-        ref={ref}
-        className="datepicker w-full text-[14px] bg-night  block body-3 py-2 px-2 rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors"
-        {...restProps}
-      />
+      <div className=" relative w-full text-[14px] bg-night  block body-3   rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors">
+        <input
+          type="date"
+          ref={ref}
+          className="w-full bg-white/0 h-10 px-2"
+          {...restProps}
+        />
+        <CalendarIcon
+          className="text-white/75 absolute right-2 top-2 pointer-events-none"
+          height={20}
+          width={20}
+        />
+      </div>
+
       <div
         className={clsx("absolute whitespace-nowrap text-[12px]  text-danger", {
           invisible: !error,
