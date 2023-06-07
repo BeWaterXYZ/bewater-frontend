@@ -105,6 +105,16 @@ export default async function ChallengeIntro({ params }: any) {
                 </div>
               );
             })}
+          <div className="w-[180px]">
+            <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
+              Coming
+              <br />
+              Soon
+            </div>
+            <p className="body-3 mt-6 w-full text-grey-400">
+              更多评委即将揭晓...
+            </p>
+          </div>
         </div>
       </div>
       <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
@@ -141,8 +151,8 @@ export default async function ChallengeIntro({ params }: any) {
               <ol className="list-decimal">
                 <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
                   <span className="body-3 text-grey-400">
-                    获奖作品和团队将被展示在 6 月 24 晚的 ETH Shanghai Cocktail
-                    Party，由 BeWater 倾力举办
+                    获奖作品和团队将被展示在 6 月 24 日晚的 ETH Shanghai
+                    Cocktail Party，由 BeWater 倾力举办
                   </span>
                 </li>
                 <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
@@ -154,8 +164,8 @@ export default async function ChallengeIntro({ params }: any) {
                 <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
                   <span className="body-3 text-grey-400">
                     奖金和 token：DeBox将提供
-                    vDBX，同时还包括其他多个合作伙伴的赞助，包括
-                    USDT、NFT白名单以及对应平台 token，更多详情敬请期待
+                    DBX，同时还包括其他多个合作伙伴的赞助，包括 USDT、NFT
+                    白名单以及对应平台 token，更多详情敬请期待
                   </span>
                 </li>
                 <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
