@@ -24,7 +24,6 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 export function EditMilestones({ challenge }: { challenge: Challenge }) {
-  console.log(challenge);
   let [open, openSet] = useState(false);
   let [bg, bgSet] = useState<string[]>([]);
   let [hostImages, hostImagesSet] = useState<string[]>([]);

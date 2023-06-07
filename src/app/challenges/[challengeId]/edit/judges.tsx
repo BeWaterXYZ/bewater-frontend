@@ -1,6 +1,5 @@
 "use client";
 import { Input } from "@/components/form/input";
-import { Uploader } from "@/components/uploader";
 import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -8,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { validationSchema } from "@/validations";
 import { z } from "zod";
 import { Challenge } from "@/services/types";
+import { TextArea } from "@/components/form/textarea";
+import { UploaderInput } from "@/components/form/uploader";
 
 const schema = z
   .object({
@@ -33,6 +34,7 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -45,7 +47,6 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
       name: "judges", // unique name for your Field Array
     }
   );
-  console.log(errors);
   const onSubmit = async (formData: Inputs) => {
     console.log({ formData });
   };
@@ -63,9 +64,28 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             {fields.map((field, index) => {
               return (
-                <div className="grid grid-cols-2 gap-4 my-2" key={field.id}>
-                  <Input {...register(`judges.${index}.name`)} />
-                  <Input {...register(`judges.${index}.title`)} />
+                <div className="mb-4 border-b border-grey-800" key={field.id}>
+                  <Input
+                    label="Judge Name"
+                    {...register(`judges.${index}.name`)}
+                  />
+                  <UploaderInput
+                    control={control}
+                    label={"Judge Avatar"}
+                    name={`judges.${index}.avatarURI`}
+                    title="Upload Avatar"
+                    subTitlte="JPG/PNG, 180x180px"
+                    max={1}
+                    height={140}
+                    width={200}
+                    onValueChange={(v) => {
+                      setValue(`judges.${index}.avatarURI`, v as string);
+                    }}
+                  />
+                  <TextArea
+                    label="Judge Title"
+                    {...register(`judges.${index}.title`)}
+                  />
                 </div>
               );
             })}

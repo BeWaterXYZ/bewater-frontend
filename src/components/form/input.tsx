@@ -14,7 +14,7 @@ export const Input = React.forwardRef(function Input_(
   const { label, name, error, className, required, ...restProps } = props;
   const id = useId();
   return (
-    <div className={clsx("block group relative", className)}>
+    <div className={clsx("block group relative pb-4", className)}>
       {label ? (
         <label
           className="block text-[12px] py-1 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"

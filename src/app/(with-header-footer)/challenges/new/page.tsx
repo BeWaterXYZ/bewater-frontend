@@ -11,8 +11,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export default function Page() {
-  const [isOnlineOnly, isOnlineOnlySet] = useState(true);
-  const schema = z.object({
+  let [isOnlineOnly, isOnlineOnlySet] = useState(true);
+  let schema = z.object({
     type: z.string(),
     title: validationSchema.text,
     hostName: validationSchema.text,
@@ -46,7 +46,6 @@ export default function Page() {
   watch((data) => {
     isOnlineOnlySet(data.location === "online");
   });
-  console.log(1, register("title"));
 
   return (
     <div className="container my-4 pt-20 flex flex-1 ">

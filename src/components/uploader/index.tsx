@@ -15,7 +15,7 @@ async function upload(file: File) {
   }
   return data.mediaURL;
 }
-interface UploaderProps {
+export interface UploaderProps {
   max: number;
   urls: string[];
   title: string;
@@ -46,6 +46,7 @@ export function Uploader({
         let url = await upload(file);
         onChange([...urls, url]);
       } catch (err) {
+        console.error('uploading error',err)
       } finally {
         uploadingListSet((uploading) =>
           uploading.filter((f) => f.name !== file.name)
