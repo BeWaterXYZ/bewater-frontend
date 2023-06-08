@@ -12,6 +12,7 @@ import { EditJudges } from "./edit/judges";
 import { EditIntro } from "./edit/intro";
 import { EditRequirements } from "./edit/requirements";
 import { EditSponsors } from "./edit/sponsors";
+import { EditAwards } from "./edit/awards";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -95,7 +96,13 @@ export default function Page({ params }: any) {
           </div>
         </div>
       </div>
-
+      {/* awards */}
+      <div className="relative py-16 border-b border-dashed border-white/30">
+        <div className="absolute top-4 right-4">
+          <EditAwards challenge={challenge} />
+        </div>
+        <div className="container">awards here</div>
+      </div>
       {/* judges */}
       <div className="relative py-16 border-b border-dashed border-white/30">
         <div className="absolute top-4 right-4">

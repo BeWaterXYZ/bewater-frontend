@@ -29,8 +29,7 @@ export function UploaderInput({
     <Controller
       name={name!}
       control={control}
-      render={({ field, fieldState, formState }) => {
-        console.log(1, field.name,field.value)
+      render={({ field }) => {
         return (
           <div className={clsx("block group relative pb-4")}>
             {label ? (
@@ -51,7 +50,7 @@ export function UploaderInput({
                 max === 1 ? (field.value ? [field.value] : []) : field.value
               }
               onChange={(urls) => {
-                console.log(2,field.name,urls)
+                console.log(2, field.name, urls);
                 onValueChange(max === 1 ? urls[0] ?? "" : urls);
               }}
             />
