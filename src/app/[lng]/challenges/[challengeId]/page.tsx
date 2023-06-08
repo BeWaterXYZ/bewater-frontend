@@ -145,56 +145,6 @@ export default async function ChallengeIntro({ params }: any) {
             ))}
           </ol>
         </div>
-        {challenge.id === '63c82bd12ddc570f32ada869' ? (
-          <>
-            <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="heading-5 font-bold mb-8">赛事奖励</h3>
-              <ol className="list-decimal">
-                <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                  <span className="body-3 text-grey-400">
-                    获奖作品和团队将被展示在 6 月 24 日晚的 ETH Shanghai
-                    Cocktail Party，由 BeWater 倾力举办
-                  </span>
-                </li>
-                <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                  <span className="body-3 text-grey-400">
-                    作品上链：每个赛道的前三名作品将以 ERC-721 (NFT)
-                    形式上链，并作为同一个系列，后续可通过社区组织相关的拍卖，获奖所得将全部提供给设计师。
-                  </span>
-                </li>
-                <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                  <span className="body-3 text-grey-400">
-                    奖金和 token：DeBox将提供
-                    DBX，同时还包括其他多个合作伙伴的赞助，包括 USDT、NFT
-                    白名单以及对应平台 token，更多详情敬请期待
-                  </span>
-                </li>
-                <li className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                  <span className="body-3 text-grey-400">
-                    作品推广：本次赛事将联合多个合作方进行宣传，为参赛作品提供十万量级的曝光
-                  </span>
-                </li>
-              </ol>
-            </div>
-            <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="heading-5 font-bold mb-8">作品交付</h3>
-              <ol className="list-decimal">
-                <li className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                  <span className="body-3 text-grey-400">
-                    ProgrammingGC 请以 Web 形式提交作品，可以使用 Codepen
-                    展示你的编程艺术
-                  </span>
-                </li>{' '}
-                <li className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                  <span className="body-3 text-grey-400">
-                    表情包、PFP、像素画请提交预览效果图、样品包或动态的 gif
-                    等文件，可使用网盘共享样品或通过网页展示
-                  </span>
-                </li>
-              </ol>
-            </div>
-          </>
-        ) : null}
       </div>
       {challenge.id === '63c82bd12ddc570f32ada868' ? <Sponsors /> : null}
       {challenge.id === '63c82bd12ddc570f32ada869' ? <Sponsors2 /> : null}
