@@ -1,4 +1,4 @@
-export const languages = ['en', 'zh'];
+export const languages = ['zh', 'en'];
 export const defaultNS = 'translation';
 export const fallbackLng = languages[0];
 
