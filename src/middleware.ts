@@ -15,7 +15,8 @@ const cookieName = 'i18next';
 export function middleware(req: any) {
   let lng = null;
   if (req.cookies.has(cookieName)) {
-    lng = acceptLanguage.get(req.cookies.get(cookieName).value);
+    // 临时方案，todo 多语言支持
+    // lng = acceptLanguage.get(req.cookies.get(cookieName).value);
   }
   if (!lng) {
     lng = acceptLanguage.get(req.headers.get('Accept-Language'));
