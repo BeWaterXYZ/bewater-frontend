@@ -26,6 +26,12 @@ export function GithubStatsDisplay({ project }: { project: Project }) {
   if (!data) return null;
   return (
     <div>
+      <iframe
+        name="github"
+        title="github"
+        className="w-full h-[400px]"
+        src={`https://alpha.metatrust.io/score/bewater/radar?repoUrl=${project.githubURI}`}
+      />
       <div className="flex flex-col gap-3">
         <div className="bg-latenight border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
           <p className="body-4 text-grey-500">Language Used</p>
