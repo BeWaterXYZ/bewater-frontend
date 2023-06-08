@@ -15,9 +15,17 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
       style={{ backgroundImage: `url(/challenge/assets/${challenge.id}.png)` }}
     >
-      {challenge.hostName === 'BeWater' ? (
+      {challenge.id === '63c82bd12ddc570f32ada868' ? (
         <Image
           src="/logo/bewater-h.svg"
+          width={120}
+          height={24}
+          alt="bewater logo"
+          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-30"
+        />
+      ) : challenge.id === '63c82bd12ddc570f32ada869' ? (
+        <Image
+          src="/sponsors/debox.png"
           width={120}
           height={24}
           alt="bewater logo"
