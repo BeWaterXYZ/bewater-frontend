@@ -6,7 +6,7 @@ export function PrizeSection() {
   return (
     <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
       <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-        赛事奖励：vDBX + USDT
+        赛道设置
       </h3>
 
       <div className="flex flex-col items-center gap-16">
