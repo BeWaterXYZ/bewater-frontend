@@ -1,6 +1,6 @@
 const sponsors_tier1 = [
   '/sponsors/debox.png',
-  '/sponsors/particleNetwork.png',
+  '/sponsors/noncegeek.png',
   '/sponsors/bewater.png',
 ];
 

@@ -6,7 +6,7 @@ export function PrizeSection() {
   return (
     <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
       <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-        奖金池：? vDBX + ? USDT
+        赛事奖励：vDBX + USDT
       </h3>
 
       <div className="flex flex-col items-center gap-16">
@@ -24,7 +24,7 @@ export function PrizeSection() {
             主赛道 B - 基础设施类
           </p> */}
           <div className="flex flex-row gap-[min(32px,2vw)] ">
-            <PrizeList title="💻 编程艺术" />
+            <PrizeList title="💻 ProgrammingGC" />
             <PrizeList title="🎨 像素画" />
           </div>
         </div>
@@ -71,12 +71,6 @@ export function PrizeSection() {
           <SponsorsCell src={'/sponsors/debox.png'} />
           <SponsorsCell src={'/sponsors/noncegeek.png'} />
           <SponsorsCell src={'/sponsors/bewater.png'} />
-          {/* <SponsorsCell src={'/sponsors/aliyun.png'} />
-          <SponsorsCell src={'/sponsors/ScalingX.png'} />
-          <SponsorsCell src={'/sponsors/particleNetwork.png'} />
-          <SponsorsCell src={'/sponsors/Metatrust.png'} />
-          <SponsorsCell src={'/sponsors/seedao.png'} />
-          <SponsorsCell src={'/sponsors/cointime.png'} /> */}
         </Marquee>
       </div>
     </div>
