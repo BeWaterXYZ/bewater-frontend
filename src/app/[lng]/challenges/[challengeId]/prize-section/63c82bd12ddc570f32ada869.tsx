@@ -35,13 +35,6 @@ export function PrizeSection() {
         </p>
         <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
           <li>
-            <span className="text-white">作品展示：</span>
-            <span>
-              获奖作品和团队将被展示在 6 月 24 日晚的 ETH Shanghai Cocktail
-              Party，由 BeWater 倾力举办。
-            </span>
-          </li>
-          <li>
             <span className="text-white">作品上链：</span>
             <span>
               每个赛道的前三名作品将以 ERC-721 (NFT)
