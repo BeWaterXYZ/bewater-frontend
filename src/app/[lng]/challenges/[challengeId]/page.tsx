@@ -98,6 +98,7 @@ export default async function ChallengeIntro({ params }: any) {
                       src={judge.avatarURI ?? unsplash('man')}
                       className="object-cover w-full h-full"
                       alt={judge.name}
+                      title={judge.description}
                     />
                   </Aspect>
                   <p className="body-3 mt-4 mb-2">{judge.name}</p>
