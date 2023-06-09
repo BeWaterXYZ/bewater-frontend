@@ -26,10 +26,10 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
       ) : challenge.id === '63c82bd12ddc570f32ada869' ? (
         <Image
           src="/sponsors/debox.png"
-          width={120}
-          height={24}
-          alt="bewater logo"
-          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-30"
+          width={93}
+          height={40}
+          alt="debox logo"
+          className="mx-auto mb-2 md:mb-3 w-[64px] md:w-[93px]"
         />
       ) : (
         <p className="body-4 md:text-[20px]">{challenge.hostName}</p>
@@ -63,8 +63,12 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
           </div>
         </div>
       )}
-      <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
-      <div className="absolute  block w-[100px] h-[1388px] left-[10%] md:left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
+      {challenge.id === '63c82bd12ddc570f32ada868' && (
+        <div>
+          <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
+          <div className="absolute  block w-[100px] h-[1388px] left-[10%] md:left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
+        </div>
+      )}
     </div>
   );
 }
