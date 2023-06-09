@@ -18,7 +18,7 @@ export default function Page() {
     hostName: validationSchema.text,
     description: validationSchema.text,
     location: z.string(),
-    city: validationSchema.text.optional(),
+    city: isOnlineOnly ? z.string().optional() : validationSchema.text,
     startTime: validationSchema.date,
     endTime: validationSchema.date,
   });
@@ -31,7 +31,6 @@ export default function Page() {
     formState: { errors },
     setValue,
     watch,
-    formState: a,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -55,105 +54,88 @@ export default function Page() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <fieldset className="py-2">
-            <label className="block text-[12px] py-1 text-grey-500 font-bold  ">
-              Campaign Type
-            </label>
-            <Radio
-              control={control}
-              name="type"
-              onValueChange={(v) => setValue("location", v)}
-              options={[
-                {
-                  value: "hackathon",
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2">
-                      <Image
-                        src="/assets/hackathon.png"
-                        width={64}
-                        height={64}
-                        alt="hackathon"
-                      />
-                      Hackathon
-                    </div>
-                  ),
-                },
-                {
-                  value: "demoday",
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2">
-                      <Image
-                        src="/assets/demoday.png"
-                        width={64}
-                        height={64}
-                        alt="hackathon"
-                      />
-                      Demo day
-                    </div>
-                  ),
-                },
-                {
-                  value: "workshop",
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2">
-                      <Image
-                        src="/assets/workshop.png"
-                        width={64}
-                        height={64}
-                        alt="hackathon"
-                      />
-                      Workshop
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </fieldset>
-          <fieldset className="py-2">
-            <Input
-              label="Campaign Title"
-              {...register("title")}
-              error={errors["title"]}
-            />
-          </fieldset>
-          <fieldset className="py-2">
-            <Input
-              label="Host Name"
-              {...register("hostName")}
-              error={errors["hostName"]}
-            />
-          </fieldset>
+          <label className="block text-[12px] py-1 text-grey-500 font-bold  ">
+            Campaign Type
+          </label>
+          <Radio
+            control={control}
+            name="type"
+            onValueChange={(v) => setValue("location", v)}
+            options={[
+              {
+                value: "hackathon",
+                label: (
+                  <div className="flex flex-col md:flex-row items-center gap-2">
+                    <Image
+                      src="/assets/hackathon.png"
+                      width={64}
+                      height={64}
+                      alt="hackathon"
+                    />
+                    Hackathon
+                  </div>
+                ),
+              },
+              {
+                value: "demoday",
+                label: (
+                  <div className="flex flex-col md:flex-row items-center gap-2">
+                    <Image
+                      src="/assets/demoday.png"
+                      width={64}
+                      height={64}
+                      alt="hackathon"
+                    />
+                    Demo day
+                  </div>
+                ),
+              },
+              {
+                value: "workshop",
+                label: (
+                  <div className="flex flex-col md:flex-row items-center gap-2">
+                    <Image
+                      src="/assets/workshop.png"
+                      width={64}
+                      height={64}
+                      alt="hackathon"
+                    />
+                    Workshop
+                  </div>
+                ),
+              },
+            ]}
+          />
+          <Input
+            label="Campaign Title"
+            {...register("title")}
+            error={errors["title"]}
+          />
+          <Input
+            label="Host Name"
+            {...register("hostName")}
+            error={errors["hostName"]}
+          />
 
-          <fieldset className="py-2">
-            <TextArea
-              label="Campaign Description"
-              {...register("description")}
-              error={errors["description"]}
-            />
-          </fieldset>
-          <fieldset className="py-2">
-            <label className="block text-[12px] py-1 text-grey-500 font-bold  ">
-              Campaign mode
-            </label>
-            <Radio
-              control={control}
-              name="location"
-              onValueChange={(v) => setValue("location", v)}
-              options={[
-                { value: "online", label: "Online" },
-                { value: "offline", label: "Offline" },
-                { value: "mixed", label: "Online + Offline" },
-              ]}
-            />
-          </fieldset>
+          <TextArea
+            label="Campaign Description"
+            {...register("description")}
+            error={errors["description"]}
+          />
+          <Radio
+            label="Campaign mode"
+            control={control}
+            name="location"
+            error={errors['location']}
+            onValueChange={(v) => setValue("location", v)}
+            options={[
+              { value: "online", label: "Online" },
+              { value: "offline", label: "Offline" },
+              { value: "mixed", label: "Online + Offline" },
+            ]}
+          />
           {isOnlineOnly ? null : (
-            <fieldset className="py-2">
-              <Input
-                label="City"
-                {...register("city")}
-                error={errors["city"]}
-              />
-            </fieldset>
+            <Input label="City" {...register("city")} error={errors["city"]} />
           )}
           <div className="grid grid-cols-2 gap-4">
             <DatePicker
