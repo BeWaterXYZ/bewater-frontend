@@ -50,7 +50,7 @@ export default function TeamJoinDialog({
     try {
       const data = await sendGroupingRequest(team.id, {
         type: 'APPLICATION',
-        recipientId: leaders[0].userId,
+        recipientId: leaders[0].userProfile.externalId,
         teamRole: formData.roles[0],
         message: formData.message,
       });

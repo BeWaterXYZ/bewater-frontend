@@ -8,7 +8,7 @@ export default function Page({ params }: { params: { lng: string } }) {
   let { lng = 'en' } = params || {};
   const user = useAuthStore((s) => s.user);
 
-  const { error, data, isLoading } = useFetchGroupingRequest(user?.userId);
+  const { error, data, isLoading } = useFetchGroupingRequest(user?.externalId);
 
   if (error || isLoading || !data) return null;
 
@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { lng: string } }) {
             <GroupingRequestNotification
               key={req.id}
               req={req}
-              sentOrReceived={req.senderId === user?.userId}
+              sentOrReceived={req.senderId === user?.externalId}
               lng={lng}
             />
           );

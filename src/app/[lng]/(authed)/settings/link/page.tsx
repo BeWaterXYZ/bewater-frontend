@@ -16,10 +16,10 @@ export default function Page() {
   const user = useAuthStore((s) => s.user);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const showDialog = useDialogStore((s) => s.open);
-  const { data: userProfile, isLoading } = useFetchUser(user?.userId);
+  const { data: userProfile, isLoading } = useFetchUser(user?.externalId);
   const mutation = useMutationDisconnectSocialConnection();
   const { data: socialConnections, isLoading: isLoading2 } =
-    useFetchUserSocialConnections(user?.userId);
+    useFetchUserSocialConnections(user?.externalId);
 
   useLoadingWhen(isLoading || isLoading2);
 

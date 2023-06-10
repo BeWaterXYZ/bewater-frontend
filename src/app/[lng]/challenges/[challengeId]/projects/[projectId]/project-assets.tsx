@@ -30,7 +30,7 @@ export function ProjectAssets({ project }: { project: Project }) {
   const user = useAuthStore((s) => s.user);
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.userId === user?.userId);
+    .some((m) => m.userProfile.externalId === user?.externalId);
 
   const assetsToShow = data.filter((d) => {
     if (isLeader && d.key !== 'githubURI') {

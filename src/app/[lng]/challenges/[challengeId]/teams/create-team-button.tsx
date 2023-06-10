@@ -31,14 +31,14 @@ export function CreateTeamButton({
   );
 
   const onClick = () => {
-    if (new Date(baoMingEndTime) < new Date()) {
-      setButtonCando(false);
-      addToast({
-        type: 'warning',
-        title: '报名时间已截止，请关注我们之后的赛事',
-      });
-      return;
-    }
+    // if (new Date(baoMingEndTime) < new Date()) {
+    //   setButtonCando(false);
+    //   addToast({
+    //     type: 'warning',
+    //     title: '报名时间已截止，请关注我们之后的赛事',
+    //   });
+    //   return;
+    // }
 
     if (!useAuthStore.getState().token) {
       navigator.goToConnectWallet();
@@ -50,7 +50,7 @@ export function CreateTeamButton({
   return (
     <button
       className="btn btn-primary"
-      disabled={!buttonCando}
+      // disabled={!buttonCando}
       onClick={onClick}
     >
       Create a team

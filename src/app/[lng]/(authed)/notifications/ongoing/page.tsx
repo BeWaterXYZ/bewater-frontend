@@ -15,7 +15,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
         <div className="body-4">
           <Link
             prefetch={false}
-            href={`/${lng}/user/${msg.targetUser?.userId}`}
+            href={`/${lng}/user/${msg.targetUser?.externalId}`}
           >
             {msg.targetUser?.userName}
           </Link>
@@ -38,7 +38,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
         <div className="body-4">
           <Link
             prefetch={false}
-            href={`/${lng}/user/${msg.targetUser?.userId}`}
+            href={`/${lng}/user/${msg.targetUser?.externalId}`}
           >
             {msg.targetUser?.userName}
           </Link>
@@ -62,7 +62,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
         <div className="body-4">
           <Link
             prefetch={false}
-            href={`/${lng}/user/${msg.targetUser?.userId}`}
+            href={`/${lng}/user/${msg.targetUser?.externalId}`}
           >
             {msg.targetUser?.userName}
           </Link>
@@ -102,7 +102,9 @@ export default function Page({ params }: { params: { lng: string } }) {
 
   const user = useAuthStore((s) => s.user);
 
-  const { error, data, isLoading } = useFetchOngoingNotifications(user?.userId);
+  const { error, data, isLoading } = useFetchOngoingNotifications(
+    user?.externalId,
+  );
 
   useLoadingWhen(isLoading);
 
