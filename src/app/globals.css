@@ -63,6 +63,14 @@ body {
   }
 }
 
+@layer utilities {
+  .-animation-delay-500 {
+    animation-delay: -500ms;
+  }
+}
+
+
+/* datepicker  */
 input[type="date"]::-webkit-calendar-picker-indicator,input[type="date"]::-moz-calendar-picker-indicator {
   opacity: 0;
   position: absolute;

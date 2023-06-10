@@ -1,9 +1,8 @@
 import "./globals.css";
 import { JetBrains_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 import { QueryProvider } from "./query";
+import { Dumpster } from "./dumpster";
 
 const jetBrainsMono = JetBrains_Mono({
   variable: "--font-secondary",
@@ -27,6 +26,8 @@ export default function RootLayout({
         <html lang="en">
           <body className={jetBrainsMono.className}>
            {children}
+           <Dumpster />
+
           </body>
         </html>
       </QueryProvider>
