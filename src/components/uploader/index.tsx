@@ -3,6 +3,7 @@ import { getStorageUpload } from "@/services/storage";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { ChangeEventHandler, useId, useState } from "react";
+import { Loading } from "../loading/loading";
 
 async function upload(file: File) {
   let data = await getStorageUpload();
@@ -46,7 +47,7 @@ export function Uploader({
         let url = await upload(file);
         onChange([...urls, url]);
       } catch (err) {
-        console.error('uploading error',err)
+        console.error("uploading error", err);
       } finally {
         uploadingListSet((uploading) =>
           uploading.filter((f) => f.name !== file.name)
@@ -59,7 +60,7 @@ export function Uploader({
   };
 
   return (
-    <div className="  flex flex-wrap gap-3" style={{  }}>
+    <div className="  flex flex-wrap gap-3" style={{}}>
       {/* existing */}
       {urls.map((url) => {
         return (
@@ -86,6 +87,7 @@ export function Uploader({
         return (
           <div key={file.name} className="relative " style={{ height, width }}>
             <Image src={URL.createObjectURL(file)} fill alt="img"></Image>
+            <Loading cover={false} />
           </div>
         );
       })}

@@ -1,5 +1,5 @@
-import clsx from 'clsx';
-import './loading.css'
+import clsx from "clsx";
+import "./loading.css";
 interface Props {
   cover?: boolean;
 }
@@ -13,8 +13,8 @@ export function Loading({ cover = true }: Props) {
       <div
         className={clsx(
           cover
-            ? 'fixed z-[99] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'
-            : 'relative inline-block',
+            ? "fixed z-[99] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            : "absolute top-0 bottom-0 left-0 right-0  flex items-center justify-center "
         )}
       >
         <div className="relative inline-block w-20 h-20" role="status">
