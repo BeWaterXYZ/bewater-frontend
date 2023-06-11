@@ -30,7 +30,7 @@ export default function Page({ params }: { params: { lng: string } }) {
             <GroupingRequestNotification
               key={req.id}
               req={req}
-              sentOrReceived={req.senderId === user?.externalId}
+              sentOrReceived={req.sender?.externalId === user?.externalId}
               lng={lng}
             />
           );
