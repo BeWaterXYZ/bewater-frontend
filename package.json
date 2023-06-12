@@ -19,7 +19,7 @@
     "@t3-oss/env-nextjs": "^0.4.0",
     "@tanstack/react-query": "^4.29.12",
     "@types/node": "20.2.5",
-    "@types/react": "18.2.9",
+    "@types/react": "18.2.11",
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
