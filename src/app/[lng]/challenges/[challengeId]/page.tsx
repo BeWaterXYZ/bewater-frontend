@@ -149,8 +149,8 @@ export default async function ChallengeIntro({ params }: any) {
           </ul>
         </div>
       </div>
-      {challenge.id === '63c82bd12ddc570f32ada868' ? <Sponsors /> : null}
-      {challenge.id === '63c82bd12ddc570f32ada869' ? <Sponsors2 /> : null}
+      {challenge.id === '1' ? <Sponsors /> : null}
+      {challenge.id === '2' ? <Sponsors2 /> : null}
 
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
         <p className="heading-6 md:heading-4 text-center">
