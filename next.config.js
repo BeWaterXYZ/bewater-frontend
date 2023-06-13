@@ -54,6 +54,14 @@ const nextConfig = {
         source: '/zh/challenges/bewater-web3-zh',
         destination: '/zh/challenges/1',
       },
+      {
+        source: '/en/challenges/63c82bd12ddc570f32ada869',
+        destination: '/en/challenges/2',
+      },
+      {
+        source: '/zh/challenges/63c82bd12ddc570f32ada869',
+        destination: '/zh/challenges/2',
+      },
       // todo更多语言
     ];
   },
