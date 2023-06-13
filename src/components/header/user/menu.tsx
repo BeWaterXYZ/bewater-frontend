@@ -10,7 +10,7 @@ import { useAuthStore } from '@/stores/auth';
 export const UserMenu = () => {
   const clearStore = useAuthStore((s) => s.clear);
   const [userId, walletAddress] = useAuthStore((s) => [
-    s.user?.userId,
+    s.user?.externalId,
     s?.walletAddress,
   ]);
 
@@ -70,7 +70,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href={`/en/user/${user.userId}`}
+                    href={`/en/user/${user.externalId}`}
                     className="body-2"
                   >
                     Your Profile

@@ -45,10 +45,10 @@ function filterAndSortProject(
   if (!userProfile) return res;
   return res.sort((a, b) => {
     let isInATeam = a.team.teamMembers.some(
-      (m) => m.userProfile.userId === userProfile.userId,
+      (m) => m.userProfile.externalId === userProfile.externalId,
     );
     let isInBTeam = b.team.teamMembers.some(
-      (m) => m.userProfile.userId === userProfile.userId,
+      (m) => m.userProfile.externalId === userProfile.externalId,
     );
 
     if (isInATeam && !isInBTeam) return -1;

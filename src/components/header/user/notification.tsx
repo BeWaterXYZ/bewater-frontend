@@ -7,7 +7,7 @@ import Link from 'next/link';
 export function NotificationBell() {
   const user = useAuthStore((s) => s.user);
 
-  const { error, data, isLoading } = useFetchGroupingRequest(user?.userId);
+  const { error, data, isLoading } = useFetchGroupingRequest(user?.externalId);
 
   const hasNewNotifications =
     isLoading || error || !data

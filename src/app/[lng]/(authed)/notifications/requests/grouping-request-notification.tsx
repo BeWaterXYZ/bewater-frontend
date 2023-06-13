@@ -22,7 +22,7 @@ import { getErrorResp } from '@/utils/error-type';
 function getUserLink(userProfile: UserProfile, lng: string) {
   return (
     <strong className="text-white hover:underline">
-      <Link prefetch={false} href={`/${lng}/user/${userProfile.userId}`}>
+      <Link prefetch={false} href={`/${lng}/user/${userProfile.externalId}`}>
         {userProfile.fullName}
       </Link>
     </strong>

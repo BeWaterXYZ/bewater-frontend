@@ -8,8 +8,9 @@ import { FormUserSettings } from './form/form-settings';
 
 export default function Page() {
   const user = useAuthStore((s) => s.user);
+  console.log(user);
 
-  const { data, isLoading } = useFetchUser(user?.userId);
+  const { data, isLoading } = useFetchUser(user?.externalId);
 
   useLoadingWhen(isLoading);
 

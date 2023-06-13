@@ -5,7 +5,6 @@ import { useTranslation } from '@/app/i18n';
 
 async function getChallengesByStatus() {
   let challenges = await getChallenges();
-
   return {
     active: challenges.filter((c) => c.status === 'ACTIVE'),
     upcoming: challenges.filter((c) => c.status === 'DRAFT'),

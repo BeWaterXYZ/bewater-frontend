@@ -11,7 +11,9 @@ export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
   const user = useAuthStore((s) => s.user);
   const showDialog = useDialogStore((s) => s.open);
   const navigator = useNavigator(lng);
-  const isMyTeam = team.teamMembers.some((m) => m.userId === user?.userId);
+  const isMyTeam = team.teamMembers.some(
+    (m) => m.userProfile.externalId === user?.externalId,
+  );
   const requestJoin = () => {
     if (!isAuthed()) {
       navigator.goToConnectWallet();
