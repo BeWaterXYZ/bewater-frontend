@@ -78,8 +78,8 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
       <div className="">
-        {challenge.id === '63c82bd12ddc570f32ada868' ? <PrizeSection1 /> : null}
-        {challenge.id === '63c82bd12ddc570f32ada869' ? <PrizeSection2 /> : null}
+        {challenge.id === '1' ? <PrizeSection1 /> : null}
+        {challenge.id === '2' ? <PrizeSection2 /> : null}
       </div>
       <div className="mt-16">
         <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
