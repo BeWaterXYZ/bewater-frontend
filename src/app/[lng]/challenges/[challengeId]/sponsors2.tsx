@@ -11,6 +11,7 @@ const sponsors_tier2 = [
 ];
 
 const sponsors_tier3 = [
+  '/sponsors/amdao.png',
   '/sponsors/sf.png',
   '/sponsors/csdn.png',
   '/sponsors/moledao.png',
