@@ -7,7 +7,7 @@ import { FormOnboardingExtra } from './form';
 export default function Page({ params }: { params: { lng: string } }) {
   const { lng = 'en' } = params || {};
   const user = useAuthStore((s) => s.user);
-  const { data, isLoading } = useFetchUser(user?.userId);
+  const { data, isLoading } = useFetchUser(user?.externalId);
 
   useLoadingWhen(isLoading);
 

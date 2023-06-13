@@ -60,7 +60,7 @@ const searchUserByKeyword =
     }
     let data = await searchUsers(inputValue);
     data = data
-      .filter((up) => !toExclude.includes(up.userId))
+      .filter((up) => !toExclude.includes(up.externalId))
       .map((d) => ({ ...d, label: d.fullName }));
     cacheOptions = data;
     return data;
@@ -129,10 +129,10 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               placeholder="Search username, email or wallet address"
               loadingMessage={() => 'searching'}
               noOptionsMessage={() => 'no options'}
-              value={cacheOptions.find((op) => op.userId === field.value)}
+              value={cacheOptions.find((op) => op.externalId === field.value)}
               onChange={(val) => {
                 val &&
-                  field.onChange((val as SingleValue<UserProfile>)?.userId);
+                  field.onChange((val as SingleValue<UserProfile>)?.externalId);
               }}
               loadOptions={searchUserByKeyword(exclude)}
               defaultOptions

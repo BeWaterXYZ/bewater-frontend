@@ -18,7 +18,7 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
   const [viewImage, viewImageSet] = useState<undefined | number>(undefined);
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.userId === user?.userId);
+    .some((m) => m.userProfile.externalId === user?.externalId);
 
   const [medias, mediaSet] = useState<Media[]>(() =>
     project.mediaURLs.map((img) => ({

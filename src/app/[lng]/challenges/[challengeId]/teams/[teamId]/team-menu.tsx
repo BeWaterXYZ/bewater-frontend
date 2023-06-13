@@ -21,10 +21,12 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const navigator = useNavigator(lng);
   const showDialog = useDialogStore((s) => s.open);
-  const isJoined = team.teamMembers.some((m) => m.userId === user?.userId);
+  const isJoined = team.teamMembers.some(
+    (m) => m.userProfile.externalId === user?.externalId,
+  );
   const isLeader = team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userId === user?.userId);
+    .some((m) => m.userProfile.externalId === user?.externalId);
 
   const requestJoin = () => {
     if (!isAuthed()) {
@@ -48,7 +50,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
       cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
-    await teamRemoveMember(team.id, user?.userId!);
+    await teamRemoveMember(team.id, user?.externalId!);
     router.refresh();
   };
 

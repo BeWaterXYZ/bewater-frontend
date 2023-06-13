@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { lng: string } }) {
 
   const user = useAuthStore((s) => s.user);
 
-  const { error, data, isLoading } = useFetchGroupingRequest(user?.userId);
+  const { error, data, isLoading } = useFetchGroupingRequest(user?.externalId);
 
   if (error || isLoading || !data) return null;
 
@@ -30,7 +30,7 @@ export default function Page({ params }: { params: { lng: string } }) {
             <GroupingRequestNotification
               key={req.id}
               req={req}
-              sentOrReceived={req.senderId === user?.userId}
+              sentOrReceived={req.sender?.externalId === user?.externalId}
               lng={lng}
             />
           );
