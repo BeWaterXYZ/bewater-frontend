@@ -6,6 +6,7 @@ import { Avatar } from '@/components/avatar/avatar';
 
 import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
+import { useEffect } from 'react';
 
 export const UserMenu = () => {
   const clearStore = useAuthStore((s) => s.clear);
@@ -19,6 +20,10 @@ export const UserMenu = () => {
     clearStore();
     window.location.href = '/';
   };
+  // todo remove this after migration completed
+  useEffect(() => {
+    if (!userId) logout();
+  }, [userId]);
 
   if (!data) return null;
 
