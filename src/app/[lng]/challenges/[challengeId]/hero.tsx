@@ -63,7 +63,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
           </div>
         </div>
       )}
-      {challenge.id === '63c82bd12ddc570f32ada868' && (
+      {challenge.id === '1' && (
         <div>
           <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
           <div className="absolute  block w-[100px] h-[1388px] left-[10%] md:left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
