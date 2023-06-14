@@ -62,6 +62,14 @@ const nextConfig = {
         source: '/zh/challenges/63c82bd12ddc570f32ada869',
         destination: '/zh/challenges/2',
       },
+      {
+        source: '/en/challenges/63c82bd12ddc570f32ada868',
+        destination: '/en/challenges/1',
+      },
+      {
+        source: '/zh/challenges/63c82bd12ddc570f32ada868',
+        destination: '/zh/challenges/1',
+      },
       // todo更多语言
     ];
   },
