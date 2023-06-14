@@ -8,8 +8,8 @@ export interface Challenge {
   hostName: string;
   description: string;
   bannerUrl: string;
-  requirements: string[];
-  reviewDimension: string[];
+  requirements: string;
+  reviewDimension: string;
   startTime: string;
   endTime: string;
   totalAward: number;

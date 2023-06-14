@@ -8,9 +8,9 @@ import { env } from "../env.mjs";
  *  interceptors
  */
 
-const requestInterceptor = (config: InternalAxiosRequestConfig) => {
-  const accessToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjlkZjFiMWNlLTEzYTItNDU2NS1iYWIwLThjMjBjYWNmMmQ1NiIsIndhbGxldEFkZHJlc3MiOiIweGMxNmZlMDY3NjYwYTVhYmFjZDE2N2Q4ZGFlMDdhZDIyNWM2YjE1MTAiLCJpYXQiOjE2ODYwMDc2NjYsImV4cCI6MTY4Njg3MTY2Nn0._M7joW_54g6iAQJjkXKr0bpgLMQVjpMQHclIBgytyDo";
+const requestInterceptor = async (config: InternalAxiosRequestConfig) => {
+  // todo. fix Clerk
+  const accessToken = await (<any>window).Clerk.session.getToken();
   if (!!accessToken && !!config.headers) {
     config.headers["authorization"] = `Bearer ${accessToken}`;
   }

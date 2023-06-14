@@ -29,8 +29,8 @@ export function EditRequirements({ challenge }: { challenge: Challenge }) {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      requirements: challenge.requirements.join("\n"),
-      reviewDimension: challenge.reviewDimension.join("\n"),
+      requirements: challenge.requirements,
+      reviewDimension: challenge.reviewDimension,
     },
   });
 

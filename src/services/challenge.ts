@@ -21,3 +21,10 @@ export async function getChallengeById(challengeId: ChallengeID) {
   );
   return data.challenge;
 }
+export async function createChallenge(challenge: Partial<Challenge>) {
+  const { data } = await agentAuthed.post<Challenge>(
+    `/host-challenge`,
+    challenge
+  );
+  return data;
+}

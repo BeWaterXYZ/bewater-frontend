@@ -146,7 +146,7 @@ export default function Page({ params }: any) {
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
               <h3 className="text-[24px] font-bold mb-8">参赛要求</h3>
               <ol className="list-decimal">
-                {challenge.requirements.map((r) => (
+                {challenge.requirements.split("\n").map((r) => (
                   <li
                     key={r}
                     className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
@@ -159,7 +159,7 @@ export default function Page({ params }: any) {
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
               <h3 className="text-[24px] font-bold mb-8">评审维度</h3>
               <ol className="list-decimal">
-                {challenge.reviewDimension.map((r) => (
+                {challenge.reviewDimension.split("\n").map((r) => (
                   <li
                     key={r}
                     className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"

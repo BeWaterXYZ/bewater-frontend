@@ -4,14 +4,45 @@ import { Input } from "@/components/form/input";
 import { Radio } from "@/components/form/radio";
 import { TextArea } from "@/components/form/textarea";
 import { Loading } from "@/components/loading/loading";
+import { CAMPAIGN_TYPE, LOCATION } from "@/constants";
+import { createChallenge } from "@/services/challenge";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { Challenge } from "@/services/types";
 
+const init: Partial<Challenge> = {
+  requirements: "",
+  reviewDimension: "",
+  milestones: [
+    {
+      dueDate: "2023-06-22",
+      stageName: "Preparation",
+    },
+    {
+      dueDate: "2023-06-23",
+      stageName: "Teaming",
+    },
+    {
+      dueDate: "2023-06-24",
+      stageName: "Project Submission",
+    },
+    {
+      dueDate: "2023-06-25",
+      stageName: "Review",
+    },
+    {
+      dueDate: "2023-06-26",
+      stageName: "Result",
+    },
+  ],
+};
 export default function Page() {
+  let router = useRouter();
   let [showFullScreen, showFullScreenSet] = useState(false);
   let [isOnlineOnly, isOnlineOnlySet] = useState(true);
   let schema = z.object({
@@ -36,17 +67,26 @@ export default function Page() {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      location: "online",
-      type: "hackathon",
+      location: LOCATION.ONLINE,
+      type: CAMPAIGN_TYPE.HACKATHON,
     },
   });
 
-  let onSubmit = (formData: Inputs) => {
-    showFullScreenSet(true);
+  let onSubmit = async (formData: Inputs) => {
+    try {
+      let data = await createChallenge({
+        ...formData,
+        ...init,
+      });
+      showFullScreenSet(true);
+      setTimeout(() => {
+        router.push(`/challenges/${data.id}`);
+      }, 3000);
+    } catch (err) {}
     console.log({ formData });
   };
   watch((data) => {
-    isOnlineOnlySet(data.location === "online");
+    isOnlineOnlySet(data.location === LOCATION.ONLINE);
   });
 
   return (
@@ -64,10 +104,10 @@ export default function Page() {
             <Radio
               control={control}
               name="type"
-              onValueChange={(v) => setValue("location", v)}
+              onValueChange={(v) => setValue("type", v)}
               options={[
                 {
-                  value: "hackathon",
+                  value: CAMPAIGN_TYPE.HACKATHON,
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2">
                       <Image
@@ -81,7 +121,7 @@ export default function Page() {
                   ),
                 },
                 {
-                  value: "demoday",
+                  value: CAMPAIGN_TYPE.DEMODAY,
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2">
                       <Image
@@ -95,7 +135,7 @@ export default function Page() {
                   ),
                 },
                 {
-                  value: "workshop",
+                  value: CAMPAIGN_TYPE.WORKSHOP,
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2">
                       <Image
@@ -134,9 +174,9 @@ export default function Page() {
               error={errors["location"]}
               onValueChange={(v) => setValue("location", v)}
               options={[
-                { value: "online", label: "Online" },
-                { value: "offline", label: "Offline" },
-                { value: "mixed", label: "Online + Offline" },
+                { value: LOCATION.ONLINE, label: LOCATION.ONLINE },
+                { value: LOCATION.OFFLINE, label: "Offline" },
+                { value: LOCATION.MIXED, label: "Online + Offline" },
               ]}
             />
             {isOnlineOnly ? null : (
@@ -169,7 +209,7 @@ export default function Page() {
       </div>
 
       {showFullScreen ? (
-        <div className="z-[100] absolute top-0  bottom-0 left-0 right-0 flex flex-col gap-2 justify-center items-center bg-night">
+        <div className="z-[100] fixed top-0  bottom-0 left-0 right-0 flex flex-col gap-2 justify-center items-center bg-night">
           <div className="h-32 w-32 relative bg-night">
             <Loading cover={false} />
           </div>
