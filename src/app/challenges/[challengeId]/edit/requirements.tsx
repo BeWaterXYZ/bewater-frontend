@@ -1,5 +1,6 @@
 "use client";
 import { TextArea } from "@/components/form/textarea";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 import { Challenge } from "@/services/types";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,6 +20,7 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditRequirements({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
+  let mutation = useMutationUpdateChallenge(challenge.id);
 
   let {
     control,
@@ -35,7 +37,13 @@ export function EditRequirements({ challenge }: { challenge: Challenge }) {
   });
 
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        ...formData,
+      });
+      openSet(false);
+    } catch (err) {}
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>

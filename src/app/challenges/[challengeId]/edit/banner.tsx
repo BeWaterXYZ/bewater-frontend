@@ -10,10 +10,14 @@ import { Challenge } from "@/services/types";
 import { UploaderInput } from "@/components/form/uploader";
 import { Radio } from "@/components/form/radio";
 import { DatePicker } from "@/components/form/datepicker";
+import { LOCATION } from "@/constants";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 
 export function EditBanner({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
-  let [isOnlineOnly, isOnlineOnlySet] = useState(true);
+  let mutation = useMutationUpdateChallenge(challenge.id);
+
+  let [isOnlineOnly, isOnlineOnlySet] = useState(challenge.location === LOCATION.ONLINE);
   const schema = z
     .object({
       title: validationSchema.text,
@@ -38,14 +42,27 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
     resolver: zodResolver(schema),
     defaultValues: {
       title: challenge.title,
+      hostIcon: challenge.hostIcon,
+      bannerUrl: challenge.bannerUrl,
       location: challenge.location,
+      city: challenge.city,
+      // fix me
+      startTime: challenge.startTime.substring(0, 10),
+      endTime: challenge.endTime.substring(0, 10),
     },
   });
   watch((data) => {
-    isOnlineOnlySet(data.location === "online");
+    isOnlineOnlySet(data.location === LOCATION.ONLINE);
   });
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    console.log(formData)
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        ...formData,
+      });
+      openSet(false);
+    } catch (err) {}
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
@@ -105,9 +122,9 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
               name="location"
               onValueChange={(v) => setValue("location", v)}
               options={[
-                { value: "online", label: "Online" },
-                { value: "offline", label: "Offline" },
-                { value: "mixed", label: "Online + Offline" },
+                { value: LOCATION.ONLINE, label: "Online" },
+                { value: LOCATION.OFFLINE, label: "Offline" },
+                { value: LOCATION.MIXED, label: "Online + Offline" },
               ]}
             />
             {isOnlineOnly ? null : (

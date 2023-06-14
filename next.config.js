@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: "*.amazonaws.com",
       },
+      {
+        hostname: "*.clerk.com",
+      },
     ],
   },
 };

@@ -6,6 +6,8 @@ export interface Challenge {
   id: ChallengeID;
   title: string;
   hostName: string;
+  hostIcon: string;
+  city?: string;
   description: string;
   bannerUrl: string;
   requirements: string;
@@ -28,6 +30,15 @@ export interface Challenge {
     officialWebsiteURI?: string;
     email?: string;
   };
+  awardAssorts?: {
+    name: string;
+    awards: {
+      awardName: string;
+      amount: number;
+      count: number;
+    }[];
+  }[];
+  keySponsors?: string[];
 }
 
 export interface Award {
@@ -53,7 +64,8 @@ export interface Milestone {
     | "Teaming"
     | "Project Submission"
     | "Review"
-    | "Result";
+    | "Result"
+    | string;
 }
 
 export interface Sponsorship {

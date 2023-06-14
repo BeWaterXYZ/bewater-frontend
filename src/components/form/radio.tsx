@@ -53,7 +53,7 @@ export const Radio = React.forwardRef(function Radio_(
                     key={id + op.value}
                   >
                     <RadioGroup.Item
-                      className="bg-white h-6 min-w-6 w-6 rounded-full "
+                      className="bg-white h-6 min-w-[24px] w-6 rounded-full "
                       value={op.value}
                       id={id + op.value + "-item"}
                     >

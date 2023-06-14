@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/form/input";
 import { UploaderInput } from "@/components/form/uploader";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 import { Challenge } from "@/services/types";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +19,7 @@ import { z } from "zod";
 const schema = z
   .object({
     awardCurrency: z.string().min(1, "min 1 character"),
-    sponsors: z.array(validationSchema.image),
+    keySponsors: z.array(validationSchema.image),
     awardAssorts: z.array(
       z.object({
         name: validationSchema.text,
@@ -38,6 +39,8 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditAwards({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
+  let mutation = useMutationUpdateChallenge(challenge.id);
+
   let [totalAward, totalAwardSet] = useState(0);
 
   let {
@@ -50,8 +53,19 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      awardAssorts: [],
-      sponsors: [],
+      // fixme
+      awardAssorts: (challenge.awardAssorts ?? []).map((aa) => {
+        return {
+          ...aa,
+          awards: aa.awards.map((a) => ({
+            ...a,
+            amount: a.amount.toString(),
+            count: a.count.toString(),
+          })),
+        };
+      }),
+      keySponsors: challenge.keySponsors ?? [],
+      awardCurrency:challenge.awardCurrency
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -61,7 +75,26 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
     }
   );
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        keySponsors: formData.keySponsors,
+        totalAward: totalAward,
+        awardCurrency: formData.awardCurrency,
+        // fixme
+        awardAssorts: formData.awardAssorts.map((aa) => {
+          return {
+            ...aa,
+            awards: aa.awards.map((a) => ({
+              ...a,
+              amount: +a.amount,
+              count: +a.count,
+            })),
+          };
+        }),
+      });
+      openSet(false);
+    } catch (err) {}
   };
   watch((data) => {
     let total =
@@ -149,14 +182,14 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
             <UploaderInput
               control={control}
               label={"Key Sponsors Logo"}
-              name={`sponsors`}
+              name={`keySponsors`}
               title="Upload "
               subTitlte="JPG/PNG, 40px height"
               max={10}
               height={140}
               width={200}
               onValueChange={(v) => {
-                setValue(`sponsors`, v as string[]);
+                setValue(`keySponsors`, v as string[]);
               }}
             />
 

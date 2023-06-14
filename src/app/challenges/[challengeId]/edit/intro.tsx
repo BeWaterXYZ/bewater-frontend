@@ -9,6 +9,8 @@ import { z } from "zod";
 import { Challenge } from "@/services/types";
 import { UploaderInput } from "@/components/form/uploader";
 import { TextArea } from "@/components/form/textarea";
+import { updateChallenge } from "@/services/challenge";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 
 const schema = z
   .object({
@@ -20,7 +22,7 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditIntro({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
-
+  let mutation = useMutationUpdateChallenge(challenge.id);
   let {
     control,
     register,
@@ -35,7 +37,13 @@ export function EditIntro({ challenge }: { challenge: Challenge }) {
   });
 
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        ...formData,
+      });
+      openSet(false);
+    } catch (err) {}
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
@@ -46,7 +54,7 @@ export function EditIntro({ challenge }: { challenge: Challenge }) {
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
         <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto">
           <Dialog.Title className="text-[20px] py-4 mb-4 border-b  border-b-white/20">
-            Banner Information
+            Introduction
           </Dialog.Title>
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             <fieldset className="">

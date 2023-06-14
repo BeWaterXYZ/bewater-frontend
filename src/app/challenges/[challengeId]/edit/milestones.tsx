@@ -5,10 +5,10 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { validationSchema } from "@/validations";
 import { z } from "zod";
 import { Challenge } from "@/services/types";
 import { DatePicker } from "@/components/form/datepicker";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 
 const schema = z
   .object({
@@ -25,8 +25,7 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditMilestones({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
-  let [bg, bgSet] = useState<string[]>([]);
-  let [hostImages, hostImagesSet] = useState<string[]>([]);
+  let mutation = useMutationUpdateChallenge(challenge.id);
 
   let {
     control,
@@ -36,7 +35,10 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      milestones: challenge.milestones,
+      milestones: challenge.milestones.map((ms) => ({
+        ...ms,
+        dueDate: ms.dueDate.substring(0, 10),
+      })),
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -45,11 +47,15 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
       name: "milestones", // unique name for your Field Array
     }
   );
-  let save = () => {
-    // openSet(false);
-  };
+
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        ...formData,
+      });
+      openSet(false);
+    } catch (err) {}
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
@@ -86,7 +92,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
               })}
             </div>
             <div className="flex mt-6 justify-end">
-              <button className="btn btn-primary" type="submit" onClick={save}>
+              <button className="btn btn-primary" type="submit">
                 Save{" "}
               </button>
             </div>

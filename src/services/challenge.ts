@@ -28,3 +28,10 @@ export async function createChallenge(challenge: Partial<Challenge>) {
   );
   return data;
 }
+export async function updateChallenge(challenge: Partial<Challenge>) {
+  const { data } = await agentAuthed.put<Challenge>(
+    `/host-challenge/${challenge.id}`,
+    challenge
+  );
+  return data;
+}

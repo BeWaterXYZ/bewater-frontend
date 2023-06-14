@@ -4,6 +4,6 @@ export async function getStorageUpload() {
   let { data } = await agentAuthed.get<{
     presignedURL: string;
     mediaURL: string;
-  }>("/storage/upload");
+  }>("/host-storage/upload");
   return data;
 }
