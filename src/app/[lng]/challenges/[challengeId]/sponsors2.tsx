@@ -2,12 +2,18 @@ const sponsors_tier1 = [
   '/sponsors/debox.png',
   '/sponsors/noncegeek.png',
   '/sponsors/bewater.png',
+  '/sponsors/club3.png',
+  '/sponsors/midaswap.png',
 ];
 
 const sponsors_tier2 = [
   '/sponsors/vip3.png',
   '/sponsors/sinohope.png',
-  '/sponsors/club3.png',
+  '/sponsors/aionews.png',
+  '/sponsors/tangdao.png',
+  '/sponsors/wbsr.png',
+  '/sponsors/blocknews.png',
+  '/sponsors/element.png',
 ];
 
 const sponsors_tier3 = [

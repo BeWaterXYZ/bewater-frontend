@@ -159,6 +159,8 @@ export function PrizeSection() {
           <SponsorsCell src={'/sponsors/debox.png'} />
           <SponsorsCell src={'/sponsors/noncegeek.png'} />
           <SponsorsCell src={'/sponsors/bewater.png'} />
+          <SponsorsCell src={'/sponsors/club3.png'} />
+          <SponsorsCell src={'/sponsors/midaswap.png'} />
         </Marquee>
       </div>
     </div>
