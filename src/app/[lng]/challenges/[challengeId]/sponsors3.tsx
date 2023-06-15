@@ -1,8 +1,12 @@
-const sponsors_tier1 = ['/sponsors/astro.png', '/sponsors/starknetsite.png'];
+const sponsors_tier1 = [
+  '/sponsors/astro.png',
+  '/sponsors/starknetsite.png',
+  '/sponsors/starknet.png',
+];
 
 const sponsors_tier2 = [
   '/sponsors/starkware.png',
-  '/sponsors/abcde.png',
+  '/sponsors/ABCDE.png',
   '/sponsors/bewater.png',
   '/sponsors/openbuild.png',
 ];

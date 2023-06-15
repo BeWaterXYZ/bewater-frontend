@@ -33,10 +33,10 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
         />
       ) : challenge.id === '3' ? (
         <Image
-          src="/sponsors/Starknet.png"
+          src="/sponsors/starknet.png"
           width={144}
           height={40}
-          alt="debox logo"
+          alt="starknet logo"
           className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
         />
       ) : (
@@ -78,7 +78,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
             prefetch={false}
             target="_blank"
             href="https://forms.gle/qZ5KbnCufSNVeVkv8"
-            className="btn btn-primary body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
+            className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
           >
             {'立即报名'}
           </Link>
