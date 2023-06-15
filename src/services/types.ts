@@ -39,6 +39,10 @@ export interface Challenge {
     }[];
   }[];
   keySponsors?: string[];
+  sponsors: {
+    defname: string;
+    members: string[];
+  }[];
 }
 
 export interface Award {
@@ -48,13 +52,10 @@ export interface Award {
 }
 
 export interface Judge {
-  id: string;
+  id?: string;
   name: string;
   title: string;
-  organization: string;
   avatarURI: string;
-  challengeIDs: number[];
-  order: number;
 }
 
 export interface Milestone {

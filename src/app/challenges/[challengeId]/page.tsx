@@ -14,11 +14,14 @@ import { EditRequirements } from "./edit/requirements";
 import { EditSponsors } from "./edit/sponsors";
 import { EditAwards } from "./edit/awards";
 import Marquee from "react-fast-marquee";
+import { mock } from "./mock";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
-  const { data: challenge } = useFetchChallengeById(challengeId);
+  let { data: challenge } = useFetchChallengeById(challengeId);
   if (!challenge) return null;
+
+  challenge = mock(challenge);
 
   return (
     <div className="bg-night">
@@ -55,7 +58,7 @@ export default function Page({ params }: any) {
           {challenge.title}
         </h1>
         <h1 className="text-[24px] md:text-[24px] uppercase font-light">
-          {challenge.location} |{" "}
+          {challenge.location} {challenge.city}|{" "}
           {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
             challenge.endTime
           )}`}
@@ -167,11 +170,11 @@ export default function Page({ params }: any) {
         </div>
         <div className="container">
           <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-            大赛评审团
+            Judges
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
             {challenge.judges
-              .sort((a, b) => a.order - b.order)
+              // .sort((a, b) => a.order - b.order)
               .map((judge) => {
                 return (
                   <div key={judge.id} className="w-[180px] mb-2">
@@ -185,7 +188,6 @@ export default function Page({ params }: any) {
                       />
                     </Aspect>
                     <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                    <p className="body-4 text-grey-400">{judge.organization}</p>
                     <p className="body-4 text-grey-400">{judge.title}</p>
                   </div>
                 );
@@ -201,7 +203,7 @@ export default function Page({ params }: any) {
         <div className="container">
           <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="text-[24px] font-bold mb-8">参赛要求</h3>
+              <h3 className="text-[24px] font-bold mb-8">Requirement</h3>
               <ol className="list-decimal">
                 {challenge.requirements.split("\n").map((r, i) => (
                   <li
@@ -214,7 +216,7 @@ export default function Page({ params }: any) {
               </ol>
             </div>
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="text-[24px] font-bold mb-8">评审维度</h3>
+              <h3 className="text-[24px] font-bold mb-8">Criteria</h3>
               <ol className="list-decimal">
                 {challenge.reviewDimension.split("\n").map((r, i) => (
                   <li
@@ -235,7 +237,33 @@ export default function Page({ params }: any) {
         <div className="absolute top-4 right-4">
           <EditSponsors challenge={challenge} />
         </div>
-        <div className="container">sponsors here</div>
+        <div className="container">
+          <div>
+            <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+              Sponsors
+            </h3>
+            <div className="flex flex-col gap-12 items-center">
+              {challenge.sponsors.map((s, i) => {
+                return (
+                  <div className="flex flex-col gap-7 items-center" key={i}>
+                    <p className="body-1 md:heading-6 font-bold text-white/30 md:text-white/30">
+                      {s.defname}
+                    </p>
+                    <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
+                      {s.members.map((member, i) => (
+                        <img
+                          src={member}
+                          key={i}
+                          className="h-8 md:h-10 mb-4 mx-4"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

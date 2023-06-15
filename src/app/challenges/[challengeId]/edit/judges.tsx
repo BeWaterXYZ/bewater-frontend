@@ -9,11 +9,13 @@ import { z } from "zod";
 import { Challenge } from "@/services/types";
 import { TextArea } from "@/components/form/textarea";
 import { UploaderInput } from "@/components/form/uploader";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 
 const schema = z
   .object({
     judges: z.array(
       z.object({
+        id: z.string().optional(),
         name: validationSchema.text,
         title: validationSchema.text,
         avatarURI: validationSchema.text,
@@ -26,8 +28,8 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditJudges({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
-  let [bg, bgSet] = useState<string[]>([]);
-  let [hostImages, hostImagesSet] = useState<string[]>([]);
+  let mutation = useMutationUpdateChallenge(challenge.id);
+  
 
   let {
     control,
@@ -48,7 +50,14 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
     }
   );
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        ...formData
+      
+      });
+      openSet(false);
+    } catch (err) {}
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>

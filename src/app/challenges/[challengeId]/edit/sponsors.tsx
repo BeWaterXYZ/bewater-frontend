@@ -1,6 +1,7 @@
 "use client";
 import { Input } from "@/components/form/input";
 import { UploaderInput } from "@/components/form/uploader";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
 import { Challenge } from "@/services/types";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,7 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditSponsors({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
+  let mutation = useMutationUpdateChallenge(challenge.id);
 
   let {
     control,
@@ -34,7 +36,7 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      sponsors: [],
+      sponsors: challenge.sponsors ?? [],
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -44,7 +46,13 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
     }
   );
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    try {
+      await mutation.mutateAsync({
+        id: challenge.id,
+        ...formData,
+      });
+      openSet(false);
+    } catch (err) {}
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
@@ -55,7 +63,7 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
         <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto">
           <Dialog.Title className="text-[20px] py-4 mb-4 border-b  border-b-white/20">
-            Judge Information
+            Sponsors Information
           </Dialog.Title>
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             {fields.map((field, index) => {
@@ -89,7 +97,7 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                 append({ defname: "", members: [] });
               }}
             >
-              + Add a new judge
+              + Add a new sponsor category
             </button>
             <div className="flex mt-6 justify-end">
               <button className="btn btn-primary" type="submit">

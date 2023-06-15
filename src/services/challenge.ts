@@ -1,5 +1,5 @@
 import { agentAuthed } from "./agent";
-import { Challenge, ChallengeID } from "./types";
+import { Challenge, ChallengeID, Judge } from "./types";
 
 export async function getChallenges() {
   // const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
@@ -21,6 +21,13 @@ export async function getChallengeById(challengeId: ChallengeID) {
   );
   return data.challenge;
 }
+export async function getChallengeList() {
+  const { data } = await agentAuthed.get<{ challenges: Challenge[] }>(
+    `/host-challenge/self-challenges`,
+    {}
+  );
+  return data.challenges;
+}
 export async function createChallenge(challenge: Partial<Challenge>) {
   const { data } = await agentAuthed.post<Challenge>(
     `/host-challenge`,
@@ -28,7 +35,9 @@ export async function createChallenge(challenge: Partial<Challenge>) {
   );
   return data;
 }
-export async function updateChallenge(challenge: Partial<Challenge>) {
+export async function updateChallenge(
+  challenge: Partial<Challenge>
+) {
   const { data } = await agentAuthed.put<Challenge>(
     `/host-challenge/${challenge.id}`,
     challenge
