@@ -31,36 +31,57 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
           alt="debox logo"
           className="mx-auto mb-2 md:mb-3 w-[64px] md:w-[93px]"
         />
+      ) : challenge.id === '3' ? (
+        <Image
+          src="/sponsors/Starknet.png"
+          width={144}
+          height={40}
+          alt="debox logo"
+          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
+        />
       ) : (
         <p className="body-4 md:text-[20px]">{challenge.hostName}</p>
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
-        {challenge.location} |{' '}
+        {challenge.id !== '3' ? challenge.location : 'SHANGHAI'} |{' '}
         {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
           challenge.endTime,
         )}`}
       </h1>
 
-      {isTeamingEnabled ? (
+      {challenge.id !== '3' ? (
+        isTeamingEnabled ? (
+          <div className="mt-6 md:mt-12">
+            <Link
+              prefetch={false}
+              href={`/en/challenges/${challenge.id}/teams`}
+              className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
+            >
+              {'加入 / 创建队伍'}
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-6 md:mt-12">
+            {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
+            <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
+              {`队伍信息及项目提交将于 ${formatYYYYMMMDD(
+                challenge.milestones.find((ms) => ms.stageName === 'Teaming')
+                  ?.dueDate!,
+              )} 开放`}
+            </div>
+          </div>
+        )
+      ) : (
         <div className="mt-6 md:mt-12">
           <Link
             prefetch={false}
-            href={`/en/challenges/${challenge.id}/teams`}
-            className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
+            target="_blank"
+            href="https://forms.gle/qZ5KbnCufSNVeVkv8"
+            className="btn btn-primary body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
           >
-            {'加入 / 创建队伍'}
+            {'立即报名'}
           </Link>
-        </div>
-      ) : (
-        <div className="mt-6 md:mt-12">
-          {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
-          <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
-            {`队伍信息及项目提交将于 ${formatYYYYMMMDD(
-              challenge.milestones.find((ms) => ms.stageName === 'Teaming')
-                ?.dueDate!,
-            )} 开放`}
-          </div>
         </div>
       )}
       {challenge.id === '1' && (
