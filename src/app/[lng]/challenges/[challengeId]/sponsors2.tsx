@@ -14,6 +14,7 @@ const sponsors_tier2 = [
   '/sponsors/wbsr.png',
   '/sponsors/blocknews.png',
   '/sponsors/element.png',
+  '/sponsors/teia.png',
 ];
 
 const sponsors_tier3 = [
@@ -40,6 +41,7 @@ const sponsors_tier3 = [
   '/sponsors/bitpush.png',
   '/sponsors/amphi.png',
   '/sponsors/cryptophd.png',
+  '/sponsors/seedao.png',
 ];
 
 export function Sponsors2() {
