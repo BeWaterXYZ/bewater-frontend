@@ -70,6 +70,14 @@ const nextConfig = {
         source: '/zh/campaigns/63c82bd12ddc570f32ada868',
         destination: '/zh/campaigns/1',
       },
+      {
+        source: '/en/challenges',
+        destination: '/en/campaigns',
+      },
+      {
+        source: '/zh/challenges',
+        destination: '/zh/campaigns',
+      },
       // todo更多语言
     ];
   },
