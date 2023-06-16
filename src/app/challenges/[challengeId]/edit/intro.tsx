@@ -15,6 +15,10 @@ import { useMutationUpdateChallenge } from "@/services/challenge.query";
 const schema = z
   .object({
     description: validationSchema.text,
+    telegramLink: z.string(),
+    wechatURL: z.string(),
+    discordLink: z.string(),
+    twitterLink: z.string(),
   })
   .required();
 
@@ -33,6 +37,10 @@ export function EditIntro({ challenge }: { challenge: Challenge }) {
     resolver: zodResolver(schema),
     defaultValues: {
       description: challenge.description,
+      telegramLink: challenge.telegramLink,
+      wechatURL: challenge.wechatURL,
+      discordLink: challenge.discordLink,
+      twitterLink: challenge.twitterLink,
     },
   });
 
@@ -63,6 +71,36 @@ export function EditIntro({ challenge }: { challenge: Challenge }) {
                 rows={5}
                 {...register("description")}
                 error={errors["description"]}
+              />
+
+              <Input
+                label="Telegram link"
+                {...register("telegramLink")}
+                error={errors["telegramLink"]}
+              />
+              <Input
+                label="Discord link"
+                {...register("discordLink")}
+                error={errors["discordLink"]}
+              />
+              <Input
+                label="Twitter link"
+                {...register("twitterLink")}
+                error={errors["twitterLink"]}
+              />
+              <UploaderInput
+                label=" Wechat QR code"
+                title="Upload Wechat QR code "
+                subTitlte="PNG , 24px height"
+                height={140}
+                width={200}
+                max={1}
+                control={control}
+                name="wechatURL"
+                error={errors["wechatURL"]}
+                onValueChange={(v) => {
+                  setValue("wechatURL", v as string);
+                }}
               />
             </fieldset>
 

@@ -6,6 +6,7 @@ import { Challenge } from "@/services/types";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
+import { Cross2Icon, PlusIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import {
   Control,
@@ -42,7 +43,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
   let mutation = useMutationUpdateChallenge(challenge.id);
 
   let [totalAward, totalAwardSet] = useState(0);
-
+  console.log(challenge.keySponsors);
   let {
     control,
     register,
@@ -65,7 +66,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
         };
       }),
       keySponsors: challenge.keySponsors ?? [],
-      awardCurrency:challenge.awardCurrency
+      awardCurrency: challenge.awardCurrency,
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -124,7 +125,10 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             {fields.map((field, index) => {
               return (
-                <div className="mb-4 border-b border-grey-800" key={field.id}>
+                <div
+                  className="relative mb-4 border-b border-grey-800"
+                  key={field.id}
+                >
                   <Input
                     label="Track Name"
                     {...register(`awardAssorts.${index}.name`)}
@@ -136,13 +140,22 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
                     register={register}
                     errors={errors}
                   />
+                  <button
+                    className="absolute right-0 top-0 text-grey-300 flex items-center text-[12px]"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    <Cross2Icon className="mr-1 text-grey-300" />
+                    Remove 
+                  </button>
                 </div>
               );
             })}
 
             <button
               type="button"
-              className="text-[12px] text-grey-300"
+              className="text-[12px] text-grey-300 flex"
               onClick={() => {
                 append({
                   name: "",
@@ -166,10 +179,10 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
                 });
               }}
             >
-              + Add a new track
+              <PlusIcon className="mr-1 text-grey-300" /> Add a new track
             </button>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mt-6">
               <Input label="Total Award " disabled value={totalAward} />
               <Input
                 label="Award Currency"
@@ -224,7 +237,7 @@ function Awards({
   );
 
   return (
-    <div>
+    <div className="mb-2">
       <div className="grid grid-cols-3 gap-4">
         <label className=" block text-[12px] my-2 text-grey-500">
           Award Name
@@ -234,7 +247,7 @@ function Awards({
       </div>
       {fields.map((field, i) => {
         return (
-          <div className="grid grid-cols-3 gap-4" key={field.id}>
+          <div className="relative grid grid-cols-3 gap-4" key={field.id}>
             <Input
               placeholder="Award Name"
               {...register(`awardAssorts.${index}.awards.${i}.awardName`)}
@@ -254,12 +267,20 @@ function Awards({
                 errors["awardAssorts"]?.[index]?.["awards"]?.[i]?.["amount"]
               }
             />
+            <button
+              className="absolute m-2 left-full top-1"
+              onClick={() => {
+                remove(i);
+              }}
+            >
+              <Cross2Icon />
+            </button>
           </div>
         );
       })}
       <button
         type="button"
-        className="text-[12px] text-grey-300"
+        className="text-[12px] text-grey-300 flex"
         onClick={() => {
           append({
             awardName: "",
@@ -268,7 +289,7 @@ function Awards({
           });
         }}
       >
-        + Add a new award
+        <PlusIcon className="mr-1 text-grey-300" /> Add a new award
       </button>
     </div>
   );

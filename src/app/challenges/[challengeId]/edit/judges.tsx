@@ -10,6 +10,7 @@ import { Challenge } from "@/services/types";
 import { TextArea } from "@/components/form/textarea";
 import { UploaderInput } from "@/components/form/uploader";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
+import { Cross2Icon } from "@radix-ui/react-icons";
 
 const schema = z
   .object({
@@ -19,6 +20,8 @@ const schema = z
         name: validationSchema.text,
         title: validationSchema.text,
         avatarURI: validationSchema.text,
+        description: validationSchema.text,
+        twitterLink: z.string(),
       })
     ),
   })
@@ -29,7 +32,6 @@ export type Inputs = z.infer<typeof schema>;
 export function EditJudges({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
   let mutation = useMutationUpdateChallenge(challenge.id);
-  
 
   let {
     control,
@@ -53,8 +55,7 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
     try {
       await mutation.mutateAsync({
         id: challenge.id,
-        ...formData
-      
+        ...formData,
       });
       openSet(false);
     } catch (err) {}
@@ -73,7 +74,10 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             {fields.map((field, index) => {
               return (
-                <div className="mb-4 border-b border-grey-800" key={field.id}>
+                <div
+                  className="relative mb-4 border-b border-grey-800"
+                  key={field.id}
+                >
                   <Input
                     label="Judge Name"
                     {...register(`judges.${index}.name`)}
@@ -95,6 +99,23 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
                     label="Judge Title"
                     {...register(`judges.${index}.title`)}
                   />
+                   <TextArea
+                    label="Detail Info"
+                    {...register(`judges.${index}.description`)}
+                  />
+                  <Input
+                    label="Twitter Link"
+                    {...register(`judges.${index}.twitterLink`)}
+                  />
+                  <button
+                    className="absolute right-0 top-0 text-grey-300 flex items-center text-[12px]"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    <Cross2Icon className="mr-1 text-grey-300" />
+                    Remove
+                  </button>
                 </div>
               );
             })}
@@ -103,7 +124,7 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
               type="button"
               className="text-[12px] text-grey-300"
               onClick={() => {
-                append({ name: "", title: "", avatarURI: "" });
+                append({ name: "", title: "", avatarURI: "",twitterLink:'',description:'' });
               }}
             >
               + Add a new judge

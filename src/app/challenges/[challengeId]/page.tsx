@@ -15,6 +15,7 @@ import { EditSponsors } from "./edit/sponsors";
 import { EditAwards } from "./edit/awards";
 import Marquee from "react-fast-marquee";
 import { mock } from "./mock";
+import { unsplash } from "@/utils/unsplash";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -93,7 +94,17 @@ export default function Page({ params }: any) {
                 ))}
               </div>
             </div>
-            <div></div>
+            <div className="flex gap-4 flex-wrap">
+              {challenge.telegramLink ? (
+                <Link className="btn btn-primary-invert " href={challenge.telegramLink}>Telegram Link</Link>
+              ) : null}
+              {challenge.discordLink ? (
+                <Link className="btn btn-primary-invert " href={challenge.discordLink}>Discord Link</Link>
+              ) : null}
+              {challenge.twitterLink ? (
+                <Link className="btn btn-primary-invert " href={challenge.twitterLink}>Twitter Link</Link>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
@@ -173,7 +184,16 @@ export default function Page({ params }: any) {
             Judges
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
-            {challenge.judges
+            {(challenge.judges && challenge.judges.length > 0
+              ? challenge.judges
+              : [
+                  {
+                    name: "John Smith",
+                    title: "BeFire CEO",
+                    avatarURI: unsplash("men"),
+                  },
+                ]
+            )
               // .sort((a, b) => a.order - b.order)
               .map((judge) => {
                 return (

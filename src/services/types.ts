@@ -30,6 +30,11 @@ export interface Challenge {
     officialWebsiteURI?: string;
     email?: string;
   };
+  wechatURL: string;
+  telegramLink: string;
+  discordLink: string;
+  twitterLink: string;
+
   awardAssorts?: {
     name: string;
     awards: {
@@ -56,6 +61,8 @@ export interface Judge {
   name: string;
   title: string;
   avatarURI: string;
+  description: string;
+  twitterLink: string;
 }
 
 export interface Milestone {

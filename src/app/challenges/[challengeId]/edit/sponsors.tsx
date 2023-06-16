@@ -6,6 +6,7 @@ import { Challenge } from "@/services/types";
 import { validationSchema } from "@/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -68,7 +69,10 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             {fields.map((field, index) => {
               return (
-                <div className="mb-4 border-b border-grey-800" key={field.id}>
+                <div
+                  className="relative mb-4 border-b border-grey-800"
+                  key={field.id}
+                >
                   <Input
                     label="Sponsor Name"
                     {...register(`sponsors.${index}.defname`)}
@@ -86,6 +90,15 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                       setValue(`sponsors.${index}.members`, v as string[]);
                     }}
                   />
+                  <button
+                    className="absolute right-0 top-0 text-grey-300 flex items-center text-[12px]"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    <Cross2Icon className="mr-1 text-grey-300" />
+                    Remove
+                  </button>
                 </div>
               );
             })}
