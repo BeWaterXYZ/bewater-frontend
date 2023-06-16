@@ -20,7 +20,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <div className="mb-8">
-        <p className="body-2 text-grey-500 font-bold">Campaigns </p>
+        <p className="body-2 text-grey-500 font-bold">Campaigns</p>
         {uniqTeamMembers.length > 0 ? (
           <div className="flex flex-wrap gap-4 my-4">
             {uniqTeamMembers.map((tm) => {
