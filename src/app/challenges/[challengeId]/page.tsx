@@ -96,13 +96,28 @@ export default function Page({ params }: any) {
             </div>
             <div className="flex gap-4 flex-wrap">
               {challenge.telegramLink ? (
-                <Link className="btn btn-primary-invert " href={challenge.telegramLink}>Telegram Link</Link>
+                <Link
+                  className="btn btn-primary-invert "
+                  href={challenge.telegramLink}
+                >
+                  Telegram Link
+                </Link>
               ) : null}
               {challenge.discordLink ? (
-                <Link className="btn btn-primary-invert " href={challenge.discordLink}>Discord Link</Link>
+                <Link
+                  className="btn btn-primary-invert "
+                  href={challenge.discordLink}
+                >
+                  Discord Link
+                </Link>
               ) : null}
               {challenge.twitterLink ? (
-                <Link className="btn btn-primary-invert " href={challenge.twitterLink}>Twitter Link</Link>
+                <Link
+                  className="btn btn-primary-invert "
+                  href={challenge.twitterLink}
+                >
+                  Twitter Link
+                </Link>
               ) : null}
             </div>
           </div>
@@ -188,6 +203,7 @@ export default function Page({ params }: any) {
               ? challenge.judges
               : [
                   {
+                    id:'random',
                     name: "John Smith",
                     title: "BeFire CEO",
                     avatarURI: unsplash("men"),
@@ -195,9 +211,9 @@ export default function Page({ params }: any) {
                 ]
             )
               // .sort((a, b) => a.order - b.order)
-              .map((judge) => {
+              .map((judge,index) => {
                 return (
-                  <div key={judge.id} className="w-[180px] mb-2">
+                  <div key={judge.id!} className="w-[180px] mb-2">
                     <Aspect ratio={1 / 1}>
                       <Image
                         height={150}
