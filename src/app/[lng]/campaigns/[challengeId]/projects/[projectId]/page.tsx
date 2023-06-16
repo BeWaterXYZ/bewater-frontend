@@ -36,7 +36,7 @@ export default function Page({ params }: any) {
     if (!window) return;
     let url =
       window.location.origin +
-      `/challenges/${challenge.id}/projects/${project.id}`;
+      `/campaigns/${challenge.id}/projects/${project.id}`;
 
     let usp = new URLSearchParams();
     usp.append(
@@ -56,7 +56,7 @@ export default function Page({ params }: any) {
         <Link
           prefetch={false}
           className="body-3 text-grey-400"
-          href={`/${lng}/challenges/${challengeId}/projects`}
+          href={`/${lng}/campaigns/${challengeId}/projects`}
         >
           {'< Project List'}
         </Link>
@@ -131,7 +131,7 @@ export default function Page({ params }: any) {
             <Link
               prefetch={false}
               className="body-3 text-day uppercase "
-              href={`/${lng}/challenges/${project.team.challengeId}/teams/${project.team.id}`}
+              href={`/${lng}/campaigns/${project.team.challengeId}/teams/${project.team.id}`}
             >
               {'CHECK TEAM DETAIL ->'}
             </Link>

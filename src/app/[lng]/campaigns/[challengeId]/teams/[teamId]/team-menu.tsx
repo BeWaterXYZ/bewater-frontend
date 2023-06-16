@@ -58,7 +58,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
     if (!window) return;
     let url =
       window.location.origin +
-      `/challenges/${team.challengeId}/teams/${team.id}`;
+      `/campaigns/${team.challengeId}/teams/${team.id}`;
 
     let usp = new URLSearchParams();
     usp.append(

@@ -37,7 +37,7 @@ function getTitle(
   let teamLink = (
     <Link
       prefetch={false}
-      href={`/${lng}/challenges/${req.team.challenge.id}/teams/${req.team.id}`}
+      href={`/${lng}/campaigns/${req.team.challenge.id}/teams/${req.team.id}`}
       className="text-white hover:underline"
     >
       {req.team.name}
@@ -179,7 +179,7 @@ export function GroupingRequestNotification({
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
             <Link
               prefetch={false}
-              href={`/${lng}/challenges/${req.team.challenge.id}`}
+              href={`/${lng}/campaigns/${req.team.challenge.id}`}
               className="hover:underline"
             >
               {req.team.challenge.title}

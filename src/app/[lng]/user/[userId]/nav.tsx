@@ -11,9 +11,9 @@ export function Nav({ userId }: { userId: string }) {
       segment: '(overview)',
     },
     {
-      path: `/en/user/${userId}/challenges`,
-      segment: 'challenges',
-      label: 'Challenges',
+      path: `/en/user/${userId}/campaigns`,
+      segment: 'campaigns',
+      label: 'Campaigns',
     },
   ];
   const segments = useSelectedLayoutSegment();

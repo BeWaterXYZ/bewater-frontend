@@ -20,7 +20,7 @@ export default async function Page({ params }: any) {
   return (
     <div>
       <div className="mb-8">
-        <p className="body-2 text-grey-500 font-bold">Challenges </p>
+        <p className="body-2 text-grey-500 font-bold">Campaigns </p>
         {uniqTeamMembers.length > 0 ? (
           <div className="flex flex-wrap gap-4 my-4">
             {uniqTeamMembers.map((tm) => {
@@ -31,7 +31,7 @@ export default async function Page({ params }: any) {
                 >
                   <Link
                     prefetch={false}
-                    href={`/en/challenges/${tm.team?.challengeId}`}
+                    href={`/en/campaigns/${tm.team?.challengeId}`}
                     className="block"
                   >
                     <Aspect ratio={2}>
@@ -57,7 +57,7 @@ export default async function Page({ params }: any) {
           </div>
         ) : (
           <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
-            Not in any challenges yet.
+            Not in any campaigns yet.
           </div>
         )}
       </div>

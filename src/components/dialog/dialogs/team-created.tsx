@@ -14,7 +14,7 @@ export default function TeamCreatedDialog({
   let [copied, setCopied] = useState(false);
   let url =
     window.location.origin +
-    `/challenges/${data.challenge.id}/teams/${data.teamId}`;
+    `/campaigns/${data.challenge.id}/teams/${data.teamId}`;
   let share = () => {
     if (!window) return;
     let usp = new URLSearchParams();

@@ -10,7 +10,7 @@ import { ChallengeID, ProjectId, TeamID } from './types';
 
 export function useFetchChallengeProjects(challengeId: ChallengeID) {
   return useQuery({
-    queryKey: ['challenges', challengeId, 'projects'],
+    queryKey: ['campaigns', challengeId, 'projects'],
     queryFn: async () => {
       return getChallengeTProjects(challengeId);
     },

@@ -18,7 +18,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
           key={challenge.id}
           className="w-full border border-[#24254E] rounded overflow-hidden bg-latenight"
         >
-          <Link prefetch={false} href={`/${lng}/challenges/${challenge.id}`}>
+          <Link prefetch={false} href={`/${lng}/campaigns/${challenge.id}`}>
             <Aspect ratio={5 / 2}>
               <Image
                 fill

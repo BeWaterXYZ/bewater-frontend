@@ -208,7 +208,7 @@ export default async function ChallengeIntro({ params }: any) {
             <div>
               <Link
                 prefetch={false}
-                href={`/${lng}/challenges/${challengeId}/teams`}
+                href={`/${lng}/campaigns/${challengeId}/teams`}
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
                 前往队伍页面

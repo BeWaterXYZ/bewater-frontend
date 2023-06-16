@@ -26,7 +26,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
             <Link
               prefetch={false}
               className="body-4"
-              href={`/${lng}/challenges/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
+              href={`/${lng}/campaigns/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
             >
               {msg.team.project.name}
             </Link>
@@ -46,7 +46,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
           <Link
             prefetch={false}
             className="body-4"
-            href={`/${lng}/challenges/${msg.team.challenge?.id}`}
+            href={`/${lng}/campaigns/${msg.team.challenge?.id}`}
           >
             {msg.team.challenge?.title}
           </Link>
@@ -87,7 +87,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
             <Link
               prefetch={false}
               className="body-4"
-              href={`/${lng}/challenges/${msg.team.challenge?.id}/teams/${msg.teamId}`}
+              href={`/${lng}/campaigns/${msg.team.challenge?.id}/teams/${msg.teamId}`}
             >
               {msg.team.name}
             </Link>
