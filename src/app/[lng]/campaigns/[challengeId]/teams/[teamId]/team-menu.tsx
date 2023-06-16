@@ -69,7 +69,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
     );
 
     usp.append('url', url);
-    usp.append('hashtags', 'BeWaterWeb3Challenge');
+    usp.append('hashtags', 'BeWaterWeb3Campaigns');
     let twitterURL = 'http://twitter.com/share?' + usp.toString();
     window!.open(twitterURL, '_blank')!.focus();
   };

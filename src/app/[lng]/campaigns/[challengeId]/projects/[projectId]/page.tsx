@@ -45,7 +45,7 @@ export default function Page({ params }: any) {
     );
 
     usp.append('url', url);
-    usp.append('hashtags', 'BeWaterWeb3Challenge');
+    usp.append('hashtags', 'BeWaterWeb3Campaign');
     let twitterURL = 'http://twitter.com/share?' + usp.toString();
     window!.open(twitterURL, '_blank')!.focus();
   };
