@@ -5,8 +5,8 @@ export type MenuItemType = {
 };
 export const nav: MenuItemType[] = [
   {
-    label: 'Challenges',
-    path: '/challenges',
+    label: 'Campaigns',
+    path: '/campaigns',
   },
   // {
   //   label: 'Showcases',

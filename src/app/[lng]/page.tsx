@@ -12,7 +12,7 @@ export default async function Home({ params }: { params: { lng: string } }) {
     lng = fallbackLng;
   }
   // if (active.length === 1) {
-  //   return redirect(`/${lng}/challenges/${active[0].id}`);
+  //   return redirect(`/${lng}/campaigns/${active[0].id}`);
   // }
-  return redirect(`/${lng}/challenges`);
+  return redirect(`/${lng}/campaigns`);
 }

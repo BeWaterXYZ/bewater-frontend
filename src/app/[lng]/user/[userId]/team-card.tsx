@@ -22,7 +22,7 @@ export function TeamCard({ member }: { member: TeamMember }) {
           {'at '}
           <Link
             prefetch={false}
-            href={`/en/challenges/${member.team?.challengeId}/teams/${member.teamId}`}
+            href={`/en/campaigns/${member.team?.challengeId}/teams/${member.teamId}`}
           >
             {member.team?.name}
           </Link>

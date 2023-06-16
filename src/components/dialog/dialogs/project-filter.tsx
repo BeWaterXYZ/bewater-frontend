@@ -1,5 +1,5 @@
-import { ProjectFilter } from '@/app/[lng]/challenges/[challengeId]/projects/project-filter';
-import { useQueryBuilder } from '@/app/[lng]/challenges/[challengeId]/query';
+import { ProjectFilter } from '@/app/[lng]/campaigns/[challengeId]/projects/project-filter';
+import { useQueryBuilder } from '@/app/[lng]/campaigns/[challengeId]/query';
 import { Dialogs } from '../store';
 
 interface TeamFilterDialogProps {

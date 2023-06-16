@@ -58,7 +58,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
     if (!window) return;
     let url =
       window.location.origin +
-      `/challenges/${team.challengeId}/teams/${team.id}`;
+      `/campaigns/${team.challengeId}/teams/${team.id}`;
 
     let usp = new URLSearchParams();
     usp.append(
@@ -69,7 +69,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
     );
 
     usp.append('url', url);
-    usp.append('hashtags', 'BeWaterWeb3Challenge');
+    usp.append('hashtags', 'BeWaterWeb3Campaigns');
     let twitterURL = 'http://twitter.com/share?' + usp.toString();
     window!.open(twitterURL, '_blank')!.focus();
   };

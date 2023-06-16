@@ -4,7 +4,7 @@ import { ChallengeID } from './types';
 
 export function useFetchChallengeById(challengeId: ChallengeID) {
   return useQuery({
-    queryKey: ['challenges', challengeId],
+    queryKey: ['campaigns', challengeId],
     queryFn: async () => {
       return getChallengeById(challengeId);
     },

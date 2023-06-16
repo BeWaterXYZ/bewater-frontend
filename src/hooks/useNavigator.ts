@@ -42,13 +42,13 @@ export function useNavigator(lng: string) {
 
   const gotoTeam = useCallback(
     (challengeId: ChallengeID, teamId: TeamID) => {
-      router.push(`/${lng}/challenges/${challengeId}/teams/${teamId}`);
+      router.push(`/${lng}/campaigns/${challengeId}/teams/${teamId}`);
     },
     [router, lng],
   );
   const gotoTeamList = useCallback(
     (challengeId: ChallengeID) => {
-      router.push(`/${lng}/challenges/${challengeId}/teams`);
+      router.push(`/${lng}/campaigns/${challengeId}/teams`);
     },
     [router, lng],
   );

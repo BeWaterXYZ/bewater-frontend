@@ -26,7 +26,7 @@ export default async function Page({ params }: any) {
         <Link
           prefetch={false}
           className="body-3 text-grey-400"
-          href={`/${lng}/challenges/${challengeId}/teams`}
+          href={`/${lng}/campaigns/${challengeId}/teams`}
         >
           {'< Team List'}
         </Link>
@@ -102,7 +102,7 @@ export default async function Page({ params }: any) {
           </div>
           <Link
             prefetch={false}
-            href={`/${lng}/challenges/${challengeId}/projects/${team.project.id}`}
+            href={`/${lng}/campaigns/${challengeId}/projects/${team.project.id}`}
             className="body-3 hidden lg:flex items-center h-7 text-day whitespace-nowrap "
           >
             {'CHECK DETAIL ->'}
@@ -119,7 +119,7 @@ export default async function Page({ params }: any) {
 
         <Link
           prefetch={false}
-          href={`/${lng}/challenges/${challengeId}/projects/${team.project.id}`}
+          href={`/${lng}/campaigns/${challengeId}/projects/${team.project.id}`}
           className="body-3 flex lg:hidden mt-3 items-center h-7 text-day whitespace-nowrap "
         >
           {'CHECK DETAIL ->'}

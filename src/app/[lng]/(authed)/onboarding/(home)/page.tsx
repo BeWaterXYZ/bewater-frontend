@@ -23,6 +23,7 @@ export default function Page({ params }: { params: { lng: string } }) {
       navigator.gotoAfterConnect();
     }
     setMounted(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

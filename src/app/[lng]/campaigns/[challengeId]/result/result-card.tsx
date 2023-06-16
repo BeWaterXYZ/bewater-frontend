@@ -37,7 +37,7 @@ export function ResultCard({
           <Link
             prefetch={false}
             className="block body-0 text-ellipsis truncate my-2 w-[80%]"
-            href={`/en/challenges/${team.challengeId}/projects/${team.project.id}`}
+            href={`/en/campaigns/${team.challengeId}/projects/${team.project.id}`}
           >
             {team.project.name}
           </Link>
@@ -59,7 +59,7 @@ export function ResultCard({
         <div>
           <Link
             prefetch={false}
-            href={`/en/challenges/${team.challengeId}/teams/${team.id}`}
+            href={`/en/campaigns/${team.challengeId}/teams/${team.id}`}
             className="block body-3 text-left mb-2 text-ellipsis truncate"
           >
             {team.name}
@@ -90,7 +90,7 @@ export function ResultCard({
                 <div>
                   <a
                     className="btn btn-secondary"
-                    href={`/en/challenges/${team.challengeId}/projects/${team.project.id}`}
+                    href={`/en/campaigns/${team.challengeId}/projects/${team.project.id}`}
                   >
                     Visit
                   </a>

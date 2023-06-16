@@ -56,7 +56,7 @@ const BeWaterLogo = () => {
         <div className="absolute left-[164px] hidden sm:flex flex-row gap-2 items-center">
           <div className="text-white body-2 font-bold">/</div>
           <div className="text-day body-2 font-bold uppercase [text-shadow:0_0_6px_theme(colors.day)]">
-            Challenges
+            Campaigns
           </div>
         </div>
       </Link>
