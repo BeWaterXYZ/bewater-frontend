@@ -32,6 +32,16 @@ export function middleware(req: any) {
     );
   }
 
+  if (req.nextUrl.pathname.startsWith('/en/challenges')) {
+    return NextResponse.redirect(
+      new URL(`/en/campaigns${req.nextUrl.pathname.substring(14)}`, req.url),
+    );
+  } else if (req.nextUrl.pathname.startsWith('/zh/challenges')) {
+    return NextResponse.redirect(
+      new URL(`/zh/campaigns${req.nextUrl.pathname.substring(14)}`, req.url),
+    );
+  }
+
   if (req.headers.has('referer')) {
     const refererUrl = new URL(req.headers.get('referer'));
     const lngInReferer = languages.find((l) =>
