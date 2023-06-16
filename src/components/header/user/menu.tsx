@@ -10,9 +10,10 @@ import { useEffect } from 'react';
 
 export const UserMenu = () => {
   const clearStore = useAuthStore((s) => s.clear);
-  const [userId, walletAddress] = useAuthStore((s) => [
+  const [userId, walletAddress, stateUser] = useAuthStore((s) => [
     s.user?.externalId,
     s?.walletAddress,
+    s.user,
   ]);
 
   const { data, isLoading } = useFetchUser(userId);
@@ -21,9 +22,9 @@ export const UserMenu = () => {
     window.location.href = '/';
   };
 
-  // useEffect(() => {
-  //   if (stateUser && !userId) logout();
-  // }, [userId]);
+  useEffect(() => {
+    if (stateUser && !userId) logout();
+  }, [userId]);
 
   if (!data) return null;
 
