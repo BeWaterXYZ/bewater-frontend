@@ -16,10 +16,25 @@ import { EditAwards } from "./edit/awards";
 import Marquee from "react-fast-marquee";
 import { mock } from "./mock";
 import { unsplash } from "@/utils/unsplash";
+import { useEffect } from "react";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
   let { data: challenge } = useFetchChallengeById(challengeId);
+
+  useEffect(() => {
+    if (challenge) {
+      let hash = location.hash;
+      if (hash.startsWith("#section-")) {
+        setTimeout(() => {
+          let target = document.getElementById(hash.substring(1));
+          console.log({ target });
+          target?.scrollIntoView({ behavior: "smooth" });
+        }, 100);
+      }
+    }
+  }, [challenge]);
+
   if (!challenge) return null;
 
   challenge = mock(challenge);
@@ -37,6 +52,7 @@ export default function Page({ params }: any) {
       </div>
       {/* banner section */}
       <div
+        id="section-banner"
         className={`relative h-[600px] overflow-hidden pb-12 md:pb-30 pt-[100px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
         style={{
           backgroundImage: `url(${
@@ -66,7 +82,10 @@ export default function Page({ params }: any) {
         </h1>
       </div>
       {/* timeline */}
-      <div className="relative py-16 border-b border-dashed border-white/30">
+      <div
+        id="section-milestones"
+        className="relative py-16 border-b border-dashed border-white/30"
+      >
         <div className="absolute top-4 right-4">
           <EditMilestones challenge={challenge} />
         </div>
@@ -76,7 +95,10 @@ export default function Page({ params }: any) {
       </div>
       {/* intro */}
 
-      <div className="relative py-16 border-b border-dashed border-white/30">
+      <div
+        id="section-intro"
+        className="relative py-16 border-b border-dashed border-white/30"
+      >
         <div className="absolute top-4 right-4">
           <EditIntro challenge={challenge} />
         </div>
@@ -124,7 +146,10 @@ export default function Page({ params }: any) {
         </div>
       </div>
       {/* awards */}
-      <div className="relative py-16 border-b border-dashed border-white/30">
+      <div
+        id="section-awards"
+        className="relative py-16 border-b border-dashed border-white/30"
+      >
         <div className="absolute top-4 right-4">
           <EditAwards challenge={challenge} />
         </div>
@@ -190,7 +215,10 @@ export default function Page({ params }: any) {
         </div>
       </div>
       {/* judges */}
-      <div className="relative py-16 border-b border-dashed border-white/30">
+      <div
+        id="section-judges"
+        className="relative py-16 border-b border-dashed border-white/30"
+      >
         <div className="absolute top-4 right-4">
           <EditJudges challenge={challenge} />
         </div>
@@ -203,7 +231,7 @@ export default function Page({ params }: any) {
               ? challenge.judges
               : [
                   {
-                    id:'random',
+                    id: "random",
                     name: "John Smith",
                     title: "BeFire CEO",
                     avatarURI: unsplash("men"),
@@ -211,7 +239,7 @@ export default function Page({ params }: any) {
                 ]
             )
               // .sort((a, b) => a.order - b.order)
-              .map((judge,index) => {
+              .map((judge, index) => {
                 return (
                   <div key={judge.id!} className="w-[180px] mb-2">
                     <Aspect ratio={1 / 1}>
@@ -232,7 +260,10 @@ export default function Page({ params }: any) {
         </div>
       </div>
       {/* requirements  */}
-      <div className="relative py-16 border-b border-dashed border-white/30">
+      <div
+        id="section-requirements"
+        className="relative py-16 border-b border-dashed border-white/30"
+      >
         <div className="absolute top-4 right-4">
           <EditRequirements challenge={challenge} />
         </div>
@@ -269,7 +300,10 @@ export default function Page({ params }: any) {
       </div>
 
       {/* sponsors  */}
-      <div className="relative py-16 border-b border-dashed border-white/30">
+      <div
+        id="section-sponsors"
+        className="relative py-16 border-b border-dashed border-white/30"
+      >
         <div className="absolute top-4 right-4">
           <EditSponsors challenge={challenge} />
         </div>

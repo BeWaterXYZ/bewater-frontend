@@ -1,19 +1,111 @@
 "use client";
 import { useLoadingWhen } from "@/components/loading/store";
 import { useFetchChallenges } from "@/services/challenge.query";
+import { Challenge } from "@/services/types";
 import { unsplash } from "@/utils/unsplash";
+import { CaretRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+
+function TodoLink({
+  // challenge,
+  copy,
+  link,
+}: {
+  // challenge: Challenge;
+  copy: string;
+  link: string;
+}) {
+  return (
+    <Link
+      href={link}
+      className="my-2 w-full flex justify-between items-center bg-[#0B0C24] rounded-md border border-[#474ABD] p-4"
+    >
+      <div>{copy}</div>
+      <div>
+        <CaretRightIcon />
+      </div>
+    </Link>
+  );
+}
+
+function Todo({ challenge }: { challenge: Challenge }) {
+  let todos = [];
+  if (!challenge.bannerUrl || !challenge.hostIcon) {
+    todos.push(
+      <TodoLink
+        key={"banner"}
+        copy="Add banner or host image"
+        link={`/challenges/${challenge.id}#section-banner`}
+      />
+    );
+  }
+  if (!challenge.milestones) {
+    todos.push(
+      <TodoLink
+        key={"milestones"}
+        copy="Add milestones"
+        link={`/challenges/${challenge.id}#section-milestones`}
+      />
+    );
+  }
+  if (!challenge.awardAssorts) {
+    todos.push(
+      <TodoLink
+        key={"awards"}
+        copy="Add Awards"
+        link={`/challenges/${challenge.id}#section-awards`}
+      />
+    );
+  }
+  if (!challenge.judges || challenge.judges.length === 0) {
+    todos.push(
+      <TodoLink
+        key={"judge"}
+        copy="Add Judges"
+        link={`/challenges/${challenge.id}#section-judges`}
+      />
+    );
+  }
+  if (!challenge.requirements || !challenge.reviewDimension) {
+    todos.push(
+      <TodoLink
+        key={"requirements"}
+        copy="Add Requirements"
+        link={`/challenges/${challenge.id}#section-requirements`}
+      />
+    );
+  }
+  if (!challenge.sponsors || challenge.sponsors.length === 0) {
+    todos.push(
+      <TodoLink
+        key={"sponsors"}
+        copy="Add Sponsors"
+        link={`/challenges/${challenge.id}#section-sponsors`}
+      />
+    );
+  }
+  if (todos.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="mb-8">
+      <p className="text-[16px] text-grey-600 my-2">{challenge.title}</p>
+      {todos}
+    </div>
+  );
+}
 
 export function Dashboard() {
   let { data: challenges, isLoading } = useFetchChallenges();
   useLoadingWhen(isLoading);
   if (!challenges) return;
   return (
-    <div className="w-full grid grid-cols-[2fr,_1fr]">
+    <div className="w-full grid  md:grid-cols-[2fr,_1fr] gap-16">
       <div>
-        {/* <div>filters</div> */}
+        <div className="h-16">filters</div>
         <div>
           {challenges.map((challenge) => {
             return (
@@ -40,9 +132,14 @@ export function Dashboard() {
                   </div>
                 </div>
                 <div>
-                  <button className={clsx('btn',{
-                    'bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)] text-grey-500': challenge.status ==='DRAFT'
-                  })}>{challenge.status}</button>
+                  <button
+                    className={clsx("btn", {
+                      "bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)] text-grey-500":
+                        challenge.status === "DRAFT",
+                    })}
+                  >
+                    {challenge.status}
+                  </button>
                 </div>
               </Link>
             );
@@ -50,10 +147,17 @@ export function Dashboard() {
         </div>
       </div>
       <div>
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-end h-16">
           <Link href="/challenges/new" className="btn btn-primary">
             + Draft a new campaign
           </Link>
+        </div>
+        <div>
+          <p className="text-[24px] my-4">CHECKLIST</p>
+
+          {challenges.map((c) => {
+            return <Todo key={c.id} challenge={c}></Todo>;
+          })}
         </div>
       </div>
     </div>
