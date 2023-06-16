@@ -1,11 +1,10 @@
 const sponsors_tier1 = [
+  '/sponsors/starkware.png',
   '/sponsors/astro.png',
-  '/sponsors/starknetsite.png',
-  '/sponsors/starknet.png',
+  '/sponsors/starknetworld.png',
 ];
 
 const sponsors_tier2 = [
-  '/sponsors/starkware.png',
   '/sponsors/ABCDE.png',
   '/sponsors/bewater.png',
   '/sponsors/openbuild.png',
@@ -16,7 +15,8 @@ const sponsors_tier3 = [
   '/sponsors/techflow.png',
   '/sponsors/panews.png',
   '/sponsors/lxdao.png',
-  '/sponsors/debox.png',
+  '/sponsors/builderdao.png',
+  '/sponsors/reddio.png',
   '/sponsors/antalpha.png',
   '/sponsors/denglian.png',
 ];
