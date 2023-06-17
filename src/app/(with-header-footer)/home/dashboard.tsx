@@ -92,7 +92,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
 
   return (
     <div className="mb-8">
-      <p className="text-[16px] text-grey-600 my-2">{challenge.title}</p>
+      <p className="text-[16px] text-grey-600 my-4">{challenge.title}</p>
       {todos}
     </div>
   );

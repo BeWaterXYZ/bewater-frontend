@@ -76,6 +76,7 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                   <Input
                     label="Sponsor Name"
                     {...register(`sponsors.${index}.defname`)}
+                    error={errors.sponsors?.[index]?.defname}
                   />
                   <UploaderInput
                     control={control}

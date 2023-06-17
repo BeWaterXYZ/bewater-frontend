@@ -232,22 +232,21 @@ export default function Page({ params }: any) {
               : [
                   {
                     id: "random",
-                    name: "John Smith",
-                    title: "BeFire CEO",
-                    avatarURI: unsplash("men"),
+                    name: "Judge Name",
+                    title: "Judge Title",
+                    avatarURI: '/assets/judge-avatar.png'
                   },
                 ]
             )
               // .sort((a, b) => a.order - b.order)
               .map((judge, index) => {
                 return (
-                  <div key={judge.id!} className="w-[180px] mb-2">
-                    <Aspect ratio={1 / 1}>
+                  <div key={judge.id!} className="w-[180px] mb-2 ">
+                    <Aspect ratio={1 / 1} className="">
                       <Image
-                        height={150}
-                        width={150}
+                        fill
                         src={judge.avatarURI}
-                        className="object-cover w-full h-full"
+                        className="object-cover w-full h-full bg-white/5"
                         alt={judge.name}
                       />
                     </Aspect>

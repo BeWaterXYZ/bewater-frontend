@@ -20,7 +20,7 @@ const schema = z
         name: validationSchema.text,
         title: validationSchema.text,
         avatarURI: validationSchema.text,
-        description: validationSchema.text,
+        description: z.string(),
         twitterLink: z.string(),
       })
     ),
@@ -81,6 +81,7 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
                   <Input
                     label="Judge Name"
                     {...register(`judges.${index}.name`)}
+                    error={errors.judges?.[index]?.name}
                   />
                   <UploaderInput
                     control={control}
@@ -88,6 +89,7 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
                     name={`judges.${index}.avatarURI`}
                     title="Upload Avatar"
                     subTitlte="JPG/PNG, 180x180px"
+                    error={errors.judges?.[index]?.avatarURI}
                     max={1}
                     height={140}
                     width={200}
@@ -98,14 +100,17 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
                   <TextArea
                     label="Judge Title"
                     {...register(`judges.${index}.title`)}
+                    error={errors.judges?.[index]?.title}
                   />
-                   <TextArea
+                  <TextArea
                     label="Detail Info"
                     {...register(`judges.${index}.description`)}
+                    error={errors.judges?.[index]?.description}
                   />
                   <Input
                     label="Twitter Link"
                     {...register(`judges.${index}.twitterLink`)}
+                    error={errors.judges?.[index]?.twitterLink}
                   />
                   <button
                     className="absolute right-0 top-0 text-grey-300 flex items-center text-[12px]"
@@ -124,7 +129,13 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
               type="button"
               className="text-[12px] text-grey-300"
               onClick={() => {
-                append({ name: "", title: "", avatarURI: "",twitterLink:'',description:'' });
+                append({
+                  name: "",
+                  title: "",
+                  avatarURI: "",
+                  twitterLink: "",
+                  description: "",
+                });
               }}
             >
               + Add a new judge

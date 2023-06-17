@@ -1,21 +1,22 @@
 "use client";
+import { DatePicker } from "@/components/form/datepicker";
 import { Input } from "@/components/form/input";
-import { Uploader } from "@/components/uploader";
+import { useMutationUpdateChallenge } from "@/services/challenge.query";
+import { Challenge, defaultMileStones } from "@/services/types";
+import { validationSchema } from "@/validations";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
+import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Challenge } from "@/services/types";
-import { DatePicker } from "@/components/form/datepicker";
-import { useMutationUpdateChallenge } from "@/services/challenge.query";
 
 const schema = z
   .object({
     milestones: z.array(
       z.object({
-        dueDate: z.string(),
-        stageName: z.string(),
+        dueDate: validationSchema.date,
+        stageName: validationSchema.text,
       })
     ),
   })
@@ -81,16 +82,45 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
 
               {fields.map((field, index) => {
                 return (
-                  <div className="grid grid-cols-2 gap-4 my-2" key={field.id}>
+                  <div
+                    className="relative grid grid-cols-2 gap-4 my-2"
+                    key={field.id}
+                  >
                     <DatePicker
                       {...register(`milestones.${index}.dueDate`)}
                       error={errors[`milestones`]?.[index]?.dueDate}
                     />
-                    <Input disabled value={field.stageName} />
+                    {index >= defaultMileStones.length ? (
+                      <Input
+                        {...register(`milestones.${index}.stageName`)}
+                        error={errors.milestones?.[index]?.stageName}
+                      />
+                    ) : (
+                      <Input disabled value={field.stageName} />
+                    )}
+                    {index >= defaultMileStones.length ? (
+                      <button
+                        className="absolute m-2 left-full top-1"
+                        onClick={() => {
+                          remove(index);
+                        }}
+                      >
+                        <Cross2Icon />
+                      </button>
+                    ) : null}
                   </div>
                 );
               })}
             </div>
+            <button
+              type="button"
+              className="text-[12px] text-grey-300"
+              onClick={() => {
+                append({ dueDate: "", stageName: "" });
+              }}
+            >
+              + Add a new milestone
+            </button>
             <div className="flex mt-6 justify-end">
               <button className="btn btn-primary" type="submit">
                 Save{" "}

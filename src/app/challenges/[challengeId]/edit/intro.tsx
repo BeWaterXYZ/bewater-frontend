@@ -20,7 +20,6 @@ const schema = z
     discordLink: z.string(),
     twitterLink: z.string(),
   })
-  .required();
 
 export type Inputs = z.infer<typeof schema>;
 
@@ -37,10 +36,10 @@ export function EditIntro({ challenge }: { challenge: Challenge }) {
     resolver: zodResolver(schema),
     defaultValues: {
       description: challenge.description,
-      telegramLink: challenge.telegramLink,
-      wechatURL: challenge.wechatURL,
-      discordLink: challenge.discordLink,
-      twitterLink: challenge.twitterLink,
+      telegramLink: challenge.telegramLink??'',
+      wechatURL: challenge.wechatURL??'',
+      discordLink: challenge.discordLink??'',
+      twitterLink: challenge.twitterLink??'',
     },
   });
 

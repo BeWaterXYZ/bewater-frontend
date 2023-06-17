@@ -65,15 +65,19 @@ export interface Judge {
   twitterLink: string;
 }
 
+export const defaultMileStones = [
+  "Preparation",
+  "Teaming",
+  "Project Submission",
+  "Review",
+  "Result",
+] as const;
+
+export type DefaultMileStones = (typeof defaultMileStones)[number];
+
 export interface Milestone {
   dueDate: string;
-  stageName:
-    | "Preparation"
-    | "Teaming"
-    | "Project Submission"
-    | "Review"
-    | "Result"
-    | string;
+  stageName: DefaultMileStones | string;
 }
 
 export interface Sponsorship {

@@ -1,25 +1,34 @@
-import { Milestone } from '@/services/types';
-import clsx from 'clsx';
-import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
+import { Milestone } from "@/services/types";
+import clsx from "clsx";
+import {
+  compareAsc,
+  differenceInDays,
+  format,
+  isSameDay,
+  parseISO,
+} from "date-fns";
 
-const labelMaps: Record<Milestone['stageName'], string> = {
-  Preparation: '赛事信息公布',
-  Teaming: '创建团队信息及提交项目',
-  'Project Submission': '项目初筛',
-  Review: '线上评审',
-  Result: '公布结果',
+const labelMaps: Record<Milestone["stageName"], string> = {
+  Preparation: "赛事信息公布",
+  Teaming: "创建团队信息及提交项目",
+  "Project Submission": "项目初筛",
+  Review: "线上评审",
+  Result: "公布结果",
 };
 
 function prepareData(milestones: Milestone[]) {
+  milestones = milestones.sort((a, b) => {
+    return compareAsc(parseISO(a.dueDate), parseISO(b.dueDate));
+  });
   let nodes = [];
   let today = new Date();
   for (let i = 0; i < milestones.length; i++) {
     let prevDate = parseISO(milestones[i].dueDate);
 
     nodes.push({
-      type: 'date',
+      type: "date",
       date: milestones[i].dueDate,
-      dateFormatted: format(prevDate, 'MM.dd'),
+      dateFormatted: format(prevDate, "MM.dd"),
       stage: milestones[i].stageName,
       passed: prevDate < today,
       isOn: isSameDay(today, prevDate),
@@ -30,7 +39,7 @@ function prepareData(milestones: Milestone[]) {
         differenceInDays(today, prevDate) /
         differenceInDays(nextDate, prevDate);
       nodes.push({
-        type: 'duration',
+        type: "duration",
         duration: differenceInDays(nextDate, prevDate),
         progress: Math.max(0, Math.min(progress, 1)),
       });
@@ -48,10 +57,10 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
     <>
       <div className="hidden md:flex body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 ">
         {data.map((node, index) =>
-          node.type === 'date' ? (
+          node.type === "date" ? (
             <div className="w-4 flex flex-col items-center" key={index}>
               <p className="whitespace-nowrap body-3 font-bold">
-                {labelMaps[node.stage!]}
+                {labelMaps[node.stage!] ?? node.stage}
               </p>
               {index === data.length - 1 ? (
                 <div className="my-4 relative -top-[2px] w-4 h-0  px-1  border-t-[6px] border-b-[6px] rounded-sm border-white border-l-4 border-r-4   border-r-transparent">
@@ -59,8 +68,8 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
                 </div>
               ) : (
                 <div
-                  className={clsx('w-4 h-4 rounded-full bg-white my-4', {
-                    '!bg-day': node.passed,
+                  className={clsx("w-4 h-4 rounded-full bg-white my-4", {
+                    "!bg-day": node.passed,
                     [glowing]: node.isOn,
                   })}
                 ></div>
@@ -75,19 +84,19 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
             >
               <div
                 className="bg-day h-full "
-                style={{ width: node.progress! * 100 + '%' }}
+                style={{ width: node.progress! * 100 + "%" }}
               ></div>
               {node.progress! > 0 && node.progress! < 1 && (
-                <div className={clsx(glowing, 'w-4 h-4')}> </div>
+                <div className={clsx(glowing, "w-4 h-4")}> </div>
               )}
             </div>
-          ),
+          )
         )}
       </div>
       {/* mobile view */}
       <div className="flex md:hidden flex-col body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 lg:mt-[100px] pr-[280px] mt-16 h-[450px] ">
         {data.map((node, index) =>
-          node.type === 'date' ? (
+          node.type === "date" ? (
             <div
               className=" h-4 flex gap-2 flex-row items-center relative "
               key={index}
@@ -99,11 +108,11 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
               ) : (
                 <div
                   className={clsx(
-                    'w-4 h-4 rounded-full bg-white my-4 relative',
+                    "w-4 h-4 rounded-full bg-white my-4 relative",
                     {
-                      '!bg-day': node.passed,
+                      "!bg-day": node.passed,
                       [glowing]: node.isOn,
-                    },
+                    }
                   )}
                 ></div>
               )}
@@ -111,7 +120,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
                 {node.dateFormatted}
               </p>
               <p className="whitespace-nowrap body-3 font-bold absolute left-[90px]">
-                {labelMaps[node.stage!]}
+                {labelMaps[node.stage!] ?? node.stage}
               </p>
             </div>
           ) : (
@@ -122,13 +131,13 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
             >
               <div
                 className="bg-day w-full "
-                style={{ height: node.progress! * 100 + '%' }}
+                style={{ height: node.progress! * 100 + "%" }}
               ></div>
               {node.progress! > 0 && node.progress! < 1 && (
-                <div className={clsx(glowing, 'w-4 h-4')}> </div>
+                <div className={clsx(glowing, "w-4 h-4")}> </div>
               )}
             </div>
-          ),
+          )
         )}
       </div>
     </>
