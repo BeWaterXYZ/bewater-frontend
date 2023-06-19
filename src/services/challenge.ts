@@ -35,12 +35,17 @@ export async function createChallenge(challenge: Partial<Challenge>) {
   );
   return data;
 }
-export async function updateChallenge(
-  challenge: Partial<Challenge>
-) {
+export async function updateChallenge(challenge: Partial<Challenge>) {
   const { data } = await agentAuthed.put<Challenge>(
     `/host-challenge/${challenge.id}`,
     challenge
+  );
+  return data;
+}
+export async function publishChallengeRequest(challengeId: ChallengeID) {
+  const { data } = await agentAuthed.post<Challenge>(
+    `/host-challenge/publish-request`,
+    { id: challengeId }
   );
   return data;
 }
