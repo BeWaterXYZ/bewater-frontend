@@ -92,15 +92,15 @@ export function ScheduleSection() {
           </div>
 
           <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-            中国上海长宁区古北 Soho A 栋 26楼
+            上海市长宁区淮海西路 666 号中山万博国际中心 6 楼
           </p>
         </div>
         <Image
-          src="/challenge/assets/gubei.png"
+          src="/challenge/assets/building.jpeg"
           width={800}
-          height={400}
+          height={600}
           className="px-20"
-          alt="gubei soho"
+          alt="building"
         />
       </div>
     </div>
