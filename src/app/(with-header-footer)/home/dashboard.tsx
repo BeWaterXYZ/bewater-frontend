@@ -98,6 +98,32 @@ function Todo({ challenge }: { challenge: Challenge }) {
   );
 }
 
+function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
+  return (
+    <button
+      className={clsx("btn rounded flex gap-2", {
+        "bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)] text-grey-500":
+          challenge.status === "DRAFT",
+        "bg-[rgba(234,_179,_8,_0.1)] border-[rgba(234,_179,_8,_0.2)] text-[#EAB308]":
+          challenge.status === "INREVIEW",
+      })}
+    >
+      <div className={clsx("w-3 h-3 rounded-full",{
+        "bg-[rgba(234,_179,_8,_0.1)] border-[rgba(234,_179,_8,_0.2)]":challenge.status === "INREVIEW",
+        "bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)]":challenge.status === "DRAFT"
+
+      })}>
+
+      </div>
+      {challenge.status === "DRAFT"
+        ? "In Draft"
+        : challenge.status === "INREVIEW"
+        ? "In Review"
+        : challenge.status}
+    </button>
+  );
+}
+
 export function Dashboard() {
   let { data: challenges, isLoading } = useFetchChallenges();
   useLoadingWhen(isLoading);
@@ -131,15 +157,8 @@ export function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div>
-                  <button
-                    className={clsx("btn", {
-                      "bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)] text-grey-500":
-                        challenge.status === "DRAFT",
-                    })}
-                  >
-                    {challenge.status}
-                  </button>
+                <div className="flex items-center">
+                  <ChallengeStatusButton challenge={challenge} />
                 </div>
               </Link>
             );

@@ -6,8 +6,7 @@ import { useFetchChallengeById } from "@/services/challenge.query";
 import { formatYYYYMMMDD } from "@/utils/date";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import { Timeline } from "../timeline";
 import { EditAwards } from "./edit/awards";
@@ -202,7 +201,7 @@ export default function Page({ params }: any) {
                           <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
                             {awardAssort.awards.map((award, i) => {
                               return (
-                                <>
+                                <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
                                     <p className="body-3 ">{award.awardName}</p>
                                     <div className="flex flex-row justify-between">
@@ -215,7 +214,7 @@ export default function Page({ params }: any) {
                                     </div>
                                   </div>
                                   <hr className="border-none bg-white/20 h-[0.5px] w-full" />
-                                </>
+                                </Fragment>
                               );
                             })}
                           </div>
