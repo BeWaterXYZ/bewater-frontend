@@ -28,6 +28,7 @@ export function ResultCard({
           <Image
             src={team.project.mediaURLs[0] ?? unsplash('project')}
             alt="github"
+            className="object-cover"
             fill
           />
         </div>
