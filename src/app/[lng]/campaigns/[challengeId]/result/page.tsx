@@ -5,61 +5,37 @@ const winners = [
   {
     track: 'GameFi',
     icon: '🎮',
-    teams: [
-      '646db5d1cb0a91f0eb425474',
-      '6455ab6179c1ffd9a29f9374',
-      '645a55cc4b5a8bfcd7bf9029',
-    ],
+    teams: ['63', '5', '22'],
     scores: [undefined, undefined, undefined],
   },
   {
     track: 'DeFi',
     icon: '🌐',
-    teams: [
-      '6455007579c1ffd9a29f9339',
-      '64679790cb0a91f0eb42528d',
-      '64671f0dcb0a91f0eb425208 ',
-    ],
+    teams: ['1', '54', '51'],
     scores: [undefined, undefined, undefined],
   },
   {
     track: 'NFT',
     icon: '🎨',
-    teams: [
-      '64550bee79c1ffd9a29f934a',
-      '645b0bc74b5a8bfcd7bf906e',
-      '6461a5631a7b44c927a1a0b8',
-    ],
+    teams: ['2', '27', '37'],
     scores: [undefined, undefined, undefined],
   },
   {
     track: 'Web3 Security & Infra',
     icon: '🔐',
-    teams: [
-      '6468a689cb0a91f0eb425318',
-      '6455d86179c1ffd9a29f93c3',
-      '645862b7a994c9b0176a8284',
-    ],
+    teams: ['55', '7', '19'],
     scores: [undefined, undefined, undefined],
   },
   {
     track: 'ZK',
     icon: '0⃣️',
-    teams: [
-      '64663df4cb0a91f0eb425114',
-      '64664619cb0a91f0eb42511f',
-      '64662bf6cb0a91f0eb4250fa',
-    ],
+    teams: ['46', '47', '44'],
     scores: [undefined, undefined, undefined],
   },
   {
     track: 'DAO Tool',
     icon: '🛠',
-    teams: [
-      '645a8f9e4b5a8bfcd7bf903a',
-      '646b75c2cb0a91f0eb425399',
-      '6457a29ca994c9b0176a824a',
-    ],
+    teams: ['23', '57', '16'],
     scores: [undefined, undefined, undefined],
   },
 ];
