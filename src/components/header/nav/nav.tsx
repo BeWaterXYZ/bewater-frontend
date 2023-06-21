@@ -10,7 +10,6 @@ type NavItemProps = {
   item: MenuItemType;
   underline?: boolean;
   className?: string;
-  lng: string;
 };
 
 export function NavItem({ item, underline, className }: NavItemProps) {
