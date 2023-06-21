@@ -16,6 +16,7 @@ import { Sponsors2 } from './sponsors2';
 import { Sponsors3 } from './sponsors3';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
+import { useTranslation } from '@/app/i18n';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -29,12 +30,47 @@ export default async function ChallengeIntro({ params }: any) {
   console.log(`challengeId ${challengeId}`, challenge);
 
   const { lng } = segmentSchema.lng.parse(params);
-
+  const { t } = await useTranslation(lng);
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
+
+  const judges = challenge.judges;
+
+  if (challenge.id === '2') {
+    if (lng === 'en') {
+      challenge.title = "A Midsummer CryptoArt's Dream";
+      challenge.description =
+        "A Midsummer CryptoArt's Dream: Showcase Your Creativity, Explore the Infinite Possibilities of Cryptographic Art!\nA Midsummer CryptoArt's Dream is a collaborative event organized by DeBox and NonceGeekDAO, hosted on BeWater. It aims to explore the infinite possibilities of cryptographic art. We invite all artists, designers, programmers, and creators to join us in creating a brilliant summer dedicated to cryptographic art!";
+      challenge.requirements =
+        '1. Stickers: Please submit preview images, sample packs, and animated gifs. Share the samples using a cloud storage service.\n2. ProgrammingGC: Please submit your artwork in the form of H5, and you can use Codepen to showcase your artwork.\n3. Other Artworks: Please submit preview images and sample packs.';
+      challenge.reviewDimension =
+        '1. The adjudicators will score participants\' artworks based on four dimensions: concept and idea, technical expression, stylistic highlights, and overall quality. The judges will provide feedback and reasoning for their evaluations.\n2. Additionally, an "Audience Choice" award will be established, which will be determined by votes from DeBox users.';
+      challenge.location = 'Online Event';
+      for (const it of judges) {
+        if (it.name.includes('李达潮')) {
+          it.name = 'Lee DaTie';
+          it.organization = 'Trainee of William G.';
+          it.title = 'Co-founder of M10b HK.';
+          continue;
+        }
+        if (it.name.includes('宋婷')) {
+          it.name = 'Song Ting';
+          it.organization = 'AI & Blockchain Artist';
+          it.title = "China's Foremost Cryptographic Artist";
+          continue;
+        }
+        if (it.name.includes('QIAO_MUZI')) {
+          it.organization = 'Web3 Artistic Leader';
+          it.title = 'Entrepreneur in the Creative Industry';
+          continue;
+        }
+      }
+    }
+  }
+
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
       {challenge.id !== '3' ? (
-        <Timeline milestones={challenge.milestones} />
+        <Timeline milestones={challenge.milestones} lng={lng} />
       ) : null}
       <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
         <div
@@ -43,7 +79,7 @@ export default async function ChallengeIntro({ params }: any) {
           }`}
         >
           <div className="heading-5 md:heading-3 whitespace-nowrap py-4 ">
-            活动简介
+            {t('campaign.t5')}
           </div>
           <div className="body-3 md:body-2 text-white">
             {challenge.description.split('\n').map((s) => (
@@ -86,7 +122,7 @@ export default async function ChallengeIntro({ params }: any) {
                     />
                   </g>
                 </svg>
-                加入 Telegram 华语交流群
+                {t('campaign.t6')}
               </div>
             </Link>
           ) : (
@@ -98,7 +134,7 @@ export default async function ChallengeIntro({ params }: any) {
             >
               <div className="flex flex-row gap-4 items-center">
                 <TwitterLogoIcon className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out" />
-                关注官方 Twitter
+                {t('campaign.t7')}
               </div>
             </Link>
           )}
@@ -106,17 +142,17 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
       <div className="">
         {challenge.id === '1' ? <PrizeSection1 /> : null}
-        {challenge.id === '2' ? <PrizeSection2 /> : null}
+        {challenge.id === '2' ? <PrizeSection2 t={t} /> : null}
         {challenge.id === '3' ? <ScheduleSection /> : null}
       </div>
       {challenge.id !== '3' ? (
         <>
           <div className="mt-16">
             <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-              大赛评审团
+              {t('campaign.t8')}
             </h3>
             <div className="flex flex-row flex-wrap gap-6 justify-center">
-              {challenge.judges
+              {judges
                 .sort((a, b) => a.order - b.order)
                 .map((judge) => {
                   return (
@@ -146,14 +182,14 @@ export default async function ChallengeIntro({ params }: any) {
                   Soon
                 </div>
                 <p className="body-3 mt-6 w-full text-grey-400">
-                  更多评委即将揭晓...
+                  {t('campaign.t9')}
                 </p>
               </div>
             </div>
           </div>
           <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="heading-5 font-bold mb-8">参赛要求</h3>
+              <h3 className="heading-5 font-bold mb-8">{t('campaign.t10')}</h3>
               <ul className="list-decimal">
                 {challenge.requirements.split('\n').map((r) => (
                   <li
@@ -166,7 +202,7 @@ export default async function ChallengeIntro({ params }: any) {
               </ul>
             </div>
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="heading-5 font-bold mb-8">评审维度</h3>
+              <h3 className="heading-5 font-bold mb-8">{t('campaign.t11')}</h3>
               <ul className="list-decimal">
                 {challenge.reviewDimension.split('\n').map((r) => (
                   <li
@@ -183,7 +219,7 @@ export default async function ChallengeIntro({ params }: any) {
       ) : null}
 
       {challenge.id === '1' ? <Sponsors /> : null}
-      {challenge.id === '2' ? <Sponsors2 /> : null}
+      {challenge.id === '2' ? <Sponsors2 t={t} /> : null}
       {challenge.id === '3' ? <Sponsors3 /> : null}
 
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
@@ -191,16 +227,16 @@ export default async function ChallengeIntro({ params }: any) {
           <Balancer ratio={0.9}>
             {challenge.id !== '3'
               ? isTeamingEnabled
-                ? '对赛事感兴趣？快组建你的梦幻团队加入我们'
-                : '现在加入 BeWater，为创新和改变贡献出自己的力量'
-              : '现在报名中国首届 Starknet Workshop，为创新和改变贡献出自己的力量'}
+                ? `${t('campaign.t12')}`
+                : `${t('campaign.t13')}`
+              : `${t('campaign.t14')}`}
           </Balancer>
         </p>
         <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
           <Balancer>
             {challenge.id !== '3'
-              ? '已有近 25000 名预注册的开发者和设计师领取了 BeWater 早鸟徽章'
-              : 'Workshop 现场名额有限，先到先得'}
+              ? `${t('campaign.t15')}`
+              : `${t('campaign.t16')}`}
           </Balancer>
         </p>
         {challenge.id !== '3' ? (
@@ -211,7 +247,7 @@ export default async function ChallengeIntro({ params }: any) {
                 href={`/${lng}/campaigns/${challengeId}/teams`}
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
-                前往队伍页面
+                {`${t('campaign.t17')}`}
               </Link>
             </div>
           ) : (
@@ -225,7 +261,7 @@ export default async function ChallengeIntro({ params }: any) {
               href="https://forms.gle/qZ5KbnCufSNVeVkv8"
               className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
             >
-              立即报名
+              {`${t('campaign.t4')}`}
             </Link>
           </div>
         )}

@@ -1,15 +1,17 @@
 import { Challenge } from '@/services/types';
-import { formatYYYYMMMDD } from '@/utils/date';
+import { formatYYYYMMMDD, formatMMMDDYYYY } from '@/utils/date';
 import { isMileStoneEnabled } from './utils';
 import Link from 'next/link';
 import Image from 'next/image';
 
 interface ChallengeHeroProps {
   challenge: Challenge;
+  lng: string;
+  t: any;
 }
-export function ChallengeHero({ challenge }: ChallengeHeroProps) {
-  const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
+export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
+  const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
@@ -45,9 +47,15 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
         {challenge.id !== '3' ? challenge.location : 'SHANGHAI'} |{' '}
-        {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
-          challenge.endTime,
-        )}`}
+        {`${
+          lng === 'zh'
+            ? formatYYYYMMMDD(challenge.startTime)
+            : formatMMMDDYYYY(challenge.startTime)
+        } - ${
+          lng === 'zh'
+            ? formatYYYYMMMDD(challenge.endTime)
+            : formatMMMDDYYYY(challenge.endTime)
+        }`}
       </h1>
 
       {challenge.id !== '3' ? (
@@ -55,20 +63,20 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
           <div className="mt-6 md:mt-12">
             <Link
               prefetch={false}
-              href={`/en/campaigns/${challenge.id}/teams`}
+              href={`/${lng}/campaigns/${challenge.id}/teams`}
               className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
             >
-              {'加入 / 创建队伍'}
+              {t('campaign.t1')}
             </Link>
           </div>
         ) : (
           <div className="mt-6 md:mt-12">
             {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
             <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
-              {`队伍信息及项目提交将于 ${formatYYYYMMMDD(
+              {`${t('campaign.t2')} ${formatYYYYMMMDD(
                 challenge.milestones.find((ms) => ms.stageName === 'Teaming')
                   ?.dueDate!,
-              )} 开放`}
+              )} ${t('campaign.t3')}`}
             </div>
           </div>
         )
@@ -80,7 +88,7 @@ export function ChallengeHero({ challenge }: ChallengeHeroProps) {
             href="https://forms.gle/qZ5KbnCufSNVeVkv8"
             className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
           >
-            {'立即报名'}
+            {`${t('campaign.t4')}`}
           </Link>
         </div>
       )}

@@ -15,10 +15,20 @@ export default async function Layout({
 }) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
+  const { lng } = segmentSchema.lng.parse(params);
+  const { t } = await useTranslation(lng);
+
+  if (challenge.id === '2') {
+    if (lng === 'en') {
+      challenge.title = "A Midsummer CryptoArt's Dream";
+      challenge.location = 'Online Event';
+    }
+  }
+
   return (
     <div>
-      <ChallengeHero challenge={challenge} />
-      <ChallengeNav challenge={challenge} />
+      <ChallengeHero challenge={challenge} lng={lng} t={t} />
+      <ChallengeNav challenge={challenge} lng={lng} />
       <div>{children}</div>
     </div>
   );

@@ -3,6 +3,7 @@ export type MenuItemType = {
   path?: string;
   active?: boolean;
 };
+
 export const nav: MenuItemType[] = [
   {
     label: 'Campaigns',

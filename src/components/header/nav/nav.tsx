@@ -10,6 +10,7 @@ type NavItemProps = {
   item: MenuItemType;
   underline?: boolean;
   className?: string;
+  lng: string;
 };
 
 export function NavItem({ item, underline, className }: NavItemProps) {
@@ -53,7 +54,6 @@ export const NavImpl = ({ items }: NavImplProps) => {
 
 export const Nav = () => {
   const segments = useSelectedLayoutSegments();
-
   let items = nav.map((n) => ({
     ...n,
     active: segments.some((s) => n.path?.includes(s)),

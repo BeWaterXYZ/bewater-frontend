@@ -8,7 +8,7 @@ import { useFetchUser } from '@/services/user.query';
 import { useAuthStore } from '@/stores/auth';
 import { useEffect } from 'react';
 
-export const UserMenu = () => {
+export const UserMenu = ({ lng }: { lng: string }) => {
   const clearStore = useAuthStore((s) => s.clear);
   const [userId, walletAddress, stateUser] = useAuthStore((s) => [
     s.user?.externalId,
@@ -17,9 +17,10 @@ export const UserMenu = () => {
   ]);
 
   const { data, isLoading } = useFetchUser(userId);
+
   const logout = () => {
     clearStore();
-    window.location.href = '/';
+    window.location.href = `/${lng}`;
   };
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const UserMenu = () => {
         <NavigationMenu.Item>
           <NavigationMenu.Trigger className="">
             {isLoading ? (
-              <Link prefetch={false} href="/en/onboarding">
+              <Link prefetch={false} href={`/${lng}/onboarding`}>
                 <Avatar
                   className="w-8 h-8 hover:opacity-75"
                   src={!isLoading ? user?.avatarURI : ''}
@@ -76,7 +77,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href={`/en/user/${user.externalId}`}
+                    href={`/${lng}/user/${user.externalId}`}
                     className="body-2"
                   >
                     Your Profile
@@ -85,7 +86,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href="/en/settings/basic"
+                    href={`/${lng}/settings/basic`}
                     className="body-2"
                   >
                     Account Settings
@@ -94,7 +95,7 @@ export const UserMenu = () => {
                 <li className="border-t p-4 py-2 border-midnight hover:bg-midnight transition-colors ease-out cursor-pointer">
                   <Link
                     prefetch={false}
-                    href="/en/notifications/requests/received"
+                    href={`/${lng}/notifications/requests/received`}
                     className="body-2"
                   >
                     Notifications

@@ -44,16 +44,16 @@ const sponsors_tier3 = [
   '/sponsors/seedao.png',
 ];
 
-export function Sponsors2() {
+export function Sponsors2({ t }: { t: Function }) {
   return (
     <div>
       <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-        赛事合作伙伴
+        {t('cryptoArt.t1')}
       </h3>
       <div className="flex flex-col gap-12 items-center">
         <div className="flex flex-col gap-7 items-center">
           <p className="body-1 md:heading-6 font-bold text-white/30 md:text-white/30">
-            联合出品方
+            {t('cryptoArt.t2')}
           </p>
           <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
             {sponsors_tier1.map((src) => (
@@ -63,7 +63,7 @@ export function Sponsors2() {
         </div>
         <div className="flex flex-col gap-7 items-center">
           <p className="body-1 md:heading-6 font-bold text-white/30 md:text-white/30">
-            战略合作方
+            {t('cryptoArt.t3')}
           </p>
           <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
             {sponsors_tier2.map((src) => (
@@ -73,7 +73,7 @@ export function Sponsors2() {
         </div>
         <div className="flex flex-col gap-7 items-center">
           <p className="body-1 md:heading-6 font-bold text-white/30 md:text-white/30">
-            {'战略媒体 & 社区'}
+            {t('cryptoArt.t4')}
           </p>
           <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
             {sponsors_tier3.map((src) => (

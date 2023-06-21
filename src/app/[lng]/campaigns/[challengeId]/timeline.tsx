@@ -2,12 +2,20 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 
-const labelMaps: Record<Milestone['stageName'], string> = {
+const labelMapsZh: Record<Milestone['stageName'], string> = {
   Preparation: '赛事信息公布',
   Teaming: '创建团队信息及提交项目',
   'Project Submission': '项目初筛',
   Review: '线上评审',
   Result: '公布结果',
+};
+
+const labelMapsEn: Record<Milestone['stageName'], string> = {
+  Preparation: 'Event revealed',
+  Teaming: 'Submission',
+  'Project Submission': 'Initial screening',
+  Review: 'Online judging',
+  Result: 'Announcement',
 };
 
 function prepareData(milestones: Milestone[]) {
@@ -42,8 +50,18 @@ function prepareData(milestones: Milestone[]) {
 const glowing =
   "rounded-full bg-day  shadow-[0_0_0_1px_theme('colors.day')_inset,_0_0_0_3px_white_inset]";
 
-export function Timeline({ milestones }: { milestones: Milestone[] }) {
+export function Timeline({
+  milestones,
+  lng,
+}: {
+  milestones: Milestone[];
+  lng: string;
+}) {
   let data = prepareData(milestones);
+  let labelMaps = labelMapsZh;
+  if (lng === 'en') {
+    labelMaps = labelMapsEn;
+  }
   return (
     <>
       <div className="hidden md:flex body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 mt-[100px] ">
