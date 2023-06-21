@@ -32,7 +32,13 @@ const links = [
   },
 ] as const;
 
-export function ChallengeNav({ challenge }: { challenge: Challenge }) {
+export function ChallengeNav({
+  challenge,
+  lng,
+}: {
+  challenge: Challenge;
+  lng: string;
+}) {
   let challengeId = challenge.id;
   let segment = useSelectedLayoutSegment();
 
@@ -45,7 +51,7 @@ export function ChallengeNav({ challenge }: { challenge: Challenge }) {
           <Link
             prefetch={false}
             key={link.path}
-            href={`/en/campaigns/${challengeId}${link.path}`}
+            href={`/${lng}/campaigns/${challengeId}${link.path}`}
             className={clsx('py-3 mx-3 text-center uppercase', {
               'text-day border-b-2 border-day [text-shadow:0_0_6px_theme(colors.day)]':
                 isAcitve,

@@ -53,7 +53,6 @@ export const NavImpl = ({ items }: NavImplProps) => {
 
 export const Nav = () => {
   const segments = useSelectedLayoutSegments();
-
   let items = nav.map((n) => ({
     ...n,
     active: segments.some((s) => n.path?.includes(s)),
