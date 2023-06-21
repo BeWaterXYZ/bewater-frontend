@@ -19,6 +19,8 @@ import { EditSponsors } from "./edit/sponsors";
 import { mock } from "./mock";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { useLoadingStoreAction } from "@/components/loading/store";
+import HoverCard from "@/components/hover-card";
+import { Judge } from "@/services/types";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -172,6 +174,24 @@ export default function Page({ params }: any) {
                     Twitter Link
                   </Link>
                 ) : null}
+                {challenge.wechatURL ? (
+                  <HoverCard
+                    card={
+                      <div>
+                        <Image
+                          src={challenge.wechatURL}
+                          height={256}
+                          width={256}
+                          alt="wechat"
+                        />
+                      </div>
+                    }
+                  >
+                    <button className="btn btn-primary-invert ">
+                      WeChat QR code
+                    </button>
+                  </HoverCard>
+                ) : null}
               </div>
             </div>
           </div>
@@ -266,7 +286,8 @@ export default function Page({ params }: any) {
                       name: "Judge Name",
                       title: "Judge Title",
                       avatarURI: "/assets/judge-avatar.png",
-                    },
+                      description: "this is description",
+                    } as Judge,
                   ]
               )
                 // .sort((a, b) => a.order - b.order)
@@ -274,13 +295,19 @@ export default function Page({ params }: any) {
                   return (
                     <div key={judge.id!} className="w-[180px] mb-2 ">
                       <Aspect ratio={1 / 1} className="">
-                        <Image
-                          fill
-                          src={judge.avatarURI}
-                          className="object-cover w-full h-full bg-white/5"
-                          alt={judge.name}
-                        />
+                        <HoverCard
+                          side="right"
+                          card={<div className="w-24">{judge.description}</div>}
+                        >
+                          <Image
+                            fill
+                            src={judge.avatarURI}
+                            className="object-cover w-full h-full bg-white/5"
+                            alt={judge.name}
+                          />
+                        </HoverCard>
                       </Aspect>
+
                       <p className="body-3 mt-4 mb-2">{judge.name}</p>
                       <p className="body-4 text-grey-400">{judge.title}</p>
                     </div>
