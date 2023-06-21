@@ -33,7 +33,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
           {...restProps}
         />
         <CalendarIcon
-          className="text-white/75 absolute right-2 top-2 pointer-events-none"
+          className="text-grey-500 absolute right-2 top-2 pointer-events-none"
           height={20}
           width={20}
         />

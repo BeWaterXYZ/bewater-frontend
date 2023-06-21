@@ -119,7 +119,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
         <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto">
-          <Dialog.Title className="text-[20px] py-4 mb-4 border-b  border-b-white/20">
+          <Dialog.Title className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
             Awards Information
           </Dialog.Title>
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
@@ -141,12 +141,12 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
                     errors={errors}
                   />
                   <button
-                    className="absolute right-0 top-0 text-grey-300 flex items-center text-[12px]"
+                    className="absolute right-0 top-0 text-grey-500 flex items-center text-[12px]"
                     onClick={() => {
                       remove(index);
                     }}
                   >
-                    <Cross2Icon className="mr-1 text-grey-300" />
+                    <Cross2Icon className="mr-1 text-grey-500" />
                     Remove 
                   </button>
                 </div>
@@ -268,7 +268,7 @@ function Awards({
               }
             />
             <button
-              className="absolute m-2 left-full top-1"
+              className="absolute m-2 left-full top-1 text-grey-500"
               onClick={() => {
                 remove(i);
               }}

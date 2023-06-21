@@ -66,7 +66,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
         <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto">
-          <Dialog.Title className="text-[20px] py-4 mb-4 border-b  border-b-white/20">
+          <Dialog.Title className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
             Milestone Information
           </Dialog.Title>
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
@@ -100,7 +100,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                     )}
                     {index >= defaultMileStones.length ? (
                       <button
-                        className="absolute m-2 left-full top-1"
+                        className="absolute m-2 left-full top-1 text-grey-500"
                         onClick={() => {
                           remove(index);
                         }}

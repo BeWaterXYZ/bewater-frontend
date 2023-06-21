@@ -61,7 +61,7 @@ export default function Page({ params }: any) {
           <div className="h-12 w-12 m-8 relative bg-[#10B981] flex items-center justify-center rounded-full">
             <CheckIcon className="w-8 h-8 text-night" />
           </div>
-          <p className="text-[14px]">Publish Request Submitted!!</p>
+          <p className="text-xl leading-8 text-white">Publish Request Submitted!</p>
           <p className="text-[14px] text-grey-500 mb-4">
             You’ll get notification after review. Review usually takes 1-2
             business days.
@@ -73,9 +73,9 @@ export default function Page({ params }: any) {
       ) : null}
       <div className="bg-night">
         {/* top bar */}
-        <div className="container h-[72px] flex flex-row justify-between items-center">
-          <Link href="/">{"<- Back"}</Link>
-          <div className="text-[14px]">
+        <div className="px-8 sticky top-0 bg-night z-10 h-[72px] flex flex-row justify-between items-center">
+          <Link href="/" className="text-sm text-white">{"<- Back"}</Link>
+          <div className="text-sm text-white">
             {" Now You're Editing"}{" "}
             <span className="text-day">{challenge.title}</span>
           </div>
@@ -86,40 +86,41 @@ export default function Page({ params }: any) {
         {/* banner section */}
         <div
           id="section-banner"
-          className={`relative h-[600px] overflow-hidden pb-12 md:pb-30 pt-[100px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
+          className={`relative h-[560px] overflow-hidden text-center flex flex-col gap-5 justify-center bg-cover bg-center `}
           style={{
             backgroundImage: `url(${
               challenge.bannerUrl ?? "/assets/default-challenge-bg.png"
             })`,
           }}
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditBanner challenge={challenge} />
           </div>
           <Image
             src={challenge.hostIcon}
             width={120}
             height={24}
-            alt="bewater logo"
-            className="mx-auto mb-2 md:mb-3 w-[80px] md:w-30"
+            alt="host logo"
+            className="mx-auto h-8 md:h-10 object-contain"
           />
-
-          <h1 className="text-[48px] md:heading-2 pb-2 md:pb-3">
+          <div className="space-y-6">
+          <h1 className="text-xl leading-[30px] md:text-5xl font-black text-white">
             {challenge.title}
           </h1>
-          <h1 className="text-[24px] md:text-[24px] uppercase font-light">
+          <h1 className="text-[24px] md:text-2xl uppercase font-light text-white">
             {challenge.location} {challenge.city}|{" "}
             {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
               challenge.endTime
             )}`}
           </h1>
+          </div>
         </div>
         {/* timeline */}
         <div
           id="section-milestones"
-          className="relative py-16 border-b border-dashed border-white/30"
+          className="relative py-[100px] border-b border-dashed border-white/30"
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditMilestones challenge={challenge} />
           </div>
           <div className="container">
@@ -130,15 +131,15 @@ export default function Page({ params }: any) {
 
         <div
           id="section-intro"
-          className="relative py-16 border-b border-dashed border-white/30"
+          className="relative py-[100px] border-b border-dashed border-white/30"
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditIntro challenge={challenge} />
           </div>
           <div className="container">
             <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
               <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center w-full">
-                <div className="text-[32px] md:heading-3 whitespace-nowrap py-4">
+                <div className="text-[32px] md:heading-3 whitespace-nowrap py-4 text-white">
                   赛事简介
                 </div>
                 <div className="text-[18px] md:body-2 text-white">
@@ -201,7 +202,7 @@ export default function Page({ params }: any) {
           id="section-awards"
           className="relative py-16 border-b border-dashed border-white/30"
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditAwards challenge={challenge} />
           </div>
           <div className="container">
@@ -223,7 +224,7 @@ export default function Page({ params }: any) {
                               return (
                                 <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
-                                    <p className="body-3 ">{award.awardName}</p>
+                                    <p className="body-3 text-white">{award.awardName}</p>
                                     <div className="flex flex-row justify-between">
                                       <p className="body-3 text-white/60">
                                         ${award.amount}
@@ -270,11 +271,11 @@ export default function Page({ params }: any) {
           id="section-judges"
           className="relative py-16 border-b border-dashed border-white/30"
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditJudges challenge={challenge} />
           </div>
           <div className="container">
-            <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+            <h3 className="text-white heading-5 md:heading-3 font-bold mb-16 text-center">
               Judges
             </h3>
             <div className="flex flex-row flex-wrap gap-6 justify-center">
@@ -312,7 +313,7 @@ export default function Page({ params }: any) {
                         </HoverCard>
                       </Aspect>
 
-                      <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                      <p className="body-3 mt-4 mb-2 text-white">{judge.name}</p>
                       <p className="body-4 text-grey-400">{judge.title}</p>
                     </div>
                   );
@@ -325,13 +326,13 @@ export default function Page({ params }: any) {
           id="section-requirements"
           className="relative py-16 border-b border-dashed border-white/30"
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditRequirements challenge={challenge} />
           </div>
           <div className="container">
             <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-[24px] font-bold mb-8">Requirement</h3>
+                <h3 className="text-[24px] font-bold mb-8 text-white">Requirement</h3>
                 <ol className="list-decimal">
                   {challenge.requirements.split("\n").map((r, i) => (
                     <li
@@ -344,7 +345,7 @@ export default function Page({ params }: any) {
                 </ol>
               </div>
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-[24px] font-bold mb-8">Criteria</h3>
+                <h3 className="text-white text-[24px] font-bold mb-8">Criteria</h3>
                 <ol className="list-decimal">
                   {challenge.reviewDimension.split("\n").map((r, i) => (
                     <li
@@ -365,12 +366,12 @@ export default function Page({ params }: any) {
           id="section-sponsors"
           className="relative py-16 border-b border-dashed border-white/30"
         >
-          <div className="absolute top-4 right-4">
+          <div className="absolute top-8 right-8">
             <EditSponsors challenge={challenge} />
           </div>
           <div className="container">
             <div>
-              <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+              <h3 className="text-white heading-5 md:heading-3 font-bold mb-16 text-center">
                 Sponsors
               </h3>
               <div className="flex flex-col gap-12 items-center">

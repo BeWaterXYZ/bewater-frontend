@@ -104,12 +104,12 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
       className={clsx("btn rounded flex gap-2 border", {
         "bg-grey-500/10 border-grey-500/20 text-grey-500":
           challenge.status === "DRAFT",
-        "bg-[rgba(234,_179,_8,_0.1)] border-[rgba(234,_179,_8,_0.2)] text-[#EAB308]":
+        "bg-yellow-500/10 border-yellow-500/20 text-yellow-500":
           challenge.status === "INREVIEW",
       })}
     >
       <div className={clsx("w-3 h-3 rounded-full border-[0.5px]",{
-        "bg-[rgba(234,_179,_8,_0.1)] border-[rgba(234,_179,_8,_0.2)]":challenge.status === "INREVIEW",
+        "bg-yellow-500/30 border-yellow-600":challenge.status === "INREVIEW",
         "bg-grey-500/30 border-grey-600":challenge.status === "DRAFT"
 
       })}>

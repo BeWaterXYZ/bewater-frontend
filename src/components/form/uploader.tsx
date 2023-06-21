@@ -34,7 +34,7 @@ export function UploaderInput({
           <div className={clsx("block group relative pb-5")}>
             {label ? (
               <label
-                className="block text-[12px] py-1 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"
+                className="block text-[12px] mb-2 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"
                 htmlFor={id}
               >
                 {label}

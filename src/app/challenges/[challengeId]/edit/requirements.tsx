@@ -53,7 +53,7 @@ export function EditRequirements({ challenge }: { challenge: Challenge }) {
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
         <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto">
-          <Dialog.Title className="text-[20px] py-4 mb-4 border-b  border-b-white/20">
+          <Dialog.Title className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
             Requirements Information
           </Dialog.Title>
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">

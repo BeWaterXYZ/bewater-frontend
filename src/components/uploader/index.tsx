@@ -75,7 +75,7 @@ export function Uploader({
                 e.stopPropagation();
                 onRemove(url);
               }}
-              className=" cursor-pointer text-white/75 absolute top-[8px] right-[8px]"
+              className=" cursor-pointer text-grey-500 absolute top-[8px] right-[8px]"
               height={16}
               width={16}
             />
