@@ -26,10 +26,10 @@ export const Radio = React.forwardRef(function Radio_(
       control={control}
       render={({ field }) => {
         return (
-          <div className="block group relative pb-4">
+          <div className="block group relative pb-5">
             {label ? (
               <label
-                className="block text-[12px] py-1 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"
+                className="block text-xs mb-2 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"
                 htmlFor={id}
               >
                 {label}
@@ -45,7 +45,7 @@ export const Radio = React.forwardRef(function Radio_(
                 return (
                   <div
                     className={clsx(
-                      "flex-1 flex gap-2 items-center rounded-sm border border-white/10  p-4",
+                      "flex-1 flex gap-3 items-center rounded-sm border border-white/10 p-4 text-grey-300",
                       field.value === op.value
                         ? "bg-white/10"
                         : "bg-white/[0.02]"
@@ -53,11 +53,11 @@ export const Radio = React.forwardRef(function Radio_(
                     key={id + op.value}
                   >
                     <RadioGroup.Item
-                      className="bg-white h-6 min-w-[24px] w-6 rounded-full "
+                      className="bg-white h-5 min-w-[20px] w-5 rounded-full "
                       value={op.value}
                       id={id + op.value + "-item"}
                     >
-                      <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[12px] after:h-[12px] after:rounded-full after:bg-white" />
+                      <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
                     </RadioGroup.Item>
                     <label
                       className="text-[14px]"

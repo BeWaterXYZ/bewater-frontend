@@ -31,7 +31,7 @@ export function UploaderInput({
       control={control}
       render={({ field }) => {
         return (
-          <div className={clsx("block group relative pb-4")}>
+          <div className={clsx("block group relative pb-5")}>
             {label ? (
               <label
                 className="block text-[12px] py-1 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"

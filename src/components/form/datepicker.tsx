@@ -18,7 +18,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
     <div className={clsx("block group relative", className)}>
       {label ? (
         <label
-          className="block text-[12px] py-1 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"
+          className="block text-xs text-grey-500 font-bold mb-2 group-hover:text-day group-focus:text-day transition-colors"
           htmlFor={id}
         >
           {label}
@@ -40,7 +40,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
       </div>
 
       <div
-        className={clsx("absolute whitespace-nowrap text-[12px]  text-danger", {
+        className={clsx("absolute whitespace-nowrap text-xs  text-danger", {
           invisible: !error,
         })}
       >

@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { Challenge } from "@/services/types";
+import Link from "next/link";
 
 const init: Partial<Challenge> = {
   requirements: "",
@@ -91,14 +92,17 @@ export default function Page() {
 
   return (
     <>
-      <div className="container my-4 pt-20 flex flex-1 ">
-        <div className="w-full">
-          <div className="text-[20px] py-4 mb-4 border-b  border-b-white/20">
+      <div className="container my-4 pt-20 flex flex-1 justify-center">
+        <div className="w-full max-w-[800px]">
+        <Link href="/" className="text-grey-500">
+          {"< Back"}
+        </Link>
+          <div className="text-xl leading-8 text-white pb-4 mt-8 mb-8 border-b  border-b-white/20">
             Edit Basic Campaign Information
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <label className="block text-[12px] py-1 text-grey-500 font-bold  ">
+            <label className="block text-xs text-grey-500 font-bold mb-2">
               Campaign Type
             </label>
             <Radio
@@ -109,7 +113,7 @@ export default function Page() {
                 {
                   value: CAMPAIGN_TYPE.HACKATHON,
                   label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2">
+                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
                         src="/assets/hackathon.png"
                         width={64}
@@ -123,12 +127,12 @@ export default function Page() {
                 {
                   value: CAMPAIGN_TYPE.DEMODAY,
                   label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2">
+                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
                         src="/assets/demoday.png"
                         width={64}
                         height={64}
-                        alt="hackathon"
+                        alt="demoday"
                       />
                       Demo day
                     </div>
@@ -137,12 +141,12 @@ export default function Page() {
                 {
                   value: CAMPAIGN_TYPE.WORKSHOP,
                   label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2">
+                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
                         src="/assets/workshop.png"
                         width={64}
                         height={64}
-                        alt="hackathon"
+                        alt="workshop"
                       />
                       Workshop
                     </div>
@@ -166,6 +170,8 @@ export default function Page() {
               rows={5}
               {...register("description")}
               error={errors["description"]}
+              placeholder="请在此编写关于本次赛事的简短介绍，赛事形式和其他相关信息。
+              你可以简述赛事的起源和发展历史，重点突出赛事的特色及意义。赛事简介应当简明扼要且贴近事实，让参赛选手、观众和媒体可以快速了解本次赛事的有关情况，为赛事的顺利举办创造良好的舆论氛围。"
             />
             <Radio
               label="Campaign mode"
@@ -201,7 +207,7 @@ export default function Page() {
 
             <div className="py-8 flex justify-end">
               <button className="btn btn-primary" type="submit">
-                Create Campaign
+                Create campaign
               </button>
             </div>
           </form>
