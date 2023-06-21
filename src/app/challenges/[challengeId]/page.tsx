@@ -297,7 +297,11 @@ export default function Page({ params }: any) {
                       <Aspect ratio={1 / 1} className="">
                         <HoverCard
                           side="right"
-                          card={<div className="w-24">{judge.description}</div>}
+                          card={
+                            <div className="min-w-[100px] max-w-[200px]">
+                              {judge.description}
+                            </div>
+                          }
                         >
                           <Image
                             fill
