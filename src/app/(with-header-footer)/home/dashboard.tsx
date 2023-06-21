@@ -20,7 +20,7 @@ function TodoLink({
   return (
     <Link
       href={link}
-      className="my-2 w-full flex justify-between items-center bg-[#0B0C24] rounded-md border border-[#474ABD] p-4"
+      className="mt-2 w-full text-sm text-white flex justify-between items-center bg-[#0B0C24] rounded-md border border-[#474ABD] p-4"
     >
       <div>{copy}</div>
       <div>
@@ -91,8 +91,8 @@ function Todo({ challenge }: { challenge: Challenge }) {
   }
 
   return (
-    <div className="mb-8">
-      <p className="text-[16px] text-grey-600 my-4">{challenge.title}</p>
+    <div className="">
+      <p className="text-base font-bold text-grey-600 mb-4">{challenge.title}</p>
       {todos}
     </div>
   );
@@ -101,16 +101,16 @@ function Todo({ challenge }: { challenge: Challenge }) {
 function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
   return (
     <button
-      className={clsx("btn rounded flex gap-2", {
-        "bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)] text-grey-500":
+      className={clsx("btn rounded flex gap-2 border", {
+        "bg-grey-500/10 border-grey-500/20 text-grey-500":
           challenge.status === "DRAFT",
         "bg-[rgba(234,_179,_8,_0.1)] border-[rgba(234,_179,_8,_0.2)] text-[#EAB308]":
           challenge.status === "INREVIEW",
       })}
     >
-      <div className={clsx("w-3 h-3 rounded-full",{
+      <div className={clsx("w-3 h-3 rounded-full border-[0.5px]",{
         "bg-[rgba(234,_179,_8,_0.1)] border-[rgba(234,_179,_8,_0.2)]":challenge.status === "INREVIEW",
-        "bg-[rgba(100,_116,_139,_0.1)] border-[rgba(100,_116,_139,_0.2)]":challenge.status === "DRAFT"
+        "bg-grey-500/30 border-grey-600":challenge.status === "DRAFT"
 
       })}>
 
@@ -137,22 +137,23 @@ export function Dashboard() {
             return (
               <Link
                 href={`/challenges/${challenge.id}`}
-                className="flex  border-b border-grey-800 p-4 justify-between"
+                className="flex border-b border-grey-800 py-8 px-4 justify-between"
                 key={challenge.id}
               >
-                <div className="flex gap-4">
-                  <div className="relative rounded-full overflow-hidden w-[60px] h-[60px]">
+                <div className="flex gap-4 items-center">
                     <Image
                       src={challenge.bannerUrl ?? unsplash("host")}
-                      fill
+                      // fill
                       alt={challenge.title}
+                      width={60}
+                      height={60}
+                      className="rounded-full border border-grey-800 w-[60px] h-[60px]"
                     />
-                  </div>
-                  <div>
-                    <p className="text-[16px]">{challenge.title}</p>
-                    <p className="text-[14px] text-grey-500">
+                  <div className="space-y-2">
+                    <p className="text-base font-bold text-white">{challenge.title}</p>
+                    <p className="text-sm text-grey-500">
                       {/* fixme */}
-                      {challenge.startTime.substring(0, 10)} {"->"}
+                      {challenge.startTime.substring(0, 10)} {"-> "}
                       {challenge.endTime.substring(0, 10)}
                     </p>
                   </div>
@@ -166,13 +167,13 @@ export function Dashboard() {
         </div>
       </div>
       <div>
-        <div className="w-full flex justify-end h-16">
+        <div className="w-full flex justify-end mb-14">
           <Link href="/challenges/new" className="btn btn-primary">
             + Draft a new campaign
           </Link>
         </div>
-        <div>
-          <p className="text-[24px] my-4">CHECKLIST</p>
+        <div className="space-y-8">
+          <p className="text-2xl text-white">CHECKLIST</p>
 
           {challenges.map((c) => {
             return <Todo key={c.id} challenge={c}></Todo>;
