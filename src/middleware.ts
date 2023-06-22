@@ -1,18 +1,13 @@
 import { NextResponse } from 'next/server';
+import { authMiddleware } from '@clerk/nextjs';
 import { fallbackLng, languages } from './app/i18n/settings';
 import acceptLanguage from 'accept-language';
 
 acceptLanguage.languages(languages);
 
-export const config = {
-  matcher: [
-    '/((?!api|_next/static|_next/image|assets|icons|logo|sponsors|challenge/og|challenge/assets|favicon.ico|sw.js).*)',
-  ],
-};
-
 const cookieName = 'i18next';
 
-export function middleware(req: any) {
+function i18n(req: any) {
   let lng = null;
   if (req.cookies.has(cookieName)) {
     // 临时方案，todo 多语言支持
@@ -26,10 +21,15 @@ export function middleware(req: any) {
   }
 
   // Redirect if lng in path is not supported
-  if (!languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`))) {
-    return NextResponse.redirect(
-      new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
-    );
+  if (
+    !req.nextUrl.pathname.startsWith('/sign-in') &&
+    !req.nextUrl.pathname.startsWith('/sign-up')
+  ) {
+    if (!languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`))) {
+      return NextResponse.redirect(
+        new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
+      );
+    }
   }
 
   if (req.nextUrl.pathname.startsWith('/en/challenges')) {
@@ -56,3 +56,25 @@ export function middleware(req: any) {
 
   return NextResponse.next();
 }
+
+export default authMiddleware({
+  beforeAuth: (req) => {
+    return i18n(req);
+  },
+
+  publicRoutes: [
+    '/',
+    '/:locale',
+    '/:locale/sign-in(.*)',
+    '/:locale/sign-up(.*)',
+    '/:locale/challenges(.*)',
+    '/:locale/campaigns(.*)',
+    '/:locale/user(.*)',
+  ],
+});
+
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|assets|icons|logo|sponsors|challenge/og|challenge/assets|favicon.ico|sw.js).*)',
+  ],
+};

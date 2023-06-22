@@ -16,6 +16,7 @@
     "yarn": ">=1.22.0"
   },
   "dependencies": {
+    "@clerk/nextjs": "^4.21.8",
     "@hookform/resolvers": "^3.0.1",
     "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-aspect-ratio": "^1.0.2",
