@@ -11,8 +11,8 @@ import axios, {
  *  interceptors
  */
 
-const requestInterceptor = (config: InternalAxiosRequestConfig) => {
-  const accessToken = useAuthStore.getState().token;
+const requestInterceptor = async(config: InternalAxiosRequestConfig) => {
+  const accessToken = await (<any>window).Clerk.session.getToken(); // useAuthStore.getState().token;
   if (!!accessToken && !!config.headers) {
     config.headers['authorization'] = `Bearer ${accessToken}`;
   }
