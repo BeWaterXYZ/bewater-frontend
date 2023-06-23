@@ -5,6 +5,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useNavigator } from '@/hooks/useNavigator';
 import { useDialogStore } from '@/components/dialog/store';
 import Image from 'next/image';
+import { useClerk } from '@clerk/nextjs';
 
 export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
   const isAuthed = useAuthStore((s) => s.isAuthed);
@@ -14,9 +15,10 @@ export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
   const isMyTeam = team.teamMembers.some(
     (m) => m.userProfile.externalId === user?.externalId,
   );
+  const clerk = useClerk()
   const requestJoin = () => {
-    if (!isAuthed()) {
-      navigator.goToConnectWallet();
+    if (!clerk.user) {
+      clerk.redirectToSignIn()
       return;
     }
     showDialog('team_join', team);

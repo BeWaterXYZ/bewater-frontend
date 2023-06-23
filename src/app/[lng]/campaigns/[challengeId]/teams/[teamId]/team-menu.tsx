@@ -7,6 +7,7 @@ import { useFetchChallengeById } from '@/services/challenge.query';
 import { teamRemoveMember } from '@/services/team';
 import { Team } from '@/services/types';
 import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 
 interface TeamMenuProps {
   team: Team;
@@ -28,9 +29,10 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
     .filter((m) => m.isLeader)
     .some((m) => m.userProfile.externalId === user?.externalId);
 
+  const clerk = useClerk();
   const requestJoin = () => {
-    if (!isAuthed()) {
-      navigator.goToConnectWallet();
+    if (!clerk.user) {
+      clerk.redirectToSignIn();
       return;
     }
     showDialog('team_join', team);
