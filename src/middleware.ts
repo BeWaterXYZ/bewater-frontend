@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server';
-import { fallbackLng, languages } from './app/i18n/settings';
+import { NextResponse, NextRequest } from 'next/server';
 import acceptLanguage from 'accept-language';
+import { fallbackLng, languages } from './app/i18n/settings';
 
 acceptLanguage.languages(languages);
 
@@ -12,11 +12,10 @@ export const config = {
 
 const cookieName = 'i18next';
 
-export function middleware(req: any) {
+export function middleware(req: NextRequest) {
   let lng = null;
   if (req.cookies.has(cookieName)) {
-    // 临时方案，todo 多语言支持
-    // lng = acceptLanguage.get(req.cookies.get(cookieName).value);
+    lng = acceptLanguage.get(req.cookies.get(cookieName)?.value);
   }
   if (!lng) {
     lng = acceptLanguage.get(req.headers.get('Accept-Language'));
@@ -43,7 +42,7 @@ export function middleware(req: any) {
   }
 
   if (req.headers.has('referer')) {
-    const refererUrl = new URL(req.headers.get('referer'));
+    const refererUrl = new URL(<string>req.headers.get('referer'));
     const lngInReferer = languages.find((l) =>
       refererUrl.pathname.startsWith(`/${l}`),
     );
