@@ -33,13 +33,13 @@ export const UserMenu = ({ lng }: { lng: string }) => {
   return (
     <NavigationMenu.Root className="relative">
       {/* <div className="opacity-0 absolute">
-        <Link prefetch = {false} href={`/en/user/${user.userId}`} className="body-2">
+        <Link prefetch = {false} href={`/${lng}/user/${user.userId}`} className="body-2">
           .
         </Link>
-        <Link prefetch = {false} href="/en/settings/basic" className="body-2">
+        <Link prefetch = {false} href="/${lng}/settings/basic" className="body-2">
           .
         </Link>
-        <Link prefetch = {false} href="/en/notifications/requests/received" className="body-2">
+        <Link prefetch = {false} href="/${lng}/notifications/requests/received" className="body-2">
           .
         </Link>
       </div> */}

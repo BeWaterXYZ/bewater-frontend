@@ -23,11 +23,11 @@ const ConnectButton = dynamicLoad(() => import('./connect-button'), {
 });
 
 export default async function ChallengeIntro({ params }: any) {
-  console.log(`params ${JSON.stringify(params)}`);
+  //console.log(`params ${JSON.stringify(params)}`);
   const { challengeId } = segmentSchema.challengeId.parse(params);
-  console.log(`challengeId ${challengeId}`);
+  //console.log(`challengeId ${challengeId}`);
   const challenge = await getChallengeById(challengeId);
-  console.log(`challengeId ${challengeId}`, challenge);
+  //console.log(`challengeId ${challengeId}`, challenge);
 
   const { lng } = segmentSchema.lng.parse(params);
   const { t } = await useTranslation(lng);
@@ -251,7 +251,7 @@ export default async function ChallengeIntro({ params }: any) {
               </Link>
             </div>
           ) : (
-            <ConnectButton />
+            <ConnectButton lng={lng} />
           )
         ) : (
           <div>

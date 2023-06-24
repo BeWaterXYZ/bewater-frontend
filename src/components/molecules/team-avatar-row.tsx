@@ -2,14 +2,20 @@ import { Avatar } from '@/components/avatar/avatar';
 import { TeamMember } from '@/services/types';
 import Link from 'next/link';
 
-export function TeamAvatarRow({ teamMembers }: { teamMembers: TeamMember[] }) {
+export function TeamAvatarRow({
+  teamMembers,
+  lng,
+}: {
+  teamMembers: TeamMember[];
+  lng: string;
+}) {
   return (
     <div className="flex ">
       {teamMembers.map((m, index) => {
         return (
           <Link
             prefetch={false}
-            href={`/en/user/${m.userProfile.externalId}`}
+            href={`/${lng}/user/${m.userProfile.externalId}`}
             key={m.userProfile.externalId}
           >
             <div key={m.id} className="relative" style={{ left: -8 * index }}>

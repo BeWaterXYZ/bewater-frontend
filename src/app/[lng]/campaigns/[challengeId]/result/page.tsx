@@ -40,6 +40,8 @@ const winners = [
   },
 ];
 export default function Page({ params }: any) {
+  const { lng = 'en' } = params || {};
+
   return (
     <>
       <div className="flex justify-center">
@@ -79,7 +81,12 @@ export default function Page({ params }: any) {
                   className="object-contain"
                 />
               </div>
-              <ResultCard teamId={w.teams[0]} thumbnail score={w.scores[0]} />
+              <ResultCard
+                teamId={w.teams[0]}
+                thumbnail
+                score={w.scores[0]}
+                lng={lng}
+              />
               <div className="absolute md:static md:pt-8 w-full flex justify-center md:w-auto bottom-4 left-4">
                 <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
                   $2,500
@@ -112,6 +119,7 @@ export default function Page({ params }: any) {
                     teamId={w.teams[1]}
                     thumbnail
                     score={w.scores[1]}
+                    lng={lng}
                   />
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
@@ -145,6 +153,7 @@ export default function Page({ params }: any) {
                     teamId={w.teams[2]}
                     thumbnail
                     score={w.scores[2]}
+                    lng={lng}
                   />
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">

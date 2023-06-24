@@ -6,7 +6,13 @@ import Link from 'next/link';
 import { TeamAvatarRow } from '@/components/molecules/team-avatar-row';
 import { unsplash } from '@/utils/unsplash';
 
-export function ProjectItem({ project }: { project: Project }) {
+export function ProjectItem({
+  project,
+  lng,
+}: {
+  project: Project;
+  lng: string;
+}) {
   let max_desc = 80;
   let desc =
     project.description.length > max_desc
@@ -16,7 +22,7 @@ export function ProjectItem({ project }: { project: Project }) {
     <div className="rounded border border-[#24254E] relative max-w-[450px] overflow-hidden flex flex-col">
       <Link
         prefetch={false}
-        href={`/en/campaigns/${project.team.challengeId}/projects/${project.id}`}
+        href={`/${lng}/campaigns/${project.team.challengeId}/projects/${project.id}`}
       >
         <Aspect ratio={3 / 2}>
           <Image
@@ -44,7 +50,7 @@ export function ProjectItem({ project }: { project: Project }) {
       <div className="p-4 bg-white/5 flex-1 flex flex-col">
         <Link
           prefetch={false}
-          href={`/en/campaigns/${project.team.challengeId}/projects/${project.id}`}
+          href={`/${lng}/campaigns/${project.team.challengeId}/projects/${project.id}`}
         >
           <h2 className="heading-6 mb-2">{project.name}</h2>
           <p className="body-3 text-gray-400 text-left ">{desc}</p>
@@ -52,14 +58,14 @@ export function ProjectItem({ project }: { project: Project }) {
         <div className="h-[20px] invisible flex-1">_</div>
         <Link
           prefetch={false}
-          href={`/en/campaigns/${project.team.challengeId}/teams/${project.teamId}`}
+          href={`/${lng}/campaigns/${project.team.challengeId}/teams/${project.teamId}`}
           className="body-3 text-left mb-2 text-ellipsis truncate"
         >
           {project.team.name}
         </Link>
         <div className="flex justify-between">
           <div className="body-3">
-            <TeamAvatarRow teamMembers={project.team.teamMembers} />
+            <TeamAvatarRow teamMembers={project.team.teamMembers} lng={lng} />
           </div>
         </div>
       </div>

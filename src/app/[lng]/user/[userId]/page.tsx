@@ -17,6 +17,8 @@ export default async function Page({ params }: any) {
     (tm) => tm.team?.challengeId,
   );
 
+  const { lng = 'en' } = params || {};
+
   return (
     <div>
       <div className="mb-8">
@@ -31,7 +33,7 @@ export default async function Page({ params }: any) {
                 >
                   <Link
                     prefetch={false}
-                    href={`/en/campaigns/${tm.team?.challengeId}`}
+                    href={`/${lng}/campaigns/${tm.team?.challengeId}`}
                     className="block"
                   >
                     <Aspect ratio={2}>
@@ -67,7 +69,7 @@ export default async function Page({ params }: any) {
         {profile.teamMembers.length > 0 ? (
           <div className="flex flex-wrap gap-4  my-4">
             {profile.teamMembers.map((tm) => {
-              return <TeamCard member={tm} key={tm.id} />;
+              return <TeamCard member={tm} key={tm.id} lng={lng} />;
             })}
           </div>
         ) : (
