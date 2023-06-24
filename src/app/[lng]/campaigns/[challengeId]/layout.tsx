@@ -16,7 +16,7 @@ export default async function Layout({
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { lng } = segmentSchema.lng.parse(params);
-  const { t } = await useTranslation(lng);
+  const { t } = await useTranslation(lng, 'translation');
 
   if (challenge.id === '2') {
     if (lng === 'en') {
@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   const { lng } = segmentSchema.lng.parse(params);
   const challenge = await getChallengeById(challengeId);
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(lng);
+  const { t } = await useTranslation(lng, 'translation');
 
   return {
     title: t('bewater') + ' - ' + challenge.title,

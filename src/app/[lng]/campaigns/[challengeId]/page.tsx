@@ -30,7 +30,7 @@ export default async function ChallengeIntro({ params }: any) {
   //console.log(`challengeId ${challengeId}`, challenge);
 
   const { lng } = segmentSchema.lng.parse(params);
-  const { t } = await useTranslation(lng);
+  const { t } = await useTranslation(lng, 'translation');
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
 
   const judges = challenge.judges;
