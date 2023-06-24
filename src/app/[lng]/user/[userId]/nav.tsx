@@ -3,15 +3,15 @@
 import { NavItem } from '@/components/header/nav';
 import { useSelectedLayoutSegment } from 'next/navigation';
 
-export function Nav({ userId }: { userId: string }) {
+export function Nav({ userId, lng }: { userId: string; lng: string }) {
   const links = [
     {
-      path: `/en/user/${userId}`,
+      path: `/${lng}/user/${userId}`,
       label: 'Overview',
       segment: '(overview)',
     },
     {
-      path: `/en/user/${userId}/campaigns`,
+      path: `/${lng}/user/${userId}/campaigns`,
       segment: 'campaigns',
       label: 'Campaigns',
     },

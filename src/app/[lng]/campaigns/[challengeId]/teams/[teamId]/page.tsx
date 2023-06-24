@@ -68,7 +68,7 @@ export default async function Page({ params }: any) {
 
           <div className="flex my-4">
             {leaders.map((member) => (
-              <TeamMember key={member.id} member={member} />
+              <TeamMember key={member.id} member={member} lng={lng} />
             ))}
           </div>
         </div>
@@ -78,7 +78,7 @@ export default async function Page({ params }: any) {
           {members.length > 0 ? (
             <div className="flex my-4 gap-3 flex-wrap">
               {members.map((member) => (
-                <TeamMember key={member.id} member={member} />
+                <TeamMember key={member.id} member={member} lng={lng} />
               ))}
             </div>
           ) : (
