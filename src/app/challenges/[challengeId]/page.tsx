@@ -17,7 +17,7 @@ import { EditMilestones } from "./edit/milestones";
 import { EditRequirements } from "./edit/requirements";
 import { EditSponsors } from "./edit/sponsors";
 import { mock } from "./mock";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import { useLoadingStoreAction } from "@/components/loading/store";
 import HoverCard from "@/components/hover-card";
 import { Judge } from "@/services/types";
@@ -61,7 +61,9 @@ export default function Page({ params }: any) {
           <div className="h-12 w-12 m-8 relative bg-[#10B981] flex items-center justify-center rounded-full">
             <CheckIcon className="w-8 h-8 text-night" />
           </div>
-          <p className="text-xl leading-8 text-white">Publish Request Submitted!</p>
+          <p className="text-xl leading-8 text-white">
+            Publish Request Submitted!
+          </p>
           <p className="text-[14px] text-grey-500 mb-4">
             You’ll get notification after review. Review usually takes 1-2
             business days.
@@ -74,7 +76,9 @@ export default function Page({ params }: any) {
       <div className="bg-night">
         {/* top bar */}
         <div className="px-8 sticky top-0 bg-night z-10 h-[72px] flex flex-row justify-between items-center">
-          <Link href="/" className="text-sm text-white">{"<- Back"}</Link>
+          <Link href="/" className="text-sm text-white">
+            {"<- Back"}
+          </Link>
           <div className="text-sm text-white">
             {" Now You're Editing"}{" "}
             <span className="text-day">{challenge.title}</span>
@@ -104,15 +108,15 @@ export default function Page({ params }: any) {
             className="mx-auto h-8 md:h-10 object-contain"
           />
           <div className="space-y-6">
-          <h1 className="text-xl leading-[30px] md:text-5xl font-black text-white">
-            {challenge.title}
-          </h1>
-          <h1 className="text-[24px] md:text-2xl uppercase font-light text-white">
-            {challenge.location} {challenge.city}|{" "}
-            {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
-              challenge.endTime
-            )}`}
-          </h1>
+            <h1 className="text-xl leading-[30px] md:text-5xl font-black text-white">
+              {challenge.title}
+            </h1>
+            <h1 className="text-[24px] md:text-2xl uppercase font-light text-white">
+              {challenge.location} {challenge.city}|{" "}
+              {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
+                challenge.endTime
+              )}`}
+            </h1>
           </div>
         </div>
         {/* timeline */}
@@ -224,7 +228,9 @@ export default function Page({ params }: any) {
                               return (
                                 <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
-                                    <p className="body-3 text-white">{award.awardName}</p>
+                                    <p className="body-3 text-white">
+                                      {award.awardName}
+                                    </p>
                                     <div className="flex flex-row justify-between">
                                       <p className="body-3 text-white/60">
                                         ${award.amount}
@@ -313,8 +319,19 @@ export default function Page({ params }: any) {
                         </HoverCard>
                       </Aspect>
 
-                      <p className="body-3 mt-4 mb-2 text-white">{judge.name}</p>
+                      <p className="body-3 mt-4 mb-2 text-white">
+                        {judge.name}
+                      </p>
                       <p className="body-4 text-grey-400">{judge.title}</p>
+                      <div>
+                        {judge.twitterLink ? (
+                          <Link href={judge.twitterLink}>
+                            {
+                              <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
+                            }
+                          </Link>
+                        ) : null}
+                      </div>
                     </div>
                   );
                 })}
@@ -332,29 +349,39 @@ export default function Page({ params }: any) {
           <div className="container">
             <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-[24px] font-bold mb-8 text-white">Requirement</h3>
+                <h3 className="text-[24px] font-bold mb-8 text-white">
+                  Requirement
+                </h3>
                 <ol className="list-decimal">
-                  {challenge.requirements.split("\n").map((r, i) => (
-                    <li
-                      key={i}
-                      className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                    >
-                      <span className="text-[14px] text-grey-400">{r}</span>
-                    </li>
-                  ))}
+                  {challenge.requirements
+                    .split("\n")
+                    .filter(Boolean)
+                    .map((r, i) => (
+                      <li
+                        key={i}
+                        className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                      >
+                        <span className="text-[14px] text-grey-400">{r}</span>
+                      </li>
+                    ))}
                 </ol>
               </div>
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-white text-[24px] font-bold mb-8">Criteria</h3>
+                <h3 className="text-white text-[24px] font-bold mb-8">
+                  Criteria
+                </h3>
                 <ol className="list-decimal">
-                  {challenge.reviewDimension.split("\n").map((r, i) => (
-                    <li
-                      key={i}
-                      className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                    >
-                      <span className="text-[14px] text-grey-400">{r}</span>
-                    </li>
-                  ))}
+                  {challenge.reviewDimension
+                    .split("\n")
+                    .filter(Boolean)
+                    .map((r, i) => (
+                      <li
+                        key={i}
+                        className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                      >
+                        <span className="text-[14px] text-grey-400">{r}</span>
+                      </li>
+                    ))}
                 </ol>
               </div>
             </div>
