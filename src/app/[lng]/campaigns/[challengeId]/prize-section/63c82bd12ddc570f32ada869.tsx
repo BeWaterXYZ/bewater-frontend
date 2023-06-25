@@ -114,6 +114,8 @@ export function PrizeSection({ t }: { t: Function }) {
                 />
                 <ul className="body-3 text-white/60 list-disc list-inside">
                   <li>{t('cryptoArt.t26')}</li>
+                  <br />
+                  <li>{t('cryptoArt.t27')}</li>
                 </ul>
               </div>
             </div>
