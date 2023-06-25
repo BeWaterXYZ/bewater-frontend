@@ -4,7 +4,7 @@ const sponsors_tier1 = [
   '/sponsors/bewater.png',
   '/sponsors/club3.png',
   '/sponsors/midaswap.png',
-  '/sponsors/tutu-logo.png',
+  '/sponsors/tutulogo.png',
 ];
 
 const sponsors_tier2 = [
