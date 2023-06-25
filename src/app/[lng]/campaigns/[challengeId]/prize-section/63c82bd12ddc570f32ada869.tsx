@@ -99,6 +99,25 @@ export function PrizeSection({ t }: { t: Function }) {
               </div>
             </div>
           </div>
+          <div className="flex flex-col gap-4 md:gap-7 items-center">
+            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+              {t('cryptoArt.t25')}
+            </p>
+            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                <Image
+                  src={`/challenge/assets/digitalart.jpg`}
+                  alt=""
+                  width={160}
+                  height={160}
+                  className="w-full sm:w-40 sm:h-40"
+                />
+                <ul className="body-3 text-white/60 list-disc list-inside">
+                  <li>{t('cryptoArt.t26')}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="relative w-full flex flex-col gap-10 items-center">
