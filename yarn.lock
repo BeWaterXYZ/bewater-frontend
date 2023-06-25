@@ -6601,10 +6601,10 @@ react-transition-group@^4.3.0:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-wrap-balancer@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/react-wrap-balancer/-/react-wrap-balancer-0.4.1.tgz#5b5500724879f5670ead177d7ab99cc9c5e36704"
-  integrity sha512-KbIwnnCBCxj5u4yr76NXKKriM94VL33LtO9bE0sedCp4yqdGYJD8TGU+2zlPxkguH5xxKxdapBtMYdMAODk/QQ==
+react-wrap-balancer@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-wrap-balancer/-/react-wrap-balancer-1.0.0.tgz#f45f8af7cf68d9d54d16a8cf271047b75d1431d7"
+  integrity sha512-yjDH+I8WGyDfh95gKhX/6ckfSBAltwQkxiYxtLPlyIRQNUVSjvz1uHR6Hpy+zHyOkJQw6GEC5RPglA41QXvzyw==
 
 react@18.2.0:
   version "18.2.0"
