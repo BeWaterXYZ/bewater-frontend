@@ -16,6 +16,7 @@ import { isMileStoneEnabled } from './utils';
 import Balancer from 'react-wrap-balancer';
 import { Sponsors2 } from './sponsors2';
 import { Sponsors3 } from './sponsors3';
+import { Sponsors4 } from './sponsors4';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -203,6 +204,7 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '1' ? <Sponsors /> : null}
       {challenge.id === '2' ? <Sponsors2 t={t} /> : null}
       {challenge.id === '3' ? <Sponsors3 /> : null}
+      {challenge.id === '4' ? <Sponsors4 t={t} /> : null}
 
       {parseInt(challenge.id) < 4 ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">

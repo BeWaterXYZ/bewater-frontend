@@ -6,7 +6,7 @@ import Image from 'next/image';
 
 export function PrizeSection({ t }: { t: Function }) {
   return (
-    <div className="flex flex-col items-center py-0 px-0 gap-20  from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[0px] border-midnight">
+    <div className="flex flex-col items-center py-10 pt-0 px-0 gap-20  from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[0px] border-midnight">
       <Image
         src={`/challenge/assets/frame-495.png`}
         alt=""
@@ -52,7 +52,8 @@ export function PrizeSection({ t }: { t: Function }) {
           {t('cryptoArt.t24')}
         </p>
         <Marquee>
-          <SponsorsCell src={'/sponsors/ABCDE.png'} />
+          <SponsorsCell src={'/sponsors/starkware.png'} />
+          <SponsorsCell src={'/sponsors/starknet.png'} />
           <SponsorsCell src={'/sponsors/bewater.png'} />
         </Marquee>
       </div>
