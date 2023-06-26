@@ -67,7 +67,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         }`}
       </h1>
 
-      {challenge.id !== '3' ? (
+      {challenge.id === '1' || challenge.id === '2' ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
@@ -89,7 +89,9 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             </div>
           </div>
         )
-      ) : (
+      ) : null}
+
+      {challenge.id === '3' ? (
         <div className="mt-6 md:mt-12">
           <Link
             prefetch={false}
@@ -100,7 +102,8 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             {`${t('campaign.t4')}`}
           </Link>
         </div>
-      )}
+      ) : null}
+
       {challenge.id === '1' && (
         <div>
           <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
