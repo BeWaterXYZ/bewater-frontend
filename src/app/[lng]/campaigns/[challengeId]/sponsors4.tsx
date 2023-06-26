@@ -4,7 +4,7 @@ const sponsors_tier2 = [
   '/sponsors/starkware.png',
   '/sponsors/starknet.png',
   '/sponsors/bewater.png',
-  '/sponsors/chainup.png',
+  // '/sponsors/chainup.png',
 ];
 
 const sponsors_tier3 = [

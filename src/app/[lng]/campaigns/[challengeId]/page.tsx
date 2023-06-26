@@ -82,7 +82,13 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '4' ? (
         <Timeline4 milestones={challenge.milestones} lng={lng} />
       ) : null}
-      <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
+      <div
+        className={`${
+          challenge.id === '4'
+            ? 'flex flex-col gap-10 md:gap-10 items-center my-10 mb-0'
+            : 'flex flex-col gap-10 md:gap-20 items-center my-10'
+        }`}
+      >
         <div
           className={`flex flex-col gap-4 md:flex-row md:gap-20 items-center ${
             challenge.id === '3' && 'mt-[100px]'
