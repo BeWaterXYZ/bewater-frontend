@@ -4,13 +4,16 @@ const sponsors_tier2 = [
   '/sponsors/starkware.png',
   '/sponsors/starknet.png',
   '/sponsors/bewater.png',
+  '/sponsors/chainup.png',
 ];
 
 const sponsors_tier3 = [
-  '/sponsors/axiom.svg',
+  '/sponsors/cysic.webp',
+  '/sponsors/axiom.png',
   '/sponsors/web3builder.png',
   '/sponsors/lxdao.png',
   '/sponsors/clsq2_white.png',
+  '/sponsors/0xparc.svg',
 ];
 
 export function Sponsors4({ t }: { t: Function }) {
