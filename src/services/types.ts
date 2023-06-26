@@ -60,6 +60,26 @@ export interface Challenge {
     officialWebsiteURI?: string;
     email?: string;
   };
+
+  wechatURL: string;
+  telegramLink: string;
+  discordLink: string;
+  twitterLink: string;
+
+  sponsors: {
+    defname: string;
+    members: string[];
+  }[];
+
+  awardAssorts?: {
+    name: string;
+    awards: {
+      awardName: string;
+      amount: number;
+      count: number;
+    }[];
+  }[];
+  keySponsors?: string[];
 }
 
 export interface Award {
