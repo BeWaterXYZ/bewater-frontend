@@ -151,7 +151,7 @@ export default async function ChallengeIntro({ params }: any) {
       </div>
       <div className="">
         {challenge.id === '1' ? <PrizeSection1 /> : null}
-        {challenge.id === '2' ? <PrizeSection2 t={t} /> : null}
+        {challenge.id === '2' ? <PrizeSection2 t={t} lng={lng} /> : null}
         {challenge.id === '3' ? <ScheduleSection /> : null}
         {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
       </div>

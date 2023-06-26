@@ -15,7 +15,7 @@ export function PrizeSection({ t }: { t: Function }) {
         className="w-full"
       />
 
-      <div className="relative w-full flex flex-col gap-10 items-center">
+      <div className="relative w-full flex flex-col py-20 gap-10 items-center bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))]">
         <p className="body-1 md:heading-5 font-bold text-[#00cccc] md:text-[#00cccc]">
           Grants
         </p>
