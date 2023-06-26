@@ -41,12 +41,21 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           alt="starknet logo"
           className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
         />
+      ) : challenge.id === '4' ? (
+        <Image
+          src="/sponsors/ABCDE.png"
+          width={144}
+          height={40}
+          alt=""
+          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
+        />
       ) : (
         <p className="body-4 md:text-[20px]">{challenge.hostName}</p>
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
-        {challenge.id !== '3' ? challenge.location : 'SHANGHAI'} |{' '}
+        {challenge.id !== '3' ? challenge.location : 'SHANGHAI'}{' '}
+        {challenge.id !== '4' ? '|' : ''}{' '}
         {`${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)

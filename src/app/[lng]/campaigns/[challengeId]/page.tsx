@@ -7,8 +7,10 @@ import Link from 'next/link';
 import { segmentSchema } from './param-schema';
 import { PrizeSection as PrizeSection1 } from './prize-section/63c82bd12ddc570f32ada868';
 import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f32ada869';
+import { PrizeSection as PrizeSection4 } from './prize-section/63c82bd12ddc570f32ada86a';
 import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
+import { Timeline as Timeline4 } from './timeline-id4';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
@@ -73,8 +75,11 @@ export default async function ChallengeIntro({ params }: any) {
 
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
-      {challenge.id !== '3' ? (
+      {challenge.id === '1' || challenge.id === '2' ? (
         <Timeline milestones={challenge.milestones} lng={lng} />
+      ) : null}
+      {challenge.id === '4' ? (
+        <Timeline4 milestones={challenge.milestones} lng={lng} />
       ) : null}
       <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
         <div
@@ -82,7 +87,7 @@ export default async function ChallengeIntro({ params }: any) {
             challenge.id === '3' && 'mt-[100px]'
           }`}
         >
-          <div className="heading-5 md:heading-3 whitespace-nowrap py-4 ">
+          <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
             {t('campaign.t5')}
           </div>
           <div className="body-3 md:body-2 text-white">
@@ -94,7 +99,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         </div>
         <div>
-          {challenge.id !== '3' ? (
+          {challenge.id !== '3' && challenge.id !== '4' ? (
             <Link
               prefetch={false}
               href={`https://t.me/bewater_zh`}
@@ -129,7 +134,7 @@ export default async function ChallengeIntro({ params }: any) {
                 {t('campaign.t6')}
               </div>
             </Link>
-          ) : (
+          ) : challenge.id !== '4' ? (
             <Link
               prefetch={false}
               href={`https://twitter.com/StarkNetAstroCN`}
@@ -141,19 +146,20 @@ export default async function ChallengeIntro({ params }: any) {
                 {t('campaign.t7')}
               </div>
             </Link>
-          )}
+          ) : null}
         </div>
       </div>
       <div className="">
         {challenge.id === '1' ? <PrizeSection1 /> : null}
         {challenge.id === '2' ? <PrizeSection2 t={t} /> : null}
         {challenge.id === '3' ? <ScheduleSection /> : null}
+        {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
       </div>
       {challenge.id !== '3' ? (
         <>
           <div className="mt-16">
             <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-              {t('campaign.t8')}
+              {challenge.id === '4' ? 'Confirmed Mentors' : t('campaign.t8')}
             </h3>
             <div className="flex flex-row flex-wrap gap-6 justify-center">
               {judges
@@ -191,34 +197,6 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
             </div>
           </div>
-          <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
-            <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="heading-5 font-bold mb-8">{t('campaign.t10')}</h3>
-              <ul className="list-decimal">
-                {challenge.requirements.split('\n').map((r) => (
-                  <li
-                    key={r}
-                    className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                  >
-                    <span className="body-3 text-grey-400">{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-              <h3 className="heading-5 font-bold mb-8">{t('campaign.t11')}</h3>
-              <ul className="list-decimal">
-                {challenge.reviewDimension.split('\n').map((r) => (
-                  <li
-                    key={r}
-                    className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                  >
-                    <span className="body-3 text-grey-400">{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
         </>
       ) : null}
 
@@ -226,50 +204,66 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '2' ? <Sponsors2 t={t} /> : null}
       {challenge.id === '3' ? <Sponsors3 /> : null}
 
-      <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
-        <p className="heading-6 md:heading-4 text-center">
-          <Balancer ratio={0.9}>
-            {challenge.id !== '3'
-              ? isTeamingEnabled
-                ? `${t('campaign.t12')}`
-                : `${t('campaign.t13')}`
-              : `${t('campaign.t14')}`}
-          </Balancer>
-        </p>
-        <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
-          <Balancer>
-            {challenge.id !== '3'
-              ? `${t('campaign.t15')}`
-              : `${t('campaign.t16')}`}
-          </Balancer>
-        </p>
-        {challenge.id !== '3' ? (
-          isTeamingEnabled ? (
+      {parseInt(challenge.id) < 4 ? (
+        <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
+          <p className="heading-6 md:heading-4 text-center">
+            <Balancer ratio={0.9}>
+              {challenge.id !== '3'
+                ? isTeamingEnabled
+                  ? `${t('campaign.t12')}`
+                  : `${t('campaign.t13')}`
+                : `${t('campaign.t14')}`}
+            </Balancer>
+          </p>
+          <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
+            <Balancer>
+              {challenge.id !== '3'
+                ? `${t('campaign.t15')}`
+                : `${t('campaign.t16')}`}
+            </Balancer>
+          </p>
+          {challenge.id !== '3' ? (
+            isTeamingEnabled ? (
+              <div>
+                <Link
+                  prefetch={false}
+                  href={`/${lng}/campaigns/${challengeId}/teams`}
+                  className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
+                >
+                  {`${t('campaign.t17')}`}
+                </Link>
+              </div>
+            ) : (
+              <ConnectButton lng={lng} />
+            )
+          ) : (
             <div>
               <Link
                 prefetch={false}
-                href={`/${lng}/campaigns/${challengeId}/teams`}
+                target="_blank"
+                href="https://forms.gle/qZ5KbnCufSNVeVkv8"
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
-                {`${t('campaign.t17')}`}
+                {`${t('campaign.t4')}`}
               </Link>
             </div>
-          ) : (
-            <ConnectButton lng={lng} />
-          )
-        ) : (
-          <div>
-            <Link
-              prefetch={false}
-              target="_blank"
-              href="https://forms.gle/qZ5KbnCufSNVeVkv8"
-              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
-            >
-              {`${t('campaign.t4')}`}
-            </Link>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : null}
+
+      {challenge.id === '4' ? (
+        <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
+          <p className="heading-6 md:heading-4 text-center">
+            <Balancer ratio={0.9}>JOIN ZK HACKER CAMP NOW</Balancer>
+          </p>
+          <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
+            <Balancer>
+              Registration Period: Jun 26th- July 21st 9PM SGT
+            </Balancer>
+          </p>
+          <ConnectButton lng={lng} />
+        </div>
+      ) : null}
     </div>
   );
 }
