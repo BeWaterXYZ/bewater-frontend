@@ -1,13 +1,18 @@
 "use client";
 import { segmentSchema } from "@/app/segment-params";
 import { Aspect } from "@/components/aspect";
+import HoverCard from "@/components/hover-card";
+import { useLoadingStoreAction } from "@/components/loading/store";
 import { publishChallengeRequest } from "@/services/challenge";
 import { useFetchChallengeById } from "@/services/challenge.query";
+import { Judge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
+import { CheckIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
+import Balancer from "react-wrap-balancer";
 import { Timeline } from "../timeline";
 import { EditAwards } from "./edit/awards";
 import { EditBanner } from "./edit/banner";
@@ -17,10 +22,6 @@ import { EditMilestones } from "./edit/milestones";
 import { EditRequirements } from "./edit/requirements";
 import { EditSponsors } from "./edit/sponsors";
 import { mock } from "./mock";
-import { CheckIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
-import { useLoadingStoreAction } from "@/components/loading/store";
-import HoverCard from "@/components/hover-card";
-import { Judge } from "@/services/types";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -157,25 +158,38 @@ export default function Page({ params }: any) {
               <div className="flex gap-4 flex-wrap">
                 {challenge.telegramLink ? (
                   <Link
-                    className="btn btn-primary-invert "
+                    className="btn btn-primary-invert min-w-[256px] py-6 flex gap-2"
                     href={challenge.telegramLink}
                   >
+                    <Image
+                      src="/icons/blue/telegram.svg"
+                      height={16}
+                      width={16}
+                      alt="telegram"
+                    />
                     Telegram Link
                   </Link>
                 ) : null}
                 {challenge.discordLink ? (
                   <Link
-                    className="btn btn-primary-invert "
+                    className="btn btn-primary-invert min-w-[256px] py-6 flex gap-2"
                     href={challenge.discordLink}
                   >
+                    <Image
+                      src="/icons/blue/discord.svg"
+                      height={16}
+                      width={16}
+                      alt="discord"
+                    />{" "}
                     Discord Link
                   </Link>
                 ) : null}
                 {challenge.twitterLink ? (
                   <Link
-                    className="btn btn-primary-invert "
+                    className="btn btn-primary-invert min-w-[256px] py-6 flex gap-2"
                     href={challenge.twitterLink}
                   >
+                    <TwitterLogoIcon height={16} width={16} />
                     Twitter Link
                   </Link>
                 ) : null}
@@ -192,7 +206,13 @@ export default function Page({ params }: any) {
                       </div>
                     }
                   >
-                    <button className="btn btn-primary-invert ">
+                    <button className="btn btn-primary-invert min-w-[256px] py-6 flex gap-2">
+                      <Image
+                        src="/icons/blue/wechat.svg"
+                        height={16}
+                        width={16}
+                        alt="wechat"
+                      />{" "}
                       WeChat QR code
                     </button>
                   </HoverCard>
@@ -421,6 +441,25 @@ export default function Page({ params }: any) {
                   );
                 })}
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
+          <p className="text-[20px] md:text-[30px] text-center">
+            <Balancer ratio={0.9}>
+              Interested in a campaign? Form your dream team and join us
+            </Balancer>
+          </p>
+          <p className="text-[14px] md:text-[16px]  text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
+            <Balancer>
+              Nearly 25,000 pre-registered developers and designers have already
+              claimed their BeWater Early Bird badges
+            </Balancer>
+          </p>
+          <div>
+            <div className="btn btn-primary-invert text-[14px] text-day  uppercase w-64 py-6">
+              Go to Team Page
             </div>
           </div>
         </div>
