@@ -37,5 +37,3 @@ NEXT_PUBLIC_BASE_PATH=
 ENVIRONMENT=local
 ```
 
-
-
