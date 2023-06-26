@@ -38,7 +38,7 @@
     "encoding": "^0.1.13",
     "ethers": "^5.7.2",
     "formidable": "^2.1.1",
-    "fslightbox-react": "^1.7.2",
+    "fslightbox-react": "^1.7.6",
     "i18next": "23.0.2",
     "i18next-browser-languagedetector": "^7.0.2",
     "i18next-resources-to-backend": "^1.1.4",

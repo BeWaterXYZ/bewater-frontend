@@ -4204,10 +4204,10 @@ fsevents@~2.3.2:
   resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.2.tgz#8a526f78b8fdf4623b709e0b975c52c24c02fd1a"
   integrity sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==
 
-fslightbox-react@^1.7.2:
-  version "1.7.4"
-  resolved "https://registry.yarnpkg.com/fslightbox-react/-/fslightbox-react-1.7.4.tgz#d1824928d3b969a07baccd02a04285b97c6c51b2"
-  integrity sha512-dmHoxfdvf2TP78jv7qPLvd/cbQOIl2P8CBapLYpcoIigDV0bAcNkx3Tav6Isjruv2bXwWoXZY1C9+A5xTd3ZFQ==
+fslightbox-react@^1.7.6:
+  version "1.7.6"
+  resolved "https://registry.yarnpkg.com/fslightbox-react/-/fslightbox-react-1.7.6.tgz#eb9565e1f836b647cdbdf4734705222ca542dbd3"
+  integrity sha512-7LN2GZRLHo2vZGKdH+BZDJUoUDkCRCLlZ5hOwtLtZplmGZQ9nqzpG54cTax7XNjbYGTWLT6BHdMiL5zOEhiRlA==
 
 function-bind@^1.1.1:
   version "1.1.1"
