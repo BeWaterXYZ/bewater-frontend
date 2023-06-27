@@ -7,11 +7,14 @@ import Image from 'next/image';
 export function PrizeSection({ t }: { t: Function }) {
   return (
     <div className="flex flex-col items-center py-10 pt-0 px-0 gap-20  from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[0px] border-midnight">
+      <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
+        Agenda
+      </div>
       <Image
-        src={`/challenge/assets/frame-495.png`}
+        src={`/challenge/assets/frame-496.png`}
         alt=""
         width={3364}
-        height={6303}
+        height={5943}
         className="w-full"
       />
 
