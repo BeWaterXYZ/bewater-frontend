@@ -11,6 +11,7 @@ const sponsors_tier3 = [
   '/sponsors/cysic.webp',
   '/sponsors/axiom.png',
   '/sponsors/poseidon.png',
+  '/sponsors/polyhedra.png',
   '/sponsors/web3builder.png',
   '/sponsors/lxdao.png',
   '/sponsors/clsq2_white.png',

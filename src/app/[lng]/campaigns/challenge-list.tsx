@@ -22,7 +22,13 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
             <Aspect ratio={5 / 2}>
               <Image
                 fill
-                src={`/challenge/assets/${challenge.id}withTitle.png`}
+                src={
+                  challenge.id === '2'
+                    ? lng === 'en'
+                      ? '/challenge/assets/2withTiten.png'
+                      : '/challenge/assets/2withTitle.png'
+                    : `/challenge/assets/${challenge.id}withTitle.png`
+                }
                 alt="crypto"
                 className="object-cover w-full h-full"
               />
