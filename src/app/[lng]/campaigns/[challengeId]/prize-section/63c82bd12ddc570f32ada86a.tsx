@@ -49,16 +49,16 @@ export function PrizeSection({ t }: { t: Function }) {
             <span>* Details will be announced.</span>
           </li>
         </ul>
-      </div>
-      <div className="relative w-full flex flex-col gap-10 items-center">
-        <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
-          {t('cryptoArt.t24')}
-        </p>
-        <Marquee>
-          <SponsorsCell src={'/sponsors/starkware.png'} />
-          <SponsorsCell src={'/sponsors/starknet.png'} />
-          <SponsorsCell src={'/sponsors/bewater.png'} />
-        </Marquee>
+        <div className="relative w-full flex flex-col gap-10 items-center pt-10">
+          <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
+            {t('cryptoArt.t24')}
+          </p>
+          <Marquee>
+            <SponsorsCell src={'/sponsors/starkware.png'} />
+            <SponsorsCell src={'/sponsors/starknet.png'} />
+            <SponsorsCell src={'/sponsors/bewater.png'} />
+          </Marquee>
+        </div>
       </div>
     </div>
   );
