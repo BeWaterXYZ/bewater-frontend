@@ -10,13 +10,24 @@ export function PrizeSection({ t }: { t: Function }) {
       <div className="heading-5 md:heading-3 whitespace-nowrap py-4 pb-0">
         Agenda
       </div>
-      <Image
-        src={`/challenge/assets/frame337717.jpg`}
-        alt=""
-        width={2242}
-        height={882}
-        className="w-full"
-      />
+      <div className="hidden md:flex">
+        <Image
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame337717.jpg`}
+          alt=""
+          width={2242}
+          height={882}
+          className="w-full"
+        />
+      </div>
+      <div className="flex md:hidden">
+        <Image
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame337717mob.jpg`}
+          alt=""
+          width={1189}
+          height={882}
+          className="w-full"
+        />
+      </div>
       <div className="body-3 md:body-2 text-white pt-5">
         <p className="py-3">
           Central to the program are world-renowned advisers, a rigorous and
@@ -25,9 +36,9 @@ export function PrizeSection({ t }: { t: Function }) {
           and Demo Day are below:
         </p>
       </div>
-      <div className="hidden md:flex py-5 px-[15px]">
+      <div className="hidden md:flex py-5 px-[20px]">
         <Image
-          src={`/challenge/assets/frame494.png`}
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame494.png`}
           alt=""
           width={2136}
           height={2592}
@@ -38,7 +49,7 @@ export function PrizeSection({ t }: { t: Function }) {
         <div style={{ display: 'block' }}>
           <Image
             style={{ marginBottom: '40px' }}
-            src={`/challenge/assets/frame494-1.png`}
+            src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame494-1.png`}
             alt=""
             width={1037}
             height={1265}
