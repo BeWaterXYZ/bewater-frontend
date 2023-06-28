@@ -6,18 +6,69 @@ import Image from 'next/image';
 
 export function PrizeSection({ t }: { t: Function }) {
   return (
-    <div className="flex flex-col items-center py-10 pt-0 px-0 gap-20  from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[0px] border-midnight">
+    <div className="flex flex-col items-center py-10 pt-0 px-0 gap-10  from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[0px] border-midnight">
       <div className="heading-5 md:heading-3 whitespace-nowrap py-4 pb-0">
         Agenda
       </div>
       <Image
-        src={`/challenge/assets/frame-496.png`}
+        src={`/challenge/assets/frame337717.jpg`}
         alt=""
-        width={3364}
-        height={5943}
+        width={2242}
+        height={882}
         className="w-full"
       />
-
+      <div className="body-3 md:body-2 text-white pt-5">
+        <p className="py-3">
+          Central to the program are world-renowned advisers, a rigorous and
+          innovative study of global ZK application and hands-on exploration of
+          coding and entrepreneurships. Details of ZK curriculum, ZK Hackathon
+          and Demo Day are below:
+        </p>
+      </div>
+      <div className="hidden md:flex py-5 px-[15px]">
+        <Image
+          src={`/challenge/assets/frame494.png`}
+          alt=""
+          width={2136}
+          height={2592}
+          className="w-full"
+        />
+      </div>
+      <div className="flex md:hidden py-5 px-[15px]">
+        <div style={{ display: 'block' }}>
+          <Image
+            style={{ marginBottom: '40px' }}
+            src={`/challenge/assets/frame494-1.png`}
+            alt=""
+            width={1037}
+            height={1265}
+            className="w-full"
+          />
+          <Image
+            style={{ marginBottom: '40px' }}
+            src={`/challenge/assets/frame494-2.png`}
+            alt=""
+            width={1036}
+            height={1264}
+            className="w-full"
+          />
+          <Image
+            style={{ marginBottom: '40px' }}
+            src={`/challenge/assets/frame494-3.png`}
+            alt=""
+            width={1037}
+            height={1264}
+            className="w-full"
+          />
+          <Image
+            src={`/challenge/assets/frame494-4.png`}
+            alt=""
+            width={1036}
+            height={1265}
+            className="w-full"
+          />
+        </div>
+      </div>
       <div className="relative w-full flex flex-col py-20 gap-10 items-center bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))]">
         <p className="body-1 md:heading-5 font-bold text-[#00cccc] md:text-[#00cccc]">
           Grants
