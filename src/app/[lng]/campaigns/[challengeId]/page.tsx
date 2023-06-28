@@ -269,7 +269,15 @@ export default async function ChallengeIntro({ params }: any) {
               Registration Period: Jun 26th- July 21st 9PM SGT
             </Balancer>
           </p>
-          <ConnectButton lng={lng} />
+          <div>
+            <Link
+              prefetch={false}
+              href={`https://docs.google.com/forms/d/128cimlspqKBj4EfAAB9dUIN4zgG0og4u4r837Ul1VJo/viewform?pli=1&edit_requested=true`}
+              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
+            >
+              Join
+            </Link>
+          </div>
         </div>
       ) : null}
     </div>

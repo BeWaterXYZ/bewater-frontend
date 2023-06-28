@@ -104,6 +104,18 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         </div>
       ) : null}
 
+      {challenge.id === '4' ? (
+        <div className="mt-6 md:mt-12">
+          <Link
+            prefetch={false}
+            href={`https://docs.google.com/forms/d/128cimlspqKBj4EfAAB9dUIN4zgG0og4u4r837Ul1VJo/viewform?pli=1&edit_requested=true`}
+            className="btn btn-primary-invert body-4 text-day  uppercase w-60 py-6"
+          >
+            Join
+          </Link>
+        </div>
+      ) : null}
+
       {challenge.id === '1' && (
         <div>
           <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
