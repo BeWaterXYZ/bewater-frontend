@@ -18,16 +18,16 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
   const { confirm } = useAlert();
   const { data: challenge } = useFetchChallengeById(team.challengeId);
   const router = useNavigator(lng);
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const isAuthed = useAuthStore((s) => s.isAuthed);
   const navigator = useNavigator(lng);
   const showDialog = useDialogStore((s) => s.open);
   const isJoined = team.teamMembers.some(
-    (m) => m.userProfile.externalId === user?.externalId,
+    (m) => m.userProfile.externalId === user?.id,
   );
   const isLeader = team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.externalId);
+    .some((m) => m.userProfile.externalId === user?.id);
 
   const clerk = useClerk();
   const requestJoin = () => {

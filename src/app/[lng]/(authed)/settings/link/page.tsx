@@ -10,16 +10,16 @@ import {
   useFetchUserSocialConnections,
   useMutationDisconnectSocialConnection,
 } from '@/services/user.query';
-import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 import Image from 'next/image';
 export default function Page() {
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const showDialog = useDialogStore((s) => s.open);
-  const { data: userProfile, isLoading } = useFetchUser(user?.externalId);
+  const { data: userProfile, isLoading } = useFetchUser(user?.id);
   const mutation = useMutationDisconnectSocialConnection();
   const { data: socialConnections, isLoading: isLoading2 } =
-    useFetchUserSocialConnections(user?.externalId);
+    useFetchUserSocialConnections(user?.id);
 
   useLoadingWhen(isLoading || isLoading2);
 

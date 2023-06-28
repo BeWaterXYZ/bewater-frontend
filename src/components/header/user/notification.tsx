@@ -1,13 +1,13 @@
 import { useFetchGroupingRequest } from '@/services/notification.query';
-import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
 // todo lng 是参数
 export function NotificationBell({ lng }: { lng: string }) {
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
 
-  const { error, data, isLoading } = useFetchGroupingRequest(user?.externalId);
+  const { error, data, isLoading } = useFetchGroupingRequest(user?.id);
 
   const hasNewNotifications =
     isLoading || error || !data

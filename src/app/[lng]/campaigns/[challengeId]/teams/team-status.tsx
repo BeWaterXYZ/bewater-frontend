@@ -9,7 +9,7 @@ import { useClerk } from '@clerk/nextjs';
 
 export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
   const isAuthed = useAuthStore((s) => s.isAuthed);
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const showDialog = useDialogStore((s) => s.open);
   const navigator = useNavigator(lng);
   const isMyTeam = team.teamMembers.some(

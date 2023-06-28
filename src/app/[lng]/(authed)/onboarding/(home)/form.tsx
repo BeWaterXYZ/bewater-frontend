@@ -11,7 +11,7 @@ import {
   getEmailVerificationCode,
   submitCreateUserProfile,
 } from '@/services/user';
-import { useAuthStore } from '@/stores/auth';
+// import { useAuthStore } from '@/stores/auth';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
@@ -36,8 +36,8 @@ interface Props {
 export const FormOnboarding = ({ onComplete }: Props) => {
   const [verificationCodeSent, verificationCodeSentSet] = useState(false);
   const addToast = useToastStore((s) => s.add);
-  const walletAddress = useAuthStore((s) => s.walletAddress);
-  const setAuthState = useAuthStore((s) => s.setState);
+  // const walletAddress = useAuthStore((s) => s.walletAddress);
+  // const setAuthState = useAuthStore((s) => s.setState);
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const {
     register,
@@ -53,10 +53,10 @@ export const FormOnboarding = ({ onComplete }: Props) => {
     try {
       let res = await submitCreateUserProfile({
         ...formData,
-        walletAddress,
+        // walletAddress,
       });
       if (res.userProfile) {
-        setAuthState({ user: res.userProfile });
+        // setAuthState({ user: res.userProfile });
         onComplete();
       } else if (!res.verified) {
         addToast({

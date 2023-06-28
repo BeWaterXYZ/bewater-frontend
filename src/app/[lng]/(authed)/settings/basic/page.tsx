@@ -8,7 +8,7 @@ import { useClerk } from '@clerk/nextjs';
 import { FormUserSettings } from './form/form-settings';
 
 export default function Page() {
-  // const user = useAuthStore((s) => s.user);
+  // const user = useClerk().user;
   // console.log(user);
   const clerk = useClerk();
   console.log(clerk.user?.id)

@@ -3,7 +3,7 @@ import { Avatar } from '@/components/avatar/avatar';
 import { useLoadingWhen } from '@/components/loading/store';
 import { OngoingNotification } from '@/services/notification';
 import { useFetchOngoingNotifications } from '@/services/notification.query';
-import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 import { formatDistance, parseISO } from 'date-fns';
 import Link from 'next/link';
 
@@ -100,10 +100,10 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
 export default function Page({ params }: { params: { lng: string } }) {
   const { lng = 'en' } = params || {};
 
-  const user = useAuthStore((s) => s.user);
+  const clerk = useClerk()
 
   const { error, data, isLoading } = useFetchOngoingNotifications(
-    user?.externalId,
+    clerk.user?.id
   );
 
   useLoadingWhen(isLoading);

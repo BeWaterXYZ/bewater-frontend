@@ -1,12 +1,12 @@
 'use client';
 import { Project } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 import { GithubStatsDisplay } from './display';
 import { GithubStatsSetup } from './setup';
 
 export function GithubStats({ project }: { project: Project }) {
   const projectHasConnectedGithub = !!project.githubURI;
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
     .some((m) => m.userProfile.externalId === user?.externalId);
