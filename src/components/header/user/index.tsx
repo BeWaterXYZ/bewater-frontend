@@ -1,7 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { useAuthStore } from '@/stores/auth';
-import { UserMenu } from './menu';
 import { NotificationBell } from './notification';
 import { useClerk, UserButton } from '@clerk/nextjs';
 

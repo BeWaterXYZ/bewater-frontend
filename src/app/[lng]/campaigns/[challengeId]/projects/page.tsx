@@ -9,7 +9,6 @@ import { ProjectFilter } from './project-filter';
 import { Project, UserProfile } from '@/services/types';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { useAuthStore } from '@/stores/auth';
 import { useState } from 'react';
 import { SearchInput } from '@/components/molecules/search-input';
 import { useDialogStore } from '@/components/dialog/store';
@@ -69,7 +68,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: projects, isLoading: isLoadingProject } =
     useFetchChallengeProjects(challengeId);
-  const { data: userProfile } = useFetchUser(user?.id)
+  const { data: userProfile } = useFetchUser(user?.id);
 
   const { lng } = segmentSchema.lng.parse(params);
 
@@ -77,11 +76,15 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   if (!challenge || !projects) return null;
 
   const { tag } = querySchema.parse(Object.fromEntries(sp!));
-  const projectsFilteredSorted = filterAndSortProject(projects, userProfile?.userProfile, {
-    tag,
-    search,
-    sort,
-  });
+  const projectsFilteredSorted = filterAndSortProject(
+    projects,
+    userProfile?.userProfile,
+    {
+      tag,
+      search,
+      sort,
+    },
+  );
   const showFilter = () => {
     showDialog('project_filter', projects);
   };

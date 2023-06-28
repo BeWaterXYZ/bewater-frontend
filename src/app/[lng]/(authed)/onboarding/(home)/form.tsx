@@ -11,7 +11,6 @@ import {
   getEmailVerificationCode,
   submitCreateUserProfile,
 } from '@/services/user';
-// import { useAuthStore } from '@/stores/auth';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';

@@ -4,7 +4,6 @@ import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
 import { Team, UserProfile } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -76,7 +75,7 @@ export default function ChallengeTeams({ params }: any) {
   const user = useClerk().user;
   const showDialog = useDialogStore((s) => s.open);
   const { challengeId } = segmentSchema.challengeId.parse(params);
-  const { data: userProfile } = useFetchUser(user?.id)
+  const { data: userProfile } = useFetchUser(user?.id);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);
@@ -86,7 +85,11 @@ export default function ChallengeTeams({ params }: any) {
   if (!challenge || !teams) return null;
 
   const { tag, role } = querySchema.parse(Object.fromEntries(sp!));
-  const teamsFilteredSorted = filterAndSortTeam(teams, userProfile?.userProfile, { role, tag });
+  const teamsFilteredSorted = filterAndSortTeam(
+    teams,
+    userProfile?.userProfile,
+    { role, tag },
+  );
 
   const showFilter = () => {
     showDialog('team_filter', teams);

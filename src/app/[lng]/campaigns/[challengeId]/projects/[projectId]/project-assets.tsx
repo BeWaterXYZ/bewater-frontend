@@ -1,7 +1,6 @@
 'use client';
 
 import { Project } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
 import { useClerk } from '@clerk/nextjs';
 import { AssetItem } from './project-asset-item';
 export const data = [
