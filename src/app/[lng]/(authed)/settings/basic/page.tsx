@@ -1,29 +1,34 @@
 'use client';
-import { AvatarWithEditor } from '@/components/avatar/avatar-with-editor';
-import { useLoadingWhen } from '@/components/loading/store';
-import { useFetchUser } from '@/services/user.query';
-import { useAuthStore } from '@/stores/auth';
-import { useClerk } from '@clerk/nextjs';
+import { UserProfile } from '@clerk/nextjs';
 
-import { FormUserSettings } from './form/form-settings';
-
+import { dark } from '@clerk/themes';
 export default function Page() {
-  // const user = useClerk().user;
-  // console.log(user);
-  const clerk = useClerk();
-  console.log(clerk.user?.id)
-  const { data, isLoading } = useFetchUser(clerk.user?.id);
-
-  useLoadingWhen(isLoading);
-
-  if (isLoading) return null;
   return (
     <div className="pt-8">
-      <AvatarWithEditor
-        walletAddress={data?.userProfile?.walletAddress}
-        src={data?.userProfile?.avatarURI}
+      <UserProfile
+        appearance={{
+          baseTheme: dark,
+          variables: { colorPrimary: '#00ffff' },
+          elements: {
+            formButtonPrimary:
+              'bg-day text-night hover:bg-[#00cccc] active:bg-[#009999] rounded-sm focus:shadow-none',
+            card: 'bg-night text-white p-0 gap-10',
+            headerSubtitle: 'text-gray-500',
+            socialButtons: 'hidden',
+            dividerRow: 'hidden',
+            formFieldInput:
+              'bg-night text-white border-gray-800 rounded-sm placeholder-gray-600',
+            formFieldLabel: 'text-gray-500 hidden',
+            formFieldLabelRow: 'mb-2',
+            footer: 'hidden',
+            header: 'text-xl gap-2',
+            identityPreviewEditButton: 'text-gray-500',
+            formResendCodeLink:
+              'text-day hover:text-[#00cccc] active:text-[#009999] rounded-none focus:shadow-none',
+            navbar: 'hidden',
+          },
+        }}
       />
-      <FormUserSettings data={data!} />
     </div>
   );
 }

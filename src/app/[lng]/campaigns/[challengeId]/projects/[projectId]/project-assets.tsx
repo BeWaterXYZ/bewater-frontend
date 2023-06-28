@@ -31,7 +31,7 @@ export function ProjectAssets({ project }: { project: Project }) {
   const user = useClerk().user;
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.id);
+    .some((m) => m.userProfile.clerkId === user?.id);
 
   const assetsToShow = data.filter((d) => {
     if (isLeader && d.key !== 'githubURI') {

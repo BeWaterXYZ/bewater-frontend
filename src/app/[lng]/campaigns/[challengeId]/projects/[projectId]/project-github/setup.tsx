@@ -9,7 +9,7 @@ export function GithubStatsSetup({ project }: { project: Project }) {
   const user = useClerk().user;
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.externalId);
+    .some((m) => m.userProfile.clerkId === user?.id);
 
   const { data: socialConnections, isLoading } = useFetchUserSocialConnections(
     user?.id,

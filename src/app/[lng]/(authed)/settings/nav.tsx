@@ -9,8 +9,8 @@ const links = [
     path: '/settings/basic',
   },
   {
-    label: ' Linked Accounts',
-    path: '/settings/link',
+    label: 'Builder Settings',
+    path: '/settings/extra',
   },
 ] as const;
 

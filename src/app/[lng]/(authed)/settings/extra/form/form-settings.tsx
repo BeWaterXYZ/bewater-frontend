@@ -26,9 +26,9 @@ interface Props {
 export const FormUserSettings = ({ data }: Props) => {
   const schema = z
     .object({
-      userName: validationSchema.userName(data.userProfile?.userName ?? ''),
+      // userName: validationSchema.userName(data.userProfile?.userName ?? ''),
       bio: validationSchema.bio,
-      fullName: validationSchema.fullName,
+      // fullName: validationSchema.fullName,
       roles: validationSchema.roles,
       skills: validationSchema.skills,
     })
@@ -74,7 +74,7 @@ export const FormUserSettings = ({ data }: Props) => {
       className={clsx('mt-8')}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input
+      {/* <Input
         label="Username"
         placeholder="Enter your username"
         required
@@ -87,7 +87,7 @@ export const FormUserSettings = ({ data }: Props) => {
         required
         error={errors['fullName']}
         {...register('fullName', { required: 'Full name is required.' })}
-      />
+      /> */}
       <TextArea
         label="Bio"
         rows={3}

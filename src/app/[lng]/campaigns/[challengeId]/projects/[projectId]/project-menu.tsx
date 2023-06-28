@@ -14,7 +14,7 @@ export default function ProjectMenu({ project }: ProjectMenuProps) {
   const user = useClerk().user;
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.externalId);
+    .some((m) => m.userProfile.clerkId === user?.id);
   const onProjectEdit = () => {
     showDialog('project_edit', project);
   };

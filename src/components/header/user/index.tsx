@@ -19,7 +19,11 @@ export default function UserArea({ lng }: { lng: string }) {
   ) : (
     <div className="flex gap-4 items-center">
       <NotificationBell lng={lng} />
-      <UserButton afterSignOutUrl="/" />
+      <UserButton
+        afterSignOutUrl="/"
+        userProfileMode="navigation"
+        userProfileUrl="/settings/basic"
+      />
     </div>
   );
 }
