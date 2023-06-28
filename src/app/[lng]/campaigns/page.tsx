@@ -46,7 +46,7 @@ export default async function ChallengePage({
       {/* todo , fixme  */}
       {completed.length > 0 && (
         <div className="pt-4 pb-8">
-          <h2 className="heading-5">Completed</h2>
+          <h2 className="body-1 text-[24px] uppercase">Completed</h2>
           <ChallengeList challenges={completed} lng={lng} />
         </div>
       )}
