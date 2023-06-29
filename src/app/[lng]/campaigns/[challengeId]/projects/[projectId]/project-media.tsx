@@ -1,7 +1,7 @@
 'use client';
 import { useMutationUpdateProject } from '@/services/project.query';
 import { Project } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { ChangeEventHandler, useEffect, useState } from 'react';
 import { ImageContainer, Media } from './image-container';
@@ -13,12 +13,12 @@ interface ProjectMediaProps {
   project: Project;
 }
 export default function ProjectMedia({ project }: ProjectMediaProps) {
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const mutation = useMutationUpdateProject();
   const [viewImage, viewImageSet] = useState<undefined | number>(undefined);
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.externalId);
+    .some((m) => m.userProfile.clerkId === user?.id);
 
   const [medias, mediaSet] = useState<Media[]>(() =>
     project.mediaURLs.map((img) => ({

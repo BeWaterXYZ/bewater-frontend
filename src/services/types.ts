@@ -19,6 +19,7 @@ export interface UserProfile {
   bio?: string;
   roles: RoleUnion[];
   skills: SkillUnion[];
+  clerkId: string;
 }
 export interface SocialAuth {
   platform: 'GitHub' | 'Figma';

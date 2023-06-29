@@ -9,11 +9,12 @@ import { ProjectFilter } from './project-filter';
 import { Project, UserProfile } from '@/services/types';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import { useAuthStore } from '@/stores/auth';
 import { useState } from 'react';
 import { SearchInput } from '@/components/molecules/search-input';
 import { useDialogStore } from '@/components/dialog/store';
 import { CreateTeamButton } from '../teams/create-team-button';
+import { useClerk } from '@clerk/nextjs';
+import { useFetchUser } from '@/services/user.query';
 
 function filterAndSortProject(
   projects: Project[],
@@ -60,24 +61,30 @@ function filterAndSortProject(
 export default function ChallengeProjects({ params, searchParams }: any) {
   const sp = useSearchParams();
   const showDialog = useDialogStore((s) => s.open);
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const [search, searchSet] = useState('');
   const [sort, sortSet] = useState(false);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: projects, isLoading: isLoadingProject } =
     useFetchChallengeProjects(challengeId);
-  const { lng = 'en' } = params || {};
+  const { data: userProfile } = useFetchUser(user?.id);
+
+  const { lng = 'en' } = segmentSchema.lng.parse(params);
 
   if (isLoading || isLoadingProject) return <Loading />;
   if (!challenge || !projects) return null;
 
   const { tag } = querySchema.parse(Object.fromEntries(sp!));
-  const projectsFilteredSorted = filterAndSortProject(projects, user, {
-    tag,
-    search,
-    sort,
-  });
+  const projectsFilteredSorted = filterAndSortProject(
+    projects,
+    userProfile?.userProfile,
+    {
+      tag,
+      search,
+      sort,
+    },
+  );
   const showFilter = () => {
     showDialog('project_filter', projects);
   };

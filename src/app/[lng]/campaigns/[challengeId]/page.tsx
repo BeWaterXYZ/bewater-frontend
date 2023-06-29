@@ -397,7 +397,7 @@ export default async function ChallengeIntro({ params }: any) {
               </Link>
             </div>
           ) : (
-            <ConnectButton lng={lng} />
+            <ConnectButton />
           )
         ) : (
           <div>

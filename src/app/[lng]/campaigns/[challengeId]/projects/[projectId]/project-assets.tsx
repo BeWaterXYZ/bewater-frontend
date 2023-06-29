@@ -1,7 +1,7 @@
 'use client';
 
 import { Project } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
+import { useClerk } from '@clerk/nextjs';
 import { AssetItem } from './project-asset-item';
 export const data = [
   {
@@ -27,10 +27,10 @@ export const data = [
 ] as const;
 
 export function ProjectAssets({ project }: { project: Project }) {
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const isLeader = project.team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.externalId);
+    .some((m) => m.userProfile.clerkId === user?.id);
 
   const assetsToShow = data.filter((d) => {
     if (isLeader && d.key !== 'githubURI') {
