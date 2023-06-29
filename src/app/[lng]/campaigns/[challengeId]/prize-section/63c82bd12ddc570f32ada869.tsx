@@ -7,7 +7,7 @@ export function PrizeSection({ t }: { t: Function }) {
   return (
     <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
       <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-        {t('cryptoArt.t5')}vDBX + USDT
+        {t('cryptoArt.t5')}vDBX + HNX + USDT
       </h3>
 
       <div className="flex flex-col items-center gap-16">
@@ -99,6 +99,27 @@ export function PrizeSection({ t }: { t: Function }) {
               </div>
             </div>
           </div>
+          <div className="flex flex-col gap-4 md:gap-7 items-center">
+            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+              {t('cryptoArt.t25')}
+            </p>
+            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                <Image
+                  src={`/challenge/assets/digitalart.jpg`}
+                  alt=""
+                  width={160}
+                  height={160}
+                  className="w-full sm:w-40 sm:h-40"
+                />
+                <ul className="body-3 text-white/60 list-disc list-inside">
+                  <li>{t('cryptoArt.t26')}</li>
+                  <br />
+                  <li>{t('cryptoArt.t27')}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="relative w-full flex flex-col gap-10 items-center">
@@ -130,6 +151,7 @@ export function PrizeSection({ t }: { t: Function }) {
           <SponsorsCell src={'/sponsors/bewater.png'} />
           <SponsorsCell src={'/sponsors/club3.png'} />
           <SponsorsCell src={'/sponsors/midaswap.png'} />
+          <SponsorsCell src={'/sponsors/tutulogo.png'} />
         </Marquee>
       </div>
     </div>

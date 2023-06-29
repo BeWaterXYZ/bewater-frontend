@@ -70,7 +70,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
     useFetchChallengeProjects(challengeId);
   const { data: userProfile } = useFetchUser(user?.id);
 
-  const { lng } = segmentSchema.lng.parse(params);
+  const { lng = 'en' } = segmentSchema.lng.parse(params);
 
   if (isLoading || isLoadingProject) return <Loading />;
   if (!challenge || !projects) return null;
@@ -160,7 +160,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
         </div>
         <div className="grid gap-4 grid-cols-300">
           {projectsFilteredSorted.map((project) => {
-            return <ProjectItem key={project.id} project={project} />;
+            return <ProjectItem key={project.id} project={project} lng={lng} />;
           })}
         </div>
       </div>

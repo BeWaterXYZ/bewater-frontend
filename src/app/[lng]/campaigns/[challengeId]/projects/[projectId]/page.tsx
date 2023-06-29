@@ -125,7 +125,11 @@ export default function Page({ params }: any) {
             <h3 className="body-3 font-bold text-grey-500">Members</h3>
             <div className="my-5">
               {project.team.teamMembers.map((m) => (
-                <TeamMember member={m} key={m.userProfile.externalId} />
+                <TeamMember
+                  member={m}
+                  key={m.userProfile.externalId}
+                  lng={lng}
+                />
               ))}
             </div>
             <Link

@@ -20,15 +20,18 @@
     "t13": "Procedural generation is a must, and we encourage artists and programmers to collaborate to generate stunning artwork through procedural generation and explore the charm of fractal art.",
     "t14": "Pixel Art",
     "t15": "Show off your love for classic pixel art, with extra points for pixel art made by hand instead of AI.",
-    "t16": "Canvas size is limited to 16x16、32x32、64x64、128x128。",
+    "t16": "Canvas size is limited to 16x16, 32x32, 64x64, 128x128.",
     "t17": "Additional Rewards",
     "t18": "On-Chain Artwork: ",
-    "t19": "The top three artworks from each track will be minted as ERC-721 (NFT) tokens and added to the blockchain as part of the same collection. They will be eligible for future community-organized auctions, with all proceeds going directly to the designers.",
+    "t19": "HeartX will assist the winning artists in 1/1 Digital Art track to be verified at HeartX platform and minting their winning artworks on the zkSync, the layer2 of Ethereum.Other top three artworks from each track will be minted as ERC-721 (NFT) tokens. They will be eligible for future community-organized auctions, with all proceeds going directly to the designers.",
     "t20": "Cash Prize and Tokens: ",
-    "t21": "DeBox will provide vDBX, along with sponsorship from various partners, including USDT, NFT whitelist, and platform-specific tokens. Stay tuned for more details.",
+    "t21": "Each of the top three projects in each track will receive 500vDBX provided by DeBox and 5,000$HNX provided by HeartX. Additionally, the fourth to tenth place winners in the 1/1 Digital Art track will receive a reward of 3,000$HNX. There are also sponsorships from several other partners, including USDT, NFT whitelist, and corresponding platform tokens. Stay tuned for more details.",
     "t22": "Artwork Promotion: ",
-    "t23": "This event will collaborate with multiple partners to promote the participating artworks, offering exposure to an audience of hundreds of thousands.",
-    "t24": "Co-hosts"
+    "t23": "This event will collaborate with multiple partners to promote the participating artworks, offering exposure to an audience of hundreds of thousands.In addition, the top three artists in the 1/1 Digital Art track will have their personal pages featured on the HeartX platform's homepage banner for 24 hours.",
+    "t24": "Co-hosts",
+    "t25": "1/1 Digital Art",
+    "t26": "Express your passion for digital art by creating captivating artworks with cryptographic elements. No limitations on form or medium. But they must be one-of-a-kind and have not been minted on any blockchain.",
+    "t27": "Image size within 2MB to 20MB (JPG, PNG, GIF), video size up to 100MB (MP4)."
   },
   "campaign": {
     "t1": "Join / Create Team",

@@ -4,9 +4,18 @@ import { TeamMember } from '@/services/types';
 import { Avatar } from '@/components/avatar/avatar';
 import { TagRole } from '@/components/tag';
 
-export function TeamMember({ member }: { member: TeamMember }) {
+export function TeamMember({
+  member,
+  lng,
+}: {
+  member: TeamMember;
+  lng: string;
+}) {
   return (
-    <Link prefetch={false} href={`/en/user/${member.userProfile.externalId}`}>
+    <Link
+      prefetch={false}
+      href={`/${lng}/user/${member.userProfile.externalId}`}
+    >
       <div className="flex gap-2 my-4">
         <div>
           <Avatar
