@@ -19,6 +19,8 @@ const sponsors_tier3 = [
   '/sponsors/moledao.png',
   '/sponsors/blockbeats.png',
   '/sponsors/cointime.png',
+  '/sponsors/ScalingX.png',
+  '/sponsors/panews.png',
 ];
 
 export function Sponsors4({ t }: { t: Function }) {
