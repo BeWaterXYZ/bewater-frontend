@@ -208,6 +208,41 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
             </div>
           </div>
+
+          {challenge.requirements.length > 1 ? (
+            <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
+              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                <h3 className="heading-5 font-bold mb-8">
+                  {t('campaign.t10')}
+                </h3>
+                <ul className="list-decimal">
+                  {challenge.requirements.split('\n').map((r) => (
+                    <li
+                      key={r}
+                      className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                    >
+                      <span className="body-3 text-grey-400">{r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                <h3 className="heading-5 font-bold mb-8">
+                  {t('campaign.t11')}
+                </h3>
+                <ul className="list-decimal">
+                  {challenge.reviewDimension.split('\n').map((r) => (
+                    <li
+                      key={r}
+                      className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                    >
+                      <span className="body-3 text-grey-400">{r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : null}
         </>
       ) : null}
 
