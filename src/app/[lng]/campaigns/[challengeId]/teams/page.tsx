@@ -58,6 +58,7 @@ function filterAndSortTeam(
     );
     let isInBTeam = b.teamMembers.some(
       (m) => m.userProfile.clerkId === userProfile.clerkId,
+
     );
 
     if (isInATeam && !isInBTeam) return -1;

@@ -15,7 +15,7 @@
     "yarn": ">=1.22.0"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.21.8",
+    "@clerk/nextjs": "^4.21.12",
     "@clerk/themes": "^1.7.5",
     "@hookform/resolvers": "^3.0.1",
     "@radix-ui/react-alert-dialog": "^1.0.3",
@@ -37,7 +37,7 @@
     "compressorjs": "^1.2.1",
     "date-fns": "^2.30.0",
     "fslightbox-react": "^1.7.2",
-    "i18next": "23.0.2",
+    "i18next": "^23.2.5",
     "i18next-browser-languagedetector": "^7.0.2",
     "i18next-resources-to-backend": "^1.1.4",
     "mime": "^3.0.0",
