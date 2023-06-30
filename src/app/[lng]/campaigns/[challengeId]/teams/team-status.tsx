@@ -12,7 +12,7 @@ export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
   const showDialog = useDialogStore((s) => s.open);
   const navigator = useNavigator(lng);
   const isMyTeam = team.teamMembers.some(
-    (m) => m.userProfile.externalId === user?.externalId,
+    (m) => m.userProfile.clerkId === user?.id,
   );
   const requestJoin = () => {
     if (!clerk.user) {

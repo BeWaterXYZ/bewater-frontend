@@ -23,7 +23,8 @@ function i18n(req: any) {
   // Redirect if lng in path is not supported
   if (
     !req.nextUrl.pathname.startsWith('/sign-in') &&
-    !req.nextUrl.pathname.startsWith('/sign-up')
+    !req.nextUrl.pathname.startsWith('/sign-up') &&
+    !req.nextUrl.pathname.startsWith('/onboarding')
   ) {
     if (!languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`))) {
       return NextResponse.redirect(

@@ -22,7 +22,7 @@ import { useClerk } from '@clerk/nextjs';
 function getUserLink(userProfile: UserProfile, lng: string) {
   return (
     <strong className="text-white hover:underline">
-      <Link prefetch={false} href={`/${lng}/user/${userProfile.externalId}`}>
+      <Link prefetch={false} href={`/${lng}/user/${userProfile.id}`}>
         {userProfile.fullName}
       </Link>
     </strong>
@@ -89,7 +89,7 @@ export function GroupingRequestNotification({
   lng: string;
 }) {
   const { confirm } = useAlert();
-  const user = useClerk().user
+  const user = useClerk().user;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
 

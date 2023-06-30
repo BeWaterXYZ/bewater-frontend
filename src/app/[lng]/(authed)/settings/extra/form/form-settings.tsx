@@ -20,7 +20,7 @@ import { useMutationUpdateUserProfile } from '@/services/user.query';
 import { validationSchema } from '@/schema';
 
 interface Props {
-  data: GetUserProfileByIdResponse;
+  data: UserProfile;
 }
 
 export const FormUserSettings = ({ data }: Props) => {
@@ -45,7 +45,7 @@ export const FormUserSettings = ({ data }: Props) => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
-    defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
+    defaultValues: { ...data, bio: data?.bio ?? '' },
   });
   const mutation = useMutationUpdateUserProfile();
 
