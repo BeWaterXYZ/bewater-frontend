@@ -22,7 +22,7 @@ import { useClerk } from '@clerk/nextjs';
 function getUserLink(userProfile: UserProfile, lng: string) {
   return (
     <strong className="text-white hover:underline">
-      <Link prefetch={false} href={`/${lng}/user/${userProfile.id}`}>
+      <Link href={`/${lng}/user/${userProfile.id}`}>
         {userProfile.fullName}
       </Link>
     </strong>
@@ -36,7 +36,6 @@ function getTitle(
 ) {
   let teamLink = (
     <Link
-      prefetch={false}
       href={`/${lng}/campaigns/${req.team.challenge.id}/teams/${req.team.id}`}
       className="text-white hover:underline"
     >
@@ -178,7 +177,6 @@ export function GroupingRequestNotification({
           <p className="body-5 text-grey-500">
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
             <Link
-              prefetch={false}
               href={`/${lng}/campaigns/${req.team.challenge.id}`}
               className="hover:underline"
             >

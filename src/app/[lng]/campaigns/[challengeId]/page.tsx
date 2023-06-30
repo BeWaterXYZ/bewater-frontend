@@ -143,7 +143,6 @@ export default async function ChallengeIntro({ params }: any) {
         <div>
           {challenge.id !== '3' ? (
             <Link
-              prefetch={false}
               href={`https://t.me/bewater_zh`}
               target="_blank"
               className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
@@ -178,7 +177,6 @@ export default async function ChallengeIntro({ params }: any) {
             </Link>
           ) : (
             <Link
-              prefetch={false}
               href={`https://twitter.com/StarkNetAstroCN`}
               target="_blank"
               className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
@@ -389,7 +387,6 @@ export default async function ChallengeIntro({ params }: any) {
           isTeamingEnabled ? (
             <div>
               <Link
-                prefetch={false}
                 href={`/${lng}/campaigns/${challengeId}/teams`}
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
@@ -402,7 +399,6 @@ export default async function ChallengeIntro({ params }: any) {
         ) : (
           <div>
             <Link
-              prefetch={false}
               target="_blank"
               href="https://forms.gle/qZ5KbnCufSNVeVkv8"
               className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"

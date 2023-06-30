@@ -12,7 +12,7 @@ export function TeamMember({
   lng: string;
 }) {
   return (
-    <Link prefetch={false} href={`/${lng}/user/${member.userProfile.id}`}>
+    <Link href={`/${lng}/user/${member.userProfile.id}`}>
       <div className="flex gap-2 my-4">
         <div>
           <Avatar

@@ -15,7 +15,6 @@ type NavItemProps = {
 export function NavItem({ item, underline, className }: NavItemProps) {
   return (
     <Link
-      prefetch={false}
       href={item.path ?? '/'}
       className={clsx(
         ' flex items-center h-full body-2 font-bold outline-none py-2 uppercase',

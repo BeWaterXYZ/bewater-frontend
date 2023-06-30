@@ -49,7 +49,6 @@ export function ChallengeNav({
         let isEnabled = isMileStoneEnabled(link.milestone, challenge);
         return isEnabled ? (
           <Link
-            prefetch={false}
             key={link.path}
             href={`/${lng}/campaigns/${challengeId}${link.path}`}
             className={clsx('py-3 mx-3 text-center uppercase', {

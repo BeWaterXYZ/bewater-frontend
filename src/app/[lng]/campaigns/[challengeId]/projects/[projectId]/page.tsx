@@ -54,7 +54,6 @@ export default function Page({ params }: any) {
     <div className="container">
       <div className="my-10 flex justify-between">
         <Link
-          prefetch={false}
           className="body-3 text-grey-400"
           href={`/${lng}/campaigns/${challengeId}/projects`}
         >
@@ -129,7 +128,6 @@ export default function Page({ params }: any) {
               ))}
             </div>
             <Link
-              prefetch={false}
               className="body-3 text-day uppercase "
               href={`/${lng}/campaigns/${project.team.challengeId}/teams/${project.team.id}`}
             >
