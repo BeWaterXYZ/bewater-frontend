@@ -55,7 +55,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
         {challenge.id !== '3' ? challenge.location : 'SHANGHAI'}{' '}
-        {challenge.id !== '4' ? '|' : ''}{' '}
+        {challenge.id !== '4' && challenge.id !== '5' ? '|' : ''}{' '}
         {`${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)
@@ -67,7 +67,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         }`}
       </h1>
 
-      {challenge.id === '1' || challenge.id === '2' ? (
+      {challenge.id === '1' || challenge.id === '2' || challenge.id === '5' ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link

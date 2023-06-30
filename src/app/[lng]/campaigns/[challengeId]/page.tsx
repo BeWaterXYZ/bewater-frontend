@@ -79,8 +79,12 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '1' || challenge.id === '2' ? (
         <Timeline milestones={challenge.milestones} lng={lng} />
       ) : null}
-      {challenge.id === '4' ? (
-        <Timeline4 milestones={challenge.milestones} lng={lng} />
+      {parseInt(challenge.id) > 3 ? (
+        <Timeline4
+          milestones={challenge.milestones}
+          lng={lng}
+          id={challenge.id}
+        />
       ) : null}
       <div
         className={`${

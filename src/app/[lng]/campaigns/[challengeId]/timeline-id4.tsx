@@ -2,7 +2,7 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 
-function prepareData(milestones: Milestone[]) {
+function prepareData(milestones: any) {
   let nodes = [];
   let today = new Date();
   for (let i = 0; i < milestones.length; i++) {
@@ -37,28 +37,52 @@ const glowing =
 export function Timeline({
   milestones,
   lng,
+  id,
 }: {
   milestones: any;
   lng: string;
+  id: string;
 }) {
-  milestones = [
-    {
-      dueDate: '2023-07-15',
-      stageName: 'Launch',
-    },
-    {
-      dueDate: '2023-07-22',
-      stageName: 'ZK Curriculum',
-    },
-    {
-      dueDate: '2023-08-14',
-      stageName: 'ZK Hackathon',
-    },
-    {
-      dueDate: '2023-09-15',
-      stageName: 'DEMO Day',
-    },
-  ];
+  if (id === '4') {
+    milestones = [
+      {
+        dueDate: '2023-07-15',
+        stageName: 'Launch',
+      },
+      {
+        dueDate: '2023-07-22',
+        stageName: 'ZK Curriculum',
+      },
+      {
+        dueDate: '2023-08-14',
+        stageName: 'ZK Hackathon',
+      },
+      {
+        dueDate: '2023-09-15',
+        stageName: 'DEMO Day',
+      },
+    ];
+  }
+  if (id === '5') {
+    milestones = [
+      {
+        dueDate: '2023-06-20',
+        stageName: 'Registration',
+      },
+      {
+        dueDate: '2023-07-16',
+        stageName: 'First round screening',
+      },
+      {
+        dueDate: '2023-07-27',
+        stageName: 'Second round screening & Online Demo Day',
+      },
+      {
+        dueDate: '2023-08-15',
+        stageName: 'Offline Demo Day & Award Ceremony',
+      },
+    ];
+  }
   let data = prepareData(milestones);
   return (
     <>

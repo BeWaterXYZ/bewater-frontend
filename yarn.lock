@@ -4577,10 +4577,10 @@ i18next-resources-to-backend@^1.1.4:
   dependencies:
     "@babel/runtime" "^7.21.5"
 
-i18next@23.0.2:
-  version "23.0.2"
-  resolved "https://registry.npmjs.org/i18next/-/i18next-23.0.2.tgz#3dba0d33b0fa6de2cb9c81531861fe04856da51c"
-  integrity sha512-UhTW8vtJWwG8Qb4g/M7xwrTGTHo6t8X0nJxunLihRdLX+p/Eh7/pl5GQ4eDeBb7xFdVc8LskNwCW4LQh6qx8FQ==
+i18next@23.2.6:
+  version "23.2.6"
+  resolved "https://registry.npmjs.org/i18next/-/i18next-23.2.6.tgz#70c09517c301f206615acd6fc35b4a2570629300"
+  integrity sha512-i0P2XBisewaICJ7UQtwymeJj6cXUigM+s8XNIXmWk4oJ8iTok2taCbOTX0ps+u9DFcQ6FWH6xLIU0dLEnMaNbA==
   dependencies:
     "@babel/runtime" "^7.22.5"
 

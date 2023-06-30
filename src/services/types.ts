@@ -51,7 +51,7 @@ export interface Challenge {
   judgeIDs: string[];
   userIDs: string[];
   awards: Award[];
-  milestones: Milestone[];
+  milestones: any;
   judges: Judge[];
   sponsorships: Sponsorship[];
   socialLinks: {
