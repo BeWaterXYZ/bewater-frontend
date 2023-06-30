@@ -8,6 +8,7 @@ import { segmentSchema } from './param-schema';
 import { PrizeSection as PrizeSection1 } from './prize-section/63c82bd12ddc570f32ada868';
 import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f32ada869';
 import { PrizeSection as PrizeSection4 } from './prize-section/63c82bd12ddc570f32ada86a';
+import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f32ada86b';
 import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
 import { Timeline as Timeline4 } from './timeline-id4';
@@ -17,6 +18,7 @@ import Balancer from 'react-wrap-balancer';
 import { Sponsors2 } from './sponsors2';
 import { Sponsors3 } from './sponsors3';
 import { Sponsors4 } from './sponsors4';
+import { Sponsors5 } from './sponsors5';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -165,6 +167,7 @@ export default async function ChallengeIntro({ params }: any) {
         {challenge.id === '2' ? <PrizeSection2 t={t} lng={lng} /> : null}
         {challenge.id === '3' ? <ScheduleSection /> : null}
         {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
+        {challenge.id === '5' ? <PrizeSection5 t={t} lng={lng} /> : null}
       </div>
       {challenge.id !== '3' ? (
         <>
@@ -259,8 +262,9 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '2' ? <Sponsors2 t={t} /> : null}
       {challenge.id === '3' ? <Sponsors3 /> : null}
       {challenge.id === '4' ? <Sponsors4 t={t} /> : null}
+      {challenge.id === '5' ? <Sponsors5 t={t} /> : null}
 
-      {parseInt(challenge.id) < 4 ? (
+      {parseInt(challenge.id) < 4 || challenge.id === '5' ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">
             <Balancer ratio={0.9}>
