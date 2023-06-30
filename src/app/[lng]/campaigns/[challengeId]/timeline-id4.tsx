@@ -71,15 +71,15 @@ export function Timeline({
       },
       {
         dueDate: '2023-07-16',
-        stageName: 'First round screening',
+        stageName: 'Screening',
       },
       {
         dueDate: '2023-07-27',
-        stageName: 'Second round screening & Online Demo Day',
+        stageName: 'Online Demo Day',
       },
       {
         dueDate: '2023-08-15',
-        stageName: 'Offline Demo Day & Award Ceremony',
+        stageName: 'Award Ceremony',
       },
     ];
   }
