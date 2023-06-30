@@ -2,7 +2,7 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 
-function prepareData(milestones: any) {
+function prepareData(milestones: Milestone[]) {
   let nodes = [];
   let today = new Date();
   for (let i = 0; i < milestones.length; i++) {
