@@ -53,10 +53,10 @@ function filterAndSortTeam(
   if (!userProfile) return res;
   return res.sort((a, b) => {
     let isInATeam = a.teamMembers.some(
-      (m) => m.userProfile.externalId === userProfile.externalId,
+      (m) => m.userProfile.id === userProfile.id,
     );
     let isInBTeam = b.teamMembers.some(
-      (m) => m.userProfile.externalId === userProfile.externalId,
+      (m) => m.userProfile.id === userProfile.id,
     );
 
     if (isInATeam && !isInBTeam) return -1;
@@ -76,6 +76,7 @@ export default function ChallengeTeams({ params }: any) {
   const showDialog = useDialogStore((s) => s.open);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: userProfile } = useFetchUser(user?.id);
+  console.log({ userProfile });
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);
@@ -85,11 +86,10 @@ export default function ChallengeTeams({ params }: any) {
   if (!challenge || !teams) return null;
 
   const { tag, role } = querySchema.parse(Object.fromEntries(sp!));
-  const teamsFilteredSorted = filterAndSortTeam(
-    teams,
-    userProfile?.userProfile,
-    { role, tag },
-  );
+  const teamsFilteredSorted = filterAndSortTeam(teams, userProfile, {
+    role,
+    tag,
+  });
 
   const showFilter = () => {
     showDialog('team_filter', teams);

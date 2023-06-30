@@ -32,7 +32,6 @@ export default async function Page({ params }: any) {
                   className="w-full lg:w-1/2 rounded bg-latenight border border-[#24254E] overflow-hidden "
                 >
                   <Link
-                    prefetch={false}
                     href={`/${lng}/campaigns/${tm.team?.challengeId}`}
                     className="block"
                   >

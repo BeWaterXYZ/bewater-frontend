@@ -62,7 +62,6 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
-              prefetch={false}
               href={`/${lng}/campaigns/${challenge.id}/teams`}
               className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
             >
@@ -83,7 +82,6 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       ) : (
         <div className="mt-6 md:mt-12">
           <Link
-            prefetch={false}
             target="_blank"
             href="https://forms.gle/qZ5KbnCufSNVeVkv8"
             className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"

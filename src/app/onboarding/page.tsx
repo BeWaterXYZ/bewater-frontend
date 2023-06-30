@@ -6,7 +6,7 @@ import { FormOnboardingExtra } from './form';
 
 export default function Page({ params }: { params: { lng: string } }) {
   const { lng = 'en' } = params || {};
-  const user = useClerk().user
+  const user = useClerk().user;
   const { data, isLoading } = useFetchUser(user?.id);
 
   useLoadingWhen(isLoading);

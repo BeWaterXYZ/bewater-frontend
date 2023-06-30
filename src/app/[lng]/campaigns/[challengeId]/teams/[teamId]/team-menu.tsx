@@ -6,6 +6,7 @@ import { useNavigator } from '@/hooks/useNavigator';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { teamRemoveMember } from '@/services/team';
 import { Team } from '@/services/types';
+import { useFetchUser } from '@/services/user.query';
 import { useClerk } from '@clerk/nextjs';
 
 interface TeamMenuProps {
@@ -18,6 +19,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
   const { data: challenge } = useFetchChallengeById(team.challengeId);
   const router = useNavigator(lng);
   const user = useClerk().user;
+  const { data: userProfile } = useFetchUser(user?.id);
   const isAuthed = !!user;
   const navigator = useNavigator(lng);
   const showDialog = useDialogStore((s) => s.open);
@@ -51,7 +53,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
       cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
-    await teamRemoveMember(team.id, user?.externalId!);
+    await teamRemoveMember(team.id, userProfile?.id!);
     router.refresh();
   };
 

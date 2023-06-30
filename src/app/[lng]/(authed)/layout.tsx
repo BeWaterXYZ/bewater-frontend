@@ -9,7 +9,5 @@ export default function RootLayout({
 }) {
   const { lng = 'en' } = params || {};
 
-  // useRequireAuthed(lng);
-
   return <div className="pt-24 lg:pt-20">{children}</div>;
 }

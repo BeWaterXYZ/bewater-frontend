@@ -51,7 +51,7 @@ export function TeamMemberManager({
     try {
       let newTM = await teamUpdateMemberRole(
         member.teamId,
-        member.userProfile.externalId,
+        member.userProfile.id,
         role,
       );
       showDialog('team_manage_member', (team) => {
@@ -103,7 +103,7 @@ export function TeamMemberManager({
               <button
                 className="bdoy-4 text-danger"
                 onClick={() => {
-                  removeMember(member.userProfile.externalId);
+                  removeMember(member.userProfile.id);
                 }}
               >
                 Remove

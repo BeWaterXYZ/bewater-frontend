@@ -46,10 +46,10 @@ function filterAndSortProject(
   if (!userProfile) return res;
   return res.sort((a, b) => {
     let isInATeam = a.team.teamMembers.some(
-      (m) => m.userProfile.externalId === userProfile.externalId,
+      (m) => m.userProfile.id === userProfile.id,
     );
     let isInBTeam = b.team.teamMembers.some(
-      (m) => m.userProfile.externalId === userProfile.externalId,
+      (m) => m.userProfile.id === userProfile.id,
     );
 
     if (isInATeam && !isInBTeam) return -1;
@@ -76,15 +76,11 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   if (!challenge || !projects) return null;
 
   const { tag } = querySchema.parse(Object.fromEntries(sp!));
-  const projectsFilteredSorted = filterAndSortProject(
-    projects,
-    userProfile?.userProfile,
-    {
-      tag,
-      search,
-      sort,
-    },
-  );
+  const projectsFilteredSorted = filterAndSortProject(projects, userProfile, {
+    tag,
+    search,
+    sort,
+  });
   const showFilter = () => {
     showDialog('project_filter', projects);
   };

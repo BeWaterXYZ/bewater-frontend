@@ -8,7 +8,6 @@ export default function UserArea({ lng }: { lng: string }) {
 
   return !clerk.user ? (
     <Link
-      prefetch={false}
       href={`/sign-in`}
       className="btn btn-primary-invert h-10 py-4 px-8 uppercase body-4 text-day "
     >

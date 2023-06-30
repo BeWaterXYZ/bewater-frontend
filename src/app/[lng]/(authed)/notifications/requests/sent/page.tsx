@@ -6,7 +6,7 @@ import { useClerk } from '@clerk/nextjs';
 
 export default function Page({ params }: { params: { lng: string } }) {
   let { lng = 'en' } = params || {};
-  const user = useClerk().user
+  const user = useClerk().user;
 
   const { error, data, isLoading } = useFetchGroupingRequest(user?.id);
 
@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { lng: string } }) {
             <GroupingRequestNotification
               key={req.id}
               req={req}
-              sentOrReceived={req.sender?.externalId === user?.externalId}
+              sentOrReceived={req.sender?.clerkId === user?.id}
               lng={lng}
             />
           );

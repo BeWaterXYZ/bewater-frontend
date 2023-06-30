@@ -10,7 +10,7 @@ import { string } from 'zod';
 export type UserID = string;
 
 export interface UserProfile {
-  externalId: UserID;
+  id: UserID;
   email: string;
   walletAddress: string;
   userName?: string;

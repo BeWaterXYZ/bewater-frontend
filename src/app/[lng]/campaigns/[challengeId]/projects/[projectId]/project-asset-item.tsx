@@ -90,7 +90,6 @@ export function AssetItem({
                   {label}
                 </p>
                 <Link
-                  prefetch={false}
                   href={value}
                   className="body-4 text-gray-300 overflow-hidden whitespace-nowrap overflow-ellipsis "
                 >
@@ -124,7 +123,7 @@ export function AssetItem({
               )}
             </div>
           ) : (
-            <Link prefetch={false} className="btn btn-secondary" href={value!}>
+            <Link className="btn btn-secondary" href={value!}>
               Visit
             </Link>
           )}

@@ -13,10 +13,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
     case 'PROJECT_UPDATED':
       return (
         <div className="body-4">
-          <Link
-            prefetch={false}
-            href={`/${lng}/user/${msg.targetUser?.externalId}`}
-          >
+          <Link href={`/${lng}/user/${msg.targetUser?.id}`}>
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
@@ -24,7 +21,6 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
             <span className="body-4">{msg.team.name}</span>
           ) : (
             <Link
-              prefetch={false}
               className="body-4"
               href={`/${lng}/campaigns/${msg.team.challenge?.id}/projects/${msg.team.project.id}`}
             >
@@ -36,15 +32,11 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
     case 'CHALLENGE_UPDATED':
       return (
         <div className="body-4">
-          <Link
-            prefetch={false}
-            href={`/${lng}/user/${msg.targetUser?.externalId}`}
-          >
+          <Link href={`/${lng}/user/${msg.targetUser?.id}`}>
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500"> has updated </span>
           <Link
-            prefetch={false}
             className="body-4"
             href={`/${lng}/campaigns/${msg.team.challenge?.id}`}
           >
@@ -60,10 +52,7 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
     case 'TEAM_INFO_UPDATED':
       return (
         <div className="body-4">
-          <Link
-            prefetch={false}
-            href={`/${lng}/user/${msg.targetUser?.externalId}`}
-          >
+          <Link href={`/${lng}/user/${msg.targetUser?.id}`}>
             {msg.targetUser?.userName}
           </Link>
           <span className="text-grey-500">
@@ -85,7 +74,6 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
             <span className="body-4">{msg.team.name}</span>
           ) : (
             <Link
-              prefetch={false}
               className="body-4"
               href={`/${lng}/campaigns/${msg.team.challenge?.id}/teams/${msg.teamId}`}
             >
@@ -100,10 +88,10 @@ function generateNotification(ntf: OngoingNotification, lng: string) {
 export default function Page({ params }: { params: { lng: string } }) {
   const { lng = 'en' } = params || {};
 
-  const clerk = useClerk()
+  const clerk = useClerk();
 
   const { error, data, isLoading } = useFetchOngoingNotifications(
-    clerk.user?.id
+    clerk.user?.id,
   );
 
   useLoadingWhen(isLoading);
