@@ -52,10 +52,10 @@ function filterAndSortTeam(
   if (!userProfile) return res;
   return res.sort((a, b) => {
     let isInATeam = a.teamMembers.some(
-      (m) => m.userId === userProfile.externalId,
+      (m) => m.userProfile.externalId === userProfile.externalId,
     );
     let isInBTeam = b.teamMembers.some(
-      (m) => m.userId === userProfile.externalId,
+      (m) => m.userProfile.externalId === userProfile.externalId,
     );
 
     if (isInATeam && !isInBTeam) return -1;
