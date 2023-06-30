@@ -52,7 +52,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       ) : challenge.id === '5' ? (
         <>
           <Image
-            src="/sponsors/ev-5.png"
+            src="/sponsors/ev-5.1.png"
             width={392}
             height={80}
             alt=""
