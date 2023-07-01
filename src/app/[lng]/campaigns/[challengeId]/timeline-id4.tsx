@@ -71,7 +71,7 @@ export function Timeline({
       },
       {
         dueDate: '2023-07-16',
-        stageName: 'Screening',
+        stageName: 'First round screening',
       },
       {
         dueDate: '2023-07-27',
@@ -79,7 +79,7 @@ export function Timeline({
       },
       {
         dueDate: '2023-08-15',
-        stageName: 'Award Ceremony',
+        stageName: 'Offline Demo Day & Award Ceremony',
       },
     ];
   }
@@ -148,7 +148,16 @@ export function Timeline({
               <p className="body-3 whitespace-nowrap absolute left-[30px]">
                 {node.dateFormatted}
               </p>
-              <p className="whitespace-nowrap body-3 font-bold absolute left-[90px]">
+              <p
+                className="whitespace-nowrap body-3 font-bold absolute left-[90px]"
+                style={{
+                  wordBreak: 'normal',
+                  wordWrap: 'break-word',
+                  width: '214px',
+                  whiteSpace: 'normal',
+                  textAlign: 'left',
+                }}
+              >
                 {node.stage}
               </p>
             </div>
