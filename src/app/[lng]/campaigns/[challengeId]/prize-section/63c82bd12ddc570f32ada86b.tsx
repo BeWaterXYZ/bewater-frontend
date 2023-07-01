@@ -159,7 +159,10 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
           </li>
           <br />
           <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
+            <div
+              className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4"
+              style={{ width: '30vw' }}
+            >
               <div className="flex flex-col gap-1 w-full">
                 <p className="body-3 ">First Prize</p>
                 <div className="flex flex-row justify-between">
