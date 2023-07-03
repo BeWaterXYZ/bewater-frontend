@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@clerk/nextjs':
-    specifier: ^4.21.8
-    version: 4.21.8(next@13.4.6)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.21.12
+    version: 4.21.13(next@13.4.6)(react-dom@18.2.0)(react@18.2.0)
   '@clerk/themes':
     specifier: ^1.7.5
     version: 1.7.5(react@18.2.0)
@@ -72,8 +72,8 @@ dependencies:
     specifier: ^1.7.2
     version: 1.7.2(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
   i18next:
-    specifier: 23.0.2
-    version: 23.0.2
+    specifier: ^23.2.5
+    version: 23.2.6
   i18next-browser-languagedetector:
     specifier: ^7.0.2
     version: 7.0.2
@@ -103,7 +103,7 @@ dependencies:
     version: 7.43.9(react@18.2.0)
   react-i18next:
     specifier: 13.0.1
-    version: 13.0.1(i18next@23.0.2)(react-dom@18.2.0)(react@18.2.0)
+    version: 13.0.1(i18next@23.2.6)(react-dom@18.2.0)(react@18.2.0)
   react-select:
     specifier: ^5.7.0
     version: 5.7.0(@types/react@18.0.27)(react-dom@18.2.0)(react@18.2.0)
@@ -222,8 +222,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
-  /@clerk/backend@0.23.6:
-    resolution: {integrity: sha512-+JnG9jmqoqPPKCHEtGf7vhFj2G8qNXmkPR8cDycjbUje/rXGNzxYAkgGaOahD9gXj5oZYMTKfGAebPf5i24JuA==}
+  /@clerk/backend@0.23.7:
+    resolution: {integrity: sha512-/Fxh4mGp1vunryGKsiX6G33fSOxYpJT0sBYoPiFQ7aQbYCrDb/R/+ieT7mYdjS/7McPxPr50/5MvAbZirj8HGw==}
     engines: {node: '>=14'}
     dependencies:
       '@clerk/types': 3.46.1
@@ -235,8 +235,8 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/clerk-react@4.21.0(react@18.2.0):
-    resolution: {integrity: sha512-wd8BDGIh8zMx6R9uTmAQdgtTBzx7B7hlWlWSxZ+oJVcz8MqT7gcmmYGgqnr5RuDtaWK9Z2jzya6CvVodzJi/Wg==}
+  /@clerk/clerk-react@4.21.1(react@18.2.0):
+    resolution: {integrity: sha512-sviPg3Cp9j9mT3gW7DUJT9w/hxg37T2yxMMs93WSonEs8OA9bM6t2uMwT7NZAy1kdVVwjlWs6c+TQ7/M2qbEDA==}
     engines: {node: '>=14'}
     peerDependencies:
       react: '>=16'
@@ -248,11 +248,11 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/clerk-sdk-node@4.10.13:
-    resolution: {integrity: sha512-Yy7N/DT1GdW+oI3/PxYqgjIgHCIEPI97dDUYn1xpG82y9aIQMVI69/W7KRK940559GDl4CmgZm1Taon+SOdDmQ==}
+  /@clerk/clerk-sdk-node@4.10.14:
+    resolution: {integrity: sha512-1rNo/CIp+fmlJ1c18KpvMJmJECB5kcep6Y18DDHAOwXH1NmmrNyPIZZVDSDk4zrb/Hs1Rv3dAImjOwmOujCTOQ==}
     engines: {node: '>=14'}
     dependencies:
-      '@clerk/backend': 0.23.6
+      '@clerk/backend': 0.23.7
       '@clerk/types': 3.46.1
       '@types/cookies': 0.7.7
       '@types/express': 4.17.14
@@ -263,17 +263,17 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/nextjs@4.21.8(next@13.4.6)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-Z32BsnoTg5C4ZstCHhKtoV90yr062mQRgkjhfZs5mAMtAMJfZ/UjNSfdBkBLVfxqUiBcLQXRxZbVayytkeTlEQ==}
+  /@clerk/nextjs@4.21.13(next@13.4.6)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-BGSm8FmiG8mQkPMM8YAk4EMP3nj5RvPm2cz8Tio//QS/1Xq/9qpnsuSFLwy+oyPtgguVS1m8p0spQ068i6JTcQ==}
     engines: {node: '>=14'}
     peerDependencies:
       next: '>=10'
       react: ^17.0.2 || ^18.0.0-0
       react-dom: ^17.0.2 || ^18.0.0-0
     dependencies:
-      '@clerk/backend': 0.23.6
-      '@clerk/clerk-react': 4.21.0(react@18.2.0)
-      '@clerk/clerk-sdk-node': 4.10.13
+      '@clerk/backend': 0.23.7
+      '@clerk/clerk-react': 4.21.1(react@18.2.0)
+      '@clerk/clerk-sdk-node': 4.10.14
       '@clerk/types': 3.46.1
       next: 13.4.6(react-dom@18.2.0)(react@18.2.0)
       path-to-regexp: 6.2.1
@@ -3208,8 +3208,8 @@ packages:
       '@babel/runtime': 7.22.5
     dev: false
 
-  /i18next@23.0.2:
-    resolution: {integrity: sha512-UhTW8vtJWwG8Qb4g/M7xwrTGTHo6t8X0nJxunLihRdLX+p/Eh7/pl5GQ4eDeBb7xFdVc8LskNwCW4LQh6qx8FQ==}
+  /i18next@23.2.6:
+    resolution: {integrity: sha512-i0P2XBisewaICJ7UQtwymeJj6cXUigM+s8XNIXmWk4oJ8iTok2taCbOTX0ps+u9DFcQ6FWH6xLIU0dLEnMaNbA==}
     dependencies:
       '@babel/runtime': 7.22.5
     dev: false
@@ -4210,7 +4210,7 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-i18next@13.0.1(i18next@23.0.2)(react-dom@18.2.0)(react@18.2.0):
+  /react-i18next@13.0.1(i18next@23.2.6)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-gMO6N2GfSfuH7xlHSsZ/mZf+Py9bLm/+EDKIn5fNTuDTjcCcwmMU5UEuGCDk5mdfivbo7ySyYXBN7B9tbGUxiA==}
     peerDependencies:
       i18next: '>= 23.2.3'
@@ -4225,7 +4225,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.22.5
       html-parse-stringify: 3.0.1
-      i18next: 23.0.2
+      i18next: 23.2.6
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false

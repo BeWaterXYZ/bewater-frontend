@@ -8,6 +8,37 @@ import { LoadingContainer } from '@/components/loading';
 import { useLoadingStore } from '@/components/loading/store';
 import { ToastContainer } from '@/components/toast';
 import { useToastStore } from '@/components/toast/store';
+import { isBrowser } from '@/constants';
+import { attach } from '@/fetch-intercept';
+
+// hack for clerk bug
+if (isBrowser) {
+  const fetchIntercept = attach(window);
+  fetchIntercept.register({
+    response: function (response: Response) {
+      if (response.url.includes('clerk.accounts.dev/v1/client')) {
+        try {
+          const json = () =>
+            response
+              .clone()
+              .json()
+              .then((data) => {
+                data.response.sessions[0].user.web3_wallets[0].verification.strategy =
+                  'web3_metamask_signature';
+                return data;
+              });
+
+          response.json = json;
+        } catch (err) {
+        } finally {
+          return response;
+        }
+      }
+
+      return response;
+    },
+  });
+}
 
 export function Dumpster({ lng }: { lng: string }) {
   const toasts = useToastStore((s) => s.toasts);
