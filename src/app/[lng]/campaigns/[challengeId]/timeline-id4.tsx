@@ -79,7 +79,7 @@ export function Timeline({
       },
       {
         dueDate: '2023-08-15',
-        stageName: 'Offline Demo Day & Award Ceremony',
+        stageName: 'Offline Demo Day',
       },
     ];
   }
