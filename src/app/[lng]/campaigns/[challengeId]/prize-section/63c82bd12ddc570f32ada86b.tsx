@@ -162,7 +162,7 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
           </li>
           <li>
             <span>
-              4. Have the chance to win from a prize pool of up to 30,000 USD.
+              4. Have the chance to win from a prize pool of up to 26,000 USD.
             </span>
           </li>
           <br />
