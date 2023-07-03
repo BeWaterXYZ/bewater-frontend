@@ -17,22 +17,22 @@ if (isBrowser) {
   fetchIntercept.register({
     response: function (response: Response) {
       if (response.url.includes('clerk.accounts.dev/v1/client')) {
-        try {
-          const json = () =>
-            response
-              .clone()
-              .json()
-              .then((data) => {
+        const json = () =>
+          response
+            .clone()
+            .json()
+            .then((data) => {
+              try {
                 data.response.sessions[0].user.web3_wallets[0].verification.strategy =
                   'web3_metamask_signature';
+              } catch (err) {
+              } finally {
                 return data;
-              });
+              }
+            });
 
-          response.json = json;
-        } catch (err) {
-        } finally {
-          return response;
-        }
+        response.json = json;
+        return response;
       }
 
       return response;
