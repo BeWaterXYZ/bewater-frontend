@@ -25,10 +25,17 @@ if (isBrowser) {
               try {
                 data.response.sessions[0].user.web3_wallets[0].verification.strategy =
                   'web3_metamask_signature';
-              } catch (err) {
-              } finally {
-                return data;
-              }
+              } catch (err) {}
+              try {
+                data.client.sessions[0].user.web3_wallets[0].verification.strategy =
+                  'web3_metamask_signature';
+              } catch (err) {}
+              try {
+                data.response.user.web3_wallets[0].verification.strategy =
+                  'web3_metamask_signature';
+              } catch (err) {}
+
+              return data;
             });
 
         response.json = json;
