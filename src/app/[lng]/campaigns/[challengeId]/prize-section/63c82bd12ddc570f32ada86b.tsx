@@ -7,12 +7,12 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
   return (
     <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
       <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-        {t('cryptoArt.t5')} USDT
+        $26k total in prizes to be won !
       </h3>
       <div className="flex flex-col items-center gap-16">
         <div className="flex flex-col items-center gap-10">
           <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
-            {t('cryptoArt.t6')}
+            6 {t('cryptoArt.t6')}
           </p>
           <div className="flex flex-col gap-4 md:gap-7 items-center">
             <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
@@ -32,7 +32,7 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
           </div>
           <div className="flex flex-col gap-4 md:gap-7 items-center">
             <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-              Professional Services, such as Education and Training
+              Professional Services
             </p>
             <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
               <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
@@ -41,11 +41,15 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
                     Utilize ChatGPT technology to enhance online education and
                     training experiences, develop intelligent tutoring systems,
                     learning companions, or language learning tools to provide
-                    personalized learning support. In the healthcare field,
-                    leverage AI & GPT technology to offer medical consultations
-                    and health guidance, develop intelligent medical assistants
-                    or patient communication platforms to provide personalized
-                    healthcare services and advice.
+                    personalized learning support.
+                  </li>
+                  <br />
+                  <li>
+                    In the healthcare field, leverage AI & GPT technology to
+                    offer medical consultations and health guidance, develop
+                    intelligent medical assistants or patient communication
+                    platforms to provide personalized healthcare services and
+                    advice.
                   </li>
                 </ul>
               </div>
@@ -114,8 +118,12 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
                     Utilize AI & GPT technology to assist in creative and
                     artistic endeavors. Develop intelligent creative partners or
                     idea generation tools to provide creative inspiration and
-                    suggestions. In the realm of social media and entertainment,
-                    create ChatGPT-based social media assistants or chat-based
+                    suggestions.
+                  </li>
+                  <br />
+                  <li>
+                    In the realm of social media and entertainment, create
+                    ChatGPT-based social media assistants or chat-based
                     entertainment applications to offer personalized
                     recommendations, interactions, and entertainment
                     experiences.
