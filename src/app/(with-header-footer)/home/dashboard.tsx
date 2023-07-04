@@ -92,7 +92,9 @@ function Todo({ challenge }: { challenge: Challenge }) {
 
   return (
     <div className="">
-      <p className="text-base font-bold text-grey-600 mb-4">{challenge.title}</p>
+      <p className="text-base font-bold text-grey-600 mb-4">
+        {challenge.title}
+      </p>
       {todos}
     </div>
   );
@@ -108,13 +110,12 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
           challenge.status === "INREVIEW",
       })}
     >
-      <div className={clsx("w-3 h-3 rounded-full border-[0.5px]",{
-        "bg-yellow-500/30 border-yellow-600":challenge.status === "INREVIEW",
-        "bg-grey-500/30 border-grey-600":challenge.status === "DRAFT"
-
-      })}>
-
-      </div>
+      <div
+        className={clsx("w-3 h-3 rounded-full border-[0.5px]", {
+          "bg-yellow-500/30 border-yellow-600": challenge.status === "INREVIEW",
+          "bg-grey-500/30 border-grey-600": challenge.status === "DRAFT",
+        })}
+      ></div>
       {challenge.status === "DRAFT"
         ? "In Draft"
         : challenge.status === "INREVIEW"
@@ -131,7 +132,7 @@ export function Dashboard() {
   return (
     <div className="w-full grid  md:grid-cols-[2fr,_1fr] gap-16">
       <div>
-        <div className="h-16">filters</div>
+        {/* <div className="h-16">filters</div> */}
         <div>
           {challenges.map((challenge) => {
             return (
@@ -141,16 +142,18 @@ export function Dashboard() {
                 key={challenge.id}
               >
                 <div className="flex gap-4 items-center">
-                    <Image
-                      src={challenge.bannerUrl ?? unsplash("host")}
-                      // fill
-                      alt={challenge.title}
-                      width={60}
-                      height={60}
-                      className="rounded-full border border-grey-800 w-[60px] h-[60px]"
-                    />
+                  <Image
+                    src={challenge.bannerUrl ?? unsplash("host")}
+                    // fill
+                    alt={challenge.title}
+                    width={60}
+                    height={60}
+                    className="rounded-full border border-grey-800 w-[60px] h-[60px]"
+                  />
                   <div className="space-y-2">
-                    <p className="text-base font-bold text-white">{challenge.title}</p>
+                    <p className="text-base font-bold text-white">
+                      {challenge.title}
+                    </p>
                     <p className="text-sm text-grey-500">
                       {/* fixme */}
                       {challenge.startTime.substring(0, 10)} {"-> "}
@@ -172,13 +175,15 @@ export function Dashboard() {
             + Draft a new campaign
           </Link>
         </div>
-        <div className="space-y-8">
-          <p className="text-2xl text-white">CHECKLIST</p>
+        {challenges.length > 0 ? (
+          <div className="space-y-8">
+            <p className="text-2xl text-white">CHECKLIST</p>
 
-          {challenges.map((c) => {
-            return <Todo key={c.id} challenge={c}></Todo>;
-          })}
-        </div>
+            {challenges.map((c) => {
+              return <Todo key={c.id} challenge={c}></Todo>;
+            })}
+          </div>
+        ) : null}
       </div>
     </div>
   );
