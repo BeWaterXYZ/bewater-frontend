@@ -13,7 +13,7 @@ export default function Page() {
           </p>
           <Link className="group relative flex" href="/sign-up">
             {/* 2 row 2 col grid */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 grid-rows-2 gap-3">
+            <div className="w-full grid grid-cols-2 grid-rows-2 gap-3">
               <div className="flex items-center gap-3  py-4 bg-white/[0.05] border-[0.5px] border-white/10 rounded-[4px] justify-center">
                 <Image
                   src="/assets/hackathon.png"
