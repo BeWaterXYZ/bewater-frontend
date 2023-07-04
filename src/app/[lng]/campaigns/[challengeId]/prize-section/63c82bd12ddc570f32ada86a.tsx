@@ -40,7 +40,7 @@ export function PrizeSection({ t }: { t: Function }) {
       </div>
       <div className="hidden md:flex py-5 px-[20px]">
         <Image
-          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame494.png`}
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame494-2.png`}
           alt=""
           width={2136}
           height={2592}
@@ -67,7 +67,7 @@ export function PrizeSection({ t }: { t: Function }) {
           />
           <Image
             style={{ marginBottom: '40px' }}
-            src={`/challenge/assets/frame494-3.png`}
+            src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame494-2-3.png`}
             alt=""
             width={1037}
             height={1264}
