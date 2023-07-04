@@ -12,20 +12,22 @@ export function PrizeSection({ t }: { t: Function }) {
       </div>
       <div className="hidden md:flex">
         <Image
-          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame337717.jpg`}
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/aFrame337717.jpg`}
           alt=""
           width={2242}
           height={882}
           className="w-full"
+          style={{ borderRadius: '10px' }}
         />
       </div>
       <div className="flex md:hidden">
         <Image
-          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/frame337717mob.jpg`}
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/sFrame337717.png`}
           alt=""
           width={1189}
           height={882}
           className="w-full"
+          style={{ borderRadius: '10px' }}
         />
       </div>
       <div className="body-3 md:body-2 text-white pt-5">
