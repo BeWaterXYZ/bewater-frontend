@@ -22,7 +22,7 @@ export function PrizeSection({ t }: { t: Function }) {
       </div>
       <div className="flex md:hidden">
         <Image
-          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/sFrame337717.png`}
+          src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230704-4s.png`}
           alt=""
           width={1189}
           height={882}
