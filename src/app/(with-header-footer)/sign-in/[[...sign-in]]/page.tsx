@@ -75,7 +75,6 @@ export default function Page() {
               'bg-night text-white border-gray-800 rounded-sm placeholder-gray-600',
             formFieldLabel: 'text-gray-500 hidden',
             formFieldLabelRow: 'mb-2',
-            footer: 'hidden',
             header: 'text-xl gap-2',
             identityPreviewEditButton: 'text-gray-500',
             formResendCodeLink:
