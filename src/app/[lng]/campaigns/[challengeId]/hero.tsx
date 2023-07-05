@@ -15,7 +15,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
-      style={{ backgroundImage: `url(/challenge/assets/${challenge.id}.png)` }}
+      style={{ backgroundImage: `url("${challenge.bannerUrl}")` }}
     >
       {challenge.id === '1' ? (
         <Image

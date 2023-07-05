@@ -1,7 +1,6 @@
 import { Aspect } from '@/components/aspect';
 import { Challenge } from '@/services/types';
-import { formatMMMDDYYYY, formatYYYYMMMDD } from '@/utils/date';
-import { unsplash } from '@/utils/unsplash';
+import { formatYYYYMMMDD } from '@/utils/date';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -22,7 +21,10 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
             <Aspect ratio={5 / 2}>
               <Image
                 fill
-                src={`/challenge/assets/${challenge.id}withTitle.png`}
+                src={
+                  challenge.bannerUrl ??
+                  `/challenge/assets/${challenge.id}withTitle.png`
+                }
                 alt="crypto"
                 className="object-cover w-full h-full"
               />
