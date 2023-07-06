@@ -42,6 +42,244 @@ export default async function ChallengeIntro({ params }: any) {
 
   const judges = challenge.judges;
 
+  interface Judges6 {
+    j1: any[];
+    j2: any[];
+    j3: any[];
+    j4: any[];
+    key: number;
+  }
+
+  const judges6: Judges6 = {
+    j1: [],
+    j2: [],
+    j3: [],
+    j4: [],
+    key: 0,
+  };
+
+  if (challenge.id === '6') {
+    judges6.j1.push({
+      name: 'Sam',
+      title: 'Arweave 创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/sam.png',
+    });
+    judges6.j1.push({
+      name: 'Outprog',
+      title: 'everVision 创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/outprog.png',
+    });
+    judges6.j1.push({
+      name: '刘怿斯',
+      title: 'MaskNetwork CTO',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706153710.png',
+    });
+    judges6.j1.push({
+      name: 'Tomas Yu',
+      title: 'KNN3 联合创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706153902.png',
+    });
+    judges6.j1.push({
+      name: 'Dennis',
+      title: 'MindNetwork 首席安全官',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154030.png',
+    });
+    judges6.j1.push({
+      name: '王太泽',
+      title: 'DB3 联合创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154140.png',
+    });
+    judges6.j1.push({
+      name: 'Muran',
+      title: 'DB3 联合创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154246.jpg',
+    });
+    judges6.j1.push({
+      name: 'Troy Hua',
+      title: 'ReadON CTO & 联合创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154349.png',
+    });
+    judges6.j1.push({
+      name: 'Yao',
+      title: 'Metaforo 创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154450.jpg',
+    });
+    judges6.j1.push({
+      name: 'Jay',
+      title: 'Permaswap 核心开发',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154546.jpg',
+    });
+    judges6.j1.push({
+      name: 'Sandy',
+      title: 'everpay 核心开发',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154655.jpg',
+    });
+
+    judges6.j2.push({
+      name: '郝志煜',
+      title: 'AWS Web3 Tech Lead',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154829.jpg',
+    });
+    judges6.j2.push({
+      name: 'Hill',
+      title: 'SevenX 投资总监',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706155004.png',
+    });
+    judges6.j2.push({
+      name: 'Radar Bear',
+      title: 'DODO CEO',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706155141.jpg',
+    });
+    judges6.j2.push({
+      name: 'Ken',
+      title: 'Giveaway 开发主管',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706155249.jpg',
+    });
+    judges6.j2.push({
+      name: 'Mark Wang',
+      title: 'UPDAO Co-Founder',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706161315.jpg',
+    });
+    judges6.j2.push({
+      name: '柏飞',
+      title: 'YZ Intelligence 售前架构师负责人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706161424.jpg',
+    });
+    judges6.j2.push({
+      name: 'Muran',
+      title: 'DB3 Co-Founder',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154246.jpg',
+    });
+
+    judges6.j3.push({
+      name: 'Tracy',
+      title: 'TinTinLand 社区主管',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/TracySalander.JPEG',
+    });
+    judges6.j3.push({
+      name: 'Tiny熊',
+      title: '登链社区发起人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162124.jpg',
+    });
+    judges6.j3.push({
+      name: 'Shootrt',
+      title: 'Rebase 社区联合发起人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162228.jpg',
+    });
+    judges6.j3.push({
+      name: '咖啡',
+      title: 'SeeDAO 原规则共同设计者',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162326.jpg',
+    });
+    judges6.j3.push({
+      name: 'Jane',
+      title: 'BuilderDAO 投研公会负责人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162447.jpg',
+    });
+    judges6.j3.push({
+      name: 'Allan',
+      title: 'MoleDAO Co-builder',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/avatars/AllanFang.png',
+    });
+    judges6.j3.push({
+      name: '蒋蒋蒋',
+      title: 'AvatorDAO 合伙人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162635.jpg',
+    });
+    judges6.j3.push({
+      name: 'Qiang',
+      title: 'Web3Builder.tech 核心贡献者兼 EthStorage 技术负责人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162731.jpg',
+    });
+    judges6.j3.push({
+      name: 'Lawrence',
+      title: 'Afflux 联合创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162844.jpg',
+    });
+    judges6.j3.push({
+      name: 'Harvey',
+      title: '0xU 核心成员',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162950.jpg',
+    });
+    judges6.j3.push({
+      name: 'Turing',
+      title: 'LegalDAO 联合创始人',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163045.jpg',
+    });
+
+    judges6.j4.push({
+      name: 'Odaily',
+      title: '星球日报媒体代表',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/400_400.png',
+    });
+    judges6.j4.push({
+      name: '鸭先知',
+      title: 'Blocklike 市场主管',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163422.jpg',
+    });
+    judges6.j4.push({
+      name: 'Cointime',
+      title: 'Cointime 媒体代表',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163519.jpg',
+    });
+    judges6.j4.push({
+      name: 'Jack',
+      title: 'BlockBeats 副主编',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163637.jpg',
+    });
+    judges6.j4.push({
+      name: 'Jeffrey',
+      title: 'PANews 运营总监',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163757.jpg',
+    });
+    judges6.j4.push({
+      name: 'MarsBit',
+      title: 'MarsBit 媒体代表',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163914.jpg',
+    });
+    judges6.j4.push({
+      name: 'Maxwell',
+      title: '金色财经内容主编',
+      avatarURI:
+        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706164032.jpg',
+    });
+  }
+
   if (challenge.id === '2') {
     if (lng === 'en') {
       challenge.title = "A Midsummer CryptoArt's Dream";
@@ -239,6 +477,94 @@ export default async function ChallengeIntro({ params }: any) {
                     </div>
                   );
                 })}
+              {challenge.id === '6' ? (
+                <>
+                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                    生态评审嘉宾
+                  </p>
+                  {judges6.j1.map((judge) => {
+                    return (
+                      <div key={judges6.key++} className="w-[180px] mb-2">
+                        <Aspect ratio={1 / 1}>
+                          <Image
+                            height={150}
+                            width={150}
+                            src={judge.avatarURI ?? unsplash('man')}
+                            className="object-cover w-full h-full"
+                            alt={judge.name}
+                            title={judge.description}
+                          />
+                        </Aspect>
+                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                        <p className="body-4 text-grey-400">{judge.title}</p>
+                      </div>
+                    );
+                  })}
+                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                    赞助评审嘉宾
+                  </p>
+                  {judges6.j2.map((judge) => {
+                    return (
+                      <div key={judges6.key++} className="w-[180px] mb-2">
+                        <Aspect ratio={1 / 1}>
+                          <Image
+                            height={150}
+                            width={150}
+                            src={judge.avatarURI ?? unsplash('man')}
+                            className="object-cover w-full h-full"
+                            alt={judge.name}
+                            title={judge.description}
+                          />
+                        </Aspect>
+                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                        <p className="body-4 text-grey-400">{judge.title}</p>
+                      </div>
+                    );
+                  })}
+                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                    社区评审嘉宾
+                  </p>
+                  {judges6.j3.map((judge) => {
+                    return (
+                      <div key={judges6.key++} className="w-[180px] mb-2">
+                        <Aspect ratio={1 / 1}>
+                          <Image
+                            height={150}
+                            width={150}
+                            src={judge.avatarURI ?? unsplash('man')}
+                            className="object-cover w-full h-full"
+                            alt={judge.name}
+                            title={judge.description}
+                          />
+                        </Aspect>
+                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                        <p className="body-4 text-grey-400">{judge.title}</p>
+                      </div>
+                    );
+                  })}
+                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                    媒体评审嘉宾
+                  </p>
+                  {judges6.j4.map((judge) => {
+                    return (
+                      <div key={judges6.key++} className="w-[180px] mb-2">
+                        <Aspect ratio={1 / 1}>
+                          <Image
+                            height={150}
+                            width={150}
+                            src={judge.avatarURI ?? unsplash('man')}
+                            className="object-cover w-full h-full"
+                            alt={judge.name}
+                            title={judge.description}
+                          />
+                        </Aspect>
+                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                        <p className="body-4 text-grey-400">{judge.title}</p>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : null}
               <div className="w-[180px]">
                 <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
                   Coming

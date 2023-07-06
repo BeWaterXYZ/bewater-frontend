@@ -6,14 +6,14 @@ export const ProjectTagSet = [
   'Professional Services',
   'Finance and Investment',
   'Business and Marketing',
-  'AIGC+Web3',
+  'AIGC + Web3',
   'GameFi',
   'DeFi',
   'NFT',
   'Web3 Security',
   'Zero Knowledge',
   'DAO Tool',
-  'Other',
+  'Others',
 ] as const;
 
 export type ProjectTagUnion = (typeof ProjectTagSet)[number];
