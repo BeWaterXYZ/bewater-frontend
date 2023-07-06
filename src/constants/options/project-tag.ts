@@ -6,7 +6,7 @@ export const ProjectTagSet = [
   'Professional Services',
   'Finance and Investment',
   'Business and Marketing',
-  'AIGC + Web3',
+  'AIGC+Web3',
   'GameFi',
   'DeFi',
   'NFT',
