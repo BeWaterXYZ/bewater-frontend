@@ -9,6 +9,7 @@ import { PrizeSection as PrizeSection1 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f32ada869';
 import { PrizeSection as PrizeSection4 } from './prize-section/63c82bd12ddc570f32ada86a';
 import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f32ada86b';
+import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f32ada86c';
 import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
 import { Timeline as Timeline4 } from './timeline-id4';
@@ -19,6 +20,7 @@ import { Sponsors2 } from './sponsors2';
 import { Sponsors3 } from './sponsors3';
 import { Sponsors4 } from './sponsors4';
 import { Sponsors5 } from './sponsors5';
+import { Sponsors6 } from './sponsors6';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -112,7 +114,9 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         </div>
         <div>
-          {challenge.id === '1' || challenge.id === '2' ? (
+          {challenge.id === '1' ||
+          challenge.id === '2' ||
+          challenge.id === '6' ? (
             <Link
               prefetch={false}
               href={`https://t.me/bewater_zh`}
@@ -203,6 +207,7 @@ export default async function ChallengeIntro({ params }: any) {
         {challenge.id === '3' ? <ScheduleSection /> : null}
         {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
         {challenge.id === '5' ? <PrizeSection5 t={t} lng={lng} /> : null}
+        {challenge.id === '6' ? <PrizeSection6 t={t} lng={lng} /> : null}
       </div>
       {challenge.id !== '3' ? (
         <>
@@ -271,20 +276,90 @@ export default async function ChallengeIntro({ params }: any) {
                   ))}
                 </ul>
               </div>
-              {challenge?.reviewDimension.length > 1 ? (
+              {parseInt(challenge.id) < 6 ? (
+                <>
+                  {challenge?.reviewDimension.length > 1 ? (
+                    <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                      <h3 className="heading-5 font-bold mb-8">
+                        {t('campaign.t11')}
+                      </h3>
+                      <ul className="list-decimal">
+                        {challenge.reviewDimension.split('\n').map((r) => (
+                          <li
+                            key={r}
+                            className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                          >
+                            <span className="body-3 text-grey-400">{r}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </>
+              ) : null}
+              {challenge.id === '6' ? (
                 <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                   <h3 className="heading-5 font-bold mb-8">
                     {t('campaign.t11')}
                   </h3>
                   <ul className="list-decimal">
-                    {challenge.reviewDimension.split('\n').map((r) => (
-                      <li
-                        key={r}
-                        className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                      >
-                        <span className="body-3 text-grey-400">{r}</span>
+                    <p className="body-3 text-grey-400">评审分数构成：</p>
+                    <br />
+                    <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                      <span className="body-3 text-grey-400">
+                        1. 生态专业评审团（占比50%）
+                      </span>
+                    </li>
+                    <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                      <span className="body-3 text-grey-400">
+                        2. 赞助评审（占比40%）
+                      </span>
+                    </li>
+                    <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                      <span className="body-3 text-grey-400">
+                        3. 社区+媒体评审团（占比10%）
+                      </span>
+                    </li>
+                    <br />
+                    <ul className="list-decimal">
+                      <p className="body-3 text-grey-400">评审打分标准：</p>
+                      <br />
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          满分100，每个评委为每个项目打分一次,为保证公平公正评委将不能为自己所在赛道的项目打分。
+                        </span>
                       </li>
-                    ))}
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          1. 产品体验：20
+                        </span>
+                      </li>
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          2. 技术壁垒：20
+                        </span>
+                      </li>
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          3. 商业模式：20
+                        </span>
+                      </li>
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          4. 团队配置：20
+                        </span>
+                      </li>
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          5. 估值水平：20
+                        </span>
+                      </li>
+                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
+                        <span className="body-3 text-grey-400">
+                          项目最终得分=[(专业评审加权总分-最高分数-最低分数）/9]*50%+[(赞助评审加权总分-最高分数-最低分数）/赞助商数量-2]*40%+[(社区媒体评审加权总分-最高分数-最低分数）/17]*10%
+                        </span>
+                      </li>
+                    </ul>
                   </ul>
                 </div>
               ) : null}
@@ -298,8 +373,11 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '3' ? <Sponsors3 /> : null}
       {challenge.id === '4' ? <Sponsors4 t={t} /> : null}
       {challenge.id === '5' ? <Sponsors5 t={t} /> : null}
+      {challenge.id === '6' ? <Sponsors6 t={t} /> : null}
 
-      {parseInt(challenge.id) < 4 || challenge.id === '5' ? (
+      {parseInt(challenge.id) < 4 ||
+      challenge.id === '5' ||
+      challenge.id === '6' ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">
             <Balancer ratio={0.9}>

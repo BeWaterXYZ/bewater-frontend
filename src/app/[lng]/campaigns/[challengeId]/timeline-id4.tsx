@@ -83,6 +83,26 @@ export function Timeline({
       },
     ];
   }
+  if (id === '6') {
+    milestones = [
+      {
+        dueDate: '2023-07-28',
+        stageName: '赛事信息发布',
+      },
+      {
+        dueDate: '2023-08-01',
+        stageName: '开发组队和作品提交',
+      },
+      {
+        dueDate: '2023-08-15',
+        stageName: 'Demo DAY & 项目评审',
+      },
+      {
+        dueDate: '2023-09-01',
+        stageName: '线上颁奖',
+      },
+    ];
+  }
   let data = prepareData(milestones);
   return (
     <>

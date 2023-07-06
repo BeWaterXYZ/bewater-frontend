@@ -17,7 +17,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
       style={{ backgroundImage: `url(/challenge/assets/${challenge.id}.png)` }}
     >
-      {challenge.id === '1' ? (
+      {challenge.id === '1' || challenge.id === '6' ? (
         <Image
           src="/logo/bewater-h.svg"
           width={120}
@@ -65,7 +65,9 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
         {challenge.id !== '3' ? challenge.location : 'SHANGHAI'}{' '}
-        {challenge.id !== '4' && challenge.id !== '5' ? '|' : ''}{' '}
+        {challenge.id !== '4' && challenge.id !== '5' && challenge.id !== '6'
+          ? '|'
+          : ''}{' '}
         {`${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)
