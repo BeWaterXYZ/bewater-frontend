@@ -70,11 +70,11 @@ export function Timeline({
         stageName: 'Registration',
       },
       {
-        dueDate: '2023-07-16',
+        dueDate: '2023-07-31',
         stageName: 'First round screening',
       },
       {
-        dueDate: '2023-07-27',
+        dueDate: '2023-08-12',
         stageName: 'Online Demo Day',
       },
       {
