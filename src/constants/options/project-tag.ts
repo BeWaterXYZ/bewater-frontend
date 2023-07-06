@@ -10,6 +10,11 @@ export const ProjectTagSet = [
   'Zero Knowledge',
   'DAO Tool',
   'Web3',
+  'Virtual Assistants and Chatbots',
+  'Professional Services',
+  'Finance and Investment',
+  'Business and Marketing',
+  'AIGC+Web3',
   'Others',
 ] as const;
 
