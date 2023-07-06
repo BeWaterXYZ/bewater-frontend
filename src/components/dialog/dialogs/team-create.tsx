@@ -11,6 +11,7 @@ import { z } from 'zod';
 
 import { useAlert } from '@/components/alert/store';
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
+import { ProjectTagSetOptions5 } from '@/constants/options/project-tag';
 import { RoleSetOptions } from '@/constants/options/role';
 import { SkillSetOptions } from '@/constants/options/skill';
 import { useNavigator } from '@/hooks/useNavigator';
@@ -61,6 +62,12 @@ export default function TeamCreateDialog({
   close,
 }: TeamCreateDialogProps) {
   const isEditing = !!data.team;
+
+  let hackProjectTagSetOptions: any = ProjectTagSetOptions;
+  if (data?.challenge?.id == '5') {
+    hackProjectTagSetOptions = ProjectTagSetOptions5;
+  }
+
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
   const router = useNavigator('en');
@@ -193,7 +200,7 @@ export default function TeamCreateDialog({
           label="Project Tag"
           required
           maxSelections={1}
-          options={ProjectTagSetOptions}
+          options={hackProjectTagSetOptions}
           error={errors['tags']}
           control={control}
           {...register('tags')}

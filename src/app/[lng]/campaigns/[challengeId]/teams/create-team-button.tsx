@@ -44,6 +44,7 @@ export function CreateTeamButton({
       navigator.goToConnectWallet();
       return;
     }
+
     showDialog('team_create', { challenge });
   };
 
