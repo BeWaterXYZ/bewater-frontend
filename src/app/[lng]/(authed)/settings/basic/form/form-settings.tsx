@@ -107,7 +107,7 @@ export const FormUserSettings = ({ data }: Props) => {
         {...register('telegramLink')}
       />
       <Input
-        label="Webiste "
+        label="Website "
         placeholder="Enter your website"
         error={errors['websiteLink']}
         {...register('websiteLink')}
