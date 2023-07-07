@@ -13,6 +13,7 @@ const sponsors_tier3 = [
   '/sponsors/ventureflow.png',
   '/sponsors/knn3.png',
   '/sponsors/blockpi.png',
+  '/sponsors/huawei.svg',
 ];
 
 const sponsors_tier4 = [
@@ -26,6 +27,8 @@ const sponsors_tier4 = [
   '/sponsors/kjpl.png',
   '/sponsors/jjz.png',
   '/sponsors/xzj.png',
+  '/sponsors/MetaversePost.webp',
+  '/sponsors/TechubNews.png',
 ];
 
 const sponsors_tier5 = [
@@ -40,6 +43,13 @@ const sponsors_tier5 = [
   '/sponsors/permadao.png',
   '/sponsors/thuba.png',
   '/sponsors/clsq2_white.png',
+  '/sponsors/baiyulan.svg',
+  '/sponsors/smu.edu.svg',
+  '/sponsors/nodelab.cc.svg',
+  '/sponsors/GeniusClub.png',
+  '/sponsors/zdlx.jpeg',
+  '/sponsors/zdao.jpeg',
+  '/sponsors/bewater.png',
 ];
 
 export function Sponsors5({ t }: { t: Function }) {
