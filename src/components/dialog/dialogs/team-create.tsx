@@ -22,6 +22,7 @@ import {
 } from '@/services/team.query';
 import { Team } from '@/services/types';
 import { useState } from 'react';
+import { COUNTRIES } from '@/constants/options/country';
 
 const schema = z
   .object({
@@ -32,7 +33,7 @@ const schema = z
     tags: validationSchema.tags,
     roles: validationSchema.roles,
     skills: validationSchema.skills,
-    nation: z.string(),
+    nation: z.array(z.string()).length(1, 'please choose a country'),
   })
   .required();
 
@@ -49,7 +50,7 @@ export function useTeamCreateForm(team?: Team) {
       tags: team?.project.tags ?? [],
       roles: team?.openingRoles ?? [],
       skills: team?.skills ?? [],
-      nation: team?.nation ?? '',
+      nation: team?.nation ? [team?.nation] : [],
     },
   });
 }
@@ -120,7 +121,7 @@ export default function TeamCreateDialog({
           projectTags: formData.tags,
           openingRoles: formData.roles,
           skills: formData.skills,
-          nation: formData.nation,
+          nation: formData.nation[0],
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -141,7 +142,7 @@ export default function TeamCreateDialog({
           challengeId: data.challenge!.id,
           openingRoles: formData.roles,
           skills: formData.skills,
-          nation: formData.nation,
+          nation: formData.nation[0],
           leaderRole: formData.role[0],
         };
 
@@ -193,6 +194,16 @@ export default function TeamCreateDialog({
           error={errors['name']}
           {...register('name')}
         />
+        <Select
+          label="Country"
+          required
+          maxSelections={1}
+          options={COUNTRIES}
+          error={errors['nation']}
+          control={control}
+          {...register('nation')}
+        />
+
         <Input
           label="Project title"
           required
@@ -215,13 +226,7 @@ export default function TeamCreateDialog({
           error={errors['description']}
           {...register('description')}
         />
-        <Input
-          label="Country"
-          required
-          placeholder="Enter your country"
-          error={errors['nation']}
-          {...register('nation')}
-        />
+
         {isEditing ? null : (
           <Select
             label="You’re going to play"
