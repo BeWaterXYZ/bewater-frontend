@@ -24,15 +24,15 @@ interface Props {
 }
 
 export const FormUserSettings = ({ data }: Props) => {
-  const schema = z
-    .object({
-      userName: validationSchema.userName(data.userProfile?.userName ?? ''),
-      bio: validationSchema.bio,
-      fullName: validationSchema.fullName,
-      roles: validationSchema.roles,
-      skills: validationSchema.skills,
-    })
-    .required();
+  const schema = z.object({
+    userName: validationSchema.userName(data.userProfile?.userName ?? ''),
+    bio: validationSchema.bio,
+    telegramLink: z.string().optional(),
+    websiteLink: z.string().url().optional(),
+    fullName: validationSchema.fullName,
+    roles: validationSchema.roles,
+    skills: validationSchema.skills,
+  });
 
   type Inputs = z.infer<typeof schema>;
 
@@ -45,7 +45,12 @@ export const FormUserSettings = ({ data }: Props) => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
-    defaultValues: { ...data?.userProfile, bio: data?.userProfile?.bio ?? '' },
+    defaultValues: {
+      ...data?.userProfile,
+      bio: data?.userProfile?.bio ?? '',
+      websiteLink: data?.userProfile?.websiteLink ?? '',
+      telegramLink: data?.userProfile?.telegramLink ?? '',
+    },
   });
   const mutation = useMutationUpdateUserProfile();
 
@@ -94,6 +99,18 @@ export const FormUserSettings = ({ data }: Props) => {
         placeholder="Introduce yourself :)"
         error={errors['bio']}
         {...register('bio', { required: 'Bio is required.' })}
+      />
+      <Input
+        label="Telegram"
+        placeholder="Enter your telegram id"
+        error={errors['telegramLink']}
+        {...register('telegramLink')}
+      />
+      <Input
+        label="Webiste "
+        placeholder="Enter your website"
+        error={errors['websiteLink']}
+        {...register('websiteLink')}
       />
       <Select
         label="Roles "

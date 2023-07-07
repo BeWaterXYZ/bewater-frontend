@@ -32,6 +32,7 @@ const schema = z
     tags: validationSchema.tags,
     roles: validationSchema.roles,
     skills: validationSchema.skills,
+    nation: z.string(),
   })
   .required();
 
@@ -48,6 +49,7 @@ export function useTeamCreateForm(team?: Team) {
       tags: team?.project.tags ?? [],
       roles: team?.openingRoles ?? [],
       skills: team?.skills ?? [],
+      nation: team?.nation ?? '',
     },
   });
 }
@@ -118,6 +120,7 @@ export default function TeamCreateDialog({
           projectTags: formData.tags,
           openingRoles: formData.roles,
           skills: formData.skills,
+          nation: formData.nation,
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -138,6 +141,7 @@ export default function TeamCreateDialog({
           challengeId: data.challenge!.id,
           openingRoles: formData.roles,
           skills: formData.skills,
+          nation: formData.nation,
           leaderRole: formData.role[0],
         };
 
@@ -210,6 +214,13 @@ export default function TeamCreateDialog({
           placeholder="Enter your project description"
           error={errors['description']}
           {...register('description')}
+        />
+        <Input
+          label="Country"
+          required
+          placeholder="Enter your country"
+          error={errors['nation']}
+          {...register('nation')}
         />
         {isEditing ? null : (
           <Select

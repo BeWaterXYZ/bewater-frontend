@@ -17,6 +17,8 @@ export interface UserProfile {
   avatarURI?: string;
   fullName?: string;
   bio?: string;
+  websiteLink?: string;
+  telegramLink?: string;
   roles: RoleUnion[];
   skills: SkillUnion[];
 }
@@ -119,6 +121,7 @@ export interface Team {
   teamMembers: TeamMember[];
   project: Project;
   challenge?: Challenge;
+  nation?: string;
 }
 
 export type ProjectId = string;
