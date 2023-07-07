@@ -86,11 +86,11 @@ export function Timeline({
   if (id === '6') {
     milestones = [
       {
-        dueDate: '2023-07-28',
+        dueDate: '2023-07-13',
         stageName: '赛事信息发布',
       },
       {
-        dueDate: '2023-08-01',
+        dueDate: '2023-07-15',
         stageName: '开发组队和作品提交',
       },
       {

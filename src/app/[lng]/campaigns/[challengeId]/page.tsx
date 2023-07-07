@@ -565,16 +565,18 @@ export default async function ChallengeIntro({ params }: any) {
                   })}
                 </>
               ) : null}
-              <div className="w-[180px]">
-                <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
-                  Coming
-                  <br />
-                  Soon
+              {challenge.id === '6' ? null : (
+                <div className="w-[180px]">
+                  <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
+                    Coming
+                    <br />
+                    Soon
+                  </div>
+                  <p className="body-3 mt-6 w-full text-grey-400">
+                    {t('campaign.t9')}
+                  </p>
                 </div>
-                <p className="body-3 mt-6 w-full text-grey-400">
-                  {t('campaign.t9')}
-                </p>
-              </div>
+              )}
             </div>
           </div>
 
