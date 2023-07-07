@@ -17,12 +17,11 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-
 import {
   restrictToWindowEdges,
   restrictToVerticalAxis,
   restrictToFirstScrollableAncestor,
-} from '@dnd-kit/modifiers';
+} from "@dnd-kit/modifiers";
 
 type Components = "banner" | "people" | "poster";
 
@@ -74,13 +73,7 @@ function Section({ section }: { section: Section }) {
   );
 }
 
-export function SortableItem({
-  id,
-  section,
-}: {
-  id: string;
-  section: Section;
-}) {
+function SortableItem({ id, section }: { id: string; section: Section }) {
   let Comp = ComponentMap[section.component];
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: id });
@@ -153,7 +146,7 @@ export default function Page() {
         console.log("move", active.id, over.id);
         console.log({
           oldIndex,
-          newIndex
+          newIndex,
         });
 
         return arrayMove(items, oldIndex, newIndex);
