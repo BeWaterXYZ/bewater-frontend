@@ -10,7 +10,7 @@ import { Challenge } from "@/services/types";
 import { TextArea } from "@/components/form/textarea";
 import { UploaderInput } from "@/components/form/uploader";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowUpIcon, Cross2Icon } from "@radix-ui/react-icons";
 
 const schema = z
   .object({
@@ -51,6 +51,7 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
       name: "judges", // unique name for your Field Array
     }
   );
+
   const onSubmit = async (formData: Inputs) => {
     try {
       await mutation.mutateAsync({
@@ -112,15 +113,36 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
                     {...register(`judges.${index}.twitterLink`)}
                     error={errors.judges?.[index]?.twitterLink}
                   />
-                  <button
-                    className="absolute right-0 top-0 text-grey-300 flex items-center text-[12px]"
-                    onClick={() => {
-                      remove(index);
-                    }}
-                  >
-                    <Cross2Icon className="mr-1 text-grey-500" />
-                    Remove
-                  </button>
+
+                  <div className="absolute right-0 top-0 flex ">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        move(index, Math.max(index - 1, 0));
+                      }}
+                    >
+                      <ArrowUpIcon className="mr-1 text-grey-500" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        move(index, Math.min(index + 1, fields.length - 1));
+                      }}
+                    >
+                      <ArrowDownIcon className="mr-1 text-grey-500" />
+                    </button>
+                    <button
+                      className="text-grey-300 flex items-center text-[12px]"
+                      onClick={() => {
+                        remove(index);
+                      }}
+                    >
+                      <Cross2Icon className="mr-1 text-grey-500" />
+                      Remove
+                    </button>
+                  </div>
                 </div>
               );
             })}
