@@ -50,7 +50,6 @@ export function UploaderInput({
                 max === 1 ? (field.value ? [field.value] : []) : field.value
               }
               onChange={(urls) => {
-                console.log(2, field.name, urls);
                 onValueChange(max === 1 ? urls[0] ?? "" : urls);
               }}
             />

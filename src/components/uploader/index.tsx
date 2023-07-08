@@ -2,7 +2,7 @@
 import { getStorageUpload } from "@/services/storage";
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
-import { ChangeEventHandler, useId, useState } from "react";
+import { ChangeEventHandler, useId, useRef, useState } from "react";
 import { Loading } from "../loading/loading";
 
 async function upload(file: File) {
@@ -37,6 +37,11 @@ export function Uploader({
   let id = useId();
   let [uploadingList, uploadingListSet] = useState<File[]>([]);
   let canUploadMore = max > urls.length + uploadingList.length;
+  // prevent closure reading staled `urls`
+  let onChangeRef = useRef<((url: string) => void) | undefined>(undefined);
+  onChangeRef.current = (url: string) => {
+    onChange([...urls, url]);
+  };
 
   let onFileSelect: ChangeEventHandler<HTMLInputElement> = async (e) => {
     let filesPicked = Array.from(e.target.files ?? []);
@@ -45,7 +50,7 @@ export function Uploader({
     filesPicked.forEach(async (file) => {
       try {
         let url = await upload(file);
-        onChange([...urls, url]);
+        onChangeRef.current?.(url);
       } catch (err) {
         console.error("uploading error", err);
       } finally {
@@ -117,7 +122,7 @@ export function Uploader({
             name="avatar"
             className="hidden"
             accept="image/*"
-            //   multiple
+            multiple={max !== 1}
             onChange={onFileSelect}
           />
         </label>
