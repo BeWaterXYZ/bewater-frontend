@@ -33,6 +33,8 @@ export const SkillSet = [
   'Motion Design',
   'Character Design',
   'Illustration',
+  'Marketing',
+  'Others',
 ] as const;
 
 export type SkillUnion = (typeof SkillSet)[number];

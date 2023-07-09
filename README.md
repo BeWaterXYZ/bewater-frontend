@@ -26,7 +26,6 @@ yarn >= 1.22.15
 ### .env file
 ```
 
-
 # configs for change dev conditions
 
 # base path from next.js\
@@ -36,5 +35,4 @@ NEXT_PUBLIC_BASE_PATH=
 # local | qa | prod
 ENVIRONMENT=local
 ```
-
 

@@ -17,7 +17,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
       style={{ backgroundImage: `url("${challenge.bannerUrl}")` }}
     >
-      {challenge.id === '1' ? (
+      {challenge.id === '1' || challenge.id === '6' ? (
         <Image
           src="/logo/bewater-h.svg"
           width={120}
@@ -41,12 +41,33 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           alt="starknet logo"
           className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
         />
+      ) : challenge.id === '4' ? (
+        <Image
+          src="/sponsors/ABCDE.png"
+          width={144}
+          height={40}
+          alt=""
+          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
+        />
+      ) : challenge.id === '5' ? (
+        <>
+          {/* <Image
+            src="/sponsors/ev-5.1.png"
+            width={392}
+            height={80}
+            alt=""
+            className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[288px]"
+          /> */}
+        </>
       ) : (
         <p className="body-4 md:text-[20px]">{challenge.hostName}</p>
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
-        {challenge.id !== '3' ? challenge.location : 'SHANGHAI'} |{' '}
+        {challenge.id !== '3' ? challenge.location : 'SHANGHAI'}{' '}
+        {challenge.id !== '4' && challenge.id !== '5' && challenge.id !== '6'
+          ? '|'
+          : ''}{' '}
         {`${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)
@@ -58,7 +79,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         }`}
       </h1>
 
-      {challenge.id !== '3' ? (
+      {challenge.id === '1' || challenge.id === '2' || challenge.id === '5' ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
@@ -79,7 +100,9 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             </div>
           </div>
         )
-      ) : (
+      ) : null}
+
+      {challenge.id === '3' ? (
         <div className="mt-6 md:mt-12">
           <Link
             target="_blank"
@@ -89,7 +112,20 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             {`${t('campaign.t4')}`}
           </Link>
         </div>
-      )}
+      ) : null}
+
+      {challenge.id === '4' ? (
+        <div className="mt-6 md:mt-12">
+          <Link
+            prefetch={false}
+            href={`https://docs.google.com/forms/d/128cimlspqKBj4EfAAB9dUIN4zgG0og4u4r837Ul1VJo/viewform?pli=1&edit_requested=true`}
+            className="btn btn-primary-invert body-4 text-day  uppercase w-60 py-6"
+          >
+            Join
+          </Link>
+        </div>
+      ) : null}
+
       {challenge.id === '1' && (
         <div>
           <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />

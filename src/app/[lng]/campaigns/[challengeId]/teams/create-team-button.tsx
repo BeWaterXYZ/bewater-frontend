@@ -23,6 +23,7 @@ export function CreateTeamButton({
       clerk.redirectToSignIn();
       return;
     }
+
     showDialog('team_create', { challenge });
   };
 

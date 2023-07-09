@@ -12,15 +12,15 @@
     "t5": "Event Rewards: ",
     "t6": "Tracks",
     "t7": "Stickers",
-    "t8": "Show your humor and creativity, there is no limit to the theme, recommended themes include \"self-cultivation of leeks\", \"walking in the bear market\", based on DeBox four NFT penguins, little eagles, little snakes, and little rabbits related to the life of cute animals, DeBox and Jokes related to film and television works, such as DeBox God of Gamblers, Stud, etc.",
-    "t9": "We recommend that contestants make emoticons in groups. A group contains about 4 emoticons, the more the better. Bonus points for emoticons made by hand instead of AI!",
-    "t10": "Show your personality and style, unlimited topics, recommended topics include \"PFP Reconstruction of Four DeBox NFTs\", \"Next Blue Chip PFP\", \"Image of Social PFP\". Additional points will be awarded for PFPs made by hand rather than AI.",
-    "t11": "When submitting a PFP, the designer needs to submit at least 4 PFPs of the same series and provide the corresponding disassembled components. At the same time, we hope that you can provide each PFP with relevant world views, stories, and interlude stories in the creation process, and give PFP works more connotation and meaning through the combination of text stories and PFP art.",
-    "t12": "For an introduction to fractal art, please refer to https://en.wikipedia.org/wiki/Fractal",
-    "t13": "Procedural generation is a must, and we encourage artists and programmers to collaborate to generate stunning artwork through procedural generation and explore the charm of fractal art.",
+    "t8": "There is no limit to themes, recommended themes include \"self-cultivation of leeks\", \"walking in the bear market\", based on DeBox's four NFT penguins, eagles, snakes, and bunnies related to the life of cute animals, DeBox and film and television works related jokes, such as DeBox God of Gamblers, Stud, etc.",
+    "t9": "",
+    "t10": "Themes are not limited, you can refer to \"PFP Reconstruction of DeBox Four NFTs\", \"Next Blue Chip PFP\", \"Image of Social PFP\", etc. Extra points will be awarded for handcrafted PFPs.",
+    "t11": "",
+    "t12": "For an introduction to fractal art, please refer to here https://en.wikipedia.org/wiki/Fractal",
+    "t13": "It must be generated with the help of programs, and we encourage artists to collaborate with programmers to create stunning works of art through program generation.",
     "t14": "Pixel Art",
-    "t15": "Show off your love for classic pixel art, with extra points for pixel art made by hand instead of AI.",
-    "t16": "Canvas size is limited to 16x16, 32x32, 64x64, 128x128.",
+    "t15": "Show off your love for classic pixel art, and handmade pixel art pieces created without the use of AI will receive extra points.",
+    "t16": "The canvas size is limited to 16x16, 32x32, 64x64, and 128x128.",
     "t17": "Additional Rewards",
     "t18": "On-Chain Artwork: ",
     "t19": "HeartX will assist the winning artists in 1/1 Digital Art track to be verified at HeartX platform and minting their winning artworks on the zkSync, the layer2 of Ethereum.Other top three artworks from each track will be minted as ERC-721 (NFT) tokens. They will be eligible for future community-organized auctions, with all proceeds going directly to the designers.",
@@ -50,6 +50,8 @@
     "t14": "Sign up now for China's first Starknet Workshop and contribute to innovation and change",
     "t15": "Nearly 25,000 pre-registered developers and designers have already claimed their BeWater Early Bird badges",
     "t16": "Workshops have limited seats on a first-come-first-served basis",
-    "t17": "Go to team page"
+    "t17": "Go to team page",
+    "t18": "Join",
+    "t19": "Rewards"
   }
 }
