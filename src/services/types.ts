@@ -1,3 +1,5 @@
+import { Languages } from "@/i18n";
+
 /**
  *  Challenge
  */
@@ -16,13 +18,7 @@ export interface Challenge {
   endTime: string;
   totalAward: number;
   awardCurrency: string;
-  status:
-    | "DRAFT"
-    | "INREVIEW"
-    | "ACTIVE"
-    | "COMPLETED"
-    | "CANCELED"
-    | "PAUSED";
+  status: "DRAFT" | "INREVIEW" | "ACTIVE" | "COMPLETED" | "CANCELED" | "PAUSED";
   location: string;
   judgeIDs: string[];
   userIDs: string[];
@@ -53,6 +49,15 @@ export interface Challenge {
   sponsors: {
     defname: string;
     members: string[];
+  }[];
+  metadata: Record<Languages, MetaData>;
+}
+
+export interface MetaData {
+  sections: {
+    id: string;
+    component: string;
+    data: any;
   }[];
 }
 

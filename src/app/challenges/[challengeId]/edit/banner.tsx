@@ -18,6 +18,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
   let mutation = useMutationUpdateChallenge(challenge.id);
 
   let [isOnlineOnly, isOnlineOnlySet] = useState(challenge.location === LOCATION.ONLINE);
+  
   const schema = z
     .object({
       title: validationSchema.text,
@@ -27,8 +28,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
       city: isOnlineOnly ? z.string().optional() : validationSchema.text,
       startTime: validationSchema.date,
       endTime: validationSchema.date,
-    })
-    .required();
+    });
 
   type Inputs = z.infer<typeof schema>;
   let {
@@ -45,7 +45,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
       hostIcon: challenge.hostIcon,
       bannerUrl: challenge.bannerUrl,
       location: challenge.location,
-      city: challenge.city,
+      city: challenge.city ?? '',
       // fix me
       startTime: challenge.startTime.substring(0, 10),
       endTime: challenge.endTime.substring(0, 10),
