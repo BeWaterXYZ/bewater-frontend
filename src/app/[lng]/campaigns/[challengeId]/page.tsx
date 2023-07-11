@@ -10,9 +10,11 @@ import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection4 } from './prize-section/63c82bd12ddc570f32ada86a';
 import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f32ada86b';
 import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f32ada86c';
+import { PrizeSection as PrizeSection7 } from './prize-section/63c82bd12ddc570f32ada86d';
 import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
 import { Timeline as Timeline4 } from './timeline-id4';
+import { Timeline as Timeline7 } from './timeline-id7';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
@@ -21,6 +23,7 @@ import { Sponsors3 } from './sponsors3';
 import { Sponsors4 } from './sponsors4';
 import { Sponsors5 } from './sponsors5';
 import { Sponsors6 } from './sponsors6';
+import { Sponsors7 } from './sponsors7';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -321,8 +324,15 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '1' || challenge.id === '2' ? (
         <Timeline milestones={challenge.milestones} lng={lng} />
       ) : null}
-      {parseInt(challenge.id) > 3 ? (
+      {parseInt(challenge.id) > 3 && challenge.id !== '7' ? (
         <Timeline4
+          milestones={challenge.milestones}
+          lng={lng}
+          id={challenge.id}
+        />
+      ) : null}
+      {challenge.id === '7' ? (
+        <Timeline7
           milestones={challenge.milestones}
           lng={lng}
           id={challenge.id}
@@ -352,9 +362,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         </div>
         <div>
-          {challenge.id === '1' ||
-          challenge.id === '2' ||
-          challenge.id === '6' ? (
+          {challenge.id === '1' || challenge.id === '2' ? (
             <Link
               prefetch={false}
               href={`https://t.me/bewater_zh`}
@@ -436,6 +444,58 @@ export default async function ChallengeIntro({ params }: any) {
                 join @AIhackathon2023
               </div>
             </Link>
+          ) : challenge.id === '6' ? (
+            <>
+              <Link
+                prefetch={false}
+                href={`https://discord.com/invite/GzCEKvuCFy`}
+                target="_blank"
+                className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
+              >
+                <div className="flex flex-row gap-4 items-center">
+                  <svg
+                    fill="#00ffff"
+                    height="800px"
+                    width="800px"
+                    version="1.1"
+                    id="Capa_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 189.473 189.473"
+                    className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out"
+                  >
+                    <g>
+                      <path
+                        d="M152.531,179.476c-1.48,0-2.95-0.438-4.211-1.293l-47.641-32.316l-25.552,18.386c-2.004,1.441-4.587,1.804-6.914,0.972
+      c-2.324-0.834-4.089-2.759-4.719-5.146l-12.83-48.622L4.821,93.928c-2.886-1.104-4.8-3.865-4.821-6.955
+      c-0.021-3.09,1.855-5.877,4.727-7.02l174.312-69.36c0.791-0.336,1.628-0.53,2.472-0.582c0.302-0.018,0.605-0.018,0.906-0.001
+      c1.748,0.104,3.465,0.816,4.805,2.13c0.139,0.136,0.271,0.275,0.396,0.42c1.11,1.268,1.72,2.814,1.835,4.389
+      c0.028,0.396,0.026,0.797-0.009,1.198c-0.024,0.286-0.065,0.571-0.123,0.854L159.898,173.38c-0.473,2.48-2.161,4.556-4.493,5.523
+      C154.48,179.287,153.503,179.476,152.531,179.476z M104.862,130.579l42.437,28.785L170.193,39.24l-82.687,79.566l17.156,11.638
+      C104.731,130.487,104.797,130.533,104.862,130.579z M69.535,124.178l5.682,21.53l12.242-8.809l-16.03-10.874
+      C70.684,125.521,70.046,124.893,69.535,124.178z M28.136,86.782l31.478,12.035c2.255,0.862,3.957,2.758,4.573,5.092l3.992,15.129
+      c0.183-1.745,0.974-3.387,2.259-4.624L149.227,38.6L28.136,86.782z"
+                      />
+                    </g>
+                  </svg>
+                  加入我们的 DC 频道
+                </div>
+              </Link>
+            </>
+          ) : challenge.id === '7' ? (
+            <>
+              <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
+                扫码前往 Unity 社区渠道进行报名↓ 活动限额，报名需通过主办方审核
+              </p>
+              <br />
+              <br />
+              <Image
+                src="/challenge/assets/event7-baoming.jpg"
+                width={240}
+                height={240}
+                alt=""
+                className="mx-auto mb-2 md:mb-3 w-[240px] md:w-[240px]"
+              />
+            </>
           ) : null}
         </div>
       </div>
@@ -446,8 +506,9 @@ export default async function ChallengeIntro({ params }: any) {
         {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
         {challenge.id === '5' ? <PrizeSection5 t={t} lng={lng} /> : null}
         {challenge.id === '6' ? <PrizeSection6 t={t} lng={lng} /> : null}
+        {challenge.id === '7' ? <PrizeSection7 t={t} lng={lng} /> : null}
       </div>
-      {challenge.id !== '3' ? (
+      {challenge.id !== '3' && challenge.id !== '7' ? (
         <>
           <div className="mt-16">
             <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
@@ -702,10 +763,12 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '4' ? <Sponsors4 t={t} /> : null}
       {challenge.id === '5' ? <Sponsors5 t={t} /> : null}
       {challenge.id === '6' ? <Sponsors6 t={t} /> : null}
+      {challenge.id === '7' ? <Sponsors7 t={t} /> : null}
 
       {parseInt(challenge.id) < 4 ||
       challenge.id === '5' ||
-      challenge.id === '6' ? (
+      challenge.id === '6' ||
+      challenge.id === '7' ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">
             <Balancer ratio={0.9}>
@@ -751,7 +814,6 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       ) : null}
-
       {challenge.id === '4' ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">

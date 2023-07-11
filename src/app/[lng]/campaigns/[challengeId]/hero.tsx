@@ -12,6 +12,7 @@ interface ChallengeHeroProps {
 
 export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
+
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
@@ -49,7 +50,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           alt=""
           className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
         />
-      ) : challenge.id === '5' ? (
+      ) : challenge.id === '5' || challenge.id === '7' ? (
         <>
           {/* <Image
             src="/sponsors/ev-5.1.png"
@@ -64,7 +65,11 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
-        {challenge.id !== '3' ? challenge.location : 'SHANGHAI'}{' '}
+        {challenge.id !== '3' && challenge.id !== '7'
+          ? challenge.location
+          : challenge.id === '3'
+          ? 'SHANGHAI'
+          : '北京市朝阳区东三环中路20号乐成中心A座18层'}{' '}
         {challenge.id !== '4' && challenge.id !== '5' && challenge.id !== '6'
           ? '|'
           : ''}{' '}

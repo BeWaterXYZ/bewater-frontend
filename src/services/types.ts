@@ -64,6 +64,7 @@ export interface Challenge {
     email?: string;
   };
 
+
   wechatURL: string;
   telegramLink: string;
   discordLink: string;
@@ -83,6 +84,9 @@ export interface Challenge {
     }[];
   }[];
   keySponsors?: string[];
+
+  city?: string;
+
 }
 
 export interface Award {
