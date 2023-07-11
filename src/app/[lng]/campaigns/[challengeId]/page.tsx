@@ -10,9 +10,11 @@ import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection4 } from './prize-section/63c82bd12ddc570f32ada86a';
 import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f32ada86b';
 import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f32ada86c';
+import { PrizeSection as PrizeSection7 } from './prize-section/63c82bd12ddc570f32ada86d';
 import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
 import { Timeline as Timeline4 } from './timeline-id4';
+import { Timeline as Timeline7 } from './timeline-id7';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
@@ -21,6 +23,7 @@ import { Sponsors3 } from './sponsors3';
 import { Sponsors4 } from './sponsors4';
 import { Sponsors5 } from './sponsors5';
 import { Sponsors6 } from './sponsors6';
+import { Sponsors7 } from './sponsors7';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -321,8 +324,15 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '1' || challenge.id === '2' ? (
         <Timeline milestones={challenge.milestones} lng={lng} />
       ) : null}
-      {parseInt(challenge.id) > 3 ? (
+      {parseInt(challenge.id) > 3 && challenge.id !== '7' ? (
         <Timeline4
+          milestones={challenge.milestones}
+          lng={lng}
+          id={challenge.id}
+        />
+      ) : null}
+      {challenge.id === '7' ? (
+        <Timeline7
           milestones={challenge.milestones}
           lng={lng}
           id={challenge.id}
@@ -471,6 +481,21 @@ export default async function ChallengeIntro({ params }: any) {
                 </div>
               </Link>
             </>
+          ) : challenge.id === '7' ? (
+            <>
+              <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
+                扫码前往 Unity 社区渠道进行报名↓ 活动限额，报名需通过主办方审核
+              </p>
+              <br />
+              <br />
+              <Image
+                src="/challenge/assets/event7-baoming.jpg"
+                width={240}
+                height={240}
+                alt=""
+                className="mx-auto mb-2 md:mb-3 w-[240px] md:w-[240px]"
+              />
+            </>
           ) : null}
         </div>
       </div>
@@ -481,6 +506,7 @@ export default async function ChallengeIntro({ params }: any) {
         {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
         {challenge.id === '5' ? <PrizeSection5 t={t} lng={lng} /> : null}
         {challenge.id === '6' ? <PrizeSection6 t={t} lng={lng} /> : null}
+        {challenge.id === '7' ? <PrizeSection7 t={t} lng={lng} /> : null}
       </div>
       {challenge.id !== '3' ? (
         <>
@@ -737,10 +763,12 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '4' ? <Sponsors4 t={t} /> : null}
       {challenge.id === '5' ? <Sponsors5 t={t} /> : null}
       {challenge.id === '6' ? <Sponsors6 t={t} /> : null}
+      {challenge.id === '7' ? <Sponsors7 t={t} /> : null}
 
       {parseInt(challenge.id) < 4 ||
       challenge.id === '5' ||
-      challenge.id === '6' ? (
+      challenge.id === '6' ||
+      challenge.id === '7' ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">
             <Balancer ratio={0.9}>
@@ -786,7 +814,6 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       ) : null}
-
       {challenge.id === '4' ? (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">

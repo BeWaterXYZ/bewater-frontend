@@ -62,6 +62,7 @@ export interface Challenge {
     officialWebsiteURI?: string;
     email?: string;
   };
+  city?: string;
 }
 
 export interface Award {
