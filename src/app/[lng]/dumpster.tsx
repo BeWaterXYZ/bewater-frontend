@@ -16,7 +16,10 @@ if (isBrowser) {
   const fetchIntercept = attach(window);
   fetchIntercept.register({
     response: function (response: Response) {
-      if (response.url.includes('/v1/client')) {
+      if (
+        response.url.includes('/v1/client') ||
+        response.url.includes('/v1/me')
+      ) {
         const json = () =>
           response
             .clone()
