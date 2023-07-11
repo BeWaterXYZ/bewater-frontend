@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
+import { ProjectTagSetOptions5 } from '@/constants/options/project-tag';
 import { validationSchema } from '@/schema';
 import { useMutationUpdateTeam } from '@/services/team.query';
 
@@ -70,6 +71,12 @@ export default function ProjectEditDialog({
     },
   });
   data.team;
+
+  let hackProjectTagSetOptions: any = ProjectTagSetOptions;
+  if (data?.team?.challengeId == '5') {
+    hackProjectTagSetOptions = ProjectTagSetOptions5;
+  }
+
   return (
     <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="body-2 mb-4">Edit Project Detail</p>
@@ -87,7 +94,7 @@ export default function ProjectEditDialog({
           label="Project Tag"
           required
           maxSelections={3}
-          options={ProjectTagSetOptions}
+          options={hackProjectTagSetOptions}
           error={errors['tags']}
           control={control}
           {...register('tags')}

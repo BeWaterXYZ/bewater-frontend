@@ -67,7 +67,10 @@ export default function TeamCreateDialog({
   const isEditing = !!data.team;
 
   let hackProjectTagSetOptions: any = ProjectTagSetOptions;
-  if (data?.challenge?.id == '5') {
+  if (data?.challenge?.id === '5') {
+    hackProjectTagSetOptions = ProjectTagSetOptions5;
+  }
+  if (isEditing && data.team?.challengeId === '5') {
     hackProjectTagSetOptions = ProjectTagSetOptions5;
   }
 
