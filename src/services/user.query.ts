@@ -41,8 +41,8 @@ export function useMutationUpdateUserProfile() {
   const queryClient = useQueryClient();
   return useMutation(submitUpdateUserProfile, {
     onSuccess: (data, variables, context) => {
-      queryClient.setQueryData(['user', data.userProfile?.externalId], data);
-      queryClient.invalidateQueries(['user', data.userProfile?.externalId]);
+      queryClient.setQueryData(['user', data.userProfile?.id], data);
+      queryClient.invalidateQueries(['user', data.userProfile?.id]);
     },
   });
 }
@@ -51,7 +51,7 @@ export function useMutationUpdateEmail() {
   const queryClient = useQueryClient();
   return useMutation(updateEmail, {
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(['user', data.userProfile?.externalId]);
+      queryClient.invalidateQueries(['user', data.userProfile?.id]);
     },
   });
 }

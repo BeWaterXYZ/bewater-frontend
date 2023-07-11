@@ -16,13 +16,13 @@ import { useLoadingStoreAction } from '@/components/loading/store';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useToastStore } from '@/components/toast/store';
-import { useAuthStore } from '@/stores/auth';
 import { getErrorResp } from '@/utils/error-type';
+import { useClerk } from '@clerk/nextjs';
 
 function getUserLink(userProfile: UserProfile, lng: string) {
   return (
     <strong className="text-white hover:underline">
-      <Link prefetch={false} href={`/${lng}/user/${userProfile.externalId}`}>
+      <Link href={`/${lng}/user/${userProfile.id}`}>
         {userProfile.fullName}
       </Link>
     </strong>
@@ -36,7 +36,6 @@ function getTitle(
 ) {
   let teamLink = (
     <Link
-      prefetch={false}
       href={`/${lng}/campaigns/${req.team.challenge.id}/teams/${req.team.id}`}
       className="text-white hover:underline"
     >
@@ -89,7 +88,7 @@ export function GroupingRequestNotification({
   lng: string;
 }) {
   const { confirm } = useAlert();
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
 
@@ -166,11 +165,11 @@ export function GroupingRequestNotification({
       )}
     >
       <div>
-        <Avatar
+        {/* <Avatar
           className="w-12 h-12"
           src={sender.avatarURI}
           walletAddress={sender.walletAddress}
-        />
+        /> */}
       </div>
       <div className="flex flex-1 flex-col justify-around">
         <div className="">{title}</div>
@@ -178,7 +177,6 @@ export function GroupingRequestNotification({
           <p className="body-5 text-grey-500">
             {formatDistance(parseISO(req.createdAt), new Date())} ago ·{' '}
             <Link
-              prefetch={false}
               href={`/${lng}/campaigns/${req.team.challenge.id}`}
               className="hover:underline"
             >

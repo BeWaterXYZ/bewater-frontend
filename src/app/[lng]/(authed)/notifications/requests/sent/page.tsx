@@ -1,14 +1,14 @@
 'use client';
 import { useFetchGroupingRequest } from '@/services/notification.query';
 import { sortGroupingRequest } from '@/services/notification';
-import { useAuthStore } from '@/stores/auth';
 import { GroupingRequestNotification } from '../grouping-request-notification';
+import { useClerk } from '@clerk/nextjs';
 
 export default function Page({ params }: { params: { lng: string } }) {
   let { lng = 'en' } = params || {};
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
 
-  const { error, data, isLoading } = useFetchGroupingRequest(user?.externalId);
+  const { error, data, isLoading } = useFetchGroupingRequest(user?.id);
 
   if (error || isLoading || !data) return null;
 
@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { lng: string } }) {
             <GroupingRequestNotification
               key={req.id}
               req={req}
-              sentOrReceived={req.sender?.externalId === user?.externalId}
+              sentOrReceived={req.sender?.clerkId === user?.id}
               lng={lng}
             />
           );

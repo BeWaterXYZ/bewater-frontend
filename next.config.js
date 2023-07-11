@@ -14,33 +14,13 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: '**.nftstorage.link',
-      },
-      {
-        protocol: 'https',
         hostname: '**.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.gradproject.xyz',
       },
 
       {
         protocol: 'https',
-        hostname: '**.nftstorage.link',
+        hostname: '**.bewater.xyz',
       },
-      {
-        protocol: 'https',
-        hostname: '**.ipfs-gateway.cloud',
-      },
-      {
-        protocol: 'https',
-        hostname: '**.pinata.cloud',
-      },
-      // {
-      //   protocol: 'https',
-      //   hostname: '**.4everland.io',
-      // },
     ],
   },
 

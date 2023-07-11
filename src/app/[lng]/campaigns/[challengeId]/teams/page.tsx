@@ -4,7 +4,6 @@ import { Loading } from '@/components/loading/loading';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeTeams } from '@/services/team.query';
 import { Team, UserProfile } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -14,6 +13,8 @@ import { CreateTeamButton } from './create-team-button';
 import { TeamFilter } from './team-filter';
 import { TeamItem } from './team-item';
 import { ChallengeTeamsInfo } from './teams-info';
+import { useClerk } from '@clerk/nextjs';
+import { useFetchUser } from '@/services/user.query';
 function getOpeningRoles(user: UserProfile, team: Team) {
   return team.openingRoles.filter(
     (role) =>
@@ -52,10 +53,10 @@ function filterAndSortTeam(
   if (!userProfile) return res;
   return res.sort((a, b) => {
     let isInATeam = a.teamMembers.some(
-      (m) => m.userProfile.externalId === userProfile.externalId,
+      (m) => m.userProfile.id === userProfile.id,
     );
     let isInBTeam = b.teamMembers.some(
-      (m) => m.userProfile.externalId === userProfile.externalId,
+      (m) => m.userProfile.id === userProfile.id,
     );
 
     if (isInATeam && !isInBTeam) return -1;
@@ -71,9 +72,11 @@ function filterAndSortTeam(
 export default function ChallengeTeams({ params }: any) {
   // fix. searchParams wont work for clicking back button on browser
   const sp = useSearchParams();
-  const user = useAuthStore((s) => s.user);
+  const user = useClerk().user;
   const showDialog = useDialogStore((s) => s.open);
   const { challengeId } = segmentSchema.challengeId.parse(params);
+  const { data: userProfile } = useFetchUser(user?.id);
+  console.log({ userProfile });
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);
@@ -83,7 +86,10 @@ export default function ChallengeTeams({ params }: any) {
   if (!challenge || !teams) return null;
 
   const { tag, role } = querySchema.parse(Object.fromEntries(sp!));
-  const teamsFilteredSorted = filterAndSortTeam(teams, user, { role, tag });
+  const teamsFilteredSorted = filterAndSortTeam(teams, userProfile, {
+    role,
+    tag,
+  });
 
   const showFilter = () => {
     showDialog('team_filter', teams);

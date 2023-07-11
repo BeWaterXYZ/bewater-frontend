@@ -1,28 +1,28 @@
 'use client';
 
 import { Team } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
 import { useNavigator } from '@/hooks/useNavigator';
 import { useDialogStore } from '@/components/dialog/store';
 import Image from 'next/image';
+import { useClerk } from '@clerk/nextjs';
 
 export let TeamStatus = ({ team, lng }: { team: Team; lng: string }) => {
-  const isAuthed = useAuthStore((s) => s.isAuthed);
-  const user = useAuthStore((s) => s.user);
+  const clerk = useClerk();
+  const user = useClerk().user;
   const showDialog = useDialogStore((s) => s.open);
   const navigator = useNavigator(lng);
   const isMyTeam = team.teamMembers.some(
-    (m) => m.userProfile.externalId === user?.externalId,
+    (m) => m.userProfile.clerkId === user?.id,
   );
   const requestJoin = () => {
-    if (!isAuthed()) {
-      navigator.goToConnectWallet();
+    if (!clerk.user) {
+      clerk.redirectToSignIn();
       return;
     }
     showDialog('team_join', team);
   };
 
-  if (isAuthed() && isMyTeam) {
+  if (!!clerk.user && isMyTeam) {
     return (
       <div className="flex items-center">
         <Image

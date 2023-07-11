@@ -10,7 +10,7 @@ import { string } from 'zod';
 export type UserID = string;
 
 export interface UserProfile {
-  externalId: UserID;
+  id: UserID;
   email: string;
   walletAddress: string;
   userName?: string;
@@ -21,6 +21,7 @@ export interface UserProfile {
   telegramLink?: string;
   roles: RoleUnion[];
   skills: SkillUnion[];
+  clerkId: string;
 }
 export interface SocialAuth {
   platform: 'GitHub' | 'Figma';
@@ -62,7 +63,30 @@ export interface Challenge {
     officialWebsiteURI?: string;
     email?: string;
   };
+
+
+  wechatURL: string;
+  telegramLink: string;
+  discordLink: string;
+  twitterLink: string;
+
+  sponsors: {
+    defname: string;
+    members: string[];
+  }[];
+
+  awardAssorts?: {
+    name: string;
+    awards: {
+      awardName: string;
+      amount: number;
+      count: number;
+    }[];
+  }[];
+  keySponsors?: string[];
+
   city?: string;
+
 }
 
 export interface Award {

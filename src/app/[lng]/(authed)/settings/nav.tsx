@@ -9,8 +9,8 @@ const links = [
     path: '/settings/basic',
   },
   {
-    label: ' Linked Accounts',
-    path: '/settings/link',
+    label: 'Builder Settings',
+    path: '/settings/extra',
   },
 ] as const;
 
@@ -20,7 +20,6 @@ export function Nav({ lng }: { lng: string }) {
     <nav className=" w-full flex flex-row lg:flex-col gap-3 ">
       {links.map((link) => (
         <Link
-          prefetch={false}
           key={link.path}
           href={`/${lng}${link.path}`}
           className={clsx(

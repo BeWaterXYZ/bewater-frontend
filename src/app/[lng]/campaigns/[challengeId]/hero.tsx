@@ -16,7 +16,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
-      style={{ backgroundImage: `url(/challenge/assets/${challenge.id}.png)` }}
+      style={{ backgroundImage: `url("${challenge.bannerUrl}")` }}
     >
       {challenge.id === '1' || challenge.id === '6' ? (
         <Image
@@ -88,7 +88,6 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
-              prefetch={false}
               href={`/${lng}/campaigns/${challenge.id}/teams`}
               className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
             >
@@ -111,7 +110,6 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       {challenge.id === '3' ? (
         <div className="mt-6 md:mt-12">
           <Link
-            prefetch={false}
             target="_blank"
             href="https://forms.gle/qZ5KbnCufSNVeVkv8"
             className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"

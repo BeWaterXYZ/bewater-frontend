@@ -20,16 +20,14 @@ import { useMutationUpdateUserProfile } from '@/services/user.query';
 import { validationSchema } from '@/schema';
 
 interface Props {
-  data: GetUserProfileByIdResponse;
+  data: UserProfile;
 }
 
 export const FormUserSettings = ({ data }: Props) => {
   const schema = z.object({
-    userName: validationSchema.userName(data.userProfile?.userName ?? ''),
     bio: validationSchema.bio,
     telegramLink: z.string().optional(),
     websiteLink: z.string().url().optional(),
-    fullName: validationSchema.fullName,
     roles: validationSchema.roles,
     skills: validationSchema.skills,
   });
@@ -45,11 +43,12 @@ export const FormUserSettings = ({ data }: Props) => {
     formState: { errors },
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
+
     defaultValues: {
-      ...data?.userProfile,
-      bio: data?.userProfile?.bio ?? '',
-      websiteLink: data?.userProfile?.websiteLink ?? '',
-      telegramLink: data?.userProfile?.telegramLink ?? '',
+      ...data,
+      bio: data?.bio ?? '',
+      websiteLink: data?.websiteLink ?? '',
+      telegramLink: data?.telegramLink ?? '',
     },
   });
   const mutation = useMutationUpdateUserProfile();
@@ -79,7 +78,7 @@ export const FormUserSettings = ({ data }: Props) => {
       className={clsx('mt-8')}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Input
+      {/* <Input
         label="Username"
         placeholder="Enter your username"
         required
@@ -92,7 +91,7 @@ export const FormUserSettings = ({ data }: Props) => {
         required
         error={errors['fullName']}
         {...register('fullName', { required: 'Full name is required.' })}
-      />
+      /> */}
       <TextArea
         label="Bio"
         rows={3}

@@ -1,7 +1,6 @@
 import { Aspect } from '@/components/aspect';
 import { Challenge } from '@/services/types';
-import { formatMMMDDYYYY, formatYYYYMMMDD } from '@/utils/date';
-import { unsplash } from '@/utils/unsplash';
+import { formatYYYYMMMDD } from '@/utils/date';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -18,16 +17,13 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
           key={challenge.id}
           className="w-full border border-[#24254E] rounded overflow-hidden bg-latenight"
         >
-          <Link prefetch={false} href={`/${lng}/campaigns/${challenge.id}`}>
+          <Link href={`/${lng}/campaigns/${challenge.id}`}>
             <Aspect ratio={5 / 2}>
               <Image
                 fill
                 src={
-                  challenge.id === '2'
-                    ? lng === 'en'
-                      ? '/challenge/assets/2withTiten.png'
-                      : '/challenge/assets/2withTitle.png'
-                    : `/challenge/assets/${challenge.id}withTitle.png`
+                  challenge.bannerUrl ??
+                  `/challenge/assets/${challenge.id}withTitle.png`
                 }
                 alt="crypto"
                 className="object-cover w-full h-full"

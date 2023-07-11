@@ -38,7 +38,6 @@ export function ResultCard({
       <div className=" h-[216px]  w-[320px] flex flex-col justify-between p-4 bg-latenight  shadow-[0px_10px_20px_rgba(0,_0,_0,_0.3)]">
         <div className="relative">
           <Link
-            prefetch={false}
             className="block body-0 text-ellipsis truncate my-2 w-[80%]"
             href={`/${lng}/campaigns/${team.challengeId}/projects/${team.project.id}`}
           >
@@ -61,7 +60,6 @@ export function ResultCard({
 
         <div>
           <Link
-            prefetch={false}
             href={`/${lng}/campaigns/${team.challengeId}/teams/${team.id}`}
             className="block body-3 text-left mb-2 text-ellipsis truncate"
           >

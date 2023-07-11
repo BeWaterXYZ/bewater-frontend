@@ -6,7 +6,8 @@ import { useNavigator } from '@/hooks/useNavigator';
 import { useFetchChallengeById } from '@/services/challenge.query';
 import { teamRemoveMember } from '@/services/team';
 import { Team } from '@/services/types';
-import { useAuthStore } from '@/stores/auth';
+import { useFetchUser } from '@/services/user.query';
+import { useClerk } from '@clerk/nextjs';
 
 interface TeamMenuProps {
   team: Team;
@@ -17,20 +18,22 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
   const { confirm } = useAlert();
   const { data: challenge } = useFetchChallengeById(team.challengeId);
   const router = useNavigator(lng);
-  const user = useAuthStore((s) => s.user);
-  const isAuthed = useAuthStore((s) => s.isAuthed);
+  const user = useClerk().user;
+  const { data: userProfile } = useFetchUser(user?.id);
+  const isAuthed = !!user;
   const navigator = useNavigator(lng);
   const showDialog = useDialogStore((s) => s.open);
   const isJoined = team.teamMembers.some(
-    (m) => m.userProfile.externalId === user?.externalId,
+    (m) => m.userProfile.clerkId === user?.id,
   );
   const isLeader = team.teamMembers
     .filter((m) => m.isLeader)
-    .some((m) => m.userProfile.externalId === user?.externalId);
+    .some((m) => m.userProfile.clerkId === user?.id);
 
+  const clerk = useClerk();
   const requestJoin = () => {
-    if (!isAuthed()) {
-      navigator.goToConnectWallet();
+    if (!clerk.user) {
+      clerk.redirectToSignIn();
       return;
     }
     showDialog('team_join', team);
@@ -50,7 +53,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
       cancelCopy: 'Cancel',
     });
     if (!confirmed) return;
-    await teamRemoveMember(team.id, user?.externalId!);
+    await teamRemoveMember(team.id, userProfile?.id!);
     router.refresh();
   };
 
@@ -78,7 +81,7 @@ export default function TeamMenu({ team, lng }: TeamMenuProps) {
       <button className="btn btn-secondary" onClick={share}>
         Share
       </button>
-      {!isAuthed() || !isJoined ? (
+      {!isAuthed || !isJoined ? (
         <button className="btn btn-primary" onClick={requestJoin}>
           Request to join
         </button>

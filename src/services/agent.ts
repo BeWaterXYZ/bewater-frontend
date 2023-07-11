@@ -1,6 +1,5 @@
 import { CONFIGS } from '@/config';
 import { isBrowser } from '@/constants';
-import { useAuthStore } from '@/stores/auth';
 import axios, {
   AxiosError,
   AxiosResponse,
@@ -11,8 +10,9 @@ import axios, {
  *  interceptors
  */
 
-const requestInterceptor = (config: InternalAxiosRequestConfig) => {
-  const accessToken = useAuthStore.getState().token;
+const requestInterceptor = async (config: InternalAxiosRequestConfig) => {
+  if (!isBrowser) return config;
+  const accessToken = await (<any>window).Clerk.session.getToken(); // useAuthStore.getState().token;
   if (!!accessToken && !!config.headers) {
     config.headers['authorization'] = `Bearer ${accessToken}`;
   }
@@ -21,10 +21,7 @@ const requestInterceptor = (config: InternalAxiosRequestConfig) => {
 
 const responseInterceptor = (error: AxiosError) => {
   if (error.response?.status === 401) {
-    useAuthStore.setState({
-      token: '',
-      user: undefined,
-    });
+    // to do , clerk logout
   }
   return Promise.reject(error);
 };

@@ -21,7 +21,6 @@ export function TeamCard({ member, lng }: { member: TeamMember; lng: string }) {
         <div className="body-3 text-grey-500">
           {'at '}
           <Link
-            prefetch={false}
             href={`/${lng}/campaigns/${member.team?.challengeId}/teams/${member.teamId}`}
           >
             {member.team?.name}
