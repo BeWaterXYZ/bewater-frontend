@@ -508,7 +508,7 @@ export default async function ChallengeIntro({ params }: any) {
         {challenge.id === '6' ? <PrizeSection6 t={t} lng={lng} /> : null}
         {challenge.id === '7' ? <PrizeSection7 t={t} lng={lng} /> : null}
       </div>
-      {challenge.id !== '3' ? (
+      {challenge.id !== '3' && challenge.id !== '7' ? (
         <>
           <div className="mt-16">
             <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
