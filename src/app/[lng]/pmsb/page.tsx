@@ -11,7 +11,7 @@ export default function PoorMansStorybook() {
             <button
               className="btn btn-primary"
               onClick={() => {
-                throw new Error('Sentry Frontend Error');
+                throw new Error(' Frontend Error');
               }}
             >
               Test button
