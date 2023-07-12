@@ -27,6 +27,9 @@ import { Sponsors7 } from './sponsors7';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
+import HoverCard from '@/components/hover-card';
+import { Fragment } from 'react';
+import Marquee from 'react-fast-marquee';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -500,13 +503,84 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
       <div className="">
-        {challenge.id === '1' ? <PrizeSection1 /> : null}
-        {challenge.id === '2' ? <PrizeSection2 t={t} lng={lng} /> : null}
-        {challenge.id === '3' ? <ScheduleSection /> : null}
-        {challenge.id === '4' ? <PrizeSection4 t={t} /> : null}
-        {challenge.id === '5' ? <PrizeSection5 t={t} lng={lng} /> : null}
-        {challenge.id === '6' ? <PrizeSection6 t={t} lng={lng} /> : null}
-        {challenge.id === '7' ? <PrizeSection7 t={t} lng={lng} /> : null}
+        {challenge.id === '1' ? (
+          <PrizeSection1 />
+        ) : challenge.id === '2' ? (
+          <PrizeSection2 t={t} lng={lng} />
+        ) : challenge.id === '3' ? (
+          <ScheduleSection />
+        ) : challenge.id === '4' ? (
+          <PrizeSection4 t={t} />
+        ) : challenge.id === '5' ? (
+          <PrizeSection5 t={t} lng={lng} />
+        ) : challenge.id === '6' ? (
+          <PrizeSection6 t={t} lng={lng} />
+        ) : challenge.id === '7' ? (
+          <PrizeSection7 t={t} lng={lng} />
+        ) : (
+          <div className="container">
+            <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
+              <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+                Total Awards: ${challenge.totalAward} {challenge.awardCurrency}
+              </h3>
+              <div className="flex flex-row flex-wrap items-center gap-16">
+                {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
+                  return (
+                    <div className="flex flex-col items-center gap-10" key={i}>
+                      <div className="flex flex-row gap-[min(32px,2vw)] ">
+                        <div className="flex flex-col gap-4 md:gap-7 items-center">
+                          <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                            {awardAssort.name}
+                          </p>
+                          <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
+                            {awardAssort.awards.map((award, i) => {
+                              return (
+                                <Fragment key={i}>
+                                  <div className="flex flex-col gap-1 w-full">
+                                    <p className="body-3 text-white">
+                                      {award.awardName}
+                                    </p>
+                                    <div className="flex flex-row justify-between">
+                                      <p className="body-3 text-white/60">
+                                        ${award.amount}
+                                      </p>
+                                      <p className="body-3 text-white/60">
+                                        x{award.count}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <hr className="border-none bg-white/20 h-[0.5px] w-full" />
+                                </Fragment>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="relative w-full flex flex-col gap-10 items-center">
+                <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30">
+                  Key Sponsors
+                </p>
+                <Marquee>
+                  {(challenge.keySponsors ?? []).map((sp, i) => {
+                    return (
+                      <div
+                        className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
+                        key={i}
+                      >
+                        {/* // fixme/ */}
+                        <img src={sp} className="h-8 md:h-10" />
+                      </div>
+                    );
+                  })}
+                </Marquee>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       {challenge.id !== '3' && challenge.id !== '7' ? (
         <>
@@ -519,22 +593,38 @@ export default async function ChallengeIntro({ params }: any) {
                 .sort((a, b) => a.order - b.order)
                 .map((judge) => {
                   return (
-                    <div key={judge.id} className="w-[180px] mb-2">
-                      <Aspect ratio={1 / 1}>
-                        <Image
-                          height={150}
-                          width={150}
-                          src={judge.avatarURI ?? unsplash('man')}
-                          className="object-cover w-full h-full"
-                          alt={judge.name}
-                          title={judge.description}
-                        />
+                    <div key={judge.id!} className="w-[180px] mb-2 ">
+                      <Aspect ratio={1 / 1} className="">
+                        <HoverCard
+                          side="right"
+                          card={
+                            <div className="min-w-[100px] max-w-[200px] text-white">
+                              {judge.description}
+                            </div>
+                          }
+                        >
+                          <Image
+                            fill
+                            src={judge.avatarURI}
+                            className="object-cover w-full h-full bg-white/5"
+                            alt={judge.name}
+                          />
+                        </HoverCard>
                       </Aspect>
-                      <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                      <p className="body-4 text-grey-400">
-                        {judge.organization}
+
+                      <p className="body-3 mt-4 mb-2 text-white">
+                        {judge.name}
                       </p>
                       <p className="body-4 text-grey-400">{judge.title}</p>
+                      <div>
+                        {judge.twitterLink ? (
+                          <Link href={judge.twitterLink}>
+                            {
+                              <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
+                            }
+                          </Link>
+                        ) : null}
+                      </div>
                     </div>
                   );
                 })}
@@ -638,6 +728,47 @@ export default async function ChallengeIntro({ params }: any) {
                   </p>
                 </div>
               )}
+            </div>
+          </div>
+
+          <div className="container">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
+              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                <h3 className="text-[24px] font-bold mb-8 text-white">
+                  Submission Requirements
+                </h3>
+                <ol className="list-decimal">
+                  {challenge.requirements
+                    .split('\n')
+                    .filter(Boolean)
+                    .map((r, i) => (
+                      <li
+                        key={i}
+                        className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                      >
+                        <span className="text-[14px] text-grey-400">{r}</span>
+                      </li>
+                    ))}
+                </ol>
+              </div>
+              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                <h3 className="text-white text-[24px] font-bold mb-8">
+                  Judging Criteria
+                </h3>
+                <ol className="list-decimal">
+                  {challenge.reviewDimension
+                    .split('\n')
+                    .filter(Boolean)
+                    .map((r, i) => (
+                      <li
+                        key={i}
+                        className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                      >
+                        <span className="text-[14px] text-grey-400">{r}</span>
+                      </li>
+                    ))}
+                </ol>
+              </div>
             </div>
           </div>
 
@@ -757,13 +888,49 @@ export default async function ChallengeIntro({ params }: any) {
         </>
       ) : null}
 
-      {challenge.id === '1' ? <Sponsors /> : null}
-      {challenge.id === '2' ? <Sponsors2 t={t} /> : null}
-      {challenge.id === '3' ? <Sponsors3 /> : null}
-      {challenge.id === '4' ? <Sponsors4 t={t} /> : null}
-      {challenge.id === '5' ? <Sponsors5 t={t} /> : null}
-      {challenge.id === '6' ? <Sponsors6 t={t} /> : null}
-      {challenge.id === '7' ? <Sponsors7 t={t} /> : null}
+      {challenge.id === '1' ? (
+        <Sponsors />
+      ) : challenge.id === '2' ? (
+        <Sponsors2 t={t} />
+      ) : challenge.id === '3' ? (
+        <Sponsors3 />
+      ) : challenge.id === '4' ? (
+        <Sponsors4 t={t} />
+      ) : challenge.id === '5' ? (
+        <Sponsors5 t={t} />
+      ) : challenge.id === '6' ? (
+        <Sponsors6 t={t} />
+      ) : challenge.id === '7' ? (
+        <Sponsors7 t={t} />
+      ) : (
+        <div className="container">
+          <div>
+            <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">
+              Sponsors
+            </h3>
+            <div className="flex flex-col gap-12 items-center">
+              {challenge.sponsors.map((s, i) => {
+                return (
+                  <div className="flex flex-col gap-7 items-center" key={i}>
+                    <p className="body-1 md: text-[20px] font-bold text-white/30 md:text-white/30">
+                      {s.defname}
+                    </p>
+                    <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
+                      {s.members.map((member, i) => (
+                        <img
+                          src={member}
+                          key={i}
+                          className="h-8 md:h-10 mb-4 mx-4"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {parseInt(challenge.id) < 4 ||
       challenge.id === '5' ||
