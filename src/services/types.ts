@@ -64,7 +64,6 @@ export interface Challenge {
     email?: string;
   };
 
-
   wechatURL: string;
   telegramLink: string;
   discordLink: string;
@@ -86,7 +85,6 @@ export interface Challenge {
   keySponsors?: string[];
 
   city?: string;
-
 }
 
 export interface Award {
@@ -104,6 +102,7 @@ export interface Judge {
   challengeIDs: number[];
   order: number;
   description?: string;
+  twitterLink?: string;
 }
 
 export interface Milestone {

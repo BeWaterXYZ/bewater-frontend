@@ -46,7 +46,7 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
         </ul>
       </div>
       <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-        🏆 🛠 platforms //开发平台
+        🛠 platforms //开发平台
       </h3>
       <div className="relative w-full flex flex-col gap-10 items-center">
         <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
