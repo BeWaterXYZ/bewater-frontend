@@ -18,10 +18,9 @@ export default async function Layout({
   const { lng } = segmentSchema.lng.parse(params);
   const { t } = await useTranslation(lng, 'translation');
 
-  if (challenge.id === '2') {
-    if (lng === 'en') {
-      challenge.title = "A Midsummer CryptoArt's Dream";
-      challenge.location = 'Online Event';
+  if (lng === 'en' && challenge.metadata) {
+    if (challenge.metadata.entitle) {
+      challenge.title = challenge.metadata.entitle;
     }
   }
 
