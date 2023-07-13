@@ -36,3 +36,13 @@ NEXT_PUBLIC_BASE_PATH=
 ENVIRONMENT=local
 ```
 
+### metadata的用途
+
+```json
+      "metadata": {
+        "entitle": "Neo APAC Hackathon",
+        "endescription": "",
+        "enrequirements": "",
+        "enreviewDimension": "Coming soon"
+      }
+```
