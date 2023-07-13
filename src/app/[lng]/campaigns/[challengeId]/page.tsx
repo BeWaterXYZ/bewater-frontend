@@ -518,7 +518,7 @@ export default async function ChallengeIntro({ params }: any) {
             </div>
           ) : null}
 
-          {challenge?.requirements.length > 1 ? (
+          {parseInt(challenge.id) < 11 && challenge?.requirements.length > 1 ? (
             <div
               className={`w-full grid grid-cols-1 ${
                 challenge?.requirements.length > 1 &&
