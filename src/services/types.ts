@@ -88,6 +88,7 @@ export interface Challenge {
   hostIcon?: string;
   type: string;
   metadata?: JSON;
+  joinLink?: string;
 }
 
 export interface Award {

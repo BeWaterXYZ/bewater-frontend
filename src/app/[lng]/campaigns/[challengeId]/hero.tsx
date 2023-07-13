@@ -94,7 +94,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         }`}
       </h1>
 
-      {challenge.id === '1' || challenge.id === '2' || challenge.id === '5' ? (
+      {challenge.type === 'HACKATHON' ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
@@ -116,49 +116,19 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           </div>
         )
       ) : null}
-
-      {challenge.id === '3' ? (
-        <div className="mt-6 md:mt-12">
-          <Link
-            target="_blank"
-            href="https://forms.gle/qZ5KbnCufSNVeVkv8"
-            className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
-          >
-            {`${t('campaign.t4')}`}
-          </Link>
-        </div>
+      {challenge.type === 'WORKSHOP' ? (
+        challenge.joinLink ? (
+          <div className="mt-6 md:mt-12">
+            <Link
+              target="_blank"
+              href={challenge.joinLink}
+              className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
+            >
+              {`${t('campaign.t4')}`}
+            </Link>
+          </div>
+        ) : null
       ) : null}
-
-      {challenge.id === '11' ? (
-        <div className="mt-6 md:mt-12">
-          <Link
-            target="_blank"
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfLBQgIvmKiZqkxBpRnOFhLJGtn7HllvyZz4pgkCjgkJrZ_lg/viewform"
-            className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
-          >
-            {`${t('campaign.t4')}`}
-          </Link>
-        </div>
-      ) : null}
-
-      {challenge.id === '4' ? (
-        <div className="mt-6 md:mt-12">
-          <Link
-            prefetch={false}
-            href={`https://docs.google.com/forms/d/128cimlspqKBj4EfAAB9dUIN4zgG0og4u4r837Ul1VJo/viewform?pli=1&edit_requested=true`}
-            className="btn btn-primary-invert body-4 text-day  uppercase w-60 py-6"
-          >
-            Join
-          </Link>
-        </div>
-      ) : null}
-
-      {challenge.id === '1' && (
-        <div>
-          <div className="absolute  block w-[100px] h-[1388px] left-[58%] md:left-[80%] -top-[352px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[30.25deg]" />
-          <div className="absolute  block w-[100px] h-[1388px] left-[10%] md:left-[56%] -top-[287px] bg-[rgba(255,89,89,0.6)] mix-blend-screen opacity-[0.16] blur-[22.5px] rotate-[40.65deg]" />
-        </div>
-      )}
     </div>
   );
 }
