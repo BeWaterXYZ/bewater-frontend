@@ -60,19 +60,29 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[288px]"
           /> */}
         </>
+      ) : challenge.hostIcon?.length ? (
+        <>
+          <Image
+            src={challenge.hostIcon}
+            width={144}
+            height={40}
+            alt=""
+            className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
+          />
+        </>
       ) : (
-        <p className="body-4 md:text-[20px]">{challenge.hostName}</p>
+        <p className="body-4 md:text-[20px]">{challenge.hostName ?? ''}</p>
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
         {challenge.id !== '3' && challenge.id !== '7'
-          ? challenge.location
+          ? challenge.location === 'OTHERS'
+            ? ''
+            : challenge.location
           : challenge.id === '3'
           ? 'SHANGHAI'
           : '北京市朝阳区东三环中路20号乐成中心A座18层'}{' '}
-        {challenge.id !== '4' && challenge.id !== '5' && challenge.id !== '6'
-          ? '|'
-          : ''}{' '}
+        {challenge.location === 'OTHERS' ? '' : '|'}{' '}
         {`${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)
@@ -112,6 +122,18 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           <Link
             target="_blank"
             href="https://forms.gle/qZ5KbnCufSNVeVkv8"
+            className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
+          >
+            {`${t('campaign.t4')}`}
+          </Link>
+        </div>
+      ) : null}
+
+      {challenge.id === '11' ? (
+        <div className="mt-6 md:mt-12">
+          <Link
+            target="_blank"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfLBQgIvmKiZqkxBpRnOFhLJGtn7HllvyZz4pgkCjgkJrZ_lg/viewform"
             className="btn btn-primary rounded-none body-4 text-night uppercase px-4 py-3 md:px-8 md:py-6"
           >
             {`${t('campaign.t4')}`}

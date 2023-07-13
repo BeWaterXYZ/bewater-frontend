@@ -85,6 +85,9 @@ export interface Challenge {
   keySponsors?: string[];
 
   city?: string;
+  hostIcon?: string;
+  type: string;
+  metadata?: JSON;
 }
 
 export interface Award {

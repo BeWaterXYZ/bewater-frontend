@@ -28,7 +28,9 @@ export default async function Layout({
   return (
     <div>
       <ChallengeHero challenge={challenge} lng={lng} t={t} />
-      <ChallengeNav challenge={challenge} lng={lng} />
+      {challenge.type !== 'WORKSHOP' ? (
+        <ChallengeNav challenge={challenge} lng={lng} />
+      ) : null}
       <div>{children}</div>
     </div>
   );

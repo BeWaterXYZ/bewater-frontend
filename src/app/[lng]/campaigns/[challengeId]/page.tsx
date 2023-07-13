@@ -11,6 +11,7 @@ import { PrizeSection as PrizeSection4 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f32ada86b';
 import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f32ada86c';
 import { PrizeSection as PrizeSection7 } from './prize-section/63c82bd12ddc570f32ada86d';
+import { PrizeSection as PrizeSection11 } from './prize-section/63c82bd12ddc570f32ada86e';
 import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
 import { Timeline as Timeline4 } from './timeline-id4';
@@ -48,242 +49,10 @@ export default async function ChallengeIntro({ params }: any) {
 
   const judges = challenge.judges;
 
-  interface Judges6 {
-    j1: any[];
-    j2: any[];
-    j3: any[];
-    j4: any[];
-    key: number;
-  }
-
-  const judges6: Judges6 = {
-    j1: [],
-    j2: [],
-    j3: [],
-    j4: [],
-    key: 0,
-  };
+  var judges6: any;
 
   if (challenge.id === '6') {
-    judges6.j1.push({
-      name: 'Sam',
-      title: 'Arweave 创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/sam.png',
-    });
-    judges6.j1.push({
-      name: 'Outprog',
-      title: 'everVision 创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/outprog.png',
-    });
-    judges6.j1.push({
-      name: '刘怿斯',
-      title: 'MaskNetwork CTO',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706153710.png',
-    });
-    judges6.j1.push({
-      name: 'Tomas Yu',
-      title: 'KNN3 联合创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706153902.png',
-    });
-    judges6.j1.push({
-      name: 'Dennis',
-      title: 'MindNetwork 首席安全官',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154030.png',
-    });
-    judges6.j1.push({
-      name: '王太泽',
-      title: 'DB3 联合创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154140.png',
-    });
-    judges6.j1.push({
-      name: 'Muran',
-      title: 'DB3 联合创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154246.jpg',
-    });
-    judges6.j1.push({
-      name: 'Troy Hua',
-      title: 'ReadON CTO & 联合创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154349.png',
-    });
-    judges6.j1.push({
-      name: 'Yao',
-      title: 'Metaforo 创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154450.jpg',
-    });
-    judges6.j1.push({
-      name: 'Jay',
-      title: 'Permaswap 核心开发',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154546.jpg',
-    });
-    judges6.j1.push({
-      name: 'Sandy',
-      title: 'everpay 核心开发',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154655.jpg',
-    });
-
-    judges6.j2.push({
-      name: '郝志煜',
-      title: 'AWS Web3 Tech Lead',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154829.jpg',
-    });
-    judges6.j2.push({
-      name: 'Hill',
-      title: 'SevenX 投资总监',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706155004.png',
-    });
-    judges6.j2.push({
-      name: 'Radar Bear',
-      title: 'DODO CEO',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706155141.jpg',
-    });
-    judges6.j2.push({
-      name: 'Ken',
-      title: 'Giveaway 开发主管',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706155249.jpg',
-    });
-    judges6.j2.push({
-      name: 'Mark Wang',
-      title: 'UPDAO Co-Founder',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706161315.jpg',
-    });
-    judges6.j2.push({
-      name: '柏飞',
-      title: 'YZ Intelligence 售前架构师负责人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706161424.jpg',
-    });
-    judges6.j2.push({
-      name: 'Muran',
-      title: 'DB3 Co-Founder',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154246.jpg',
-    });
-
-    judges6.j3.push({
-      name: 'Tracy',
-      title: 'TinTinLand 社区主管',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/TracySalander.JPEG',
-    });
-    judges6.j3.push({
-      name: 'Tiny熊',
-      title: '登链社区发起人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162124.jpg',
-    });
-    judges6.j3.push({
-      name: 'Shootrt',
-      title: 'Rebase 社区联合发起人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162228.jpg',
-    });
-    judges6.j3.push({
-      name: '咖啡',
-      title: 'SeeDAO 原规则共同设计者',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162326.jpg',
-    });
-    judges6.j3.push({
-      name: 'Jane',
-      title: 'BuilderDAO 投研公会负责人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162447.jpg',
-    });
-    judges6.j3.push({
-      name: 'Allan',
-      title: 'MoleDAO Co-builder',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/avatars/AllanFang.png',
-    });
-    judges6.j3.push({
-      name: '蒋蒋蒋',
-      title: 'AvatorDAO 合伙人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162635.jpg',
-    });
-    judges6.j3.push({
-      name: 'Qiang',
-      title: 'Web3Builder.tech 核心贡献者兼 EthStorage 技术负责人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162731.jpg',
-    });
-    judges6.j3.push({
-      name: 'Lawrence',
-      title: 'Afflux 联合创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162844.jpg',
-    });
-    judges6.j3.push({
-      name: 'Harvey',
-      title: '0xU 核心成员',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706162950.jpg',
-    });
-    judges6.j3.push({
-      name: 'Turing',
-      title: 'LegalDAO 联合创始人',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163045.jpg',
-    });
-
-    judges6.j4.push({
-      name: 'Odaily',
-      title: '星球日报媒体代表',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/400_400.png',
-    });
-    judges6.j4.push({
-      name: '鸭先知',
-      title: 'Blocklike 市场主管',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163422.jpg',
-    });
-    judges6.j4.push({
-      name: 'Cointime',
-      title: 'Cointime 媒体代表',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163519.jpg',
-    });
-    judges6.j4.push({
-      name: 'Jack',
-      title: 'BlockBeats 副主编',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163637.jpg',
-    });
-    judges6.j4.push({
-      name: 'Jeffrey',
-      title: 'PANews 运营总监',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163757.jpg',
-    });
-    judges6.j4.push({
-      name: 'MarsBit',
-      title: 'MarsBit 媒体代表',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706163914.jpg',
-    });
-    judges6.j4.push({
-      name: 'Maxwell',
-      title: '金色财经内容主编',
-      avatarURI:
-        'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706164032.jpg',
-    });
+    judges6 = challenge.metadata;
   }
 
   if (challenge.id === '2') {
@@ -364,94 +133,28 @@ export default async function ChallengeIntro({ params }: any) {
             ))}
           </div>
         </div>
+        {/* 优先级 DC > TG > 推特 */}
         <div>
-          {challenge.id === '1' || challenge.id === '2' ? (
-            <Link
-              prefetch={false}
-              href={`https://t.me/bewater_zh`}
-              target="_blank"
-              className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
-            >
-              <div className="flex flex-row gap-4 items-center">
-                <svg
-                  fill="#00ffff"
-                  height="800px"
-                  width="800px"
-                  version="1.1"
-                  id="Capa_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 189.473 189.473"
-                  className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out"
-                >
-                  <g>
-                    <path
-                      d="M152.531,179.476c-1.48,0-2.95-0.438-4.211-1.293l-47.641-32.316l-25.552,18.386c-2.004,1.441-4.587,1.804-6.914,0.972
-      c-2.324-0.834-4.089-2.759-4.719-5.146l-12.83-48.622L4.821,93.928c-2.886-1.104-4.8-3.865-4.821-6.955
-      c-0.021-3.09,1.855-5.877,4.727-7.02l174.312-69.36c0.791-0.336,1.628-0.53,2.472-0.582c0.302-0.018,0.605-0.018,0.906-0.001
-      c1.748,0.104,3.465,0.816,4.805,2.13c0.139,0.136,0.271,0.275,0.396,0.42c1.11,1.268,1.72,2.814,1.835,4.389
-      c0.028,0.396,0.026,0.797-0.009,1.198c-0.024,0.286-0.065,0.571-0.123,0.854L159.898,173.38c-0.473,2.48-2.161,4.556-4.493,5.523
-      C154.48,179.287,153.503,179.476,152.531,179.476z M104.862,130.579l42.437,28.785L170.193,39.24l-82.687,79.566l17.156,11.638
-      C104.731,130.487,104.797,130.533,104.862,130.579z M69.535,124.178l5.682,21.53l12.242-8.809l-16.03-10.874
-      C70.684,125.521,70.046,124.893,69.535,124.178z M28.136,86.782l31.478,12.035c2.255,0.862,3.957,2.758,4.573,5.092l3.992,15.129
-      c0.183-1.745,0.974-3.387,2.259-4.624L149.227,38.6L28.136,86.782z"
-                    />
-                  </g>
-                </svg>
-                {t('campaign.t6')}
-              </div>
-            </Link>
-          ) : challenge.id === '3' ? (
-            <Link
-              prefetch={false}
-              href={`https://twitter.com/StarkNetAstroCN`}
-              target="_blank"
-              className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
-            >
-              <div className="flex flex-row gap-4 items-center">
-                <TwitterLogoIcon className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out" />
-                {t('campaign.t7')}
-              </div>
-            </Link>
-          ) : challenge.id === '5' ? (
-            <Link
-              prefetch={false}
-              href={`https://t.me/AIhackathon2023`}
-              target="_blank"
-              className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
-            >
-              <div className="flex flex-row gap-4 items-center">
-                <svg
-                  fill="#00ffff"
-                  height="800px"
-                  width="800px"
-                  version="1.1"
-                  id="Capa_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 189.473 189.473"
-                  className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out"
-                >
-                  <g>
-                    <path
-                      d="M152.531,179.476c-1.48,0-2.95-0.438-4.211-1.293l-47.641-32.316l-25.552,18.386c-2.004,1.441-4.587,1.804-6.914,0.972
-    c-2.324-0.834-4.089-2.759-4.719-5.146l-12.83-48.622L4.821,93.928c-2.886-1.104-4.8-3.865-4.821-6.955
-    c-0.021-3.09,1.855-5.877,4.727-7.02l174.312-69.36c0.791-0.336,1.628-0.53,2.472-0.582c0.302-0.018,0.605-0.018,0.906-0.001
-    c1.748,0.104,3.465,0.816,4.805,2.13c0.139,0.136,0.271,0.275,0.396,0.42c1.11,1.268,1.72,2.814,1.835,4.389
-    c0.028,0.396,0.026,0.797-0.009,1.198c-0.024,0.286-0.065,0.571-0.123,0.854L159.898,173.38c-0.473,2.48-2.161,4.556-4.493,5.523
-    C154.48,179.287,153.503,179.476,152.531,179.476z M104.862,130.579l42.437,28.785L170.193,39.24l-82.687,79.566l17.156,11.638
-    C104.731,130.487,104.797,130.533,104.862,130.579z M69.535,124.178l5.682,21.53l12.242-8.809l-16.03-10.874
-    C70.684,125.521,70.046,124.893,69.535,124.178z M28.136,86.782l31.478,12.035c2.255,0.862,3.957,2.758,4.573,5.092l3.992,15.129
-    c0.183-1.745,0.974-3.387,2.259-4.624L149.227,38.6L28.136,86.782z"
-                    />
-                  </g>
-                </svg>
-                join @AIhackathon2023
-              </div>
-            </Link>
-          ) : challenge.id === '6' ? (
+          {challenge.id === '7' ? (
+            <>
+              <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
+                扫码前往 Unity 社区渠道进行报名↓ 活动限额，报名需通过主办方审核
+              </p>
+              <br />
+              <br />
+              <Image
+                src="/challenge/assets/event7-baoming.jpg"
+                width={240}
+                height={240}
+                alt=""
+                className="mx-auto mb-2 md:mb-3 w-[240px] md:w-[240px]"
+              />
+            </>
+          ) : challenge?.discordLink ? (
             <>
               <Link
                 prefetch={false}
-                href={`https://discord.com/invite/GzCEKvuCFy`}
+                href={challenge.discordLink}
                 target="_blank"
                 className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
               >
@@ -480,25 +183,57 @@ export default async function ChallengeIntro({ params }: any) {
                       />
                     </g>
                   </svg>
-                  加入我们的 DC 频道
+                  {t('campaign.t20')}
                 </div>
               </Link>
             </>
-          ) : challenge.id === '7' ? (
-            <>
-              <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
-                扫码前往 Unity 社区渠道进行报名↓ 活动限额，报名需通过主办方审核
-              </p>
-              <br />
-              <br />
-              <Image
-                src="/challenge/assets/event7-baoming.jpg"
-                width={240}
-                height={240}
-                alt=""
-                className="mx-auto mb-2 md:mb-3 w-[240px] md:w-[240px]"
-              />
-            </>
+          ) : challenge?.telegramLink ? (
+            <Link
+              prefetch={false}
+              href={challenge.telegramLink}
+              target="_blank"
+              className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6 "
+            >
+              <div className="flex flex-row gap-4 items-center">
+                <svg
+                  fill="#00ffff"
+                  height="800px"
+                  width="800px"
+                  version="1.1"
+                  id="Capa_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 189.473 189.473"
+                  className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out"
+                >
+                  <g>
+                    <path
+                      d="M152.531,179.476c-1.48,0-2.95-0.438-4.211-1.293l-47.641-32.316l-25.552,18.386c-2.004,1.441-4.587,1.804-6.914,0.972
+        c-2.324-0.834-4.089-2.759-4.719-5.146l-12.83-48.622L4.821,93.928c-2.886-1.104-4.8-3.865-4.821-6.955
+        c-0.021-3.09,1.855-5.877,4.727-7.02l174.312-69.36c0.791-0.336,1.628-0.53,2.472-0.582c0.302-0.018,0.605-0.018,0.906-0.001
+        c1.748,0.104,3.465,0.816,4.805,2.13c0.139,0.136,0.271,0.275,0.396,0.42c1.11,1.268,1.72,2.814,1.835,4.389
+        c0.028,0.396,0.026,0.797-0.009,1.198c-0.024,0.286-0.065,0.571-0.123,0.854L159.898,173.38c-0.473,2.48-2.161,4.556-4.493,5.523
+        C154.48,179.287,153.503,179.476,152.531,179.476z M104.862,130.579l42.437,28.785L170.193,39.24l-82.687,79.566l17.156,11.638
+        C104.731,130.487,104.797,130.533,104.862,130.579z M69.535,124.178l5.682,21.53l12.242-8.809l-16.03-10.874
+        C70.684,125.521,70.046,124.893,69.535,124.178z M28.136,86.782l31.478,12.035c2.255,0.862,3.957,2.758,4.573,5.092l3.992,15.129
+        c0.183-1.745,0.974-3.387,2.259-4.624L149.227,38.6L28.136,86.782z"
+                    />
+                  </g>
+                </svg>
+                {t('campaign.t6')}
+              </div>
+            </Link>
+          ) : challenge?.twitterLink ? (
+            <Link
+              prefetch={false}
+              href={challenge.twitterLink}
+              target="_blank"
+              className="group btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
+            >
+              <div className="flex flex-row gap-4 items-center">
+                <TwitterLogoIcon className="w-4 h-4 fill-current text-day group-hover:text-night transition duration-[.15s] ease-out" />
+                {t('campaign.t7')}
+              </div>
+            </Link>
           ) : null}
         </div>
       </div>
@@ -517,6 +252,8 @@ export default async function ChallengeIntro({ params }: any) {
           <PrizeSection6 t={t} lng={lng} />
         ) : challenge.id === '7' ? (
           <PrizeSection7 t={t} lng={lng} />
+        ) : challenge.id === '11' ? (
+          <PrizeSection11 t={t} lng={lng} />
         ) : (
           <div className="container">
             <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
@@ -909,7 +646,7 @@ export default async function ChallengeIntro({ params }: any) {
               Sponsors
             </h3>
             <div className="flex flex-col gap-12 items-center">
-              {challenge.sponsors.map((s, i) => {
+              {(challenge.sponsors ?? []).map((s, i) => {
                 return (
                   <div className="flex flex-col gap-7 items-center" key={i}>
                     <p className="body-1 md: text-[20px] font-bold text-white/30 md:text-white/30">
