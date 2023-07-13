@@ -370,7 +370,7 @@ export default async function ChallengeIntro({ params }: any) {
                   <p className="body-3 mt-6 w-full text-grey-400 text-center">
                     生态评审嘉宾
                   </p>
-                  {judges6.j1.map((judge) => {
+                  {judges6.j1.map((judge: any) => {
                     return (
                       <div key={judges6.key++} className="w-[180px] mb-2">
                         <Aspect ratio={1 / 1}>
@@ -391,7 +391,7 @@ export default async function ChallengeIntro({ params }: any) {
                   <p className="body-3 mt-6 w-full text-grey-400 text-center">
                     赞助评审嘉宾
                   </p>
-                  {judges6.j2.map((judge) => {
+                  {judges6.j2.map((judge: any) => {
                     return (
                       <div key={judges6.key++} className="w-[180px] mb-2">
                         <Aspect ratio={1 / 1}>
@@ -412,7 +412,7 @@ export default async function ChallengeIntro({ params }: any) {
                   <p className="body-3 mt-6 w-full text-grey-400 text-center">
                     社区评审嘉宾
                   </p>
-                  {judges6.j3.map((judge) => {
+                  {judges6.j3.map((judge: any) => {
                     return (
                       <div key={judges6.key++} className="w-[180px] mb-2">
                         <Aspect ratio={1 / 1}>
@@ -433,7 +433,7 @@ export default async function ChallengeIntro({ params }: any) {
                   <p className="body-3 mt-6 w-full text-grey-400 text-center">
                     媒体评审嘉宾
                   </p>
-                  {judges6.j4.map((judge) => {
+                  {judges6.j4.map((judge: any) => {
                     return (
                       <div key={judges6.key++} className="w-[180px] mb-2">
                         <Aspect ratio={1 / 1}>
