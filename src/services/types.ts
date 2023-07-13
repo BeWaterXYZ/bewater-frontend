@@ -87,7 +87,7 @@ export interface Challenge {
   city?: string;
   hostIcon?: string;
   type: string;
-  metadata?: JSON;
+  metadata?: any;
   joinLink?: string;
 }
 

@@ -55,15 +55,23 @@ export default async function ChallengeIntro({ params }: any) {
     judges6 = challenge.metadata;
   }
 
+  if (lng === 'en' && challenge.metadata) {
+    if (challenge.metadata.entitle) {
+      challenge.title = challenge.metadata.entitle;
+    }
+    if (challenge.metadata.endescription) {
+      challenge.description = challenge.metadata.endescription;
+    }
+    if (challenge.metadata.enrequirements) {
+      challenge.requirements = challenge.metadata.enrequirements;
+    }
+    if (challenge.metadata.enreviewDimension) {
+      challenge.reviewDimension = challenge.metadata.enreviewDimension;
+    }
+  }
+
   if (challenge.id === '2') {
     if (lng === 'en') {
-      challenge.title = "A Midsummer CryptoArt's Dream";
-      challenge.description =
-        "A Midsummer CryptoArt's Dream: Showcase Your Creativity, Explore the Infinite Possibilities of Cryptographic Art!\nA Midsummer CryptoArt's Dream is a collaborative event organized by DeBox and NonceGeekDAO, hosted on BeWater. It aims to explore the infinite possibilities of cryptographic art. We invite all artists, designers, programmers, and creators to join us in creating a brilliant summer dedicated to cryptographic art!";
-      challenge.requirements =
-        '1. Stickers: Please submit preview images, sample packs, and animated gifs. Share the samples using a cloud storage service.\n2. ProgrammingGC: Please submit your artwork in the form of H5, and you can use Codepen to showcase your artwork.\n3. Other Artworks: Please submit preview images and sample packs.';
-      challenge.reviewDimension =
-        '1. The adjudicators will score participants\' artworks based on four dimensions: concept and idea, technical expression, stylistic highlights, and overall quality. The judges will provide feedback and reasoning for their evaluations.\n2. Additionally, an "Audience Choice" award will be established, which will be determined by votes from DeBox users.';
       challenge.location = 'Online Event';
       for (const it of judges) {
         if (it.name.includes('李达潮')) {
@@ -467,12 +475,12 @@ export default async function ChallengeIntro({ params }: any) {
               )}
             </div>
           </div>
-          {parseInt(challenge.id) > 11 ? (
+          {parseInt(challenge.id) > 6 ? (
             <div className="container">
               <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
                 <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                   <h3 className="text-[24px] font-bold mb-8 text-white">
-                    Submission Requirements
+                    {t('campaign.t10')}
                   </h3>
                   <ol className="list-decimal">
                     {challenge.requirements
@@ -490,7 +498,7 @@ export default async function ChallengeIntro({ params }: any) {
                 </div>
                 <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                   <h3 className="text-white text-[24px] font-bold mb-8">
-                    Judging Criteria
+                    {t('campaign.t11')}
                   </h3>
                   <ol className="list-decimal">
                     {challenge.reviewDimension
