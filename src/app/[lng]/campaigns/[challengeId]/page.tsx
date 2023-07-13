@@ -467,47 +467,48 @@ export default async function ChallengeIntro({ params }: any) {
               )}
             </div>
           </div>
-
-          <div className="container">
-            <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
-              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-[24px] font-bold mb-8 text-white">
-                  Submission Requirements
-                </h3>
-                <ol className="list-decimal">
-                  {challenge.requirements
-                    .split('\n')
-                    .filter(Boolean)
-                    .map((r, i) => (
-                      <li
-                        key={i}
-                        className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                      >
-                        <span className="text-[14px] text-grey-400">{r}</span>
-                      </li>
-                    ))}
-                </ol>
-              </div>
-              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-white text-[24px] font-bold mb-8">
-                  Judging Criteria
-                </h3>
-                <ol className="list-decimal">
-                  {challenge.reviewDimension
-                    .split('\n')
-                    .filter(Boolean)
-                    .map((r, i) => (
-                      <li
-                        key={i}
-                        className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                      >
-                        <span className="text-[14px] text-grey-400">{r}</span>
-                      </li>
-                    ))}
-                </ol>
+          {parseInt(challenge.id) > 11 ? (
+            <div className="container">
+              <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
+                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                  <h3 className="text-[24px] font-bold mb-8 text-white">
+                    Submission Requirements
+                  </h3>
+                  <ol className="list-decimal">
+                    {challenge.requirements
+                      .split('\n')
+                      .filter(Boolean)
+                      .map((r, i) => (
+                        <li
+                          key={i}
+                          className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                        >
+                          <span className="text-[14px] text-grey-400">{r}</span>
+                        </li>
+                      ))}
+                  </ol>
+                </div>
+                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                  <h3 className="text-white text-[24px] font-bold mb-8">
+                    Judging Criteria
+                  </h3>
+                  <ol className="list-decimal">
+                    {challenge.reviewDimension
+                      .split('\n')
+                      .filter(Boolean)
+                      .map((r, i) => (
+                        <li
+                          key={i}
+                          className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                        >
+                          <span className="text-[14px] text-grey-400">{r}</span>
+                        </li>
+                      ))}
+                  </ol>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
 
           {challenge?.requirements.length > 1 ? (
             <div
