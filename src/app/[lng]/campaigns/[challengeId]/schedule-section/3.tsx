@@ -77,16 +77,16 @@ export function ScheduleSection() {
               <path
                 d="M14.002 15.166C15.9349 15.166 17.502 13.599 17.502 11.666C17.502 9.73302 15.9349 8.16602 14.002 8.16602C12.069 8.16602 10.502 9.73302 10.502 11.666C10.502 13.599 12.069 15.166 14.002 15.166Z"
                 stroke="#00CCCC"
-                stroke-width="2.33333"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2.33333"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
               <path
                 d="M14.0013 2.33301C11.5259 2.33301 9.15198 3.31634 7.40164 5.06668C5.6513 6.81702 4.66797 9.19099 4.66797 11.6663C4.66797 13.8737 5.13697 15.318 6.41797 16.9163L14.0013 25.6663L21.5846 16.9163C22.8656 15.318 23.3346 13.8737 23.3346 11.6663C23.3346 9.19099 22.3513 6.81702 20.601 5.06668C18.8506 3.31634 16.4767 2.33301 14.0013 2.33301Z"
                 stroke="#00CCCC"
-                stroke-width="2.33333"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2.33333"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </div>
