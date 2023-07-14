@@ -46,7 +46,10 @@ export function ChallengeNav({
     <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[72px] md:top-[72px] z-10">
       {links.map((link) => {
         let isAcitve = link.segment === segment;
-        let isEnabled = isMileStoneEnabled(link.milestone, challenge);
+        let isEnabled = false;
+        if (challenge.milestones?.length > 0) {
+          isEnabled = isMileStoneEnabled(link.milestone, challenge);
+        }
         return isEnabled ? (
           <Link
             key={link.path}

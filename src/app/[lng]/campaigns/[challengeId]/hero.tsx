@@ -11,7 +11,10 @@ interface ChallengeHeroProps {
 }
 
 export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
-  const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
+  let isTeamingEnabled = false;
+  if (challenge.milestones?.length > 0) {
+    isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
+  }
 
   return (
     <div

@@ -42,7 +42,10 @@ export default async function ChallengeIntro({ params }: any) {
   const challenge = await getChallengeById(challengeId);
   const { lng } = segmentSchema.lng.parse(params);
   const { t } = await useTranslation(lng, 'translation');
-  const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
+  let isTeamingEnabled = false;
+  if (challenge.milestones?.length > 0) {
+    isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
+  }
 
   const judges = challenge.judges;
 
@@ -117,15 +120,19 @@ export default async function ChallengeIntro({ params }: any) {
       ) : null}
       <div
         className={`${
-          challenge.id === '4'
+          !(
+            challenge.discordLink ||
+            challenge.telegramLink ||
+            challenge.telegramLink
+          )
             ? 'flex flex-col gap-10 md:gap-10 items-center my-10 mb-0'
             : 'flex flex-col gap-10 md:gap-20 items-center my-10'
         }`}
       >
         <div
-          className={`flex flex-col gap-4 md:flex-row md:gap-20 items-center ${
-            challenge.id === '3' && 'mt-[100px]'
-          }`}
+          className={`flex flex-col gap-4 md:flex-row md:gap-20 items-center
+          ${challenge.milestones?.length === 0 && 'mt-[100px]'}
+          `}
         >
           <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
             {t('campaign.t5')}
