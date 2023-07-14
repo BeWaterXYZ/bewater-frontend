@@ -25,6 +25,7 @@ import { Sponsors4 } from './sponsors4';
 import { Sponsors5 } from './sponsors5';
 import { Sponsors6 } from './sponsors6';
 import { Sponsors7 } from './sponsors7';
+import { Sponsors11 } from './sponsors11';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -37,12 +38,8 @@ const ConnectButton = dynamicLoad(() => import('./connect-button'), {
 });
 
 export default async function ChallengeIntro({ params }: any) {
-  //console.log(`params ${JSON.stringify(params)}`);
   const { challengeId } = segmentSchema.challengeId.parse(params);
-  //console.log(`challengeId ${challengeId}`);
   const challenge = await getChallengeById(challengeId);
-  //console.log(`challengeId ${challengeId}`, challenge);
-
   const { lng } = segmentSchema.lng.parse(params);
   const { t } = await useTranslation(lng, 'translation');
   const isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
@@ -648,6 +645,8 @@ export default async function ChallengeIntro({ params }: any) {
         <Sponsors6 t={t} />
       ) : challenge.id === '7' ? (
         <Sponsors7 t={t} />
+      ) : challenge.id === '11' ? (
+        <Sponsors11 t={t} />
       ) : (
         <div className="container">
           <div>
@@ -677,29 +676,27 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         </div>
       )}
-
-      {parseInt(challenge.id) < 4 ||
-      challenge.id === '5' ||
-      challenge.id === '6' ||
-      challenge.id === '7' ? (
+      {false ? (
+        <></>
+      ) : (
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="heading-6 md:heading-4 text-center">
             <Balancer ratio={0.9}>
-              {challenge.id !== '3'
+              {challenge.type !== 'WORKSHOP'
                 ? isTeamingEnabled
                   ? `${t('campaign.t12')}`
                   : `${t('campaign.t13')}`
-                : `${t('campaign.t14')}`}
+                : `${t('campaign.t24')}${challenge.title}${t('campaign.t25')}`}
             </Balancer>
           </p>
           <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
             <Balancer>
-              {challenge.id !== '3'
+              {challenge.type !== 'WORKSHOP'
                 ? `${t('campaign.t15')}`
                 : `${t('campaign.t16')}`}
             </Balancer>
           </p>
-          {challenge.id !== '3' ? (
+          {challenge.type !== 'WORKSHOP' ? (
             isTeamingEnabled ? (
               <div>
                 <Link
@@ -713,41 +710,20 @@ export default async function ChallengeIntro({ params }: any) {
             ) : (
               <ConnectButton lng={lng} />
             )
-          ) : (
+          ) : challenge.joinLink ? (
             <div>
               <Link
                 prefetch={false}
                 target="_blank"
-                href="https://forms.gle/qZ5KbnCufSNVeVkv8"
+                href={`${challenge.joinLink}`}
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
                 {`${t('campaign.t4')}`}
               </Link>
             </div>
-          )}
+          ) : null}
         </div>
-      ) : null}
-      {challenge.id === '4' ? (
-        <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
-          <p className="heading-6 md:heading-4 text-center">
-            <Balancer ratio={0.9}>JOIN ZK HACKER CAMP NOW</Balancer>
-          </p>
-          <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
-            <Balancer>
-              Registration Period: Jun 26th- July 21st 9PM SGT
-            </Balancer>
-          </p>
-          <div>
-            <Link
-              prefetch={false}
-              href={`https://docs.google.com/forms/d/128cimlspqKBj4EfAAB9dUIN4zgG0og4u4r837Ul1VJo/viewform?pli=1&edit_requested=true`}
-              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
-            >
-              Join
-            </Link>
-          </div>
-        </div>
-      ) : null}
+      )}
     </div>
   );
 }
