@@ -15,120 +15,169 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
           <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
             {t('cryptoArt.t6')}
           </p>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-              {lng === 'en' ? 'DeFi and Payment' : '去中心化金融和支付'}
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
-                <Image
-                  src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/defi_20230713173307.png`}
-                  alt="emoji"
-                  width={160}
-                  height={160}
-                  className="w-full sm:w-40 sm:h-40"
-                />
-                <ul className="body-3 text-white/60 list-disc list-inside">
-                  <li>
-                    {lng === 'en'
-                      ? ''
-                      : '去中心化金融（DeFi）是WEB3.0时代的金融创新，它基于区块链技术，通过智能合约和去中心化的应用程序，实现了金融服务的去中心化和自动化。'}
-                  </li>
-                </ul>
+          <div className="hidden md:flex flex-row gap-12 items-center">
+            <div className="flex flex-col gap-4 md:gap-7 items-center flex-wrap justify-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'DeFi and Payment' : '去中心化金融和支付'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2_68065631-dbd9-4c44.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-7 items-center flex-wrap justify-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'NFT and Gaming' : 'NFT和游戏'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2eec8fa90ah+1.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'AI, Social and DAO' : 'AI、社交和 DAO'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2-4cc8fa90ah+1.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-              {lng === 'en' ? 'NFT and Gaming' : 'NFT和游戏'}
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
-                <Image
-                  src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/nft_20230713174015.png`}
-                  alt="emoji"
-                  width={160}
-                  height={160}
-                  className="w-full sm:w-40 sm:h-40"
-                />
-                <ul className="body-3 text-white/60 list-disc list-inside">
-                  <li>
-                    {lng === 'en'
-                      ? ''
-                      : '区块链游戏结合了区块链技术、加密货币和游戏机制，创造了一个虚拟的游戏世界。这些游戏通常在游戏环境中使用NFT——纳入游戏规则、玩家互动或作为奖励系统——从玩家的头像到武器、装备、皮肤或土地。'}
-                  </li>
-                </ul>
+          <div className="hidden md:flex flex-row gap-12 items-center">
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'Infrastructure and Tooling' : '基础设施和工具'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v290ah+1.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'General' : '综合'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2_68065631-dbd9.png`}
+                    alt=""
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-              {lng === 'en'
-                ? 'AI, Social and DAO'
-                : '人工智能（AI）、社交和去中心化自治组织（DAO）'}
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
-                <Image
-                  src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/ai_20230713174616.png`}
-                  alt="emoji"
-                  width={160}
-                  height={160}
-                  className="w-full sm:w-40 sm:h-40"
-                />
-                <ul className="body-3 text-white/60 list-disc list-inside">
-                  <li>
-                    {lng === 'en'
-                      ? ''
-                      : '使用区块链技术，可以创建一个公平公正的去中心化数据系统。这意味着人工智能系统可以在代表各种经验和观点的数据上进行训练，从而实现更准确和公平的决策。'}
-                  </li>
-                </ul>
+          <div className="flex md:hidden flex-col gap-12 items-center">
+            <div className="flex flex-col gap-4 md:gap-7 items-center flex-wrap justify-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'DeFi and Payment' : '去中心化金融和支付'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2_68065631-dbd9-4c44.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-              {lng === 'en' ? 'Infrastructure and Tooling' : '基础设施和工具'}
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
-                <Image
-                  src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/tool20230713175848.png`}
-                  alt="emoji"
-                  width={160}
-                  height={160}
-                  className="w-full sm:w-40 sm:h-40"
-                />
-                <ul className="body-3 text-white/60 list-disc list-inside">
-                  <li>
-                    {lng === 'en'
-                      ? ''
-                      : '构建基础层区块链网络，以满足对大规模去中心化应用程序日益增长的需求，实现更多的链上可编程性并以轻量级和动态的方式实现定制功能。'}
-                  </li>
-                </ul>
+            <div className="flex flex-col gap-4 md:gap-7 items-center flex-wrap justify-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'NFT and Gaming' : 'NFT和游戏'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2eec8fa90ah+1.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
-              {lng === 'en' ? 'General' : '综合'}
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
-                <Image
-                  src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/all_20230713182408.png`}
-                  alt=""
-                  width={160}
-                  height={160}
-                  className="w-full sm:w-40 sm:h-40"
-                />
-                <ul className="body-3 text-white/60 list-disc list-inside">
-                  <li>
-                    {lng === 'en'
-                      ? ''
-                      : '无论是一个想法，一次洞见，一套系统，能够提高透明度和协作效率。想法之间排列组合，解决实际问题。应用范围从不起眼到人人离不开。'}
-                  </li>
-                </ul>
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'AI, Social and DAO' : 'AI、社交和 DAO'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2-4cc8fa90ah+1.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'Infrastructure and Tooling' : '基础设施和工具'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v290ah+1.png`}
+                    alt="emoji"
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                {lng === 'en' ? 'General' : '综合'}
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
+                  <Image
+                    src={`https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/img_v2_68065631-dbd9.png`}
+                    alt=""
+                    width={160}
+                    height={160}
+                    className="w-full sm:w-40 sm:h-40"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -136,8 +185,38 @@ export function PrizeSection({ t, lng }: { t: Function; lng: string }) {
       </div>
       <div className="relative w-full flex flex-col gap-10 items-center">
         <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
-          {t('cryptoArt.t17')}
+          {t('campaign.t26')}
         </p>
+        <div className="relative w-full flex flex-col gap-10 items-center">
+          <div className="hidden md:flex flex-row gap-[min(32px,2vw)]">
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
+                <div className="flex flex-col gap-1 w-full">
+                  <p className="body-3" style={{ color: '#fff' }}>
+                    {lng === 'en' ? 'HK Finale Prize' : '香港总决赛大奖'}
+                  </p>
+                  <div className="flex flex-row justify-between">
+                    <p className="body-3 text-white/60">$10,000 USD</p>
+                    <p className="body-3 text-white/60">x5</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
+                <div className="flex flex-col gap-1 w-full">
+                  <p className="body-3" style={{ color: '#fff' }}>
+                    {lng === 'en' ? 'Excellence Prize' : '卓越奖'}
+                  </p>
+                  <div className="flex flex-row justify-between">
+                    <p className="body-3 text-white/60">$5,000 USD</p>
+                    <p className="body-3 text-white/60">x10</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
           <li>
             <span className="text-white">10k USD ✖ 5: </span>
