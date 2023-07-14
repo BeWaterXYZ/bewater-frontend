@@ -7,6 +7,8 @@ const sponsors_tier2 = [
   '/sponsors/chainup.png',
 ];
 
+const sponsors_tier2_1 = ['/sponsors/gsr.io_.png'];
+
 const sponsors_tier3 = [
   '/sponsors/cysic.webp',
   '/sponsors/axiom.png',
@@ -21,7 +23,6 @@ const sponsors_tier3 = [
   '/sponsors/cointime.png',
   '/sponsors/ScalingX.png',
   '/sponsors/panews.png',
-  '/sponsors/gsr.io_.png',
 ];
 
 export function Sponsors4({ t }: { t: Function }) {
@@ -47,6 +48,16 @@ export function Sponsors4({ t }: { t: Function }) {
           </p>
           <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
             {sponsors_tier2.map((src) => (
+              <img src={src} key={src} className="h-8 md:h-10 mb-4 mx-4" />
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col gap-7 items-center">
+          <p className="body-1 md:heading-6 font-bold text-white/30 md:text-white/30">
+            Sponsor Ship:
+          </p>
+          <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
+            {sponsors_tier2_1.map((src) => (
               <img src={src} key={src} className="h-8 md:h-10 mb-4 mx-4" />
             ))}
           </div>
