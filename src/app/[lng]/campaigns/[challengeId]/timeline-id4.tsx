@@ -91,7 +91,7 @@ export function Timeline({
       },
       {
         dueDate: '2023-07-15',
-        stageName: '开发组队和作品提交',
+        stageName: '开放组队和作品提交',
       },
       {
         dueDate: '2023-08-15',
