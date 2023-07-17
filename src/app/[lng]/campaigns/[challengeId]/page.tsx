@@ -49,12 +49,6 @@ export default async function ChallengeIntro({ params }: any) {
 
   const judges = challenge.judges;
 
-  var judges6: any;
-
-  if (challenge.id === '6') {
-    judges6 = challenge.metadata;
-  }
-
   if (lng === 'en' && challenge.metadata) {
     if (challenge.metadata.entitle) {
       challenge.title = challenge.metadata.entitle;
@@ -68,6 +62,25 @@ export default async function ChallengeIntro({ params }: any) {
     if (challenge.metadata.enreviewDimension) {
       challenge.reviewDimension = challenge.metadata.enreviewDimension;
     }
+  } else if (lng === 'zh' && challenge.metadata) {
+    if (challenge.metadata.zhtitle) {
+      challenge.title = challenge.metadata.zhtitle;
+    }
+    if (challenge.metadata.zhdescription) {
+      challenge.description = challenge.metadata.zhdescription;
+    }
+    if (challenge.metadata.zhrequirements) {
+      challenge.requirements = challenge.metadata.zhrequirements;
+    }
+    if (challenge.metadata.zhreviewDimension) {
+      challenge.reviewDimension = challenge.metadata.zhreviewDimension;
+    }
+  }
+
+  // 以下是hack代码
+  var judges6: any;
+  if (challenge.id === '6') {
+    judges6 = challenge.metadata;
   }
 
   if (challenge.id === '2') {

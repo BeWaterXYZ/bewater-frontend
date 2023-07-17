@@ -22,6 +22,10 @@ export default async function Layout({
     if (challenge.metadata.entitle) {
       challenge.title = challenge.metadata.entitle;
     }
+  } else if (lng === 'zh' && challenge.metadata) {
+    if (challenge.metadata.zhtitle) {
+      challenge.title = challenge.metadata.zhtitle;
+    }
   }
 
   return (
