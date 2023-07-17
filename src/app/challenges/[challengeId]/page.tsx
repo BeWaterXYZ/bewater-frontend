@@ -379,7 +379,7 @@ export default function Page({ params }: any) {
                     .map((r, i) => (
                       <li
                         key={i}
-                        className="list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                        className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
                       >
                         <span className="text-[14px] text-grey-400">{r}</span>
                       </li>
@@ -397,7 +397,7 @@ export default function Page({ params }: any) {
                     .map((r, i) => (
                       <li
                         key={i}
-                        className=" list-inside text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                        className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
                       >
                         <span className="text-[14px] text-grey-400">{r}</span>
                       </li>
