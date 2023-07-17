@@ -94,9 +94,9 @@ export default function Page() {
     <>
       <div className="container my-4 pt-20 flex flex-1 justify-center">
         <div className="w-full max-w-[800px]">
-        <Link href="/" className="text-grey-500">
-          {"< Back"}
-        </Link>
+          <Link href="/" className="text-grey-500">
+            {"< Back"}
+          </Link>
           <div className="text-xl leading-8 text-white pb-4 mt-8 mb-8 border-b  border-b-white/20">
             Edit Basic Campaign Information
           </div>
@@ -170,8 +170,7 @@ export default function Page() {
               rows={5}
               {...register("description")}
               error={errors["description"]}
-              placeholder="请在此编写关于本次赛事的简短介绍，赛事形式和其他相关信息。
-              你可以简述赛事的起源和发展历史，重点突出赛事的特色及意义。赛事简介应当简明扼要且贴近事实，让参赛选手、观众和媒体可以快速了解本次赛事的有关情况，为赛事的顺利举办创造良好的舆论氛围。"
+              placeholder="Please write a brief introduction about this event, including the format and other relevant information. You may briefly describe the event's origin, development history, and emphasize its unique features and significance. The event introduction should be concise, factual, and provide participants, spectators, and media with a quick understanding of the event's details. Let's create a favorable public atmosphere for the smooth running of the event."
             />
             <Radio
               label="Campaign mode"

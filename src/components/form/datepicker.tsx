@@ -30,6 +30,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
           type="date"
           ref={ref}
           className="w-full bg-white/0 h-10 px-2"
+          lang="en"
           {...restProps}
         />
         <CalendarIcon

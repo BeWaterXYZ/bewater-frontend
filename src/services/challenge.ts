@@ -16,7 +16,7 @@ export async function getChallenges() {
 
 export async function getChallengeById(challengeId: ChallengeID) {
   const { data } = await agentAuthed.get<{ challenge: Challenge }>(
-    `/challenge/${challengeId}`,
+    `/host-challenge/${challengeId}`,
     {}
   );
   return data.challenge;
