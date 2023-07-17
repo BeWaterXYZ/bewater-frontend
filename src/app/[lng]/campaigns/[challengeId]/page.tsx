@@ -49,6 +49,7 @@ export default async function ChallengeIntro({ params }: any) {
 
   const judges = challenge.judges;
 
+  // 这里的四个字段借助matadata支持中英文显示
   if (lng === 'en' && challenge.metadata) {
     if (challenge.metadata.entitle) {
       challenge.title = challenge.metadata.entitle;
