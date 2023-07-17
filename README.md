@@ -48,5 +48,31 @@ ENVIRONMENT=local
         "zhdescription"?: "",
         "zhrequirements"?: "",
         "zhreviewDimension"?: "更多...",
+        "judges": [
+          {
+            "name": "生态评审嘉宾",
+            "data": [
+              {
+                "name": "Sam",
+                "title": "Arweave 创始人",
+                "avatarURI": "https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/sam.png"
+              }
+            ]
+          },
+          {
+            "name": "赞助评审嘉宾",
+            "data": [
+              {
+                "name": "郝志煜",
+                "title": "AWS Web3 Tech Lead",
+                "avatarURI": "https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/20230706154829.jpg"
+              }
+            ]
+          }
+        ],
+        "eventDetails": {
+          "zhcontent": "中文详情",
+          "encontent": "Event Details"
+        }
       }
 ```

@@ -78,6 +78,18 @@ export default async function ChallengeIntro({ params }: any) {
     }
   }
 
+  if (challenge?.metadata?.eventDetails) {
+    challenge.metadata.eventDetails.zhcontent =
+      challenge.metadata.eventDetails.zhcontent ||
+      challenge.metadata.eventDetails.encontent ||
+      '暂无';
+    challenge.metadata.eventDetails.encontent =
+      challenge.metadata.eventDetails.encontent ||
+      challenge.metadata.eventDetails.zhcontent ||
+      'None';
+  }
+
+  // todo 删除以下hack部分
   if (challenge.id === '2') {
     if (lng === 'en') {
       challenge.location = 'Online Event';
@@ -443,32 +455,72 @@ export default async function ChallengeIntro({ params }: any) {
             )}
           </div>
         </div>
-        {!(challenge.requirements || challenge.reviewDimension) ? null : (
+        {!(
+          challenge.requirements ||
+          challenge.reviewDimension ||
+          challenge?.metadata?.eventDetails
+        ) ? null : (
           <div className="container">
             <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                 <h3 className="text-[24px] font-bold mb-8 text-white">
-                  {challenge.id !== '5' ? t('campaign.t10') : t('campaign.t28')}
+                  {challenge?.metadata?.eventDetails
+                    ? t('campaign.t28')
+                    : t('campaign.t10')}
                 </h3>
                 <ol className="list-decimal">
-                  {challenge.requirements ? (
-                    challenge.requirements
-                      .split('\n')
-                      .filter(Boolean)
-                      .map((r, i) => (
-                        <li
-                          key={i}
-                          className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                        >
-                          <span className="text-[14px] text-grey-400">
-                            {r ? r : ''}
-                          </span>
-                        </li>
-                      ))
+                  {challenge?.metadata?.eventDetails ? (
+                    <>
+                      {lng === 'en'
+                        ? challenge.metadata.eventDetails.encontent
+                            .split('\n')
+                            .filter(Boolean)
+                            .map((r: string, i: number) => (
+                              <li
+                                key={i}
+                                className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                              >
+                                <span className="text-[14px] text-grey-400">
+                                  {r ?? ''}
+                                </span>
+                              </li>
+                            ))
+                        : challenge.metadata.eventDetails.zhcontent
+                            .split('\n')
+                            .filter(Boolean)
+                            .map((r: string, i: number) => (
+                              <li
+                                key={i}
+                                className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                              >
+                                <span className="text-[14px] text-grey-400">
+                                  {r ?? ''}
+                                </span>
+                              </li>
+                            ))}
+                    </>
                   ) : (
-                    <p className="text-[14px] text-grey-400">
-                      {t('campaign.t27')}
-                    </p>
+                    <>
+                      {challenge.requirements ? (
+                        challenge.requirements
+                          .split('\n')
+                          .filter(Boolean)
+                          .map((r, i) => (
+                            <li
+                              key={i}
+                              className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
+                            >
+                              <span className="text-[14px] text-grey-400">
+                                {r ? r : ''}
+                              </span>
+                            </li>
+                          ))
+                      ) : (
+                        <p className="text-[14px] text-grey-400">
+                          {t('campaign.t27')}
+                        </p>
+                      )}
+                    </>
                   )}
                 </ol>
               </div>
