@@ -78,12 +78,6 @@ export default async function ChallengeIntro({ params }: any) {
     }
   }
 
-  // 以下是hack代码
-  var judges6: any;
-  if (challenge.id === '6') {
-    judges6 = challenge.metadata;
-  }
-
   if (challenge.id === '2') {
     if (lng === 'en') {
       challenge.location = 'Online Event';
