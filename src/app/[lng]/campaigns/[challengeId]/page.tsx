@@ -81,12 +81,10 @@ export default async function ChallengeIntro({ params }: any) {
   if (challenge?.metadata?.eventDetails) {
     challenge.metadata.eventDetails.zhcontent =
       challenge.metadata.eventDetails.zhcontent ||
-      challenge.metadata.eventDetails.encontent ||
-      '暂无';
+      challenge.metadata.eventDetails.encontent;
     challenge.metadata.eventDetails.encontent =
       challenge.metadata.eventDetails.encontent ||
-      challenge.metadata.eventDetails.zhcontent ||
-      'None';
+      challenge.metadata.eventDetails.zhcontent;
   }
 
   // todo 删除以下hack部分
