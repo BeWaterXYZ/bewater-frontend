@@ -40,9 +40,13 @@ ENVIRONMENT=local
 
 ```json
       "metadata": {
-        "entitle": "Neo APAC Hackathon",
-        "endescription": "",
-        "enrequirements": "",
-        "enreviewDimension": "Coming soon"
+        "entitle"?: "Neo APAC Hackathon",
+        "endescription"?: "",
+        "enrequirements"?: "",
+        "enreviewDimension"?: "Coming soon",
+        "zhtitle"?: "Neo APAC 黑客松",
+        "zhdescription"?: "",
+        "zhrequirements"?: "",
+        "zhreviewDimension"?: "更多...",
       }
 ```
