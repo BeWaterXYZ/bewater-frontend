@@ -16,8 +16,16 @@ export const DatePicker = React.forwardRef(function DatePicker_(
   props: Props,
   ref: React.ForwardedRef<HTMLInputElement>
 ) {
-  const { label, error, className, name, required, control, onValueChange } =
-    props;
+  const {
+    label,
+    error,
+    className,
+    name,
+    required,
+    control,
+    onValueChange,
+    placeholder = "Click to select a date",
+  } = props;
   const id = useId();
 
   return (
@@ -40,6 +48,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
             <div className=" relative w-full text-[14px] bg-night  block body-3   rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors">
               <ReactDatePicker
                 className="w-full bg-white/0 h-10 px-2 outline-none"
+                placeholderText={placeholder}
                 selected={field.value ? parseISO(field.value as string) : null}
                 onChange={(date) => {
                   date && onValueChange(format(date, "yyyy-MM-dd"));
