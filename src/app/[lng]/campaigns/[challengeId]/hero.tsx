@@ -21,49 +21,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
       style={{ backgroundImage: `url("${challenge.bannerUrl}")` }}
     >
-      {challenge.id === '1' || challenge.id === '6' ? (
-        <Image
-          src="/logo/bewater-h.svg"
-          width={120}
-          height={24}
-          alt="bewater logo"
-          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-30"
-        />
-      ) : challenge.id === '2' ? (
-        <Image
-          src="/sponsors/debox.png"
-          width={93}
-          height={40}
-          alt="debox logo"
-          className="mx-auto mb-2 md:mb-3 w-[64px] md:w-[93px]"
-        />
-      ) : challenge.id === '3' ? (
-        <Image
-          src="/sponsors/starknet.png"
-          width={144}
-          height={40}
-          alt="starknet logo"
-          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
-        />
-      ) : challenge.id === '4' ? (
-        <Image
-          src="/sponsors/ABCDE.png"
-          width={144}
-          height={40}
-          alt=""
-          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
-        />
-      ) : challenge.id === '5' || challenge.id === '7' ? (
-        <>
-          {/* <Image
-            src="/sponsors/ev-5.1.png"
-            width={392}
-            height={80}
-            alt=""
-            className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[288px]"
-          /> */}
-        </>
-      ) : challenge.hostIcon?.length ? (
+      {challenge.hostIcon?.length ? (
         <>
           <Image
             src={challenge.hostIcon}
