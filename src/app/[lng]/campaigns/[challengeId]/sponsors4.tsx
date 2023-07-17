@@ -54,7 +54,7 @@ export function Sponsors4({ t }: { t: Function }) {
         </div>
         <div className="flex flex-col gap-7 items-center">
           <p className="body-1 md:heading-6 font-bold text-white/30 md:text-white/30">
-            Sponsorship:
+            Strategic partner:
           </p>
           <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
             {sponsors_tier2_1.map((src) => (
