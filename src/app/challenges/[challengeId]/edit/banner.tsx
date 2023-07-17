@@ -17,18 +17,19 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
   let mutation = useMutationUpdateChallenge(challenge.id);
 
-  let [isOnlineOnly, isOnlineOnlySet] = useState(challenge.location === LOCATION.ONLINE);
-  
-  const schema = z
-    .object({
-      title: validationSchema.text,
-      hostIcon: validationSchema.image,
-      bannerUrl: validationSchema.image,
-      location: z.string(),
-      city: isOnlineOnly ? z.string().optional() : validationSchema.text,
-      startTime: validationSchema.date,
-      endTime: validationSchema.date,
-    });
+  let [isOnlineOnly, isOnlineOnlySet] = useState(
+    challenge.location === LOCATION.ONLINE
+  );
+
+  const schema = z.object({
+    title: validationSchema.text,
+    hostIcon: validationSchema.image,
+    bannerUrl: validationSchema.image,
+    location: z.string(),
+    city: isOnlineOnly ? z.string().optional() : validationSchema.text,
+    startTime: validationSchema.date,
+    endTime: validationSchema.date,
+  });
 
   type Inputs = z.infer<typeof schema>;
   let {
@@ -42,10 +43,10 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
     resolver: zodResolver(schema),
     defaultValues: {
       title: challenge.title,
-      hostIcon: challenge.hostIcon,
-      bannerUrl: challenge.bannerUrl,
+      hostIcon: challenge.hostIcon ?? "",
+      bannerUrl: challenge.bannerUrl ?? "",
       location: challenge.location,
-      city: challenge.city ?? '',
+      city: challenge.city ?? "",
       // fix me
       startTime: challenge.startTime.substring(0, 10),
       endTime: challenge.endTime.substring(0, 10),
@@ -55,7 +56,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
     isOnlineOnlySet(data.location === LOCATION.ONLINE);
   });
   const onSubmit = async (formData: Inputs) => {
-    console.log(formData)
+    console.log(formData);
     try {
       await mutation.mutateAsync({
         id: challenge.id,
@@ -137,11 +138,15 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
             <div className="grid grid-cols-2 gap-4">
               <DatePicker
                 label="Start Date"
+                control={control}
+                onValueChange={(v) => setValue(`startTime`, v)}
                 {...register("startTime")}
                 error={errors["startTime"]}
               />
               <DatePicker
+                control={control}
                 label="End Date"
+                onValueChange={(v) => setValue(`endTime`, v)}
                 {...register("endTime")}
                 error={errors["endTime"]}
               />

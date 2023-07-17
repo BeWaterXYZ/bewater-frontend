@@ -194,11 +194,15 @@ export default function Page() {
             <div className="grid grid-cols-2 gap-4">
               <DatePicker
                 label="Start Date"
+                control={control}
+                onValueChange={(v) => setValue("startTime", v)}
                 {...register("startTime")}
                 error={errors["startTime"]}
               />
               <DatePicker
                 label="End Date"
+                control={control}
+                onValueChange={(v) => setValue("endTime", v)}
                 {...register("endTime")}
                 error={errors["endTime"]}
               />

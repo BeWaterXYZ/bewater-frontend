@@ -71,17 +71,8 @@ body {
 
 
 /* datepicker  */
-input[type="date"]::-webkit-calendar-picker-indicator,input[type="date"]::-moz-calendar-picker-indicator {
-  opacity: 0;
-  position: absolute;
-  display: block;
-  background-color: rgba(0, 0, 0, 0);
-  width: 100%;
-  height: 100%;
-}
-
-input[type='date'], input[type='time'] {
-  -webkit-appearance: none;
+.react-datepicker-wrapper{
+  @apply w-full
 }
 
 

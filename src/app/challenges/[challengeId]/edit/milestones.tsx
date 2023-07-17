@@ -33,6 +33,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -65,7 +66,10 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
-        <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto">
+        <Dialog.Content
+          className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[500px] p-8 overflow-y-auto"
+          onOpenAutoFocus={(e) => e.preventDefault()}
+        >
           <Dialog.Title className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
             Milestone Information
           </Dialog.Title>
@@ -87,6 +91,10 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                     key={field.id}
                   >
                     <DatePicker
+                      control={control}
+                      onValueChange={(v) =>
+                        setValue(`milestones.${index}.dueDate`, v)
+                      }
                       {...register(`milestones.${index}.dueDate`)}
                       error={errors[`milestones`]?.[index]?.dueDate}
                     />

@@ -29,7 +29,7 @@ export function UploaderInput({
     <Controller
       name={name!}
       control={control}
-      render={({ field }) => {
+      render={({ field  }) => {
         return (
           <div className={clsx("block group relative pb-5")}>
             {label ? (
