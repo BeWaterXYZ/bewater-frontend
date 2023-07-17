@@ -145,7 +145,7 @@ export default function Page({ params }: any) {
             <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
               <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center w-full">
                 <div className="text-[32px] md:text-[36px] whitespace-nowrap py-4 text-white">
-                  赛事简介
+                  Introduction
                 </div>
                 <div className="text-[18px] md:body-2 text-white">
                   {challenge.description.split("\n").map((s) => (
