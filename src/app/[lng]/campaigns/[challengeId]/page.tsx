@@ -345,168 +345,120 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         )}
       </div>
-      {challenge.id !== '3' && challenge.id !== '7' ? (
-        <>
-          <div className="mt-16">
-            <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-              {challenge.id === '4' ? 'Confirmed Mentors' : t('campaign.t8')}
-            </h3>
-            <div className="flex flex-row flex-wrap gap-6 justify-center">
-              {judges
-                .sort((a, b) => a.order - b.order)
-                .map((judge) => {
-                  return (
-                    <div key={judge.id!} className="w-[180px] mb-2 ">
-                      <Aspect ratio={1 / 1} className="">
-                        <HoverCard
-                          side="right"
-                          card={
-                            <div className="min-w-[100px] max-w-[200px] text-white">
-                              {judge.description}
-                            </div>
-                          }
-                        >
+      <>
+        <div className="mt-16">
+          <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+            {challenge.id === '4' ? 'Confirmed Mentors' : t('campaign.t8')}
+          </h3>
+          <div className="flex flex-row flex-wrap gap-6 justify-center">
+            {judges.length > 0
+              ? judges
+                  .sort((a, b) => a.order - b.order)
+                  .map((judge) => {
+                    return (
+                      <div key={judge.id!} className="w-[180px] mb-2 ">
+                        <Aspect ratio={1 / 1} className="">
+                          {/* <HoverCard
+                            side="right"
+                            card={
+                              <div className="min-w-[100px] max-w-[200px] text-white">
+                                {judge.description ?? ''}
+                              </div>
+                            }>
                           <Image
                             fill
                             src={judge.avatarURI}
                             className="object-cover w-full h-full bg-white/5"
                             alt={judge.name}
                           />
-                        </HoverCard>
-                      </Aspect>
-
-                      <p className="body-3 mt-4 mb-2 text-white">
-                        {judge.name}
-                      </p>
-                      <p className="body-4 text-grey-400">
-                        {judge.title ?? ''}
-                      </p>
-                      <p className="body-4 text-grey-400">
-                        {judge.organization ?? ''}
-                      </p>
-                      <div>
-                        {judge.twitterLink ? (
-                          <Link href={judge.twitterLink}>
-                            {
-                              <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
-                            }
-                          </Link>
-                        ) : null}
+                        </HoverCard> */}
+                          <Image
+                            fill
+                            src={judge.avatarURI}
+                            className="object-cover w-full h-full bg-white/5"
+                            alt={judge.name}
+                          />
+                        </Aspect>
+                        <p className="body-3 mt-4 mb-2 text-white">
+                          {judge.name}
+                        </p>
+                        <p className="body-4 text-grey-400">
+                          {judge.title ?? ''}
+                        </p>
+                        <p className="body-4 text-grey-400">
+                          {judge.organization ?? ''}
+                        </p>
+                        <div>
+                          {judge.twitterLink ? (
+                            <Link href={judge.twitterLink}>
+                              {
+                                <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
+                              }
+                            </Link>
+                          ) : null}
+                        </div>
                       </div>
-                    </div>
+                    );
+                  })
+              : challenge?.metadata?.judges?.length > 0
+              ? challenge.metadata.judges.map((it: any) => {
+                  return (
+                    <>
+                      <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                        {it.name}
+                      </p>
+                      {it.data.map((judge: any) => {
+                        return (
+                          <>
+                            <div className="w-[180px] mb-2">
+                              <Aspect ratio={1 / 1}>
+                                <Image
+                                  height={150}
+                                  width={150}
+                                  src={judge.avatarURI ?? unsplash('man')}
+                                  className="object-cover w-full h-full"
+                                  alt={judge.name}
+                                />
+                              </Aspect>
+                              <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                              <p className="body-4 text-grey-400">
+                                {judge.title ?? ''}
+                              </p>
+                              <p className="body-4 text-grey-400">
+                                {judge.organization ?? ''}
+                              </p>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </>
                   );
-                })}
-              {challenge.id === '6' ? (
-                <>
-                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
-                    生态评审嘉宾
-                  </p>
-                  {judges6.j1.map((judge: any) => {
-                    return (
-                      <div key={judges6.key++} className="w-[180px] mb-2">
-                        <Aspect ratio={1 / 1}>
-                          <Image
-                            height={150}
-                            width={150}
-                            src={judge.avatarURI ?? unsplash('man')}
-                            className="object-cover w-full h-full"
-                            alt={judge.name}
-                            title={judge.description}
-                          />
-                        </Aspect>
-                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                        <p className="body-4 text-grey-400">{judge.title}</p>
-                      </div>
-                    );
-                  })}
-                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
-                    赞助评审嘉宾
-                  </p>
-                  {judges6.j2.map((judge: any) => {
-                    return (
-                      <div key={judges6.key++} className="w-[180px] mb-2">
-                        <Aspect ratio={1 / 1}>
-                          <Image
-                            height={150}
-                            width={150}
-                            src={judge.avatarURI ?? unsplash('man')}
-                            className="object-cover w-full h-full"
-                            alt={judge.name}
-                            title={judge.description}
-                          />
-                        </Aspect>
-                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                        <p className="body-4 text-grey-400">{judge.title}</p>
-                      </div>
-                    );
-                  })}
-                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
-                    社区评审嘉宾
-                  </p>
-                  {judges6.j3.map((judge: any) => {
-                    return (
-                      <div key={judges6.key++} className="w-[180px] mb-2">
-                        <Aspect ratio={1 / 1}>
-                          <Image
-                            height={150}
-                            width={150}
-                            src={judge.avatarURI ?? unsplash('man')}
-                            className="object-cover w-full h-full"
-                            alt={judge.name}
-                            title={judge.description}
-                          />
-                        </Aspect>
-                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                        <p className="body-4 text-grey-400">{judge.title}</p>
-                      </div>
-                    );
-                  })}
-                  <p className="body-3 mt-6 w-full text-grey-400 text-center">
-                    媒体评审嘉宾
-                  </p>
-                  {judges6.j4.map((judge: any) => {
-                    return (
-                      <div key={judges6.key++} className="w-[180px] mb-2">
-                        <Aspect ratio={1 / 1}>
-                          <Image
-                            height={150}
-                            width={150}
-                            src={judge.avatarURI ?? unsplash('man')}
-                            className="object-cover w-full h-full"
-                            alt={judge.name}
-                            title={judge.description}
-                          />
-                        </Aspect>
-                        <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                        <p className="body-4 text-grey-400">{judge.title}</p>
-                      </div>
-                    );
-                  })}
-                </>
-              ) : null}
-              {challenge.id === '6' ? null : (
-                <div className="w-[180px]">
-                  <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
-                    Coming
-                    <br />
-                    Soon
-                  </div>
-                  <p className="body-3 mt-6 w-full text-grey-400">
-                    {t('campaign.t9')}
-                  </p>
+                })
+              : null}
+            {challenge?.metadata?.judges?.length > 0 ? null : (
+              <div className="w-[180px]">
+                <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
+                  Coming
+                  <br />
+                  Soon
                 </div>
-              )}
-            </div>
+                <p className="body-3 mt-6 w-full text-grey-400">
+                  {t('campaign.t9')}
+                </p>
+              </div>
+            )}
           </div>
-          {parseInt(challenge.id) > 6 ? (
-            <div className="container">
-              <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
-                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                  <h3 className="text-[24px] font-bold mb-8 text-white">
-                    {t('campaign.t10')}
-                  </h3>
-                  <ol className="list-decimal">
-                    {challenge.requirements
+        </div>
+        {!(challenge.requirements || challenge.reviewDimension) ? null : (
+          <div className="container">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
+              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                <h3 className="text-[24px] font-bold mb-8 text-white">
+                  {challenge.id !== '5' ? t('campaign.t10') : t('campaign.t28')}
+                </h3>
+                <ol className="list-decimal">
+                  {challenge.requirements ? (
+                    challenge.requirements
                       .split('\n')
                       .filter(Boolean)
                       .map((r, i) => (
@@ -514,17 +466,25 @@ export default async function ChallengeIntro({ params }: any) {
                           key={i}
                           className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
                         >
-                          <span className="text-[14px] text-grey-400">{r}</span>
+                          <span className="text-[14px] text-grey-400">
+                            {r ? r : ''}
+                          </span>
                         </li>
-                      ))}
-                  </ol>
-                </div>
-                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                  <h3 className="text-white text-[24px] font-bold mb-8">
-                    {t('campaign.t11')}
-                  </h3>
-                  <ol className="list-decimal">
-                    {challenge.reviewDimension
+                      ))
+                  ) : (
+                    <p className="text-[14px] text-grey-400">
+                      {t('campaign.t27')}
+                    </p>
+                  )}
+                </ol>
+              </div>
+              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                <h3 className="text-white text-[24px] font-bold mb-8">
+                  {t('campaign.t11')}
+                </h3>
+                <ol className="list-decimal">
+                  {challenge.reviewDimension ? (
+                    challenge.reviewDimension
                       .split('\n')
                       .filter(Boolean)
                       .map((r, i) => (
@@ -532,131 +492,22 @@ export default async function ChallengeIntro({ params }: any) {
                           key={i}
                           className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
                         >
-                          <span className="text-[14px] text-grey-400">{r}</span>
+                          <span className="text-[14px] text-grey-400">
+                            {r ? r : ''}
+                          </span>
                         </li>
-                      ))}
-                  </ol>
-                </div>
+                      ))
+                  ) : (
+                    <p className="text-[14px] text-grey-400">
+                      {t('campaign.t27')}
+                    </p>
+                  )}
+                </ol>
               </div>
             </div>
-          ) : null}
-
-          {parseInt(challenge.id) < 11 && challenge?.requirements.length > 1 ? (
-            <div
-              className={`w-full grid grid-cols-1 ${
-                challenge?.requirements.length > 1 &&
-                challenge?.reviewDimension.length > 1
-                  ? 'md:grid-cols-2'
-                  : 'md:grid-cols-1'
-              }  gap-8  mt-16`}
-            >
-              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="heading-5 font-bold mb-8">
-                  {challenge.id !== '5' ? t('campaign.t10') : 'Event Details'}
-                </h3>
-                <ul className="list-decimal">
-                  {challenge.requirements.split('\n').map((r) => (
-                    <li
-                      key={r}
-                      className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                    >
-                      <span className="body-3 text-grey-400">{r}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {parseInt(challenge.id) < 6 ? (
-                <>
-                  {challenge?.reviewDimension.length > 1 ? (
-                    <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                      <h3 className="heading-5 font-bold mb-8">
-                        {t('campaign.t11')}
-                      </h3>
-                      <ul className="list-decimal">
-                        {challenge.reviewDimension.split('\n').map((r) => (
-                          <li
-                            key={r}
-                            className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                          >
-                            <span className="body-3 text-grey-400">{r}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : null}
-                </>
-              ) : null}
-              {challenge.id === '6' ? (
-                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                  <h3 className="heading-5 font-bold mb-8">
-                    {t('campaign.t11')}
-                  </h3>
-                  <ul className="list-decimal">
-                    <p className="body-3 text-grey-400">评审分数构成：</p>
-                    <br />
-                    <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                      <span className="body-3 text-grey-400">
-                        1. 生态专业评审团（占比50%）
-                      </span>
-                    </li>
-                    <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                      <span className="body-3 text-grey-400">
-                        2. 赞助评审（占比40%）
-                      </span>
-                    </li>
-                    <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                      <span className="body-3 text-grey-400">
-                        3. 社区+媒体评审团（占比10%）
-                      </span>
-                    </li>
-                    <br />
-                    <ul className="list-decimal">
-                      <p className="body-3 text-grey-400">评审打分标准：</p>
-                      <br />
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          满分100，每个评委为每个项目打分一次,为保证公平公正评委将不能为自己所在赛道的项目打分。
-                        </span>
-                      </li>
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          1. 产品体验：20
-                        </span>
-                      </li>
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          2. 技术壁垒：20
-                        </span>
-                      </li>
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          3. 商业模式：20
-                        </span>
-                      </li>
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          4. 团队配置：20
-                        </span>
-                      </li>
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          5. 估值水平：20
-                        </span>
-                      </li>
-                      <li className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]">
-                        <span className="body-3 text-grey-400">
-                          项目最终得分=[(专业评审加权总分-最高分数-最低分数）/9]*50%+[(赞助评审加权总分-最高分数-最低分数）/赞助商数量-2]*40%+[(社区媒体评审加权总分-最高分数-最低分数）/17]*10%
-                        </span>
-                      </li>
-                    </ul>
-                  </ul>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
-        </>
-      ) : null}
-
+          </div>
+        )}
+      </>
       {challenge.id === '1' ? (
         <Sponsors />
       ) : challenge.id === '2' ? (
