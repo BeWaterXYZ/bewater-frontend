@@ -40,16 +40,18 @@ ENVIRONMENT=local
 
 metadata字段如果不用，为null，否则是一个json。当前定义了以下字段，如果存在优先使用
 
+例如：假如赛事标题不需要多语言支持，就使用原有 title 字段，不需要设置 metadata 里面的 entitle 和 zhtitle。
+
 ```json
       "metadata": {
-        "entitle": "Neo APAC Hackathon",
+        "entitle": "英文title(例如：Neo APAC Hackathon)",
         "endescription": "",
         "enrequirements": "",
         "enreviewDimension": "Coming soon",
-        "zhtitle": "Neo APAC 黑客松",
-        "zhdescription": "",
-        "zhrequirements": "",
-        "zhreviewDimension": "更多...",
+        "zhtitle": "中文title，例如：Neo APAC 黑客松",
+        "zhdescription": "中文赛事描述",
+        "zhrequirements": "中文赛事要求",
+        "zhreviewDimension": "中文评审维度",
         "judges": [
           {
             "name": "生态评审嘉宾",
