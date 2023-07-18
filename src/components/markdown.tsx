@@ -43,6 +43,18 @@ export default function Markdown(props: Props) {
                 className: ' text-[10px]',
               },
             },
+            ol: {
+              component: 'ol',
+              props: {
+                className: 'list-decimal list-inside',
+              },
+            },
+            ul: {
+              component: 'ul',
+              props: {
+                className: 'list-disc list-inside',
+              },
+            },
             li: {
               component: 'li',
               props: {
