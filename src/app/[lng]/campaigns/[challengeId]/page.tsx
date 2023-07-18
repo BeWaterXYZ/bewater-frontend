@@ -455,35 +455,26 @@ export default async function ChallengeIntro({ params }: any) {
                 <h3 className="text-[24px] font-bold mb-8 text-white">
                   {t('campaign.t28')}
                 </h3>
-                <ol className="list-decimal">
-                  {false ? (
-                    <></>
-                  ) : (
-                    <>
-                      {challenge.requirements ? (
-                        <Markdown>{challenge.requirements}</Markdown>
-                      ) : (
-                        <p className="text-[14px] text-grey-400">
-                          {t('campaign.t27')}
-                        </p>
-                      )}
-                    </>
-                  )}
-                </ol>
+
+                {challenge.requirements ? (
+                  <Markdown>{challenge.requirements}</Markdown>
+                ) : (
+                  <p className="text-[14px] text-grey-400">
+                    {t('campaign.t27')}
+                  </p>
+                )}
               </div>
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                 <h3 className="text-white text-[24px] font-bold mb-8">
                   {t('campaign.t11')}
                 </h3>
-                <ol className="list-decimal">
-                  {challenge.reviewDimension ? (
-                    <Markdown>{challenge.reviewDimension}</Markdown>
-                  ) : (
-                    <p className="text-[14px] text-grey-400">
-                      {t('campaign.t27')}
-                    </p>
-                  )}
-                </ol>
+                {challenge.reviewDimension ? (
+                  <Markdown>{challenge.reviewDimension}</Markdown>
+                ) : (
+                  <p className="text-[14px] text-grey-400">
+                    {t('campaign.t27')}
+                  </p>
+                )}
               </div>
             </div>
           </div>
