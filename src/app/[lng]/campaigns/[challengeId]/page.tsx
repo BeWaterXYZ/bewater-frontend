@@ -32,6 +32,7 @@ import { useTranslation } from '@/app/i18n';
 import HoverCard from '@/components/hover-card';
 import { Fragment } from 'react';
 import Marquee from 'react-fast-marquee';
+import Markdown from '@/components/markdown';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -460,19 +461,7 @@ export default async function ChallengeIntro({ params }: any) {
                   ) : (
                     <>
                       {challenge.requirements ? (
-                        challenge.requirements
-                          .split('\n')
-                          .filter(Boolean)
-                          .map((r, i) => (
-                            <li
-                              key={i}
-                              className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                            >
-                              <span className="text-[14px] text-grey-400">
-                                {r ? r : ''}
-                              </span>
-                            </li>
-                          ))
+                        <Markdown>{challenge.requirements}</Markdown>
                       ) : (
                         <p className="text-[14px] text-grey-400">
                           {t('campaign.t27')}
@@ -488,19 +477,7 @@ export default async function ChallengeIntro({ params }: any) {
                 </h3>
                 <ol className="list-decimal">
                   {challenge.reviewDimension ? (
-                    challenge.reviewDimension
-                      .split('\n')
-                      .filter(Boolean)
-                      .map((r, i) => (
-                        <li
-                          key={i}
-                          className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                        >
-                          <span className="text-[14px] text-grey-400">
-                            {r ? r : ''}
-                          </span>
-                        </li>
-                      ))
+                    <Markdown>{challenge.reviewDimension}</Markdown>
                   ) : (
                     <p className="text-[14px] text-grey-400">
                       {t('campaign.t27')}
