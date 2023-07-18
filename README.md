@@ -40,15 +40,15 @@ ENVIRONMENT=local
 
 ```json
       "metadata": {
-        "entitle"?: "Neo APAC Hackathon",
+        "entitle"?: "Neo APAC Hackathon", // 英文title
         "endescription"?: "",
         "enrequirements"?: "",
         "enreviewDimension"?: "Coming soon",
-        "zhtitle"?: "Neo APAC 黑客松",
+        "zhtitle"?: "Neo APAC 黑客松",    // 中文title
         "zhdescription"?: "",
         "zhrequirements"?: "",
         "zhreviewDimension"?: "更多...",
-        "judges": [
+        "judges": [ // 支持裁判分类
           {
             "name": "生态评审嘉宾",
             "data": [
@@ -72,7 +72,7 @@ ENVIRONMENT=local
         ],
         "eventDetails": {
           "zhcontent": "中文详情",
-          "encontent": "Event Details"
+          "encontent": "Event Details" // 如果不需要支持多语言，就只需要给encontent赋值，让zhcontent不存在
         }
       }
 ```
