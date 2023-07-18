@@ -3,7 +3,7 @@ import M2J from 'markdown-to-jsx';
 type Props = React.ComponentProps<typeof M2J>;
 export default function Markdown(props: Props) {
   return (
-    <div className="font-secondary text-white">
+    <div className="font-secondary text-grey-400">
       <M2J
         options={{
           overrides: {
@@ -46,13 +46,13 @@ export default function Markdown(props: Props) {
             li: {
               component: 'li',
               props: {
-                className: ' text-[12px] my-2',
+                className: ' text-[14px] my-2',
               },
             },
             p: {
               component: 'p',
               props: {
-                className: ' text-[12px] my-2',
+                className: ' text-[14px] my-2',
               },
             },
             th: {
