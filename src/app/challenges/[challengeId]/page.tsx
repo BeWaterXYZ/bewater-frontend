@@ -248,7 +248,7 @@ export default function Page({ params }: any) {
                               return (
                                 <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
-                                    <p className="body-3 text-white">
+                                    <p className="body-3 text-white whitespace-nowrap">
                                       {award.awardName}
                                     </p>
                                     <div className="flex flex-row justify-between">
