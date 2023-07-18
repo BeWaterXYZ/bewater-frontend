@@ -50,41 +50,32 @@ export default async function ChallengeIntro({ params }: any) {
   const judges = challenge.judges;
 
   // 这里的四个字段借助matadata支持中英文显示
-  if (lng === 'en' && challenge.metadata) {
-    if (challenge.metadata.entitle) {
-      challenge.title = challenge.metadata.entitle;
+  if (lng === 'en' && challenge.yotadata) {
+    if (challenge.yotadata.entitle) {
+      challenge.title = challenge.yotadata.entitle;
     }
-    if (challenge.metadata.endescription) {
-      challenge.description = challenge.metadata.endescription;
+    if (challenge.yotadata.endescription) {
+      challenge.description = challenge.yotadata.endescription;
     }
-    if (challenge.metadata.enrequirements) {
-      challenge.requirements = challenge.metadata.enrequirements;
+    if (challenge.yotadata.enrequirements) {
+      challenge.requirements = challenge.yotadata.enrequirements;
     }
-    if (challenge.metadata.enreviewDimension) {
-      challenge.reviewDimension = challenge.metadata.enreviewDimension;
+    if (challenge.yotadata.enreviewDimension) {
+      challenge.reviewDimension = challenge.yotadata.enreviewDimension;
     }
-  } else if (lng === 'zh' && challenge.metadata) {
-    if (challenge.metadata.zhtitle) {
-      challenge.title = challenge.metadata.zhtitle;
+  } else if (lng === 'zh' && challenge.yotadata) {
+    if (challenge.yotadata.zhtitle) {
+      challenge.title = challenge.yotadata.zhtitle;
     }
-    if (challenge.metadata.zhdescription) {
-      challenge.description = challenge.metadata.zhdescription;
+    if (challenge.yotadata.zhdescription) {
+      challenge.description = challenge.yotadata.zhdescription;
     }
-    if (challenge.metadata.zhrequirements) {
-      challenge.requirements = challenge.metadata.zhrequirements;
+    if (challenge.yotadata.zhrequirements) {
+      challenge.requirements = challenge.yotadata.zhrequirements;
     }
-    if (challenge.metadata.zhreviewDimension) {
-      challenge.reviewDimension = challenge.metadata.zhreviewDimension;
+    if (challenge.yotadata.zhreviewDimension) {
+      challenge.reviewDimension = challenge.yotadata.zhreviewDimension;
     }
-  }
-
-  if (challenge?.metadata?.eventDetails) {
-    challenge.metadata.eventDetails.zhcontent =
-      challenge.metadata.eventDetails.zhcontent ||
-      challenge.metadata.eventDetails.encontent;
-    challenge.metadata.eventDetails.encontent =
-      challenge.metadata.eventDetails.encontent ||
-      challenge.metadata.eventDetails.zhcontent;
   }
 
   // todo 删除以下hack部分
@@ -404,8 +395,8 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     );
                   })
-              : challenge?.metadata?.judges?.length > 0
-              ? challenge.metadata.judges.map((it: any) => {
+              : challenge?.yotadata?.judges?.length > 0
+              ? challenge.yotadata.judges.map((it: any) => {
                   return (
                     <>
                       <p className="body-3 mt-6 w-full text-grey-400 text-center">
@@ -439,7 +430,7 @@ export default async function ChallengeIntro({ params }: any) {
                   );
                 })
               : null}
-            {challenge?.metadata?.judges?.length > 0 ? null : (
+            {challenge?.yotadata?.judges?.length > 0 ? null : (
               <div className="w-[180px]">
                 <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
                   Coming
@@ -453,50 +444,16 @@ export default async function ChallengeIntro({ params }: any) {
             )}
           </div>
         </div>
-        {!(
-          challenge.requirements ||
-          challenge.reviewDimension ||
-          challenge?.metadata?.eventDetails
-        ) ? null : (
+        {!(challenge.requirements || challenge.reviewDimension) ? null : (
           <div className="container">
             <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                 <h3 className="text-[24px] font-bold mb-8 text-white">
-                  {challenge?.metadata?.eventDetails
-                    ? t('campaign.t28')
-                    : t('campaign.t10')}
+                  {t('campaign.t28')}
                 </h3>
                 <ol className="list-decimal">
-                  {challenge?.metadata?.eventDetails ? (
-                    <>
-                      {lng === 'en'
-                        ? challenge.metadata.eventDetails.encontent
-                            .split('\n')
-                            .filter(Boolean)
-                            .map((r: string, i: number) => (
-                              <li
-                                key={i}
-                                className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                              >
-                                <span className="text-[14px] text-grey-400">
-                                  {r ?? ''}
-                                </span>
-                              </li>
-                            ))
-                        : challenge.metadata.eventDetails.zhcontent
-                            .split('\n')
-                            .filter(Boolean)
-                            .map((r: string, i: number) => (
-                              <li
-                                key={i}
-                                className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                              >
-                                <span className="text-[14px] text-grey-400">
-                                  {r ?? ''}
-                                </span>
-                              </li>
-                            ))}
-                    </>
+                  {false ? (
+                    <></>
                   ) : (
                     <>
                       {challenge.requirements ? (

@@ -18,13 +18,13 @@ export default async function Layout({
   const { lng } = segmentSchema.lng.parse(params);
   const { t } = await useTranslation(lng, 'translation');
 
-  if (lng === 'en' && challenge.metadata) {
-    if (challenge.metadata.entitle) {
-      challenge.title = challenge.metadata.entitle;
+  if (lng === 'en' && challenge.yotadata) {
+    if (challenge.yotadata.entitle) {
+      challenge.title = challenge.yotadata.entitle;
     }
-  } else if (lng === 'zh' && challenge.metadata) {
-    if (challenge.metadata.zhtitle) {
-      challenge.title = challenge.metadata.zhtitle;
+  } else if (lng === 'zh' && challenge.yotadata) {
+    if (challenge.yotadata.zhtitle) {
+      challenge.title = challenge.yotadata.zhtitle;
     }
   }
 
