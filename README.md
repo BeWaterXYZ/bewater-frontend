@@ -38,7 +38,7 @@ ENVIRONMENT=local
 
 ### metadata的用途
 
-以下定义字段，如果存在优先使用
+metadata字段如果不用，为null，否则是一个json。当前定义了以下字段，如果存在优先使用
 
 ```json
       "metadata": {
