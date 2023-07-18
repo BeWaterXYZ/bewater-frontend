@@ -38,17 +38,19 @@ ENVIRONMENT=local
 
 ### metadata的用途
 
+以下定义字段，如果存在优先使用
+
 ```json
       "metadata": {
-        "entitle"?: "Neo APAC Hackathon", // 英文title
-        "endescription"?: "",
-        "enrequirements"?: "",
-        "enreviewDimension"?: "Coming soon",
-        "zhtitle"?: "Neo APAC 黑客松",    // 中文title
-        "zhdescription"?: "",
-        "zhrequirements"?: "",
-        "zhreviewDimension"?: "更多...",
-        "judges": [ // 支持裁判分类
+        "entitle": "Neo APAC Hackathon",
+        "endescription": "",
+        "enrequirements": "",
+        "enreviewDimension": "Coming soon",
+        "zhtitle": "Neo APAC 黑客松",
+        "zhdescription": "",
+        "zhrequirements": "",
+        "zhreviewDimension": "更多...",
+        "judges": [
           {
             "name": "生态评审嘉宾",
             "data": [
