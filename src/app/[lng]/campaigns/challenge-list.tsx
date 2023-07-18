@@ -10,6 +10,17 @@ interface ChallengeListProps {
 }
 
 export function ChallengeList({ challenges, lng }: ChallengeListProps) {
+  for (const it of challenges) {
+    if (lng === 'en' && it.yotadata) {
+      if (it.yotadata.entitle) {
+        it.title = it.yotadata.entitle;
+      }
+    } else if (lng === 'zh' && it.yotadata) {
+      if (it.yotadata.zhtitle) {
+        it.title = it.yotadata.zhtitle;
+      }
+    }
+  }
   return (
     <div className="flex  gap-5 flex-col lg:flex-row my-8">
       {challenges.map((challenge) => (
