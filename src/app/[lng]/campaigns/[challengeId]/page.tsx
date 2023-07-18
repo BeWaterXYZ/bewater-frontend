@@ -281,13 +281,16 @@ export default async function ChallengeIntro({ params }: any) {
               <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
                 Total Awards: ${challenge.totalAward} {challenge.awardCurrency}
               </h3>
-              <div className="flex flex-row flex-wrap items-center gap-16">
+              <div className="flex flex-row flex-wrap items-center gap-16 p-8">
                 {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
                   return (
-                    <div className="flex flex-col items-center gap-10" key={i}>
+                    <div
+                      className="flex-1 flex flex-col items-center gap-10"
+                      key={i}
+                    >
                       <div className="flex flex-row gap-[min(32px,2vw)] ">
                         <div className="flex flex-col gap-4 md:gap-7 items-center">
-                          <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc]">
+                          <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
                             {awardAssort.name}
                           </p>
                           <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
