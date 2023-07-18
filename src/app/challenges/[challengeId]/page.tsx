@@ -22,6 +22,7 @@ import { EditMilestones } from "./edit/milestones";
 import { EditRequirements } from "./edit/requirements";
 import { EditSponsors } from "./edit/sponsors";
 import { mock } from "./mock";
+import Markdown from "@/components/markdown";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -372,37 +373,18 @@ export default function Page({ params }: any) {
                 <h3 className="text-[24px] font-bold mb-8 text-white">
                   Requirement
                 </h3>
-                <ol className="list-decimal">
-                  {challenge.requirements
-                    .split("\n")
-                    .filter(Boolean)
-                    .map((r, i) => (
-                      <li
-                        key={i}
-                        className="list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                      >
-                        <span className="text-[14px] text-grey-400">{r}</span>
-                      </li>
-                    ))}
-                </ol>
+                <Markdown>
+                  {challenge.requirements}
+                </Markdown>
+               
               </div>
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                 <h3 className="text-white text-[24px] font-bold mb-8">
                   Criteria
                 </h3>
-                <ol className="list-decimal">
-                  {challenge.reviewDimension
-                    .split("\n")
-                    .filter(Boolean)
-                    .map((r, i) => (
-                      <li
-                        key={i}
-                        className=" list-none text-grey-400 mb-3 indent-[-1em] pl-[1em]"
-                      >
-                        <span className="text-[14px] text-grey-400">{r}</span>
-                      </li>
-                    ))}
-                </ol>
+                <Markdown>
+                  {challenge.reviewDimension}
+                </Markdown>
               </div>
             </div>
           </div>
