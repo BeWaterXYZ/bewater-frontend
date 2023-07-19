@@ -12,24 +12,17 @@ import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f32ada86c';
 import { PrizeSection as PrizeSection7 } from './prize-section/63c82bd12ddc570f32ada86d';
 import { PrizeSection as PrizeSection11 } from './prize-section/63c82bd12ddc570f32ada86e';
-import { Sponsors } from './sponsors';
 import { Timeline } from './timeline';
 import { Timeline as Timeline4 } from './timeline-id4';
 import { Timeline as Timeline7 } from './timeline-id7';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
-import { Sponsors2 } from './sponsors2';
-import { Sponsors3 } from './sponsors3';
-import { Sponsors4 } from './sponsors4';
-import { Sponsors5 } from './sponsors5';
-import { Sponsors6 } from './sponsors6';
 import { Sponsors7 } from './sponsors7';
-import { Sponsors11 } from './sponsors11';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
-import HoverCard from '@/components/hover-card';
+//import HoverCard from '@/components/hover-card';
 import { Fragment } from 'react';
 import Marquee from 'react-fast-marquee';
 import Markdown from '@/components/markdown';
@@ -322,24 +315,26 @@ export default async function ChallengeIntro({ params }: any) {
                   );
                 })}
               </div>
-              <div className="relative w-full flex flex-col gap-10 items-center">
-                <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30">
-                  Key Sponsors
-                </p>
-                <Marquee>
-                  {(challenge.keySponsors ?? []).map((sp, i) => {
-                    return (
-                      <div
-                        className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
-                        key={i}
-                      >
-                        {/* // fixme/ */}
-                        <img src={sp} className="h-8 md:h-10" />
-                      </div>
-                    );
-                  })}
-                </Marquee>
-              </div>
+              {(challenge.keySponsors ?? []).length > 0 ? (
+                <div className="relative w-full flex flex-col gap-10 items-center">
+                  <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30">
+                    {t('campaign.t29')}
+                  </p>
+                  <Marquee>
+                    {(challenge.keySponsors ?? []).map((sp, i) => {
+                      return (
+                        <div
+                          className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
+                          key={i}
+                        >
+                          {/* // fixme/ */}
+                          <img src={sp} className="h-8 md:h-10" />
+                        </div>
+                      );
+                    })}
+                  </Marquee>
+                </div>
+              ) : null}
             </div>
           </div>
         )}
@@ -480,27 +475,13 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         )}
       </>
-      {challenge.id === '1' ? (
-        <Sponsors />
-      ) : challenge.id === '2' ? (
-        <Sponsors2 t={t} />
-      ) : challenge.id === '3' ? (
-        <Sponsors3 />
-      ) : challenge.id === '4' ? (
-        <Sponsors4 t={t} />
-      ) : challenge.id === '5' ? (
-        <Sponsors5 t={t} />
-      ) : challenge.id === '6' ? (
-        <Sponsors6 t={t} />
-      ) : challenge.id === '7' ? (
+      {challenge.id === '7' ? (
         <Sponsors7 t={t} />
-      ) : challenge.id === '11' ? (
-        <Sponsors11 t={t} />
-      ) : (
+      ) : (challenge.sponsors ?? []).length > 0 ? (
         <div className="container">
           <div>
             <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">
-              Sponsors
+              {t('cryptoArt.t1')}
             </h3>
             <div className="flex flex-col gap-12 items-center">
               {(challenge.sponsors ?? []).map((s, i) => {
@@ -524,55 +505,51 @@ export default async function ChallengeIntro({ params }: any) {
             </div>
           </div>
         </div>
-      )}
-      {false ? (
-        <></>
-      ) : (
-        <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
-          <p className="heading-6 md:heading-4 text-center">
-            <Balancer ratio={0.9}>
-              {challenge.type !== 'WORKSHOP'
-                ? isTeamingEnabled
-                  ? `${t('campaign.t12')}`
-                  : `${t('campaign.t13')}`
-                : `${t('campaign.t24')}${challenge.title}${t('campaign.t25')}`}
-            </Balancer>
-          </p>
-          <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
-            <Balancer>
-              {challenge.type !== 'WORKSHOP'
-                ? `${t('campaign.t15')}`
-                : `${t('campaign.t16')}`}
-            </Balancer>
-          </p>
-          {challenge.type !== 'WORKSHOP' ? (
-            isTeamingEnabled ? (
-              <div>
-                <Link
-                  prefetch={false}
-                  href={`/${lng}/campaigns/${challengeId}/teams`}
-                  className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
-                >
-                  {`${t('campaign.t17')}`}
-                </Link>
-              </div>
-            ) : (
-              <ConnectButton lng={lng} />
-            )
-          ) : challenge.joinLink ? (
+      ) : null}
+      <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
+        <p className="heading-6 md:heading-4 text-center">
+          <Balancer ratio={0.9}>
+            {challenge.type !== 'WORKSHOP'
+              ? isTeamingEnabled
+                ? `${t('campaign.t12')}`
+                : `${t('campaign.t13')}`
+              : `${t('campaign.t24')}${challenge.title}${t('campaign.t25')}`}
+          </Balancer>
+        </p>
+        <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
+          <Balancer>
+            {challenge.type !== 'WORKSHOP'
+              ? `${t('campaign.t15')}`
+              : `${t('campaign.t16')}`}
+          </Balancer>
+        </p>
+        {challenge.type !== 'WORKSHOP' ? (
+          isTeamingEnabled ? (
             <div>
               <Link
                 prefetch={false}
-                target="_blank"
-                href={`${challenge.joinLink}`}
+                href={`/${lng}/campaigns/${challengeId}/teams`}
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
-                {`${t('campaign.t4')}`}
+                {`${t('campaign.t17')}`}
               </Link>
             </div>
-          ) : null}
-        </div>
-      )}
+          ) : (
+            <ConnectButton lng={lng} />
+          )
+        ) : challenge.joinLink ? (
+          <div>
+            <Link
+              prefetch={false}
+              target="_blank"
+              href={`${challenge.joinLink}`}
+              className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
+            >
+              {`${t('campaign.t4')}`}
+            </Link>
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }
