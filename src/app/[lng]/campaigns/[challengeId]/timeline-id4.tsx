@@ -5,14 +5,21 @@ import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 function prepareData(milestones: Milestone[]) {
   let nodes = [];
   let today = new Date();
-  for (let i = 0; i < milestones.length; i++) {
-    let prevDate = parseISO(milestones[i].dueDate);
+  for (let i = 0; i < milestones.length; ++i) {
+    if (!milestones[i].showName) {
+      if (milestones[i].stageName === 'NOP') {
+        continue;
+      } else {
+        milestones[i].showName = milestones[i].stageName;
+      }
+    }
 
+    let prevDate = parseISO(milestones[i].dueDate);
     nodes.push({
       type: 'date',
       date: milestones[i].dueDate,
       dateFormatted: format(prevDate, 'MM.dd'),
-      stage: milestones[i].stageName,
+      stage: milestones[i].showName,
       passed: prevDate < today,
       isOn: isSameDay(today, prevDate),
     });
@@ -47,19 +54,19 @@ export function Timeline({
     milestones = [
       {
         dueDate: '2023-07-15',
-        stageName: 'Launch',
+        showName: 'Launch',
       },
       {
         dueDate: '2023-07-22',
-        stageName: 'ZK Curriculum',
+        showName: 'ZK Curriculum',
       },
       {
         dueDate: '2023-08-14',
-        stageName: 'ZK Hackathon',
+        showName: 'ZK Hackathon',
       },
       {
         dueDate: '2023-09-15',
-        stageName: 'DEMO Day',
+        showName: 'DEMO Day',
       },
     ];
   }
@@ -67,19 +74,19 @@ export function Timeline({
     milestones = [
       {
         dueDate: '2023-06-20',
-        stageName: 'Registration',
+        showName: 'Registration',
       },
       {
         dueDate: '2023-07-31',
-        stageName: 'First round screening',
+        showName: 'First round screening',
       },
       {
         dueDate: '2023-08-12',
-        stageName: 'Online Demo Day',
+        showName: 'Online Demo Day',
       },
       {
         dueDate: '2023-08-15',
-        stageName: 'Offline Demo Day',
+        showName: 'Offline Demo Day',
       },
     ];
   }
@@ -87,19 +94,19 @@ export function Timeline({
     milestones = [
       {
         dueDate: '2023-07-13',
-        stageName: '赛事信息发布',
+        showName: '赛事信息发布',
       },
       {
         dueDate: '2023-07-15',
-        stageName: '开放组队和作品提交',
+        showName: '开放组队和作品提交',
       },
       {
         dueDate: '2023-08-15',
-        stageName: 'Demo DAY & 项目评审',
+        showName: 'Demo DAY & 项目评审',
       },
       {
         dueDate: '2023-09-01',
-        stageName: '线上颁奖',
+        showName: '线上颁奖',
       },
     ];
   }

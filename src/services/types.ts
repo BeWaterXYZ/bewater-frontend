@@ -114,10 +114,12 @@ export interface Milestone {
   dueDate: string;
   stageName:
     | 'Preparation'
+    | 'NOP'
     | 'Teaming'
     | 'Project Submission'
     | 'Review'
     | 'Result';
+  showName?: string;
 }
 
 export interface Sponsorship {
