@@ -8,6 +8,7 @@ const labelMapsZh: Record<Milestone['stageName'], string> = {
   'Project Submission': '项目初筛',
   Review: '线上评审',
   Result: '公布结果',
+  NOP: '',
 };
 
 const labelMapsEn: Record<Milestone['stageName'], string> = {
@@ -16,6 +17,7 @@ const labelMapsEn: Record<Milestone['stageName'], string> = {
   'Project Submission': 'Initial screening',
   Review: 'Online judging',
   Result: 'Announcement',
+  NOP: '',
 };
 
 function prepareData(milestones: Milestone[]) {
