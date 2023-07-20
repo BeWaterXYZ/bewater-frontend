@@ -16,6 +16,7 @@ const wordingMap: Record<Milestone['stageName'], string> = {
   Preparation: '',
   Result: '',
   Review: '',
+  NOP: '',
 };
 
 interface ChallengeTeamsInfoProps {
