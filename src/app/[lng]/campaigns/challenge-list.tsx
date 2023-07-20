@@ -44,8 +44,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
             <div className="relative p-4 flex flex-row justify-between">
               {challenge.totalAward > 0 ? (
                 <div className="absolute bottom-full  text-day text-[24px] font-secondary p-2">
-                  {formatMoney(challenge.totalAward)}
-                  {challenge.awardCurrency}
+                  {formatMoney(challenge.totalAward)} {challenge.awardCurrency}
                 </div>
               ) : null}
               <div className="flex-1 overflow-hidden">
