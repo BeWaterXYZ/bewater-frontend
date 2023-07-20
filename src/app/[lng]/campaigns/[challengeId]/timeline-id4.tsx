@@ -5,6 +5,7 @@ import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 function prepareData(milestones: Milestone[]) {
   let nodes = [];
   let today = new Date();
+  let index = 0;
   for (let i = 0; i < milestones.length; ++i) {
     if (!milestones[i].showName) {
       if (milestones[i].stageName === 'NOP') {
@@ -22,6 +23,7 @@ function prepareData(milestones: Milestone[]) {
       stage: milestones[i].showName,
       passed: prevDate < today,
       isOn: isSameDay(today, prevDate),
+      index: index++,
     });
     if (i !== milestones.length - 1) {
       let nextDate = parseISO(milestones[i + 1].dueDate);

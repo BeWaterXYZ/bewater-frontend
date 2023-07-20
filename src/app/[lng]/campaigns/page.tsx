@@ -5,6 +5,7 @@ import { useTranslation } from '@/app/i18n';
 
 async function getChallengesByStatus() {
   let challenges = await getChallenges();
+  challenges = challenges.sort((a, b) => Number(b.id) - Number(a.id));
   return {
     active: challenges.filter((c) => c.status === 'ACTIVE'),
     upcoming: challenges.filter((c) => c.status === 'DRAFT'),
@@ -22,33 +23,10 @@ export default async function ChallengePage({
   return (
     <div className="container my-4 pt-20">
       {active.length > 0 && (
-        <div className=" py-4">
-          <div className="flex gap-2 items-center">
-            <h2 className="body-1 text-[24px] uppercase">Happening</h2>
-            <div className="w-5 h-4 body-5 bg-day text-night rounded-full text-center leading-4">
-              {active.length}
-            </div>
-          </div>
-          <ChallengeList challenges={active} lng={lng} />
-        </div>
-      )}
-      {upcoming.length > 0 && (
-        <div className=" py-4">
-          <div className="flex gap-2 items-center">
-            <h2 className="body-1 text-[24px] uppercase">Up Next</h2>
-            <div className="w-5 h-4 body-5 bg-day text-night rounded-full text-center leading-4">
-              {active.length}
-            </div>
-          </div>
-          <ChallengeList challenges={upcoming} lng={lng} />
-        </div>
-      )}
-      {/* todo , fixme  */}
-      {completed.length > 0 && (
-        <div className="pt-4 pb-8">
-          <h2 className="body-1 text-[24px] uppercase">Completed</h2>
-          <ChallengeList challenges={completed} lng={lng} />
-        </div>
+        <ChallengeList
+          challenges={[...active, ...upcoming, ...completed]}
+          lng={lng}
+        />
       )}
     </div>
   );

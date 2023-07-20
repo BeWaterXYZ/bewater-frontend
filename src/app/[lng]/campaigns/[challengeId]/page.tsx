@@ -107,7 +107,9 @@ export default async function ChallengeIntro({ params }: any) {
       {challenge.id === '1' || challenge.id === '2' ? (
         <Timeline milestones={challenge.milestones} lng={lng} />
       ) : null}
-      {parseInt(challenge.id) > 3 && challenge.id !== '7' ? (
+      {challenge.milestones?.length > 0 &&
+      parseInt(challenge.id) > 2 &&
+      challenge.id !== '7' ? (
         <Timeline4
           milestones={challenge.milestones}
           lng={lng}
