@@ -12,6 +12,10 @@ export type Dialogs = {
   email_change?: boolean;
   project_filter?: Project[];
   project_edit?: Project;
+  project_rating?: {
+    project: Project;
+    rating: { label: string; rate: number }[];
+  };
 };
 
 type State = {

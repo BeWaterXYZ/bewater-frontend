@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { segmentSchema } from '../../param-schema';
 import { ProjectAssets } from './project-assets';
 import { GithubStats } from './project-github';
+import { Rate } from './rate';
 
 const ProjectMenu = dynamicLoad(() => import('./project-menu'), {
   ssr: false,
@@ -109,6 +110,7 @@ export default function Page({ params }: any) {
               <TagProjectTag label={tag} key={tag} />
             ))}
           </div>
+          <Rate project={project} challenge={challenge} />
         </div>
       </div>
       <div className="mt-10">
