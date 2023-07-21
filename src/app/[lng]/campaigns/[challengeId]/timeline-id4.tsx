@@ -7,6 +7,9 @@ function prepareData(milestones: Milestone[]) {
   let today = new Date();
   let index = 0;
   for (let i = 0; i < milestones.length; ++i) {
+    if (milestones[i].showName === 'NOP') {
+      continue;
+    }
     if (!milestones[i].showName) {
       if (milestones[i].stageName === 'NOP') {
         continue;
@@ -112,6 +115,7 @@ export function Timeline({
       },
     ];
   }
+
   let data = prepareData(milestones);
   return (
     <>
