@@ -10,3 +10,6 @@ export enum CAMPAIGN_TYPE {
   WORKSHOP = "WORKSHOP",
   OTHERS = "OTHERS",
 }
+
+
+export const isBrowser = typeof window !== 'undefined';
