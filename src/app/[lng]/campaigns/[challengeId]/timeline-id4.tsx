@@ -2,22 +2,24 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 
-function prepareData(milestones: Milestone[]) {
+function prepareData(rawMilestones: Milestone[]) {
+  const milestones = [];
+  for (const it of rawMilestones) {
+    if (it.showName === 'NOP') {
+      continue;
+    }
+    if (!it.showName && it.stageName === 'NOP') {
+      continue;
+    }
+    milestones.push(it);
+  }
   let nodes = [];
   let today = new Date();
   let index = 0;
   for (let i = 0; i < milestones.length; ++i) {
-    if (milestones[i].showName === 'NOP') {
-      continue;
-    }
     if (!milestones[i].showName) {
-      if (milestones[i].stageName === 'NOP') {
-        continue;
-      } else {
-        milestones[i].showName = milestones[i].stageName;
-      }
+      milestones[i].showName = milestones[i].stageName;
     }
-
     let prevDate = parseISO(milestones[i].dueDate);
     nodes.push({
       type: 'date',
@@ -55,67 +57,6 @@ export function Timeline({
   lng: string;
   id: string;
 }) {
-  if (id === '4') {
-    milestones = [
-      {
-        dueDate: '2023-07-15',
-        showName: 'Launch',
-      },
-      {
-        dueDate: '2023-07-22',
-        showName: 'ZK Curriculum',
-      },
-      {
-        dueDate: '2023-08-14',
-        showName: 'ZK Hackathon',
-      },
-      {
-        dueDate: '2023-09-15',
-        showName: 'DEMO Day',
-      },
-    ];
-  }
-  if (id === '5') {
-    milestones = [
-      {
-        dueDate: '2023-06-20',
-        showName: 'Registration',
-      },
-      {
-        dueDate: '2023-07-31',
-        showName: 'First round screening',
-      },
-      {
-        dueDate: '2023-08-12',
-        showName: 'Online Demo Day',
-      },
-      {
-        dueDate: '2023-08-15',
-        showName: 'Offline Demo Day',
-      },
-    ];
-  }
-  if (id === '6') {
-    milestones = [
-      {
-        dueDate: '2023-07-13',
-        showName: '赛事信息发布',
-      },
-      {
-        dueDate: '2023-07-15',
-        showName: '开放组队和作品提交',
-      },
-      {
-        dueDate: '2023-08-15',
-        showName: 'Demo DAY & 项目评审',
-      },
-      {
-        dueDate: '2023-09-01',
-        showName: '线上颁奖',
-      },
-    ];
-  }
-
   let data = prepareData(milestones);
   return (
     <>
