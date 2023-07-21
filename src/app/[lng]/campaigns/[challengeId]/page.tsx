@@ -286,11 +286,9 @@ export default async function ChallengeIntro({ params }: any) {
                     >
                       <div className="flex flex-row gap-[min(32px,2vw)] ">
                         <div className="flex flex-col gap-4 md:gap-7 items-center">
-                          <div style={{ minHeight: '70px' }}>
-                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
-                              {awardAssort.name}
-                            </p>
-                          </div>
+                          <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
+                            {awardAssort.name}
+                          </p>
                           <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
                             {awardAssort.awards.map((award, i) => {
                               return (
