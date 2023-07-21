@@ -297,14 +297,28 @@ export default async function ChallengeIntro({ params }: any) {
                                     <p className="body-3 text-white whitespace-nowrap">
                                       {award.awardName}
                                     </p>
-                                    <div className="flex flex-row justify-between">
-                                      <p className="body-3 text-white/60">
-                                        ${award.amount}
-                                      </p>
-                                      <p className="body-3 text-white/60">
-                                        x{award.count}
-                                      </p>
-                                    </div>
+                                    {award.goodsName ? (
+                                      <>
+                                        <div className="flex flex-row justify-between">
+                                          <p className="body-3 text-white/60">
+                                            ${award.goodsName}
+                                          </p>
+                                          <p className="body-3 text-white/60">
+                                            x{award.goodsCount}
+                                          </p>
+                                        </div>
+                                      </>
+                                    ) : null}
+                                    {award.amount > 0 ? (
+                                      <div className="flex flex-row justify-between">
+                                        <p className="body-3 text-white/60">
+                                          ${award.amount}
+                                        </p>
+                                        <p className="body-3 text-white/60">
+                                          x{award.count}
+                                        </p>
+                                      </div>
+                                    ) : null}
                                   </div>
                                   <hr className="border-none bg-white/20 h-[0.5px] w-full" />
                                 </Fragment>
