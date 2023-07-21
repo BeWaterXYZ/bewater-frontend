@@ -13,8 +13,7 @@ import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection7 } from './prize-section/63c82bd12ddc570f32ada86d';
 import { PrizeSection as PrizeSection11 } from './prize-section/63c82bd12ddc570f32ada86e';
 import { Timeline } from './timeline';
-import { Timeline as Timeline4 } from './timeline-id4';
-import { Timeline as Timeline7 } from './timeline-id7';
+import { Timeline7 } from './timeline-id7';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
@@ -104,13 +103,8 @@ export default async function ChallengeIntro({ params }: any) {
 
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
-      {challenge.id === '1' || challenge.id === '2' ? (
-        <Timeline milestones={challenge.milestones} lng={lng} />
-      ) : null}
-      {challenge.milestones?.length > 0 &&
-      parseInt(challenge.id) > 2 &&
-      challenge.id !== '7' ? (
-        <Timeline4
+      {challenge.milestones?.length > 0 && challenge.id !== '7' ? (
+        <Timeline
           milestones={challenge.milestones}
           lng={lng}
           id={challenge.id}

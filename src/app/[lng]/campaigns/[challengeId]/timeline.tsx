@@ -2,37 +2,33 @@ import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 
-const labelMapsZh: Record<Milestone['stageName'], string> = {
-  Preparation: '赛事信息公布',
-  Teaming: '创建团队信息及提交项目',
-  'Project Submission': '项目初筛',
-  Review: '线上评审',
-  Result: '公布结果',
-  NOP: '',
-};
-
-const labelMapsEn: Record<Milestone['stageName'], string> = {
-  Preparation: 'Event revealed',
-  Teaming: 'Submission',
-  'Project Submission': 'Initial screening',
-  Review: 'Online judging',
-  Result: 'Announcement',
-  NOP: '',
-};
-
-function prepareData(milestones: Milestone[]) {
+function prepareData(rawMilestones: Milestone[]) {
+  const milestones = [];
+  for (const it of rawMilestones) {
+    if (it.showName === 'NOP') {
+      continue;
+    }
+    if (!it.showName && it.stageName === 'NOP') {
+      continue;
+    }
+    milestones.push(it);
+  }
   let nodes = [];
   let today = new Date();
-  for (let i = 0; i < milestones.length; i++) {
+  let index = 0;
+  for (let i = 0; i < milestones.length; ++i) {
+    if (!milestones[i].showName) {
+      milestones[i].showName = milestones[i].stageName;
+    }
     let prevDate = parseISO(milestones[i].dueDate);
-
     nodes.push({
       type: 'date',
       date: milestones[i].dueDate,
       dateFormatted: format(prevDate, 'MM.dd'),
-      stage: milestones[i].stageName,
+      stage: milestones[i].showName,
       passed: prevDate < today,
       isOn: isSameDay(today, prevDate),
+      index: index++,
     });
     if (i !== milestones.length - 1) {
       let nextDate = parseISO(milestones[i + 1].dueDate);
@@ -55,24 +51,20 @@ const glowing =
 export function Timeline({
   milestones,
   lng,
+  id,
 }: {
-  milestones: Milestone[];
+  milestones: any;
   lng: string;
+  id: string;
 }) {
   let data = prepareData(milestones);
-  let labelMaps = labelMapsZh;
-  if (lng === 'en') {
-    labelMaps = labelMapsEn;
-  }
   return (
     <>
       <div className="hidden md:flex body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 mt-[100px] ">
         {data.map((node, index) =>
           node.type === 'date' ? (
             <div className="w-4 flex flex-col items-center" key={index}>
-              <p className="whitespace-nowrap body-3 font-bold">
-                {labelMaps[node.stage!]}
-              </p>
+              <p className="whitespace-nowrap body-3 font-bold">{node.stage}</p>
               {index === data.length - 1 ? (
                 <div className="my-4 relative -top-[2px] w-4 h-0  px-1  border-t-[6px] border-b-[6px] rounded-sm border-white border-l-4 border-r-4   border-r-transparent">
                   <div className="w-[1px] h-3 bg-white absolute top-1 -left-1"></div>
@@ -130,8 +122,17 @@ export function Timeline({
               <p className="body-3 whitespace-nowrap absolute left-[30px]">
                 {node.dateFormatted}
               </p>
-              <p className="whitespace-nowrap body-3 font-bold absolute left-[90px]">
-                {labelMaps[node.stage!]}
+              <p
+                className="whitespace-nowrap body-3 font-bold absolute left-[90px]"
+                style={{
+                  wordBreak: 'normal',
+                  wordWrap: 'break-word',
+                  width: '214px',
+                  whiteSpace: 'normal',
+                  textAlign: 'left',
+                }}
+              >
+                {node.stage}
               </p>
             </div>
           ) : (
