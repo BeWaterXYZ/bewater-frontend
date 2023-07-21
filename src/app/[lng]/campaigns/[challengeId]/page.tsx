@@ -275,15 +275,9 @@ export default async function ChallengeIntro({ params }: any) {
           <div className="container">
             <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
               {challenge.yotadata?.award?.entitle ? (
-                <>
-                  <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                    {challenge.yotadata.award.entitle}
-                  </h3>
-                  <p className="body-3 md:body-1 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                    Total Awards: ${challenge.totalAward}{' '}
-                    {challenge.awardCurrency}
-                  </p>
-                </>
+                <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+                  {challenge.yotadata.award.entitle}
+                </h3>
               ) : (
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
                   Total Awards: ${challenge.totalAward}{' '}
