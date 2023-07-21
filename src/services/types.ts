@@ -80,6 +80,8 @@ export interface Challenge {
       awardName: string;
       amount: number;
       count: number;
+      goodsName?: string;
+      goodsCount?: number;
     }[];
   }[];
   keySponsors?: string[];
