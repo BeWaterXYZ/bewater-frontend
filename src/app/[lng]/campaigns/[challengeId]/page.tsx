@@ -305,14 +305,6 @@ export default async function ChallengeIntro({ params }: any) {
                                         x{award.count}
                                       </p>
                                     </div>
-                                    <div className="flex flex-row justify-between">
-                                      <p className="body-3 text-white/60">
-                                        ${award.amount}
-                                      </p>
-                                      <p className="body-3 text-white/60">
-                                        x{award.count}
-                                      </p>
-                                    </div>
                                   </div>
                                   <hr className="border-none bg-white/20 h-[0.5px] w-full" />
                                 </Fragment>
