@@ -3,8 +3,10 @@ import {
   getChallengeTProjects,
   getGitHubRepos,
   getProject,
+  getProjectRating,
   getProjectRepoStats,
   updateProject,
+  updateProjectRating,
 } from './project';
 import { ChallengeID, ProjectId, TeamID } from './types';
 
@@ -22,6 +24,14 @@ export function useFetchProject(projectId: ProjectId) {
     queryKey: ['project', projectId],
     queryFn: async () => {
       return getProject(projectId);
+    },
+  });
+}
+export function useFetchProjectRating(projectId: ProjectId) {
+  return useQuery({
+    queryKey: ['project', projectId, 'rating'],
+    queryFn: async () => {
+      return getProjectRating(projectId);
     },
   });
 }
@@ -49,6 +59,15 @@ export function useMutationUpdateProject() {
   return useMutation(updateProject, {
     onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries(['project', data.id]);
+    },
+  });
+}
+
+export function useMutationUpdateProjectRating(projectId: ProjectId) {
+  const queryClient = useQueryClient();
+  return useMutation(updateProjectRating, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(['project', projectId, 'rating']);
     },
   });
 }

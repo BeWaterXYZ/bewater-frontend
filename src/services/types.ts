@@ -110,6 +110,7 @@ export interface Judge {
   order: number;
   description?: string;
   twitterLink?: string;
+  email?: string;
 }
 
 export interface Milestone {

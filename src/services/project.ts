@@ -25,6 +25,26 @@ export async function updateProject(project: OptionalExceptFor<Project, 'id'>) {
   return data.project;
 }
 
+export async function getProjectRating(projectId: ProjectId) {
+  const { data } = await agentAuthed.get<{ mark: number[] }>(
+    `/project/${projectId}/rank`,
+    {},
+  );
+  return data.mark;
+}
+export async function updateProjectRating({
+  projectId,
+  mark,
+}: {
+  projectId: ProjectId;
+  mark: number[];
+}) {
+  const { data } = await agentAuthed.post(`/project/${projectId}/rank`, {
+    mark,
+  });
+  return data;
+}
+
 export async function getGitHubRepos(teamId: TeamID) {
   const { data } = await agentAuthed.post<{
     repos: {
