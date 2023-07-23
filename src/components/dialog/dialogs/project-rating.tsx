@@ -11,6 +11,11 @@ import { z } from 'zod';
 
 import { Dialogs } from '../store';
 import { Rate } from '@/components/form/control/rating';
+import {
+  useFetchProjectRating,
+  useMutationUpdateProjectRating,
+} from '@/services/project.query';
+import { add } from 'date-fns';
 
 const schema = z
   .object({
@@ -36,31 +41,23 @@ export default function ProjectRatingDialog({
   close,
 }: ProjectRatingDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
+  const mutation = useMutationUpdateProjectRating(data.project.id);
+  // const {data:rating} = useFetchProjectRating(data.project.id);
+  // console.log({rating})
   const addToast = useToastStore((s) => s.add);
 
   const onSubmit = async (formData: Inputs) => {
     console.log({ formData });
     showLoading();
     try {
-      // const data = await sendGroupingRequest(team.id, {
-      //   type: 'APPLICATION',
-      //   recipientId: leaders[0].userProfile.id,
-      //   teamRole: formData.roles[0],
-      //   message: formData.message,
-      // });
-      // if (data.newRequest) {
-      //   addToast({
-      //     type: 'success',
-      //     title: 'Request sent!',
-      //     description: 'please wait for team leader to approve',
-      //   });
-      // } else {
-      //   addToast({
-      //     type: 'warning',
-      //     title: 'Request not sent!',
-      //     description: 'You are already in a team or you have pending request',
-      //   });
-      // }
+      await mutation.mutateAsync({
+        projectId: data.project.id,
+        mark: formData.rating.map((r) => r.rate),
+      });
+      addToast({
+        type: 'success',
+        title: 'Submitted',
+      });
     } catch (err) {
       let resp = getErrorResp(err);
 
