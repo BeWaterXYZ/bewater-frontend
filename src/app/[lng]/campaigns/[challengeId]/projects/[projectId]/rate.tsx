@@ -51,9 +51,14 @@ export function Rate(props: Props) {
           Score
         </p>
         {totalRating > 0 ? (
-          <div className="text-day text-[24px] font-secondary">
-            {totalRating}
-          </div>
+          <>
+            <div className="text-day text-[24px] font-secondary">
+              {totalRating}/{(rating?.length ?? 0) * 10}
+            </div>
+            <p className="font-secondary text-[12px] text-grey-500">
+              You can change the score before the event ends.
+            </p>
+          </>
         ) : (
           <>
             <p className="font-secondary text-[18px]  text-grey-300">NA</p>
