@@ -39,7 +39,7 @@ export function Rate({
                 return (
                   <button
                     className={clsx(
-                      'w-8 h-8  rounded-sm ',
+                      'w-8 h-8  rounded-sm hover:border hover:border-day',
                       rate === field.value
                         ? 'bg-day text-grey-800'
                         : 'bg-grey-800 text-white',
