@@ -84,7 +84,7 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                     name={`sponsors.${index}.members`}
                     title="Upload Avatar"
                     subTitlte="JPG/PNG, 180x180px"
-                    max={10}
+                    max={100}
                     height={140}
                     width={200}
                     onValueChange={(v) => {
