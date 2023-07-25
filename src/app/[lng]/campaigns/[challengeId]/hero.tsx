@@ -15,9 +15,14 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
   if (challenge.milestones?.length > 0) {
     isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
   }
-  const topRegisterBtnText = challenge.yotadata?.topRegisterBtnText
+  let topRegisterBtnText: any = challenge.yotadata?.topRegisterBtnText
     ? challenge.yotadata.topRegisterBtnText
     : t('campaign.t4');
+  if (challenge.type === 'HACKATHON') {
+    topRegisterBtnText = challenge.yotadata?.topRegisterBtnText
+      ? challenge.yotadata.topRegisterBtnText
+      : null;
+  }
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
@@ -56,7 +61,6 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             : formatMMMDDYYYY(challenge.endTime)
         }`}
       </h1>
-
       {challenge.type === 'HACKATHON' ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
@@ -78,6 +82,28 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             </div>
           </div>
         )
+      ) : null}
+      {challenge.type === 'HACKATHON' && topRegisterBtnText ? (
+        challenge.joinLink ? (
+          <div className="mt-6 md:mt-12">
+            <Link
+              target="_blank"
+              href={challenge.joinLink}
+              className={`btn btn-primary rounded-none body-4 text-night uppercase ${
+                topRegisterBtnText.length > 26
+                  ? 'px-4 py-8 md:px-8 md:py-10'
+                  : 'px-4 py-3 md:px-8 md:py-6'
+              }`}
+            >
+              <p
+                className="text-center max-w-[250px]"
+                style={{ whiteSpace: 'pre-wrap' }}
+              >
+                {topRegisterBtnText}
+              </p>
+            </Link>
+          </div>
+        ) : null
       ) : null}
       {challenge.type === 'WORKSHOP' ? (
         challenge.joinLink ? (
