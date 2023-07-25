@@ -40,7 +40,7 @@ export function PrizeSection({
                     Plugin，具体能够解决一个实际问题或满足一个需求。文档：https://docs.knn3.xyz/welcome/k.transformer
                   </li>
                   <br />
-                  <li>评判标准：确保创建的ChatGPT插件正常使用</li>
+                  <li>评判标准：确保创建的 ChatGPT 插件正常使用</li>
                 </ul>
               </div>
             </div>
@@ -132,7 +132,7 @@ export function PrizeSection({
               <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full">
                 <ul className="body-3 text-white/60 list-disc list-inside">
                   <li>
-                    接入Relation Profile
+                    接入 Relation Profile
                     NFT的（.soul解析）。链接：docs.relationlabs.ai
                   </li>
                   <br />
