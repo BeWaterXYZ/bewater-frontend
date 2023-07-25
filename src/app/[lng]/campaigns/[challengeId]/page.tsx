@@ -12,6 +12,7 @@ import { PrizeSection as PrizeSection5 } from './prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection6 } from './prize-section/63c82bd12ddc570f32ada86c';
 import { PrizeSection as PrizeSection7 } from './prize-section/63c82bd12ddc570f32ada86d';
 import { PrizeSection as PrizeSection11 } from './prize-section/63c82bd12ddc570f32ada86e';
+import { PrizeSection as PrizeSection19 } from './prize-section/63c82bd12ddc570f32ada86f';
 import { Timeline } from './timeline';
 import { Timeline7 } from './timeline-id7';
 import { isMileStoneEnabled } from './utils';
@@ -265,6 +266,8 @@ export default async function ChallengeIntro({ params }: any) {
           <PrizeSection7 t={t} lng={lng} />
         ) : challenge.id === '11' ? (
           <PrizeSection11 t={t} lng={lng} />
+        ) : challenge.id === '19' ? (
+          <PrizeSection19 t={t} lng={lng} challenge={challenge} />
         ) : (
           <div className="container">
             <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
