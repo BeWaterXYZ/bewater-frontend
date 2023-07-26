@@ -200,8 +200,7 @@ export default async function ChallengeIntro({ params }: any) {
                     </div>
                   </Link>
                 </>
-              ) : null}
-              {challenge?.telegramLink ? (
+              ) : challenge?.telegramLink ? (
                 <Link
                   prefetch={false}
                   href={challenge.telegramLink}
