@@ -51,19 +51,8 @@ export interface Challenge {
   awardCurrency: string;
   status: 'DRAFT' | 'INREVIEW' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED';
   location: string;
-  judgeIDs: string[];
-  userIDs: string[];
-  awards: Award[];
   milestones: Milestone[];
   judges: Judge[];
-  sponsorships: Sponsorship[];
-  socialLinks: {
-    twitterURI?: string;
-    discordURI?: string;
-    officialWebsiteURI?: string;
-    email?: string;
-  };
-
   wechatURL: string;
   telegramLink: string;
   discordLink: string;
