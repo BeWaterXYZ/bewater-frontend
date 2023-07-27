@@ -105,8 +105,8 @@ importers:
         specifier: 13.0.1
         version: 13.0.1(i18next@23.2.6)(react-dom@18.2.0)(react@18.2.0)
       react-select:
-        specifier: ^5.7.0
-        version: 5.7.0(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^5.7.4
+        version: 5.7.4(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
       react-wrap-balancer:
         specifier: ^1.0.0
         version: 1.0.0(react@18.2.0)
@@ -4059,8 +4059,8 @@ packages:
       use-sidecar: 1.1.2(@types/react@18.2.14)(react@18.2.0)
     dev: false
 
-  /react-select@5.7.0(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-lJGiMxCa3cqnUr2Jjtg9YHsaytiZqeNOKeibv6WF5zbK/fPegZ1hg3y/9P1RZVLhqBTs0PfqQLKuAACednYGhQ==}
+  /react-select@5.7.4(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NhuE56X+p9QDFh4BgeygHFIvJJszO1i1KSkg/JPcIJrbovyRtI+GuOEa4XzFCEpZRAEoEI8u/cAHK+jG/PgUzQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0

@@ -38,7 +38,7 @@
     "react-fast-marquee": "^1.6.0",
     "react-hook-form": "^7.45.1",
     "react-i18next": "13.0.1",
-    "react-select": "^5.7.0",
+    "react-select": "^5.7.4",
     "react-wrap-balancer": "^1.0.0",
     "remeda": "^1.9.0",
     "zod": "^3.21.4",
