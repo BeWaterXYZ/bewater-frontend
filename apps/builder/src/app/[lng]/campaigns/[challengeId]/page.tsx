@@ -35,6 +35,7 @@ export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { lng } = segmentSchema.lng.parse(params);
+  // eslint-disable-next-line
   const { t } = await useTranslation(lng, 'translation');
   let isTeamingEnabled = false;
   if (challenge.milestones?.length > 0) {

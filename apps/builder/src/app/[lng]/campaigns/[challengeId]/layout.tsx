@@ -16,6 +16,7 @@ export default async function Layout({
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { lng } = segmentSchema.lng.parse(params);
+  // eslint-disable-next-line
   const { t } = await useTranslation(lng, 'translation');
 
   if (lng === 'en' && challenge.yotadata) {
