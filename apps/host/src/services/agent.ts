@@ -10,7 +10,7 @@ import { env } from "../env.mjs";
 
 const requestInterceptor = async (config: InternalAxiosRequestConfig) => {
   // todo. fix Clerk
-  const accessToken = await (<any>window).Clerk.session.getToken();
+  const accessToken = await (<any>window).Clerk?.session?.getToken?.();
   if (!!accessToken && !!config.headers) {
     config.headers["authorization"] = `Bearer ${accessToken}`;
   }
