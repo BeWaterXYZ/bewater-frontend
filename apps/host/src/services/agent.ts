@@ -19,7 +19,7 @@ const requestInterceptor = async (config: InternalAxiosRequestConfig) => {
 
 const responseInterceptor = (error: AxiosError) => {
   if (error.response?.status === 401) {
-    window.location.href = window.location.origin + "/sign-in";
+    // window.location.href = window.location.origin + "/sign-in";
   }
   return Promise.reject(error);
 };
