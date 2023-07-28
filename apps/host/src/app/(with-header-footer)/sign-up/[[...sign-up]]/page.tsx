@@ -6,6 +6,8 @@ export default function Page() {
     <div className="flex justify-center items-center min-h-[100vh]">
       <SignUp
         redirectUrl={"/"}
+        afterSignUpUrl={"/"}
+        afterSignInUrl={"/"}
         appearance={{
           baseTheme: dark,
           variables: { colorPrimary: "#00ffff" },

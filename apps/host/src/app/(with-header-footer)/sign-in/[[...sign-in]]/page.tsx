@@ -61,7 +61,7 @@ export default function Page() {
       <div className="w-full h-px lg:w-px lg:h-[276px] bg-gray-800"></div>
 
       <SignIn
-        redirectUrl={"/"}
+        afterSignInUrl={"/"}
         appearance={{
           baseTheme: dark,
           variables: { colorPrimary: "#00ffff" },
