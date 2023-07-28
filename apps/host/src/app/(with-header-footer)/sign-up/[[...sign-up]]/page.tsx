@@ -17,7 +17,7 @@ export default function Page() {
         dividerRow: 'hidden',
         formFieldInput:
           'bg-night text-white border-gray-800 rounded-sm placeholder-gray-600',
-        formFieldLabel: 'text-gray-500 hidden',
+        formFieldLabel: 'text-gray-500 ',
         formFieldLabelRow: 'mb-2',
         // footer: 'hidden',
         header: 'text-xl gap-2',
