@@ -60,7 +60,10 @@ function i18n(req: any) {
 
 export default authMiddleware({
   isSatellite: true,
-  domain: "build.bewater.xyz",
+  domain: (url)=>{
+    console.log({url})
+    return 'build.bewater.xyz'
+  },
   beforeAuth: (req) => {
     return i18n(req);
   },
