@@ -19,6 +19,7 @@ function i18n(req: any) {
 }
 
 export default authMiddleware({
+  publicRoutes: ["/"],
   beforeAuth: (req) => {
     return i18n(req);
   },
