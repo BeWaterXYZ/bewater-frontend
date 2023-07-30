@@ -90,17 +90,26 @@ export interface Award {
 }
 
 export interface Judge {
-  id: string;
+  id?: string;
   name: string;
   title: string;
-  organization: string;
   avatarURI: string;
-  challengeIDs: number[];
-  order: number;
+
+  organization?: string;
   description?: string;
   twitterLink?: string;
   email?: string;
 }
+
+export const defaultMileStones = [
+  'Preparation',
+  'Teaming',
+  'Project Submission',
+  'Review',
+  'Result',
+] as const;
+
+export type DefaultMileStones = (typeof defaultMileStones)[number];
 
 export interface Milestone {
   dueDate: string;
@@ -110,7 +119,9 @@ export interface Milestone {
     | 'Teaming'
     | 'Project Submission'
     | 'Review'
-    | 'Result';
+    | 'Result'
+    // todo
+    | string;
   showName?: string;
 }
 

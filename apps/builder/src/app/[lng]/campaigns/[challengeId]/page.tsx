@@ -401,7 +401,6 @@ export default async function ChallengeIntro({ params }: any) {
           <div className="flex flex-row flex-wrap gap-6 justify-center">
             {judges.length > 0
               ? judges
-                  .sort((a, b) => a.order - b.order)
                   .map((judge) => {
                     return (
                       <div key={judge.id!} className="w-[180px] mb-2 ">
