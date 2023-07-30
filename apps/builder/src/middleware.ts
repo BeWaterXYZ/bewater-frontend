@@ -60,6 +60,7 @@ function i18n(req: any) {
 }
 
 export default authMiddleware({
+
   beforeAuth: (req) => {
     return i18n(req);
   },
