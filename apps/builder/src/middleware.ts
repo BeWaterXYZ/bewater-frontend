@@ -24,7 +24,8 @@ function i18n(req: any) {
   if (
     !req.nextUrl.pathname.startsWith('/sign-in') &&
     !req.nextUrl.pathname.startsWith('/sign-up') &&
-    !req.nextUrl.pathname.startsWith('/onboarding')
+    !req.nextUrl.pathname.startsWith('/onboarding') &&
+    !req.nextUrl.pathname.startsWith('/host') 
   ) {
     if (!languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`))) {
       return NextResponse.redirect(

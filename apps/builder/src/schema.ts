@@ -36,4 +36,10 @@ export const validationSchema = {
     .array(ProjectTagSetScheme)
     .min(1, { message: 'You need to choose one tag' })
     .max(1, { message: 'You can only choose one tag' }),
+
+    date: z
+      .string()
+      .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),
+    image: z.string().url("please upload image"),
+    positive: z.string().regex(/^[1-9][0-9]*$/, "wrong number"),
 };

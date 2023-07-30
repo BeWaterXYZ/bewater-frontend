@@ -16,6 +16,9 @@ const nextConfig = {
         protocol: 'https',
         hostname: '**.bewater.xyz',
       },
+      {
+        hostname: "*.clerk.com",
+      },
     ],
   },
 
