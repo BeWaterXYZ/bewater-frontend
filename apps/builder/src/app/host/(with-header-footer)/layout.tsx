@@ -8,7 +8,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="min-h-[100vh] flex flex-col bg-night">
-      <Header />
+      <Header lng="en" />
       <div className="flex-1 flex flex-col"> {children}</div>
       <Footer />
     </div>

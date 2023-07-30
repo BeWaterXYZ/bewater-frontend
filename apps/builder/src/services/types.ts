@@ -119,7 +119,9 @@ export interface Milestone {
     | 'Teaming'
     | 'Project Submission'
     | 'Review'
-    | 'Result';
+    | 'Result'
+    // todo
+    | string;
   showName?: string;
 }
 
