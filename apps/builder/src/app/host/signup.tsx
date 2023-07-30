@@ -1,7 +1,7 @@
-import { SignIn } from "@clerk/nextjs";
-import Image from "next/image";
-import { dark } from "@clerk/themes";
-import Link from "next/link";
+import { SignIn } from '@clerk/nextjs';
+import Image from 'next/image';
+import { dark } from '@clerk/themes';
+import Link from 'next/link';
 
 export default function Page() {
   return (
@@ -59,30 +59,9 @@ export default function Page() {
       </div>
       {/* responsive divider, vertical when wide screenm horizontal when small screen */}
       <div className="w-full h-px lg:w-px lg:h-[276px] bg-gray-800"></div>
-
-      <SignIn
-        afterSignInUrl={"/"}
-        appearance={{
-          baseTheme: dark,
-          variables: { colorPrimary: "#00ffff" },
-          elements: {
-            formButtonPrimary:
-              "bg-day text-night hover:bg-[#00cccc] active:bg-[#009999] rounded-sm focus:shadow-none",
-            card: "bg-night text-white p-0 gap-10",
-            headerSubtitle: "text-gray-500",
-            socialButtons: "hidden",
-            dividerRow: "hidden",
-            formFieldInput:
-              "bg-night text-white border-gray-800 rounded-sm placeholder-gray-600",
-            formFieldLabel: "text-gray-500 ",
-            formFieldLabelRow: "mb-2",
-            header: "text-xl gap-2",
-            identityPreviewEditButton: "text-gray-500",
-            formResendCodeLink:
-              "text-day hover:text-[#00cccc] active:text-[#009999] rounded-none focus:shadow-none",
-          },
-        }}
-      />
+      <Link href="/sign-up" className=" btn btn-primary ">
+        Sign Up Now
+      </Link>
     </div>
   );
 }

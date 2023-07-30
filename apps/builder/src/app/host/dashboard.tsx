@@ -1,12 +1,12 @@
-"use client";
-import { useLoadingWhen } from "@/components/loading/store";
-import { useFetchChallenges } from "@/services/challenge.query";
-import { Challenge } from "@/services/types";
-import { unsplash } from "@/utils/unsplash";
-import { CaretRightIcon } from "@radix-ui/react-icons";
-import clsx from "clsx";
-import Image from "next/image";
-import Link from "next/link";
+'use client';
+import { useLoadingWhen } from '@/components/loading/store';
+import { useFetchChallenges } from '@/services/challenge.query';
+import { Challenge } from '@/services/types';
+import { unsplash } from '@/utils/unsplash';
+import { CaretRightIcon } from '@radix-ui/react-icons';
+import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function TodoLink({
   // challenge,
@@ -35,55 +35,55 @@ function Todo({ challenge }: { challenge: Challenge }) {
   if (!challenge.bannerUrl || !challenge.hostIcon) {
     todos.push(
       <TodoLink
-        key={"banner"}
+        key={'banner'}
         copy="Add banner or host image"
         link={`/host/challenges/${challenge.id}#section-banner`}
-      />
+      />,
     );
   }
   if (!challenge.milestones) {
     todos.push(
       <TodoLink
-        key={"milestones"}
+        key={'milestones'}
         copy="Add milestones"
         link={`/host/challenges/${challenge.id}#section-milestones`}
-      />
+      />,
     );
   }
   if (!challenge.awardAssorts) {
     todos.push(
       <TodoLink
-        key={"awards"}
+        key={'awards'}
         copy="Add Awards"
         link={`/host/challenges/${challenge.id}#section-awards`}
-      />
+      />,
     );
   }
   if (!challenge.judges || challenge.judges.length === 0) {
     todos.push(
       <TodoLink
-        key={"judge"}
+        key={'judge'}
         copy="Add Judges"
         link={`/host/challenges/${challenge.id}#section-judges`}
-      />
+      />,
     );
   }
   if (!challenge.requirements || !challenge.reviewDimension) {
     todos.push(
       <TodoLink
-        key={"requirements"}
+        key={'requirements'}
         copy="Add Requirements"
         link={`/host/challenges/${challenge.id}#section-requirements`}
-      />
+      />,
     );
   }
   if (!challenge.sponsors || challenge.sponsors.length === 0) {
     todos.push(
       <TodoLink
-        key={"sponsors"}
+        key={'sponsors'}
         copy="Add Sponsors"
         link={`/host/challenges/${challenge.id}#section-sponsors`}
-      />
+      />,
     );
   }
   if (todos.length === 0) {
@@ -103,23 +103,23 @@ function Todo({ challenge }: { challenge: Challenge }) {
 function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
   return (
     <button
-      className={clsx("btn rounded flex gap-2 border", {
-        "bg-grey-500/10 border-grey-500/20 text-grey-500":
-          challenge.status === "DRAFT",
-        "bg-yellow-500/10 border-yellow-500/20 text-yellow-500":
-          challenge.status === "INREVIEW",
+      className={clsx('btn rounded flex gap-2 border', {
+        'bg-grey-500/10 border-grey-500/20 text-grey-500':
+          challenge.status === 'DRAFT',
+        'bg-yellow-500/10 border-yellow-500/20 text-yellow-500':
+          challenge.status === 'INREVIEW',
       })}
     >
       <div
-        className={clsx("w-3 h-3 rounded-full border-[0.5px]", {
-          "bg-yellow-500/30 border-yellow-600": challenge.status === "INREVIEW",
-          "bg-grey-500/30 border-grey-600": challenge.status === "DRAFT",
+        className={clsx('w-3 h-3 rounded-full border-[0.5px]', {
+          'bg-yellow-500/30 border-yellow-600': challenge.status === 'INREVIEW',
+          'bg-grey-500/30 border-grey-600': challenge.status === 'DRAFT',
         })}
       ></div>
-      {challenge.status === "DRAFT"
-        ? "In Draft"
-        : challenge.status === "INREVIEW"
-        ? "In Review"
+      {challenge.status === 'DRAFT'
+        ? 'In Draft'
+        : challenge.status === 'INREVIEW'
+        ? 'In Review'
         : challenge.status}
     </button>
   );
@@ -128,7 +128,7 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
 export function Dashboard() {
   let { data: challenges, isLoading } = useFetchChallenges();
   useLoadingWhen(isLoading);
-  if (!challenges) return;
+  if (!challenges) return null;
   return (
     <div className="w-full grid  md:grid-cols-[2fr,_1fr] gap-16">
       <div>
@@ -143,7 +143,7 @@ export function Dashboard() {
               >
                 <div className="flex gap-4 items-center">
                   <Image
-                    src={challenge.bannerUrl ?? unsplash("host")}
+                    src={challenge.bannerUrl ?? unsplash('host')}
                     // fill
                     alt={challenge.title}
                     width={60}
@@ -156,7 +156,7 @@ export function Dashboard() {
                     </p>
                     <p className="text-sm text-grey-500">
                       {/* fixme */}
-                      {challenge.startTime.substring(0, 10)} {"-> "}
+                      {challenge.startTime.substring(0, 10)} {'-> '}
                       {challenge.endTime.substring(0, 10)}
                     </p>
                   </div>
