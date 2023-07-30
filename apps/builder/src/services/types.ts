@@ -95,18 +95,18 @@ export interface Judge {
   title: string;
   avatarURI: string;
 
+  organization?: string;
   description?: string;
   twitterLink?: string;
   email?: string;
 }
 
-
 export const defaultMileStones = [
-  "Preparation",
-  "Teaming",
-  "Project Submission",
-  "Review",
-  "Result",
+  'Preparation',
+  'Teaming',
+  'Project Submission',
+  'Review',
+  'Result',
 ] as const;
 
 export type DefaultMileStones = (typeof defaultMileStones)[number];
