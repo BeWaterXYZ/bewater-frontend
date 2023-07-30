@@ -73,9 +73,9 @@ export default authMiddleware({
     '/zh/challenges(.*)',
     '/en/challenges(.*)',
     '/zh/campaigns(.*)',
-    '/cn/campaigns(.*)',
+    '/en/campaigns(.*)',
     '/zh/user(.*)',
-    '/cn/user(.*)',
+    '/en/user(.*)',
   ],
 });
 
