@@ -68,8 +68,6 @@ export default authMiddleware({
   publicRoutes: [
     '/',
     '/:locale',
-    '/:locale/sign-in(.*)',
-    '/:locale/sign-up(.*)',
     '/:locale/challenges(.*)',
     '/:locale/campaigns(.*)',
     '/:locale/user(.*)',
