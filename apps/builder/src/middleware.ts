@@ -67,10 +67,15 @@ export default authMiddleware({
 
   publicRoutes: [
     '/',
-    '/:locale',
-    '/:locale/challenges(.*)',
-    '/:locale/campaigns(.*)',
-    '/:locale/user(.*)',
+    '/en',
+    '/zh',
+    '/host',
+    '/zh/challenges(.*)',
+    '/en/challenges(.*)',
+    '/zh/campaigns(.*)',
+    '/cn/campaigns(.*)',
+    '/zh/user(.*)',
+    '/cn/user(.*)',
   ],
 });
 
