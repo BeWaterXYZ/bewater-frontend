@@ -34,7 +34,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               <Image
                 fill
                 src={
-                  challenge.bannerUrl
+                  challenge.bannerUrl ?? `/challenge/assets/${challenge.id}withTitle.png`
                 }
                 alt="crypto"
                 className="object-cover w-full h-full"
