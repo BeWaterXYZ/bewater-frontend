@@ -33,6 +33,19 @@ export function ChallengeTeamsInfo({
 
   if (!curMileStone) return null;
 
+  let submissionEndTime: string | null = null;
+  for (const it of challenge.milestones) {
+    if ('Project Submission' === it.stageName) {
+      submissionEndTime = it.dueDate;
+      break;
+    }
+  }
+
+  let isCountDown = false;
+  if (submissionEndTime) {
+    isCountDown = (compareDesc(parseISO(submissionEndTime), new Date()) < 0)
+  }
+
   return (
     <div className="mt-10 my-6 gap-5 flex justify-between flex-col lg:flex-row">
       <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#310D37] to-[#310d3700] border border-[#310D37]">
@@ -45,6 +58,7 @@ export function ChallengeTeamsInfo({
             className="m-1"
           />
         </div>
+        { isCountDown ? (
         <div className="flex flex-col justify-around items-center lg:items-start">
           <p className="body-2 text-[#701A75] font-bold uppercase mt-8 lg:mt-0">
             {wordingMap['Teaming']}
@@ -53,7 +67,7 @@ export function ChallengeTeamsInfo({
             {' '}
             <Countdown deadline={curMileStone.dueDate} />
           </p>
-        </div>
+        </div>) : null }
       </div>
       <div className="flex-1 h-36  p-8 flex flex-col lg:flex-row items-center justify-around rounded bg-gradient-to-b from-[#1C104A] to-[#1c104a00] border border-[#1C104A]">
         <div>
