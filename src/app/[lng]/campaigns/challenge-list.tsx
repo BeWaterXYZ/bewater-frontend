@@ -34,9 +34,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               <Image
                 fill
                 src={
-                  challenge.yotadata?.ogImgUri ? challenge.yotadata.ogImgUri : (
-                    challenge.bannerUrl ?? `/challenge/assets/${challenge.id}withTitle.png`
-                  )
+                  challenge.bannerUrl
                 }
                 alt="crypto"
                 className="object-cover w-full h-full"
