@@ -1,6 +1,11 @@
 "use client";
 import { getStorageUpload } from "@/services/storage";
-import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
+import {
+  ArrowBottomRightIcon,
+  ArrowTopLeftIcon,
+  Cross1Icon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import Image from "next/image";
 import { ChangeEventHandler, useId, useRef, useState } from "react";
 import { Loading } from "../loading/loading";
@@ -63,7 +68,22 @@ export function Uploader({
   let onRemove = (url: string) => {
     onChange(urls.filter((u) => u !== url));
   };
-
+  let onRemoveUp = (url: string) => {
+    let index = urls.indexOf(url);
+    if (index > 0) {
+      let clone = [...urls];
+      [clone[index - 1], clone[index]] = [clone[index], clone[index - 1]];
+      onChange(clone);
+    }
+  };
+  let onRemoveDown = (url: string) => {
+    let index = urls.indexOf(url);
+    if (index < urls.length - 1) {
+      let clone = [...urls];
+      [clone[index + 1], clone[index]] = [clone[index], clone[index + 1]];
+      onChange(clone);
+    }
+  };
   return (
     <div className="  flex flex-wrap gap-3" style={{}}>
       {/* existing */}
@@ -71,19 +91,41 @@ export function Uploader({
         return (
           <div
             key={url}
-            className="bg-night relative  "
+            className="bg-night relative group/image "
             style={{ height, width }}
           >
             <Image src={url} fill alt="img"></Image>
-            <Cross1Icon
-              onClick={(e) => {
-                e.stopPropagation();
-                onRemove(url);
-              }}
-              className=" cursor-pointer text-grey-500 absolute top-[8px] right-[8px]"
-              height={16}
-              width={16}
-            />
+
+            <div className="absolute top-[8px] right-[8px]  gap-2 hidden group-hover/image:flex bg-black/30 p-2">
+              <ArrowTopLeftIcon
+                className="cursor-pointer text-white"
+                height={16}
+                width={16}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveUp(url);
+                }}
+              />
+              <ArrowBottomRightIcon
+                className="cursor-pointer text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemoveDown(url);
+                }}
+                height={16}
+                width={16}
+              />
+
+              <Cross1Icon
+                className="cursor-pointer text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onRemove(url);
+                }}
+                height={16}
+                width={16}
+              />
+            </div>
           </div>
         );
       })}
