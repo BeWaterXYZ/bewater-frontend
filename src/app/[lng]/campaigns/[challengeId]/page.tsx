@@ -340,6 +340,20 @@ export default async function ChallengeIntro({ params }: any) {
                   );
                 })}
               </div>
+              {challenge.yotadata?.award?.additional ? (
+                <>
+                  <div className="relative w-full flex flex-col gap-10 items-center">
+                    <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
+                      {challenge.yotadata.award.additional.en.title}
+                    </p>
+                    <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
+                      <li>
+                        <Markdown>{challenge.yotadata.award.additional.en.content}</Markdown>
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              ) : null}
               {challenge.yotadata?.award?.other ? (
                 <Link
                   href={challenge.yotadata.award.other.link ?? ''}
