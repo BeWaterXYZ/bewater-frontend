@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { ProjectTagSetScheme } from './constants/options/project-tag';
+// import { ProjectTagSetScheme } from './constants/options/project-tag';
 import { RoleSetScheme } from './constants/options/role';
 import { SkillSetScheme } from './constants/options/skill';
 import { checkUsername } from './services/user';
@@ -33,7 +33,8 @@ export const validationSchema = {
     .array(SkillSetScheme)
     .max(10, { message: 'You can only choose 10 skills' }),
   tags: z
-    .array(ProjectTagSetScheme)
+    //.array(ProjectTagSetScheme)
+    .string().array()
     .min(1, { message: 'You need to choose one tag' })
     .max(1, { message: 'You can only choose one tag' }),
 
