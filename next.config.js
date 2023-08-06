@@ -6,15 +6,16 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['source.unsplash.com', 'images.unsplash.com', 'ipfs.io'],
+    unoptimized: true,
+    domains: ["source.unsplash.com", "images.unsplash.com", "ipfs.io"],
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**.amazonaws.com',
+        protocol: "https",
+        hostname: "**.amazonaws.com",
       },
       {
-        protocol: 'https',
-        hostname: '**.bewater.xyz',
+        protocol: "https",
+        hostname: "**.bewater.xyz",
       },
       {
         hostname: "*.clerk.com",
@@ -25,28 +26,28 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/en/campaigns/bewater-web3-zh',
-        destination: '/en/campaigns/1',
+        source: "/en/campaigns/bewater-web3-zh",
+        destination: "/en/campaigns/1",
       },
       {
-        source: '/zh/campaigns/bewater-web3-zh',
-        destination: '/zh/campaigns/1',
+        source: "/zh/campaigns/bewater-web3-zh",
+        destination: "/zh/campaigns/1",
       },
       {
-        source: '/en/campaigns/63c82bd12ddc570f32ada869',
-        destination: '/en/campaigns/2',
+        source: "/en/campaigns/63c82bd12ddc570f32ada869",
+        destination: "/en/campaigns/2",
       },
       {
-        source: '/zh/campaigns/63c82bd12ddc570f32ada869',
-        destination: '/zh/campaigns/2',
+        source: "/zh/campaigns/63c82bd12ddc570f32ada869",
+        destination: "/zh/campaigns/2",
       },
       {
-        source: '/en/campaigns/63c82bd12ddc570f32ada868',
-        destination: '/en/campaigns/1',
+        source: "/en/campaigns/63c82bd12ddc570f32ada868",
+        destination: "/en/campaigns/1",
       },
       {
-        source: '/zh/campaigns/63c82bd12ddc570f32ada868',
-        destination: '/zh/campaigns/1',
+        source: "/zh/campaigns/63c82bd12ddc570f32ada868",
+        destination: "/zh/campaigns/1",
       },
       // todo更多语言
     ];
