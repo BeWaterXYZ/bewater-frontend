@@ -11,7 +11,7 @@ import { z } from 'zod';
 
 import { useAlert } from '@/components/alert/store';
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
-import { ProjectTagSetOptions5 } from '@/constants/options/project-tag';
+import { obtainProjectTagOptions } from '@/constants/options/project-tag';
 import { RoleSetOptions } from '@/constants/options/role';
 import { SkillSetOptions } from '@/constants/options/skill';
 import { useNavigator } from '@/hooks/useNavigator';
@@ -67,11 +67,11 @@ export default function TeamCreateDialog({
   const isEditing = !!data.team;
 
   let hackProjectTagSetOptions: any = ProjectTagSetOptions;
-  if (data?.challenge?.id === '5') {
-    hackProjectTagSetOptions = ProjectTagSetOptions5;
+  if (data?.challenge?.track && data.challenge.track.length > 0) {
+    hackProjectTagSetOptions = obtainProjectTagOptions(data.challenge.track);
   }
-  if (isEditing && data.team?.challengeId === '5') {
-    hackProjectTagSetOptions = ProjectTagSetOptions5;
+  if (isEditing && data.team?.challenge?.track && data.team.challenge.track.length > 0) {
+    hackProjectTagSetOptions = obtainProjectTagOptions(data.team.challenge.track);
   }
 
   const { showLoading, dismissLoading } = useLoadingStoreAction();

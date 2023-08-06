@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
-import { ProjectTagSetOptions5 } from '@/constants/options/project-tag';
+import { obtainProjectTagOptions } from '@/constants/options/project-tag';
 import { validationSchema } from '@/schema';
 import { useMutationUpdateTeam } from '@/services/team.query';
 
@@ -73,8 +73,8 @@ export default function ProjectEditDialog({
   data.team;
 
   let hackProjectTagSetOptions: any = ProjectTagSetOptions;
-  if (data?.team?.challengeId == '5') {
-    hackProjectTagSetOptions = ProjectTagSetOptions5;
+  if (data.team?.challenge?.track && data.team.challenge.track.length > 0) {
+    hackProjectTagSetOptions = obtainProjectTagOptions(data.team.challenge.track);
   }
 
   return (

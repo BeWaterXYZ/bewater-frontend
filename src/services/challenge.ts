@@ -1,4 +1,4 @@
-import { ProjectTagUnion } from '@/constants/options/project-tag';
+// import { ProjectTagUnion } from '@/constants/options/project-tag';
 import { RoleUnion } from '@/constants/options/role';
 import { SkillUnion } from '@/constants/options/skill';
 import { agentAnon, agentAuthed } from './agent';
@@ -8,7 +8,7 @@ export interface CreateTeamRequest {
   name: string;
   projectName: string;
   projectDescription: string;
-  projectTags: ProjectTagUnion[];
+  projectTags: string[];
   challengeId: ChallengeID;
   openingRoles: RoleUnion[];
   skills: SkillUnion[];
@@ -18,7 +18,7 @@ export interface UpdateTeamRequest {
   name: string;
   projectName: string;
   projectDescription: string;
-  projectTags: ProjectTagUnion[];
+  projectTags: string[];
   openingRoles: RoleUnion[];
   skills: SkillUnion[];
 }
