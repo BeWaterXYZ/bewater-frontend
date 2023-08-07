@@ -43,14 +43,8 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
       <h1 className="body-4 md:text-[24px] uppercase font-light">
-        {challenge.id !== '3' && challenge.id !== '7'
-          ? challenge.location === 'OTHERS'
-            ? ''
-            : challenge.location
-          : challenge.id === '3'
-          ? 'SHANGHAI'
-          : '北京市朝阳区东三环中路20号乐成中心A座18层'}{' '}
-        {challenge.location === 'OTHERS' ? '' : '|'}{' '}
+        { challenge.location === 'ONLINE' ? `${t('campaign.t30')} | ` : null }
+        { (challenge.location === 'OFFLINE' || challenge.location === 'MIXED' || challenge.location === 'OTHERS') && challenge.city ? `${challenge.city} | ` : null }
         {`${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)
