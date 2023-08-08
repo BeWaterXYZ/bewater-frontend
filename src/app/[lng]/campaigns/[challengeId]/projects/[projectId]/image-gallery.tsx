@@ -17,7 +17,6 @@ export function ImageGallery({
   show,
   onClose,
 }: ImageGalleryProps) {
-console.log({firstToShow})
   return show ? (
     <Lightbox
       open={show}
