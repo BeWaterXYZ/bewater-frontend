@@ -107,7 +107,7 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
           sources={project.mediaURLs}
           show={viewImage !== undefined}
           onClose={() => viewImageSet(undefined)}
-          firstToShow={medias.find((m) => m.id === viewImage)?.url!}
+          firstToShow={medias.findIndex((m) => m.id === viewImage)}
         />
 
         {canUpload ? (
