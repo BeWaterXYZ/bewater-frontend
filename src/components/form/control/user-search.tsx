@@ -23,7 +23,6 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
           <Avatar
             className="w-8 h-8"
             src={data.avatarURI}
-            walletAddress={data.walletAddress}
           />
         </div>
         <div className="flex flex-col justify-around">
@@ -43,7 +42,6 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
       <Avatar
         className="w-5 h-5"
         src={props.data.avatarURI}
-        walletAddress={props.data.walletAddress}
       />
       <span className="body-4 text-grey-400">
         {' '}

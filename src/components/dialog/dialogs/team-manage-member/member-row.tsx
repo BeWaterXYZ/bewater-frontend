@@ -16,7 +16,6 @@ export function TeamMemberRow({
     >
       <Avatar
         className="w-8 h-8"
-        walletAddress={member.userProfile.walletAddress}
         src={member.userProfile.avatarURI}
       />
       <div className="flex flex-col justify-between">
