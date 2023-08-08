@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import FsLightbox from 'fslightbox-react';
-import { useEffect, useState } from 'react';
-
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+// import "yet-another-react-lightbox/plugins/captions.css";
+// import "yet-another-react-lightbox/plugins/thumbnails.css";
 interface ImageGalleryProps {
   sources: string[];
   firstToShow: string;
@@ -16,18 +17,12 @@ export function ImageGallery({
   show,
   onClose,
 }: ImageGalleryProps) {
-  const [trigger, triggerSet] = useState(false);
-  useEffect(() => {
-    if (show) {
-      triggerSet(!trigger);
-    }
-  }, [show]);
+
   return show ? (
-    <FsLightbox
-      toggler={trigger}
-      sources={sources}
-      source={firstToShow}
-      onClose={onClose}
+    <Lightbox
+      open={show}
+      close={() => onClose()}
+      slides={sources.map((s) => ({ type: "image", src: s }))}
     />
   ) : null;
 }

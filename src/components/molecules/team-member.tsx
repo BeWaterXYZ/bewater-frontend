@@ -18,7 +18,6 @@ export function TeamMember({
           <Avatar
             className="w-12 h-12"
             src={member.userProfile.avatarURI}
-            walletAddress={member.userProfile.walletAddress}
           />
         </div>
         <div className="flex items-start flex-col ">

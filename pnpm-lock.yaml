@@ -58,9 +58,6 @@ importers:
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
-      fslightbox-react:
-        specifier: ^1.7.6
-        version: 1.7.6(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
       i18next:
         specifier: 23.2.6
         version: 23.2.6
@@ -106,6 +103,9 @@ importers:
       remeda:
         specifier: ^1.24.0
         version: 1.24.0
+      yet-another-react-lightbox:
+        specifier: ^3.12.0
+        version: 3.12.0(react-dom@18.2.0)(react@18.2.0)
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -113,9 +113,6 @@ importers:
         specifier: ^4.3.9
         version: 4.3.9(react@18.2.0)
     devDependencies:
-      '@types/fslightbox-react':
-        specifier: ^1.7.3
-        version: 1.7.3
       '@types/node':
         specifier: 20.4.1
         version: 20.4.1
@@ -4751,6 +4748,17 @@ packages:
     resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
     engines: {node: '>= 14'}
     dev: true
+
+  /yet-another-react-lightbox@3.12.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Hd3CzPJJFFQ2TMP9QvhkuKouWJ/DIw/mrlPkUa6KiQu4AW+CwtKIiJsxWixNN9uS4sC10G0V1ULyJKpHs4yk8g==}
+    engines: {node: '>=14'}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}

@@ -123,9 +123,7 @@ export default function Page({ params }: { params: { lng: string } }) {
             >
               <Avatar
                 src={ntf.notificationMessage.targetUser?.avatarURI}
-                walletAddress={
-                  ntf.notificationMessage.targetUser?.walletAddress
-                }
+             
                 className="w-8 h-8"
               />
               <div>

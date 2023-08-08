@@ -20,7 +20,6 @@ export function TeamAvatarRow({
             <div key={m.id} className="relative" style={{ left: -8 * index }}>
               <Avatar
                 src={m.userProfile.avatarURI}
-                walletAddress={m.userProfile.walletAddress}
                 className="w-8 h-8"
               />
             </div>

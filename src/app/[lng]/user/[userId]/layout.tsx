@@ -34,7 +34,6 @@ export default async function Layout({
             <Avatar
               className="w-20 h-20 lg:w-48 lg:h-48"
               src={profile.avatarURI}
-              walletAddress={profile.walletAddress}
             />
             <div className="mt-0 lg:mt-6">
               <p className="body-2 font-bold">{profile.fullName}</p>
