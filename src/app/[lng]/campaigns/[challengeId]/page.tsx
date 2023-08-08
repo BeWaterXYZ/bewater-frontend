@@ -18,7 +18,6 @@ import { Timeline7 } from './timeline-id7';
 import { isMileStoneEnabled } from './utils';
 
 import Balancer from 'react-wrap-balancer';
-import { Sponsors7 } from './sponsors7';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection } from './schedule-section/3';
 import { useTranslation } from '@/app/i18n';
@@ -542,8 +541,8 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         )}
       </>
-      {challenge.id === '7' ? (
-        <Sponsors7 t={t} />
+      {false ? (
+        null
       ) : (challenge.sponsors ?? []).length > 0 ? (
         <div className="container">
           <div>
@@ -557,15 +556,33 @@ export default async function ChallengeIntro({ params }: any) {
                     <p className="body-1 md: text-[20px] font-bold text-white/30 md:text-white/30">
                       {s.defname}
                     </p>
-                    <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
-                      {s.members.map((member, i) => (
-                        <img
-                          src={member}
-                          key={i}
-                          className="h-8 md:h-10 mb-4 mx-4"
-                        />
-                      ))}
-                    </div>
+                    <>
+                      { s.members && s.members.length > 0 ? (
+                      <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
+                        {s.members.map((member, i) => (
+                          <img src={member} key={i} className="h-8 md:h-10 mb-4 mx-4"/>
+                        ))}
+                      </div>
+                      ) : (s.descriptions && s.descriptions.length > 0 ? (
+                        <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
+                          { s.descriptions.map((it, i) => (
+                            <div key={i} className="w-[80px] mb-2 justify-center mx-3">
+                              <Aspect ratio={1 / 1}>
+                                <Image
+                                  height={80}
+                                  width={80}
+                                  src={`${it.uri}`}
+                                  className="object-cover w-full h-full"
+                                  alt=""
+                                />
+                              </Aspect>
+                              <p className="body-3 mt-4 mb-2">{it.name}</p>
+                              <p className="body-4 text-grey-400">{it.org}</p>
+                            </div>
+                          )) }
+                        </div>
+                      ) : null) }
+                    </>
                   </div>
                 );
               })}
