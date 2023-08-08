@@ -302,7 +302,7 @@ export default async function ChallengeIntro({ params }: any) {
                               return (
                                 <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
-                                    <p className="body-3 text-white whitespace-nowrap">
+                                    <p className="body-3 text-white">
                                       {award.awardName}
                                     </p>
                                     {award.goodsName ? (
