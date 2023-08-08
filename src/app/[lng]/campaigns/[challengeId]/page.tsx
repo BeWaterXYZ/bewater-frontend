@@ -559,13 +559,13 @@ export default async function ChallengeIntro({ params }: any) {
                     <>
                       { s.members && s.members.length > 0 ? (
                       <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
-                        {s.members.map((member, i) => (
+                        {(s.members ?? []).map((member, i) => (
                           <img src={member} key={i} className="h-8 md:h-10 mb-4 mx-4"/>
                         ))}
                       </div>
                       ) : (s.descriptions && s.descriptions.length > 0 ? (
                         <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
-                          { s.descriptions.map((it, i) => (
+                          { (s.descriptions ?? []).map((it, i) => (
                             <div key={i} className="w-[80px] mb-2 justify-center mx-3">
                               <Aspect ratio={1 / 1}>
                                 <Image
