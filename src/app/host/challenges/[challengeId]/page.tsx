@@ -409,7 +409,7 @@ export default function Page({ params }: any) {
                         {s.defname}
                       </p>
                       <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
-                        {s.members.map((member, i) => (
+                        {(s.members ?? []).map((member, i) => (
                           <img
                             src={member}
                             key={i}
