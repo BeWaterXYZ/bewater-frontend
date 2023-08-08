@@ -60,7 +60,12 @@ export interface Challenge {
 
   sponsors: {
     defname: string;
-    members: string[];
+    members?: string[];
+    descriptions?: {
+      name: string;
+      org: string;
+      uri: string;
+    }[];
   }[];
 
   awardAssorts?: {
