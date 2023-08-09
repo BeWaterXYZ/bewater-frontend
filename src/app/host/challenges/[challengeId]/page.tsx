@@ -1,28 +1,28 @@
-'use client';
-import { Aspect } from '@/components/aspect';
-import HoverCard from '@/components/hover-card';
-import { useLoadingStoreAction } from '@/components/loading/store';
-import { publishChallengeRequest } from '@/services/challenge';
-import { useFetchChallengeById } from '@/services/challenge.query';
-import { Judge } from '@/services/types';
-import { formatYYYYMMMDD } from '@/utils/date';
-import { CheckIcon, TwitterLogoIcon } from '@radix-ui/react-icons';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
-import Marquee from 'react-fast-marquee';
-import Balancer from 'react-wrap-balancer';
-import { Timeline } from '../timeline';
-import { EditAwards } from './edit/awards';
-import { EditBanner } from './edit/banner';
-import { EditIntro } from './edit/intro';
-import { EditJudges } from './edit/judges';
-import { EditMilestones } from './edit/milestones';
-import { EditRequirements } from './edit/requirements';
-import { EditSponsors } from './edit/sponsors';
-import { mock } from './mock';
-import Markdown from '@/components/markdown';
-import { segmentSchema } from '../../segment-params';
+"use client";
+import { Aspect } from "@/components/aspect";
+import HoverCard from "@/components/hover-card";
+import { useLoadingStoreAction } from "@/components/loading/store";
+import { publishChallengeRequest } from "@/services/challenge";
+import { useFetchChallengeById } from "@/services/challenge.query";
+import { Judge } from "@/services/types";
+import { formatYYYYMMMDD } from "@/utils/date";
+import { CheckIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
+import Link from "next/link";
+import { Fragment, useEffect, useState } from "react";
+import Marquee from "react-fast-marquee";
+import Balancer from "react-wrap-balancer";
+import { Timeline } from "../timeline";
+import { EditAwards } from "./edit/awards";
+import { EditBanner } from "./edit/banner";
+import { EditIntro } from "./edit/intro";
+import { EditJudges } from "./edit/judges";
+import { EditMilestones } from "./edit/milestones";
+import { EditRequirements } from "./edit/requirements";
+import { EditSponsors } from "./edit/sponsors";
+import { mock } from "./mock";
+import Markdown from "@/components/markdown";
+import { segmentSchema } from "../../segment-params";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -42,11 +42,11 @@ export default function Page({ params }: any) {
   useEffect(() => {
     if (challenge) {
       let hash = location.hash;
-      if (hash.startsWith('#section-')) {
+      if (hash.startsWith("#section-")) {
         setTimeout(() => {
           let target = document.getElementById(hash.substring(1));
           console.log({ target });
-          target?.scrollIntoView({ behavior: 'smooth' });
+          target?.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }
     }
@@ -79,10 +79,10 @@ export default function Page({ params }: any) {
         {/* top bar */}
         <div className="px-8 sticky top-0 bg-night z-10 h-[72px] flex flex-row justify-between items-center">
           <Link href="/host" className="text-sm text-white">
-            {'<- Back'}
+            {"<- Back"}
           </Link>
           <div className="text-sm text-white">
-            {" Now You're Editing"}{' '}
+            {" Now You're Editing"}{" "}
             <span className="text-day">{challenge.title}</span>
           </div>
           <button className="btn btn-primary" onClick={publish}>
@@ -95,7 +95,7 @@ export default function Page({ params }: any) {
           className={`relative h-[560px] overflow-hidden text-center flex flex-col gap-5 justify-center bg-cover bg-center `}
           style={{
             backgroundImage: `url(${
-              challenge.bannerUrl ?? '/assets/default-challenge-bg.png'
+              challenge.bannerUrl ?? "/assets/default-challenge-bg.png"
             })`,
           }}
         >
@@ -103,7 +103,7 @@ export default function Page({ params }: any) {
             <EditBanner challenge={challenge} />
           </div>
           <Image
-            src={challenge.hostIcon ?? ''}
+            src={challenge.hostIcon ?? ""}
             width={120}
             height={24}
             alt="host logo"
@@ -114,11 +114,23 @@ export default function Page({ params }: any) {
               {challenge.title}
             </h1>
             <h1 className="text-[24px] md:text-2xl uppercase font-light text-white">
-              {challenge.location} {challenge.city}|{' '}
+              {challenge.location} {challenge.city}|{" "}
               {`${formatYYYYMMMDD(challenge.startTime)} - ${formatYYYYMMMDD(
-                challenge.endTime,
+                challenge.endTime
               )}`}
             </h1>
+            <div>
+              {challenge.joinLink ? (
+                <Link
+                  prefetch={false}
+                  target="_blank"
+                  href={`${challenge.joinLink}`}
+                  className="btn btn-primary rounded-none body-4 text-night uppercase"
+                >
+                  {challenge.linkText}
+                </Link>
+              ) : null}
+            </div>
           </div>
         </div>
         {/* timeline */}
@@ -149,7 +161,7 @@ export default function Page({ params }: any) {
                   Introduction
                 </div>
                 <div className="text-[18px] md:body-2 text-white">
-                  {challenge.description.split('\n').map((s) => (
+                  {challenge.description.split("\n").map((s) => (
                     <p className="py-3" key={s}>
                       {s}
                     </p>
@@ -181,7 +193,7 @@ export default function Page({ params }: any) {
                       height={16}
                       width={16}
                       alt="discord"
-                    />{' '}
+                    />{" "}
                     Discord Link
                   </Link>
                 ) : null}
@@ -213,7 +225,7 @@ export default function Page({ params }: any) {
                         height={16}
                         width={16}
                         alt="wechat"
-                      />{' '}
+                      />{" "}
                       WeChat QR code
                     </button>
                   </HoverCard>
@@ -313,11 +325,11 @@ export default function Page({ params }: any) {
                 ? challenge.judges
                 : [
                     {
-                      id: 'random',
-                      name: 'Judge Name',
-                      title: 'Judge Title',
-                      avatarURI: '/assets/judge-avatar.png',
-                      description: 'this is description',
+                      id: "random",
+                      name: "Judge Name",
+                      title: "Judge Title",
+                      avatarURI: "/assets/judge-avatar.png",
+                      description: "this is description",
                     } as Judge,
                   ]
               )

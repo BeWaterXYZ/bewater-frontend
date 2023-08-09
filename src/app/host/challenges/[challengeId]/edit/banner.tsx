@@ -29,6 +29,8 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
     city: isOnlineOnly ? z.string().optional() : validationSchema.text,
     startTime: validationSchema.date,
     endTime: validationSchema.date,
+    joinLink: z.string().optional(),
+    linkText: z.string().optional(),
   });
 
   type Inputs = z.infer<typeof schema>;
@@ -47,6 +49,8 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
       bannerUrl: challenge.bannerUrl ?? "",
       location: challenge.location,
       city: challenge.city ?? "",
+      linkText: challenge.linkText,
+      joinLink: challenge.joinLink,
       // fix me
       startTime: challenge.startTime.substring(0, 10),
       endTime: challenge.endTime.substring(0, 10),
@@ -115,7 +119,19 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
               </label>
               <Input {...register("title")} error={errors["title"]} />
             </fieldset>
-
+            <>
+              <Input
+                label="Link URL"
+                placeholder="Link to join your workshop"
+                {...register("joinLink")}
+                error={errors["joinLink"]}
+              />
+              <Input
+                label="Link Text"
+                {...register("linkText")}
+                error={errors["linkText"]}
+              />
+            </>
             <Radio
               label="Campaign mode"
               control={control}
