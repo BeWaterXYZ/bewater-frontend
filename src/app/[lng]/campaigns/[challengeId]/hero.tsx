@@ -15,14 +15,15 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
   if (challenge.milestones?.length > 0) {
     isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
   }
-  let topRegisterBtnText: any = challenge.yotadata?.topRegisterBtnText
-    ? challenge.yotadata.topRegisterBtnText
-    : t('campaign.t4');
-  if (challenge.type === 'HACKATHON') {
+  let topRegisterBtnText: any = t('campaign.t4');
+  if (challenge.type === 'HACKATHON' || challenge.type === 'CHALLENGE') {
     topRegisterBtnText = challenge.yotadata?.topRegisterBtnText
       ? challenge.yotadata.topRegisterBtnText
       : null;
+  } else if (challenge.type === 'WORKSHOP' && challenge.linkText) {
+    topRegisterBtnText = challenge.linkText;
   }
+
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
@@ -55,7 +56,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             : formatMMMDDYYYY(challenge.endTime)
         }`}
       </h1>
-      {challenge.type === 'HACKATHON' ? (
+      {(challenge.type === 'HACKATHON' || challenge.type === 'CHALLENGE') ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
@@ -77,7 +78,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           </div>
         )
       ) : null}
-      {challenge.type === 'HACKATHON' && topRegisterBtnText ? (
+      {(challenge.type === 'HACKATHON' || challenge.type === 'CHALLENGE') && topRegisterBtnText ? (
         challenge.joinLink ? (
           <div className="mt-6 md:mt-12">
             <Link
