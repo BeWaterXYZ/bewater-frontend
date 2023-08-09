@@ -122,7 +122,6 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
             <>
               <Input
                 label="Link URL"
-                placeholder="Link to join your workshop"
                 {...register("joinLink")}
                 error={errors["joinLink"]}
               />
