@@ -42,6 +42,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
       <div className="flex gap-4 text-white font-secondary my-6">
         {filterMap.map((t) => (
           <button
+            key={t[0]}
             onClick={() => filterSet(t[1])}
             className={clsx({
               "text-day": filter === t[1],
