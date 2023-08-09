@@ -69,7 +69,7 @@ export default function Page() {
     resolver: zodResolver(schema),
     defaultValues: {
       location: LOCATION.ONLINE,
-      type: CAMPAIGN_TYPE.HACKATHON,
+      type: CAMPAIGN_TYPE.CHALLENGE,
     },
   });
 
@@ -111,7 +111,7 @@ export default function Page() {
               onValueChange={(v) => setValue("type", v)}
               options={[
                 {
-                  value: CAMPAIGN_TYPE.HACKATHON,
+                  value: CAMPAIGN_TYPE.CHALLENGE,
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
@@ -124,20 +124,7 @@ export default function Page() {
                     </div>
                   ),
                 },
-                {
-                  value: CAMPAIGN_TYPE.DEMODAY,
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
-                      <Image
-                        src="/assets/demoday.png"
-                        width={64}
-                        height={64}
-                        alt="demoday"
-                      />
-                      Demo day
-                    </div>
-                  ),
-                },
+               
                 {
                   value: CAMPAIGN_TYPE.WORKSHOP,
                   label: (
@@ -149,6 +136,20 @@ export default function Page() {
                         alt="workshop"
                       />
                       Workshop
+                    </div>
+                  ),
+                },
+                 {
+                  value: CAMPAIGN_TYPE.OTHERS,
+                  label: (
+                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
+                      <Image
+                        src="/assets/demoday.png"
+                        width={64}
+                        height={64}
+                        alt="demoday"
+                      />
+                      Others
                     </div>
                   ),
                 },
