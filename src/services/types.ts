@@ -87,6 +87,7 @@ export interface Challenge {
   yotadata?: any;
   joinLink?: string;
   track?: string[];
+  linkText?: string;
 }
 
 export interface Award {
