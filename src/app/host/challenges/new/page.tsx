@@ -69,7 +69,7 @@ export default function Page() {
     resolver: zodResolver(schema),
     defaultValues: {
       location: LOCATION.ONLINE,
-      type: CAMPAIGN_TYPE.HACKATHON,
+      type: CAMPAIGN_TYPE.CHALLENGE,
     },
   });
 
