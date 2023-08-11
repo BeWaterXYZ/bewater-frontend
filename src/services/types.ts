@@ -49,7 +49,7 @@ export interface Challenge {
   endTime: string;
   totalAward: number;
   awardCurrency: string;
-  status: 'DRAFT' | 'INREVIEW' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED';
+  status: 'DRAFT' | 'INREVIEW' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED' | 'REFUSED';
   location: string;
   milestones: Milestone[];
   judges: Judge[];
