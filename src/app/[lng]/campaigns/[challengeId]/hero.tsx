@@ -70,7 +70,10 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           <div className="mt-6 md:mt-12">
             {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
             <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
-              {`${t('campaign.t2')} ${formatYYYYMMMDD(
+              {`${t('campaign.t2')} ${lng === 'zh' ? formatYYYYMMMDD(
+                challenge.milestones.find((ms) => ms.stageName === 'Teaming')
+                  ?.dueDate!,
+              ) : formatMMMDDYYYY(
                 challenge.milestones.find((ms) => ms.stageName === 'Teaming')
                   ?.dueDate!,
               )} ${t('campaign.t3')}`}
