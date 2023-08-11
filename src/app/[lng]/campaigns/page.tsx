@@ -7,9 +7,9 @@ async function getChallengesByStatus() {
   let challenges = await getChallenges();
   challenges = challenges.sort((a, b) => Number(b.id) - Number(a.id));
   return {
-    active: challenges.filter((c) => c.status === 'ACTIVE'),
-    upcoming: challenges.filter((c) => c.status === 'DRAFT'),
+    active:    challenges.filter((c) => c.status === 'ACTIVE'),
     completed: challenges.filter((c) => c.status === 'COMPLETED'),
+    paused:    challenges.filter((c) => c.status === 'PAUSED'),
   };
 }
 
@@ -19,12 +19,12 @@ export default async function ChallengePage({
   params: { lng: string };
 }) {
   const { lng = 'en' } = params || {};
-  const { active, upcoming, completed } = await getChallengesByStatus();
+  const { active, completed, paused } = await getChallengesByStatus();
   return (
     <div className="container my-4 pt-20">
       {active.length > 0 && (
         <ChallengeList
-          challenges={[...active, ...upcoming, ...completed]}
+          challenges={[...active, ...paused, ...completed]}
           lng={lng}
         />
       )}

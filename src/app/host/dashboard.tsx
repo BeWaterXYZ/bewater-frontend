@@ -108,18 +108,23 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
           challenge.status === 'DRAFT',
         'bg-yellow-500/10 border-yellow-500/20 text-yellow-500':
           challenge.status === 'INREVIEW',
+        'bg-red-500/10 border-red-500/20 text-red-500':
+          challenge.status === 'REFUSED',
       })}
     >
       <div
         className={clsx('w-3 h-3 rounded-full border-[0.5px]', {
           'bg-yellow-500/30 border-yellow-600': challenge.status === 'INREVIEW',
           'bg-grey-500/30 border-grey-600': challenge.status === 'DRAFT',
+          'bg-red-500/30 border-red-600': challenge.status === 'REFUSED',
         })}
       ></div>
       {challenge.status === 'DRAFT'
         ? 'In Draft'
         : challenge.status === 'INREVIEW'
         ? 'In Review'
+        : challenge.status === 'REFUSED'
+        ? 'Audit Failed'
         : challenge.status}
     </button>
   );
