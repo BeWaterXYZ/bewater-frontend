@@ -58,7 +58,9 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
             key={challenge.id}
             className="w-full border relative border-[#24254E] rounded overflow-hidden bg-latenight"
           >
-            <Link href={`/${lng}/campaigns/${challenge.id}`}>
+            <Link
+              target={challenge.type !== 'OTHERS' ? undefined : '_blank'}
+              href={challenge.type !== 'OTHERS' ? `/${lng}/campaigns/${challenge.id}` : (challenge.joinLink ?? '')}>
               <Aspect ratio={5 / 2}>
                 <Image
                   fill
@@ -87,12 +89,12 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     )} ->  ${formatYYYYMMMDD(challenge.endTime)}`}
                   </div>
                 </div>
-                <div className="">
+                <div className="" style={{ maxWidth: '40%' }}>
                   <div className="body-2 py-1 text-gray-400 invisible">
                     {challenge.location}
                   </div>
                   <div className="body-4 py-1 text-gray-600">
-                    {challenge.location}
+                    {challenge.location === 'ONLINE' ? 'ONLINE' : (challenge.city ? challenge.city : '')}
                   </div>
                 </div>
               </div>
