@@ -72,6 +72,15 @@ export default async function ChallengeIntro({ params }: any) {
     }
   }
 
+  let adjudicators = t('campaign.t8');
+  if (challenge.yotadata?.adjudicators) {
+    if (lng === 'zh') {
+      adjudicators = challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en;
+    } else {
+      adjudicators = challenge.yotadata.adjudicators.en;
+    }
+  }
+
   // todo 删除以下hack部分
   if (challenge.id === '2') {
     if (lng === 'en') {
@@ -409,7 +418,7 @@ export default async function ChallengeIntro({ params }: any) {
       <>
         <div className="mt-16">
           <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-            {challenge.id === '4' ? 'Confirmed Mentors' : t('campaign.t8')}
+            {adjudicators}
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
             {judges.length > 0
