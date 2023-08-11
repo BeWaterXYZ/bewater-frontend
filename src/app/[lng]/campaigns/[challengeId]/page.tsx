@@ -258,6 +258,20 @@ export default async function ChallengeIntro({ params }: any) {
                   </div>
                 </Link>
               ) : null}
+              {
+                challenge?.yotadata?.tgOtherLink ? (
+                  <Link
+                    prefetch={false}
+                    href={challenge.yotadata.tgOtherLink.url}
+                    target="_blank"
+                    className="flex md:inline-flex group btn btn-primary-invert body-4 text-day uppercase w-64 py-6 mx-6 my-6 md:my-0"
+                  >
+                    <div className="flex flex-row gap-4 items-center">
+                      {challenge.yotadata.tgOtherLink.name}
+                    </div>
+                  </Link>
+                ) : null
+              }
             </>
           )}
         </div>
