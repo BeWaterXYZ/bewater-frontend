@@ -7,7 +7,7 @@ import { useToastStore } from '@/components/toast/store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-
+import { OptionItem } from '@/constants/options/types';
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
 import { obtainProjectTagOptions } from '@/constants/options/project-tag';
 import { validationSchema } from '@/schema';
@@ -72,7 +72,7 @@ export default function ProjectEditDialog({
   });
   data.team;
 
-  let hackProjectTagSetOptions: any = ProjectTagSetOptions;
+  let hackProjectTagSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
   if (data.team?.challenge?.track && data.team.challenge.track.length > 0) {
     hackProjectTagSetOptions = obtainProjectTagOptions(data.team.challenge.track);
   }

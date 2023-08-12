@@ -1,8 +1,6 @@
 /**
  * User
  */
-
-import { ProjectTagUnion } from '@/constants/options/project-tag';
 import { RoleUnion } from '@/constants/options/role';
 import { SkillUnion } from '@/constants/options/skill';
 import { string } from 'zod';
@@ -170,7 +168,7 @@ export interface Project {
   id: ProjectId;
   name: string;
   description: string;
-  tags: ProjectTagUnion[];
+  tags: string[];
   status: string;
   teamId: string;
   team: Team;
