@@ -473,7 +473,7 @@ export default async function ChallengeIntro({ params }: any) {
                         </p>
                         <div>
                           {judge.twitterLink ? (
-                            <Link href={judge.twitterLink}>
+                            <Link href={judge.twitterLink} target="_blank">
                               {
                                 <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
                               }
