@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 import { useAlert } from '@/components/alert/store';
+import { OptionItem } from '@/constants/options/types';
 import { ProjectTagSetOptions } from '@/constants/options/project-tag';
 import { obtainProjectTagOptions } from '@/constants/options/project-tag';
 import { RoleSetOptions } from '@/constants/options/role';
@@ -66,7 +67,7 @@ export default function TeamCreateDialog({
 }: TeamCreateDialogProps) {
   const isEditing = !!data.team;
 
-  let hackProjectTagSetOptions: any = ProjectTagSetOptions;
+  let hackProjectTagSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
   if (data?.challenge?.track && data.challenge.track.length > 0) {
     hackProjectTagSetOptions = obtainProjectTagOptions(data.challenge.track);
   }

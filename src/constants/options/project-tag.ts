@@ -1,31 +1,21 @@
 import { OptionItem } from './types';
 
-export const ProjectTagSet = [
+const ProjectTagSet = [
   "GameFi",
   "DeFi",
   "NFT",
+  "Web3",
+  "AIGC",
+  "DAO Tool",
   "Web3 Security",
   "Zero Knowledge",
-  "DAO Tool",
-  "AIGC",
-  "Web3",
-  "AIGC+Web3",
   "Virtual Assistants and Chatbots",
-  "Professional Services",
   "Finance and Investment",
   "Business and Marketing",
-  "ZK Infra and Tooling",
-  "ZK Application",
-  "Other ZK-related Topics",
-  "STICKERS",
-  "PFP",
-  "PROGRAMMINGGC",
-  "PIXEL ART",
-  "1/1 DIGITAL ART",
   "Others",
 ] as const;
 
-export type ProjectTagUnion = (typeof ProjectTagSet)[number];
+type ProjectTagUnion = (typeof ProjectTagSet)[number];
 
 export const ProjectTagSetOptions: OptionItem<ProjectTagUnion>[] =
   ProjectTagSet.map((tag) => ({
@@ -39,7 +29,7 @@ export const ProjectTagSetOptions: OptionItem<ProjectTagUnion>[] =
   }));
 
 export function obtainProjectTagOptions(tagSet: string[]) {
-  const tagSetOptions = tagSet.map((tag) => ({
+  const tagSetOptions : OptionItem<string>[] = tagSet.map((tag) => ({
     label: tag,
     value: tag,
     classes: {
@@ -50,5 +40,3 @@ export function obtainProjectTagOptions(tagSet: string[]) {
   }));
   return tagSetOptions;
 }
-
-// export const ProjectTagSetScheme = createUnionSchema(ProjectTagSet);

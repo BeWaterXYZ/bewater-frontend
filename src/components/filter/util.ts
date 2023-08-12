@@ -1,12 +1,33 @@
-import { ProjectTagSet } from '@/constants/options/project-tag';
 import { RoleSet } from '@/constants/options/role';
 import { Project, Team } from '@/services/types';
 
 export function prepareProjectTagFilterData(projects: Project[]) {
-  let data = ProjectTagSet.map((tag) => ({
-    tag,
-    amount: projects.filter((project) => project.tags.includes(tag)).length,
-  }));
+  const data : {
+    tag: string;
+    amount: number;
+  }[] = [];
+
+  const tmpMap: any = {};
+  for (const it of projects) {
+    if (it.tags) {
+      for (const tag of it.tags) {
+        if (!tag) {
+          continue;
+        }
+        if (tmpMap[tag]) {
+          ++tmpMap[tag];
+        } else {
+          tmpMap[tag] = 1;
+        }
+      }
+    }
+  }
+  for (const it of Object.keys(tmpMap)) {
+    data.push({
+      tag: it,
+      amount: tmpMap[it]
+    })
+  }
 
   return data;
 }
