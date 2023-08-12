@@ -17,6 +17,11 @@ export const ProjectTagSet = [
   "ZK Infra and Tooling",
   "ZK Application",
   "Other ZK-related Topics",
+  "STICKERS",
+  "PFP",
+  "PROGRAMMINGGC",
+  "PIXEL ART",
+  "1/1 DIGITAL ART",
   "Others",
 ] as const;
 
