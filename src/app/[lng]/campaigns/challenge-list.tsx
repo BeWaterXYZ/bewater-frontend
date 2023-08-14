@@ -8,6 +8,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 interface ChallengeListProps {
   challenges: Challenge[];
@@ -59,8 +60,13 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
             className="w-full border relative border-[#24254E] rounded overflow-hidden bg-latenight"
           >
             <Link
-              target={challenge.type !== 'OTHERS' ? undefined : '_blank'}
-              href={challenge.type !== 'OTHERS' ? `/${lng}/campaigns/${challenge.id}` : (challenge.joinLink ?? '')}>
+              target={challenge.type !== "OTHERS" ? undefined : "_blank"}
+              href={
+                challenge.type !== "OTHERS"
+                  ? `/${lng}/campaigns/${challenge.id}`
+                  : challenge.joinLink ?? ""
+              }
+            >
               <Aspect ratio={5 / 2}>
                 <Image
                   fill
@@ -89,12 +95,16 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     )} ->  ${formatYYYYMMMDD(challenge.endTime)}`}
                   </div>
                 </div>
-                <div className="" style={{ maxWidth: '40%' }}>
+                <div className="" style={{ maxWidth: "40%" }}>
                   <div className="body-2 py-1 text-gray-400 invisible">
                     {challenge.location}
                   </div>
                   <div className="body-4 py-1 text-gray-600">
-                    {challenge.location === 'ONLINE' ? 'ONLINE' : (challenge.city ? challenge.city : '')}
+                    {challenge.location === "ONLINE"
+                      ? "ONLINE"
+                      : challenge.city
+                      ? challenge.city
+                      : ""}
                   </div>
                 </div>
               </div>
@@ -103,6 +113,11 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               <div className=" flex gap-2 absolute items-center left-4 top-4 rounded-full border border-white/20 p-2 px-3 bg-black/50 text-white text-[12px] font-secondary">
                 <div className="w-2 h-2 rounded bg-day"></div>
                 LIVE
+              </div>
+            ) : null}
+            {challenge.type === "OTHERS" ? (
+              <div className=" flex  absolute items-center justify-center right-4 top-4 rounded-full border border-white/20 h-8 w-8 bg-black/50 text-white text-[12px] font-secondary">
+                <ArrowTopRightIcon />
               </div>
             ) : null}
           </div>

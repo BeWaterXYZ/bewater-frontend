@@ -49,8 +49,8 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
       bannerUrl: challenge.bannerUrl ?? "",
       location: challenge.location,
       city: challenge.city ?? "",
-      linkText: challenge.linkText,
-      joinLink: challenge.joinLink,
+      linkText: challenge.linkText ?? "",
+      joinLink: challenge.joinLink ?? "",
       // fix me
       startTime: challenge.startTime.substring(0, 10),
       endTime: challenge.endTime.substring(0, 10),
