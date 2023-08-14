@@ -121,7 +121,9 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               </div>
             ) : null}
             {challenge.hostIcon ? (
-              <div className="flex absolute w-full top-12 h-12">
+              <div className="flex absolute w-full top-12 h-12" style={{cursor:'pointer'}} onClick={(e) => {
+                window.location.href = `/${lng}/campaigns/${challenge.id}`;
+              }}>
                 <Image
                   src={challenge.hostIcon}
                   width={144}
