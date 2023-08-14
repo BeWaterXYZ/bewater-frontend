@@ -1,9 +1,9 @@
 /**
  * User
  */
+import { CAMPAIGN_TYPE } from '@/constants';
 import { RoleUnion } from '@/constants/options/role';
 import { SkillUnion } from '@/constants/options/skill';
-import { string } from 'zod';
 
 export type UserID = string;
 
@@ -80,7 +80,7 @@ export interface Challenge {
 
   city?: string;
   hostIcon?: string;
-  type: string;
+  type: CAMPAIGN_TYPE;
   metadata?: any;
   yotadata?: any;
   joinLink?: string;
