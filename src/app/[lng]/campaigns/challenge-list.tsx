@@ -110,16 +110,28 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               </div>
             </Link>
             {challenge.status === "ACTIVE" ? (
-              <div className=" flex gap-2 absolute items-center left-4 top-4 rounded-full border border-white/20 p-2 px-3 bg-black/50 text-white text-[12px] font-secondary">
+              <div className="flex gap-2 absolute items-center left-4 top-4 rounded-full border border-white/20 p-2 px-3 bg-black/50 text-white text-[12px] font-secondary">
                 <div className="w-2 h-2 rounded bg-day"></div>
                 LIVE
               </div>
             ) : null}
             {challenge.type === "OTHERS" ? (
-              <div className=" flex  absolute items-center justify-center right-4 top-4 rounded-full border border-white/20 h-8 w-8 bg-black/50 text-white text-[12px] font-secondary">
+              <div className="flex absolute items-center justify-center right-4 top-4 rounded-full border border-white/20 h-8 w-8 bg-black/50 text-white text-[12px] font-secondary">
                 <ArrowTopRightIcon />
               </div>
             ) : null}
+            {challenge.hostIcon ? (
+              <div className="flex absolute w-full top-12 h-12">
+                <Image
+                  src={challenge.hostIcon}
+                  width={144}
+                  height={40}
+                  alt=""
+                  className="mx-auto h-10"
+                  style={{width:'fit-content'}}
+                />
+              </div>
+              ) : null}
           </div>
         ))}
       </div>
