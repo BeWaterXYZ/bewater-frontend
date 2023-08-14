@@ -6,10 +6,11 @@ export enum LOCATION {
   MIXED = "MIXED",
 }
 
-export enum CAMPAIGN_TYPE {
-  CHALLENGE = "CHALLENGE",
-  WORKSHOP = "WORKSHOP",
-  OTHERS = "OTHERS",
-}
+
+export const CampaignType = [
+  "CHALLENGE","WORKSHOP", "OTHERS"
+] as const
+
+export type CAMPAIGN_TYPE = typeof CampaignType[number]
 
 export const isDEV = process.env.NODE_ENV === "development";

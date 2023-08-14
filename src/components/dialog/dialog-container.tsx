@@ -14,6 +14,7 @@ type DialogMap = Record<
   ComponentType<{ data: any; close: () => void }>
 >;
 
+
 const dialogMaps: DialogMap = {
   metamask_not_support: dynamicLoad(
     () => import('./dialogs/metamask-not-support'),

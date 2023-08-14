@@ -15,11 +15,11 @@ interface ChallengeListProps {
   lng: string;
 }
 
-const filterMap = [
+const filterMap =  [
   ["All", ""],
-  ["Challenge", CAMPAIGN_TYPE.CHALLENGE],
-  ["Workshop", CAMPAIGN_TYPE.WORKSHOP],
-  ["Others", CAMPAIGN_TYPE.OTHERS],
+  ["Challenge", "CHALLENGE"],
+  ["Workshop","WORKSHOP"],
+  ["Others", "OTHERS"],
 ];
 
 export function ChallengeList({ challenges, lng }: ChallengeListProps) {

@@ -4,7 +4,7 @@ import { Input } from "@/components/form/input";
 import { Radio } from "@/components/form/radio";
 import { TextArea } from "@/components/form/textarea";
 import { Loading } from "@/components/loading/loading";
-import { CAMPAIGN_TYPE, LOCATION } from "@/constants";
+import { CAMPAIGN_TYPE, CampaignType, LOCATION } from "@/constants";
 import { createChallenge } from "@/services/challenge";
 import { validationSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { Challenge } from "@/services/types";
 import Link from "next/link";
+import { createUnionSchema } from "@/types/utils";
 
 const init: Partial<Challenge> = {
   requirements: "",
@@ -47,7 +48,7 @@ export default function Page() {
   let [showFullScreen, showFullScreenSet] = useState(false);
   let [isOnlineOnly, isOnlineOnlySet] = useState(true);
   let schema = z.object({
-    type: z.string(),
+    type: createUnionSchema(CampaignType),
     title: validationSchema.text,
     hostName: validationSchema.text,
     description: validationSchema.text,
@@ -69,7 +70,7 @@ export default function Page() {
     resolver: zodResolver(schema),
     defaultValues: {
       location: LOCATION.ONLINE,
-      type: CAMPAIGN_TYPE.CHALLENGE,
+      type: "CHALLENGE",
     },
   });
 
@@ -108,10 +109,10 @@ export default function Page() {
             <Radio
               control={control}
               name="type"
-              onValueChange={(v) => setValue("type", v)}
+              onValueChange={(v) => setValue("type", v as  CAMPAIGN_TYPE)}
               options={[
                 {
-                  value: CAMPAIGN_TYPE.CHALLENGE,
+                  value: "CHALLENGE",
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
@@ -126,7 +127,7 @@ export default function Page() {
                 },
                
                 {
-                  value: CAMPAIGN_TYPE.WORKSHOP,
+                  value: "WORKSHOP",
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
@@ -140,7 +141,7 @@ export default function Page() {
                   ),
                 },
                  {
-                  value: CAMPAIGN_TYPE.OTHERS,
+                  value: "OTHERS",
                   label: (
                     <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
                       <Image
