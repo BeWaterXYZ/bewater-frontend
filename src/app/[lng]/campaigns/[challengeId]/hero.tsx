@@ -30,15 +30,13 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       style={{ backgroundImage: `url("${challenge.bannerUrl}")` }}
     >
       {challenge.hostIcon?.length ? (
-        <>
-          <Image
-            src={challenge.hostIcon}
-            width={144}
-            height={40}
-            alt=""
-            className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
-          />
-        </>
+        <Image
+          src={challenge.hostIcon}
+          width={144}
+          height={40}
+          alt=""
+          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
+        />
       ) : (
         <p className="body-4 md:text-[20px]">{challenge.hostName ?? ''}</p>
       )}
