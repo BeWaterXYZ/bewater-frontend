@@ -43,7 +43,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
   let mutation = useMutationUpdateChallenge(challenge.id);
 
   let [totalAward, totalAwardSet] = useState(0);
-  console.log(challenge.keySponsors);
+  // console.log(challenge.keySponsors);
   let {
     control,
     register,
