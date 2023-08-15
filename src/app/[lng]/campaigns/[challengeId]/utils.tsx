@@ -1,4 +1,5 @@
 import { Challenge, Milestone } from '@/services/types';
+import { log } from 'console';
 import { compareDesc, parseISO } from 'date-fns';
 
 export function isMileStoneEnabled(
@@ -13,7 +14,7 @@ export function isMileStoneEnabled(
 }
 
 export function isWorkshop(challenge: Challenge) {
-  if (challenge?.type === 'WORKSHOP' || challenge?.metadata?.realType === 'WORKSHOP') {
+  if (challenge.type === 'WORKSHOP' || challenge.metadata?.realType === 'WORKSHOP') {
     return true;
   }
   return false;
@@ -21,7 +22,8 @@ export function isWorkshop(challenge: Challenge) {
 
 export function isChallenge(challenge: Challenge) {
   // if no real type, as challenge by default
-  if (challenge.type === 'CHALLENGE' && (challenge?.metadata?.realType || challenge?.metadata?.realType === 'CHALLENGE')) {
+  console.log(challenge);
+  if (challenge.type === 'CHALLENGE' && (!challenge.metadata?.realType || challenge.metadata?.realType === 'CHALLENGE')) {
     return true;
   }
   return false;
