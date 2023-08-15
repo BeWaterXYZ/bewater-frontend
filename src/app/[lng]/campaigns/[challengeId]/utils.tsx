@@ -11,3 +11,18 @@ export function isMileStoneEnabled(
 
   return compareDesc(parseISO(menuMileStone!.dueDate), new Date()) > 0;
 }
+
+export function isWorkshop(challenge: Challenge) {
+  if (challenge?.type === 'WORKSHOP' || challenge?.metadata?.realType === 'WORKSHOP') {
+    return true;
+  }
+  return false;
+}
+
+export function isChallenge(challenge: Challenge) {
+  // if no real type, as challenge by default
+  if (challenge.type === 'CHALLENGE' || !challenge?.metadata?.realType || challenge?.metadata?.realType === 'WORKSHOP') {
+    return true;
+  }
+  return false;
+}
