@@ -1,24 +1,23 @@
 "use client";
 import { Aspect } from "@/components/aspect";
-import { CAMPAIGN_TYPE } from "@/constants";
 import { Challenge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
 import { formatMoney } from "@/utils/numeral";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 
 interface ChallengeListProps {
   challenges: Challenge[];
   lng: string;
 }
 
-const filterMap =  [
+const filterMap = [
   ["All", ""],
   ["Challenge", "CHALLENGE"],
-  ["Workshop","WORKSHOP"],
+  ["Workshop", "WORKSHOP"],
   ["Others", "OTHERS"],
 ];
 
@@ -60,6 +59,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
             className="w-full border relative border-[#24254E] rounded overflow-hidden bg-latenight"
           >
             <Link
+              className="relative"
               target={challenge.type !== "OTHERS" ? undefined : "_blank"}
               href={
                 challenge.type !== "OTHERS"
@@ -108,16 +108,16 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                   </div>
                 </div>
               </div>
+              {challenge.type === "OTHERS" ? (
+                <div className=" flex  absolute items-center justify-center right-4 top-4 rounded-full border border-white/20 h-8 w-8 bg-black/50 text-white text-[12px] font-secondary">
+                  <ArrowTopRightIcon />
+                </div>
+              ) : null}
             </Link>
             {challenge.status === "ACTIVE" ? (
               <div className="flex gap-2 absolute items-center left-4 top-4 rounded-full border border-white/20 p-2 px-3 bg-black/50 text-white text-[12px] font-secondary">
                 <div className="w-2 h-2 rounded bg-day"></div>
                 LIVE
-              </div>
-            ) : null}
-            {challenge.type === "OTHERS" ? (
-              <div className="flex absolute items-center justify-center right-4 top-4 rounded-full border border-white/20 h-8 w-8 bg-black/50 text-white text-[12px] font-secondary">
-                <ArrowTopRightIcon />
               </div>
             ) : null}
             {challenge.hostIcon ? (
