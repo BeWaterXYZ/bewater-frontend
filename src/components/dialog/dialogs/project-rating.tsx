@@ -47,7 +47,7 @@ export default function ProjectRatingDialog({
   const addToast = useToastStore((s) => s.add);
 
   const onSubmit = async (formData: Inputs) => {
-    console.log({ formData });
+    // console.log({ formData });
     showLoading();
     try {
       await mutation.mutateAsync({

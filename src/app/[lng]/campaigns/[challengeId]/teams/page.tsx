@@ -76,7 +76,7 @@ export default function ChallengeTeams({ params }: any) {
   const showDialog = useDialogStore((s) => s.open);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: userProfile } = useFetchUser(user?.id);
-  console.log({ userProfile });
+  // console.log({ userProfile });
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);

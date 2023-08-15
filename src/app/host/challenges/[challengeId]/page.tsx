@@ -46,7 +46,7 @@ export default function Page({ params }: any) {
       if (hash.startsWith("#section-")) {
         setTimeout(() => {
           let target = document.getElementById(hash.substring(1));
-          console.log({ target });
+          // console.log({ target });
           target?.scrollIntoView({ behavior: "smooth" });
         }, 100);
       }

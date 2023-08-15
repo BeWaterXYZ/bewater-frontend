@@ -60,7 +60,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
     isOnlineOnlySet(data.location === LOCATION.ONLINE);
   });
   const onSubmit = async (formData: Inputs) => {
-    console.log(formData);
+    // console.log(formData);
     try {
       await mutation.mutateAsync({
         id: challenge.id,

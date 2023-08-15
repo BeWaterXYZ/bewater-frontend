@@ -22,7 +22,7 @@ export function isWorkshop(challenge: Challenge) {
 
 export function isChallenge(challenge: Challenge) {
   // if no real type, as challenge by default
-  console.log(challenge);
+  // console.log(challenge);
   if (challenge.type === 'CHALLENGE' && (!challenge.metadata?.realType || challenge.metadata?.realType === 'CHALLENGE')) {
     return true;
   }
