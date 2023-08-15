@@ -15,7 +15,7 @@ import { PrizeSection as PrizeSection11 } from './prize-section/63c82bd12ddc570f
 import { PrizeSection as PrizeSection19 } from './prize-section/63c82bd12ddc570f32ada86f';
 import { Timeline } from './timeline';
 import { Timeline7 } from './timeline-id7';
-import { isMileStoneEnabled } from './utils';
+import { isMileStoneEnabled, isWorkshop } from './utils';
 
 import Balancer from 'react-wrap-balancer';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
@@ -616,7 +616,7 @@ export default async function ChallengeIntro({ params }: any) {
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
         <p className="heading-6 md:heading-4 text-center">
           <Balancer ratio={0.9}>
-            {challenge.type !== 'WORKSHOP'
+            {!isWorkshop(challenge)
               ? isTeamingEnabled
                 ? `${t('campaign.t12')}`
                 : `${t('campaign.t13')}`
@@ -625,12 +625,12 @@ export default async function ChallengeIntro({ params }: any) {
         </p>
         <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
           <Balancer>
-            {challenge.type !== 'WORKSHOP'
+            {!isWorkshop(challenge)
               ? `${t('campaign.t15')}`
               : `${t('campaign.t16')}`}
           </Balancer>
         </p>
-        {challenge.type !== 'WORKSHOP' ? (
+        {!isWorkshop(challenge) ? (
           isTeamingEnabled ? (
             <div>
               <Link

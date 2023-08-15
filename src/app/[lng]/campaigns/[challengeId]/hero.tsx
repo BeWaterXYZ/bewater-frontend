@@ -1,6 +1,6 @@
 import { Challenge } from '@/services/types';
 import { formatYYYYMMMDD, formatMMMDDYYYY } from '@/utils/date';
-import { isMileStoneEnabled } from './utils';
+import { isMileStoneEnabled, isWorkshop, isChallenge } from './utils';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -16,11 +16,11 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
     isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
   }
   let topRegisterBtnText: any = t('campaign.t4');
-  if (challenge.type === 'CHALLENGE') {
+  if (isChallenge(challenge)) {
     topRegisterBtnText = challenge.yotadata?.topRegisterBtnText
       ? challenge.yotadata.topRegisterBtnText
       : null;
-  } else if (challenge.type === 'WORKSHOP' && challenge.linkText) {
+  } else if (isWorkshop(challenge) && challenge.linkText) {
     topRegisterBtnText = challenge.linkText;
   }
 
@@ -54,7 +54,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             : formatMMMDDYYYY(challenge.endTime)
         }`}
       </h1>
-      {challenge.type === 'CHALLENGE' ? (
+      {isChallenge(challenge) ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
@@ -79,7 +79,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           </div>
         )
       ) : null}
-      {challenge.type === 'CHALLENGE' && topRegisterBtnText ? (
+      {isChallenge(challenge) && topRegisterBtnText ? (
         challenge.joinLink ? (
           <div className="mt-6 md:mt-12">
             <Link
@@ -101,7 +101,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           </div>
         ) : null
       ) : null}
-      {challenge.type === 'WORKSHOP' ? (
+      {isWorkshop(challenge) ? (
         challenge.joinLink ? (
           <div className="mt-6 md:mt-12">
             <Link

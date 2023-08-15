@@ -5,6 +5,7 @@ import { ChallengeHero } from './hero';
 import { ChallengeNav } from './nav';
 import { segmentSchema } from './param-schema';
 import { useTranslation } from '@/app/i18n';
+import { isWorkshop } from './utils';
 
 export default async function Layout({
   children,
@@ -32,7 +33,7 @@ export default async function Layout({
   return (
     <div>
       <ChallengeHero challenge={challenge} lng={lng} t={t} />
-      {challenge.type !== 'WORKSHOP' ? (
+      { !isWorkshop(challenge) ? (
         <ChallengeNav challenge={challenge} lng={lng} />
       ) : null}
       <div>{children}</div>
