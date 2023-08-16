@@ -120,9 +120,13 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                 LIVE
               </div>
             ) : null}
-            {challenge.hostIcon && challenge.type !== 'OTHERS' ? (
+            {challenge.hostIcon ? (
               <div className="flex absolute w-full top-12 h-12" style={{cursor:'pointer'}} onClick={(e) => {
-                window.location.href = `/${lng}/campaigns/${challenge.id}`;
+                if (challenge.type !== 'OTHERS') {
+                  window.location.href = `/${lng}/campaigns/${challenge.id}`;
+                } else {
+                  window.open(challenge.joinLink ?? '', '_blank')
+                }
               }}>
                 <Image
                   src={challenge.hostIcon}
