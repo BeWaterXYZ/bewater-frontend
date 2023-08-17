@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { Challenge } from "@/services/types";
 import Link from "next/link";
 import { createUnionSchema } from "@/types/utils";
+import { useUser } from '@clerk/nextjs';
 
 const init: Partial<Challenge> = {
   requirements: "",
@@ -91,6 +92,56 @@ export default function Page() {
     isOnlineOnlySet(data.location === LOCATION.ONLINE);
   });
 
+  // 一般host用户只能创建challenge和workshop
+  let challengeType = [
+    {
+      value: "CHALLENGE",
+      label: (
+        <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
+          <Image
+            src="/assets/hackathon.png"
+            width={64}
+            height={64}
+            alt="hackathon"
+          />
+          Hackathon
+        </div>
+      ),
+    },
+    {
+      value: "WORKSHOP",
+      label: (
+        <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
+          <Image
+            src="/assets/workshop.png"
+            width={64}
+            height={64}
+            alt="workshop"
+          />
+          Workshop
+        </div>
+      ),
+    }
+  ];
+
+  const { isLoaded, isSignedIn, user } = useUser();
+  if (isLoaded && isSignedIn && user?.publicMetadata?.teamMember) {
+    challengeType.push({
+      value: "OTHERS",
+      label: (
+        <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
+          <Image
+            src="/assets/demoday.png"
+            width={64}
+            height={64}
+            alt="demoday"
+          />
+          Others
+        </div>
+      )
+    });
+  }
+
   return (
     <>
       <div className="container my-4 pt-20 flex flex-1 justify-center">
@@ -110,51 +161,7 @@ export default function Page() {
               control={control}
               name="type"
               onValueChange={(v) => setValue("type", v as  CAMPAIGN_TYPE)}
-              options={[
-                {
-                  value: "CHALLENGE",
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
-                      <Image
-                        src="/assets/hackathon.png"
-                        width={64}
-                        height={64}
-                        alt="hackathon"
-                      />
-                      Hackathon
-                    </div>
-                  ),
-                },
-               
-                {
-                  value: "WORKSHOP",
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
-                      <Image
-                        src="/assets/workshop.png"
-                        width={64}
-                        height={64}
-                        alt="workshop"
-                      />
-                      Workshop
-                    </div>
-                  ),
-                },
-                 {
-                  value: "OTHERS",
-                  label: (
-                    <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
-                      <Image
-                        src="/assets/demoday.png"
-                        width={64}
-                        height={64}
-                        alt="demoday"
-                      />
-                      Others
-                    </div>
-                  ),
-                },
-              ]}
+              options={challengeType}
             />
             <Input
               label="Campaign Title"

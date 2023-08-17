@@ -37,6 +37,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
   let filteredChallenges = challenges.filter((c) =>
     filter !== "" ? c.type === filter : true
   );
+
   return (
     <>
       <div className="flex gap-4 text-white font-secondary my-6">
