@@ -6,7 +6,7 @@ import { Challenge } from "@/services/types";
 import { validationSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowUpIcon, Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -91,15 +91,39 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                       setValue(`sponsors.${index}.members`, v as string[]);
                     }}
                   />
-                  <button
-                    className="absolute right-0 top-0 text-grey-500 flex items-center text-[12px]"
-                    onClick={() => {
-                      remove(index);
-                    }}
-                  >
-                    <Cross2Icon className="mr-1 text-grey-500" />
-                    Remove
-                  </button>
+                 
+
+                  <div className="absolute right-0 top-0 flex ">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        move(index, Math.max(index - 1, 0));
+                      }}
+                    >
+                      <ArrowUpIcon className="mr-1 text-grey-500" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        move(index, Math.min(index + 1, fields.length - 1));
+                      }}
+                    >
+                      <ArrowDownIcon className="mr-1 text-grey-500" />
+                    </button>
+                    <button
+                      className="text-grey-300 flex items-center text-[12px]"
+                      onClick={() => {
+                        remove(index);
+                      }}
+                    >
+                      <Cross2Icon className="mr-1 text-grey-500" />
+                      Remove
+                    </button>
+                  </div>
+
+
                 </div>
               );
             })}
