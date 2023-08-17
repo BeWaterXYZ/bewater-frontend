@@ -8,7 +8,6 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useUser } from '@clerk/nextjs';
 
 interface ChallengeListProps {
   challenges: Challenge[];
@@ -38,9 +37,6 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
   let filteredChallenges = challenges.filter((c) =>
     filter !== "" ? c.type === filter : true
   );
-
-  const { isLoaded, isSignedIn, user } = useUser()
-  //console.log(isLoaded, isSignedIn, user)
 
   return (
     <>
