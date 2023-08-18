@@ -147,7 +147,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
                     }}
                   >
                     <Cross2Icon className="mr-1 text-grey-500" />
-                    Remove 
+                    Remove
                   </button>
                 </div>
               );
@@ -199,8 +199,8 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
               title="Upload "
               subTitlte="JPG/PNG, 40px height"
               max={10}
-              height={140}
               width={200}
+              height={70}
               onValueChange={(v) => {
                 setValue(`keySponsors`, v as string[]);
               }}
