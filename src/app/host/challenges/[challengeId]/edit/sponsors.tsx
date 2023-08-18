@@ -82,10 +82,10 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                     label={"Sponsors Logo"}
                     name={`sponsors.${index}.members`}
                     title="Upload Avatar"
-                    subTitlte="JPG/PNG, 180x180px"
+                    subTitlte="JPG/PNG"
                     max={100}
-                    height={140}
                     width={200}
+                    height={70}
                     onValueChange={(v) => {
                       setValue(`sponsors.${index}.members`, v as string[]);
                     }}
@@ -119,8 +119,6 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                       Remove
                     </button>
                   </div>
-
-
                 </div>
               );
             })}
@@ -135,7 +133,7 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
             </button>
             <div className="flex mt-6 justify-end">
               <button className="btn btn-primary" type="submit">
-                Save
+                Save{" "}
               </button>
             </div>
           </form>
