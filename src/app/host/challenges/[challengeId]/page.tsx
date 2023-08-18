@@ -130,7 +130,7 @@ export default function Page({ params }: any) {
                   href={`${challenge.joinLink}`}
                   className="btn btn-primary rounded-none body-4 text-night uppercase"
                 >
-                  {challenge.linkText}
+                  {challenge.linkText ? challenge.linkText : 'REGISTER NOW'}
                 </Link>
               ) : null}
             </div>
@@ -452,7 +452,6 @@ export default function Page({ params }: any) {
             </div>
           </div>
         ) : null}
-
         <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
           <p className="text-[20px] md:text-[30px] text-center text-white">
             <Balancer ratio={0.9}>
