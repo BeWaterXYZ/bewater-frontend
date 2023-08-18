@@ -49,9 +49,19 @@ export function Uploader({
   };
 
   let onFileSelect: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    let fileSize = 0;
     let filesPicked = Array.from(e.target.files ?? []);
-    uploadingListSet((list) => list.concat(filesPicked));
+    if (filesPicked.length === 1) {
+      fileSize = filesPicked[0].size;
+    }
 
+    if (fileSize > 3 * 1024 * 1024) {
+      window.alert('Image size should be less than 3MB');
+      e.target.value = "";
+      return;
+    }
+
+    uploadingListSet((list) => list.concat(filesPicked));
     filesPicked.forEach(async (file) => {
       try {
         let url = await upload(file);
