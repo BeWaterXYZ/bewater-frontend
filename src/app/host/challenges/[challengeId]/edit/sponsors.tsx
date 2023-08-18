@@ -16,7 +16,7 @@ const schema = z
     sponsors: z.array(
       z.object({
         defname: validationSchema.text,
-        members: z.array(validationSchema.image),
+        members: z.array(validationSchema.text),
       })
     ),
   })
@@ -27,7 +27,6 @@ export type Inputs = z.infer<typeof schema>;
 export function EditSponsors({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
   let mutation = useMutationUpdateChallenge(challenge.id);
-
   let {
     control,
     register,
@@ -91,8 +90,6 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                       setValue(`sponsors.${index}.members`, v as string[]);
                     }}
                   />
-                 
-
                   <div className="absolute right-0 top-0 flex ">
                     <button
                       type="button"
@@ -127,7 +124,6 @@ export function EditSponsors({ challenge }: { challenge: Challenge }) {
                 </div>
               );
             })}
-
             <button
               type="button"
               className="text-[12px] text-grey-300"
