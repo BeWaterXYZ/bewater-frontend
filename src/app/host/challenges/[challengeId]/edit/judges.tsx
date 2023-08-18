@@ -92,8 +92,8 @@ export function EditJudges({ challenge }: { challenge: Challenge }) {
                     subTitlte="JPG/PNG, 180x180px"
                     error={errors.judges?.[index]?.avatarURI}
                     max={1}
-                    height={140}
                     width={200}
+                    height={200}
                     onValueChange={(v) => {
                       setValue(`judges.${index}.avatarURI`, v as string);
                     }}
