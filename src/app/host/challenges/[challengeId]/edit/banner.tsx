@@ -102,8 +102,8 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
                 label=" Host Logo"
                 title="Upload the host image"
                 subTitlte="PNG, 24px height"
-                height={140}
                 width={200}
+                height={70}
                 max={1}
                 control={control}
                 name="hostIcon"

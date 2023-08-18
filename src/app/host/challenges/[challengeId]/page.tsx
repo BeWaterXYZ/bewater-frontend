@@ -106,7 +106,7 @@ export default function Page({ params }: any) {
             <EditBanner challenge={challenge} />
           </div>
           <Image
-            src={challenge.hostIcon ?? ""}
+            src={challenge.hostIcon ?? "/sponsors/hostlogo.png"}
             width={120}
             height={24}
             alt="host logo"
