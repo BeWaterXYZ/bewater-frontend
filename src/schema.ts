@@ -15,7 +15,7 @@ export const validationSchema = {
       .min(3, { message: 'At least 3 characters' })
       .refine(checkUsername(currentUserName), {
         message: 'The user name is taken',
-      }),
+    }),
   fullName: z.string().min(3, { message: 'At least 3 characters' }),
   // general text field
   text: z.string().min(3, { message: 'At least 3 characters' }),
@@ -35,10 +35,9 @@ export const validationSchema = {
     .string().array()
     .min(1, { message: 'You need to choose one tag' })
     .max(1, { message: 'You can only choose one tag' }),
-
-    date: z
-      .string()
-      .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),
-    image: z.string().url("please upload image"),
-    positive: z.string().regex(/^[1-9][0-9]*$/, "wrong number"),
+  date: z
+    .string()
+    .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),
+  image: z.string().url("please upload image"),
+  positive: z.string().regex(/^[1-9][0-9]*$/, "wrong number"),
 };
