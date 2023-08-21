@@ -5,10 +5,7 @@ import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
 function prepareData(rawMilestones: Milestone[]) {
   const milestones = [];
   for (const it of rawMilestones) {
-    if (it.showName === 'NOP') {
-      continue;
-    }
-    if (!it.showName && it.stageName === 'NOP') {
+    if (it.showName === '' || it.showName === 'NOP') {
       continue;
     }
     milestones.push(it);
