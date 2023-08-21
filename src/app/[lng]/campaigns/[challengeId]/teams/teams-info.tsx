@@ -58,14 +58,14 @@ export function ChallengeTeamsInfo({
             className="m-1"
           />
         </div>
-        { isCountDown ? (
+        { submissionEndTime && isCountDown ? (
         <div className="flex flex-col justify-around items-center lg:items-start">
           <p className="body-2 text-[#701A75] font-bold uppercase mt-8 lg:mt-0">
             {wordingMap['Teaming']}
           </p>
           <p className="mt-2">
             {' '}
-            <Countdown deadline={curMileStone.dueDate} />
+            <Countdown deadline={submissionEndTime} />
           </p>
         </div>) : null }
       </div>
