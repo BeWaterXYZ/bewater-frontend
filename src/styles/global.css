@@ -75,3 +75,7 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
+
+.cl-footer+div{
+  display:none;
+}
