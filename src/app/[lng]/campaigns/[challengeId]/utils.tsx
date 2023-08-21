@@ -10,6 +10,10 @@ export function isMileStoneEnabled(
     (ml) => ml.stageName === milestone,
   );
 
+  if (!menuMileStone) {
+    return false;
+  }
+
   return compareDesc(parseISO(menuMileStone!.dueDate), new Date()) > 0;
 }
 

@@ -47,6 +47,7 @@ export default function TeamJoinDialog({
 
   const onSubmit = async (formData: Inputs) => {
     showLoading();
+
     try {
       const data = await sendGroupingRequest(team.id, {
         type: 'APPLICATION',
