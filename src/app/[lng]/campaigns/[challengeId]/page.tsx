@@ -19,7 +19,8 @@ import { isMileStoneEnabled, isWorkshop } from './utils';
 
 import Balancer from 'react-wrap-balancer';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
-import { ScheduleSection } from './schedule-section/3';
+import { ScheduleSection as ScheduleSection3 } from './schedule-section/3';
+import { ScheduleSection as ScheduleSection42  } from './schedule-section/42';
 import { useTranslation } from '@/app/i18n';
 //import HoverCard from '@/components/hover-card';
 import { Fragment } from 'react';
@@ -147,11 +148,15 @@ export default async function ChallengeIntro({ params }: any) {
             {t('campaign.t5')}
           </div>
           <div className="body-3 md:body-2 text-white">
-            {challenge.description.split('\n').map((s) => (
-              <p className="py-3" key={s}>
-                {s}
-              </p>
-            ))}
+            {challenge.id === '42' ? (
+              <Markdown>{challenge.description}</Markdown>
+            ) : (
+              challenge.description.split('\n').map((s) => (
+                <p className="py-3" key={s}>
+                  {s}
+                </p>
+              ))
+            )}
           </div>
         </div>
         <div>
@@ -282,7 +287,7 @@ export default async function ChallengeIntro({ params }: any) {
         ) : challenge.id === '2' ? (
           <PrizeSection2 t={t} lng={lng} />
         ) : challenge.id === '3' ? (
-          <ScheduleSection />
+          <ScheduleSection3 />
         ) : challenge.id === '4' ? (
           <PrizeSection4 t={t} />
         ) : challenge.id === '5' ? (
@@ -295,6 +300,8 @@ export default async function ChallengeIntro({ params }: any) {
           <PrizeSection11 t={t} lng={lng} />
         ) : challenge.id === '19' ? (
           <PrizeSection19 t={t} lng={lng} challenge={challenge} />
+        ) : challenge.id === '42' ? (
+          <ScheduleSection42 />
         ) : (
           <div className="container">
             <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
