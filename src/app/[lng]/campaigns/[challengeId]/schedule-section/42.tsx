@@ -35,7 +35,7 @@ export function ScheduleSection() {
         <div className="flex flex-col gap-4 md:gap-7 items-center">
           <div className="prizeList2 w-[303px] max-w-[800px] sm:w-[420px] lg:w-[600px] mx-5 px-10 py-10">
             <div className="flex z-[1] flex-col gap-4 lg:gap-6 w-full body-3 lg:font-secondary lg:body-0 lg:font-normal text-gray-300 lg:text-gray-300">
-              <p>除了大家必须参加的 DemoDay ，我们还提供了“ Happy hour ”和“大 理体验日”的休闲活动，作为开发过程中的闲暇放松，届时大家可以根据自己的意愿自行参与。</p>
+              <p>除了大家必须参加的 DemoDay ，我们还提供了“Happy hour”和“大理体验日”的休闲活动，作为开发过程中的闲暇放松，届时大家可以根据自己的意愿自行参与。</p>
             </div>
           </div>
         </div>
