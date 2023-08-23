@@ -136,7 +136,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     height={40}
                     alt=""
                     className="mx-auto h-10"
-                    style={{width:'fit-content'}}
+                    style={{width:"auto"}}
                   />
                 ) : null}
               </div>
