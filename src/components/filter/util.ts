@@ -7,7 +7,9 @@ export function prepareProjectTagFilterData(projects: Project[]) {
     amount: number;
   }[] = [];
 
-  const tmpMap: any = {};
+  const tmpMap: {
+    [key: string]: number;
+  } = {};
   for (const it of projects) {
     if (it.tags) {
       for (const tag of it.tags) {

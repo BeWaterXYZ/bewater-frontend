@@ -93,7 +93,7 @@ export default function Page() {
   });
 
   // 一般host用户只能创建challenge和workshop
-  let challengeType = [
+  const challengeType = [
     {
       value: "CHALLENGE",
       label: (
