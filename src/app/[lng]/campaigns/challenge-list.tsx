@@ -129,14 +129,16 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                   window.open(challenge.joinLink ?? '', '_blank')
                 }
               }}>
-                <Image
-                  src={challenge.hostIcon}
-                  width={144}
-                  height={40}
-                  alt=""
-                  className="mx-auto h-10"
-                  style={{width:'fit-content'}}
-                />
+                {challenge.type !== 'OTHERS' ? (
+                  <Image
+                    src={challenge.hostIcon}
+                    width={144}
+                    height={40}
+                    alt=""
+                    className="mx-auto h-10"
+                    style={{width:'fit-content'}}
+                  />
+                ) : null}
               </div>
               ) : null}
           </div>
