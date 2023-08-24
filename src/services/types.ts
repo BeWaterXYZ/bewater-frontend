@@ -97,13 +97,13 @@ export interface Award {
 export interface Judge {
   id?: string;
   name: string;
-  title: string;
+  title?: string | null;
   avatarURI: string;
 
-  organization?: string;
-  description?: string;
-  twitterLink?: string;
-  email?: string;
+  organization?: string | null;
+  description?: string | null;
+  twitterLink?: string | null;
+  email?: string | null;
 }
 
 export const defaultMileStones = [
