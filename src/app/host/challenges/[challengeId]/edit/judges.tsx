@@ -17,7 +17,7 @@ const schema = z
     judges: z.array(
       z.object({
         id: z.string().optional(),
-        name: validationSchema.text,
+        name: validationSchema.zhName,
         title: z.string().nullable(),
         avatarURI: validationSchema.text,
         description: z.string().nullable(),
