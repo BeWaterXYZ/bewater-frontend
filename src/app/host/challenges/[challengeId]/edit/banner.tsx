@@ -23,10 +23,10 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
 
   const schema = z.object({
     title: validationSchema.text,
-    hostIcon: validationSchema.image,
+    hostIcon: z.string().nullable(),
     bannerUrl: validationSchema.image,
     location: z.string(),
-    city: isOnlineOnly ? z.string().optional() : validationSchema.text,
+    city: isOnlineOnly ? z.string().optional() : validationSchema.zhName,
     startTime: validationSchema.date,
     endTime: validationSchema.date,
     joinLink: z.string().optional(),

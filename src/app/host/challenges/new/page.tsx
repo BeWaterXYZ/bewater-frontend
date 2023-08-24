@@ -54,7 +54,7 @@ export default function Page() {
     hostName: validationSchema.text,
     description: validationSchema.text,
     location: z.string(),
-    city: isOnlineOnly ? z.string().optional() : validationSchema.text,
+    city: isOnlineOnly ? z.string().optional() : validationSchema.zhName,
     startTime: validationSchema.date,
     endTime: validationSchema.date,
   });
