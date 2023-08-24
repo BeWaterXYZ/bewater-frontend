@@ -64,6 +64,16 @@ export function AssetItem({
       dismissLoading();
     }
   };
+
+  const completeUrl = (val : string) => {
+    if (val) {
+      if (!val.includes('//')) {
+        return `http://${val}`;
+      }
+    }
+    return val;
+  }
+
   return (
     <div className="rounded p-3 border border-midnight bg-latenight flex gap-2 justify-between ">
       <div className="flex  p-2">
@@ -91,7 +101,7 @@ export function AssetItem({
                 </p>
                 <Link
                   target={"_blank"}
-                  href={value}
+                  href={completeUrl(value)}
                   className="body-4 text-gray-300 overflow-hidden whitespace-nowrap overflow-ellipsis "
                 >
                   {field === 'githubURI'
@@ -124,7 +134,7 @@ export function AssetItem({
               )}
             </div>
           ) : (
-            <Link className="btn btn-secondary" href={value!} target={"_blank"}>
+            <Link className="btn btn-secondary" href={completeUrl(value!)} target={"_blank"}>
               Visit
             </Link>
           )}
