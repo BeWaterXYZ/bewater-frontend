@@ -476,7 +476,7 @@ export default async function ChallengeIntro({ params }: any) {
                           {judge.title ?? ''}
                         </p>
                         <p className="body-4 text-grey-400">
-                          {judge.organization ?? ''}
+                          {judge.organization ?? judge.description ?? ''}
                         </p>
                         <div>
                           {judge.twitterLink ? (
