@@ -79,7 +79,7 @@ export interface Challenge {
   keySponsors?: string[];
 
   city?: string;
-  hostIcon?: string;
+  hostIcon?: string | null;
   type: CAMPAIGN_TYPE;
   metadata?: any;
   yotadata?: any;
