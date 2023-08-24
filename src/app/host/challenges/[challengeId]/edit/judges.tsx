@@ -18,10 +18,10 @@ const schema = z
       z.object({
         id: z.string().optional(),
         name: validationSchema.text,
-        title: validationSchema.text,
+        title: z.string().nullable(),
         avatarURI: validationSchema.text,
-        description: z.string(),
-        twitterLink: z.string(),
+        description: z.string().nullable(),
+        twitterLink: z.string().nullable(),
       })
     ),
   })
