@@ -90,6 +90,7 @@ export function AssetItem({
                   {label}
                 </p>
                 <Link
+                  target={"_blank"}
                   href={value}
                   className="body-4 text-gray-300 overflow-hidden whitespace-nowrap overflow-ellipsis "
                 >
@@ -123,7 +124,7 @@ export function AssetItem({
               )}
             </div>
           ) : (
-            <Link className="btn btn-secondary" href={value!}>
+            <Link className="btn btn-secondary" href={value!} target={"_blank"}>
               Visit
             </Link>
           )}
