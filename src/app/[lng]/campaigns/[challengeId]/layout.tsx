@@ -20,10 +20,6 @@ export default async function Layout({
   // eslint-disable-next-line
   const { t } = await useTranslation(lng, 'translation');
 
-  if (challenge.yotadata?.title) {
-    challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
-  }
-
   return (
     <div>
       <ChallengeHero challenge={challenge} lng={lng} t={t} />

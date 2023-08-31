@@ -24,6 +24,10 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
     topRegisterBtnText = challenge.linkText;
   }
 
+  if (challenge.yotadata?.title) {
+    challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
+  }
+
   return (
     <div
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
