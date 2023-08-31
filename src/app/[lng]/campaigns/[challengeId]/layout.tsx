@@ -20,14 +20,8 @@ export default async function Layout({
   // eslint-disable-next-line
   const { t } = await useTranslation(lng, 'translation');
 
-  if (lng === 'en' && challenge.yotadata) {
-    if (challenge.yotadata.entitle) {
-      challenge.title = challenge.yotadata.entitle;
-    }
-  } else if (lng === 'zh' && challenge.yotadata) {
-    if (challenge.yotadata.zhtitle) {
-      challenge.title = challenge.yotadata.zhtitle;
-    }
+  if (challenge?.yotadata?.title) {
+    challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
   }
 
   return (

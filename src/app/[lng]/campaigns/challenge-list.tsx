@@ -22,16 +22,10 @@ const filterMap = [
 ];
 
 export function ChallengeList({ challenges, lng }: ChallengeListProps) {
-  let [filter, filterSet] = useState("");
+  let [filter, filterSet] = useState('');
   for (const it of challenges) {
-    if (lng === "en" && it.yotadata) {
-      if (it.yotadata.entitle) {
-        it.title = it.yotadata.entitle;
-      }
-    } else if (lng === "zh" && it.yotadata) {
-      if (it.yotadata.zhtitle) {
-        it.title = it.yotadata.zhtitle;
-      }
+    if (it?.yotadata?.title) {
+      it.title = lng === 'zh' ? (it.yotadata.title.zh ?? it.yotadata.title.en) : (it.yotadata.title.en ?? it.yotadata.title.zh);
     }
   }
   let filteredChallenges = challenges.filter((c) =>
