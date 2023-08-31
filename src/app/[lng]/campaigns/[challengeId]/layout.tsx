@@ -46,6 +46,10 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
   }
 
+  if (challenge.yotadata?.description) {
+    challenge.description = lng === 'zh' ? (challenge.yotadata.description.zh ?? challenge.yotadata.description.en) : (challenge.yotadata.description.en ?? challenge.yotadata.description.zh);
+  }
+
   return {
     title: t('bewater') + ' - ' + challenge.title,
     description: challenge.description,
