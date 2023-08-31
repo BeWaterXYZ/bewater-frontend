@@ -557,7 +557,10 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
               <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                 <h3 className="text-white text-[24px] font-bold mb-8">
-                  {t('campaign.t11')}
+                  {challenge.yotadata?.judgingCriteria ?
+                    (lng === 'en' ? (challenge.yotadata.judgingCriteria?.en ?? challenge.yotadata.judgingCriteria?.zh) :
+                      (challenge.yotadata.judgingCriteria?.zh ?? challenge.yotadata.judgingCriteria?.en)) :
+                    t('campaign.t11')}
                 </h3>
                 {challenge.reviewDimension ? (
                   <Markdown>{challenge.reviewDimension}</Markdown>
