@@ -42,11 +42,9 @@ export default async function ChallengeIntro({ params }: any) {
     isTeamingEnabled = isMileStoneEnabled('Teaming', challenge);
   }
 
-  const judges = challenge.judges;
-
   // 这里的四个字段借助json支持中英文显示
   if (challenge.yotadata?.title) {
-    challenge.title =       lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
+    challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
   }
 
   if (challenge.yotadata?.description) {
@@ -54,7 +52,7 @@ export default async function ChallengeIntro({ params }: any) {
   }
 
   if (challenge.yotadata?.requirements) {
-    challenge.requirements =    lng === 'zh' ? (challenge.yotadata.requirements.zh ?? challenge.yotadata.requirements.en) : (challenge.yotadata.requirements.en ?? challenge.yotadata.requirements.zh);
+    challenge.requirements = lng === 'zh' ? (challenge.yotadata.requirements.zh ?? challenge.yotadata.requirements.en) : (challenge.yotadata.requirements.en ?? challenge.yotadata.requirements.zh);
   }
 
   if (challenge.yotadata?.reviewDimension) {
@@ -65,7 +63,7 @@ export default async function ChallengeIntro({ params }: any) {
   if (challenge.id === '2') {
     if (lng === 'en') {
       challenge.location = 'Online Event';
-      for (const it of judges) {
+      for (const it of challenge.judges) {
         if (it.name.includes('李达潮')) {
           it.name = 'Lee DaTie';
           it.organization = 'Trainee of William G.';
@@ -429,8 +427,8 @@ export default async function ChallengeIntro({ params }: any) {
               t('campaign.t8')}
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
-            {judges.length > 0
-              ? judges
+            {challenge.judges?.length > 0
+              ? challenge.judges
                   .map((judge) => {
                     return (
                       <div key={judge.id!} className="w-[180px] mb-2 ">
@@ -477,7 +475,7 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     );
                   })
-              : challenge?.yotadata?.judges?.length > 0
+              : challenge.yotadata?.judges?.length > 0
               ? challenge.yotadata.judges.map((it: any) => {
                   return (
                     <>
@@ -512,7 +510,7 @@ export default async function ChallengeIntro({ params }: any) {
                   );
                 })
               : null}
-            {challenge?.yotadata?.judges?.length > 0 ? null : (
+            {challenge.yotadata?.judges?.length > 0 ? null : (
               <div className="w-[180px]">
                 <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
                   Coming
