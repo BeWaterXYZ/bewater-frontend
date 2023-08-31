@@ -44,42 +44,21 @@ export default async function ChallengeIntro({ params }: any) {
 
   const judges = challenge.judges;
 
-  // 这里的四个字段借助matadata支持中英文显示
-  if (lng === 'en' && challenge.yotadata) {
-    if (challenge.yotadata.entitle) {
-      challenge.title = challenge.yotadata.entitle;
-    }
-    if (challenge.yotadata.endescription) {
-      challenge.description = challenge.yotadata.endescription;
-    }
-    if (challenge.yotadata.enrequirements) {
-      challenge.requirements = challenge.yotadata.enrequirements;
-    }
-    if (challenge.yotadata.enreviewDimension) {
-      challenge.reviewDimension = challenge.yotadata.enreviewDimension;
-    }
-  } else if (lng === 'zh' && challenge.yotadata) {
-    if (challenge.yotadata.zhtitle) {
-      challenge.title = challenge.yotadata.zhtitle;
-    }
-    if (challenge.yotadata.zhdescription) {
-      challenge.description = challenge.yotadata.zhdescription;
-    }
-    if (challenge.yotadata.zhrequirements) {
-      challenge.requirements = challenge.yotadata.zhrequirements;
-    }
-    if (challenge.yotadata.zhreviewDimension) {
-      challenge.reviewDimension = challenge.yotadata.zhreviewDimension;
-    }
+  // 这里的四个字段借助json支持中英文显示
+  if (challenge.yotadata?.title) {
+    challenge.title =       lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
   }
 
-  let adjudicators = t('campaign.t8');
-  if (challenge.yotadata?.adjudicators) {
-    if (lng === 'zh') {
-      adjudicators = challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en;
-    } else {
-      adjudicators = challenge.yotadata.adjudicators.en;
-    }
+  if (challenge.yotadata?.description) {
+    challenge.description = lng === 'zh' ? (challenge.yotadata.description.zh ?? challenge.yotadata.description.en) : (challenge.yotadata.description.en ?? challenge.yotadata.description.zh);
+  }
+
+  if (challenge.yotadata?.requirements) {
+    challenge.requirements =    lng === 'zh' ? (challenge.yotadata.requirements.zh ?? challenge.yotadata.requirements.en) : (challenge.yotadata.requirements.en ?? challenge.yotadata.requirements.zh);
+  }
+
+  if (challenge.yotadata?.reviewDimension) {
+    challenge.reviewDimension = lng === 'zh' ? (challenge.yotadata.reviewDimension.zh ?? challenge.yotadata.reviewDimension.en) : (challenge.yotadata.reviewDimension.en ?? challenge.yotadata.reviewDimension.zh);
   }
 
   // todo 删除以下hack部分
@@ -305,9 +284,9 @@ export default async function ChallengeIntro({ params }: any) {
         ) : (
           <div className="container">
             <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
-              {challenge.yotadata?.award?.entitle ? (
+              {challenge.yotadata?.award?.title ? (
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  {challenge.yotadata.award.entitle}
+                  {lng === 'zh' ? (challenge.yotadata.award.title.zh ?? challenge.yotadata.award.title.en) : (challenge.yotadata.award.title.en ?? challenge.yotadata.award.title.zh) }
                 </h3>
               ) : (
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
@@ -389,14 +368,18 @@ export default async function ChallengeIntro({ params }: any) {
                   target="_blank"
                 >
                   <div className="flex flex-row flex-wrap items-top gap-10 p-8 pt-0">
-                    {challenge.yotadata.award.other.entitle ? (
+                    {challenge.yotadata.award.other.title ? (
                       <p className="body-3 text-white/60 text-center w-full">
-                        {challenge.yotadata.award.other.entitle}
+                        {lng === 'zh' ?
+                          (challenge.yotadata.award.other.title.zh ?? challenge.yotadata.award.other.title.en) :
+                          (challenge.yotadata.award.other.title.en ?? challenge.yotadata.award.other.title.zh)}
                       </p>
                     ) : null}
-                    {challenge.yotadata.award.other.entext ? (
+                    {challenge.yotadata.award.other.text ? (
                       <p className="body-4 text-white/60">
-                        {challenge.yotadata.award.other.entext}
+                        {lng === 'zh' ?
+                          (challenge.yotadata.award.other.text.zh ?? challenge.yotadata.award.other.text.en) :
+                          (challenge.yotadata.award.other.text.en ?? challenge.yotadata.award.other.text.zh)}
                       </p>
                     ) : null}
                     {challenge.yotadata.award.other.img ? (
@@ -439,7 +422,11 @@ export default async function ChallengeIntro({ params }: any) {
       <>
         <div className="mt-16">
           <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-            {adjudicators}
+            {challenge.yotadata?.adjudicators ?
+              (lng === 'zh' ?
+                (challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en) :
+                (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh) ) :
+              t('campaign.t8')}
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
             {judges.length > 0
