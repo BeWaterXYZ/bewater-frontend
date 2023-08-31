@@ -127,10 +127,10 @@ export default async function ChallengeIntro({ params }: any) {
             {t('campaign.t5')}
           </div>
           <div className="body-3 md:body-2 text-white">
-            {challenge.id === '42' ? (
-              <Markdown>{challenge.description}</Markdown>
+            {challenge.description?.endsWith('--edit-by-markdown') ? (
+              <Markdown style={{color: 'white'}}>{challenge.description.substring(0, challenge.description.length - '--edit-by-markdown'.length)}</Markdown>
             ) : (
-              challenge.description.split('\n').map((s) => (
+              (challenge.description ?? '').split('\n').map((s) => (
                 <p className="py-3" key={s}>
                   {s}
                 </p>
