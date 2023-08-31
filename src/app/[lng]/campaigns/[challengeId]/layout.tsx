@@ -20,7 +20,7 @@ export default async function Layout({
   // eslint-disable-next-line
   const { t } = await useTranslation(lng, 'translation');
 
-  if (challenge?.yotadata?.title) {
+  if (challenge.yotadata?.title) {
     challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
   }
 
@@ -41,6 +41,10 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   const challenge = await getChallengeById(challengeId);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(lng, 'translation');
+
+  if (challenge.yotadata?.title) {
+    challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
+  }
 
   return {
     title: t('bewater') + ' - ' + challenge.title,
