@@ -77,16 +77,16 @@ export default function RootLayout({
             </div>
           </QueryProvider>
           <Script
-            src="https://www.googletagmanager.com/gtag/js?id=G-60J539690M"
-            strategy="afterInteractive"
+            src="https://www.googletagmanager.com/gtag/js?id=G-1FYW2MFVEG"
+            async
           />
           <Script id="google-analytics" strategy="afterInteractive">
             {`
            window.dataLayer = window.dataLayer || [];
            function gtag(){dataLayer.push(arguments);}
            gtag('js', new Date());
-
-           gtag('config', 'G-60J539690M');
+         
+           gtag('config', 'G-1FYW2MFVEG');
         `}
           </Script>
         </body>
