@@ -10,7 +10,7 @@ resultMap.set('5', Challenge5);
 export default function Page({ params }: any) {
   const { challengeId } = params || {};
   const ChallengeResult = resultMap.get(challengeId);
-  return (
-      <ChallengeResult {...params} />
-  );
+  if(ChallengeResult) {
+    return <ChallengeResult {...params} />
+  }
 }
