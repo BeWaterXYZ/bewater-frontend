@@ -59,7 +59,7 @@ export default function Page({ params }: any) {
               />
               <div className="absolute md:static md:pt-8 w-full flex justify-center md:w-auto bottom-4 left-4">
                 <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-                  $2,500
+                  $10,000
                 </div>
               </div>
             </div>
@@ -94,7 +94,7 @@ export default function Page({ params }: any) {
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-                    $1,700
+                    $5,000
                   </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@ export default function Page({ params }: any) {
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-                    $1,700
+                    $5,000
                   </div>
                 </div>
               </div>
@@ -160,7 +160,7 @@ export default function Page({ params }: any) {
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-                    $800
+                    $2,000
                   </div>
                 </div>
               </div>
@@ -192,7 +192,7 @@ export default function Page({ params }: any) {
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-                    $800
+                    $2,000
                   </div>
                 </div>
               </div>
@@ -224,9 +224,36 @@ export default function Page({ params }: any) {
                 </div>
                 <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
                   <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-                    $800
+                    $2,000
                   </div>
                 </div>
+              </div>
+              <div
+                className="relative w-full pb-16 md:pb-10  p-10 rounded-xl flex flex-wrap  justify-center md:justify-between"
+                style={{
+                  background:
+                    'linear-gradient(256.33deg, #06385B 0.53%, #0F0E38 100%)',
+                }}
+              >
+                <div
+                  className=" relative flex-1 h-[216px] md:h-auto flex justify-center text-white body-0 items-center "
+                  style={{}}
+                >
+                   Most Popular Award
+                </div>
+                <div className="flex-1">
+                  <ResultCard
+                    teamId={w.teams[6]}
+                    thumbnail
+                    score={w.scores[6]}
+                    lng={lng}
+                  />
+                </div>
+                {/* <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
+                  <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
+                    $2,000
+                  </div>
+                </div> */}
               </div>
             </div>
           </div>
