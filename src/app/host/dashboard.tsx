@@ -50,7 +50,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       />,
     );
   }
-  if (!challenge.awardAssorts) {
+  if (!challenge.awardAssorts || challenge.awardAssorts.length === 0) {
     todos.push(
       <TodoLink
         key={'awards'}
