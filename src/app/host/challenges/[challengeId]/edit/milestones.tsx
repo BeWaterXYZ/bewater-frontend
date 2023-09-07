@@ -37,7 +37,10 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      milestones: challenge.milestones.map((ms) => ({
+      // todo 时间线编辑2.0。当前隐藏 NOP 阶段
+      milestones: challenge.milestones.filter((ms) => {
+        return ms.stageName === 'NOP' ? false : true;
+      }).map((ms) => ({
         ...ms,
         dueDate: ms.dueDate.substring(0, 10),
       })),
