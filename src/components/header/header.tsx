@@ -8,7 +8,7 @@ import Image from 'next/image';
 interface HeaderImplProps {
   logo: React.ReactNode;
   nav: React.ReactNode;
-  lng: React.ReactNode;
+  lang: React.ReactNode;
   user: React.ReactNode;
 }
 
@@ -16,7 +16,7 @@ const UserArea = dynamicLoad(() => import('./user'), {
   ssr: false,
 });
 
-const HeaderImpl = ({ logo, nav, lng, user }: HeaderImplProps) => {
+const HeaderImpl = ({ logo, nav, lang, user }: HeaderImplProps) => {
   return (
     <header
       id="main-header"
@@ -27,7 +27,7 @@ const HeaderImpl = ({ logo, nav, lng, user }: HeaderImplProps) => {
           {logo}
         </div>
         <div className="w-1/2 order-2 md:order-3 md:w-auto flex justify-end h-[72px] items-center">
-          {lng}
+          {lang}
           {user}
         </div>
       </div>
@@ -69,7 +69,7 @@ export const Header = ({ lng }: { lng: string }) => {
     <HeaderImpl
       logo={<BeWaterLogo lng={lng} />}
       nav={<Nav />}
-      lng={<Lng lng={lng} />}
+      lang={<Lng lng={lng} />}
       user={<UserArea lng={lng} />}
     />
   );
