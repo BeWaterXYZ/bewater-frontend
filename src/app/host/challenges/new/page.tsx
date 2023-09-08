@@ -23,27 +23,33 @@ const init: Partial<Challenge> = {
   reviewDimension: "",
   milestones: [
     {
-      dueDate: "2023-06-22",
+      dueDate: "2023-06-22T00:00:00.000+00:00",
       stageName: "Preparation",
+      showName: "Preparation",
     },
     {
-      dueDate: "2023-06-23",
+      dueDate: "2023-06-23T00:00:00.000+00:00",
       stageName: "Teaming",
+      showName: "Submission",
     },
     {
-      dueDate: "2023-06-24",
+      dueDate: "2023-06-24T00:00:00.000+00:00",
       stageName: "Project Submission",
+      showName: "Registration Deadline",
     },
     {
-      dueDate: "2023-06-25",
+      dueDate: "2023-06-25T00:00:00.000+00:00",
       stageName: "Review",
+      showName: "Review",
     },
     {
-      dueDate: "2023-06-26",
+      dueDate: "2023-06-26T00:00:00.000+00:00",
       stageName: "Result",
+      showName: "Result",
     },
   ],
 };
+
 export default function Page() {
   let router = useRouter();
   let [showFullScreen, showFullScreenSet] = useState(false);

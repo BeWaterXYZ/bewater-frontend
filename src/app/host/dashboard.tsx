@@ -41,7 +41,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       />,
     );
   }
-  if (!challenge.milestones) {
+  if (!challenge.milestones || challenge.milestones.length === 0) {
     todos.push(
       <TodoLink
         key={'milestones'}
