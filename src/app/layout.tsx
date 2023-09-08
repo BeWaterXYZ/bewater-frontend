@@ -7,6 +7,7 @@ import { Footer } from '@/components/footer';
 import { Metadata } from 'next';
 import { languages } from './i18n/settings';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Dumpster } from './[lng]/dumpster';
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -67,6 +68,7 @@ export default function RootLayout({
             <div className="min-h-[100vh] flex flex-col bg-night">
               <div className="flex-1">{children}</div>
               <Footer />
+              <Dumpster />
             </div>
           </QueryProvider>
           <Script

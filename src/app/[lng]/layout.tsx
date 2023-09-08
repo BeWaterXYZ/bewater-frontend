@@ -1,5 +1,4 @@
 import { Header } from '@/components/header';
-import { Dumpster } from './dumpster';
 
 export default async function RootLayout({
   children,
@@ -13,7 +12,6 @@ export default async function RootLayout({
     <div>
       <Header lng={lng} />
       <div>{children}</div>
-      <Dumpster />
     </div>
   );
 }
