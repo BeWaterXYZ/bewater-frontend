@@ -7,6 +7,7 @@ import { CaretRightIcon } from '@radix-ui/react-icons';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useUser } from '@clerk/nextjs';
 
 function TodoLink({
   // challenge,
@@ -131,7 +132,8 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
 }
 
 export function Dashboard() {
-  let { data: challenges, isLoading } = useFetchChallenges();
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { data: challenges, isLoading } = useFetchChallenges();
   useLoadingWhen(isLoading);
   if (!challenges) return null;
   return (
@@ -157,7 +159,7 @@ export function Dashboard() {
                   />
                   <div className="space-y-2">
                     <p className="text-base font-bold text-white">
-                      {challenge.title}
+                      {challenge.title}{isLoaded && isSignedIn && user?.publicMetadata?.teamMember ? `（${challenge.id}）` : ""}
                     </p>
                     <p className="text-sm text-grey-500">
                       {/* fixme */}
