@@ -1,6 +1,6 @@
 import { Header } from '@/components/header';
 
-export default function RootLayout({
+export default function Layout({
   children,
   params,
 }: {
