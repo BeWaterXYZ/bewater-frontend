@@ -8,7 +8,7 @@ export const Lng = ({ lng }: { lng: string }) => {
   };
   return (
     !!lng ? (
-      <div className="mr-4 text-[12px]">
+      <div className="mr-4 text-[12px] whitespace-nowrap">
         <span className="font-bold text-grey-400 cursor-pointer">{lang[lng]}</span>
         {languages.filter((l) => lng !== l).map((l, index) => {
           return (
