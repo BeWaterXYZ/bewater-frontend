@@ -25,23 +25,13 @@ function i18n(req: any) {
     !req.nextUrl.pathname.startsWith('/sign-in') &&
     !req.nextUrl.pathname.startsWith('/sign-up') &&
     !req.nextUrl.pathname.startsWith('/onboarding') &&
-    !req.nextUrl.pathname.startsWith('/host') 
+    !req.nextUrl.pathname.startsWith('/host')
   ) {
     if (!languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`))) {
       return NextResponse.redirect(
         new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
       );
     }
-  }
-
-  if (req.nextUrl.pathname.startsWith('/en/challenges')) {
-    return NextResponse.redirect(
-      new URL(`/en/campaigns${req.nextUrl.pathname.substring(14)}`, req.url),
-    );
-  } else if (req.nextUrl.pathname.startsWith('/zh/challenges')) {
-    return NextResponse.redirect(
-      new URL(`/zh/campaigns${req.nextUrl.pathname.substring(14)}`, req.url),
-    );
   }
 
   if (req.headers.has('referer')) {
