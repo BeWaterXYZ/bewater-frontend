@@ -33,23 +33,6 @@ const nextConfig = {
         source: "/zh/campaigns/bewater-web3-zh",
         destination: "/zh/campaigns/1",
       },
-      {
-        source: "/en/campaigns/63c82bd12ddc570f32ada869",
-        destination: "/en/campaigns/2",
-      },
-      {
-        source: "/zh/campaigns/63c82bd12ddc570f32ada869",
-        destination: "/zh/campaigns/2",
-      },
-      {
-        source: "/en/campaigns/63c82bd12ddc570f32ada868",
-        destination: "/en/campaigns/1",
-      },
-      {
-        source: "/zh/campaigns/63c82bd12ddc570f32ada868",
-        destination: "/zh/campaigns/1",
-      },
-      // todo更多语言
     ];
   },
 
