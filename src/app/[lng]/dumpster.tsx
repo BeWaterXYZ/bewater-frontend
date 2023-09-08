@@ -50,7 +50,7 @@ if (isBrowser) {
   });
 }
 
-export function Dumpster({ lng }: { lng: string }) {
+export function Dumpster() {
   const toasts = useToastStore((s) => s.toasts);
   const dialogs = useDialogStore((s) => s.dialogs);
   const closeDialog = useDialogStore((s) => s.close);

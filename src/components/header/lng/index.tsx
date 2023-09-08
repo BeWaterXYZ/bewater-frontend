@@ -1,0 +1,1 @@
+export { Lng } from './switch';
