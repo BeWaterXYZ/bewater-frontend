@@ -14,9 +14,10 @@ export default function Page({ params }: { params: { lng: string } }) {
   if (!data) return null;
 
   return (
-    <div className="h-full container flex flex-col  justify-center items-center  md:my-20">
-      <div className="md:max-w-[450px]  w-full flex flex-col">
-        <h5 className="text-day  heading-5">
+    <div className="h-full container flex flex-col justify-center items-center my-20">
+      <div className="md:max-w-[450px] w-full flex flex-col">
+        <br />
+        <h5 className="text-day heading-5">
           Hi, {user?.fullName}!
           <br />
           {"Let's do the last step."}

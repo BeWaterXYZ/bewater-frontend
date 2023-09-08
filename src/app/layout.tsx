@@ -3,13 +3,11 @@ import { QueryProvider } from './[lng]/query';
 import { JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import Script from 'next/script';
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
-import { Dumpster } from './[lng]/dumpster';
 import { Metadata } from 'next';
-import { dir } from 'i18next';
 import { languages } from './i18n/settings';
 import { ClerkProvider } from '@clerk/nextjs';
+import { Dumpster } from './[lng]/dumpster';
+
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
 }
@@ -53,27 +51,20 @@ const fontSecondary = JetBrains_Mono({
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { lng: string };
 }) {
-  const { lng = 'en' } = params || {};
   return (
     <ClerkProvider>
       <html
-        lang={lng}
-        dir={dir(lng)}
         className={`${fontSecondary.variable} ${fontPrimary.variable}`}
       >
         <head />
         <body>
           <QueryProvider>
             <div className="min-h-[100vh] flex flex-col bg-night">
-              <Header lng={lng} />
               <div className="flex-1">{children}</div>
-              <Footer />
-              <Dumpster lng={lng} />
+              <Dumpster />
             </div>
           </QueryProvider>
           <Script
@@ -85,7 +76,6 @@ export default function RootLayout({
            window.dataLayer = window.dataLayer || [];
            function gtag(){dataLayer.push(arguments);}
            gtag('js', new Date());
-         
            gtag('config', 'G-1FYW2MFVEG');
         `}
           </Script>

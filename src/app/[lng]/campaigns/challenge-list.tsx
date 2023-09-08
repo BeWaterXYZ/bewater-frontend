@@ -122,7 +122,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               ) : null}
             </Link>
             {challenge.status === "ACTIVE" ? (
-              <div className="flex gap-2 absolute items-center left-4 top-4 rounded-full border border-white/20 p-2 px-3 bg-black/50 text-white text-[12px] font-secondary z-20">
+              <div className="flex gap-2 absolute items-center left-4 top-4 rounded-full border border-white/20 p-2 px-3 bg-black/50 text-white text-[12px] font-secondary z-10">
                 <div className="w-2 h-2 rounded bg-day"></div>
                 LIVE
               </div>

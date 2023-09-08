@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function Page() {
   return (
-    <div className="container my-4 pt-20 flex flex-col lg:flex-row justify-center items-center min-h-[100vh] gap-10 md:gap-20 ">
+    <div className="container my-0 pt-0 flex flex-col lg:flex-row justify-center items-center min-h-[100vh] gap-10 md:gap-20 ">
       <div>
         <div className="flex flex-col gap-10 ">
           <p className="text-xl font-bold text-day">

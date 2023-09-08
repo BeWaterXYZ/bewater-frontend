@@ -125,7 +125,7 @@ export interface Milestone {
     | 'Project Submission'
     | 'Review'
     | 'Result'
-    // todo
+    // todo del string
     | string;
   showName?: string;
 }

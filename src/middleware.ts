@@ -1,5 +1,4 @@
 import { authMiddleware } from '@clerk/nextjs';
-
 import { NextResponse, NextRequest } from 'next/server';
 import acceptLanguage from 'accept-language';
 import { fallbackLng, languages } from './app/i18n/settings';
@@ -8,8 +7,17 @@ acceptLanguage.languages(languages);
 
 const cookieName = 'i18next';
 
-function i18n(req: any) {
-  let lng = null;
+function i18n(req: NextRequest) {
+  if (
+    req.nextUrl.pathname.startsWith('/sign-in') ||
+    req.nextUrl.pathname.startsWith('/sign-up') ||
+    req.nextUrl.pathname.startsWith('/onboarding') ||
+    req.nextUrl.pathname.startsWith('/host')
+  ) {
+    return NextResponse.next()
+  }
+
+  let lng : string | null = '';
   if (req.cookies.has(cookieName)) {
     lng = acceptLanguage.get(req.cookies.get(cookieName)?.value);
   }
@@ -22,25 +30,11 @@ function i18n(req: any) {
 
   // Redirect if lng in path is not supported
   if (
-    !req.nextUrl.pathname.startsWith('/sign-in') &&
-    !req.nextUrl.pathname.startsWith('/sign-up') &&
-    !req.nextUrl.pathname.startsWith('/onboarding') &&
-    !req.nextUrl.pathname.startsWith('/host') 
+    !languages.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
+    !req.nextUrl.pathname.startsWith('/_next')
   ) {
-    if (!languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`))) {
-      return NextResponse.redirect(
-        new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
-      );
-    }
-  }
-
-  if (req.nextUrl.pathname.startsWith('/en/challenges')) {
     return NextResponse.redirect(
-      new URL(`/en/campaigns${req.nextUrl.pathname.substring(14)}`, req.url),
-    );
-  } else if (req.nextUrl.pathname.startsWith('/zh/challenges')) {
-    return NextResponse.redirect(
-      new URL(`/zh/campaigns${req.nextUrl.pathname.substring(14)}`, req.url),
+      new URL(`/${lng}${req.nextUrl.pathname}`, req.url),
     );
   }
 
@@ -60,18 +54,14 @@ function i18n(req: any) {
 }
 
 export default authMiddleware({
-
   beforeAuth: (req) => {
     return i18n(req);
   },
-
   publicRoutes: [
     '/',
     '/en',
     '/zh',
     '/host',
-    '/zh/challenges(.*)',
-    '/en/challenges(.*)',
     '/zh/campaigns(.*)',
     '/en/campaigns(.*)',
     '/zh/user(.*)',

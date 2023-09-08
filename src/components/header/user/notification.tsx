@@ -3,7 +3,6 @@ import { useClerk } from '@clerk/nextjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-// todo lng 是参数
 export function NotificationBell({ lng }: { lng: string }) {
   const user = useClerk().user;
 
@@ -17,8 +16,8 @@ export function NotificationBell({ lng }: { lng: string }) {
         ).length > 0;
 
   return (
-    <div className="relative -top-1">
-      <Link href={`/${lng}/notifications/requests/received`}>
+    <div className="relative">
+      <Link href={'/notifications/requests/received'}>
         <Image
           src={hasNewNotifications ? '/icons/bell-dot.svg' : '/icons/bell.svg'}
           height={24}
