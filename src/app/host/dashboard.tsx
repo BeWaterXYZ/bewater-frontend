@@ -133,6 +133,7 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
 
 export function Dashboard() {
   const { isLoaded, isSignedIn, user } = useUser();
+  const isAdmin = isLoaded && isSignedIn && user?.publicMetadata?.teamMember;
   const { data: challenges, isLoading } = useFetchChallenges();
   useLoadingWhen(isLoading);
   if (!challenges) return null;
@@ -143,35 +144,49 @@ export function Dashboard() {
         <div>
           {challenges.map((challenge) => {
             return (
-              <Link
-                href={`/host/challenges/${challenge.id}`}
-                className="flex border-b border-grey-800 py-8 px-4 justify-between"
-                key={challenge.id}
-              >
-                <div className="flex gap-4 items-center">
-                  <Image
-                    src={challenge.bannerUrl ?? unsplash('host')}
-                    // fill
-                    alt={challenge.title}
-                    width={60}
-                    height={60}
-                    className="rounded-full border border-grey-800 w-[60px] h-[60px]"
-                  />
-                  <div className="space-y-2">
-                    <p className="text-base font-bold text-white">
-                      {challenge.title}{isLoaded && isSignedIn && user?.publicMetadata?.teamMember ? `（${challenge.id}）` : ""}
-                    </p>
-                    <p className="text-sm text-grey-500">
-                      {/* fixme */}
-                      {challenge.startTime.substring(0, 10)} {'-> '}
-                      {challenge.endTime.substring(0, 10)}
-                    </p>
+              <>
+                <Link
+                  href={`/host/challenges/${challenge.id}`}
+                  className={isAdmin ? "flex pt-8 px-4 justify-between" : "flex border-b border-grey-800 py-8 px-4 justify-between"}
+                  key={challenge.id}
+                >
+                  <div className="flex gap-4 items-center">
+                    <Image
+                      src={challenge.bannerUrl ?? unsplash('host')}
+                      // fill
+                      alt={challenge.title}
+                      width={60}
+                      height={60}
+                      className="rounded-full border border-grey-800 w-[60px] h-[60px]"
+                    />
+                    <div className="space-y-2">
+                      <p className="text-base font-bold text-white">
+                        {challenge.title}{isAdmin ? `（${challenge.id}）` : ""}
+                      </p>
+                      <p className="text-sm text-grey-500">
+                        {/* fixme */}
+                        {challenge.startTime.substring(0, 10)} {'-> '}
+                        {challenge.endTime.substring(0, 10)}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center">
-                  <ChallengeStatusButton challenge={challenge} />
-                </div>
-              </Link>
+                  <div className="flex items-center">
+                    <ChallengeStatusButton challenge={challenge} />
+                  </div>
+                </Link>
+                {isAdmin ? (
+                  <Link
+                    href={`http://bewater.waketu.com/manage?challengeId=${challenge.id}#/detail`}
+                    className="flex border-b border-grey-800 pt-4 pb-8 px-4 justify-between"
+                    key={`m-${challenge.id}`}
+                    target={"_blank"}
+                  >
+                    <p className="text-base font-bold text-grey-500">
+                      Manage》
+                    </p>
+                  </Link>
+                ) : null}
+              </>
             );
           })}
         </div>
