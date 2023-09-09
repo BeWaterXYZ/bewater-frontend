@@ -4,6 +4,15 @@
   "blog": {
     "text": ""
   },
+  "header": {
+    "campaign": "Campaigns"
+  },
+  "stage": {
+    "Introduction": "Introduction",
+    "Teams": "Teams",
+    "Projects": "Projects",
+    "Result": "Result"
+  },
   "cryptoArt": {
     "t1": "Event Partners",
     "t2": "Co-hosts",

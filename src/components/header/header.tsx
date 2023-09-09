@@ -1,9 +1,8 @@
-import Link from 'next/link';
+import { BeWaterLogo } from './logo'
 import { Nav } from './nav';
 import { Lng } from './lng';
 import dynamicLoad from 'next/dynamic';
 import { HeaderScrollHelper } from './scroll-helper';
-import Image from 'next/image';
 
 interface HeaderImplProps {
   logo: React.ReactNode;
@@ -33,34 +32,6 @@ const HeaderImpl = ({ logo, nav, lang, user }: HeaderImplProps) => {
       </div>
       <HeaderScrollHelper />
     </header>
-  );
-};
-
-const BeWaterLogo = ({ lng }: { lng: string }) => {
-  return (
-    <div className="flex flex-row relative">
-      <Link href="https://bewater.xyz">
-        <Image
-          src="/logo/bewater-h.svg"
-          width={120}
-          height={24}
-          alt="bewater logo"
-        />
-        <div className="body-5 text-day absolute left-full top-[-12px] rounded-full p-[1px] bg-gradient-108 from-[#057382] to-[#66FFFF]">
-          <div className="bg-night rounded-full px-[5px] leading-[12px]">
-            Alpha
-          </div>
-        </div>
-      </Link>
-      <Link href={`/${lng}`}>
-        <div className="absolute left-[164px] hidden sm:flex flex-row gap-2 items-center">
-          <div className="text-white body-2 font-bold">/</div>
-          <div className="text-day body-2 font-bold uppercase [text-shadow:0_0_6px_theme(colors.day)]">
-            Campaigns
-          </div>
-        </div>
-      </Link>
-    </div>
   );
 };
 
