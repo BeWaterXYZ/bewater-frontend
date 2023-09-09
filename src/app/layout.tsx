@@ -51,10 +51,8 @@ const fontSecondary = JetBrains_Mono({
 
 export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { lng: string };
 }) {
   return (
     <ClerkProvider>
