@@ -3,7 +3,6 @@ import { QueryProvider } from './[lng]/query';
 import { JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import Script from 'next/script';
-import { Footer } from '@/components/footer';
 import { Metadata } from 'next';
 import { languages } from './i18n/settings';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -67,7 +66,6 @@ export default function RootLayout({
           <QueryProvider>
             <div className="min-h-[100vh] flex flex-col bg-night">
               <div className="flex-1">{children}</div>
-              <Footer />
               <Dumpster />
             </div>
           </QueryProvider>

@@ -1,11 +1,16 @@
 {
   "bewater": "若水",
+  "dot": "。",
   "title": "若水 - 我创造故我在",
   "blog": {
     "text": ""
   },
   "header": {
     "campaign": "赛事"
+  },
+  "footer": {
+    "dot": " -",
+    "right": "版权所有。"
   },
   "stage": {
     "Introduction": "赛事介绍",

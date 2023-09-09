@@ -1,11 +1,12 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslation } from '@/app/i18n/client';
+import { useTranslation } from '@/app/i18n';
 
-export const BeWaterLogo = ({ lng }: { lng: string }) => {
-  lng = lng ? lng : 'en';
-  const { t } = useTranslation(lng, 'translation');
+export const BeWaterLogo = async (params: { lng: string }) => {
+  const lng = (params || {}).lng ? params.lng : 'en'
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = await useTranslation(lng, 'translation');
+
   return (
     <div className="flex flex-row relative">
       <Link href="https://bewater.xyz">
