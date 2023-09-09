@@ -17,7 +17,7 @@ export function NotificationBell({ lng }: { lng: string }) {
 
   return (
     <div className="relative">
-      <Link href={lng ? `/${lng}/notifications/requests/received` : '/notifications/requests/received'}>
+      <Link href={'/notifications/requests/received'}>
         <Image
           src={hasNewNotifications ? '/icons/bell-dot.svg' : '/icons/bell.svg'}
           height={24}

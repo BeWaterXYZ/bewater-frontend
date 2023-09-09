@@ -1,4 +1,5 @@
 import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 export default function Layout({
   children,
@@ -10,6 +11,7 @@ export default function Layout({
     <div>
       <Header lng={lng} />
       <div>{children}</div>
+      <Footer lng={"en"} />
     </div>
   );
 }

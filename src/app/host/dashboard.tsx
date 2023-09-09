@@ -144,11 +144,10 @@ export function Dashboard() {
         <div>
           {challenges.map((challenge) => {
             return (
-              <>
+              <div key={challenge.id}>
                 <Link
                   href={`/host/challenges/${challenge.id}`}
                   className={isAdmin ? "flex pt-8 px-4 justify-between" : "flex border-b border-grey-800 py-8 px-4 justify-between"}
-                  key={challenge.id}
                 >
                   <div className="flex gap-4 items-center">
                     <Image
@@ -178,7 +177,6 @@ export function Dashboard() {
                   <Link
                     href={`http://bewater.waketu.com/manage?challengeId=${challenge.id}#/detail`}
                     className="flex border-b border-grey-800 pt-4 pb-8 px-4 justify-between"
-                    key={`m-${challenge.id}`}
                     target={"_blank"}
                   >
                     <p className="text-base font-bold text-grey-500">
@@ -186,7 +184,7 @@ export function Dashboard() {
                     </p>
                   </Link>
                 ) : null}
-              </>
+              </div>
             );
           })}
         </div>
