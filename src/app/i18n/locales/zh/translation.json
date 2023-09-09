@@ -4,6 +4,15 @@
   "blog": {
     "text": ""
   },
+  "header": {
+    "campaign": "赛事"
+  },
+  "stage": {
+    "Introduction": "赛事介绍",
+    "Teams": "参赛队伍",
+    "Projects": "所有项目",
+    "Result": "比赛结果"
+  },
   "cryptoArt": {
     "t1": "赛事合作伙伴",
     "t2": "联合出品方",
