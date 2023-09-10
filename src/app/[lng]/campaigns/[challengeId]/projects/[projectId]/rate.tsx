@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import { useDialogStore } from '@/components/dialog/store';
-import { useFetchProjectRating } from '@/services/project.query';
-import { Challenge, Project } from '@/services/types';
-import { useClerk } from '@clerk/nextjs';
+import { useDialogStore } from "@/components/dialog/store";
+import { useFetchProjectRating } from "@/services/project.query";
+import { Challenge, Project } from "@/services/types";
+import { useClerk } from "@clerk/nextjs";
 
 const textMaps = [
-  'Innovation Uniqueness',
-  'Technical Implementation',
-  'User Experience',
-  'Practicality & Value Creation',
-  'Presentation and Demo',
+  " Innovation:  Hackathons encourage participants to think of novel solutions, so a unique and creative project would catch the attention. Innovation often means the project has the potential to make substantial improvements in society, industry, or the tech field.",
+  "Feasibility: Feasibility of the project is a crucial factor. This includes technical feasibility, resource availability, and a realistic timeline.",
+  "Completeness: The completeness of the project is also crucial. Even a brilliant idea needs to be implemented in practice.",
+  "User Experience: User experience is critical for any application.  A good user experience can attract more users and enhance the project's chances of success.",
+  "Social Impact: A project with social impact is often more appealing.",
+  "Technical Depth: The technical depth of the project is also crucial. This includes the innovative use of technology and the adaptability of the tech stack.",
 ];
 
 interface Props {
@@ -25,22 +26,22 @@ export function Rate(props: Props) {
   let isJudge = props.challenge.judges.some(
     (judge) =>
       judge.email?.toLowerCase() ===
-      user?.emailAddresses[0].emailAddress.toLowerCase(),
+      user?.emailAddresses[0].emailAddress.toLowerCase()
   );
   if (!isJudge) {
     return null;
   }
 
   let rate = () => {
-    showDialog('project_rating', {
+    showDialog("project_rating", {
       project: props.project,
       // fixme
-      rating: (rating?.length ?? 0 > 0 ? rating : [0, 0, 0, 0, 0])!.map(
-        (r, i) => ({
-          label: textMaps[i],
-          rate: r,
-        }),
-      ),
+      rating: (rating?.length ?? 0 > 0
+        ? rating
+        : new Array(textMaps.length).fill(0))!.map((r, i) => ({
+        label: textMaps[i],
+        rate: r,
+      })),
     });
   };
   let totalRating = rating?.reduce((p, c) => p + c, 0) ?? 0;
