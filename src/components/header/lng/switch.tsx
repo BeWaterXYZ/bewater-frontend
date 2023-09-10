@@ -15,7 +15,9 @@ export const Lng = ({ lng }: { lng: string }) => {
             <span key={l}>
               <span className="text-base text-grey-500 cursor-pointer">{' / '}</span>
               <span className="text-grey-500 cursor-pointer" onClick={() => {
-                location.href = `/${l}/${location.pathname.substring('//'.length + lng.length)}`
+                location.replace(
+                  `/${l}/${location.pathname.substring('//'.length + lng.length)}${location.search}${location.hash}`
+                )
               }}>{lang[l]}</span>
             </span>
           )
