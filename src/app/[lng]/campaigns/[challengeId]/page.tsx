@@ -316,7 +316,7 @@ export default async function ChallengeIntro({ params }: any) {
                                       <>
                                         <div className="flex flex-row justify-between">
                                           <p className="body-3 text-white/60">
-                                            ${award.goodsName}
+                                            {award.goodsName}
                                           </p>
                                           <p className="body-3 text-white/60">
                                             x{award.goodsCount}
