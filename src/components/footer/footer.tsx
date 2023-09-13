@@ -13,8 +13,8 @@ export const Footer = async (params: Props) => {
   const { t } = await useTranslation(lng, 'translation');
 
   return (
-    <footer id="main-footer" className={clsx('w-full heading-5  ')}>
-      <div className="container mx-auto py-8 flex flex-col gap-6 justify-between items-center md:flex-row md:items-start">
+    <footer id="main-footer" className={clsx('w-full heading-5  h-20 flex flex-col justify-center')}>
+      <div className="container mx-auto  flex flex-col gap-6 justify-between items-center md:flex-row md:items-start">
         <div className="body-4 text-grey-100 uppercase">
           © {new Date().getFullYear()} {t('bewater')}{t('footer.dot')} {t('footer.right')}
         </div>
