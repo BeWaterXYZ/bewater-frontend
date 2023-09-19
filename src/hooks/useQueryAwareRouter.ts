@@ -1,8 +1,8 @@
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { useMemo } from 'react';
 
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { isBrowser } from '@/constants';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 const searchParamsToCarryOver = ['redirect'];
 
