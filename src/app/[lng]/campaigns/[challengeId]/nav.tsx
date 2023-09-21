@@ -40,7 +40,7 @@ export function ChallengeNav({
   challenge: Challenge;
   lng: string;
 }) {
-  let challengeId = challenge.id;
+  const challengeId = challenge.externalId ? challenge.externalId : challenge.id;
   let segment = useSelectedLayoutSegment();
   const { t } = useTranslation(lng, 'translation');
 
