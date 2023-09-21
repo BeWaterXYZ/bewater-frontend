@@ -58,7 +58,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
               target={challenge.type !== "OTHERS" ? undefined : "_blank"}
               href={
                 challenge.type !== "OTHERS"
-                  ? `/${lng}/campaigns/${challenge.id}`
+                  ? (challenge.externalId ? `/${lng}/campaigns/${challenge.externalId}` : `/${lng}/campaigns/${challenge.id}`)
                   : challenge.joinLink ?? ""
               }
             >
@@ -98,8 +98,8 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     {challenge.location === "ONLINE"
                       ? "ONLINE"
                       : challenge.city
-                      ? challenge.city
-                      : ""}
+                        ? challenge.city
+                        : ""}
                   </div>
                 </div>
               </div>
@@ -109,16 +109,16 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                 </div>
               ) : null}
               {challenge.hostIcon && challenge.type !== 'OTHERS' ? (
-              <div className="flex absolute w-full top-12 h-12 z-10">
-                <Image
+                <div className="flex absolute w-full top-12 h-12 z-10">
+                  <Image
                     src={challenge.hostIcon}
                     width={144}
                     height={40}
                     alt=""
                     className="mx-auto h-10"
-                    style={{width: "auto"}}
+                    style={{ width: "auto" }}
                   />
-              </div>
+                </div>
               ) : null}
             </Link>
             {challenge.status === "ACTIVE" ? (

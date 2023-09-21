@@ -38,6 +38,7 @@ export interface UserProfileFull extends UserProfile {
 export type ChallengeID = string;
 export interface Challenge {
   id: ChallengeID;
+  externalId?: string;
   title: string;
   hostName: string;
   description: string;
