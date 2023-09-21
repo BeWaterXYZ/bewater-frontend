@@ -12,7 +12,6 @@ import { z } from 'zod';
 import { Dialogs } from '../store';
 import { Rate } from '@/components/form/control/rating';
 import {
-  useFetchProjectRating,
   useMutationUpdateProjectRating,
 } from '@/services/project.query';
 import { add } from 'date-fns';
@@ -42,8 +41,6 @@ export default function ProjectRatingDialog({
 }: ProjectRatingDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const mutation = useMutationUpdateProjectRating(data.project.id);
-  // const {data:rating} = useFetchProjectRating(data.project.id);
-  // console.log({rating})
   const addToast = useToastStore((s) => s.add);
 
   const onSubmit = async (formData: Inputs) => {
