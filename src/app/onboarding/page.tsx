@@ -7,6 +7,7 @@ import { FormOnboardingExtra } from './form';
 export default function Page({ params }: { params: { lng: string } }) {
   const { lng = 'en' } = params || {};
   const user = useClerk().user;
+
   const { data, isLoading } = useFetchUser(user?.id);
 
   useLoadingWhen(isLoading);
@@ -18,7 +19,7 @@ export default function Page({ params }: { params: { lng: string } }) {
       <div className="md:max-w-[450px] w-full flex flex-col">
         <br />
         <h5 className="text-day heading-5">
-          Hi, {user?.fullName}!
+          Hi, {user?.username ?? user?.firstName ?? ''}
           <br />
           {"Let's do the last step."}
         </h5>

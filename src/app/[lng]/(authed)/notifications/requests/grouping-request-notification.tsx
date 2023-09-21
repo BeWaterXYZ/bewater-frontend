@@ -23,7 +23,7 @@ function getUserLink(userProfile: UserProfile, lng: string) {
   return (
     <strong className="text-white hover:underline">
       <Link href={`/${lng}/user/${userProfile.id}`}>
-        {userProfile.fullName}
+        {userProfile.userName ?? userProfile.fullName}
       </Link>
     </strong>
   );

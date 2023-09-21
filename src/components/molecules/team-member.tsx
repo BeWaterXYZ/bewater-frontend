@@ -22,7 +22,7 @@ export function TeamMember({
         </div>
         <div className="flex items-start flex-col ">
           <p className="body-3 font-bold mb-0.5">
-            {member.userProfile.fullName ?? member.userProfile.userName}
+            {member.userProfile.userName ?? member.userProfile.fullName}
           </p>
           <div>
             <TagRole label={member.teamRole} />

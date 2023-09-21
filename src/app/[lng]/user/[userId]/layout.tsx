@@ -36,8 +36,8 @@ export default async function Layout({
               src={profile.avatarURI}
             />
             <div className="mt-0 lg:mt-6">
-              <p className="body-2 font-bold">{profile.fullName}</p>
-              <p className="body-4 text-grey-400">@{profile.userName}</p>
+              <p className="body-2 font-bold">{profile.userName}</p>
+              <p className="body-4 text-grey-400">@{profile.firstName}</p>
               <p className="body-4 text-grey-400">
                 {maskWalletAddress(profile.walletAddress)}
               </p>
