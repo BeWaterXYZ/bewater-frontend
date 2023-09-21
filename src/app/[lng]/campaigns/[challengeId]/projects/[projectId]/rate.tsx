@@ -21,16 +21,15 @@ interface Props {
 export function Rate(props: Props) {
   const showDialog = useDialogStore((s) => s.open);
   let user = useClerk().user;
-  const { data: rating } = useFetchProjectRating(props.project.id);
-  if (!user) return null;
   let isJudge = props.challenge.judges.some(
     (judge) =>
       judge.email?.toLowerCase() ===
       user?.emailAddresses[0].emailAddress.toLowerCase()
   );
-  if (!isJudge) {
-    return null;
-  }
+
+  const { data: rating } = useFetchProjectRating(props.project.id, isJudge);
+  if (!user) return null;
+  if (!isJudge) return null;
 
   let rate = () => {
     showDialog("project_rating", {
