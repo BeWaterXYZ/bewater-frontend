@@ -14,6 +14,7 @@ export interface UserProfile {
   userName?: string;
   avatarURI?: string;
   fullName?: string;
+  firstName?: string;
   bio?: string;
   websiteLink?: string;
   telegramLink?: string;

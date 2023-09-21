@@ -85,13 +85,7 @@ export const FormUserSettings = ({ data }: Props) => {
         error={errors['userName']}
         {...register('userName', { required: 'Username is required.' })}
       />
-      <Input
-        label="Full Name"
-        placeholder="Enter your full name"
-        required
-        error={errors['fullName']}
-        {...register('fullName', { required: 'Full name is required.' })}
-      /> */}
+       */}
       <TextArea
         label="Bio"
         rows={3}

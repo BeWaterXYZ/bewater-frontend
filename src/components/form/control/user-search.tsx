@@ -27,7 +27,7 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
         </div>
         <div className="flex flex-col justify-around">
           <div className="body-4 text-grey-400">
-            {data.fullName ?? data.userName}
+            {data.userName}
           </div>
           <div className="body-4 text-grey-600">@{data.userName}</div>
         </div>
@@ -45,7 +45,7 @@ const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
       />
       <span className="body-4 text-grey-400">
         {' '}
-        {props.data.fullName ?? props.data.userName}
+        {props.data.userName ?? props.data.fullName}
       </span>
     </div>
   );
@@ -59,7 +59,7 @@ const searchUserByKeyword =
     let data = await searchUsers(inputValue);
     data = data
       .filter((up) => !toExclude.includes(up.id))
-      .map((d) => ({ ...d, label: d.fullName }));
+      .map((d) => ({ ...d, label: d.userName }));
     cacheOptions = data;
     return data;
   };

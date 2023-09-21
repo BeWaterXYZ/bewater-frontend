@@ -20,7 +20,7 @@ export function TeamMemberRow({
       />
       <div className="flex flex-col justify-between">
         <p className="body-4 text-grey-300">
-          {member.userProfile.fullName ?? member.userProfile.userName}
+          {member.userProfile.userName ?? member.userProfile.fullName}
         </p>
         <p className="body-4 text-grey-500">@{member.userProfile.userName}</p>
       </div>
