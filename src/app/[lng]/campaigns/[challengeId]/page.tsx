@@ -20,7 +20,7 @@ import { isMileStoneEnabled, isWorkshop } from './utils';
 import Balancer from 'react-wrap-balancer';
 import { TwitterLogoIcon } from '@radix-ui/react-icons';
 import { ScheduleSection as ScheduleSection3 } from './schedule-section/3';
-import { ScheduleSection as ScheduleSection42  } from './schedule-section/42';
+import { ScheduleSection as ScheduleSection42 } from './schedule-section/42';
 import { useTranslation } from '@/app/i18n';
 //import HoverCard from '@/components/hover-card';
 import { Fragment } from 'react';
@@ -60,34 +60,34 @@ export default async function ChallengeIntro({ params }: any) {
   }
 
   // todo 删除以下hack部分
-  if (challenge.id === '2') {
-    if (lng === 'en') {
-      challenge.location = 'Online Event';
-      for (const it of challenge.judges) {
-        if (it.name.includes('李达潮')) {
-          it.name = 'Lee DaTie';
-          it.organization = 'Trainee of William G.';
-          it.title = 'Co-founder of M10b HK.';
-          continue;
-        }
-        if (it.name.includes('宋婷')) {
-          it.name = 'Song Ting';
-          it.organization = 'AI & Blockchain Artist';
-          it.title = "China's Foremost Cryptographic Artist";
-          continue;
-        }
-        if (it.name.includes('QIAO_MUZI')) {
-          it.organization = 'Web3 Artistic Leader';
-          it.title = 'Entrepreneur in the Creative Industry';
-          continue;
-        }
-        if (it.name.includes('释无量叁')) {
-          it.organization = 'People Tang illustrator/Tang DAO builder/artist';
-          continue;
-        }
-      }
-    }
-  }
+  // if (challenge.id === '2') {
+  //   if (lng === 'en') {
+  //     challenge.location = 'Online Event';
+  //     for (const it of challenge.judges) {
+  //       if (it.name.includes('李达潮')) {
+  //         it.name = 'Lee DaTie';
+  //         it.organization = 'Trainee of William G.';
+  //         it.title = 'Co-founder of M10b HK.';
+  //         continue;
+  //       }
+  //       if (it.name.includes('宋婷')) {
+  //         it.name = 'Song Ting';
+  //         it.organization = 'AI & Blockchain Artist';
+  //         it.title = "China's Foremost Cryptographic Artist";
+  //         continue;
+  //       }
+  //       if (it.name.includes('QIAO_MUZI')) {
+  //         it.organization = 'Web3 Artistic Leader';
+  //         it.title = 'Entrepreneur in the Creative Industry';
+  //         continue;
+  //       }
+  //       if (it.name.includes('释无量叁')) {
+  //         it.organization = 'People Tang illustrator/Tang DAO builder/artist';
+  //         continue;
+  //       }
+  //     }
+  //   }
+  // }
 
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
@@ -106,15 +106,14 @@ export default async function ChallengeIntro({ params }: any) {
         />
       ) : null}
       <div
-        className={`${
-          !(
-            challenge.discordLink ||
-            challenge.telegramLink ||
-            challenge.telegramLink
-          )
-            ? 'flex flex-col gap-10 md:gap-10 items-center my-10 mb-0'
-            : 'flex flex-col gap-10 md:gap-20 items-center my-10'
-        }`}
+        className={`${!(
+          challenge.discordLink ||
+          challenge.telegramLink ||
+          challenge.telegramLink
+        )
+          ? 'flex flex-col gap-10 md:gap-10 items-center my-10 mb-0'
+          : 'flex flex-col gap-10 md:gap-20 items-center my-10'
+          }`}
       >
         <div
           className={`flex flex-col gap-4 md:flex-row md:gap-20 items-center
@@ -126,7 +125,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
           <div className="body-3 md:body-2 text-white">
             {challenge.description?.endsWith('--edit-by-markdown') ? (
-              <Markdown style={{color: 'white'}}>{challenge.description.substring(0, challenge.description.length - '--edit-by-markdown'.length)}</Markdown>
+              <Markdown style={{ color: 'white' }}>{challenge.description.substring(0, challenge.description.length - '--edit-by-markdown'.length)}</Markdown>
             ) : (
               (challenge.description ?? '').split('\n').map((s) => (
                 <p className="py-3" key={s}>
@@ -284,7 +283,7 @@ export default async function ChallengeIntro({ params }: any) {
             <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
               {challenge.yotadata?.award?.title ? (
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  {lng === 'zh' ? (challenge.yotadata.award.title.zh ?? challenge.yotadata.award.title.en) : (challenge.yotadata.award.title.en ?? challenge.yotadata.award.title.zh) }
+                  {lng === 'zh' ? (challenge.yotadata.award.title.zh ?? challenge.yotadata.award.title.en) : (challenge.yotadata.award.title.en ?? challenge.yotadata.award.title.zh)}
                 </h3>
               ) : (
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
@@ -423,17 +422,17 @@ export default async function ChallengeIntro({ params }: any) {
             {challenge.yotadata?.adjudicators ?
               (lng === 'zh' ?
                 (challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en) :
-                (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh) ) :
+                (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh)) :
               t('campaign.t8')}
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
             {challenge.judges?.length > 0
               ? challenge.judges
-                  .map((judge) => {
-                    return (
-                      <div key={judge.id!} className="w-[180px] mb-2 ">
-                        <Aspect ratio={1 / 1} className="">
-                          {/* <HoverCard
+                .map((judge) => {
+                  return (
+                    <div key={judge.id!} className="w-[180px] mb-2 ">
+                      <Aspect ratio={1 / 1} className="">
+                        {/* <HoverCard
                             side="right"
                             card={
                               <div className="min-w-[100px] max-w-[200px] text-white">
@@ -447,36 +446,36 @@ export default async function ChallengeIntro({ params }: any) {
                             alt={judge.name}
                           />
                         </HoverCard> */}
-                          <Image
-                            fill
-                            src={judge.avatarURI}
-                            className="object-cover w-full h-full bg-white/5"
-                            alt={judge.name}
-                          />
-                        </Aspect>
-                        <p className="body-3 mt-4 mb-2 text-white">
-                          {judge.name}
-                        </p>
-                        <p className="body-4 text-grey-400">
-                          {judge.title ?? ''}
-                        </p>
-                        <p className="body-4 text-grey-400">
-                          {judge.organization ?? judge.description ?? ''}
-                        </p>
-                        <div>
-                          {judge.twitterLink ? (
-                            <Link href={judge.twitterLink} target="_blank">
-                              {
-                                <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
-                              }
-                            </Link>
-                          ) : null}
-                        </div>
+                        <Image
+                          fill
+                          src={judge.avatarURI}
+                          className="object-cover w-full h-full bg-white/5"
+                          alt={judge.name}
+                        />
+                      </Aspect>
+                      <p className="body-3 mt-4 mb-2 text-white">
+                        {judge.name}
+                      </p>
+                      <p className="body-4 text-grey-400">
+                        {judge.title ?? ''}
+                      </p>
+                      <p className="body-4 text-grey-400">
+                        {judge.organization ?? judge.description ?? ''}
+                      </p>
+                      <div>
+                        {judge.twitterLink ? (
+                          <Link href={judge.twitterLink} target="_blank">
+                            {
+                              <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
+                            }
+                          </Link>
+                        ) : null}
                       </div>
-                    );
-                  })
+                    </div>
+                  );
+                })
               : challenge.yotadata?.judges?.length > 0
-              ? challenge.yotadata.judges.map((it: any) => {
+                ? challenge.yotadata.judges.map((it: any) => {
                   return (
                     <>
                       <p className="body-3 mt-6 w-full text-grey-400 text-center">
@@ -509,7 +508,7 @@ export default async function ChallengeIntro({ params }: any) {
                     </>
                   );
                 })
-              : null}
+                : null}
             {challenge.yotadata?.judges?.length > 0 ? null : (
               <div className="w-[180px]">
                 <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
@@ -575,15 +574,15 @@ export default async function ChallengeIntro({ params }: any) {
                       {s.defname}
                     </p>
                     <>
-                      { s.members && s.members.length > 0 ? (
-                      <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
-                        {(s.members ?? []).map((member, i) => (
-                          <img src={member} key={i} className="h-8 md:h-10 mb-4 mx-4"/>
-                        ))}
-                      </div>
+                      {s.members && s.members.length > 0 ? (
+                        <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
+                          {(s.members ?? []).map((member, i) => (
+                            <img src={member} key={i} className="h-8 md:h-10 mb-4 mx-4" />
+                          ))}
+                        </div>
                       ) : (s.descriptions && s.descriptions.length > 0 ? (
                         <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
-                          { (s.descriptions ?? []).map((it, i) => (
+                          {(s.descriptions ?? []).map((it, i) => (
                             <div key={i} className="w-[80px] mb-2 justify-center mx-3">
                               <Aspect ratio={1 / 1}>
                                 <Image
@@ -597,9 +596,9 @@ export default async function ChallengeIntro({ params }: any) {
                               <p className="body-3 mt-4 mb-2">{it.name}</p>
                               <p className="body-4 text-grey-400">{it.org}</p>
                             </div>
-                          )) }
+                          ))}
                         </div>
-                      ) : null) }
+                      ) : null)}
                     </>
                   </div>
                 );
@@ -615,7 +614,7 @@ export default async function ChallengeIntro({ params }: any) {
               ? isTeamingEnabled
                 ? `${t('campaign.t12')}`
                 : `${t('campaign.t13')}`
-              : `${t('campaign.t24')}${challenge.title}${t('campaign.t25')}`}
+              : `${t('campaign.t24', { title: challenge.title })}`}
           </Balancer>
         </p>
         <p className="body-3 md:body-2 text-grey-400 md:text-grey-400  pt-5 pb-8 text-center">
