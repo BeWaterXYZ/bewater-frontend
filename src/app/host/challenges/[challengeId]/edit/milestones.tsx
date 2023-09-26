@@ -6,13 +6,35 @@ import { Challenge, defaultMileStones } from "@/services/types";
 import { validationSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
-import { Cross2Icon } from "@radix-ui/react-icons";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  Cross2Icon,
+  MinusIcon,
+  PlusIcon,
+} from "@radix-ui/react-icons";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import { Select } from "@/components/form/control";
+import { addHours, compareAsc, parseISO, subHours } from "date-fns";
+import clsx from "clsx";
+
+const timezones = [
+  -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
+  9, 10, 11, 12,
+].map((tz) => ({
+  value: tz.toString(),
+  label: "UTC" + (tz === 0 ? "" : tz > 0 ? "+" + tz : tz),
+  classes: {
+    container: "!rounded-full !bg-midnight  h-5  my-0",
+    text: "!text-grey-400 body-4 leading-5 !py-0",
+  },
+}));
 
 const schema = z
   .object({
+    timezone: z.array(z.string()),
     milestones: z.array(
       z.object({
         dueDate: validationSchema.date,
@@ -34,30 +56,39 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
+      timezone: ["0"],
       // todo 时间线编辑2.0。当前隐藏 NOP 阶段
-      milestones: challenge.milestones.filter((ms) => {
-        return ms.stageName === 'NOP' ? false : true;
-      }).map((ms) => ({
-        ...ms,
-        dueDate: ms.dueDate.substring(0, 10),
-      })),
+      milestones: challenge.milestones
+        .filter((ms) => {
+          return ms.stageName === "NOP" ? false : true;
+        })
+        .map((ms) => ({
+          ...ms,
+          dueDate: ms.dueDate.substring(0, 10),
+        })),
     },
   });
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
+  const { fields, append, prepend, remove, swap, move, insert, replace } =
+    useFieldArray({
       control, // control props comes from useForm (optional: if you are using FormContext)
       name: "milestones", // unique name for your Field Array
-    }
-  );
+    });
 
   const onSubmit = async (formData: Inputs) => {
     try {
       await mutation.mutateAsync({
         id: challenge.id,
-        ...formData,
+        milestones: formData.milestones.map((ms) => ({
+          ...ms,
+          dueDate: subHours(
+            parseISO(ms.dueDate + "T00:00:00.000Z"),
+            parseInt(formData.timezone[0])
+          ).toISOString(),
+        })),
       });
       openSet(false);
     } catch (err) {}
@@ -78,7 +109,18 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
           </Dialog.Title>
           <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
             <div>
-              <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Select
+                  label="Time Zone"
+                  required
+                  maxSelections={1}
+                  options={timezones}
+                  error={errors["timezone"]}
+                  control={control}
+                  {...register("timezone")}
+                />
+              </div>
+              <div className="grid grid-cols-3 gap-4">
                 <label className=" block text-[12px] my-2 text-grey-500">
                   Date
                 </label>
@@ -88,9 +130,12 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
               </div>
 
               {fields.map((field, index) => {
+                let isDefault = defaultMileStones.some(
+                  (d) => d === field.stageName
+                );
                 return (
                   <div
-                    className="relative grid grid-cols-2 gap-4 my-2"
+                    className="relative grid grid-cols-3 gap-4 my-2"
                     key={field.id}
                   >
                     <DatePicker
@@ -101,7 +146,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                       {...register(`milestones.${index}.dueDate`)}
                       error={errors[`milestones`]?.[index]?.dueDate}
                     />
-                    {index >= defaultMileStones.length ? (
+                    {!isDefault ? (
                       <Input
                         {...register(`milestones.${index}.stageName`)}
                         error={errors.milestones?.[index]?.stageName}
@@ -109,16 +154,44 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                     ) : (
                       <Input disabled value={field.stageName} />
                     )}
-                    {index >= defaultMileStones.length ? (
+                    <div className="flex gap-2 pb-5">
                       <button
-                        className="absolute m-2 left-full top-1 text-grey-500"
+                        className="  text-grey-500"
+                        onClick={() => {
+                          insert(index + 1, { dueDate: "", stageName: "" });
+                        }}
+                      >
+                        <PlusIcon />
+                      </button>
+                      <button
+                        className={clsx("  text-grey-500", {
+                          invisible: isDefault,
+                        })}
                         onClick={() => {
                           remove(index);
                         }}
                       >
-                        <Cross2Icon />
+                        <MinusIcon />
                       </button>
-                    ) : null}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          move(index, Math.max(index - 1, 0));
+                        }}
+                      >
+                        <ArrowUpIcon className="mr-1 text-grey-500" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          move(index, Math.min(index + 1, fields.length - 1));
+                        }}
+                      >
+                        <ArrowDownIcon className="mr-1 text-grey-500" />
+                      </button>
+                    </div>
                   </div>
                 );
               })}
