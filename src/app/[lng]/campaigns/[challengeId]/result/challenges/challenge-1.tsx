@@ -41,6 +41,7 @@ const winners = [
 ];
 export default function Page({ params }: any) {
   const { lng = 'en' } = params || {};
+
   return (
     <>
       <div className="flex justify-center">
