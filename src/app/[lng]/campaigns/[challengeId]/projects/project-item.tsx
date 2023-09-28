@@ -18,10 +18,11 @@ export function ProjectItem({
     project.description.length > max_desc
       ? project.description.substring(0, max_desc) + '...'
       : project.description;
+
   return (
     <div className="rounded border border-[#24254E] relative max-w-[450px] overflow-hidden flex flex-col">
       <Link
-        href={`/${lng}/campaigns/${project.team.challengeId}/projects/${project.id}`}
+        href={`/${lng}/campaigns/${project.team.challenge!.externalId ?? project.team.challenge!.id}/projects/${project.id}`}
       >
         <Aspect ratio={3 / 2}>
           <Image

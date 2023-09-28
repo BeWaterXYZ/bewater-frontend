@@ -39,7 +39,7 @@ export function ResultCard({
         <div className="relative">
           <Link
             className="block body-0 text-ellipsis truncate my-2 w-[80%]"
-            href={`/${lng}/campaigns/${team.challengeId}/projects/${team.project.id}`}
+            href={`/${lng}/campaigns/${team.challenge!.externalId ?? team.challenge!.id}/projects/${team.project.id}`}
           >
             {team.project.name}
           </Link>
@@ -60,7 +60,7 @@ export function ResultCard({
 
         <div>
           <Link
-            href={`/${lng}/campaigns/${team.challengeId}/teams/${team.id}`}
+            href={`/${lng}/campaigns/${team.challenge!.externalId ?? team.challenge!.id}/teams/${team.id}`}
             className="block body-3 text-left mb-2 text-ellipsis truncate"
           >
             {team.name}
@@ -91,7 +91,7 @@ export function ResultCard({
                 <div>
                   <a
                     className="btn btn-secondary"
-                    href={`/${lng}/campaigns/${team.challengeId}/projects/${team.project.id}`}
+                    href={`/${lng}/campaigns/${team.challenge!.externalId ?? team.challenge!.id}/projects/${team.project.id}`}
                   >
                     Visit
                   </a>
