@@ -20,6 +20,6 @@ export default async function Page({ params }: any) {
   }
   const ChallengeResult = resultMap.get(challengeId);
   if (ChallengeResult) {
-    return <ChallengeResult {...params} />
+    return <ChallengeResult params={params} />
   }
 }
