@@ -49,14 +49,14 @@ export function ProjectItem({
       </Link>
       <div className="p-4 bg-white/5 flex-1 flex flex-col">
         <Link
-          href={`/${lng}/campaigns/${project.team.challengeId}/projects/${project.id}`}
+          href={`/${lng}/campaigns/${project.team.challenge!.externalId ?? project.team.challenge!.id}/projects/${project.id}`}
         >
           <h2 className="heading-6 mb-2">{project.name}</h2>
           <p className="body-3 text-gray-400 text-left ">{desc}</p>
         </Link>
         <div className="h-[20px] invisible flex-1">_</div>
         <Link
-          href={`/${lng}/campaigns/${project.team.challengeId}/teams/${project.teamId}`}
+          href={`/${lng}/campaigns/${project.team.challenge!.externalId ?? project.team.challenge!.id}/teams/${project.teamId}`}
           className="body-3 text-left mb-2 text-ellipsis truncate"
         >
           {project.team.name}
