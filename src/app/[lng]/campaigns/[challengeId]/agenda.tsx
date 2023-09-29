@@ -1,6 +1,8 @@
 "use client";
 
+import { Challenge } from "@/services/types";
 import * as Tabs from "@radix-ui/react-tabs";
+import clsx from "clsx";
 
 let data = [
   {
@@ -64,7 +66,73 @@ let data = [
     ],
   },
 ];
-export function Agenda() {
+let data61 = [
+  {
+    label: "Fri, Oct 13",
+    time: "",
+    locations: [
+      {
+        location: "",
+        sessions: [
+          { time: "12:00 AM", topic: "Check-in starts" },
+          { time: "06:00 PM", topic: "Dinner" },
+          { time: "07:00 PM", topic: "Project introduction (2 minutes for each team)" },
+          { time: "12:00 PM", topic: "Check-in ends" },
+        ],
+      },
+     
+    ],
+  },
+  {
+    label:  "Sat, Oct 14 - Sun, Oct 15",
+    time: "",
+    locations: [
+      {
+        location: "",
+        sessions: [
+          { time: "All Day", topic: "Project Buidl" },
+          { time: "12:00 AM", topic: "Lunch" },
+          { time: "01:00 PM", topic: "Workshop" },
+          { time: "06:00 PM", topic: "Dinner" },
+          { time: "07:00 PM", topic: "Project progress report" },
+        ],
+      },
+      
+    ],
+  },
+  {
+    label: "Mon, Oct 16",
+    time: "",
+    locations: [
+      {
+        location: "",
+        sessions: [
+          { time: "All Day", topic: "Project Buidl" },
+          { time: "12:00 AM", topic: "Lunch" },
+          { time: "02:00 PM", topic: "Project submission & First round of judging" },
+          { time: "06:00 PM", topic: "Dinner" },
+          { time: "07:00 PM", topic: "Demo Day (5 minutes for each project in the top 5 of each track)" },
+          { time: "09:00 PM", topic: "After Party" },
+        ],
+      },
+     
+    ],
+  },
+];
+
+function getData(challenge: Challenge) {
+  console.log(challenge);
+  if(challenge.id === '61'){
+    return data61
+  }
+  return null;
+}
+interface Props {
+  challenge: Challenge;
+}
+export function Agenda(props: Props) {
+  const data = getData(props.challenge);
+  if (!data) return null;
   return (
     <div className="text-white body-1">
       <p className="heading-4 text-center py-12">Agenda</p>
@@ -87,7 +155,7 @@ export function Agenda() {
             value={"tab" + index}
           >
             <p className="body-2">{d.time}</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+            <div className={clsx("grid grid-cols-1  gap-4 ", d.locations.length>1 ? "md:grid-cols-2":"md:grid-cols-1" )}>
               {d.locations.map((l, index) => {
                 return (
                   <div className="py-4" key={index}>

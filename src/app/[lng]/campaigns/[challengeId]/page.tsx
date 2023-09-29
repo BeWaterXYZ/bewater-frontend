@@ -260,7 +260,7 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       </div>
 
-      {/* <Agenda /> */}
+      <Agenda challenge={challenge}/>
 
 
       <div className="">
