@@ -26,6 +26,7 @@ import { useTranslation } from '@/app/i18n';
 import { Fragment } from 'react';
 import Marquee from 'react-fast-marquee';
 import Markdown from '@/components/markdown';
+import { Agenda } from './agenda';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -105,6 +106,7 @@ export default async function ChallengeIntro({ params }: any) {
           id={challenge.id}
         />
       ) : null}
+
       <div
         className={`${!(
           challenge.discordLink ||
@@ -257,6 +259,10 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       </div>
+
+      {/* <Agenda /> */}
+
+
       <div className="">
         {challenge.id === '1' ? (
           <PrizeSection1 />
