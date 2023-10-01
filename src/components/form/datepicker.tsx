@@ -1,4 +1,4 @@
-import React, { useId } from "react";
+import React, { ReactNode, useId } from "react";
 import clsx from "clsx";
 import { Controller, type FieldError } from "react-hook-form";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from "react-datepicker";
 import { format, parseISO } from "date-fns";
 interface Props extends React.ComponentPropsWithoutRef<"input"> {
-  label?: string;
+  label?: ReactNode;
   onValueChange: (v: string) => void;
   error?: FieldError;
   control: any;
@@ -37,7 +37,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
           <div className={clsx("block group relative", className)}>
             {label ? (
               <label
-                className="block text-xs text-grey-500 font-bold mb-2 group-hover:text-day group-focus:text-day transition-colors"
+                className="absolute bottom-full left-0 text-xs text-grey-500  group-hover:text-day group-focus:text-day transition-colors"
                 htmlFor={id}
               >
                 {label}

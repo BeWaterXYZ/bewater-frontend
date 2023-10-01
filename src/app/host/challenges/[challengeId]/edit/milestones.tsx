@@ -10,7 +10,10 @@ import {
   ArrowDownIcon,
   ArrowUpIcon,
   Cross2Icon,
+  DrawingPinFilledIcon,
   MinusIcon,
+  Pencil1Icon,
+  PinTopIcon,
   PlusIcon,
 } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -140,6 +143,16 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                   >
                     <DatePicker
                       control={control}
+                      label={
+                        <div className="flex gap-1">
+                          {isDefault ? (
+                            <DrawingPinFilledIcon />
+                          ) : (
+                            <Pencil1Icon />
+                          )}
+                          {field.stageName}
+                        </div>
+                      }
                       onValueChange={(v) =>
                         setValue(`milestones.${index}.dueDate`, v)
                       }
