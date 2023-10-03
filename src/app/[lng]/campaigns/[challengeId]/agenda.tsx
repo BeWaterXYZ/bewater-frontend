@@ -80,7 +80,7 @@ let data61 = [
           { time: "12:00 PM", topic: "Check-in ends" },
         ],
       },
-     
+
     ],
   },
   {
@@ -97,7 +97,7 @@ let data61 = [
           { time: "07:00 PM", topic: "Project progress report" },
         ],
       },
-      
+
     ],
   },
   {
@@ -115,13 +115,13 @@ let data61 = [
           { time: "09:00 PM", topic: "After Party" },
         ],
       },
-     
+
     ],
   },
 ];
 
 function getData(challenge: Challenge) {
-  console.log(challenge);
+  // console.log(challenge);
   if(challenge.id === '61'){
     return data61
   }
