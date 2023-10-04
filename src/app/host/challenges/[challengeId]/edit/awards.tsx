@@ -27,7 +27,7 @@ const schema = z
         awards: z.array(
           z.object({
             awardName: validationSchema.text,
-            amount: validationSchema.positive,
+            amount: validationSchema.nonNegative,
             count: validationSchema.positive,
           })
         ),
