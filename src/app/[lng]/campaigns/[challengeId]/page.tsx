@@ -314,9 +314,17 @@ export default async function ChallengeIntro({ params }: any) {
                               return (
                                 <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
-                                    <p className="body-3 text-white">
-                                      {award.awardName}
-                                    </p>
+                                    {award.amount === 0 ? 
+                                      (<div className="flex flex-row justify-between">
+                                      <p className="body-3 text-white/60">
+                                        ${award.awardName}
+                                      </p>
+                                      <p className="body-3 text-white/60">
+                                        x{award.count}
+                                      </p>
+                                      </div>): (<p className="body-3 text-white">
+                                        {award.awardName}
+                                      </p>)}
                                     {award.goodsName ? (
                                       <>
                                         <div className="flex flex-row justify-between">
