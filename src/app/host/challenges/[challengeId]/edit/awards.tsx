@@ -20,7 +20,11 @@ import { z } from "zod";
 const schema = z
   .object({
     awardCurrency: z.string().min(1, "min 1 character"),
-    keySponsors: z.array(validationSchema.text),
+    keySponsors: z.array(validationSchema.text).or(
+      z.array(z.object({
+        uri: z.string(),
+        href: z.string().optional()
+    }))),
     awardAssorts: z.array(
       z.object({
         name: validationSchema.text,
