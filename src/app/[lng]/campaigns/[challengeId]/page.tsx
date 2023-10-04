@@ -129,8 +129,8 @@ export default async function ChallengeIntro({ params }: any) {
             {challenge.description?.endsWith('--edit-by-markdown') ? (
               <Markdown style={{ color: 'white' }}>{challenge.description.substring(0, challenge.description.length - '--edit-by-markdown'.length)}</Markdown>
             ) : (
-              (challenge.description ?? '').split('\n').map((s) => (
-                <p className="py-3" key={s}>
+              (challenge.description ?? '').split('\n').map((s, i) => (
+                <p className="py-3" key={i}>
                   {s}
                 </p>
               ))
@@ -314,7 +314,7 @@ export default async function ChallengeIntro({ params }: any) {
                               return (
                                 <Fragment key={i}>
                                   <div className="flex flex-col gap-1 w-full">
-                                    {award.amount === 0 ? 
+                                    {award.amount === 0 ?
                                       (<div className="flex flex-row justify-between">
                                       <p className="body-3 text-white/60">
                                         ${award.awardName}
@@ -418,8 +418,18 @@ export default async function ChallengeIntro({ params }: any) {
                           className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
                           key={i}
                         >
-                          {/* // fixme/ */}
-                          <img src={sp} className="h-8 md:h-10" />
+                          {
+                            typeof sp === 'string' || !sp.href ? (
+                              <img src={typeof sp === 'string' ? sp : sp.uri} className="h-8 md:h-10" />
+                            ) : (
+                              <Link
+                                href={sp.href}
+                                target="_blank"
+                              >
+                                <img src={sp.uri} className="h-8 md:h-10" />
+                              </Link>
+                            )
+                          }
                         </div>
                       );
                     })}
@@ -572,9 +582,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         )}
       </>
-      {false ? (
-        null
-      ) : (challenge.sponsors ?? []).length > 0 ? (
+      {(challenge.sponsors ?? []).length > 0 ? (
         <div className="container">
           <div>
             <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">
@@ -591,7 +599,19 @@ export default async function ChallengeIntro({ params }: any) {
                       {s.members && s.members.length > 0 ? (
                         <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
                           {(s.members ?? []).map((member, i) => (
-                            <img src={member} key={i} className="h-8 md:h-10 mb-4 mx-4" />
+                            <>
+                            {typeof member === 'string' || !member.href ? (
+                              <img src={typeof member === 'string' ? member : member.uri} key={i} className="h-8 md:h-10 mb-4 mx-4" />
+                            ) : (
+                              <Link
+                                href={member.href}
+                                target="_blank"
+                                key={i}
+                              >
+                                <img src={member.uri} className="h-8 md:h-10 mb-4 mx-4" />
+                              </Link>
+                            ) }
+                            </>
                           ))}
                         </div>
                       ) : (s.descriptions && s.descriptions.length > 0 ? (

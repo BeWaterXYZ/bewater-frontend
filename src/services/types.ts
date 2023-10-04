@@ -60,7 +60,10 @@ export interface Challenge {
 
   sponsors: {
     defname: string;
-    members?: string[];
+    members?: string[] | {
+      uri: string;
+      href?: string;
+    }[];
     descriptions?: {
       name: string;
       org: string;
@@ -78,8 +81,10 @@ export interface Challenge {
       goodsCount?: number;
     }[];
   }[];
-  keySponsors?: string[];
-
+  keySponsors?: string[] | {
+    uri: string;
+    href?: string;
+  }[];
   city?: string;
   hostIcon?: string | null;
   type: CAMPAIGN_TYPE;
