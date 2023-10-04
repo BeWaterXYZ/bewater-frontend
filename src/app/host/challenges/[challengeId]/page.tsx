@@ -167,8 +167,8 @@ export default function Page({ params }: any) {
                     Introduction
                   </div>
                   <div className="text-[18px] md:body-2 text-white">
-                    {challenge.description.split("\n").map((s) => (
-                      <p className="py-3" key={s}>
+                    {challenge.description.split("\n").map((s, i) => (
+                      <p className="py-3" key={i}>
                         {s}
                       </p>
                     ))}
@@ -308,7 +308,7 @@ export default function Page({ params }: any) {
                           key={i}
                         >
                           {/* // fixme/ */}
-                          <img src={sp} className="h-8 md:h-10" />
+                          <img src={typeof sp === 'string' ? sp : sp.uri} className="h-8 md:h-10" />
                         </div>
                       );
                     })}
@@ -437,11 +437,8 @@ export default function Page({ params }: any) {
                         </p>
                         <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
                           {(s.members ?? []).map((member, i) => (
-                            <img
-                              src={member}
-                              key={i}
-                              className="h-8 md:h-10 mb-4 mx-4"
-                            />
+                            <img src={typeof member === 'string' ? member : member.uri}
+                              key={i} className="h-8 md:h-10 mb-4 mx-4" />
                           ))}
                         </div>
                       </div>
