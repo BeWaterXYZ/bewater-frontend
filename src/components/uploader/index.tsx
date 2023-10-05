@@ -5,6 +5,7 @@ import {
   ArrowTopLeftIcon,
   Cross1Icon,
   PlusIcon,
+  UpdateIcon,
 } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { ChangeEventHandler, useId, useRef, useState } from "react";
@@ -43,9 +44,18 @@ export function Uploader({
   let [uploadingList, uploadingListSet] = useState<File[]>([]);
   let canUploadMore = max > urls.length + uploadingList.length;
   // prevent closure reading staled `urls`
-  let onChangeRef = useRef<((url: string) => void) | undefined>(undefined);
-  onChangeRef.current = (url: string) => {
-    onChange([...urls, url]);
+  let onChangeRef = useRef<((url: string, old?: string) => void) | undefined>(
+    undefined
+  );
+  onChangeRef.current = (url: string, old?: string) => {
+    if (old) {
+      let index = urls.findIndex((v) => v === old);
+      let urls_ = [...urls];
+      urls_.splice(index, 1, url);
+      onChange(urls_);
+    } else {
+      onChange([...urls, url]);
+    }
   };
 
   let onFileSelect: ChangeEventHandler<HTMLInputElement> = async (e) => {
@@ -56,7 +66,7 @@ export function Uploader({
     }
 
     if (fileSize > 3 * 1024 * 1024) {
-      window.alert('Image size should be less than 3MB');
+      window.alert("Image size should be less than 3MB");
       e.target.value = "";
       return;
     }
@@ -75,6 +85,36 @@ export function Uploader({
       }
     });
   };
+
+  let onFileReplace: (old: string) => ChangeEventHandler<HTMLInputElement> =
+    (old: string) => async (e) => {
+      let fileSize = 0;
+      let filesPicked = Array.from(e.target.files ?? []);
+      if (filesPicked.length === 1) {
+        fileSize = filesPicked[0].size;
+      }
+
+      if (fileSize > 3 * 1024 * 1024) {
+        window.alert("Image size should be less than 3MB");
+        e.target.value = "";
+        return;
+      }
+
+      uploadingListSet((list) => list.concat(filesPicked));
+      filesPicked.forEach(async (file) => {
+        try {
+          let url = await upload(file);
+          onChangeRef.current?.(url, old);
+        } catch (err) {
+          console.error("uploading error", err);
+        } finally {
+          uploadingListSet((uploading) =>
+            uploading.filter((f) => f.name !== file.name)
+          );
+        }
+      });
+    };
+
   let onRemove = (url: string) => {
     onChange(urls.filter((u) => u !== url));
   };
@@ -97,7 +137,7 @@ export function Uploader({
   return (
     <div className="  flex flex-wrap gap-3" style={{}}>
       {/* existing */}
-      {urls.map((url) => {
+      {urls.map((url, index) => {
         return (
           <div
             key={url}
@@ -107,6 +147,23 @@ export function Uploader({
             <Image src={url} fill alt="img"></Image>
 
             <div className="absolute top-[8px] right-[8px]  gap-2 hidden group-hover/image:flex bg-black/30 p-2">
+              <label>
+                <input
+                  type="file"
+                  id={`upload-input-${index}-${id}`}
+                  name="avatar"
+                  className="hidden"
+                  accept="image/*"
+                  multiple={max !== 1}
+                  onChange={onFileReplace(url)}
+                />
+                <UpdateIcon
+                  className="cursor-pointer text-white"
+                  height={16}
+                  width={16}
+                />
+              </label>
+
               <ArrowTopLeftIcon
                 className="cursor-pointer text-white"
                 height={16}
