@@ -16,11 +16,10 @@ const schema = z
     sponsors: z.array(
       z.object({
         defname: validationSchema.text,
-        members: z.array(validationSchema.text).or(
-          z.array(z.object({
-            uri: z.string(),
-            href: z.string().optional()
-          }))),
+        members: z.array(z.object({
+            uri: validationSchema.text,
+            href: z.string().optional(),
+          }).or(validationSchema.text)),
       })
     ),
   })
