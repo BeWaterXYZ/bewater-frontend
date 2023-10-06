@@ -30,7 +30,7 @@ const timezones = [
   value: tz.toString(),
   label: "UTC" + (tz === 0 ? "" : tz > 0 ? "+" + tz : tz),
   classes: {
-    container: "!rounded-full !bg-midnight  h-5  my-0",
+    container: " !bg-transparent  h-5  my-0",
     text: "!text-grey-400 body-4 leading-5 !py-0",
   },
 }));
@@ -51,6 +51,7 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditMilestones({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
+  let [sameTime, sameTimeSet] = useState(false);
   let mutation = useMutationUpdateChallenge(challenge.id);
 
   let {
@@ -75,6 +76,14 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
         })),
     },
   });
+
+  let sameTimeToggle = () => {
+    sameTimeSet(!sameTime);
+    let i = challenge.milestones.findIndex(
+      (m) => m.stageName === "Project Submission"
+    );
+    setValue(`milestones.${i}.dueDate`, challenge.startTime.substring(0, 10));
+  };
   const { fields, append, prepend, remove, swap, move, insert, replace } =
     useFieldArray({
       control, // control props comes from useForm (optional: if you are using FormContext)
@@ -123,11 +132,11 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                   {...register("timezone")}
                 />
               </div>
-              <div className="grid grid-cols-3 gap-4">
-                <label className=" block text-[12px] my-2 text-grey-500">
+              <div className="flex flex-row gap-4">
+                <label className=" flex-1 flex text-[12px] my-2 text-grey-500">
                   Date
                 </label>
-                <label className=" block text-[12px] my-2 text-grey-500">
+                <label className=" flex-1 flex  text-[12px] my-2 text-grey-500">
                   Milestone Name
                 </label>
               </div>
@@ -138,10 +147,11 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                 );
                 return (
                   <div
-                    className="relative grid grid-cols-3 gap-4 my-2"
+                    className="relative flex flex-row gap-4 my-2 pt-1"
                     key={field.id}
                   >
                     <DatePicker
+                    disabled={sameTime &&  field.stageName === 'Project Submission'}
                       control={control}
                       label={
                         <div className="flex gap-1">
@@ -150,7 +160,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                           ) : (
                             <Pencil1Icon />
                           )}
-                          {field.stageName}
+                          {field.stageName || "Customized"}
                         </div>
                       }
                       onValueChange={(v) =>
@@ -170,7 +180,8 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                     <div className="flex gap-2 pb-5">
                       <button
                         className="  text-grey-500"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.stopPropagation();
                           insert(index + 1, { dueDate: "", stageName: "" });
                         }}
                       >
@@ -186,7 +197,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                       >
                         <MinusIcon />
                       </button>
-                      <button
+                      {/* <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -194,8 +205,8 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                         }}
                       >
                         <ArrowUpIcon className="mr-1 text-grey-500" />
-                      </button>
-                      <button
+                      </button> */}
+                      {/* <button
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -203,13 +214,13 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                         }}
                       >
                         <ArrowDownIcon className="mr-1 text-grey-500" />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 );
               })}
             </div>
-            <button
+            {/* <button
               type="button"
               className="text-[12px] text-grey-300"
               onClick={() => {
@@ -217,7 +228,24 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
               }}
             >
               + Add a new milestone
-            </button>
+            </button> */}
+            <label
+              className={clsx(
+                "body-3 flex items-center my-1 cursor-pointer"
+                // on ? 'text-white' : 'text-[#94A3B8]',
+              )}
+            >
+              <input
+                className="mr-2 w-4 h-4 block accent-[#00FFFF]"
+                type="checkbox"
+                checked={sameTime}
+                onChange={sameTimeToggle}
+              ></input>
+              <span>{"赛事开始时，项目提交也同时开启"}</span>
+            </label>
+            <p className="body-3 text-grey-500">
+              说明：线下赛事以现场公布的时间为准。
+            </p>
             <div className="flex mt-6 justify-end">
               <button className="btn btn-primary" type="submit">
                 Save{" "}

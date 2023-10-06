@@ -25,6 +25,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
     control,
     onValueChange,
     placeholder = "Click to select a date",
+    disabled,
   } = props;
   const id = useId();
 
@@ -47,6 +48,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
 
             <div className=" relative w-full text-[14px] bg-night  block body-3   rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors">
               <ReactDatePicker
+                disabled={disabled}
                 className="w-full bg-white/0 h-10 px-2 outline-none"
                 placeholderText={placeholder}
                 selected={field.value ? parseISO(field.value as string) : null}
