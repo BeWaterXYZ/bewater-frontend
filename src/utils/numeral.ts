@@ -6,5 +6,5 @@ export function formatMoney(amount: number) {
 }
 
 export function formatMoneyWithCurreny(amount: number, currency: string) {
-  return getSymbolFromCurrency(currency) ? `${getSymbolFromCurrency(currency)} ${amount}` : `${amount} ${currency}`
+  return getSymbolFromCurrency(currency) ? `${getSymbolFromCurrency(currency)} ${formatMoney(amount)}` : `${formatMoney(amount)} ${currency}`
 }
