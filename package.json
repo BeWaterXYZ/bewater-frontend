@@ -28,6 +28,7 @@
     "axios": "^1.5.1",
     "clsx": "^2.0.0",
     "compressorjs": "^1.2.1",
+    "currency-symbol-map": "^5.1.0",
     "date-fns": "^2.30.0",
     "i18next": "23.5.1",
     "i18next-browser-languagedetector": "^7.1.0",

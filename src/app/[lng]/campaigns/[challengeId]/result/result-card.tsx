@@ -14,6 +14,7 @@ interface ResultCardProps {
   score?: number;
   lng: string;
 }
+
 export function ResultCard({
   teamId,
   score,
@@ -44,7 +45,7 @@ export function ResultCard({
             {team.project.name}
           </Link>
           {score ? (
-            <div className="absolute top-0 right-0 w-10 h-10 rounded-[3px] body-4 bg-[#1A1C40]   p-3">
+            <div className="absolute top-0 right-0 w-16 h-10 rounded-[3px] body-4 bg-[#1A1C40]   p-3">
               {score}
             </div>
           ) : null}
