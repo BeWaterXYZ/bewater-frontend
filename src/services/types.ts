@@ -93,6 +93,20 @@ export interface Challenge {
   joinLink?: string;
   track?: string[];
   linkText?: string;
+  result? : Array<ChallengeTrackResult>;
+}
+
+export interface ChallengeTrackResult {
+  track: string | null;
+  awards: Array<TrackAward>;
+}
+
+export interface TrackAward {
+  awardName: string | null;
+  prize: number | null;
+  award: number | null;
+  teamId: number;
+  score: number | null;
 }
 
 export interface Award {
