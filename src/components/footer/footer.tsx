@@ -19,20 +19,20 @@ export const Footer = async (params: Props) => {
           © {new Date().getFullYear()} {t('bewater')}{t('footer.dot')} {t('footer.right')}
         </div>
         <div className="flex flex-row gap-x-4 items-center justify-end">
-          <Link href="https://t.co/oPJUASWXjh" target="_blank">
-            <Image
-              src="/icons/footer-discord.svg"
-              width={24}
-              height={24}
-              alt="discord"
-            />
-          </Link>
           <Link href="https://twitter.com/BeWaterOfficial" target="_blank">
             <Image
               src="/icons/footer-twitter.svg"
               width={24}
               height={24}
               alt="twitter"
+            />
+          </Link>
+          <Link href="https://t.co/oPJUASWXjh" target="_blank">
+            <Image
+              src="/icons/footer-discord.svg"
+              width={24}
+              height={24}
+              alt="discord"
             />
           </Link>
         </div>

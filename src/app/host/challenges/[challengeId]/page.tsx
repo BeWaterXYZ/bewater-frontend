@@ -6,7 +6,7 @@ import { publishChallengeRequest } from "@/services/challenge";
 import { useFetchChallengeById } from "@/services/challenge.query";
 import { Judge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
-import { CheckIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import { CheckIcon, OpenInNewWindowIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
@@ -73,9 +73,15 @@ export default function Page({ params }: any) {
             You’ll get notification after review. Review usually takes 1-2
             business days.
           </p>
+          <div className="flex gap-2">
           <Link href="/host" className="btn btn-secondary">
-            Back to homepage
-          </Link>
+           Done
+          </Link>   <a href={`/host/challenges/${challenge.id}`} className="btn btn-secondary-invert">
+            <OpenInNewWindowIcon/>
+           Open campaign page
+          </a>
+          </div>
+       
         </div>
       ) : null}
       <div className="bg-night pt-20">
