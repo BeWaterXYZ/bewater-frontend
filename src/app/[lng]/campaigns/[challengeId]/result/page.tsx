@@ -38,20 +38,25 @@ export default function Page({ params }: any) {
 
 function Result({ params, challenge, teams } : any) {
   const { lng } = segmentSchema.lng.parse(params);
-  const { result, totalAward, awardCurrency } = challenge;
+  const { result, awardCurrency } = challenge;
 
   const countTrackAward = (awards: Array<TrackAward>) => awards.reduce((amount, trackAward) => amount + (trackAward.award ??= 0), 0);
+  const totalAward = result.reduce((award: number, trackResult: ChallengeTrackResult) => award + countTrackAward(trackResult.awards), 0);
   const awardTeamsCount = result.reduce((amount: number, trackResult: ChallengeTrackResult) => amount + (trackResult.awards.length ??= 0), 0);
   return (
-    <>
+    <> 
       <div className="flex justify-center">
         <div className="relative body-2 text-center my-10 p-6 m-auto">
-          ✨ {awardTeamsCount} of over {teams.length} teams won a total prize pool of{' '}
-          <span className="text-day">{formatMoneyWithCurreny(totalAward, awardCurrency)}</span>{' '}
-          <div
-            className="absolute w-full h-[1px] bottom-0 left-0"
-            style={{ background: 'linear-gradient(to right, #01DCBA,#7F30CB' }}
-          ></div>
+        {!challenge.yotadata.hideResultAward && (
+          <>
+            ✨ {awardTeamsCount} of over {teams.length} teams won a total prize pool of{' '}
+            <span className="text-day">{formatMoneyWithCurreny(totalAward, awardCurrency)}</span>{' '}
+            <div
+              className="absolute w-full h-[1px] bottom-0 left-0"
+              style={{ background: 'linear-gradient(to right, #01DCBA,#7F30CB' }}
+            ></div>
+          </>
+        )}
         </div>
       </div>
       {result.map((w : ChallengeTrackResult) => {
