@@ -138,7 +138,7 @@ export default async function ChallengeIntro({ params }: any) {
             )}
           </div>
         </div>
-        <div>
+        <div className='flex flex-wrap gap-4 justify-center items-center'>
           {challenge.id === '7' ? (
             <>
               <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
