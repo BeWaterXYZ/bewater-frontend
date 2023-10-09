@@ -53,10 +53,10 @@ export interface Challenge {
   location: string;
   milestones: Milestone[];
   judges: Judge[];
-  wechatURL: string;
-  telegramLink: string;
-  discordLink: string;
-  twitterLink: string;
+  wechatURL?: string;
+  telegramLink?: string;
+  discordLink?: string;
+  twitterLink?: string;
 
   sponsors: {
     defname: string;

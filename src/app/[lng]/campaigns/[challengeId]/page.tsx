@@ -155,6 +155,21 @@ export default async function ChallengeIntro({ params }: any) {
             </>
           ) : (
             <>
+              {challenge.yotadata?.linkObj?.official ? (
+                <Link
+                prefetch={false}
+                href={challenge.yotadata.linkObj.official.link}
+                target="_blank"
+                className="flex md:inline-flex group btn btn-primary-invert body-4 text-day uppercase w-64 py-6 mx-6 my-6 md:my-0"
+              >
+                <div className="flex flex-row gap-4 items-center">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.9375 3.5625H5.0625C4.23407 3.5625 3.5625 4.23407 3.5625 5.0625V12.9375C3.5625 13.7659 4.23407 14.4375 5.0625 14.4375H12.9375C13.7659 14.4375 14.4375 13.7659 14.4375 12.9375V11.0625M14.4375 6.9375V3.5625H11.0625M14.25 3.75L8.8125 9.1875" stroke="#00FFFF" strokeWidth="1.28" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {challenge.yotadata.linkObj.official.text.en}
+                </div>
+              </Link>
+              ) : null}
               {challenge?.discordLink ? (
                 <>
                   <Link
