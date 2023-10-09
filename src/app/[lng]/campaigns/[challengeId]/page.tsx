@@ -1,3 +1,4 @@
+import getSymbolFromCurrency from 'currency-symbol-map';
 import { Aspect } from '@/components/aspect';
 import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
@@ -308,8 +309,8 @@ export default async function ChallengeIntro({ params }: any) {
                 </h3>
               ) : (
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  Total Awards: ${challenge.totalAward}{' '}
-                  {challenge.awardCurrency}
+                  Total Awards: {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{challenge.totalAward}{' '}
+                  {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
                 </h3>
               )}
               <div className="flex flex-row flex-wrap items-top gap-16 p-8">
@@ -332,7 +333,7 @@ export default async function ChallengeIntro({ params }: any) {
                                     {award.amount === 0 ?
                                       (<div className="flex flex-row justify-between">
                                       <p className="body-3 text-white/60">
-                                        ${award.awardName}
+                                        {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{award.awardName}
                                       </p>
                                       <p className="body-3 text-white/60">
                                         x{award.count}
@@ -355,7 +356,7 @@ export default async function ChallengeIntro({ params }: any) {
                                     {award.amount > 0 ? (
                                       <div className="flex flex-row justify-between">
                                         <p className="body-3 text-white/60">
-                                          ${award.amount}
+                                          {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{award.amount}
                                         </p>
                                         <p className="body-3 text-white/60">
                                           x{award.count}
