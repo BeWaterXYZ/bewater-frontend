@@ -1,8 +1,5 @@
 'use client';
 
-import Challenge1 from './challenges/challenge-1';
-import Challenge5 from './challenges/challenge-5';
-import Challenge29 from './challenges/challenge-29';
 import './style.css';
 import { ChallengeTrackResult, TrackAward } from '@/services/types';
 import { ResultCard } from './result-card';
@@ -13,24 +10,14 @@ import { Loading } from '@/components/loading/loading';
 import { formatMoneyWithCurreny } from '@/utils/numeral';
 import Image from 'next/image';
 
-const regexNumber = /^\d+$/;
-const resultMap = new Map();
-resultMap.set('1', Challenge1);
-resultMap.set('5', Challenge5);
-resultMap.set('29', Challenge29);
-
 export default function Page({ params }: any) {
   let { challengeId } = params || {};
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
   const { data: teams, isLoading: isLoadingTeam } = useFetchChallengeTeams(challengeId);
-
   if (isLoading || isLoadingTeam) {
     return <Loading />;
   }
-  const ChallengeResult = resultMap.get(challenge?.id);
-  if (ChallengeResult) {
-    return <ChallengeResult params={params} />
-  }
+
   if (challenge?.result) {
     return <Result params={params} challenge={challenge} teams={teams} />
   }
@@ -47,7 +34,7 @@ function Result({ params, challenge, teams } : any) {
     <> 
       <div className="flex justify-center">
         <div className="relative body-2 text-center my-10 p-6 m-auto">
-        {!challenge.yotadata.hideResultAward && (
+        {!challenge.yotadata?.hideResultAward && (
           <>
             ✨ {awardTeamsCount} of over {teams.length} teams won a total prize pool of{' '}
             <span className="text-day">{formatMoneyWithCurreny(totalAward, awardCurrency)}</span>{' '}
@@ -107,11 +94,14 @@ function FirstPrize({award, awardCurrency, lng}: any) {
         score={award.score}
         lng={lng}
       />
-      <div className="absolute md:static md:pt-8 w-full flex justify-center md:w-auto bottom-4 left-4">
-        <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-          {formatMoneyWithCurreny(award.award, awardCurrency)}
+
+      {award.award && 
+        <div className="absolute md:static md:pt-8 w-full flex justify-center md:w-auto bottom-4 left-4">
+          <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
+            {formatMoneyWithCurreny(award.award, awardCurrency)}
+          </div>
         </div>
-      </div>
+      }
     </div>
   )
 }
@@ -168,11 +158,13 @@ function OtherPrize({award, awardCurrency, lng}: any) {
           lng={lng}
         />
       </div>
-      <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
-        <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
-          {formatMoneyWithCurreny(award.award, awardCurrency)}
+      {award.award && 
+        <div className="absolute w-full flex justify-center md:w-auto bottom-4 left-4">
+          <div className="p-2 px-4 text-white/30 body-3 bg-white/5 rounded-full ">
+            {formatMoneyWithCurreny(award.award, awardCurrency)}
+          </div>
         </div>
-      </div>
+      }
     </div>
   )
 }
