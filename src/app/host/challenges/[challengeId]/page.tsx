@@ -8,7 +8,11 @@ import { publishChallengeRequest } from "@/services/challenge";
 import { useFetchChallengeById } from "@/services/challenge.query";
 import { Judge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
-import { CheckIcon, OpenInNewWindowIcon, TwitterLogoIcon } from "@radix-ui/react-icons";
+import {
+  CheckIcon,
+  OpenInNewWindowIcon,
+  TwitterLogoIcon,
+} from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
@@ -25,6 +29,7 @@ import { EditSponsors } from "./edit/sponsors";
 import { mock } from "./mock";
 import Markdown from "@/components/markdown";
 import { segmentSchema } from "../../segment-params";
+import { EditContestant } from "./edit/contestant";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -76,14 +81,17 @@ export default function Page({ params }: any) {
             business days.
           </p>
           <div className="flex gap-2">
-          <Link href="/host" className="btn btn-secondary">
-           Done
-          </Link>   <a href={`/host/challenges/${challenge.id}`} className="btn btn-secondary-invert">
-            <OpenInNewWindowIcon/>
-           Open campaign page
-          </a>
+            <Link href="/host" className="btn btn-secondary">
+              Done
+            </Link>{" "}
+            <a
+              href={`/host/challenges/${challenge.id}`}
+              className="btn btn-secondary-invert"
+            >
+              <OpenInNewWindowIcon />
+              Open campaign page
+            </a>
           </div>
-
         </div>
       ) : null}
       <div className="bg-night pt-20">
@@ -96,9 +104,12 @@ export default function Page({ params }: any) {
             {" Now You're Editing"}{" "}
             <span className="text-day">{challenge.title}</span>
           </div>
-          <button className="btn btn-primary" onClick={publish}>
-            Publish Request
-          </button>
+          <div className="flex gap-2">
+            <EditContestant challenge={challenge} />
+            <button className="btn btn-primary" onClick={publish}>
+              Publish Request
+            </button>
+          </div>
         </div>
         {/* banner section */}
         <div
@@ -138,7 +149,7 @@ export default function Page({ params }: any) {
                   href={`${challenge.joinLink}`}
                   className="btn btn-primary rounded-none body-4 text-night uppercase"
                 >
-                  {challenge.linkText ? challenge.linkText : 'REGISTER NOW'}
+                  {challenge.linkText ? challenge.linkText : "REGISTER NOW"}
                 </Link>
               ) : null}
             </div>
@@ -316,7 +327,10 @@ export default function Page({ params }: any) {
                           key={i}
                         >
                           {/* // fixme/ */}
-                          <img src={typeof sp === 'string' ? sp : sp.uri} className="h-8 md:h-10" />
+                          <img
+                            src={typeof sp === "string" ? sp : sp.uri}
+                            className="h-8 md:h-10"
+                          />
                         </div>
                       );
                     })}
@@ -445,8 +459,13 @@ export default function Page({ params }: any) {
                         </p>
                         <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
                           {(s.members ?? []).map((member, i) => (
-                            <img src={typeof member === 'string' ? member : member.uri}
-                              key={i} className="h-8 md:h-10 mb-4 mx-4" />
+                            <img
+                              src={
+                                typeof member === "string" ? member : member.uri
+                              }
+                              key={i}
+                              className="h-8 md:h-10 mb-4 mx-4"
+                            />
                           ))}
                         </div>
                       </div>
