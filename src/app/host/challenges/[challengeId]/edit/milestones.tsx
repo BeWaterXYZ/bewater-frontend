@@ -1,27 +1,23 @@
 "use client";
+import { Select } from "@/components/form/control";
 import { DatePicker } from "@/components/form/datepicker";
 import { Input } from "@/components/form/input";
+import { validationSchema } from "@/schema";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
 import { Challenge, defaultMileStones } from "@/services/types";
-import { validationSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  Cross2Icon,
   DrawingPinFilledIcon,
   MinusIcon,
   Pencil1Icon,
-  PinTopIcon,
-  PlusIcon,
+  PlusIcon
 } from "@radix-ui/react-icons";
+import clsx from "clsx";
+import { parseISO, subHours } from "date-fns";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Select } from "@/components/form/control";
-import { addHours, compareAsc, parseISO, subHours } from "date-fns";
-import clsx from "clsx";
 
 const timezones = [
   -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
@@ -42,6 +38,7 @@ const schema = z
       z.object({
         dueDate: validationSchema.date,
         stageName: validationSchema.text,
+        showName: validationSchema.text,
       })
     ),
   })
@@ -60,7 +57,6 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -151,7 +147,9 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                     key={field.id}
                   >
                     <DatePicker
-                    disabled={sameTime &&  field.stageName === 'Project Submission'}
+                      disabled={
+                        sameTime && field.stageName === "Project Submission"
+                      }
                       control={control}
                       label={
                         <div className="flex gap-1">
@@ -160,7 +158,9 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                           ) : (
                             <Pencil1Icon />
                           )}
-                          {field.stageName || "Customized"}
+                          {field.stageName !== "NOP"
+                            ? field.stageName
+                            : "Customized"}
                         </div>
                       }
                       onValueChange={(v) =>
@@ -169,20 +169,22 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                       {...register(`milestones.${index}.dueDate`)}
                       error={errors[`milestones`]?.[index]?.dueDate}
                     />
-                    {!isDefault ? (
-                      <Input
-                        {...register(`milestones.${index}.stageName`)}
-                        error={errors.milestones?.[index]?.stageName}
-                      />
-                    ) : (
-                      <Input disabled value={field.stageName} />
-                    )}
+
+                    <Input
+                      {...register(`milestones.${index}.showName`)}
+                      error={errors.milestones?.[index]?.showName}
+                    />
+
                     <div className="flex gap-2 pb-5">
                       <button
                         className="  text-grey-500"
                         onClick={(e) => {
                           e.stopPropagation();
-                          insert(index + 1, { dueDate: "", stageName: "" });
+                          insert(index + 1, {
+                            dueDate: "",
+                            stageName: "NOP",
+                            showName: "",
+                          });
                         }}
                       >
                         <PlusIcon />

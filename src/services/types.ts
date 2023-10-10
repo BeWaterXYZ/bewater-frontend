@@ -1,9 +1,9 @@
 /**
  * User
  */
-import { CAMPAIGN_TYPE } from '@/constants';
-import { RoleUnion } from '@/constants/options/role';
-import { SkillUnion } from '@/constants/options/skill';
+import { CAMPAIGN_TYPE } from "@/constants";
+import { RoleUnion } from "@/constants/options/role";
+import { SkillUnion } from "@/constants/options/skill";
 
 export type UserID = string;
 
@@ -23,8 +23,8 @@ export interface UserProfile {
   clerkId: string;
 }
 export interface SocialAuth {
-  platform: 'GitHub' | 'Figma';
-  authStatus: 'AUTHORIZED';
+  platform: "GitHub" | "Figma";
+  authStatus: "AUTHORIZED";
   handle: string;
 }
 export interface UserProfileFull extends UserProfile {
@@ -49,7 +49,14 @@ export interface Challenge {
   endTime: string;
   totalAward: number;
   awardCurrency: string;
-  status: 'DRAFT' | 'INREVIEW' | 'ACTIVE' | 'COMPLETED' | 'CANCELED' | 'PAUSED' | 'REFUSED';
+  status:
+    | "DRAFT"
+    | "INREVIEW"
+    | "ACTIVE"
+    | "COMPLETED"
+    | "CANCELED"
+    | "PAUSED"
+    | "REFUSED";
   location: string;
   milestones: Milestone[];
   judges: Judge[];
@@ -60,10 +67,13 @@ export interface Challenge {
 
   sponsors: {
     defname: string;
-    members?: (string | {
-      uri: string;
-      href?: string;
-    })[];
+    members?: (
+      | string
+      | {
+          uri: string;
+          href?: string;
+        }
+    )[];
     descriptions?: {
       name: string;
       org: string;
@@ -81,10 +91,13 @@ export interface Challenge {
       goodsCount?: number;
     }[];
   }[];
-  keySponsors?: (string | {
-    uri: string;
-    href?: string;
-  })[];
+  keySponsors?: (
+    | string
+    | {
+        uri: string;
+        href?: string;
+      }
+  )[];
   city?: string;
   hostIcon?: string | null;
   type: CAMPAIGN_TYPE;
@@ -93,7 +106,7 @@ export interface Challenge {
   joinLink?: string;
   track?: string[];
   linkText?: string;
-  result? : Array<ChallengeTrackResult>;
+  result?: Array<ChallengeTrackResult>;
 }
 
 export interface ChallengeTrackResult {
@@ -128,11 +141,11 @@ export interface Judge {
 }
 
 export const defaultMileStones = [
-  'Preparation',
-  'Teaming',
-  'Project Submission',
-  'Review',
-  'Result',
+  "Preparation",
+  "Teaming",
+  "Project Submission",
+  "Review",
+  "Result",
 ] as const;
 
 export type DefaultMileStones = (typeof defaultMileStones)[number];
@@ -140,14 +153,13 @@ export type DefaultMileStones = (typeof defaultMileStones)[number];
 export interface Milestone {
   dueDate: string;
   stageName:
-    | 'Preparation'
-    | 'NOP'
-    | 'Teaming'
-    | 'Project Submission'
-    | 'Review'
-    | 'Result'
-    // todo del string
-    | string;
+    | "Preparation"
+    | "NOP"
+    | "Teaming"
+    | "Project Submission"
+    | "Review"
+    | "Result"
+    | "NOP";
   showName?: string;
 }
 
@@ -216,22 +228,22 @@ export interface TeamMember {
 export type GroupingRequestId = string;
 
 export interface GroupingRequest {
-  type: 'APPLICATION' | 'INVITATION';
+  type: "APPLICATION" | "INVITATION";
   recipientId: UserID;
   teamRole: RoleUnion;
   message?: string;
 }
 export interface GroupingRequestFull extends GroupingRequest {
   id: GroupingRequestId;
-  status: 'PENDING' | 'REVOKED' | 'ACCEPTED' | 'DECLINED';
+  status: "PENDING" | "REVOKED" | "ACCEPTED" | "DECLINED";
   teamId: number;
   createdAt: string;
   updatedAt: string;
   recipient?: UserProfile;
   senderId: UserID;
   sender?: UserProfile;
-  team: Pick<Team, 'id' | 'name'> & {
-    challenge: Pick<Challenge, 'id' | 'title'>;
+  team: Pick<Team, "id" | "name"> & {
+    challenge: Pick<Challenge, "id" | "title">;
   };
 }
 
