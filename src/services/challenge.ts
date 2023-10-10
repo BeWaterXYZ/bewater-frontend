@@ -1,7 +1,7 @@
-import { RoleUnion } from '@/constants/options/role';
-import { SkillUnion } from '@/constants/options/skill';
-import { agentAnon, agentAuthed } from './agent';
-import { Challenge, ChallengeID } from './types';
+import { RoleUnion } from "@/constants/options/role";
+import { SkillUnion } from "@/constants/options/skill";
+import { agentAnon, agentAuthed } from "./agent";
+import { Challenge, ChallengeID, ChallengeInvitation } from "./types";
 
 export interface CreateTeamRequest {
   name: string;
@@ -26,10 +26,10 @@ export async function getChallenges() {
     `/challenge/timerange`,
     {
       params: {
-        startTime: '2022-01-01T19:54:35.308Z',
-        endTime: '2023-12-20T19:54:35.308Z',
+        startTime: "2022-01-01T19:54:35.308Z",
+        endTime: "2023-12-20T19:54:35.308Z",
       },
-    },
+    }
   );
   return data.challenges;
 }
@@ -37,12 +37,10 @@ export async function getChallenges() {
 export async function getChallengeById(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
-    {},
+    {}
   );
   return data.challenge;
 }
-
-
 
 export async function getHostChallengeById(challengeId: ChallengeID) {
   const { data } = await agentAuthed.get<{ challenge: Challenge }>(
@@ -76,6 +74,21 @@ export async function publishChallengeRequest(challengeId: ChallengeID) {
   const { data } = await agentAuthed.post<Challenge>(
     `/host-challenge/publish-request`,
     { id: challengeId }
+  );
+  return data;
+}
+
+export async function inviteToChallenge(id: ChallengeID, emails: string[]) {
+  const { data } = await agentAuthed.post(
+    `/host-challenge/${id}/invitation`,
+    emails
+  );
+  return data;
+}
+
+export async function getChallengeInvitation(id: ChallengeID) {
+  const { data } = await agentAuthed.get<ChallengeInvitation[]>(
+    `/host-challenge/${id}/invitation`
   );
   return data;
 }

@@ -260,3 +260,9 @@ export interface RepoLatestCommit {
   commitAuthor: string;
   commitDate: string;
 }
+
+
+export interface ChallengeInvitation  {
+  email: string;
+  status: 'waitingToJoin'|'joined';
+};
