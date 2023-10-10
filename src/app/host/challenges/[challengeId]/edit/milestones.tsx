@@ -4,7 +4,7 @@ import { DatePicker } from "@/components/form/datepicker";
 import { Input } from "@/components/form/input";
 import { validationSchema } from "@/schema";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
-import { Challenge, defaultMileStones } from "@/services/types";
+import { Challenge, Milestone, defaultMileStones } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
@@ -96,7 +96,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
             parseISO(ms.dueDate + "T00:00:00.000Z"),
             parseInt(formData.timezone[0])
           ).toISOString(),
-        })),
+        })) as Milestone[],
       });
       openSet(false);
     } catch (err) {}
