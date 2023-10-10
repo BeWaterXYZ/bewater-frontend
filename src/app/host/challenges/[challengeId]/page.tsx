@@ -1,4 +1,6 @@
 "use client";
+import getSymbolFromCurrency from 'currency-symbol-map';
+import { formatMoney } from "@/utils/numeral";
 import { Aspect } from "@/components/aspect";
 import HoverCard from "@/components/hover-card";
 import { useLoadingStoreAction } from "@/components/loading/store";
@@ -81,7 +83,7 @@ export default function Page({ params }: any) {
            Open campaign page
           </a>
           </div>
-       
+
         </div>
       ) : null}
       <div className="bg-night pt-20">
@@ -259,8 +261,8 @@ export default function Page({ params }: any) {
             <div className="container">
               <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  Total Awards: ${challenge.totalAward}{" "}
-                  {challenge.awardCurrency}
+                  Total Awards: {getSymbolFromCurrency(challenge?.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{formatMoney(challenge.totalAward)}{" "}
+                  {challenge?.awardCurrency ? challenge.awardCurrency : 'USD'}
                 </h3>
                 <div className="flex flex-row flex-wrap items-center gap-16 p-8">
                   {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
@@ -284,7 +286,7 @@ export default function Page({ params }: any) {
                                       </p>
                                       <div className="flex flex-row justify-between">
                                         <p className="body-3 text-white/60">
-                                          ${award.amount}
+                                          {getSymbolFromCurrency(challenge?.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{formatMoney(award.amount)}
                                         </p>
                                         <p className="body-3 text-white/60">
                                           x{award.count}
