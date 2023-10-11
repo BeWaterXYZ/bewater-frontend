@@ -1,5 +1,4 @@
 import getSymbolFromCurrency from 'currency-symbol-map';
-import { formatMoney } from "@/utils/numeral";
 import { Aspect } from '@/components/aspect';
 import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
@@ -139,7 +138,7 @@ export default async function ChallengeIntro({ params }: any) {
             )}
           </div>
         </div>
-        <div className='flex flex-wrap gap-4 justify-center items-center'>
+        <div>
           {challenge.id === '7' ? (
             <>
               <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
@@ -279,326 +278,330 @@ export default async function ChallengeIntro({ params }: any) {
 
       <Agenda challenge={challenge}/>
 
-
-      <div className="">
-        {challenge.id === '1' ? (
-          <PrizeSection1 />
-        ) : challenge.id === '2' ? (
-          <PrizeSection2 t={t} lng={lng} />
-        ) : challenge.id === '3' ? (
-          <ScheduleSection3 />
-        ) : challenge.id === '4' ? (
-          <PrizeSection4 t={t} />
-        ) : challenge.id === '5' ? (
-          <PrizeSection5 t={t} lng={lng} />
-        ) : challenge.id === '6' ? (
-          <PrizeSection6 t={t} lng={lng} />
-        ) : challenge.id === '7' ? (
-          <PrizeSection7 t={t} lng={lng} />
-        ) : challenge.id === '11' ? (
-          <PrizeSection11 t={t} lng={lng} />
-        ) : challenge.id === '19' ? (
-          <PrizeSection19 t={t} lng={lng} challenge={challenge} />
-        ) : challenge.id === '42' ? (
-          <ScheduleSection42 />
-        ) : (
-          <div className="container">
-            <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
-              {challenge.yotadata?.award?.title ? (
-                <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  {lng === 'zh' ? (challenge.yotadata.award.title.zh ?? challenge.yotadata.award.title.en) : (challenge.yotadata.award.title.en ?? challenge.yotadata.award.title.zh)}
-                </h3>
-              ) : (
-                <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  Total Awards: {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{formatMoney(challenge.totalAward)}{' '}
-                  {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
-                </h3>
-              )}
-              <div className="flex flex-row flex-wrap items-top gap-16 p-8">
-                {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
-                  return (
-                    <div
-                      className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
-                      key={i}
-                    >
-                      <div className="flex flex-row gap-[min(32px,2vw)] ">
-                        <div className="flex flex-col gap-4 md:gap-7 items-center">
-                          <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
-                            {awardAssort.name}
-                          </p>
-                          <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
-                            {awardAssort.awards.map((award, i) => {
-                              return (
-                                <Fragment key={i}>
-                                  <div className="flex flex-col gap-1 w-full">
-                                    {award.amount === 0 ?
-                                      (<div className="flex flex-row justify-between">
-                                      <p className="body-3 text-white/60">
-                                        {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{award.awardName}
-                                      </p>
-                                      <p className="body-3 text-white/60">
-                                        x{award.count}
-                                      </p>
-                                      </div>): (<p className="body-3 text-white">
-                                        {award.awardName}
-                                      </p>)}
-                                    {award.goodsName ? (
-                                      <>
-                                        <div className="flex flex-row justify-between">
-                                          <p className="body-3 text-white/60">
-                                            {award.goodsName}
-                                          </p>
-                                          <p className="body-3 text-white/60">
-                                            x{award.goodsCount}
-                                          </p>
-                                        </div>
-                                      </>
-                                    ) : null}
-                                    {award.amount > 0 ? (
-                                      <div className="flex flex-row justify-between">
+      { !challenge.yotadata?.disableAwards &&
+        <div className="">
+          {challenge.id === '1' ? (
+            <PrizeSection1 />
+          ) : challenge.id === '2' ? (
+            <PrizeSection2 t={t} lng={lng} />
+          ) : challenge.id === '3' ? (
+            <ScheduleSection3 />
+          ) : challenge.id === '4' ? (
+            <PrizeSection4 t={t} />
+          ) : challenge.id === '5' ? (
+            <PrizeSection5 t={t} lng={lng} />
+          ) : challenge.id === '6' ? (
+            <PrizeSection6 t={t} lng={lng} />
+          ) : challenge.id === '7' ? (
+            <PrizeSection7 t={t} lng={lng} />
+          ) : challenge.id === '11' ? (
+            <PrizeSection11 t={t} lng={lng} />
+          ) : challenge.id === '19' ? (
+            <PrizeSection19 t={t} lng={lng} challenge={challenge} />
+          ) : challenge.id === '42' ? (
+            <ScheduleSection42 />
+          ) : (
+            <div className="container">
+              <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
+                {challenge.yotadata?.award?.title ? (
+                  <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+                    {lng === 'zh' ? (challenge.yotadata.award.title.zh ?? challenge.yotadata.award.title.en) : (challenge.yotadata.award.title.en ?? challenge.yotadata.award.title.zh)}
+                  </h3>
+                ) : (
+                  <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+                    Total Awards: {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{challenge.totalAward}{' '}
+                    {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
+                  </h3>
+                )}
+                <div className="flex flex-row flex-wrap items-top gap-16 p-8">
+                  {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
+                    return (
+                      <div
+                        className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
+                        key={i}
+                      >
+                        <div className="flex flex-row gap-[min(32px,2vw)] ">
+                          <div className="flex flex-col gap-4 md:gap-7 items-center">
+                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
+                              {awardAssort.name}
+                            </p>
+                            <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
+                              {awardAssort.awards.map((award, i) => {
+                                return (
+                                  <Fragment key={i}>
+                                    <div className="flex flex-col gap-1 w-full">
+                                      {award.amount === 0 ?
+                                        (<div className="flex flex-row justify-between">
                                         <p className="body-3 text-white/60">
-                                          {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{formatMoney(award.amount)}
+                                          {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{award.awardName}
                                         </p>
                                         <p className="body-3 text-white/60">
                                           x{award.count}
                                         </p>
-                                      </div>
-                                    ) : null}
-                                  </div>
-                                  <hr className="border-none bg-white/20 h-[0.5px] w-full" />
-                                </Fragment>
-                              );
-                            })}
+                                        </div>): (<p className="body-3 text-white">
+                                          {award.awardName}
+                                        </p>)}
+                                      {award.goodsName ? (
+                                        <>
+                                          <div className="flex flex-row justify-between">
+                                            <p className="body-3 text-white/60">
+                                              {award.goodsName}
+                                            </p>
+                                            <p className="body-3 text-white/60">
+                                              x{award.goodsCount}
+                                            </p>
+                                          </div>
+                                        </>
+                                      ) : null}
+                                      {award.amount > 0 ? (
+                                        <div className="flex flex-row justify-between">
+                                          <p className="body-3 text-white/60">
+                                            {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{award.amount}
+                                          </p>
+                                          <p className="body-3 text-white/60">
+                                            x{award.count}
+                                          </p>
+                                        </div>
+                                      ) : null}
+                                    </div>
+                                    <hr className="border-none bg-white/20 h-[0.5px] w-full" />
+                                  </Fragment>
+                                );
+                              })}
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-              {challenge.yotadata?.award?.additional ? (
-                <>
-                  <div className="relative w-full flex flex-col gap-10 items-center">
-                    <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
-                      {challenge.yotadata.award.additional.en.title}
-                    </p>
-                    <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
-                      <li>
-                        <Markdown>{challenge.yotadata.award.additional.en.content}</Markdown>
-                      </li>
-                    </ul>
-                  </div>
-                </>
-              ) : null}
-              {challenge.yotadata?.award?.other ? (
-                <Link
-                  href={challenge.yotadata.award.other.link ?? ''}
-                  target="_blank"
-                >
-                  <div className="flex flex-row flex-wrap items-top gap-10 p-8 pt-0">
-                    {challenge.yotadata.award.other.title ? (
-                      <p className="body-3 text-white/60 text-center w-full">
-                        {lng === 'zh' ?
-                          (challenge.yotadata.award.other.title.zh ?? challenge.yotadata.award.other.title.en) :
-                          (challenge.yotadata.award.other.title.en ?? challenge.yotadata.award.other.title.zh)}
-                      </p>
-                    ) : null}
-                    {challenge.yotadata.award.other.text ? (
-                      <p className="body-4 text-white/60">
-                        {lng === 'zh' ?
-                          (challenge.yotadata.award.other.text.zh ?? challenge.yotadata.award.other.text.en) :
-                          (challenge.yotadata.award.other.text.en ?? challenge.yotadata.award.other.text.zh)}
-                      </p>
-                    ) : null}
-                    {challenge.yotadata.award.other.img ? (
-                      <Image
-                        src={challenge.yotadata.award.other.img}
-                        alt=""
-                        width={2242}
-                        height={882}
-                        className="w-full"
-                        style={{ borderRadius: '10px' }}
-                      />
-                    ) : null}
-                  </div>
-                </Link>
-              ) : null}
-              {(challenge.keySponsors ?? []).length > 0 ? (
-                <div className="relative w-full flex flex-col gap-10 items-center">
-                  <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30">
-                    {t('campaign.t29')}
-                  </p>
-                  <Marquee>
-                    {(challenge.keySponsors ?? []).map((sp, i) => {
-                      return (
-                        <div
-                          className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
-                          key={i}
-                        >
-                          {
-                            typeof sp === 'string' || !sp.href ? (
-                              <img src={typeof sp === 'string' ? sp : sp.uri} className="h-8 md:h-10" />
-                            ) : (
-                              <Link
-                                href={sp.href}
-                                target="_blank"
-                              >
-                                <img src={sp.uri} className="h-8 md:h-10" />
-                              </Link>
-                            )
-                          }
-                        </div>
-                      );
-                    })}
-                  </Marquee>
+                    );
+                  })}
                 </div>
-              ) : null}
+                {challenge.yotadata?.award?.additional ? (
+                  <>
+                    <div className="relative w-full flex flex-col gap-10 items-center">
+                      <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
+                        {challenge.yotadata.award.additional.en.title}
+                      </p>
+                      <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
+                        <li>
+                          <Markdown>{challenge.yotadata.award.additional.en.content}</Markdown>
+                        </li>
+                      </ul>
+                    </div>
+                  </>
+                ) : null}
+                {challenge.yotadata?.award?.other ? (
+                  <Link
+                    href={challenge.yotadata.award.other.link ?? ''}
+                    target="_blank"
+                  >
+                    <div className="flex flex-row flex-wrap items-top gap-10 p-8 pt-0">
+                      {challenge.yotadata.award.other.title ? (
+                        <p className="body-3 text-white/60 text-center w-full">
+                          {lng === 'zh' ?
+                            (challenge.yotadata.award.other.title.zh ?? challenge.yotadata.award.other.title.en) :
+                            (challenge.yotadata.award.other.title.en ?? challenge.yotadata.award.other.title.zh)}
+                        </p>
+                      ) : null}
+                      {challenge.yotadata.award.other.text ? (
+                        <p className="body-4 text-white/60">
+                          {lng === 'zh' ?
+                            (challenge.yotadata.award.other.text.zh ?? challenge.yotadata.award.other.text.en) :
+                            (challenge.yotadata.award.other.text.en ?? challenge.yotadata.award.other.text.zh)}
+                        </p>
+                      ) : null}
+                      {challenge.yotadata.award.other.img ? (
+                        <Image
+                          src={challenge.yotadata.award.other.img}
+                          alt=""
+                          width={2242}
+                          height={882}
+                          className="w-full"
+                          style={{ borderRadius: '10px' }}
+                        />
+                      ) : null}
+                    </div>
+                  </Link>
+                ) : null}
+                {(challenge.keySponsors ?? []).length > 0 ? (
+                  <div className="relative w-full flex flex-col gap-10 items-center">
+                    <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30">
+                      {t('campaign.t29')}
+                    </p>
+                    <Marquee>
+                      {(challenge.keySponsors ?? []).map((sp, i) => {
+                        return (
+                          <div
+                            className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
+                            key={i}
+                          >
+                            {
+                              typeof sp === 'string' || !sp.href ? (
+                                <img src={typeof sp === 'string' ? sp : sp.uri} className="h-8 md:h-10" />
+                              ) : (
+                                <Link
+                                  href={sp.href}
+                                  target="_blank"
+                                >
+                                  <img src={sp.uri} className="h-8 md:h-10" />
+                                </Link>
+                              )
+                            }
+                          </div>
+                        );
+                      })}
+                    </Marquee>
+                  </div>
+                ) : null}
+              </div>
             </div>
-          </div>
-        )}
-      </div>
-      <>
-        <div className="mt-16">
-          <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-            {challenge.yotadata?.adjudicators ?
-              (lng === 'zh' ?
-                (challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en) :
-                (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh)) :
-              t('campaign.t8')}
-          </h3>
-          <div className="flex flex-row flex-wrap gap-6 justify-center">
-            {challenge.judges?.length > 0
-              ? challenge.judges
-                .map((judge) => {
-                  return (
-                    <div key={judge.id!} className="w-[180px] mb-2 ">
-                      <Aspect ratio={1 / 1} className="">
-                        {/* <HoverCard
-                            side="right"
-                            card={
-                              <div className="min-w-[100px] max-w-[200px] text-white">
-                                {judge.description ?? ''}
-                              </div>
-                            }>
+          )}
+        </div>
+      }
+
+      {!challenge.yotadata?.disableJudges &&
+        <>
+          <div className="mt-16">
+            <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+              {challenge.yotadata?.adjudicators ?
+                (lng === 'zh' ?
+                  (challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en) :
+                  (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh)) :
+                t('campaign.t8')}
+            </h3>
+            <div className="flex flex-row flex-wrap gap-6 justify-center">
+              {challenge.judges?.length > 0
+                ? challenge.judges
+                  .map((judge) => {
+                    return (
+                      <div key={judge.id!} className="w-[180px] mb-2 ">
+                        <Aspect ratio={1 / 1} className="">
+                          {/* <HoverCard
+                              side="right"
+                              card={
+                                <div className="min-w-[100px] max-w-[200px] text-white">
+                                  {judge.description ?? ''}
+                                </div>
+                              }>
+                            <Image
+                              fill
+                              src={judge.avatarURI}
+                              className="object-cover w-full h-full bg-white/5"
+                              alt={judge.name}
+                            />
+                          </HoverCard> */}
                           <Image
                             fill
                             src={judge.avatarURI}
                             className="object-cover w-full h-full bg-white/5"
                             alt={judge.name}
                           />
-                        </HoverCard> */}
-                        <Image
-                          fill
-                          src={judge.avatarURI}
-                          className="object-cover w-full h-full bg-white/5"
-                          alt={judge.name}
-                        />
-                      </Aspect>
-                      <p className="body-3 mt-4 mb-2 text-white">
-                        {judge.name}
-                      </p>
-                      <p className="body-4 text-grey-400">
-                        {judge.title ?? ''}
-                      </p>
-                      <p className="body-4 text-grey-400">
-                        {judge.organization ?? judge.description ?? ''}
-                      </p>
-                      <div>
-                        {judge.twitterLink ? (
-                          <Link href={judge.twitterLink} target="_blank">
-                            {
-                              <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
-                            }
-                          </Link>
-                        ) : null}
+                        </Aspect>
+                        <p className="body-3 mt-4 mb-2 text-white">
+                          {judge.name}
+                        </p>
+                        <p className="body-4 text-grey-400">
+                          {judge.title ?? ''}
+                        </p>
+                        <p className="body-4 text-grey-400">
+                          {judge.organization ?? judge.description ?? ''}
+                        </p>
+                        <div>
+                          {judge.twitterLink ? (
+                            <Link href={judge.twitterLink} target="_blank">
+                              {
+                                <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
+                              }
+                            </Link>
+                          ) : null}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })
-              : challenge.yotadata?.judges?.length > 0
-                ? challenge.yotadata.judges.map((it: any) => {
-                  return (
-                    <>
-                      <p className="body-3 mt-6 w-full text-grey-400 text-center">
-                        {it.name}
-                      </p>
-                      {it.data.map((judge: any) => {
-                        return (
-                          <>
-                            <div className="w-[180px] mb-2">
-                              <Aspect ratio={1 / 1}>
-                                <Image
-                                  height={150}
-                                  width={150}
-                                  src={judge.avatarURI ?? unsplash('man')}
-                                  className="object-cover w-full h-full"
-                                  alt={judge.name}
-                                />
-                              </Aspect>
-                              <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                              <p className="body-4 text-grey-400">
-                                {judge.title ?? ''}
-                              </p>
-                              <p className="body-4 text-grey-400">
-                                {judge.organization ?? ''}
-                              </p>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </>
-                  );
-                })
-                : null}
-            {challenge.yotadata?.judges?.length > 0 ? null : (
-              <div className="w-[180px]">
-                <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
-                  Coming
-                  <br />
-                  Soon
+                    );
+                  })
+                : challenge.yotadata?.judges?.length > 0
+                  ? challenge.yotadata.judges.map((it: any) => {
+                    return (
+                      <>
+                        <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                          {it.name}
+                        </p>
+                        {it.data.map((judge: any) => {
+                          return (
+                            <>
+                              <div className="w-[180px] mb-2">
+                                <Aspect ratio={1 / 1}>
+                                  <Image
+                                    height={150}
+                                    width={150}
+                                    src={judge.avatarURI ?? unsplash('man')}
+                                    className="object-cover w-full h-full"
+                                    alt={judge.name}
+                                  />
+                                </Aspect>
+                                <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                                <p className="body-4 text-grey-400">
+                                  {judge.title ?? ''}
+                                </p>
+                                <p className="body-4 text-grey-400">
+                                  {judge.organization ?? ''}
+                                </p>
+                              </div>
+                            </>
+                          );
+                        })}
+                      </>
+                    );
+                  })
+                  : null}
+              {challenge.yotadata?.judges?.length > 0 ? null : (
+                <div className="w-[180px]">
+                  <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
+                    Coming
+                    <br />
+                    Soon
+                  </div>
+                  <p className="body-3 mt-6 w-full text-grey-400">
+                    {t('campaign.t9')}
+                  </p>
                 </div>
-                <p className="body-3 mt-6 w-full text-grey-400">
-                  {t('campaign.t9')}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-        {!(challenge.requirements || challenge.reviewDimension) ? null : (
-          <div className="container">
-            <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
-              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-[24px] font-bold mb-8 text-white">
-                  {t('campaign.t28')}
-                </h3>
-
-                {challenge.requirements ? (
-                  <Markdown>{challenge.requirements}</Markdown>
-                ) : (
-                  <p className="text-[14px] text-grey-400">
-                    {t('campaign.t27')}
-                  </p>
-                )}
-              </div>
-              <div className="flex-1 p-8 bg-white/5 border border-grey-800">
-                <h3 className="text-white text-[24px] font-bold mb-8">
-                  {challenge.yotadata?.judgingCriteria ?
-                    (lng === 'en' ? (challenge.yotadata.judgingCriteria?.en ?? challenge.yotadata.judgingCriteria?.zh) :
-                      (challenge.yotadata.judgingCriteria?.zh ?? challenge.yotadata.judgingCriteria?.en)) :
-                    t('campaign.t11')}
-                </h3>
-                {challenge.reviewDimension ? (
-                  <Markdown>{challenge.reviewDimension}</Markdown>
-                ) : (
-                  <p className="text-[14px] text-grey-400">
-                    {t('campaign.t27')}
-                  </p>
-                )}
-              </div>
+              )}
             </div>
           </div>
-        )}
-      </>
+          {!(challenge.requirements || challenge.reviewDimension) ? null : (
+            <div className="container">
+              <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
+                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                  <h3 className="text-[24px] font-bold mb-8 text-white">
+                    {t('campaign.t28')}
+                  </h3>
+
+                  {challenge.requirements ? (
+                    <Markdown>{challenge.requirements}</Markdown>
+                  ) : (
+                    <p className="text-[14px] text-grey-400">
+                      {t('campaign.t27')}
+                    </p>
+                  )}
+                </div>
+                <div className="flex-1 p-8 bg-white/5 border border-grey-800">
+                  <h3 className="text-white text-[24px] font-bold mb-8">
+                    {challenge.yotadata?.judgingCriteria ?
+                      (lng === 'en' ? (challenge.yotadata.judgingCriteria?.en ?? challenge.yotadata.judgingCriteria?.zh) :
+                        (challenge.yotadata.judgingCriteria?.zh ?? challenge.yotadata.judgingCriteria?.en)) :
+                      t('campaign.t11')}
+                  </h3>
+                  {challenge.reviewDimension ? (
+                    <Markdown>{challenge.reviewDimension}</Markdown>
+                  ) : (
+                    <p className="text-[14px] text-grey-400">
+                      {t('campaign.t27')}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      }
       {(challenge.sponsors ?? []).length > 0 ? (
         <div className="container">
           <div>
