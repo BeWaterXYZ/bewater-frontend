@@ -120,10 +120,36 @@ let data61 = [
   },
 ];
 
+let data71 = [
+  {
+    label: "10月14日",
+    time: "",
+    locations: [
+      {
+        location: "",
+        sessions: [
+          { time: "13:30", topic: "签到" },
+          { time: "14:00", topic: "主持人开场" },
+          { time: "14:05", topic: "主办方致辞: Starbase" },
+          { time: "14:25", topic: "在Telegram中做去中心化小程序" },
+          { time: "14:40", topic: "Q&A" },
+          { time: "14:50", topic: "圆桌" },
+          { time: "15:40", topic: "5 * 8握手会: 初创企业Keynote" },
+          { time: "16:50", topic: "自由交流（茶歇）" },
+        ],
+      },
+
+    ],
+  },
+];
+
 function getData(challenge: Challenge) {
   // console.log(challenge);
   if(challenge.id === '61'){
-    return data61
+    return data61;
+  }
+  if(challenge.id === '71') {
+    return data71;
   }
   return null;
 }
