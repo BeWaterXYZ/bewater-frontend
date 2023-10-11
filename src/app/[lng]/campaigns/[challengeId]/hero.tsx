@@ -52,7 +52,8 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.startTime)
             : formatMMMDDYYYY(challenge.startTime)
-        } - ${
+        }`}
+        { challenge.startTime !== challenge.endTime && ` - ${
           lng === 'zh'
             ? formatYYYYMMMDD(challenge.endTime)
             : formatMMMDDYYYY(challenge.endTime)

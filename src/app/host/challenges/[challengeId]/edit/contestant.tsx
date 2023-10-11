@@ -1,6 +1,10 @@
 "use client";
 import { TextArea } from "@/components/form/textarea";
-import { useMutationUpdateChallenge } from "@/services/challenge.query";
+import { useToastStore } from "@/components/toast/store";
+import {
+    useFetchChallengeInvitation,
+    useMutationInviteToChallenge
+} from "@/services/challenge.query";
 import { Challenge } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -18,33 +22,38 @@ export type Inputs = z.infer<typeof schema>;
 
 export function EditContestant({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
-  let [sameTime, sameTimeSet] = useState(false);
-  let mutation = useMutationUpdateChallenge(challenge.id);
-
+  let addToast = useToastStore((s) => s.add);
+ 
   let {
-    control,
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      // todo 时间线编辑2.0。当前隐藏 NOP 阶段
       invites: "",
     },
   });
 
+  const mutation = useMutationInviteToChallenge(challenge.id);
+
   const onSubmit = async (formData: Inputs) => {
     try {
-      openSet(false);
+      let emails = formData.invites.split(/[,\n]/);
+      await mutation.mutateAsync(emails);
+      addToast({
+        type:'success',
+        title:'Invite sent'
+      })
     } catch (err) {}
   };
+
+  const { data: invitations = [] } = useFetchChallengeInvitation(challenge.id);
+
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
       <Dialog.Trigger asChild>
-        <button className="btn btn-secondary hidden">Contestant management </button>
+        <button className="btn btn-secondary ">Contestant management </button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
@@ -75,12 +84,25 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
             Contestant list
           </Dialog.Title>
 
-          <div>
-            <div className="flex gap-2 justify-between border border-grey-800 bg-grey-900 rounded-sm px-4 py-2">
-              <div>avatar</div>
-              <div className="body-2 text-grey-500">status</div>
-              <div>op</div>
-            </div>
+          <div className="flex flex-col gap-2">
+            {invitations.map((i) => {
+              return (
+                <div
+                  key={i.email}
+                  className="flex items-center gap-2 justify-between border border-grey-800 bg-grey-900 rounded-sm px-4 py-2"
+                >
+                  <div className="body-2 ">{i.email}</div>
+                  <div className="body-4 text-grey-500">{i.status}</div>
+                  <div>
+                    {i.status === "joined" ? (
+                      <button className="btn btn-secondary">Remove</button>
+                    ) : i.status === "waitingToJoin" ? (
+                      <button className="btn btn-secondary">Resend</button>
+                    ) : null}
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <div></div>
         </Dialog.Content>
