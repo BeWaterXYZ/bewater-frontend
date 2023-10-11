@@ -16,8 +16,9 @@ export default function ProjectMedia({ project }: ProjectMediaProps) {
   const user = useClerk().user;
   const mutation = useMutationUpdateProject();
   const [viewImage, viewImageSet] = useState<undefined | number>(undefined);
+  // todo use isTeamMember instead
   const isLeader = project.team.teamMembers
-    .filter((m) => m.isLeader)
+    // .filter((m) => m.isLeader)
     .some((m) => m.userProfile.clerkId === user?.id);
 
   const [medias, mediaSet] = useState<Media[]>(() =>
