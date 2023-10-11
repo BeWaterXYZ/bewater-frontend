@@ -28,8 +28,9 @@ export const data = [
 
 export function ProjectAssets({ project }: { project: Project }) {
   const user = useClerk().user;
+  // todo use isTeamMember instead
   const isLeader = project.team.teamMembers
-    .filter((m) => m.isLeader)
+    // .filter((m) => m.isLeader)
     .some((m) => m.userProfile.clerkId === user?.id);
 
   const assetsToShow = data.filter((d) => {

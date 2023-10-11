@@ -7,8 +7,9 @@ import { GithubStatsSetup } from './setup';
 export function GithubStats({ project }: { project: Project }) {
   const projectHasConnectedGithub = !!project.githubURI;
   const user = useClerk().user;
+  // todo use isTeamMember instead
   const isLeader = project.team.teamMembers
-    .filter((m) => m.isLeader)
+    // .filter((m) => m.isLeader)
     .some((m) => m.userProfile.clerkId === user?.id);
   return (
     <div className="">
