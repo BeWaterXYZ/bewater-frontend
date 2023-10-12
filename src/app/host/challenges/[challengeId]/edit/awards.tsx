@@ -36,6 +36,7 @@ const schema = z
         ),
       })
     ),
+    totalAward: validationSchema.nonNegative,
   })
   .required();
 
@@ -70,6 +71,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
       }),
       keySponsors: challenge.keySponsors ?? [],
       awardCurrency: challenge.awardCurrency,
+      totalAward: `${challenge.totalAward}`,
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -83,7 +85,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
       await mutation.mutateAsync({
         id: challenge.id,
         keySponsors: formData.keySponsors,
-        totalAward: totalAward,
+        totalAward: parseInt(formData.totalAward),
         awardCurrency: formData.awardCurrency,
         // fixme
         awardAssorts: formData.awardAssorts.map((aa) => {
@@ -155,7 +157,6 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
                 </div>
               );
             })}
-
             <button
               type="button"
               className="text-[12px] text-grey-300 flex"
@@ -186,7 +187,11 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
             </button>
 
             <div className="grid grid-cols-2 gap-4 mt-6">
-              <Input label="Total Award " disabled value={totalAward} />
+              <Input
+                label="Total Award"
+                {...register(`totalAward`)}
+                error={errors["totalAward"]}
+              />
               <Input
                 label="Award Currency"
                 placeholder="USD/ETH"
