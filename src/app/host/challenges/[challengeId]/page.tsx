@@ -317,7 +317,7 @@ export default function Page({ params }: any) {
                 </div>
                 <div className="relative w-full flex flex-col gap-10 items-center">
                   <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30">
-                    Key Sponsors
+                   Core Sponsors
                   </p>
                   <Marquee>
                     {(challenge.keySponsors ?? []).map((sp, i) => {
@@ -351,7 +351,7 @@ export default function Page({ params }: any) {
             </div>
             <div className="container">
               <h3 className="text-white text-[24px] md:text-[36px] font-bold mb-16 text-center">
-                Judges
+              Adjudicators
               </h3>
               <div className="flex flex-row flex-wrap gap-6 justify-center">
                 {(challenge.judges && challenge.judges.length > 0
@@ -448,7 +448,7 @@ export default function Page({ params }: any) {
             <div className="container">
               <div>
                 <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">
-                  Sponsors
+                Event Partners
                 </h3>
                 <div className="flex flex-col gap-12 items-center">
                   {challenge.sponsors.map((s, i) => {
