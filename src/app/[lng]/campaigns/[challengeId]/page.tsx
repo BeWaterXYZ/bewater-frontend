@@ -1,5 +1,6 @@
 import getSymbolFromCurrency from 'currency-symbol-map';
 import { formatMoney } from "@/utils/numeral";
+import { redirect } from 'next/navigation';
 import { Aspect } from '@/components/aspect';
 import { getChallengeById } from '@/services/challenge';
 import { unsplash } from '@/utils/unsplash';
@@ -35,9 +36,14 @@ const ConnectButton = dynamicLoad(() => import('./connect-button'), {
 });
 
 export default async function ChallengeIntro({ params }: any) {
+  const { lng } = segmentSchema.lng.parse(params);
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
-  const { lng } = segmentSchema.lng.parse(params);
+
+  if (challenge.externalId !== challengeId) {
+    return redirect(`/${lng}/campaigns/${challenge.externalId}`);
+  }
+
   // eslint-disable-next-line
   const { t } = await useTranslation(lng, 'translation');
   let isTeamingEnabled = false;
