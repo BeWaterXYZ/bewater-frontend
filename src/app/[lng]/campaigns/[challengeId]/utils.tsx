@@ -32,3 +32,5 @@ export function isChallenge(challenge: Challenge) {
   }
   return false;
 }
+
+export const RegexDigit = /^\d+$/;
