@@ -71,7 +71,7 @@ export function EditAwards({ challenge }: { challenge: Challenge }) {
       }),
       keySponsors: challenge.keySponsors ?? [],
       awardCurrency: challenge.awardCurrency,
-      totalAward: `${challenge.totalAward}`,
+      totalAward: `${challenge.totalAward ?? 0}`,
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
