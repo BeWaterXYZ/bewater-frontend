@@ -159,7 +159,7 @@ export function EditMilestones({ challenge }: { challenge: Challenge }) {
                             <Pencil1Icon />
                           )}
                           {field.stageName !== "NOP"
-                            ? field.stageName
+                            ? (field.stageName === 'Project Submission' ? 'Registration Deadline' : field.stageName)
                             : "Customized"}
                         </div>
                       }
