@@ -81,12 +81,12 @@ export default function Page({ params }: any) {
             business days.
           </p>
           <div className="flex gap-2">
-            <Link href="/host" className="btn btn-secondary">
+            <Link href="/host" className="btn btn-secondary min-w-[96px]">
               Done
             </Link>{" "}
             <a
               href={`/host/challenges/${challenge.id}`}
-              className="btn btn-secondary-invert"
+              className="btn btn-secondary-invert gap-2"
             >
               <OpenInNewWindowIcon />
               Open campaign page
