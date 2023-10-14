@@ -2,8 +2,8 @@
 import { TextArea } from "@/components/form/textarea";
 import { useToastStore } from "@/components/toast/store";
 import {
-    useFetchChallengeInvitation,
-    useMutationInviteToChallenge
+  useFetchChallengeInvitation,
+  useMutationInviteToChallenge,
 } from "@/services/challenge.query";
 import { Challenge } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,7 +23,7 @@ export type Inputs = z.infer<typeof schema>;
 export function EditContestant({ challenge }: { challenge: Challenge }) {
   let [open, openSet] = useState(false);
   let addToast = useToastStore((s) => s.add);
- 
+
   let {
     register,
     handleSubmit,
@@ -38,13 +38,21 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
   const mutation = useMutationInviteToChallenge(challenge.id);
 
   const onSubmit = async (formData: Inputs) => {
+    let emails = formData.invites.split(/[,\n]/);
+    sendInvite(emails);
+  };
+
+  const resend = (email: string) => () => {
+    sendInvite([email]);
+  };
+
+  const sendInvite = async (emails: string[]) => {
     try {
-      let emails = formData.invites.split(/[,\n]/);
       await mutation.mutateAsync(emails);
       addToast({
-        type:'success',
-        title:'Invite sent'
-      })
+        type: "success",
+        title: "Invite sent",
+      });
     } catch (err) {}
   };
 
@@ -97,7 +105,12 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
                     {i.status === "joined" ? (
                       <button className="btn btn-secondary">Remove</button>
                     ) : i.status === "waitingToJoin" ? (
-                      <button className="btn btn-secondary">Resend</button>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={resend(i.email)}
+                      >
+                        Resend
+                      </button>
                     ) : null}
                   </div>
                 </div>
