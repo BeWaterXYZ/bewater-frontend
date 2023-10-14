@@ -591,7 +591,7 @@ export default async function ChallengeIntro({ params }: any) {
                     </p>
                   )}
                 </div>
-                { challenge.yotadata.disableJudgeCriteria && 
+                { !challenge.yotadata?.disableJudgeCriteria && 
                   <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                     <h3 className="text-white text-[24px] font-bold mb-8">
                       {challenge.yotadata?.judgingCriteria ?
