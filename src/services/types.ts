@@ -264,5 +264,5 @@ export interface RepoLatestCommit {
 
 export interface ChallengeInvitation  {
   email: string;
-  status: 'waitingToJoin'|'joined';
+  status: 'WaitingToJoin'|'Joined';
 };
