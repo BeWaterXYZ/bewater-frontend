@@ -102,9 +102,9 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
                   <div className="body-2 ">{i.email}</div>
                   <div className="body-4 text-grey-500">{i.status}</div>
                   <div>
-                    {i.status === "joined" ? (
+                    {i.status === "Joined" ? (
                       <button className="btn btn-secondary">Remove</button>
-                    ) : i.status === "waitingToJoin" ? (
+                    ) : i.status === "WaitingToJoin" ? (
                       <button
                         className="btn btn-secondary"
                         onClick={resend(i.email)}
