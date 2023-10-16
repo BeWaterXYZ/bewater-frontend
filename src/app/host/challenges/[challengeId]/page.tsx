@@ -82,7 +82,7 @@ export default function Page({ params }: any) {
           </p>
           <div className="flex gap-2">
             <Link
-              href={`/host/challenges/${challenge.id}`}
+              href={`${window.location.origin}/host/challenges/${challenge.id}`}
               className="btn btn-secondary min-w-[96px]"
             >
               Done
