@@ -342,7 +342,7 @@ export default async function ChallengeIntro({ params }: any) {
                                       {award.amount === 0 ?
                                         (<div className="flex flex-row justify-between">
                                         <p className="body-3 text-white/60">
-                                          {getSymbolFromCurrency(challenge.awardCurrency ? challenge.awardCurrency : 'USD') ?? ''}{award.awardName}
+                                          {award.awardName}
                                         </p>
                                         <p className="body-3 text-white/60">
                                           x{award.count}
@@ -467,7 +467,7 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       }
 
-      
+
         <>
           {!challenge.yotadata?.disableJudges &&
             <div className="mt-16">
@@ -593,7 +593,7 @@ export default async function ChallengeIntro({ params }: any) {
                     </p>
                   )}
                 </div>
-                { !challenge.yotadata?.disableJudgeCriteria && 
+                { !challenge.yotadata?.disableJudgeCriteria &&
                   <div className="flex-1 p-8 bg-white/5 border border-grey-800">
                     <h3 className="text-white text-[24px] font-bold mb-8">
                       {challenge.yotadata?.judgingCriteria ?
