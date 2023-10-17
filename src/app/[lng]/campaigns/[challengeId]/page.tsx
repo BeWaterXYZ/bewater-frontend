@@ -467,114 +467,116 @@ export default async function ChallengeIntro({ params }: any) {
         </div>
       }
 
-      {!challenge.yotadata?.disableJudges &&
+      
         <>
-          <div className="mt-16">
-            <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-              {challenge.yotadata?.adjudicators ?
-                (lng === 'zh' ?
-                  (challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en) :
-                  (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh)) :
-                t('campaign.t8')}
-            </h3>
-            <div className="flex flex-row flex-wrap gap-6 justify-center">
-              {challenge.judges?.length > 0
-                ? challenge.judges
-                  .map((judge) => {
-                    return (
-                      <div key={judge.id!} className="w-[180px] mb-2 ">
-                        <Aspect ratio={1 / 1} className="">
-                          {/* <HoverCard
-                              side="right"
-                              card={
-                                <div className="min-w-[100px] max-w-[200px] text-white">
-                                  {judge.description ?? ''}
-                                </div>
-                              }>
+          {!challenge.yotadata?.disableJudges &&
+            <div className="mt-16">
+              <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+                {challenge.yotadata?.adjudicators ?
+                  (lng === 'zh' ?
+                    (challenge.yotadata.adjudicators.zh ?? challenge.yotadata.adjudicators.en) :
+                    (challenge.yotadata.adjudicators.en ?? challenge.yotadata.adjudicators.zh)) :
+                  t('campaign.t8')}
+              </h3>
+              <div className="flex flex-row flex-wrap gap-6 justify-center">
+                {challenge.judges?.length > 0
+                  ? challenge.judges
+                    .map((judge) => {
+                      return (
+                        <div key={judge.id!} className="w-[180px] mb-2 ">
+                          <Aspect ratio={1 / 1} className="">
+                            {/* <HoverCard
+                                side="right"
+                                card={
+                                  <div className="min-w-[100px] max-w-[200px] text-white">
+                                    {judge.description ?? ''}
+                                  </div>
+                                }>
+                              <Image
+                                fill
+                                src={judge.avatarURI}
+                                className="object-cover w-full h-full bg-white/5"
+                                alt={judge.name}
+                              />
+                            </HoverCard> */}
                             <Image
                               fill
                               src={judge.avatarURI}
                               className="object-cover w-full h-full bg-white/5"
                               alt={judge.name}
                             />
-                          </HoverCard> */}
-                          <Image
-                            fill
-                            src={judge.avatarURI}
-                            className="object-cover w-full h-full bg-white/5"
-                            alt={judge.name}
-                          />
-                        </Aspect>
-                        <p className="body-3 mt-4 mb-2 text-white">
-                          {judge.name}
-                        </p>
-                        <p className="body-4 text-grey-400">
-                          {judge.title ?? ''}
-                        </p>
-                        <p className="body-4 text-grey-400">
-                          {judge.organization ?? judge.description ?? ''}
-                        </p>
-                        <div>
-                          {judge.twitterLink ? (
-                            <Link href={judge.twitterLink} target="_blank">
-                              {
-                                <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
-                              }
-                            </Link>
-                          ) : null}
+                          </Aspect>
+                          <p className="body-3 mt-4 mb-2 text-white">
+                            {judge.name}
+                          </p>
+                          <p className="body-4 text-grey-400">
+                            {judge.title ?? ''}
+                          </p>
+                          <p className="body-4 text-grey-400">
+                            {judge.organization ?? judge.description ?? ''}
+                          </p>
+                          <div>
+                            {judge.twitterLink ? (
+                              <Link href={judge.twitterLink} target="_blank">
+                                {
+                                  <TwitterLogoIcon className="text-blue-500 w-5 h-5" />
+                                }
+                              </Link>
+                            ) : null}
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })
-                : challenge.yotadata?.judges?.length > 0
-                  ? challenge.yotadata.judges.map((it: any) => {
-                    return (
-                      <>
-                        <p className="body-3 mt-6 w-full text-grey-400 text-center">
-                          {it.name}
-                        </p>
-                        {it.data.map((judge: any) => {
-                          return (
-                            <>
-                              <div className="w-[180px] mb-2">
-                                <Aspect ratio={1 / 1}>
-                                  <Image
-                                    height={150}
-                                    width={150}
-                                    src={judge.avatarURI ?? unsplash('man')}
-                                    className="object-cover w-full h-full"
-                                    alt={judge.name}
-                                  />
-                                </Aspect>
-                                <p className="body-3 mt-4 mb-2">{judge.name}</p>
-                                <p className="body-4 text-grey-400">
-                                  {judge.title ?? ''}
-                                </p>
-                                <p className="body-4 text-grey-400">
-                                  {judge.organization ?? ''}
-                                </p>
-                              </div>
-                            </>
-                          );
-                        })}
-                      </>
-                    );
-                  })
-                  : null}
-              {challenge.yotadata?.judges?.length > 0 ? null : (
-                <div className="w-[180px]">
-                  <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
-                    Coming
-                    <br />
-                    Soon
+                      );
+                    })
+                  : challenge.yotadata?.judges?.length > 0
+                    ? challenge.yotadata.judges.map((it: any) => {
+                      return (
+                        <>
+                          <p className="body-3 mt-6 w-full text-grey-400 text-center">
+                            {it.name}
+                          </p>
+                          {it.data.map((judge: any) => {
+                            return (
+                              <>
+                                <div className="w-[180px] mb-2">
+                                  <Aspect ratio={1 / 1}>
+                                    <Image
+                                      height={150}
+                                      width={150}
+                                      src={judge.avatarURI ?? unsplash('man')}
+                                      className="object-cover w-full h-full"
+                                      alt={judge.name}
+                                    />
+                                  </Aspect>
+                                  <p className="body-3 mt-4 mb-2">{judge.name}</p>
+                                  <p className="body-4 text-grey-400">
+                                    {judge.title ?? ''}
+                                  </p>
+                                  <p className="body-4 text-grey-400">
+                                    {judge.organization ?? ''}
+                                  </p>
+                                </div>
+                              </>
+                            );
+                          })}
+                        </>
+                      );
+                    })
+                    : null}
+                {challenge.yotadata?.judges?.length > 0 ? null : (
+                  <div className="w-[180px]">
+                    <div className="w-[180px] h-[180px] flex items-center justify-center bg-white/5 heading-5 text-gray-500/50 text-center">
+                      Coming
+                      <br />
+                      Soon
+                    </div>
+                    <p className="body-3 mt-6 w-full text-grey-400">
+                      {t('campaign.t9')}
+                    </p>
                   </div>
-                  <p className="body-3 mt-6 w-full text-grey-400">
-                    {t('campaign.t9')}
-                  </p>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
+          }
           {!(challenge.requirements || challenge.reviewDimension) ? null : (
             <div className="container">
               <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
@@ -612,7 +614,6 @@ export default async function ChallengeIntro({ params }: any) {
             </div>
           )}
         </>
-      }
       {(challenge.sponsors ?? []).length > 0 ? (
         <div className="container">
           <div>
