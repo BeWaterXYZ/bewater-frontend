@@ -34,8 +34,7 @@ export const validationSchema = {
     .max(10, { message: 'You can only choose 10 skills' }),
   tags: z
     .string().array()
-    .min(1, { message: 'You need to choose one tag' })
-    .max(1, { message: 'You can only choose one tag' }),
+    .min(1, { message: 'You need to choose one tag' }),
   date: z
     .string()
     .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),

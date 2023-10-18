@@ -93,7 +93,7 @@ export default function ProjectEditDialog({
         <Select
           label="Project Tag"
           required
-          maxSelections={3}
+          maxSelections={5}
           options={hackProjectTagSetOptions}
           error={errors['tags']}
           control={control}
