@@ -76,15 +76,17 @@ let data61 = [
         sessions: [
           { time: "12:00 AM", topic: "Check-in starts" },
           { time: "06:00 PM", topic: "Dinner" },
-          { time: "07:00 PM", topic: "Project introduction (2 minutes for each team)" },
+          {
+            time: "07:00 PM",
+            topic: "Project introduction (2 minutes for each team)",
+          },
           { time: "12:00 PM", topic: "Check-in ends" },
         ],
       },
-
     ],
   },
   {
-    label:  "Sat, Oct 14 - Sun, Oct 15",
+    label: "Sat, Oct 14 - Sun, Oct 15",
     time: "",
     locations: [
       {
@@ -97,7 +99,6 @@ let data61 = [
           { time: "07:00 PM", topic: "Project progress report" },
         ],
       },
-
     ],
   },
   {
@@ -109,13 +110,19 @@ let data61 = [
         sessions: [
           { time: "All Day", topic: "Project Buidl" },
           { time: "12:00 AM", topic: "Lunch" },
-          { time: "02:00 PM", topic: "Project submission & First round of judging" },
+          {
+            time: "02:00 PM",
+            topic: "Project submission & First round of judging",
+          },
           { time: "06:00 PM", topic: "Dinner" },
-          { time: "07:00 PM", topic: "Demo Day (5 minutes for each project in the top 5 of each track)" },
+          {
+            time: "07:00 PM",
+            topic:
+              "Demo Day (5 minutes for each project in the top 5 of each track)",
+          },
           { time: "09:00 PM", topic: "After Party" },
         ],
       },
-
     ],
   },
 ];
@@ -138,17 +145,57 @@ let data71 = [
           { time: "16:50", topic: "自由交流（茶歇）" },
         ],
       },
-
     ],
   },
 ];
 
+
+
+let data62 = [
+  {
+    label: "Day 1: OCT 22nd",
+    time: "",
+    locations: [
+      {
+        location: "",
+        sessions: [
+          { time: "14:00pm-14:30pm", topic: "Scroll & BeWater Opening Speech" },
+          { time: "14:30pm-15:00pm", topic: "Web 3.0 标准化探索 " },
+          { time: "15:30pm-16:00pm", topic: "Decentralised Social On Top Of Centralised Platforms" },
+          { time: "16:00pm-16:30pm", topic: "Builder-First AI Security" },
+          { time: "16:30pm-17:00pm", topic: "Explore zk with modularity on Ethereum" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Day 2: OCT 23nd",
+    time: "",
+    locations: [
+      {
+        location: "",
+        sessions: [
+          { time: "10:00-10:45", topic: "Deploy Zero Knowledge Proofs with Aleo" },
+          { time: "11:00-11:45", topic: "Intro to Scroll cross chain interactions" },
+          { time: "12:00-12:45", topic: "The grand finale of intentional development-AIBot collaborative generative blockchain development" },
+          { time: "13:00-14:00", topic: "ZK Proofs and the Polygon zkEVM    " },
+          { time: "14:30-15:15", topic: "Private Key Management - AWS Nitro Enclave Deep Dive and Demo" },
+          { time: "16:30-17:15", topic: "Why exactly do engineers fail to learn ZK? " },
+          { time: "15:30-16:15", topic: "Building with Chainlink CCIP" },
+        ],
+      },
+    ],
+  },
+];
 function getData(challenge: Challenge) {
   // console.log(challenge);
-  if(challenge.id === '61'){
+  if (challenge.id === "61") {
     return data61;
   }
-  if(challenge.id === '71') {
+  if (challenge.id === "62") {
+    return data62;
+  }
+  if (challenge.id === "71") {
     return data71;
   }
   return null;
@@ -181,7 +228,12 @@ export function Agenda(props: Props) {
             value={"tab" + index}
           >
             <p className="body-2">{d.time}</p>
-            <div className={clsx("grid grid-cols-1  gap-4 ", d.locations.length>1 ? "md:grid-cols-2":"md:grid-cols-1" )}>
+            <div
+              className={clsx(
+                "grid grid-cols-1  gap-4 ",
+                d.locations.length > 1 ? "md:grid-cols-2" : "md:grid-cols-1"
+              )}
+            >
               {d.locations.map((l, index) => {
                 return (
                   <div className="py-4" key={index}>
