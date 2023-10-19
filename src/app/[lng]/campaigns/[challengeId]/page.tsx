@@ -383,6 +383,36 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     );
                   })}
+                  {(challenge.yotadata?.award?.truck ?? []).map((it : any, i : number ) => {
+                    return (
+                      <div
+                        className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
+                        key={i}
+                      >
+                        <div className="flex flex-row gap-[min(32px,2vw)] ">
+                          <div className="flex flex-col gap-4 md:gap-7 items-center">
+                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
+                              {it.title}
+                            </p>
+                            <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
+                              {it.letter.map((item : string, j : number) => {
+                                return (
+                                  <Fragment key={j}>
+                                    <div className="flex flex-col gap-1 w-full">
+                                      <p className="body-3 text-white">
+                                        {item}
+                                      </p>
+                                    </div>
+                                    <hr className="border-none bg-white/20 h-[0.5px] w-full" />
+                                  </Fragment>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
                 {challenge.yotadata?.award?.additional ? (
                   <>
