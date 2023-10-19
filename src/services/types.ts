@@ -107,8 +107,28 @@ export interface Challenge {
   track?: string[];
   linkText?: string;
   result?: Array<ChallengeTrackResult>;
+  agenda?: Array<AgendaDay>;
 }
 
+export interface AgendaDay {
+  label: string,
+  time: string,
+  locations: [
+    {
+      location?: string,
+      sessions: [
+        { 
+          time: string, 
+          topic: string,
+          speaker?: {
+            name?: string,
+            title?: string
+          } 
+        }
+      ],
+    },
+  ]
+}
 export interface ChallengeTrackResult {
   track: string | null;
   awards: Array<TrackAward>;
