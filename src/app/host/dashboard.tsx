@@ -3,11 +3,11 @@ import { useLoadingWhen } from "@/components/loading/store";
 import { useFetchChallenges } from "@/services/challenge.query";
 import { Challenge } from "@/services/types";
 import { unsplash } from "@/utils/unsplash";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { CreateOrganization, useOrganization, useUser } from "@clerk/nextjs";
 
 function TodoLink({
   // challenge,
@@ -198,7 +198,7 @@ export function Dashboard() {
       </div>
       <div>
         <div className="w-full flex justify-end mb-14">
-          <Link href="/host/challenges/new" className="btn btn-primary">
+          <Link href="/host/campaigns/new" className="btn btn-primary">
             + Draft a new campaign
           </Link>
         </div>

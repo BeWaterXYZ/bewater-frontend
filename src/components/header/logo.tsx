@@ -16,11 +16,11 @@ export const BeWaterLogo = async (params: { lng: string }) => {
           height={24}
           alt="bewater logo"
         />
-        <div className="body-5 text-day absolute left-full top-[-12px] rounded-full p-[1px] bg-gradient-108 from-[#057382] to-[#66FFFF]">
+        {/* <div className="body-5 text-day absolute left-full top-[-12px] rounded-full p-[1px] bg-gradient-108 from-[#057382] to-[#66FFFF]">
           <div className="bg-night rounded-full px-[5px] leading-[12px]">
             Alpha
           </div>
-        </div>
+        </div> */}
       </Link>
       <Link href={params?.lng === lng ? `/${lng}/` : '/'}>
         <div className="absolute left-[164px] hidden sm:flex flex-row gap-2 items-center">
