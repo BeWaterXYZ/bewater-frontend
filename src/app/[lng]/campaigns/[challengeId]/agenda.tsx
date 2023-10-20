@@ -1,5 +1,4 @@
 "use client";
-
 import { Challenge } from "@/services/types";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
