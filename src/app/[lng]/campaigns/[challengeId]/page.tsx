@@ -7,6 +7,7 @@ import { unsplash } from '@/utils/unsplash';
 import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { segmentSchema } from './param-schema';
 import { PrizeSection as PrizeSection1 } from './prize-section/63c82bd12ddc570f32ada868';
 import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f32ada869';
@@ -394,7 +395,9 @@ export default async function ChallengeIntro({ params }: any) {
                       {challenge.yotadata.award.truck.subtitle}
                     </p>
                   ) : null}
-                <div className="flex flex-row flex-wrap items-top gap-16 p-8">
+                <div className={clsx('', {
+                  ['flex flex-row flex-wrap items-top gap-16 p-8']: challenge.yotadata?.award?.truck?.data,
+                })}>
                   {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
                     return (
                       <div
