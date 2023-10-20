@@ -390,6 +390,13 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     );
                   })}
+                </div>
+                {challenge.yotadata?.award?.truck?.subtitle ? (
+                    <p className="body-3 md:body-1 md:heading-5 font-bold text-white/30 md:text-white/30 h-8">
+                      {challenge.yotadata.award.truck.subtitle}
+                    </p>
+                  ) : null}
+                <div className="flex flex-row flex-wrap items-top gap-16 p-8">
                   {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
                     return (
                       <div
