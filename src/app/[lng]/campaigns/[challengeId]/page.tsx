@@ -508,8 +508,6 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       }
-
-
         <>
           {!challenge.yotadata?.disableJudges &&
             <div className="mt-16">
@@ -618,6 +616,44 @@ export default async function ChallengeIntro({ params }: any) {
                 )}
               </div>
             </div>
+          }
+          {
+            challenge.yotadata?.speakers ? (
+              <div className="mt-16">
+                <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
+                  { challenge.yotadata.speakers.title.en }
+                </h3>
+                <div className="flex flex-row flex-wrap gap-6 justify-center">
+                  {(challenge.yotadata.speakers.data ?? [])
+                    .map((it: any, i: number) => {
+                      return (
+                        <>
+                          {
+                            it.avatar ? (
+                              <div key={i!} className="w-[180px] mb-2 ">
+                              <Aspect ratio={1 / 1} className="">
+                                <Image
+                                  fill
+                                  src={it.avatar}
+                                  className="object-cover w-full h-full bg-white/5"
+                                  alt={it.name}
+                                />
+                              </Aspect>
+                              <p className="body-3 mt-4 mb-2 text-white">
+                                {it.name}
+                              </p>
+                              <p className="body-4 text-grey-400">
+                                {it.title ?? ''}
+                              </p>
+                            </div>
+                            ) : null
+                          }
+                        </>
+                      );
+                    })}
+                </div>
+              </div>
+            ) : null
           }
           {!(challenge.requirements || challenge.reviewDimension) ? null : (
             <div className="container">
