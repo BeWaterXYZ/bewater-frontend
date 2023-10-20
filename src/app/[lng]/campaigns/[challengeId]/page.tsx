@@ -71,36 +71,6 @@ export default async function ChallengeIntro({ params }: any) {
     challenge.reviewDimension = lng === 'zh' ? (challenge.yotadata.reviewDimension.zh ?? challenge.yotadata.reviewDimension.en) : (challenge.yotadata.reviewDimension.en ?? challenge.yotadata.reviewDimension.zh);
   }
 
-  // todo 删除以下hack部分
-  // if (challenge.id === '2') {
-  //   if (lng === 'en') {
-  //     challenge.location = 'Online Event';
-  //     for (const it of challenge.judges) {
-  //       if (it.name.includes('李达潮')) {
-  //         it.name = 'Lee DaTie';
-  //         it.organization = 'Trainee of William G.';
-  //         it.title = 'Co-founder of M10b HK.';
-  //         continue;
-  //       }
-  //       if (it.name.includes('宋婷')) {
-  //         it.name = 'Song Ting';
-  //         it.organization = 'AI & Blockchain Artist';
-  //         it.title = "China's Foremost Cryptographic Artist";
-  //         continue;
-  //       }
-  //       if (it.name.includes('QIAO_MUZI')) {
-  //         it.organization = 'Web3 Artistic Leader';
-  //         it.title = 'Entrepreneur in the Creative Industry';
-  //         continue;
-  //       }
-  //       if (it.name.includes('释无量叁')) {
-  //         it.organization = 'People Tang illustrator/Tang DAO builder/artist';
-  //         continue;
-  //       }
-  //     }
-  //   }
-  // }
-
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
       {challenge.milestones?.length > 0 && challenge.id !== '7' ? (
