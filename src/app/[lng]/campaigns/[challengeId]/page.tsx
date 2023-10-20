@@ -322,13 +322,11 @@ export default async function ChallengeIntro({ params }: any) {
                     {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
                   </h3>
                 )}
-                {
-                  challenge.yotadata?.award?.additional?.en?.subtitle ? (
+                {challenge.yotadata?.award?.additional?.en?.subtitle ? (
                     <p className="body-3 md:body-1 md:heading-5 font-bold text-white/30 md:text-white/30 h-8">
                       {challenge.yotadata.award.additional.en.subtitle}
                     </p>
-                  ) : null
-                }
+                  ) : null}
                 <div className="flex flex-row flex-wrap items-top gap-16 p-8">
                   {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
                     return (
@@ -413,7 +411,7 @@ export default async function ChallengeIntro({ params }: any) {
                                 return (
                                   <Fragment key={j}>
                                     <div className="flex flex-col gap-1 w-full">
-                                      <p className="body-3 text-white">
+                                      <p className="body-3 text-white/60">
                                         {item}
                                       </p>
                                     </div>
@@ -617,8 +615,7 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
             </div>
           }
-          {
-            challenge.yotadata?.speakers ? (
+          {challenge.yotadata?.speakers ? (
               <div className="mt-16">
                 <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
                   { challenge.yotadata.speakers.title.en }
@@ -653,8 +650,7 @@ export default async function ChallengeIntro({ params }: any) {
                     })}
                 </div>
               </div>
-            ) : null
-          }
+            ) : null}
           {!(challenge.requirements || challenge.reviewDimension) ? null : (
             <div className="container">
               <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
