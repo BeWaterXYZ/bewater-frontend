@@ -322,6 +322,13 @@ export default async function ChallengeIntro({ params }: any) {
                     {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
                   </h3>
                 )}
+                {
+                  challenge.yotadata?.award?.additional?.en?.subtitle ? (
+                    <p className="body-3 md:body-1 md:heading-5 font-bold text-white/30 md:text-white/30 h-8">
+                      {challenge.yotadata.award.additional.en.subtitle}
+                    </p>
+                  ) : null
+                }
                 <div className="flex flex-row flex-wrap items-top gap-16 p-8">
                   {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
                     return (
@@ -383,7 +390,7 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     );
                   })}
-                  {(challenge.yotadata?.award?.truck ?? []).map((it : any, i : number ) => {
+                  {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
                     return (
                       <div
                         className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
@@ -415,18 +422,16 @@ export default async function ChallengeIntro({ params }: any) {
                   })}
                 </div>
                 {challenge.yotadata?.award?.additional ? (
-                  <>
-                    <div className="relative w-full flex flex-col gap-10 items-center">
-                      <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
-                        {challenge.yotadata.award.additional.en.title}
-                      </p>
-                      <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
-                        <li>
-                          <Markdown>{challenge.yotadata.award.additional.en.content}</Markdown>
-                        </li>
-                      </ul>
-                    </div>
-                  </>
+                  <div className="relative w-full flex flex-col gap-10 items-center">
+                    <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
+                      {challenge.yotadata.award.additional.en.title}
+                    </p>
+                    <ul className="w-[80%] flex-col flex gap-2 body-3 md:body-2 text-white/60 md:text-white/60">
+                      <li>
+                        <Markdown>{challenge.yotadata.award.additional.en.content}</Markdown>
+                      </li>
+                    </ul>
+                  </div>
                 ) : null}
                 {challenge.yotadata?.award?.other ? (
                   <Link
