@@ -7,6 +7,7 @@ import { unsplash } from '@/utils/unsplash';
 import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { segmentSchema } from './param-schema';
 import { PrizeSection as PrizeSection1 } from './prize-section/63c82bd12ddc570f32ada868';
 import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f32ada869';
@@ -394,38 +395,42 @@ export default async function ChallengeIntro({ params }: any) {
                       {challenge.yotadata.award.truck.subtitle}
                     </p>
                   ) : null}
-                <div className="flex flex-row flex-wrap items-top gap-16 p-8">
-                  {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
-                    return (
-                      <div
-                        className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
-                        key={i}
-                      >
-                        <div className="flex flex-row gap-[min(32px,2vw)] ">
-                          <div className="flex flex-col gap-4 md:gap-7 items-center">
-                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
-                              {it.title}
-                            </p>
-                            <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
-                              {it.letter.map((item : string, j : number) => {
-                                return (
-                                  <Fragment key={j}>
-                                    <div className="flex flex-col gap-1 w-full">
-                                      <p className="body-3 text-white/60">
-                                        {item}
-                                      </p>
-                                    </div>
-                                    <hr className="border-none bg-white/20 h-[0.5px] w-full" />
-                                  </Fragment>
-                                );
-                              })}
+                {challenge.yotadata?.award?.truck?.data ? (
+                  <div className={clsx('', {
+                    ['flex flex-row flex-wrap items-top gap-16 p-8']: challenge.yotadata?.award?.truck?.data,
+                  })}>
+                    {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
+                      return (
+                        <div
+                          className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
+                          key={i}
+                        >
+                          <div className="flex flex-row gap-[min(32px,2vw)] ">
+                            <div className="flex flex-col gap-4 md:gap-7 items-center">
+                              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
+                                {it.title}
+                              </p>
+                              <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
+                                {it.letter.map((item : string, j : number) => {
+                                  return (
+                                    <Fragment key={j}>
+                                      <div className="flex flex-col gap-1 w-full">
+                                        <p className="body-3 text-white/60">
+                                          {item}
+                                        </p>
+                                      </div>
+                                      <hr className="border-none bg-white/20 h-[0.5px] w-full" />
+                                    </Fragment>
+                                  );
+                                })}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                ) : null}
                 {challenge.yotadata?.award?.additional ? (
                   <div className="relative w-full flex flex-col gap-10 items-center">
                     <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
