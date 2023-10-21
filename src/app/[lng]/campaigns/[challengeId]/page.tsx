@@ -31,6 +31,7 @@ import { Fragment } from 'react';
 import Marquee from 'react-fast-marquee';
 import Markdown from '@/components/markdown';
 import { Agenda } from './agenda';
+import { EventVenue } from './event-venue';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -255,9 +256,8 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       </div>
-
       <Agenda challenge={challenge}/>
-
+      <EventVenue challenge={challenge}/>
       { !challenge.yotadata?.disableAwards &&
         <div className="">
           {challenge.id === '1' ? (
