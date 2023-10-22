@@ -256,8 +256,8 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       </div>
-      <Agenda challenge={challenge}/>
-      <EventVenue challenge={challenge}/>
+      <Agenda lng={lng} challenge={challenge}/>
+      <EventVenue lng={lng} challenge={challenge}/>
       { !challenge.yotadata?.disableAwards &&
         <div className="">
           {challenge.id === '1' ? (
