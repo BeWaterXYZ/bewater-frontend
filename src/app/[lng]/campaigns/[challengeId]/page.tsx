@@ -293,9 +293,9 @@ export default async function ChallengeIntro({ params }: any) {
                     {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
                   </h3>
                 )}
-                {challenge.yotadata?.award?.additional?.en?.subtitle ? (
+                {challenge.yotadata?.award?.truck?.maintitle ? (
                     <p className="body-3 md:body-1 md:heading-5 font-bold text-white/30 md:text-white/30 h-8">
-                      {challenge.yotadata.award.additional.en.subtitle}
+                      {challenge.yotadata.award.truck.maintitle}
                     </p>
                   ) : null}
                 <div className="flex flex-row flex-wrap items-top gap-16 p-8">
@@ -593,7 +593,7 @@ export default async function ChallengeIntro({ params }: any) {
           {challenge.yotadata?.speakers ? (
               <div className="mt-16">
                 <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-                  { challenge.yotadata.speakers.title.en }
+                  { lng === 'en' ? challenge.yotadata.speakers.title.en : challenge.yotadata.speakers.title.zh }
                 </h3>
                 <div className="flex flex-row flex-wrap gap-6 justify-center">
                   {(challenge.yotadata.speakers.data ?? [])
