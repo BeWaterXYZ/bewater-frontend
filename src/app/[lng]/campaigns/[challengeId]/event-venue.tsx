@@ -4,8 +4,10 @@ import Image from 'next/image';
 
 export function EventVenue({
   challenge,
+  lng,
 }: {
   challenge: Challenge;
+  lng: string;
 }) {
   if (!challenge?.yotadata?.event_venue) {
     return null;
@@ -13,7 +15,8 @@ export function EventVenue({
   return (
     <div className="container text-white body-1">
       <p className="heading-4 text-center pb-12">{
-          challenge.yotadata.event_venue.title.en
+          lng === 'en' ? challenge.yotadata.event_venue.title.en :
+            (challenge.yotadata.event_venue.title.zh ?? challenge.yotadata.event_venue.title.en)
         }
       </p>
       {challenge.yotadata.event_venue?.content?.style_img ? (

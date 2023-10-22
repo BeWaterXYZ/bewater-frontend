@@ -2,16 +2,19 @@
 import { Challenge } from "@/services/types";
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
+import { useTranslation } from '@/app/i18n/client';
 
 interface Props {
   challenge: Challenge;
+  lng: string;
 }
 export function Agenda(props: Props) {
   const { agenda } = props.challenge;
+  const { t } = useTranslation(props.lng, 'translation');
   if (!agenda || agenda.length == 0) return null;
   return (
     <div className="container text-white body-1">
-      <p className="heading-4 text-center pb-12">Agenda</p>
+      <p className="heading-4 text-center pb-12">{t('campaign.agenda')}</p>
       <Tabs.Root className="w-full" defaultValue="tab0">
         <Tabs.List className="w-full flex" aria-label="agenda">
           {agenda.map((d, index) => (
