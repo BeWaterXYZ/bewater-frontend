@@ -52,6 +52,9 @@ export function ChallengeNav({
         if (challenge.milestones?.length > 0) {
           isEnabled = isMileStoneEnabled(link.milestone, challenge);
         }
+        if (link.segment === 'result') {
+          isEnabled = !!challenge.result;
+        }
         return isEnabled ? (
           <Link
             key={link.path}
