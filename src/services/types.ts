@@ -117,13 +117,13 @@ export interface AgendaDay {
     {
       location?: string,
       sessions: [
-        { 
-          time: string, 
+        {
+          time: string,
           topic: string,
           speaker?: {
             name?: string,
             title?: string
-          } 
+          }
         }
       ],
     },
@@ -231,6 +231,7 @@ export interface Project {
   videoURI?: string;
   demoURI?: string;
   githubURI?: string;
+  promoted?: boolean;
 }
 export interface TeamMember {
   id: string;

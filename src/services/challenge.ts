@@ -92,3 +92,15 @@ export async function getChallengeInvitation(id: ChallengeID) {
   );
   return data;
 }
+
+export async function getShortlistByChallenge(challengeId: ChallengeID) {
+  const { data } = await agentAnon.get<{
+    ids: string[];
+    shortlist: {
+      projectId: string; }[]
+    }>(
+    `/challenge/${challengeId}/raw-shortlist`,
+    {}
+  );
+  return data;
+}

@@ -7,6 +7,7 @@ import { unsplash } from '@/utils/unsplash';
 import dynamicLoad from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
+import clsx from 'clsx';
 import { segmentSchema } from './param-schema';
 import { PrizeSection as PrizeSection1 } from './prize-section/63c82bd12ddc570f32ada868';
 import { PrizeSection as PrizeSection2 } from './prize-section/63c82bd12ddc570f32ada869';
@@ -30,6 +31,7 @@ import { Fragment } from 'react';
 import Marquee from 'react-fast-marquee';
 import Markdown from '@/components/markdown';
 import { Agenda } from './agenda';
+import { EventVenue } from './event-venue';
 
 const ConnectButton = dynamicLoad(() => import('./connect-button'), {
   ssr: false,
@@ -69,36 +71,6 @@ export default async function ChallengeIntro({ params }: any) {
   if (challenge.yotadata?.reviewDimension) {
     challenge.reviewDimension = lng === 'zh' ? (challenge.yotadata.reviewDimension.zh ?? challenge.yotadata.reviewDimension.en) : (challenge.yotadata.reviewDimension.en ?? challenge.yotadata.reviewDimension.zh);
   }
-
-  // todo 删除以下hack部分
-  // if (challenge.id === '2') {
-  //   if (lng === 'en') {
-  //     challenge.location = 'Online Event';
-  //     for (const it of challenge.judges) {
-  //       if (it.name.includes('李达潮')) {
-  //         it.name = 'Lee DaTie';
-  //         it.organization = 'Trainee of William G.';
-  //         it.title = 'Co-founder of M10b HK.';
-  //         continue;
-  //       }
-  //       if (it.name.includes('宋婷')) {
-  //         it.name = 'Song Ting';
-  //         it.organization = 'AI & Blockchain Artist';
-  //         it.title = "China's Foremost Cryptographic Artist";
-  //         continue;
-  //       }
-  //       if (it.name.includes('QIAO_MUZI')) {
-  //         it.organization = 'Web3 Artistic Leader';
-  //         it.title = 'Entrepreneur in the Creative Industry';
-  //         continue;
-  //       }
-  //       if (it.name.includes('释无量叁')) {
-  //         it.organization = 'People Tang illustrator/Tang DAO builder/artist';
-  //         continue;
-  //       }
-  //     }
-  //   }
-  // }
 
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
@@ -284,9 +256,8 @@ export default async function ChallengeIntro({ params }: any) {
           )}
         </div>
       </div>
-
-      <Agenda challenge={challenge}/>
-
+      <Agenda lng={lng} challenge={challenge}/>
+      <EventVenue lng={lng} challenge={challenge}/>
       { !challenge.yotadata?.disableAwards &&
         <div className="">
           {challenge.id === '1' ? (
@@ -322,13 +293,11 @@ export default async function ChallengeIntro({ params }: any) {
                     {challenge.awardCurrency ? challenge.awardCurrency : 'USD'}
                   </h3>
                 )}
-                {
-                  challenge.yotadata?.award?.additional?.en?.subtitle ? (
+                {challenge.yotadata?.award?.truck?.maintitle ? (
                     <p className="body-3 md:body-1 md:heading-5 font-bold text-white/30 md:text-white/30 h-8">
-                      {challenge.yotadata.award.additional.en.subtitle}
+                      {challenge.yotadata.award.truck.maintitle}
                     </p>
-                  ) : null
-                }
+                  ) : null}
                 <div className="flex flex-row flex-wrap items-top gap-16 p-8">
                   {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
                     return (
@@ -396,38 +365,42 @@ export default async function ChallengeIntro({ params }: any) {
                       {challenge.yotadata.award.truck.subtitle}
                     </p>
                   ) : null}
-                <div className="flex flex-row flex-wrap items-top gap-16 p-8">
-                  {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
-                    return (
-                      <div
-                        className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
-                        key={i}
-                      >
-                        <div className="flex flex-row gap-[min(32px,2vw)] ">
-                          <div className="flex flex-col gap-4 md:gap-7 items-center">
-                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
-                              {it.title}
-                            </p>
-                            <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
-                              {it.letter.map((item : string, j : number) => {
-                                return (
-                                  <Fragment key={j}>
-                                    <div className="flex flex-col gap-1 w-full">
-                                      <p className="body-3 text-white">
-                                        {item}
-                                      </p>
-                                    </div>
-                                    <hr className="border-none bg-white/20 h-[0.5px] w-full" />
-                                  </Fragment>
-                                );
-                              })}
+                {challenge.yotadata?.award?.truck?.data ? (
+                  <div className={clsx('', {
+                    ['flex flex-row flex-wrap items-top gap-16 p-8']: challenge.yotadata?.award?.truck?.data,
+                  })}>
+                    {(challenge.yotadata?.award?.truck?.data ?? []).map((it : any, i : number ) => {
+                      return (
+                        <div
+                          className="flex-1 flex flex-col items-center gap-10 min-w-[200px]"
+                          key={i}
+                        >
+                          <div className="flex flex-row gap-[min(32px,2vw)] ">
+                            <div className="flex flex-col gap-4 md:gap-7 items-center">
+                              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-16">
+                                {it.title}
+                              </p>
+                              <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4  min-w-[200px]">
+                                {it.letter.map((item : string, j : number) => {
+                                  return (
+                                    <Fragment key={j}>
+                                      <div className="flex flex-col gap-1 w-full">
+                                        <p className="body-3 text-white/60">
+                                          {item}
+                                        </p>
+                                      </div>
+                                      <hr className="border-none bg-white/20 h-[0.5px] w-full" />
+                                    </Fragment>
+                                  );
+                                })}
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })}
-                </div>
+                      );
+                    })}
+                  </div>
+                ) : null}
                 {challenge.yotadata?.award?.additional ? (
                   <div className="relative w-full flex flex-col gap-10 items-center">
                     <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
@@ -617,11 +590,10 @@ export default async function ChallengeIntro({ params }: any) {
               </div>
             </div>
           }
-          {
-            challenge.yotadata?.speakers ? (
+          {challenge.yotadata?.speakers ? (
               <div className="mt-16">
                 <h3 className="heading-5 md:heading-3 font-bold mb-16 text-center">
-                  { challenge.yotadata.speakers.title.en }
+                  { lng === 'en' ? challenge.yotadata.speakers.title.en : challenge.yotadata.speakers.title.zh }
                 </h3>
                 <div className="flex flex-row flex-wrap gap-6 justify-center">
                   {(challenge.yotadata.speakers.data ?? [])
@@ -653,8 +625,7 @@ export default async function ChallengeIntro({ params }: any) {
                     })}
                 </div>
               </div>
-            ) : null
-          }
+            ) : null}
           {!(challenge.requirements || challenge.reviewDimension) ? null : (
             <div className="container">
               <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
