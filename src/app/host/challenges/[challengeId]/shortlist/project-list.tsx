@@ -7,6 +7,7 @@ import Markdown from '@/components/markdown';
 import { useState } from 'react';
 import { pushShortlist, popShortlist } from '@/services/project.query';
 import { openSaveDialog, workbook2Blob } from "@/utils/saver";
+import { useLoadingWhen } from "@/components/loading/store";
 import { teamMemInfo } from "./utils";
 
 export function ProjectList({ challengeId, projects }: {
@@ -14,8 +15,15 @@ export function ProjectList({ challengeId, projects }: {
   projects: Project[];
 }) {
   const { isLoaded, isSignedIn, user } = useUser();
-  const isAdmin = isLoaded && isSignedIn && user?.publicMetadata?.teamMember;
   let [projects_, upProjects] =  useState(projects);
+
+  useLoadingWhen(!isLoaded);
+
+  if (!isLoaded) {
+    return null;
+  }
+
+  const isAdmin = isSignedIn && user?.publicMetadata?.teamMember;
 
   const pickup = (project: Project) => () => {
     if (project.promoted) {
@@ -95,7 +103,11 @@ export function ProjectList({ challengeId, projects }: {
 
   return (
     <>
-    {!isAdmin ? null : (
+    {!isAdmin ? (
+      <div className="max-w-[calc(100vw-150px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
+        <p>{`${!isSignedIn ? '请先登录' : '请联系管理员索要权限'}`}</p>
+      </div>
+    ) : (
       <>
         <div className="max-w-[calc(100vw-150px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
           {projects_.map((it) => {
