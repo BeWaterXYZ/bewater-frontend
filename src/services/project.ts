@@ -9,6 +9,7 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
   );
   return data.projects;
 }
+
 export async function getProject(projectId: ProjectId) {
   const { data } = await agentAnon.get<{ project: Project }>(
     `/project/${projectId}`,
@@ -32,6 +33,7 @@ export async function getProjectRating(projectId: ProjectId) {
   );
   return data.mark;
 }
+
 export async function updateProjectRating({
   projectId,
   mark,
@@ -64,4 +66,19 @@ export async function getProjectRepoStats(teamId: TeamID, githubURI: string) {
     },
   });
   return data;
+}
+
+export function putShortlist(challengeId: string, projectId: ProjectId) {
+  return agentAuthed.put<{
+    challengeId: string
+    projectId: string;
+  }>(`/project/${projectId}/shortlist`, {
+    challengeId,
+  });
+}
+
+export function unShortlist(projectId: ProjectId) {
+  return agentAuthed.delete<{
+    projectId: string;
+  }>(`/project/${projectId}/shortlist`);
 }

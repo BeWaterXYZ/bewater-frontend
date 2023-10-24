@@ -7,6 +7,8 @@ import {
   getProjectRepoStats,
   updateProject,
   updateProjectRating,
+  putShortlist,
+  unShortlist,
 } from './project';
 import { ChallengeID, ProjectId, TeamID } from './types';
 
@@ -71,4 +73,12 @@ export function useMutationUpdateProjectRating(projectId: ProjectId) {
       queryClient.invalidateQueries(['project', projectId, 'rating']);
     },
   });
+}
+
+export function pushShortlist(challengeId: string, projectId: ProjectId) {
+  return putShortlist(challengeId, projectId);
+}
+
+export function popShortlist(projectId: ProjectId) {
+  return unShortlist(projectId);
 }
