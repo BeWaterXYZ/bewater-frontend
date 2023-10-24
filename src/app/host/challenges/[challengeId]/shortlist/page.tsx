@@ -16,6 +16,10 @@ export default async function Page({ params }: any) {
     return it;
   })
 
+  projects.sort((a: any, b: any) => {
+    return a['name'].toLowerCase() > b['name'].toLowerCase() ? 1 : -1;
+  })
+
   return (
     <ProjectList challengeId={challengeId} projects={projects} />
   )
