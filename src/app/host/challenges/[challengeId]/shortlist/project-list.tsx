@@ -138,9 +138,10 @@ export function ProjectList({ challengeId, projects }: {
           {projects_.map((it, i: number) => {
             return (
               <div key={it.id} className="">
-                <p>{`${it.promoted ? '✅' : ''}${it.name}`}
+                <p>
+                  <span>{`${it.promoted ? '✅' : ''}${it.name}`}</span>
                   <span className="text-[12px]">（{it.id}）</span>
-                  <span className="inline-block">{"    "}</span>
+                  <span className="inline-block">&nbsp;&nbsp;</span>
                   <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
                     ['text-day']: !it.promoted,
                     ['text-yellow-500']: it.promoted,
