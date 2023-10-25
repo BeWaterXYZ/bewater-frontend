@@ -193,7 +193,6 @@ export function Dashboard() {
                     <p style={{whiteSpace:"pre"}}>{'    '}</p>
                     <Link
                       href={`/host/challenges/${challenge.id}/shortlist`}
-                      target={"_blank"}
                     >
                       <p className="text-base font-bold text-grey-500">
                       💰Shortlist
