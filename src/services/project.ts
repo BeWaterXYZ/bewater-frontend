@@ -1,6 +1,8 @@
 import { OptionalExceptFor } from '@/types/utils';
 import { agentAnon, agentAuthed } from './agent';
-import { ChallengeID, Project, ProjectId, RepoStats, TeamID } from './types';
+import { ChallengeID, Project,
+  ProjectId, RepoStats,
+  TeamID, ProjectStatus, } from './types';
 
 export async function getChallengeTProjects(challengeId: ChallengeID) {
   const { data } = await agentAnon.get<{ projects: Project[] }>(
@@ -68,17 +70,8 @@ export async function getProjectRepoStats(teamId: TeamID, githubURI: string) {
   return data;
 }
 
-export function putShortlist(challengeId: string, projectId: ProjectId) {
-  return agentAuthed.put<{
-    challengeId: string
-    projectId: string;
-  }>(`/project/${projectId}/shortlist`, {
-    challengeId,
+export function putProjectStatus(projectId: ProjectId, status: ProjectStatus) {
+  return agentAuthed.post(`/project/${projectId}/project-status`, {
+    status,
   });
-}
-
-export function unShortlist(projectId: ProjectId) {
-  return agentAuthed.delete<{
-    projectId: string;
-  }>(`/project/${projectId}/shortlist`);
 }

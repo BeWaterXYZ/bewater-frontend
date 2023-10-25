@@ -7,10 +7,9 @@ import {
   getProjectRepoStats,
   updateProject,
   updateProjectRating,
-  putShortlist,
-  unShortlist,
+  putProjectStatus,
 } from './project';
-import { ChallengeID, ProjectId, TeamID } from './types';
+import { ChallengeID, ProjectId, TeamID, ProjectStatus } from './types';
 
 export function useFetchChallengeProjects(challengeId: ChallengeID) {
   return useQuery({
@@ -75,10 +74,6 @@ export function useMutationUpdateProjectRating(projectId: ProjectId) {
   });
 }
 
-export function pushShortlist(challengeId: string, projectId: ProjectId) {
-  return putShortlist(challengeId, projectId);
-}
-
-export function popShortlist(projectId: ProjectId) {
-  return unShortlist(projectId);
+export function resetProjectStatus(projectId: ProjectId, status: ProjectStatus) {
+  return putProjectStatus(projectId, status);
 }
