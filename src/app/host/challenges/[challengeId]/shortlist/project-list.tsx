@@ -124,10 +124,10 @@ export function ProjectList({ challengeId, projects }: {
   return (
     <>
     {!isAdmin ? (
-      <div className="max-w-[calc(100vw-150px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
+      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2 justify-center items-center">
         <p>{`${!isSignedIn ? '请先登录' : '请联系管理员索要权限'}`}</p>
       </div>
-    ) : (
+    ) : projects_.length > 0 ? (
       <>
         <div className="max-w-[calc(100vw-150px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
           <div>
@@ -164,7 +164,11 @@ export function ProjectList({ challengeId, projects }: {
           >导出所有项目</p>
         </div>
       </>
-    )}
+    ) : (
+      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2 justify-center items-center">
+        <p>没有项目数据</p>
+      </div>
+    ) }
     </>
   );
 }
