@@ -3,6 +3,7 @@ import { ChallengeID } from "@/services/types";
 import clsx from "clsx";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { scrollTo } from "./scroll";
 
 const links = [
   {
@@ -143,13 +144,15 @@ const links = [
 
 export function Sidebar({ challengeId }: { challengeId: ChallengeID }) {
   let segment = useSelectedLayoutSegment();
-  console.log(1, { segment });
   return (
     <div className="flex-1 border-r border-r-white/20">
       <div className="flex flex-col gap-2 p-2 py-4 ">
         {links.map((link) => (
           <Link
             key={link.label}
+            onClick={() => {
+              scrollTo(link.path)
+            }}
             className={clsx(
               "body-5  font-mono p-3 text-gray-500  rounded-[6px] flex flex-col gap-2 items-center",
               {

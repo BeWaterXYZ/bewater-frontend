@@ -89,7 +89,7 @@ export default function Page() {
       });
       showFullScreenSet(true);
       setTimeout(() => {
-        router.push(`/host/challenges/${data.id}`);
+        router.push(`/host/edit/${data.id}`);
       }, 3000);
     } catch (err) {}
     console.log({ formData });

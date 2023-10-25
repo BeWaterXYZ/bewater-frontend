@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { PublishButton } from "./publish-button";
 const links = [
   {
     path: 'content',
@@ -45,17 +46,21 @@ const links = [
 ];
 export function Header({ challengeId }: { challengeId: ChallengeID }) {
   let segment = useSelectedLayoutSegment();
-  console.log({ segment });
+
+  
 
   return (
     <div className="text-white flex justify-between w-full h-14 items-center p-4 border-b border-b-white/20">
       <div className="">
+        <Link href="/host">
         <Image
           src="/logo/bewater-h.svg"
           width={120}
           height={24}
           alt="bewater logo"
         />
+        </Link>
+
       </div>
       <div className="flex">
         {links.map((link) => (
@@ -72,7 +77,10 @@ export function Header({ challengeId }: { challengeId: ChallengeID }) {
           </Link>
         ))}
       </div>
-      <div>3</div>
+      <div>
+        <PublishButton challengeId={challengeId} />
+      
+      </div>
     </div>
   );
 }

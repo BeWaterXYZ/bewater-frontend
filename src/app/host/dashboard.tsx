@@ -148,7 +148,7 @@ export function Dashboard() {
             return (
               <div key={challenge.id}>
                 <Link
-                  href={`/host/challenges/${challenge.id}`}
+                  href={`/host/edit/${challenge.id}`}
                   className={
                     isAdmin
                       ? "flex pt-8 pb-4 px-4 justify-between"
