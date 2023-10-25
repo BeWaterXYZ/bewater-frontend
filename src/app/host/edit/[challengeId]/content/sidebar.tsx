@@ -3,7 +3,6 @@ import { ChallengeID } from "@/services/types";
 import clsx from "clsx";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { scrollTo } from "./scroll";
 
 const links = [
   {
