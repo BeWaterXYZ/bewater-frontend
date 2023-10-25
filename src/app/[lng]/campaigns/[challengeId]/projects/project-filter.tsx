@@ -17,7 +17,7 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
       <div className="my-2">
         <p className="body-5 uppercase my-4">status</p>
         {shortlistD
-          .filter((item) => item.amount > 0)
+          .filter((item) => item.amount > -1)
           .map((item) => {
             return (
               <ShortlistTag
