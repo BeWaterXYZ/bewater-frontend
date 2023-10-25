@@ -38,7 +38,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       <TodoLink
         key={"banner"}
         copy="Add banner or host image"
-        link={`/host/challenges/${challenge.id}#section-banner`}
+        link={`/host/edit/${challenge.id}/content/hero`}
       />
     );
   }
@@ -47,7 +47,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       <TodoLink
         key={"milestones"}
         copy="Add milestones"
-        link={`/host/challenges/${challenge.id}#section-milestones`}
+        link={`/host/edit/${challenge.id}/content/milestone`}
       />
     );
   }
@@ -56,7 +56,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       <TodoLink
         key={"awards"}
         copy="Add Awards"
-        link={`/host/challenges/${challenge.id}#section-awards`}
+        link={`/host/edit/${challenge.id}/content/prizes`}
       />
     );
   }
@@ -65,7 +65,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       <TodoLink
         key={"judge"}
         copy="Add Judges"
-        link={`/host/challenges/${challenge.id}#section-judges`}
+        link={`/host/edit/${challenge.id}/content/judge`}
       />
     );
   }
@@ -74,7 +74,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       <TodoLink
         key={"requirements"}
         copy="Add Requirements"
-        link={`/host/challenges/${challenge.id}#section-requirements`}
+        link={`/host/edit/${challenge.id}/content/requirements`}
       />
     );
   }
@@ -83,7 +83,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
       <TodoLink
         key={"sponsors"}
         copy="Add Sponsors"
-        link={`/host/challenges/${challenge.id}#section-sponsors`}
+        link={`/host/edit/${challenge.id}/content/sponsors`}
       />
     );
   }
@@ -192,7 +192,7 @@ export function Dashboard() {
                     </Link>
                     <p style={{whiteSpace:"pre"}}>{'    '}</p>
                     <Link
-                      href={`/host/challenges/${challenge.id}/shortlist`}
+                      href={`/host/edit/${challenge.id}/shortlist`}
                     >
                       <p className="text-base font-bold text-grey-500">
                       💰Shortlist

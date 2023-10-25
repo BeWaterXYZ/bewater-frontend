@@ -19,13 +19,6 @@ import { Fragment, useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import Balancer from "react-wrap-balancer";
 import { Timeline } from "../timeline";
-import { EditAwards } from "./edit/awards";
-import { EditBanner } from "./edit/banner";
-import { EditIntro } from "./edit/intro";
-import { EditJudges } from "./edit/judges";
-import { EditMilestones } from "./edit/milestones";
-import { EditRequirements } from "./edit/requirements";
-import { EditSponsors } from "./edit/sponsors";
 import { mock } from "./mock";
 import Markdown from "@/components/markdown";
 import { segmentSchema } from "../../segment-params";
@@ -68,55 +61,12 @@ export default function Page({ params }: any) {
 
   return (
     <>
-      {publishRequested ? (
-        <div className="z-[100] fixed top-0  bottom-0 left-0 right-0 flex flex-col gap-2 justify-center items-center bg-night">
-          <div className="h-12 w-12 m-8 relative bg-[#10B981] flex items-center justify-center rounded-full">
-            <CheckIcon className="w-8 h-8 text-night" />
-          </div>
-          <p className="text-xl leading-8 text-white">
-            Publish Request Submitted!
-          </p>
-          <p className="text-[14px] text-grey-500 mb-4">
-            You’ll get notification after review. Review usually takes 1-2
-            business days.
-          </p>
-          <div className="flex gap-2">
-            <Link
-              href={`${window.location.origin}/host/challenges/${challenge.id}`}
-              className="btn btn-secondary min-w-[96px]"
-            >
-              Done
-            </Link>{" "}
-            <a
-              href={`https://build.bewater.xyz/en/campaigns/${challenge.id}`}
-              className="btn btn-secondary-invert gap-2"
-            >
-              <OpenInNewWindowIcon />
-              Open campaign page
-            </a>
-          </div>
-        </div>
-      ) : null}
+     
       <div className="bg-night pt-20">
-        {/* top bar */}
-        <div className="px-8 sticky top-0 bg-night z-10 h-[72px] flex flex-row justify-between items-center">
-          <Link href="/host" className="text-sm text-white">
-            {"<- Back"}
-          </Link>
-          <div className="text-sm text-white">
-            {" Now You're Editing"}{" "}
-            <span className="text-day">{challenge.title}</span>
-          </div>
-          <div className="flex gap-2">
-            <EditContestant challenge={challenge} />
-            <button className="btn btn-primary" onClick={publish}>
-              Publish Request
-            </button>
-          </div>
-        </div>
+      
         {/* banner section */}
         <div
-          id="section-banner"
+          id="section-hero"
           className={`relative h-[560px] overflow-hidden text-center flex flex-col gap-5 justify-center bg-cover bg-center `}
           style={{
             backgroundImage: `url(${
@@ -124,9 +74,7 @@ export default function Page({ params }: any) {
             })`,
           }}
         >
-          <div className="absolute top-8 right-8">
-            <EditBanner challenge={challenge} />
-          </div>
+         
           <Image
             src={challenge.hostIcon ?? "/sponsors/hostlogo.png"}
             width={120}
@@ -161,12 +109,10 @@ export default function Page({ params }: any) {
         {/* timeline */}
         {!isOTHERS ? (
           <div
-            id="section-milestones"
+            id="section-milestone"
             className="relative py-[100px] border-b border-dashed border-white/30"
           >
-            <div className="absolute top-8 right-8">
-              <EditMilestones challenge={challenge} />
-            </div>
+           
             <div className="container">
               <Timeline milestones={challenge.milestones} />
             </div>
@@ -179,9 +125,7 @@ export default function Page({ params }: any) {
             id="section-intro"
             className="relative py-[100px] border-b border-dashed border-white/30"
           >
-            <div className="absolute top-8 right-8">
-              <EditIntro challenge={challenge} />
-            </div>
+           
             <div className="container">
               <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
                 <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center w-full">
@@ -266,12 +210,10 @@ export default function Page({ params }: any) {
         {/* awards */}
         {!isOTHERS ? (
           <div
-            id="section-awards"
+            id="section-prizes"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-            <div className="absolute top-8 right-8">
-              <EditAwards challenge={challenge} />
-            </div>
+            
             <div className="container">
               <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
@@ -355,12 +297,10 @@ export default function Page({ params }: any) {
         {/* judges */}
         {!isOTHERS ? (
           <div
-            id="section-judges"
+            id="section-judge"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-            <div className="absolute top-8 right-8">
-              <EditJudges challenge={challenge} />
-            </div>
+           
             <div className="container">
               <h3 className="text-white text-[24px] md:text-[36px] font-bold mb-16 text-center">
                 Adjudicators
@@ -426,9 +366,7 @@ export default function Page({ params }: any) {
             id="section-requirements"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-            <div className="absolute top-8 right-8">
-              <EditRequirements challenge={challenge} />
-            </div>
+           
             <div className="container">
               <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
                 <div className="flex-1 p-8 bg-white/5 border border-grey-800">
@@ -454,9 +392,7 @@ export default function Page({ params }: any) {
             id="section-sponsors"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-            <div className="absolute top-8 right-8">
-              <EditSponsors challenge={challenge} />
-            </div>
+            
             <div className="container">
               <div>
                 <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">

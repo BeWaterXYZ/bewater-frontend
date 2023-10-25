@@ -150,9 +150,6 @@ export function Sidebar({ challengeId }: { challengeId: ChallengeID }) {
         {links.map((link) => (
           <Link
             key={link.label}
-            onClick={() => {
-              scrollTo(link.path)
-            }}
             className={clsx(
               "body-5  font-mono p-3 text-gray-500  rounded-[6px] flex flex-col gap-2 items-center",
               {
