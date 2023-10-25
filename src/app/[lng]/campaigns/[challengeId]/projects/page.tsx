@@ -6,7 +6,7 @@ import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeProjects } from '@/services/project.query';
 import Loading from '../loading';
 import { ProjectFilter } from './project-filter';
-import { Project, UserProfile } from '@/services/types';
+import { Project, UserProfile, ProjectStatus } from '@/services/types';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -21,18 +21,32 @@ function filterAndSortProject(
   userProfile?: UserProfile,
   options?: {
     tag?: string;
+    shortlist?: string;
     search?: string;
     sort?: boolean;
   },
 ) {
   let res = projects;
-
   /**
    * filtering
    */
   if (options?.tag) {
     res = res.filter((p) => p.tags.some((pt) => options.tag!.includes(pt)));
   }
+
+  if (options?.shortlist) {
+    const sl: string[] = [];
+    if (options.shortlist!.includes('Shortlist')) {
+      sl.push('SELECTED');
+    }
+    if (options.shortlist!.includes('Rejected')) {
+      sl.push('REJECTED');
+    }
+    if (sl.length > 0) {
+      res = res.filter((p) => sl.some((pt) => pt === p.status ));
+    }
+  }
+
   if (options?.search) {
     res = res.filter(
       (p) =>
@@ -75,9 +89,10 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   if (isLoading || isLoadingProject) return <Loading />;
   if (!challenge || !projects) return null;
 
-  const { tag } = querySchema.parse(Object.fromEntries(sp!));
+  const { tag, shortlist } = querySchema.parse(Object.fromEntries(sp!));
   const projectsFilteredSorted = filterAndSortProject(projects, userProfile, {
     tag,
+    shortlist,
     search,
     sort,
   });
