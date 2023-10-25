@@ -1,5 +1,5 @@
 import { RoleSet } from '@/constants/options/role';
-import { Project, Team } from '@/services/types';
+import { Project, Team, ProjectStatus } from '@/services/types';
 
 export function prepareProjectTagFilterData(projects: Project[]) {
   const data : {
@@ -50,4 +50,35 @@ export function prepareTeamReadinessFilterData(teams: Team[]) {
   ];
 
   return data;
+}
+
+export function prepareProjectShortlistData(projects: Project[]) {
+  const selected: {
+    status: string;
+    amount: number;
+  } = {
+    status: 'Shortlist',
+    amount: 0,
+  }
+
+  const rejected: {
+    status: string;
+    amount: number;
+  } = {
+    status: 'Rejected',
+    amount: 0,
+  };
+
+  for (const it of projects) {
+    if (it.status === 'SELECTED' as ProjectStatus) {
+      selected.amount += 1;
+    } else if (it.status === 'REJECTED' as ProjectStatus) {
+      rejected.amount += 1;
+    }
+  }
+
+  return [
+    selected,
+    rejected
+  ];
 }

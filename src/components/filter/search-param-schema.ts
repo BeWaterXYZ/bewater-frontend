@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
 export let querySchema = z.object({
-  status: z.optional(z.string()),
   tag: z.optional(z.string()),
+  shortlist: z.optional(z.string()),
+  status: z.optional(z.string()),
   role: z.optional(z.string()),
 });
 
