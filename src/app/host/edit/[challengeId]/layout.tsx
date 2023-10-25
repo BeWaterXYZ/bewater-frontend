@@ -2,7 +2,6 @@ import { segmentSchema } from "../../segment-params";
 import { Header } from "./header";
 
 export default function Layout({ children ,params }: { children: React.ReactNode ,params:any}) {
-    console.log({params})
     const { challengeId } = segmentSchema.challengeId.parse(params);
 
   return (

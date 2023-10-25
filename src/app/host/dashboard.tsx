@@ -148,7 +148,7 @@ export function Dashboard() {
             return (
               <div key={challenge.id}>
                 <Link
-                  href={`/host/challenges/${challenge.id}`}
+                  href={`/host/edit/${challenge.id}`}
                   className={
                     isAdmin
                       ? "flex pt-8 pb-4 px-4 justify-between"
@@ -190,14 +190,18 @@ export function Dashboard() {
                       🈺Manage
                       </p>
                     </Link>
-                    <p style={{whiteSpace:"pre"}}>{'    '}</p>
-                    <Link
-                      href={`/host/challenges/${challenge.id}/shortlist`}
-                    >
-                      <p className="text-base font-bold text-grey-500">
-                      💰Shortlist
-                      </p>
-                    </Link>
+                    {challenge.type !== 'OTHERS' ? (
+                      <>
+                        <p style={{whiteSpace:"pre"}}>{'    '}</p>
+                        <Link
+                          href={`/host/challenges/${challenge.id}/shortlist`}
+                        >
+                          <p className="text-base font-bold text-grey-500">
+                          💰Shortlist
+                          </p>
+                        </Link>
+                      </>
+                    ) : null}
                   </div>
                 ) : null}
               </div>
