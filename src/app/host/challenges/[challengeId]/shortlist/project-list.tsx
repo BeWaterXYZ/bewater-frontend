@@ -129,7 +129,7 @@ export function ProjectList({ challengeId, projects }: {
       </div>
     ) : projects_.length > 0 ? (
       <>
-        <div className="max-w-[calc(100vw-150px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
+        <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
           <div>
             <p>{'[项目名称]'}
               <span className="text-[12px]">[（项目 id）]</span>
@@ -149,13 +149,16 @@ export function ProjectList({ challengeId, projects }: {
                     onClick={pickup(it)}
                   >{`${it.promoted ? '取消' : '点击筛选'}`}</span>
                 </p>
-                <Markdown style={{ fontSize: '12px' }}>{`<details><summary>项目详情</summary>${it.description ?? ''
+                <Markdown style={{ fontSize: '12px' }}>{`<details><summary>项目描述</summary>${it.description ?? ''
                   }</details><details><summary>队伍信息</summary>${it.team.name} ${it.team.nation}</details>`}</Markdown>
               </div>
             );
           })}
         </div>
         <div className="fixed top-[10px] right-[0px] max-w-[150px] grid gap-4 font-bold text-white/90 text-base mx-2">
+          <p className="text-[14px] text-white/90 px-2 inline-block">
+            {`项目总数：${projects_.length}`}
+          </p>
           <p className="text-[14px] text-day cursor-pointer border border-grey-300 px-2 inline-block"
             onClick={excelOut(true)}
           >导出筛选项目</p>
