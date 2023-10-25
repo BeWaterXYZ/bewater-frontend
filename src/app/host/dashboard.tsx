@@ -190,14 +190,20 @@ export function Dashboard() {
                       🈺Manage
                       </p>
                     </Link>
-                    <p style={{whiteSpace:"pre"}}>{'    '}</p>
-                    <Link
-                      href={`/host/edit/${challenge.id}/shortlist`}
-                    >
-                      <p className="text-base font-bold text-grey-500">
-                      💰Shortlist
-                      </p>
-                    </Link>
+
+                    {challenge.type !== 'OTHERS' ? (
+                      <>
+                        <p style={{whiteSpace:"pre"}}>{'    '}</p>
+                        <Link
+                          href={`/host/challenges/${challenge.id}/shortlist`}
+                        >
+                          <p className="text-base font-bold text-grey-500">
+                          💰Shortlist
+                          </p>
+                        </Link>
+                      </>
+                    ) : null}
+
                   </div>
                 ) : null}
               </div>
