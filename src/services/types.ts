@@ -217,12 +217,13 @@ export interface Team {
 }
 
 export type ProjectId = string;
+export type ProjectStatus = "INITIATED | REJECTED | SELECTED"; // 后台不会返回 TERMINATED
 export interface Project {
   id: ProjectId;
   name: string;
   description: string;
   tags: string[];
-  status: string;
+  status: ProjectStatus;
   teamId: string;
   team: Team;
   mediaURLs: string[];
@@ -231,7 +232,6 @@ export interface Project {
   videoURI?: string;
   demoURI?: string;
   githubURI?: string;
-  promoted?: boolean;
 }
 export interface TeamMember {
   id: string;

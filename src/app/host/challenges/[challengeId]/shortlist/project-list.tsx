@@ -2,11 +2,11 @@
 import * as XLSX from "xlsx";
 import { format } from 'date-fns';
 import { useUser } from "@clerk/nextjs";
-import { Project } from "@/services/types";
+import { Project, ProjectStatus } from "@/services/types";
 import Markdown from '@/components/markdown';
 import { useState } from 'react';
 import clsx from 'clsx';
-import { pushShortlist, popShortlist } from '@/services/project.query';
+import { resetProjectStatus } from '@/services/project.query';
 import { openSaveDialog, workbook2Blob } from "@/utils/saver";
 import { useLoadingWhen } from "@/components/loading/store";
 import { teamMemInfo } from "./utils";
@@ -26,32 +26,16 @@ export function ProjectList({ challengeId, projects }: {
 
   const isAdmin = isSignedIn && user?.publicMetadata?.teamMember;
 
+  const handleChange = (project: Project) => (ev: any) => {
+    project.status = ev.target.value as ProjectStatus;
+  }
+
   const pickup = (project: Project) => () => {
-    if (project.promoted) {
-      popShortlist(project.id).then((res) => {
-        if (res.status === 200) {
-          for (const it of projects_) {
-            if (it.id === project.id) {
-              it.promoted = false;
-              upProjects(JSON.parse(JSON.stringify(projects_)));
-              break;
-            }
-          }
-        }
-      });
-    } else {
-      pushShortlist(challengeId, project.id).then((res) => {
-        if (res.status === 200) {
-          for (const it of projects_) {
-            if (it.id === project.id) {
-              it.promoted = true;
-              upProjects(JSON.parse(JSON.stringify(projects_)));
-              break;
-            }
-          }
-        }
-      });
-    }
+    resetProjectStatus(project.id, project.status).then((res) => {
+      if (res.status === 201 || res.status === 200) {
+        upProjects(JSON.parse(JSON.stringify(projects_)));
+      }
+    });
   };
 
   const excelOut = (promoted: boolean) => () => {
@@ -60,7 +44,7 @@ export function ProjectList({ challengeId, projects }: {
 
     for (const it of projects_) {
       if (promoted) {
-        if (!it.promoted) {
+        if (it.status !== 'SELECTED' as ProjectStatus) {
           continue;
         }
       }
@@ -74,7 +58,7 @@ export function ProjectList({ challengeId, projects }: {
         GitHub地址: it.githubURI ?? '',
         MediaURLs: it.mediaURLs?.join(',') ?? '',
         视频地址: it.videoURI ?? '',
-        筛选状态: it.promoted ? 'yes' : 'no',
+        筛选状态: it.status,
         队名: it.team.name,
         队伍国别: it.team.nation,
         队长邮箱: teamMem.email,
@@ -139,15 +123,23 @@ export function ProjectList({ challengeId, projects }: {
             return (
               <div key={it.id} className="">
                 <p>
-                  <span>{`${it.promoted ? '✅' : ''}${it.name}`}</span>
+                  <span>{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
+                    it.status === ('REJECTED' as ProjectStatus) ? '❌' : ''
+                  )}${it.name}`}</span>
                   <span className="text-[12px]">（{it.id}）</span>
-                  <span className="inline-block">&nbsp;&nbsp;</span>
+                  <select defaultValue={it.status}
+                    onChange={handleChange(it)}
+                    className="bg-[#0F1021] text-white text-[14px] border border-midnight font-normal">
+                    <option value="INITIATED">INITIATED</option>
+                    <option value="SELECTED">SELECTED</option>
+                    <option value="REJECTED">REJECTED</option>
+                  </select>
+                  <span style={{whiteSpace:"pre"}}>{' '}</span>
                   <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
-                    ['text-day']: !it.promoted,
-                    ['text-yellow-500']: it.promoted,
+                    ['text-day']: true,
                   })}
                     onClick={pickup(it)}
-                  >{`${it.promoted ? '取消' : '点击筛选'}`}</span>
+                  >设置</span>
                 </p>
                 <Markdown style={{ fontSize: '12px' }}>{`<details><summary>项目描述</summary>${it.description ?? ''
                   }</details><details><summary>队伍信息</summary>${it.team.name} ${it.team.nation}</details>`}</Markdown>
