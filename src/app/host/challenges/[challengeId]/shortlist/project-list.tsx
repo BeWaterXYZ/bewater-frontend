@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { resetProjectStatus } from '@/services/project.query';
 import { openSaveDialog, workbook2Blob } from "@/utils/saver";
 import { useLoadingWhen } from "@/components/loading/store";
+import { SearchInput } from '@/components/molecules/search-input';
 import { teamMemInfo } from "./utils";
 
 export function ProjectList({ challengeId, projects }: {
@@ -16,7 +17,8 @@ export function ProjectList({ challengeId, projects }: {
   projects: Project[];
 }) {
   const { isLoaded, isSignedIn, user } = useUser();
-  let [projects_, upProjects] =  useState(projects);
+  const [projects_, upProjects] =  useState(projects);
+  const [search, searchSet] = useState("");
 
   useLoadingWhen(!isLoaded);
 
@@ -25,6 +27,18 @@ export function ProjectList({ challengeId, projects }: {
   }
 
   const isAdmin = isSignedIn && user?.publicMetadata?.teamMember;
+
+  let projectsFiltered: Project[]= [];
+
+  if (search) {
+    for (const it of projects_) {
+      if (it.name && it.name.toLowerCase().includes(search.toLowerCase())) {
+        projectsFiltered.push(it);
+      }
+    }
+  } else {
+    projectsFiltered = projects_;
+  }
 
   const handleChange = (project: Project) => (ev: any) => {
     project.status = ev.target.value as ProjectStatus;
@@ -42,7 +56,7 @@ export function ProjectList({ challengeId, projects }: {
     let sheetTeam: any = [];
     let sheetMem: any = [];
 
-    for (const it of projects_) {
+    for (const it of projectsFiltered) {
       if (promoted) {
         if (it.status !== 'SELECTED' as ProjectStatus) {
           continue;
@@ -108,18 +122,25 @@ export function ProjectList({ challengeId, projects }: {
   return (
     <>
     {!isAdmin ? (
-      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2 justify-center items-center">
+      <div className="max-w-[100vw] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2 justify-center items-center">
         <p>{`${!isSignedIn ? '请先登录' : '请联系管理员索要权限'}`}</p>
       </div>
     ) : projects_.length > 0 ? (
       <>
-        <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2">
-          <div>
-            <p>{'[项目名称]'}
+        <div className="max-w-[calc(100vw-200px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2">
+          <div className="pt-4">
+            <p className="inline-block">{'[项目名称]'}
               <span className="text-[12px]">[（项目 id）]</span>
             </p>
+            <div className="inline-block lg:min-w-[300px] ml-5">
+              <SearchInput
+                placeholder="Search for project name"
+                value={search}
+                onChange={(e) => searchSet(e.target.value)}
+              />
+            </div>
           </div>
-          {projects_.map((it, i: number) => {
+          {projectsFiltered.map((it, i: number) => {
             return (
               <div key={it.id} className="border-b border-grey-800 pt-4 pb-4">
                 <div className="flex justify-between">
@@ -152,20 +173,25 @@ export function ProjectList({ challengeId, projects }: {
             );
           })}
         </div>
-        <div className="fixed top-[10px] right-[0px] max-w-[150px] grid gap-4 font-bold text-white/60 text-base mx-2">
-          <p className="text-[14px] text-white/60 px-2 inline-block">
-            {`项目总数：${projects_.length}`}
+        <div className="fixed top-[10px] right-[5px] max-w-[200px] grid gap-4 font-bold text-white/60 text-base mx-2">
+          <p className="text-center text-[14px] text-white/60 px-2 inline-block">
+              {`SL：${projectsFiltered.reduce((tot, cur) => {
+                return tot + (cur.status === 'SELECTED' as ProjectStatus ? 1 : 0);
+              }, 0)}；RJ：${
+                projectsFiltered.reduce((tot, cur) => {
+                return tot + (cur.status === 'REJECTED' as ProjectStatus ? 1 : 0);
+              }, 0)}；TL：${projectsFiltered.length}`}
           </p>
-          <p className="text-[14px] cursor-pointer border border-grey-300 px-2 inline-block"
+          <p className="text-center mx-auto text-[14px] cursor-pointer border border-grey-300 px-2 inline-block max-w-[120px]"
             onClick={excelOut(true)}
           >导出筛选项目</p>
-          <p className="text-[14px] cursor-pointer border border-grey-300 px-2 inline-block"
+          <p className="text-center mx-auto text-[14px] cursor-pointer border border-grey-300 px-2 inline-block max-w-[120px]"
             onClick={excelOut(false)}
           >导出所有项目</p>
         </div>
       </>
     ) : (
-      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2 justify-center items-center">
+      <div className="max-w-[100vw] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2 justify-center items-center">
         <p>没有项目数据</p>
       </div>
     ) }
