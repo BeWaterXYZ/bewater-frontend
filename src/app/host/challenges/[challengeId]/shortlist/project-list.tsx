@@ -124,13 +124,14 @@ export function ProjectList({ challengeId, projects }: {
               <div key={it.id} className="border-b border-grey-800 pt-4 pb-4">
                 <div className="flex justify-between">
                   <p>
-                    <span>{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
+                    <span className="text-white">{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
                       it.status === ('REJECTED' as ProjectStatus) ? '❌' : ''
-                    )}${it.name}`}</span>
+                    )} `}</span>
+                    <span>{it.name}</span>
                     <span className="text-[12px]">（{it.id}）</span>
                     <select defaultValue={it.status}
                       onChange={handleChange(it)}
-                      className="bg-[#0F1021] text-white text-[14px] border border-midnight font-normal">
+                      className="bg-[#0F1021] text-white/90 text-[14px] border border-midnight font-normal">
                       <option value="INITIATED">INITIATED（默认)</option>
                       <option value="SELECTED">SELECTED（筛选)</option>
                       <option value="REJECTED">REJECTED（排除)</option>
