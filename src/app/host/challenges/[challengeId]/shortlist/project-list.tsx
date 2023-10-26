@@ -101,19 +101,19 @@ export function ProjectList({ challengeId, projects }: {
       workbookBlob,
       `${format(new Date(), 'yyyy-MM-dd HH-mm')}[${
         challengeId
-      }]初筛team和project信息统计.xlsx`
+      }]${promoted ? '初筛' : '所有'}team和project信息统计.xlsx`
     );
   };
 
   return (
     <>
     {!isAdmin ? (
-      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2 justify-center items-center">
+      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2 justify-center items-center">
         <p>{`${!isSignedIn ? '请先登录' : '请联系管理员索要权限'}`}</p>
       </div>
     ) : projects_.length > 0 ? (
       <>
-        <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2">
+        <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2">
           <div>
             <p>{'[项目名称]'}
               <span className="text-[12px]">[（项目 id）]</span>
@@ -121,46 +121,51 @@ export function ProjectList({ challengeId, projects }: {
           </div>
           {projects_.map((it, i: number) => {
             return (
-              <div key={it.id} className="">
-                <p>
-                  <span>{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
-                    it.status === ('REJECTED' as ProjectStatus) ? '❌' : ''
-                  )}${it.name}`}</span>
-                  <span className="text-[12px]">（{it.id}）</span>
-                  <select defaultValue={it.status}
-                    onChange={handleChange(it)}
-                    className="bg-[#0F1021] text-white text-[14px] border border-midnight font-normal">
-                    <option value="INITIATED">INITIATED</option>
-                    <option value="SELECTED">SELECTED</option>
-                    <option value="REJECTED">REJECTED</option>
-                  </select>
-                  <span style={{whiteSpace:"pre"}}>{' '}</span>
-                  <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
-                    ['text-day']: true,
-                  })}
-                    onClick={pickup(it)}
-                  >设置</span>
-                </p>
+              <div key={it.id} className="border-b border-grey-800 pt-4 pb-4">
+                <div className="flex justify-between">
+                  <p>
+                    <span className="text-white">{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
+                      it.status === ('REJECTED' as ProjectStatus) ? '❌' : ''
+                    )} `}</span>
+                    <span>{it.name}</span>
+                    <span className="text-[12px]">（{it.id}）</span>
+                    <select defaultValue={it.status}
+                      onChange={handleChange(it)}
+                      className="bg-[#0F1021] text-white/90 text-[14px] border border-midnight font-normal">
+                      <option value="INITIATED">INITIATED（默认)</option>
+                      <option value="SELECTED">SELECTED（筛选)</option>
+                      <option value="REJECTED">REJECTED（排除)</option>
+                    </select>
+                    <span style={{whiteSpace:"pre"}}>{' '}</span>
+                  </p>
+                  <p className="mr-[20px]" style={{whiteSpace:"pre"}}>
+                    <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
+                      ['text-day']: true,
+                    })}
+                      onClick={pickup(it)}
+                    >Update</span>
+                  </p>
+                </div>
                 <Markdown style={{ fontSize: '12px' }}>{`<details><summary>项目描述</summary>${it.description ?? ''
                   }</details><details><summary>队伍信息</summary>${it.team.name} ${it.team.nation}</details>`}</Markdown>
               </div>
             );
           })}
         </div>
-        <div className="fixed top-[10px] right-[0px] max-w-[150px] grid gap-4 font-bold text-white/90 text-base mx-2">
-          <p className="text-[14px] text-white/90 px-2 inline-block">
+        <div className="fixed top-[10px] right-[0px] max-w-[150px] grid gap-4 font-bold text-white/60 text-base mx-2">
+          <p className="text-[14px] text-white/60 px-2 inline-block">
             {`项目总数：${projects_.length}`}
           </p>
-          <p className="text-[14px] text-day cursor-pointer border border-grey-300 px-2 inline-block"
+          <p className="text-[14px] cursor-pointer border border-grey-300 px-2 inline-block"
             onClick={excelOut(true)}
           >导出筛选项目</p>
-          <p className="text-[14px] text-day cursor-pointer border border-grey-300 px-2 inline-block"
+          <p className="text-[14px] cursor-pointer border border-grey-300 px-2 inline-block"
             onClick={excelOut(false)}
           >导出所有项目</p>
         </div>
       </>
     ) : (
-      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/90 text-base mx-2 mt-2 justify-center items-center">
+      <div className="max-w-[calc(100vw-150px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2 justify-center items-center">
         <p>没有项目数据</p>
       </div>
     ) }
