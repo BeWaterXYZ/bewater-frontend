@@ -121,26 +121,30 @@ export function ProjectList({ challengeId, projects }: {
           </div>
           {projects_.map((it, i: number) => {
             return (
-              <div key={it.id} className="">
-                <p>
-                  <span>{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
-                    it.status === ('REJECTED' as ProjectStatus) ? '❌' : ''
-                  )}${it.name}`}</span>
-                  <span className="text-[12px]">（{it.id}）</span>
-                  <select defaultValue={it.status}
-                    onChange={handleChange(it)}
-                    className="bg-[#0F1021] text-white text-[14px] border border-midnight font-normal">
-                    <option value="INITIATED">INITIATED</option>
-                    <option value="SELECTED">SELECTED</option>
-                    <option value="REJECTED">REJECTED</option>
-                  </select>
-                  <span style={{whiteSpace:"pre"}}>{' '}</span>
-                  <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
-                    ['text-day']: true,
-                  })}
-                    onClick={pickup(it)}
-                  >设置</span>
-                </p>
+              <div key={it.id} className="border-b border-grey-800 pt-4 pb-4">
+                <div className="flex justify-between">
+                  <p>
+                    <span>{`${it.status === ('SELECTED' as ProjectStatus) ? '✅' : (
+                      it.status === ('REJECTED' as ProjectStatus) ? '❌' : ''
+                    )}${it.name}`}</span>
+                    <span className="text-[12px]">（{it.id}）</span>
+                    <select defaultValue={it.status}
+                      onChange={handleChange(it)}
+                      className="bg-[#0F1021] text-white text-[14px] border border-midnight font-normal">
+                      <option value="INITIATED">INITIATED</option>
+                      <option value="SELECTED">SELECTED</option>
+                      <option value="REJECTED">REJECTED</option>
+                    </select>
+                    <span style={{whiteSpace:"pre"}}>{' '}</span>
+                  </p>
+                  <p className="mr-[20px]" style={{whiteSpace:"pre"}}>
+                    <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
+                      ['text-day']: true,
+                    })}
+                      onClick={pickup(it)}
+                    >更新</span>
+                  </p>
+                </div>
                 <Markdown style={{ fontSize: '12px' }}>{`<details><summary>项目描述</summary>${it.description ?? ''
                   }</details><details><summary>队伍信息</summary>${it.team.name} ${it.team.nation}</details>`}</Markdown>
               </div>
