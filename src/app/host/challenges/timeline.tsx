@@ -57,8 +57,8 @@ let glowing =
 export function Timeline({ milestones }: { milestones: Milestone[] }) {
   let data = prepareData(milestones);
   return (
-    <>
-      <div className="hidden md:flex body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 ">
+    <div className="@container">
+      <div className="hidden @md:flex body-1 text-center border border-midnight  justify-between items-center p-12 @lg:px-32 ">
         {data.map((node, index) =>
           node.type === "date" ? (
             <div className="w-4 text-white flex flex-col items-center" key={index}>
@@ -97,7 +97,7 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
         )}
       </div>
       {/* mobile view */}
-      <div className="flex md:hidden flex-col body-1 text-center border border-midnight  justify-between items-center p-12 lg:px-32 lg:mt-[100px] pr-[280px] mt-16 h-[450px] text-white ">
+      <div className="flex @md:hidden flex-col body-1 text-center border border-midnight  justify-between items-center p-12 @lg:px-32 @lg:mt-[100px] pr-[280px] mt-16 h-[450px] text-white ">
         {data.map((node, index) =>
           node.type === "date" ? (
             <div
@@ -143,6 +143,6 @@ export function Timeline({ milestones }: { milestones: Milestone[] }) {
           )
         )}
       </div>
-    </>
+    </div>
   );
 }
