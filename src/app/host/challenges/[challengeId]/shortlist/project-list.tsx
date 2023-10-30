@@ -114,7 +114,7 @@ export function ProjectList({ challengeId, projects, challenge }: {
         total += tmpcur;
         ++judgeNum;
       }
-      obj['平均分'] = judgeNum < 1 ? '-' : `${total / judgeNum}`;
+      obj['平均分'] = judgeNum < 1 ? '-' : (total / judgeNum).toFixed(2);
       sheetTeam.push(obj);
       sheetMem = sheetMem.concat(teamMem.all);
     }
