@@ -3,7 +3,7 @@ import { Challenge, Milestone, Team } from '@/services/types';
 import { compareDesc, parseISO } from 'date-fns';
 import Image from 'next/image';
 import { Countdown } from './countdown';
-import { formatYYYYMMMDD } from "@/utils/date";
+import { formatMMMDDYYYY } from "@/utils/date";
 
 function getCurMileStone(milestones: Milestone[]) {
   return milestones.filter(
@@ -73,8 +73,8 @@ export function ChallengeTeamsInfo({
             <p className="body-2 text-[#701A75] font-bold uppercase mt-8 lg:mt-0">
               TEAM FORMATION COMPLETED ON
             </p>
-            <p className="mt-2 uppercase ml-3 text-indigo-200 body-1">
-              {submissionEndTime ? formatYYYYMMMDD(submissionEndTime) : ''}
+            <p className="mt-2 uppercase text-indigo-200 body-1">
+              {submissionEndTime ? formatMMMDDYYYY(submissionEndTime) : ''}
             </p>
           </div>
         ) }
