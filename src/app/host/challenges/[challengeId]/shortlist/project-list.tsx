@@ -1,11 +1,11 @@
 "use client";
+import clsx from 'clsx';
 import * as XLSX from "xlsx";
 import { format } from 'date-fns';
 import { useUser } from "@clerk/nextjs";
 import { Project, ProjectStatus } from "@/services/types";
 import Markdown from '@/components/markdown';
 import { useState } from 'react';
-import clsx from 'clsx';
 import { resetProjectStatus } from '@/services/project.query';
 import { openSaveDialog, workbook2Blob } from "@/utils/saver";
 import { useLoadingWhen } from "@/components/loading/store";
@@ -42,15 +42,12 @@ export function ProjectList({ challengeId, projects }: {
 
   const handleChange = (project: Project) => (ev: any) => {
     project.status = ev.target.value as ProjectStatus;
-  }
-
-  const pickup = (project: Project) => () => {
     resetProjectStatus(project.id, project.status).then((res) => {
       if (res.status === 201 || res.status === 200) {
         upProjects(JSON.parse(JSON.stringify(projects_)));
       }
     });
-  };
+  }
 
   const excelOut = (promoted: boolean) => () => {
     let sheetTeam: any = [];
@@ -127,7 +124,7 @@ export function ProjectList({ challengeId, projects }: {
       </div>
     ) : projects_.length > 0 ? (
       <>
-        <div className="max-w-[calc(100vw-200px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2">
+        <div className="max-w-[calc(100vw-210px)] min-h-[calc(100vh-80px)] grid gap-4 font-bold text-white/60 text-base mx-2 mt-2">
           <div className="pt-4">
             <p className="inline-block">{'[项目名称]'}
               <span className="text-[12px]">[（项目 id）]</span>
@@ -150,30 +147,24 @@ export function ProjectList({ challengeId, projects }: {
                     )} `}</span>
                     <span>{it.name}</span>
                     <span className="text-[12px]">（{it.id}）</span>
+                  </p>
+                  <div style={{whiteSpace:"pre"}}>
                     <select defaultValue={it.status}
                       onChange={handleChange(it)}
-                      className="bg-[#0F1021] text-white/90 text-[14px] border border-midnight font-normal">
+                      className="bg-[#0F1021] text-white/90 text-[14px] font-normal">
                       <option value="INITIATED">INITIATED（默认)</option>
                       <option value="SELECTED">SELECTED（筛选)</option>
                       <option value="REJECTED">REJECTED（排除)</option>
                     </select>
-                    <span style={{whiteSpace:"pre"}}>{' '}</span>
-                  </p>
-                  <p className="mr-[20px]" style={{whiteSpace:"pre"}}>
-                    <span className={clsx('text-[14px] cursor-pointer border border-grey-300 px-2 inline-block', {
-                      ['text-day']: true,
-                    })}
-                      onClick={pickup(it)}
-                    >Update</span>
-                  </p>
+                  </div>
                 </div>
                 <Markdown style={{ fontSize: '12px' }}>{`<details><summary>项目描述</summary>${it.description ?? ''
-                  }</details><details><summary>队伍信息</summary>${it.team.name} ${it.team.nation}</details>`}</Markdown>
+                  }</details><details><summary>队伍信息</summary>${it.team.name}, ${it.team.nation}</details>`}</Markdown>
               </div>
             );
           })}
         </div>
-        <div className="fixed top-[10px] right-[5px] max-w-[200px] grid gap-4 font-bold text-white/60 text-base mx-2">
+        <div className="fixed top-[10px] right-[5px] max-w-[210px] grid gap-4 font-bold text-white/60 text-base mx-2">
           <p className="text-center text-[14px] text-white/60 px-2 inline-block">
               {`SL：${projectsFiltered.reduce((tot, cur) => {
                 return tot + (cur.status === 'SELECTED' as ProjectStatus ? 1 : 0);

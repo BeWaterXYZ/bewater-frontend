@@ -19,7 +19,7 @@ const schema = z
         id: z.string().optional(),
         name: validationSchema.zhName,
         title: z.string().nullable(),
-        avatarURI: validationSchema.text,
+        avatarURI: validationSchema.image,
         description: z.string().nullable(),
         twitterLink: z.string().nullable(),
       })
