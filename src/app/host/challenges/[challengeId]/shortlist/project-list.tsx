@@ -12,9 +12,10 @@ import { useLoadingWhen } from "@/components/loading/store";
 import { SearchInput } from '@/components/molecules/search-input';
 import { teamMemInfo } from "./utils";
 
-export function ProjectList({ challengeId, projects }: {
+export function ProjectList({ challengeId, projects, challenge }: {
   challengeId: string;
   projects: Project[];
+  challenge: any;
 }) {
   const { isLoaded, isSignedIn, user } = useUser();
   const [projects_, upProjects] =  useState(projects);
@@ -25,6 +26,9 @@ export function ProjectList({ challengeId, projects }: {
   if (!isLoaded) {
     return null;
   }
+
+  // console.log(challenge)
+  // console.log(projects)
 
   const isAdmin = isSignedIn && user?.publicMetadata?.teamMember;
 
@@ -38,6 +42,24 @@ export function ProjectList({ challengeId, projects }: {
     }
   } else {
     projectsFiltered = projects_;
+  }
+
+  function score(prjid: string, judgeid: string) {
+    let obprj: any;
+    for (const it of projects) {
+      if (it.id === prjid) {
+        obprj = it;
+        break;
+      }
+    }
+    for (const it of (obprj?.projectRank ?? [])) {
+      if (it.judgeId === judgeid) {
+        return it.mark.reduce((tot: number, cur: number) => {
+          return tot + cur;
+        }, 0);
+      }
+    }
+    return -1;
   }
 
   const handleChange = (project: Project) => (ev: any) => {
@@ -60,7 +82,7 @@ export function ProjectList({ challengeId, projects }: {
         }
       }
       const teamMem = teamMemInfo(it.team.teamMembers);
-      const obj = {
+      const obj: any = {
         序号: -1,
         项目名称: it.name,
         赛道: it?.tags.join(',') ?? '',
@@ -79,6 +101,20 @@ export function ProjectList({ challengeId, projects }: {
         所有队员邮箱: teamMem.all.join('\n'),
         所有队员TG: teamMem.tgAll.join('\n'),
       };
+      let total = 0;
+      let judgeNum = 0;
+
+      for (const item of (challenge.judges ?? [])) {
+        let tmpcur = score(it.id, item.id);
+        if (tmpcur < 0) {
+          obj[item.name ?? item.id!] = '-';
+          continue;
+        }
+        obj[item.name ?? item.id!] = `${tmpcur}`;
+        total += tmpcur;
+        ++judgeNum;
+      }
+      obj['平均分'] = judgeNum < 1 ? '-' : `${total / judgeNum}`;
       sheetTeam.push(obj);
       sheetMem = sheetMem.concat(teamMem.all);
     }
