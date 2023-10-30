@@ -147,7 +147,6 @@ export default function ChallengeTeams({ params }: any) {
               <CreateTeamButton challenge={challenge} lng={lng} />
             </div>
           </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-8">
             {teamsFilteredSorted.map((team) => {
               return (
