@@ -232,6 +232,7 @@ export interface Project {
   videoURI?: string;
   demoURI?: string;
   githubURI?: string;
+  projectRank?: any;
 }
 export interface TeamMember {
   id: string;
