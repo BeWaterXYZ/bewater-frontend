@@ -1,28 +1,25 @@
 "use client";
-import getSymbolFromCurrency from "currency-symbol-map";
-import { formatMoney } from "@/utils/numeral";
 import { Aspect } from "@/components/aspect";
 import HoverCard from "@/components/hover-card";
 import { useLoadingStoreAction } from "@/components/loading/store";
+import Markdown from "@/components/markdown";
 import { publishChallengeRequest } from "@/services/challenge";
 import { useFetchChallengeById } from "@/services/challenge.query";
 import { Judge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
+import { formatMoney } from "@/utils/numeral";
 import {
-  CheckIcon,
-  OpenInNewWindowIcon,
-  TwitterLogoIcon,
+  TwitterLogoIcon
 } from "@radix-ui/react-icons";
+import getSymbolFromCurrency from "currency-symbol-map";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import Balancer from "react-wrap-balancer";
+import { segmentSchema } from "../../segment-params";
 import { Timeline } from "../timeline";
 import { mock } from "./mock";
-import Markdown from "@/components/markdown";
-import { segmentSchema } from "../../segment-params";
-import { EditContestant } from "./edit/contestant";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -224,7 +221,7 @@ export default function Page({ params }: any) {
                   {formatMoney(challenge.totalAward ?? 0)}{" "}
                   {challenge?.awardCurrency ? challenge.awardCurrency : "USD"}
                 </h3>
-                <div className="flex flex-row flex-wrap items-center gap-16 p-8">
+                <div className="flex flex-row flex-wrap items-top gap-16 p-8">
                   {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
                     return (
                       <div
@@ -233,7 +230,7 @@ export default function Page({ params }: any) {
                       >
                         <div className="flex flex-row gap-[min(32px,2vw)] ">
                           <div className="flex flex-col gap-4 md:gap-7 items-center">
-                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+                            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-14 line-clamp-2">
                               {awardAssort.name}
                             </p>
                             <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
