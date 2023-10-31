@@ -26,7 +26,7 @@
     "@tailwindcss/container-queries": "^0.1.1",
     "@tanstack/react-query": "^4.35.7",
     "accept-language": "^3.0.18",
-    "axios": "^1.5.1",
+    "axios": "^1.6.0",
     "clsx": "^2.0.0",
     "compressorjs": "^1.2.1",
     "currency-symbol-map": "^5.1.0",
