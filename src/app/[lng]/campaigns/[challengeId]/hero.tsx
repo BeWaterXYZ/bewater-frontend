@@ -36,9 +36,8 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
       id="hero"
       className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
       style={{
-        backgroundImage: `url("${
-          challenge.yotadata?.mainBanner ?? challenge.bannerUrl
-        }")`,
+        backgroundImage: `url("${challenge.yotadata?.mainBanner ?? challenge.bannerUrl
+          }")`,
       }}
     >
       {challenge.hostIcon?.length ? (
@@ -47,7 +46,7 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           width={144}
           height={40}
           alt=""
-          className="mx-auto mb-2 md:mb-3 w-[80px] md:w-[144px]"
+          className="mx-auto mb-2 md:mb-3 max-w-[80%] w-auto h-full max-h-[40px]"
         />
       ) : (
         <p className="body-4 md:text-[20px]">{challenge.hostName ?? ""}</p>
@@ -58,19 +57,17 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
         {(challenge.location === "OFFLINE" ||
           challenge.location === "MIXED" ||
           challenge.location === "OTHERS") &&
-        challenge.city
+          challenge.city
           ? `${challenge.city} | `
           : null}
-        {`${
-          lng === "zh"
-            ? formatYYYYMMMDD(challenge.startTime)
-            : formatMMMDDYYYY(challenge.startTime)
-        }`}
+        {`${lng === "zh"
+          ? formatYYYYMMMDD(challenge.startTime)
+          : formatMMMDDYYYY(challenge.startTime)
+          }`}
         {challenge.startTime !== challenge.endTime &&
-          ` - ${
-            lng === "zh"
-              ? formatYYYYMMMDD(challenge.endTime)
-              : formatMMMDDYYYY(challenge.endTime)
+          ` - ${lng === "zh"
+            ? formatYYYYMMMDD(challenge.endTime)
+            : formatMMMDDYYYY(challenge.endTime)
           }`}
       </h1>
       {isChallenge(challenge) ? (
@@ -87,19 +84,18 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
           <div className="mt-6 md:mt-12">
             {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
             <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
-              {`${t("campaign.t2")} ${
-                lng === "zh"
-                  ? formatYYYYMMMDD(
-                      challenge.milestones.find(
-                        (ms) => ms.stageName === "Teaming"
-                      )?.dueDate!
-                    )
-                  : formatMMMDDYYYY(
-                      challenge.milestones.find(
-                        (ms) => ms.stageName === "Teaming"
-                      )?.dueDate!
-                    )
-              } ${t("campaign.t3")}`}
+              {`${t("campaign.t2")} ${lng === "zh"
+                ? formatYYYYMMMDD(
+                  challenge.milestones.find(
+                    (ms) => ms.stageName === "Teaming"
+                  )?.dueDate!
+                )
+                : formatMMMDDYYYY(
+                  challenge.milestones.find(
+                    (ms) => ms.stageName === "Teaming"
+                  )?.dueDate!
+                )
+                } ${t("campaign.t3")}`}
             </div>
           </div>
         )
@@ -110,11 +106,10 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             <Link
               target="_blank"
               href={challenge.joinLink}
-              className={`btn btn-primary rounded-none body-4 text-night uppercase ${
-                topRegisterBtnText.length > 26
-                  ? "px-4 py-8 md:px-8 md:py-10"
-                  : "px-4 py-3 md:px-8 md:py-6"
-              }`}
+              className={`btn btn-primary rounded-none body-4 text-night uppercase ${topRegisterBtnText.length > 26
+                ? "px-4 py-8 md:px-8 md:py-10"
+                : "px-4 py-3 md:px-8 md:py-6"
+                }`}
             >
               <p
                 className="text-center max-w-[250px]"
@@ -132,11 +127,10 @@ export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
             <Link
               target="_blank"
               href={challenge.joinLink}
-              className={`btn btn-primary rounded-none body-4 text-night uppercase ${
-                topRegisterBtnText.length > 26
-                  ? "px-4 py-8 md:px-8 md:py-10"
-                  : "px-4 py-3 md:px-8 md:py-6"
-              }`}
+              className={`btn btn-primary rounded-none body-4 text-night uppercase ${topRegisterBtnText.length > 26
+                ? "px-4 py-8 md:px-8 md:py-10"
+                : "px-4 py-3 md:px-8 md:py-6"
+                }`}
             >
               <p
                 className="text-center max-w-[250px]"

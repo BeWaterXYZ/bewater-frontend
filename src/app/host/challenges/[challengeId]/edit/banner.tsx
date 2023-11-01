@@ -67,7 +67,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
         ...formData,
       });
       openSet(false);
-    } catch (err) {}
+    } catch (err) { }
   };
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
@@ -101,7 +101,7 @@ export function EditBanner({ challenge }: { challenge: Challenge }) {
               <UploaderInput
                 label=" Host Logo"
                 title="Upload the host image"
-                subTitlte="PNG, 24px height"
+                subTitlte="PNG, 40px height"
                 width={200}
                 height={70}
                 max={1}
