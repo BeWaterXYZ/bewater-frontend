@@ -12,7 +12,7 @@ import { DatePicker } from "@/components/form/datepicker";
 import { LOCATION } from "@/constants";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
 
-export  function Hero({ challenge }: { challenge: Challenge }) {
+export function Hero({ challenge }: { challenge: Challenge }) {
   let mutation = useMutationUpdateChallenge(challenge.id);
 
   let [isOnlineOnly, isOnlineOnlySet] = useState(
@@ -64,7 +64,7 @@ export  function Hero({ challenge }: { challenge: Challenge }) {
         id: challenge.id,
         ...formData,
       });
-    } catch (err) {}
+    } catch (err) { }
   };
   return (
     <div>
@@ -93,7 +93,7 @@ export  function Hero({ challenge }: { challenge: Challenge }) {
             <UploaderInput
               label=" Host Logo"
               title="Upload the host image"
-              subTitlte="PNG, 24px height"
+              subTitlte="PNG, 40px height"
               width={200}
               height={70}
               max={1}
