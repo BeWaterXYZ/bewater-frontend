@@ -56,7 +56,7 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
   const { data: invitations = [] } = useFetchChallengeInvitation(challenge.id);
 
   return (
-    <div className="z-30 bg-[#141527]   h-full  w-full  p-8 overflow-y-auto">
+    <div className="z-30    h-full  w-full  p-8 overflow-y-auto">
       <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
         Contestant Management
       </div>

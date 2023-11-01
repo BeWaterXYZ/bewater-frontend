@@ -1,7 +1,16 @@
-export default function Page() {
+"use client";
+
+import { segmentSchema } from "@/app/host/segment-params";
+import { useFetchChallengeById } from "@/services/challenge.query";
+import { EditSettings } from "./form";
+
+export default function Page({ params }: any) {
+  const { challengeId } = segmentSchema.challengeId.parse(params);
+  const { data: challenge } = useFetchChallengeById(challengeId);
+  if (!challenge) return null;
   return (
-    <div className="container my-4 pt-20 flex flex-1 ">
-      <p className="heading-1">Settings</p>
+    <div className="container m-auto">
+      <EditSettings challenge={challenge} />
     </div>
   );
 }
