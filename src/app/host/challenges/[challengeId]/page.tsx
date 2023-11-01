@@ -58,26 +58,25 @@ export default function Page({ params }: any) {
 
   return (
     <>
-     
+
       <div className="bg-night pt-20">
-      
+
         {/* banner section */}
         <div
           id="section-hero"
           className={`relative h-[560px] overflow-hidden text-center flex flex-col gap-5 justify-center bg-cover bg-center `}
           style={{
-            backgroundImage: `url(${
-              challenge.bannerUrl ?? "/assets/default-challenge-bg.png"
-            })`,
+            backgroundImage: `url(${challenge.bannerUrl ?? "/assets/default-challenge-bg.png"
+              })`,
           }}
         >
-         
+
           <Image
             src={challenge.hostIcon ?? "/sponsors/hostlogo.png"}
-            width={120}
+            width={100}
             height={24}
             alt="host logo"
-            className="mx-auto h-8 md:h-10 object-contain"
+            className="mx-auto object-contain max-w-[80%] w-auto h-full max-h-[40px]"
           />
           <div className="space-y-6">
             <h1 className="text-xl leading-[30px] md:text-5xl font-black text-white">
@@ -109,7 +108,7 @@ export default function Page({ params }: any) {
             id="section-milestone"
             className="relative py-[100px] border-b border-dashed border-white/30"
           >
-           
+
             <div className="container">
               <Timeline milestones={challenge.milestones} />
             </div>
@@ -122,7 +121,7 @@ export default function Page({ params }: any) {
             id="section-intro"
             className="relative py-[100px] border-b border-dashed border-white/30"
           >
-           
+
             <div className="container">
               <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
                 <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center w-full">
@@ -210,7 +209,7 @@ export default function Page({ params }: any) {
             id="section-prizes"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-            
+
             <div className="container">
               <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
                 <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
@@ -297,7 +296,7 @@ export default function Page({ params }: any) {
             id="section-judge"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-           
+
             <div className="container">
               <h3 className="text-white text-[24px] md:text-[36px] font-bold mb-16 text-center">
                 Adjudicators
@@ -306,14 +305,14 @@ export default function Page({ params }: any) {
                 {(challenge.judges && challenge.judges.length > 0
                   ? challenge.judges
                   : [
-                      {
-                        id: "random",
-                        name: "Judge Name",
-                        title: "Judge Title",
-                        avatarURI: "/assets/judge-avatar.png",
-                        description: "this is description",
-                      } as Judge,
-                    ]
+                    {
+                      id: "random",
+                      name: "Judge Name",
+                      title: "Judge Title",
+                      avatarURI: "/assets/judge-avatar.png",
+                      description: "this is description",
+                    } as Judge,
+                  ]
                 )
                   // .sort((a, b) => a.order - b.order)
                   .map((judge, index) => {
@@ -363,7 +362,7 @@ export default function Page({ params }: any) {
             id="section-requirements"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-           
+
             <div className="container">
               <div className="w-full grid grid-cols-1 md:grid-cols-2  gap-8  mt-16">
                 <div className="flex-1 p-8 bg-white/5 border border-grey-800">
@@ -389,7 +388,7 @@ export default function Page({ params }: any) {
             id="section-sponsors"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-            
+
             <div className="container">
               <div>
                 <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">
