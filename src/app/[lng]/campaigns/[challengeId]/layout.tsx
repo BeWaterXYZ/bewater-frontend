@@ -54,13 +54,19 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       card: 'summary_large_image',
       title: 'BeWater - ' + challenge.title,
       description: challenge.description,
-      images: `/api/og?challengeId=${challenge.id}`,
+      // images: `/api/og?challengeId=${challenge.id}`,
+      images: challenge.yotadata?.ogImgUri ? challenge.yotadata.ogImgUri : (
+        challenge.bannerUrl ?? `/challenge/assets/${challenge.id}withTitle.png`
+      ),
     },
     openGraph: {
       type: 'website',
       title: 'BeWater - ' + challenge.title,
       description: challenge.description,
-      images: `/api/og?challengeId=${challenge.id}`,
+      //images: `/api/og?challengeId=${challenge.id}`,
+      images: challenge.yotadata?.ogImgUri ? challenge.yotadata.ogImgUri : (
+        challenge.bannerUrl ?? `/challenge/assets/${challenge.id}withTitle.png`
+      ),
     },
   };
 }
