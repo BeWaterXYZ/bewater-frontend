@@ -10,6 +10,26 @@ export default async function handler(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const challengeId = searchParams.get('challengeId');
 
+  if (!challengeId) {
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 128,
+            background: 'lavender',
+          }}
+        >
+          Hello!
+        </div>
+      )
+    )
+  }
+
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/challenge/${challengeId}`);
   const { data } = await response.json();
   const challenge = data.challenge;
