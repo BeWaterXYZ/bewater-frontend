@@ -38,7 +38,7 @@ export function Rate(props: Props) {
       rating: (rating?.length ?? 0 > 0
         ? rating
         : new Array(textMaps.length).fill(0))!.map((r, i) => ({
-        label: textMaps[i],
+        label: props.challenge.scoreDimension[i].text ?? textMaps[i],
         rate: r,
       })),
     });

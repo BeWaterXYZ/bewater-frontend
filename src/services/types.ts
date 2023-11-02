@@ -59,6 +59,10 @@ export interface Challenge {
     | "REFUSED";
   location: string;
   milestones: Milestone[];
+  scoreDimension:{
+    text:string,
+    locked?:boolean;
+  }[]
   judges: Judge[];
   wechatURL?: string;
   telegramLink?: string;

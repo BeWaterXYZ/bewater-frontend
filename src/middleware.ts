@@ -12,7 +12,8 @@ function i18n(req: NextRequest) {
     req.nextUrl.pathname.startsWith('/sign-in') ||
     req.nextUrl.pathname.startsWith('/sign-up') ||
     req.nextUrl.pathname.startsWith('/onboarding') ||
-    req.nextUrl.pathname.startsWith('/host')
+    req.nextUrl.pathname.startsWith('/host') ||
+    req.nextUrl.pathname.startsWith('/api')
   ) {
     return NextResponse.next()
   }
@@ -66,6 +67,7 @@ export default authMiddleware({
     '/en/campaigns(.*)',
     '/zh/user(.*)',
     '/en/user(.*)',
+    '/api/og'
   ],
 });
 
