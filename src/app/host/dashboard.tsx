@@ -8,6 +8,7 @@ import { CaretRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { formatYYYYMMMDD, } from "@/utils/date";
 
 function TodoLink({
   // challenge,
@@ -171,8 +172,8 @@ export function Dashboard() {
                       </p>
                       <p className="text-sm text-grey-500">
                         {/* fixme */}
-                        {challenge.startTime.substring(0, 10)} {"-> "}
-                        {challenge.endTime.substring(0, 10)}
+                        {formatYYYYMMMDD(challenge.startTime)} {"-> "}
+                        {formatYYYYMMMDD(challenge.endTime)}
                       </p>
                     </div>
                   </div>
