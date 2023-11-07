@@ -34,19 +34,20 @@ export async function submitGetLoginMessage({
   return data;
 }
 
-export async function submitVerifySignedMessage({
-  signature,
-  walletAddress,
-}: VerifySignedMessageRequest) {
-  const { data } = await agentAnon.post<VerifySignedMessageResponse>(
-    '/auth/login',
-    {
-      signature,
-      walletAddress,
-    },
-  );
-  return data;
-}
+// todo del
+// export async function submitVerifySignedMessage({
+//   signature,
+//   walletAddress,
+// }: VerifySignedMessageRequest) {
+//   const { data } = await agentAnon.post<VerifySignedMessageResponse>(
+//     '/auth/login',
+//     {
+//       signature,
+//       walletAddress,
+//     },
+//   );
+//   return data;
+// }
 
 export async function getOAuthUrl(query: {
   platform: string;
