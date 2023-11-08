@@ -5,7 +5,7 @@ import {
   OrganizationSwitcher,
 } from "@clerk/nextjs";
 
-export default function () {
+export default function Page () {
   return (
     <div>
       <div className="heading-1">Org</div>
