@@ -39,6 +39,6 @@ export const validationSchema = {
     .string()
     .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),
   image: z.string().url("please upload image"),
-  positive: z.string().regex(/^[1-9][0-9]*$/, "wrong number"),
-  nonNegative: z.string().regex(/^[1-9][0-9]*|0$/, "invalid number"),
+  positive: z.string().regex(/^[1-9]\d*$/, "wrong number"),
+  nonNegative: z.string().regex(/^\d+$/, "invalid number"),
 };
