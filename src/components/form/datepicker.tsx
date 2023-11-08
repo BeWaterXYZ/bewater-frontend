@@ -10,6 +10,8 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   onValueChange: (v: string) => void;
   error?: FieldError;
   control: any;
+  dateFormat?: string;
+  showTimeSelect?: boolean;
 }
 
 export const DatePicker = React.forwardRef(function DatePicker_(
@@ -26,6 +28,8 @@ export const DatePicker = React.forwardRef(function DatePicker_(
     onValueChange,
     placeholder = "Click to select a date",
     disabled,
+    dateFormat = "yyyy/MM/dd",
+    showTimeSelect = false,
   } = props;
   const id = useId();
 
@@ -48,13 +52,16 @@ export const DatePicker = React.forwardRef(function DatePicker_(
 
             <div className=" relative w-full text-[14px] bg-night  block body-3   rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors">
               <ReactDatePicker
+                showTimeSelect={showTimeSelect}
+                dateFormat={dateFormat}
                 disabled={disabled}
                 wrapperClassName="w-full"
-                className="w-full bg-white/0 h-10 px-2 outline-none"
+                calendarClassName="!flex"
+                className="w-full bg-white/0 h-10 px-2 outline-none "
                 placeholderText={placeholder}
                 selected={field.value ? parseISO(field.value as string) : null}
                 onChange={(date) => {
-                  date && onValueChange(format(date, "yyyy-MM-dd"));
+                  date && onValueChange(date.toISOString());
                 }}
               />
               <CalendarIcon
