@@ -70,6 +70,12 @@ export async function updateChallenge(challenge: Partial<Challenge>) {
   );
   return data;
 }
+export async function deleteChallenge(challengeId: ChallengeID) {
+  const { data } = await agentAuthed.delete<Challenge>(
+    `/host-challenge/${challengeId}`,
+  );
+  return data;
+}
 export async function publishChallengeRequest(challengeId: ChallengeID) {
   const { data } = await agentAuthed.post<Challenge>(
     `/host-challenge/publish-request`,
