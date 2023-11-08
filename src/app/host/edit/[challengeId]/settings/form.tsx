@@ -1,8 +1,10 @@
 "use client";
+import { useAlert } from "@/components/alert/store";
 import { Input } from "@/components/form/control";
 import { TextArea } from "@/components/form/textarea";
 import { useToastStore } from "@/components/toast/store";
 import { validationSchema } from "@/schema";
+import { deleteChallenge } from "@/services/challenge";
 import {
   useFetchChallengeInvitation,
   useMutationInviteToChallenge,
@@ -14,7 +16,7 @@ import { TrashIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { useRouter } from "next/navigation";
 const lock = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -63,7 +65,8 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
     }
   );
   let mutation = useMutationUpdateChallenge(challenge.id);
-
+  const { confirm } = useAlert();
+  const router = useRouter();
   const onSubmit = async (formData: Inputs) => {
     try {
       await mutation.mutateAsync({
@@ -75,6 +78,23 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
         title: "Updated",
       });
     } catch (err) {}
+  };
+  const onDelete = async () => {
+    let confirmed = await confirm({
+      title: "Are you sure?",
+      description: "You are going to delete the campaign",
+      okCopy: "Confirm",
+      cancelCopy: "Cancel",
+    });
+    if (!confirmed) return;
+    await deleteChallenge(challenge.id);
+
+    addToast({
+      type: "success",
+      title: "Deleted",
+    });
+
+    router.push("/host");
   };
 
   return (
@@ -168,6 +188,20 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
           </button>
         </div>
       </form>
+
+      <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
+        Danger Zone
+      </div>
+      <p className="body-3 py-4">Delete</p>
+      <p className="body-3 text-grey-600 py-4">
+        If you want to permanently delete this campaign, all of its data will
+        remove.
+      </p>
+
+      <button className="btn btn-danger" onClick={onDelete}>
+        {" "}
+        Delete this campaign
+      </button>
     </div>
   );
 }

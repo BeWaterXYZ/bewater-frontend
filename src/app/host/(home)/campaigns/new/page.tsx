@@ -237,7 +237,7 @@ export default function Page() {
           <div className="h-32 w-32 relative bg-night">
             <Loading cover={false} />
           </div>
-          <p className="text-[14px]">Created Success!</p>
+          <p className="text-[14px] body-2">Created Success!</p>
           <p className="text-[14px] text-grey-500">
             Next let’s edit your campaign web page.
           </p>

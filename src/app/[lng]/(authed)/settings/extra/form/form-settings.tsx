@@ -3,7 +3,6 @@ import clsx from 'clsx';
 import {
   checkUsername,
   GetUserProfileByIdResponse,
-  submitUpdateUserProfile,
 } from '@/services/user';
 
 import type { FieldValues } from 'react-hook-form';
