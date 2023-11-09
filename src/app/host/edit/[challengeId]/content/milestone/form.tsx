@@ -66,11 +66,11 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
         })
         .map((ms) => ({
           ...ms,
-          dueDate: ms.dueDate.substring(0, 10),
+          dueDate: parseISO(ms.dueDate).toISOString(),
         })),
     },
   });
-
+console.log(errors)
   let sameTimeToggle = () => {
     sameTimeSet(!sameTime);
     let i = challenge.milestones.findIndex(
@@ -91,7 +91,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
         milestones: formData.milestones.map((ms) => ({
           ...ms,
           dueDate: subHours(
-            parseISO(ms.dueDate + "T00:00:00.000Z"),
+            parseISO(ms.dueDate ),
             parseInt(formData.timezone[0])
           ).toISOString(),
         })) as Milestone[],
@@ -136,12 +136,14 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                   key={field.id}
                 >
                   <DatePicker
+                    showTimeSelect
+                    dateFormat="yyyy/MM/dd HH:mm"
                     disabled={
                       sameTime && field.stageName === "Project Submission"
                     }
                     control={control}
                     label={
-                      <div className="flex gap-1">
+                      <div className="flex gap-1 ">
                         {isDefault ? <DrawingPinFilledIcon /> : <Pencil1Icon />}
                         {field.stageName !== "NOP"
                           ? field.stageName === "Project Submission"
@@ -150,14 +152,16 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                           : "Customized"}
                       </div>
                     }
-                    onValueChange={(v) =>
-                      setValue(`milestones.${index}.dueDate`, v)
-                    }
+                    onValueChange={(v) => {
+                      console.log({ v });
+                      setValue(`milestones.${index}.dueDate`, v);
+                    }}
                     {...register(`milestones.${index}.dueDate`)}
                     error={errors[`milestones`]?.[index]?.dueDate}
                   />
 
                   <Input
+                    label="&nbsp;"
                     {...register(`milestones.${index}.showName`)}
                     error={errors.milestones?.[index]?.showName}
                   />
