@@ -17,18 +17,8 @@ import { parseISO, subHours } from "date-fns";
 import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
-
-const timezones = [
-  -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8,
-  9, 10, 11, 12,
-].map((tz) => ({
-  value: tz.toString(),
-  label: "UTC" + (tz === 0 ? "" : tz > 0 ? "+" + tz : tz),
-  classes: {
-    container: " !bg-transparent  h-5  my-0",
-    text: "!text-grey-400 body-4 leading-5 !py-0",
-  },
-}));
+import { enZoneCity, zhZoneCity } from "@/utils/time-zone";
+import { defValArr } from "@/utils/default";
 
 const schema = z
   .object({
@@ -37,7 +27,7 @@ const schema = z
       z.object({
         dueDate: validationSchema.date,
         stageName: validationSchema.text,
-        showName: validationSchema.text,
+        showName: validationSchema.zhName,
       })
     ),
   })
@@ -46,58 +36,158 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 export function Milestone({ challenge }: { challenge: Challenge }) {
-  let [sameTime, sameTimeSet] = useState(false);
-  let mutation = useMutationUpdateChallenge(challenge.id);
+  const orgMilestones = Array.isArray(challenge.milestones)
+    && challenge.milestones.length > 0
+    ? challenge.milestones.map((ms) => ({
+      ...ms
+    })) : (defValArr as Milestone[]);
 
-  let {
+  // console.log('orgMilestones', JSON.parse(JSON.stringify(orgMilestones)))
+
+  const [{ dueDate }] = orgMilestones.filter((it) => {
+    if (it.stageName === 'Teaming') {
+      return true;
+    }
+    return false;
+  })
+
+  const [sameTime, sameTimeSet] = useState(dueDate === orgMilestones[0].dueDate);
+
+  if (sameTime) {
+    for (const it of orgMilestones) {
+      if (it.stageName === 'Teaming') {
+        it.showName = 'Teaming';
+      }
+    }
+  }
+
+  const mutation = useMutationUpdateChallenge(challenge.id);
+  const [zone, upZone] = useState(Math.floor(new Date().getTimezoneOffset() / 60));
+  const [topErr, upTopErr] = useState(false);
+
+  const zhLang = navigator.language?.toLowerCase().includes('zh');
+
+  const zoneCity = zhLang ? zhZoneCity : enZoneCity;
+
+  const timezones = [
+    -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1,
+    0,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+  ].map((tz) => ({
+    value: tz.toString(),
+    label: "UTC " + (tz === 0 ? zoneCity['0'] : tz > 0 ? ("+" + tz + zoneCity[`${tz}`]) : `${tz}` + zoneCity[`${tz}`] ),
+    classes: {
+      container: " !bg-transparent  h-5  my-0",
+      text: "!text-grey-400 body-4 leading-5 !py-0",
+    },
+  }));
+
+  const {
     control,
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    setFocus,
+    getValues,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      timezone: ["0"],
-      // todo 时间线编辑2.0。当前隐藏 NOP 阶段
-      milestones: challenge.milestones
-        .filter((ms) => {
-          return ms.stageName === "NOP" ? false : true;
-        })
+      timezone: [`${zone === 0 ? 0 : -zone}`],
+      milestones: orgMilestones
         .map((ms) => ({
           ...ms,
           dueDate: parseISO(ms.dueDate).toISOString(),
         })),
     },
   });
-console.log(errors)
-  let sameTimeToggle = () => {
-    sameTimeSet(!sameTime);
-    let i = challenge.milestones.findIndex(
-      (m) => m.stageName === "Project Submission"
-    );
-    setValue(`milestones.${i}.dueDate`, challenge.startTime.substring(0, 10));
-  };
-  const { fields, append, prepend, remove, swap, move, insert, replace } =
+
+  const { fields, append, prepend, remove, swap, move, insert, replace, update } =
     useFieldArray({
       control, // control props comes from useForm (optional: if you are using FormContext)
       name: "milestones", // unique name for your Field Array
     });
 
+  const sameTimeToggle = () => {
+    const hit = sameTime;
+    sameTimeSet(!sameTime);
+    if (!hit) {
+      const { milestones: tmArr} = getValues();
+      const n = fields.map((ms, i) => ({
+        ...ms,
+        showName: tmArr[i].showName,
+      }));
+
+      for (const it of n) {
+        if (it.stageName === 'Teaming') {
+          it.showName = 'Teaming';
+          it.dueDate = fields[0].dueDate;
+          break;
+        }
+      }
+      replace(n);
+    }
+  };
+
+  const zoneSelectHandle = (val: any[]) => {
+    const { milestones: tmArr} = getValues();
+    const delta = parseInt(val[0]) - (-zone);
+    const n = fields.map((ms, i) => ({
+      ...ms,
+      dueDate: subHours(
+        parseISO(ms.dueDate),
+        -delta,
+      ).toISOString(),
+      showName: tmArr[i].showName,
+    }));
+    replace(n);
+    upZone(parseInt(val[0]) === 0 ? 0 : -parseInt(val[0]));
+  }
+
   const onSubmit = async (formData: Inputs) => {
+    const n = formData.milestones.map((ms) => ({
+      ...ms,
+    }));
+
+    const [{ dueDate }] = n.filter((it) => {
+      if (it.stageName === 'Teaming') {
+        return true;
+      }
+      return false;
+    })
+
+    const sameTime = (dueDate === n[0].dueDate);
+
+    if (sameTime) {
+      for (const it of n) {
+        if (it.stageName === 'Teaming') {
+          it.showName = "";
+        }
+      }
+    }
+
+    for (let i = n.length - 1; i > 0; --i) {
+      if (n[i].dueDate < n[i-1].dueDate) {
+        upTopErr(true);
+        return;
+      }
+    }
+
+    const sysZone = Math.abs(Math.floor(new Date().getTimezoneOffset() / 60));
     try {
       await mutation.mutateAsync({
         id: challenge.id,
-        milestones: formData.milestones.map((ms) => ({
+        milestones: n.map((ms) => ({
           ...ms,
           dueDate: subHours(
-            parseISO(ms.dueDate ),
-            parseInt(formData.timezone[0])
+            parseISO(ms.dueDate),
+            ((-zone) - sysZone),
           ).toISOString(),
         })) as Milestone[],
       });
     } catch (err) {}
   };
+
   return (
     <div>
       <div className="z-30  top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
@@ -114,6 +204,9 @@ console.log(errors)
                 options={timezones}
                 error={errors["timezone"]}
                 control={control}
+                classMenuList={"text-[12px]"}
+                usHandler={zoneSelectHandle}
+                isSingle={true}
                 {...register("timezone")}
               />
             </div>
@@ -139,7 +232,7 @@ console.log(errors)
                     showTimeSelect
                     dateFormat="yyyy/MM/dd HH:mm"
                     disabled={
-                      sameTime && field.stageName === "Project Submission"
+                      sameTime && field.stageName === "Teaming"
                     }
                     control={control}
                     label={
@@ -153,24 +246,26 @@ console.log(errors)
                       </div>
                     }
                     onValueChange={(v) => {
-                      console.log({ v });
-                      setValue(`milestones.${index}.dueDate`, v);
+                      update(index, {
+                        ...field,
+                        dueDate: v,
+                      })
+                      upTopErr(false);
                     }}
                     {...register(`milestones.${index}.dueDate`)}
                     error={errors[`milestones`]?.[index]?.dueDate}
                   />
-
                   <Input
                     label="&nbsp;"
+                    readOnly={sameTime && field.stageName === "Teaming"}
                     {...register(`milestones.${index}.showName`)}
                     error={errors.milestones?.[index]?.showName}
                   />
-
                   <div className="flex gap-2 pb-5">
                     <button
                       className="  text-grey-500"
                       onClick={(e) => {
-                        e.stopPropagation();
+                        // e.stopPropagation();
                         insert(index + 1, {
                           dueDate: "",
                           stageName: "NOP",
@@ -186,6 +281,7 @@ console.log(errors)
                       })}
                       onClick={() => {
                         remove(index);
+                        upTopErr(false);
                       }}
                     >
                       <MinusIcon />
@@ -225,7 +321,6 @@ console.log(errors)
           <label
             className={clsx(
               "body-3 flex items-center my-1 cursor-pointer"
-              // on ? 'text-white' : 'text-[#94A3B8]',
             )}
           >
             <input
@@ -234,10 +329,10 @@ console.log(errors)
               checked={sameTime}
               onChange={sameTimeToggle}
             ></input>
-            <span>{"赛事开始时，项目提交也同时开启"}</span>
+            <span>{zhLang ? "赛事开始时，也同时开启项目提交" : 'When the event starts, project submission also opens.'}</span>
           </label>
-          <p className="body-3 text-grey-500">
-            说明：线下赛事以现场公布的时间为准。
+          <p className="body-3 text-red-500 mt-4">
+            {topErr ? (zhLang ? '日期应保持升序' : 'The date field should maintain ascending order from top to bottom' ): ''}
           </p>
           <div className="flex mt-6 justify-end">
             <button className="btn btn-primary" type="submit">

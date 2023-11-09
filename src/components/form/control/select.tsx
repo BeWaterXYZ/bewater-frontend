@@ -12,6 +12,9 @@ interface SelectProps<T extends string>
   control: any;
   options: OptionItem<T>[];
   maxSelections?: number;
+  classMenuList?: string | undefined;
+  isSingle?: boolean;
+  usHandler?: (newValue: any[]) => void;
 }
 
 export const Select = React.forwardRef(function Select_<T extends string>(
@@ -27,6 +30,9 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     required,
     control,
     maxSelections,
+    classMenuList,
+    isSingle,
+    usHandler,
   } = props;
 
   const id = useId();
@@ -39,12 +45,12 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
-    singleValue: () => 'body-4',
+    singleValue: () => 'body-4 ',
     multiValue: ({ data }) => data.classes.container + ' !my-1',
     multiValueLabel: ({ data }) => data.classes.text ?? '',
     multiValueRemove: () => 'hover:!bg-transparent',
     menu: () => '!bg-[#0F1021] !rounded-sm !border !border-midnight',
-    menuList: () => '!p-0',
+    menuList: () => `!p-0 ${classMenuList ? classMenuList : ''}`,
     option: () => '!text-white hover:!bg-midnight !bg-transparent',
   };
   return (
@@ -70,7 +76,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
           return (
             <RSelect
               id={id}
-              isMulti={true}
+              isMulti={!isSingle}
               classNames={styles}
               options={showOptions ? options : []}
               maxMenuHeight={148}
@@ -82,12 +88,19 @@ export const Select = React.forwardRef(function Select_<T extends string>(
               value={cur.map((value: string) =>
                 options.find((op) => value === op.value),
               )}
-              onChange={(val) => {
-                let values = Array.from(val.values()).map((d) => d.value);
+              onChange={(val: any) => {
+                if (!Array.isArray(val)) {
+                  val = [val];
+                }
+                const values = Array.from(val.values()).map((d: any) => d.value);
+                const rawVal = [...values];
                 if (maxSelections) {
                   while (values.length > maxSelections) {
                     values.shift();
                   }
+                }
+                if (usHandler && typeof usHandler === 'function') {
+                  usHandler(rawVal);
                 }
                 field.onChange(values);
               }}

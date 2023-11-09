@@ -177,13 +177,12 @@ export type DefaultMileStones = (typeof defaultMileStones)[number];
 export interface Milestone {
   dueDate: string;
   stageName:
-    | "Preparation"
     | "NOP"
+    | "Preparation"
     | "Teaming"
     | "Project Submission"
     | "Review"
-    | "Result"
-    | "NOP";
+    | "Result";
   showName?: string;
 }
 
