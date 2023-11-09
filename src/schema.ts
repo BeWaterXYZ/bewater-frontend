@@ -41,4 +41,5 @@ export const validationSchema = {
   image: z.string().url("please upload image"),
   positive: z.string().regex(/^[1-9]\d*$/, "wrong number"),
   nonNegative: z.string().regex(/^\d+$/, "invalid number"),
+  str: z.string(),
 };

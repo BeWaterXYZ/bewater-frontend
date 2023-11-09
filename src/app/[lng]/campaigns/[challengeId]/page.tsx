@@ -394,6 +394,7 @@ export default async function ChallengeIntro({ params }: any) {
                                                 : "USD"
                                             ) ?? ""}
                                             {formatMoney(award.amount)}
+                                            {challenge.awardCurrency && getSymbolFromCurrency(challenge.awardCurrency) ? '' : ' ' + challenge.awardCurrency }
                                           </p>
                                           <p className="body-3 text-white/60">
                                             x{award.count}
