@@ -13,7 +13,7 @@ dependencies:
     version: 1.7.6(react@18.2.0)
   '@hookform/resolvers':
     specifier: ^3.3.2
-    version: 3.3.2(react-hook-form@7.46.2)
+    version: 3.3.2(react-hook-form@7.48.2)
   '@radix-ui/react-alert-dialog':
     specifier: ^1.0.5
     version: 1.0.5(@types/react-dom@18.2.8)(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
@@ -96,8 +96,8 @@ dependencies:
     specifier: 18.2.0
     version: 18.2.0
   react-datepicker:
-    specifier: ^4.18.0
-    version: 4.18.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.21.0
+    version: 4.21.0(react-dom@18.2.0)(react@18.2.0)
   react-dom:
     specifier: 18.2.0
     version: 18.2.0(react@18.2.0)
@@ -105,8 +105,8 @@ dependencies:
     specifier: ^1.6.1
     version: 1.6.1(react-dom@18.2.0)(react@18.2.0)
   react-hook-form:
-    specifier: ^7.46.2
-    version: 7.46.2(react@18.2.0)
+    specifier: ^7.48.2
+    version: 7.48.2(react@18.2.0)
   react-i18next:
     specifier: 13.3.1
     version: 13.3.1(i18next@23.6.0)(react-dom@18.2.0)(react@18.2.0)
@@ -114,8 +114,8 @@ dependencies:
     specifier: ^6.16.0
     version: 6.16.0(react-dom@18.2.0)(react@18.2.0)
   react-select:
-    specifier: ^5.7.5
-    version: 5.7.5(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^5.8.0
+    version: 5.8.0(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0)
   react-wrap-balancer:
     specifier: ^1.1.0
     version: 1.1.0(react@18.2.0)
@@ -146,8 +146,8 @@ devDependencies:
     specifier: ^18.2.24
     version: 18.2.24
   '@types/react-datepicker':
-    specifier: ^4.15.1
-    version: 4.15.1(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.19.2
+    version: 4.19.2(react-dom@18.2.0)(react@18.2.0)
   '@types/react-dom':
     specifier: ^18.2.8
     version: 18.2.8
@@ -486,12 +486,12 @@ packages:
     resolution: {integrity: sha512-qprfWkn82Iw821mcKofJ5Pk9wgioHicxcQMxx+5zt5GSKoqdWvgG5AxVmpmUUjzTLPVSH5auBrhI93Deayn/DA==}
     dev: false
 
-  /@hookform/resolvers@3.3.2(react-hook-form@7.46.2):
+  /@hookform/resolvers@3.3.2(react-hook-form@7.48.2):
     resolution: {integrity: sha512-Tw+GGPnBp+5DOsSg4ek3LCPgkBOuOgS5DsDV7qsWNH9LZc433kgsWICjlsh2J9p04H2K66hsXPPb9qn9ILdUtA==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.46.2(react@18.2.0)
+      react-hook-form: 7.48.2(react@18.2.0)
     dev: false
 
   /@humanwhocodes/config-array@0.11.11:
@@ -1535,8 +1535,8 @@ packages:
     resolution: {integrity: sha512-xrO9OoVPqFuYyR/loIHjnbvvyRZREYKLjxV4+dY6v3FQR3stQ9ZxIGkaclF7YhI9hfjpuTbu14hZEy94qKLtOA==}
     dev: false
 
-  /@types/react-datepicker@4.15.1(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-6/LthK0pTDBKjjVJqA2ygY3jJsHH7uZXIk8WPQcGHUiFOQLOKIv3krOxFZ2mt3BB3guMB6jVTc6ansQAd0r7xQ==}
+  /@types/react-datepicker@4.19.2(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Ta1YGrdK3PNWQjiilXly/ABjxsyjTHj4FoKlvhM4v2RC3aOM+m7xpr2fixjMIHEoS+108gt+sUBNGYGaXlxtfQ==}
     dependencies:
       '@popperjs/core': 2.11.8
       '@types/react': 18.2.24
@@ -3776,8 +3776,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /react-datepicker@4.18.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-0MYt3HmLbHVk1sw4v+RCbLAVg5TA3jWP7RyjZbo53PC+SEi+pjdgc92lB53ai/ENZaTOhbXmgni9GzvMrorMAw==}
+  /react-datepicker@4.21.0(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-z0DtuRrKMz9i7dcTusW29VacbM9pn08g1yw0cG+Y5GpodJDxSWv7zUMxl3IwKN9Ap/AMphiepvmT5P+iNCgEiA==}
     peerDependencies:
       react: ^16.9.0 || ^17 || ^18
       react-dom: ^16.9.0 || ^17 || ^18
@@ -3814,8 +3814,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /react-hook-form@7.46.2(react@18.2.0):
-    resolution: {integrity: sha512-x1DWmHQchV7x2Rq9l99M/cQHC8JGchAnw9Z0uTz5KrPa0bTl/Inm1NR7ceOARfIrkNuQNAhuSuZPYa6k7QYn3Q==}
+  /react-hook-form@7.48.2(react@18.2.0):
+    resolution: {integrity: sha512-H0T2InFQb1hX7qKtDIZmvpU1Xfn/bdahWBN1fH19gSe4bBEqTfmlr7H3XWTaVtiK4/tpPaI1F3355GPMZYge+A==}
     engines: {node: '>=12.22.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18
@@ -3927,8 +3927,8 @@ packages:
       react: 18.2.0
     dev: false
 
-  /react-select@5.7.5(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-jgYZa2xgKP0DVn5GZk7tZwbRx7kaVz1VqU41S8z1KWmshRDhlrpKS0w80aS1RaK5bVIXpttgSou7XCjWw1ncKA==}
+  /react-select@5.8.0(@types/react@18.2.24)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-TfjLDo58XrhP6VG5M/Mi56Us0Yt8X7xD6cDybC7yoRMUNm7BGO7qk8J0TLQOua/prb8vUOtsfnXZwfm30HGsAA==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0

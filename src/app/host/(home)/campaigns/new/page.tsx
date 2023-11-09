@@ -13,41 +13,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { Challenge } from "@/services/types";
+import { Challenge, Milestone } from "@/services/types";
 import Link from "next/link";
 import { createUnionSchema } from "@/types/utils";
 import { useUser } from '@clerk/nextjs';
+import { defValArr } from "@/utils/default";
 
 const init: Partial<Challenge> = {
   requirements: "",
   reviewDimension: "",
-  milestones: [
-    {
-      dueDate: "2023-06-22T00:00:00.000+00:00",
-      stageName: "Preparation",
-      showName: "Preparation",
-    },
-    {
-      dueDate: "2023-06-23T00:00:00.000+00:00",
-      stageName: "Teaming",
-      showName: "Submission",
-    },
-    {
-      dueDate: "2023-06-24T00:00:00.000+00:00",
-      stageName: "Project Submission",
-      showName: "Registration Deadline",
-    },
-    {
-      dueDate: "2023-06-25T00:00:00.000+00:00",
-      stageName: "Review",
-      showName: "Review",
-    },
-    {
-      dueDate: "2023-06-26T00:00:00.000+00:00",
-      stageName: "Result",
-      showName: "Result",
-    },
-  ],
+  milestones: defValArr as Milestone[],
 };
 
 export default function Page() {
