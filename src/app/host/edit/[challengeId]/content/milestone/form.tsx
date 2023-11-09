@@ -246,10 +246,25 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                       </div>
                     }
                     onValueChange={(v) => {
+                      if (sameTime && index === 0) {
+                        let tmi = 0;
+                        for (const it of fields) {
+                          if (it.stageName === 'Teaming') {
+                            break;
+                          }
+                          ++tmi;
+                        }
+                        update(tmi, {
+                          ...fields[tmi],
+                          dueDate: v,
+                        });
+                      }
+
                       update(index, {
                         ...field,
                         dueDate: v,
                       })
+
                       upTopErr(false);
                     }}
                     {...register(`milestones.${index}.dueDate`)}
