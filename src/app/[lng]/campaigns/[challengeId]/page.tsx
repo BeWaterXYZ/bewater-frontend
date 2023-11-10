@@ -162,7 +162,25 @@ export default async function ChallengeIntro({ params }: any) {
               />
             </>
           ) : (
-            <>
+            <div className="flex flex-col items-center">
+              {challenge.wechatURL ? (
+                  <div className="flex flex-col items-center mb-8">
+                    <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
+                      {`${t("campaign.t31", { name: challenge.hostName ?? ''})}`}
+                    </p>
+                    <br />
+                    <br />
+                    <Image
+                      src={challenge.wechatURL}
+                      width={240}
+                      height={240}
+                      alt=""
+                      className="mx-auto mb-2 md:mb-3 w-[240px] md:w-[240px]"
+                    />
+                  </div>
+                ) :
+                null}
+              <div className="flex flex-col md:flex-row items-center">
               {challenge.yotadata?.linkObj?.official ? (
                 <Link
                   prefetch={false}
@@ -288,7 +306,8 @@ export default async function ChallengeIntro({ params }: any) {
                   </div>
                 </Link>
               ) : null}
-            </>
+              </div>
+            </div>
           )}
         </div>
       </div>

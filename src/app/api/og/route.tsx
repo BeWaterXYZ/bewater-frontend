@@ -53,9 +53,11 @@ export async function GET(request: NextRequest) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundImage: `url("${challenge.yotadata?.mainBanner ?? challenge.bannerUrl}")`,
+          backgroundImage: `url(${challenge.yotadata?.mainBanner ?? challenge.bannerUrl})`,
           backgroundSize: 'cover',
           backgroundPosition: '50%',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'scroll',
           justifyContent: 'center',
           overflow: 'hidden',
         }}
