@@ -18,7 +18,7 @@ import { useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { enZoneCity, zhZoneCity } from "@/utils/time-zone";
-import { defValArr } from "@/utils/default";
+import { defMilestoneArr as defValArr } from "@/utils/default";
 
 const schema = z
   .object({
@@ -41,8 +41,6 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     ? challenge.milestones.map((ms) => ({
       ...ms
     })) : (defValArr as Milestone[]);
-
-  // console.log('orgMilestones', JSON.parse(JSON.stringify(orgMilestones)))
 
   const [{ dueDate }] = orgMilestones.filter((it) => {
     if (it.stageName === 'Teaming') {
@@ -272,7 +270,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                   />
                   <Input
                     label="&nbsp;"
-                    readOnly={sameTime && field.stageName === "Teaming"}
+                    disabled={sameTime && field.stageName === "Teaming"}
                     {...register(`milestones.${index}.showName`)}
                     error={errors.milestones?.[index]?.showName}
                   />

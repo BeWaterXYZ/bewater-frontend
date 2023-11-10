@@ -12,7 +12,6 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   control: any;
   dateFormat?: string;
   showTimeSelect?: boolean;
-  readOnly?: boolean;
 }
 
 export const DatePicker = React.forwardRef(function DatePicker_(
@@ -31,7 +30,6 @@ export const DatePicker = React.forwardRef(function DatePicker_(
     disabled,
     dateFormat = "yyyy/MM/dd",
     showTimeSelect = false,
-    readOnly = false,
   } = props;
   const id = useId();
 
@@ -55,7 +53,6 @@ export const DatePicker = React.forwardRef(function DatePicker_(
             <div className=" relative w-full text-[14px] bg-night  block body-3   rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors">
               <ReactDatePicker
                 showTimeSelect={showTimeSelect}
-                readOnly={readOnly}
                 dateFormat={dateFormat}
                 disabled={disabled}
                 wrapperClassName="w-full"
