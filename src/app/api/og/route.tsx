@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          backgroundImage: `url(${challenge.yotadata?.mainBanner ?? challenge.bannerUrl})`,
+          backgroundImage: `url(${challenge.yotadata?.mainBanner ?? (challenge.bannerUrl ?? 'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/1.png')})`,
           backgroundSize: 'contain',
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
