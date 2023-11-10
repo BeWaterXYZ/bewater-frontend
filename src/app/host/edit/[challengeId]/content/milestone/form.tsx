@@ -76,7 +76,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     label: "UTC " + (tz === 0 ? zoneCity['0'] : tz > 0 ? ("+" + tz + zoneCity[`${tz}`]) : `${tz}` + zoneCity[`${tz}`] ),
     classes: {
       container: " !bg-transparent  h-5  my-0",
-      text: "!text-grey-400 body-4 leading-5 !py-0",
+      text: "!text-[12px]",
     },
   }));
 
@@ -202,7 +202,6 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                 options={timezones}
                 error={errors["timezone"]}
                 control={control}
-                classMenuList={"text-[12px]"}
                 usHandler={zoneSelectHandle}
                 isSingle={true}
                 {...register("timezone")}
