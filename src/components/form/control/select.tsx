@@ -12,7 +12,6 @@ interface SelectProps<T extends string>
   control: any;
   options: OptionItem<T>[];
   maxSelections?: number;
-  classMenuList?: string | undefined;
   isSingle?: boolean;
   usHandler?: (newValue: any[]) => void;
 }
@@ -30,7 +29,6 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     required,
     control,
     maxSelections,
-    classMenuList,
     isSingle,
     usHandler,
   } = props;
@@ -45,14 +43,15 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     },
     clearIndicator: () => '!hidden',
     indicatorSeparator: () => '!hidden',
-    singleValue: () => 'body-4 ',
+    singleValue: () => 'body-4 !text-grey-300',
     multiValue: ({ data }) => data.classes.container + ' !my-1',
     multiValueLabel: ({ data }) => data.classes.text ?? '',
     multiValueRemove: () => 'hover:!bg-transparent',
     menu: () => '!bg-[#0F1021] !rounded-sm !border !border-midnight',
-    menuList: () => `!p-0 ${classMenuList ? classMenuList : ''}`,
-    option: () => '!text-white hover:!bg-midnight !bg-transparent',
+    menuList: () => '!p-0 ',
+    option: ({ data }) => `!text-white hover:!bg-midnight !bg-transparent ${(!!isSingle && data?.classes?.text) ? data.classes.text : ''}`,
   };
+
   return (
     <div className={clsx('block ', className)}>
       {label ? (
