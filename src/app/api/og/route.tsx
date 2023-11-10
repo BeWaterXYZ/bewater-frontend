@@ -53,8 +53,11 @@ export async function GET(request: NextRequest) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'center',
           backgroundImage: `url("${challenge.yotadata?.mainBanner ?? challenge.bannerUrl}")`,
+          backgroundSize: 'cover',
+          backgroundPosition: '50%',
+          justifyContent: 'center',
+          overflow: 'hidden',
         }}
       >
         {challenge.hostIcon?.length ? (
