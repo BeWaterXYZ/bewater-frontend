@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { formatMMMDDYYYY } from "@/utils/date";
 
 export const runtime = "edge"
-export const revalidate = 30
+export const revalidate = 10
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;

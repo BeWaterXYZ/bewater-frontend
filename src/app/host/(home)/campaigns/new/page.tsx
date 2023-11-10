@@ -17,7 +17,7 @@ import { Challenge, Milestone } from "@/services/types";
 import Link from "next/link";
 import { createUnionSchema } from "@/types/utils";
 import { useUser } from '@clerk/nextjs';
-import { defValArr } from "@/utils/default";
+import { defMilestoneArr as defValArr } from "@/utils/default";
 
 const init: Partial<Challenge> = {
   requirements: "",

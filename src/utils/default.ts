@@ -1,6 +1,6 @@
 import { subMonths } from "date-fns";
 
-export const defValArr = [
+export const defMilestoneArr = [
   {
     dueDate: "",
     showName: "Preparation",
