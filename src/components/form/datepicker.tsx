@@ -57,7 +57,9 @@ export const DatePicker = React.forwardRef(function DatePicker_(
                 disabled={disabled}
                 wrapperClassName="w-full"
                 calendarClassName="!flex"
-                className="w-full bg-white/0 h-10 px-2 outline-none "
+                className={clsx("w-full bg-white/0 h-10 px-2 outline-none", {
+                  'text-white/30': !!disabled
+                })}
                 placeholderText={placeholder}
                 selected={field.value ? parseISO(field.value as string) : null}
                 onChange={(date) => {
