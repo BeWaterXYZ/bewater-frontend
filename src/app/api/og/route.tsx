@@ -12,15 +12,14 @@ export async function GET(request: NextRequest) {
   const ogimg = (
     <div
       style={{
-        width: "1345px",
-        height: "570px",
+        width: "1016px",
+        height: "480px",
         display: "flex",
         gap: 0,
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: 128,
         backgroundImage: `url(https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/1.png)`,
-        backgroundSize: "1345px 570px",
+        backgroundSize: "1016px 480px",
         backgroundPosition: 'center center',
         backgroundRepeat: 'no-repeat',
       }}
@@ -29,8 +28,8 @@ export async function GET(request: NextRequest) {
   );
 
   const ops = {
-    width: 1345,
-    height: 570,
+    width: 1016,
+    height: 480,
   };
 
   if (!challengeId) {
@@ -51,14 +50,14 @@ export async function GET(request: NextRequest) {
       (
         <div style={{
           fontFamily: 'var(--font-secondary), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji',
-          width: "1345px",
-          height: "570px",
+          width: "1016px",
+          height: "480px",
           display: "flex",
           gap: 0,
           flexDirection: 'column',
           alignItems: 'center',
           backgroundImage: `url(${challenge.yotadata?.mainBanner ?? (challenge.bannerUrl ?? 'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/1.png')})`,
-          backgroundSize: "1345px 570px",
+          backgroundSize: "1016px 480px",
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           justifyContent: 'center',
@@ -67,7 +66,7 @@ export async function GET(request: NextRequest) {
       >
         {challenge.hostIcon?.length ? (
           <img
-            width="144"
+            width="144px"
             src={challenge.yotadata?.mainIcon ?? challenge.hostIcon}
           />
         ) : (
