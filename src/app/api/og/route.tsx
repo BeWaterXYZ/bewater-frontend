@@ -12,22 +12,25 @@ export async function GET(request: NextRequest) {
   const ogimg = (
     <div
       style={{
-        width: '100%',
-        height: '100%',
-        display: 'flex',
+        width: "1345px",
+        height: "570px",
+        display: "flex",
+        gap: 0,
         alignItems: 'center',
         justifyContent: 'center',
         fontSize: 128,
-        background: 'lavender',
+        backgroundImage: `url(https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/1.png)`,
+        backgroundSize: "1345px 570px",
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      Bewater.xyz
     </div>
   );
 
   const ops = {
-    width: 1008,
-    height: 530,
+    width: 1345,
+    height: 570,
   };
 
   if (!challengeId) {
@@ -48,13 +51,14 @@ export async function GET(request: NextRequest) {
       (
         <div style={{
           fontFamily: 'var(--font-secondary), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
+          width: "1345px",
+          height: "570px",
+          display: "flex",
+          gap: 0,
           flexDirection: 'column',
           alignItems: 'center',
           backgroundImage: `url(${challenge.yotadata?.mainBanner ?? (challenge.bannerUrl ?? 'https://bewater-static.s3.ap-southeast-1.amazonaws.com/yunying/1.png')})`,
-          backgroundSize: 'contain',
+          backgroundSize: "1345px 570px",
           backgroundPosition: 'center center',
           backgroundRepeat: 'no-repeat',
           justifyContent: 'center',
