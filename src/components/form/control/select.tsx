@@ -29,7 +29,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     required,
     control,
     maxSelections,
-    isSingle,
+    isSingle = false,
     usHandler,
   } = props;
 
@@ -49,7 +49,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     multiValueRemove: () => 'hover:!bg-transparent',
     menu: () => '!bg-[#0F1021] !rounded-sm !border !border-midnight',
     menuList: () => '!p-0 ',
-    option: ({ data }) => `!text-white hover:!bg-midnight !bg-transparent ${(!!isSingle && data?.classes?.text) ? data.classes.text : ''}`,
+    option: ({ data }) => `!text-white hover:!bg-midnight !bg-transparent ${(isSingle && data?.classes?.text) ? data.classes.text : ''}`,
   };
 
   return (
