@@ -1,6 +1,6 @@
 "use client";
 import { BeWaterLogo } from "@/components/header/logo";
-import { UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,7 +57,7 @@ const links = [
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
-        fill="inherit"
+        fill="none"
         viewBox="0 0 24 24"
       >
         <path
@@ -65,7 +65,14 @@ const links = [
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth="2"
-          d="M22 21v-2a4.002 4.002 0 00-3-3.874M15.5 3.291a4.001 4.001 0 010 7.418M17 21c0-1.864 0-2.796-.305-3.53a4 4 0 00-2.164-2.165C13.796 15 12.864 15 11 15H8c-1.864 0-2.796 0-3.53.305a4 4 0 00-2.166 2.164C2 18.204 2 19.136 2 21M13.5 7a4 4 0 11-8 0 4 4 0 018 0z"
+          d="M12 15a3 3 0 100-6 3 3 0 000 6z"
+        ></path>
+        <path
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M18.727 14.727a1.5 1.5 0 00.3 1.655l.055.054a1.816 1.816 0 010 2.573 1.818 1.818 0 01-2.573 0l-.055-.055a1.5 1.5 0 00-1.654-.3 1.5 1.5 0 00-.91 1.373v.155a1.818 1.818 0 11-3.636 0V20.1a1.5 1.5 0 00-.981-1.373 1.5 1.5 0 00-1.655.3l-.054.055a1.818 1.818 0 01-3.106-1.287 1.818 1.818 0 01.533-1.286l.054-.055a1.5 1.5 0 00.3-1.654 1.5 1.5 0 00-1.372-.91h-.155a1.818 1.818 0 110-3.636H3.9a1.5 1.5 0 001.373-.981 1.5 1.5 0 00-.3-1.655l-.055-.054A1.818 1.818 0 117.491 4.99l.054.054a1.5 1.5 0 001.655.3h.073a1.5 1.5 0 00.909-1.372v-.155a1.818 1.818 0 013.636 0V3.9a1.499 1.499 0 00.91 1.373 1.5 1.5 0 001.654-.3l.054-.055a1.817 1.817 0 012.573 0 1.819 1.819 0 010 2.573l-.055.054a1.5 1.5 0 00-.3 1.655v.073a1.5 1.5 0 001.373.909h.155a1.818 1.818 0 010 3.636H20.1a1.499 1.499 0 00-1.373.91z"
         ></path>
       </svg>
     ),
@@ -74,19 +81,17 @@ const links = [
 
 export function Sidebar() {
   let segment = useSelectedLayoutSegment();
-  console.log({ segment });
   return (
     <div className="flex-1 border-r border-r-white/20">
       <div className="p-2 flex justify-between items-center">
-        <div>
-          <Image
-            src="/logo/bewater-h.svg"
-            width={120}
-            height={24}
-            alt="bewater logo"
-          />
+        <div className="relative h-8">
+          <div className="absolute">
+            <OrganizationSwitcher />
+          </div>
         </div>
-        <UserButton />
+        <div className="">
+          <UserButton />
+        </div>
       </div>
       <div className="flex flex-col gap-2 p-2 py-4 ">
         {links.map((link) => (
