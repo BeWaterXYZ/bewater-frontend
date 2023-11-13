@@ -6,13 +6,13 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 const links = [
   {
-    path: "general",
-    label: "General",
+    path: "org",
+    label: "Organization",
   },
-  {
-    path: "people",
-    label: "People",
-  },
+  // {
+  //   path: "people",
+  //   label: "People",
+  // },
 ];
 export function Header() {
   let segment = useSelectedLayoutSegment();
