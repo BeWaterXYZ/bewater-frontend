@@ -1,8 +1,5 @@
 "use client";
-import {
-  OrganizationProfile,
-  useOrganization,
-} from "@clerk/nextjs";
+import { OrganizationProfile, useOrganization } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 
 export default function Page() {
@@ -10,7 +7,7 @@ export default function Page() {
   if (isLoaded && !organization) {
     return (
       <div>
-        <p className="body-1">Your haven't selected a organization </p>
+        <p className="body-1">{"Your haven't selected a organization"} </p>
       </div>
     );
   }
