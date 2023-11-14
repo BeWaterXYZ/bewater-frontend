@@ -1,6 +1,6 @@
 "use client";
 import { BeWaterLogo } from "@/components/header/logo";
-import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, UserButton, useUser } from "@clerk/nextjs";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -77,16 +77,29 @@ const links = [
       </svg>
     ),
   },
-];
+] as const;
 
 export function Sidebar() {
   let segment = useSelectedLayoutSegment();
+  let { user } = useUser();
+  let isAdmin = user?.publicMetadata?.teamMember ?? false;
+  let links_ = isAdmin ? links : links.filter((l) => l.path !== "settings");
   return (
     <div className="flex-1 border-r border-r-white/20">
       <div className="p-2 flex justify-between items-center">
-        <div className="relative h-8">
+        <div className="relative h-8 w-32">
           <div className="absolute">
-            <OrganizationSwitcher />
+            {isAdmin ? (
+              <OrganizationSwitcher />
+            ) : (
+              <Image
+                className="block"
+                src="/logo/bewater-h.svg"
+                width={120}
+                height={24}
+                alt="bewater logo"
+              />
+            )}
           </div>
         </div>
         <div className="">
@@ -94,7 +107,7 @@ export function Sidebar() {
         </div>
       </div>
       <div className="flex flex-col gap-2 p-2 py-4 ">
-        {links.map((link) => (
+        {links_.map((link) => (
           <Link
             key={link.label}
             className={clsx(

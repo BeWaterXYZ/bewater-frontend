@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function Page() {
-  return redirect(`/host/settings/org`)
+  return redirect(`/host/settings/org`);
 }
