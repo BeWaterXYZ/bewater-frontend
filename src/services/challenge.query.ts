@@ -17,11 +17,11 @@ export function useFetchChallengeById(challengeId: ChallengeID) {
   });
 }
 
-export function useFetchChallenges() {
+export function useFetchChallenges(id?: string) {
   return useQuery({
     queryKey: ["challenges"],
     queryFn: async () => {
-      return getHostChallengeList();
+      return getHostChallengeList(id);
     },
   });
 }

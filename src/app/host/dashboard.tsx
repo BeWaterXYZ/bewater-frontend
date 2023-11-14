@@ -1,6 +1,7 @@
 "use client";
+import React, { useState } from 'react';
 import { useLoadingWhen } from "@/components/loading/store";
-import { useFetchChallenges } from "@/services/challenge.query";
+import { getHostChallengePage } from '@/services/challenge';
 import { Challenge } from "@/services/types";
 import { unsplash } from "@/utils/unsplash";
 import { useOrganization, useUser } from "@clerk/nextjs";
@@ -133,15 +134,69 @@ function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
 }
 
 export function Dashboard() {
+  const containerRef = React.useRef(null);
+
   const { isLoaded, isSignedIn, user } = useUser();
+  const [challenges, setChallenges] = useState([] as Challenge[]);
+  const [loading, setLoading] = useState(false);
+  const [more, setMore] = useState(true);
   const org = useOrganization();
+
   const isAdmin = isLoaded && isSignedIn && user?.publicMetadata?.teamMember;
-  const { data: challenges, isLoading } = useFetchChallenges();
-  useLoadingWhen(isLoading);
-  if (!challenges || !org) return null;
+  useLoadingWhen(loading);
+
+  if (isLoaded && isSignedIn && challenges.length === 0 && !loading && more) {
+    getHostChallengePage('0').then((res) => {
+      if (res.status === 201 || res.status === 200) {
+        setChallenges(challenges.concat(res.data.challenges));
+        if (res.data.challenges.length === 0) {
+          setMore(false);
+        }
+        setLoading(false);
+      }
+    });
+    setLoading(true);
+  }
+
+  React.useEffect(() => {
+    const node = containerRef.current;
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      if (isLoaded && isSignedIn && challenges.length > 0 && !loading && more) {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            getHostChallengePage(challenges[challenges.length - 1].id).then((res) => {
+              if (res.status === 201 || res.status === 200) {
+                setChallenges(challenges.concat(res.data.challenges));
+                setLoading(false);
+                if (res.data.challenges.length === 0) {
+                  setMore(false);
+                }
+              }
+            });
+            setLoading(true);
+            observer.disconnect();
+            break;
+          }
+        }
+      } // end if
+
+    }, {
+      root: null,
+    });
+
+    if (node) {
+      observer.observe(node);
+    }
+
+    return () => {
+      observer.disconnect();
+    }
+
+  }, [containerRef, isLoaded, isSignedIn, challenges, loading, more]);
 
   return (
-    <div className="w-full grid  md:grid-cols-[2fr,_1fr] gap-16">
+    <div className="w-full grid  md:grid-cols-[2fr,_1fr] gap-16"  >
       <div>
         {/* <div className="h-16">filters</div> */}
         <div>
@@ -191,7 +246,6 @@ export function Dashboard() {
                       🈺Manage
                       </p>
                     </Link>
-
                     {challenge.type !== 'OTHERS' ? (
                       <>
                         <p style={{whiteSpace:"pre"}}>{'    '}</p>
@@ -204,12 +258,15 @@ export function Dashboard() {
                         </Link>
                       </>
                     ) : null}
-
                   </div>
                 ) : null}
               </div>
             );
           })}
+          <p
+            className="text-base font-bold text-grey-500 text-center pt-4 "
+            ref={containerRef}
+          >{more ? 'Loading...' : '--no more data--'}</p>
         </div>
       </div>
       <div>
