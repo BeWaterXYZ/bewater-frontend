@@ -147,7 +147,7 @@ export function Dashboard() {
 
   if (isLoaded && isSignedIn && challenges.length === 0 && !loading && more) {
     getHostChallengePage('0').then((res) => {
-      if (res.status === 201 || res.status === 200) {
+      if (res.status === 200) {
         setChallenges(challenges.concat(res.data.challenges));
         if (res.data.challenges.length === 0) {
           setMore(false);
@@ -166,12 +166,12 @@ export function Dashboard() {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             getHostChallengePage(challenges[challenges.length - 1].id).then((res) => {
-              if (res.status === 201 || res.status === 200) {
+              if (res.status === 200) {
                 setChallenges(challenges.concat(res.data.challenges));
-                setLoading(false);
                 if (res.data.challenges.length === 0) {
                   setMore(false);
                 }
+                setLoading(false);
               }
             });
             setLoading(true);
