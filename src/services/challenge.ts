@@ -13,6 +13,7 @@ export interface CreateTeamRequest {
   skills: SkillUnion[];
   leaderRole: RoleUnion;
 }
+
 export interface UpdateTeamRequest {
   name: string;
   projectName: string;
@@ -21,6 +22,7 @@ export interface UpdateTeamRequest {
   openingRoles: RoleUnion[];
   skills: SkillUnion[];
 }
+
 export async function getChallenges() {
   const { data } = await agentAnon.get<{ challenges: Challenge[] }>(
     `/challenge/timerange`,
@@ -49,13 +51,15 @@ export async function getHostChallengeById(challengeId: ChallengeID) {
   );
   return data.challenge;
 }
-export async function getHostChallengeList() {
+
+export async function getHostChallengeList(id?: string) {
   const { data } = await agentAuthed.get<{ challenges: Challenge[] }>(
-    `/host-challenge/self-challenges`,
+    `/host-challenge/self-challenges${id ? ('?challengeId=' + id) : ''}`,
     {}
   );
   return data.challenges;
 }
+
 export async function createChallenge(challenge: Partial<Challenge>) {
   const { data } = await agentAuthed.post<Challenge>(
     `/host-challenge`,
@@ -63,6 +67,7 @@ export async function createChallenge(challenge: Partial<Challenge>) {
   );
   return data;
 }
+
 export async function updateChallenge(challenge: Partial<Challenge>) {
   const { data } = await agentAuthed.put<Challenge>(
     `/host-challenge/${challenge.id}`,
@@ -70,12 +75,14 @@ export async function updateChallenge(challenge: Partial<Challenge>) {
   );
   return data;
 }
+
 export async function deleteChallenge(challengeId: ChallengeID) {
   const { data } = await agentAuthed.delete<Challenge>(
     `/host-challenge/${challengeId}`,
   );
   return data;
 }
+
 export async function publishChallengeRequest(challengeId: ChallengeID) {
   const { data } = await agentAuthed.post<Challenge>(
     `/host-challenge/publish-request`,
@@ -97,4 +104,8 @@ export async function getChallengeInvitation(id: ChallengeID) {
     `/host-challenge/${id}/invitation`
   );
   return data;
+}
+
+export function getHostChallengePage(id?: string) {
+  return agentAuthed.get(`/host-challenge/self-challenges${id ? ('?challengeId=' + id) : ''}`);
 }
