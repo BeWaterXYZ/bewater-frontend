@@ -29,27 +29,19 @@ export function mock(challenge: Challenge) {
   //   ];
   // }
   if (!c.awardAssorts || c.awardAssorts.length === 0) {
-    c.awardCurrency = "USD";
-    c.totalAward = 6000;
-    c.awardAssorts = [
-      {
-        name: "Award track #1",
-        awards: [
-          { awardName: "1st award", amount: 3000, count: 1 },
-          { awardName: "2nd award", amount: 2000, count: 1 },
-          { awardName: "3rd award", amount: 1000, count: 1 },
-        ],
-      },
-    ];
   }
+
   if (!c.keySponsors) {
     c.keySponsors = [bewaterLogo];
   }
+
   if (!c.requirements) {
     c.requirements ='Please describe the requirements for this campaign'
   }
+
   if (!c.reviewDimension) {
     c.reviewDimension ='Please describe the criteria for this campaign'
   }
+
   return c;
 }
