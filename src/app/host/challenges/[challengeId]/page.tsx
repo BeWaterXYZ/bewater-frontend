@@ -70,14 +70,15 @@ export default function Page({ params }: any) {
               })`,
           }}
         >
-
-          <Image
-            src={challenge.hostIcon ?? "/sponsors/hostlogo.png"}
+          {challenge.hostIcon ? (
+            <Image
+            src={challenge.hostIcon}
             width={100}
             height={24}
             alt="host logo"
             className="mx-auto object-contain max-w-[80%] w-auto h-full max-h-[40px]"
           />
+          ) : null}
           <div className="space-y-6">
             <h1 className="text-xl leading-[30px] md:text-5xl font-black text-white">
               {challenge.title}
