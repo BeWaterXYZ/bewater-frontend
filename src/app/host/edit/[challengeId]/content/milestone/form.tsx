@@ -208,7 +208,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
       n.splice(reviewIndex, 0, deadlineInfo);
     }
 
-    const sysZone = Math.floor(-(new Date().getTimezoneOffset() / 60));
+    const sysZone = -Math.floor(new Date().getTimezoneOffset() / 60);
 
     try {
       await mutation.mutateAsync({

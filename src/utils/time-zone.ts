@@ -89,7 +89,7 @@ const zoneCity: any = {
 };
 
 export function zoneLiteral (city: boolean) {
-  const zone = Math.floor(-(new Date().getTimezoneOffset() / 60));
+  const zone = -Math.floor(new Date().getTimezoneOffset() / 60);
   return 'UTC' + (zone === 0 ? (city ? (' ' + zoneCity['0']) : '') :
     (zone > 0 ? ("+" + zone + (city ? (' ' + zoneCity[`${zone}`]) : '')) :
       `${zone}` + (city ? (' ' + zoneCity[`${zone}`]) : '')));
