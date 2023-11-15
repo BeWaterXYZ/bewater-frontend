@@ -275,7 +275,9 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                   />
                   <div className="flex gap-2 pb-5">
                     <button
-                      className="  text-grey-500"
+                      className={clsx("  text-grey-500", {
+                        invisible: (field.stageName === "Result" || (field.stageName === "Preparation" && sameTime)),
+                      })}
                       onClick={(e) => {
                         // e.stopPropagation();
                         insert(index + 1, {
