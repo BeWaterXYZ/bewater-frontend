@@ -131,11 +131,20 @@ export default function Page({ params }: any) {
                     Introduction
                   </div>
                   <div className="text-[18px] md:body-2 text-white">
-                    {challenge.description.split("\n").map((s, i) => (
-                      <p className="py-3" key={i}>
-                        {s}
-                      </p>
-                    ))}
+                    {challenge.description?.endsWith("--edit-by-markdown") ? (
+                      <Markdown style={{ color: "white" }}>
+                        {challenge.description.substring(
+                          0,
+                          challenge.description.length - "--edit-by-markdown".length
+                        )}
+                      </Markdown>
+                    ) : (
+                      (challenge.description ?? "").split("\n").map((s, i) => (
+                        <p className="py-3" key={i}>
+                          {s}
+                        </p>
+                      ))
+                    )}
                   </div>
                 </div>
                 <div className="flex gap-4 flex-wrap">
