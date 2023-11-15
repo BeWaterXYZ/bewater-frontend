@@ -55,6 +55,10 @@ const dialogMaps: DialogMap = {
   project_rating: dynamicLoad(() => import('./dialogs/project-rating'), {
     loading: () => <Loading />,
   }),
+
+  rating_dimensions: dynamicLoad(() => import('./dialogs/rating-dimensions'), {
+    loading: () => <Loading />,
+  }),
 };
 
 export function DialogContainer({

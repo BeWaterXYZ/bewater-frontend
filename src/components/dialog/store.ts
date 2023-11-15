@@ -1,5 +1,5 @@
-import { Challenge, Project, Team, TeamID } from '@/services/types';
-import { create } from 'zustand';
+import { Challenge, Project, Team, TeamID } from "@/services/types";
+import { create } from "zustand";
 
 export type Dialogs = {
   metamask_not_support?: boolean;
@@ -16,6 +16,9 @@ export type Dialogs = {
     project: Project;
     rating: { label: string; rate: number }[];
   };
+  rating_dimensions?: {
+    challenge: Challenge;
+  };
 };
 
 type State = {
@@ -28,7 +31,7 @@ export type CloseDialogFunc = <T extends DialogsKeys>(name: T) => void;
 type Actions = {
   open: <T extends DialogsKeys>(
     name: T,
-    data: Dialogs[T] | ((v: Dialogs[T]) => Dialogs[T]),
+    data: Dialogs[T] | ((v: Dialogs[T]) => Dialogs[T])
   ) => void;
   close: CloseDialogFunc;
 };
@@ -39,7 +42,7 @@ export const useDialogStore = create<State & Actions>((set) => ({
     set((old) => ({
       dialogs: {
         ...old.dialogs,
-        [name]: typeof data === 'function' ? data(old.dialogs[name]) : data,
+        [name]: typeof data === "function" ? data(old.dialogs[name]) : data,
       },
     })),
 
