@@ -6,6 +6,11 @@ import { defMilestoneArr as defValArr } from "@/utils/default";
 
 export function mock(challenge: Challenge) {
   let c = { ...challenge };
+
+  if (!c.description) {
+    c.description = "";
+  }
+
   if (!c.sponsors) {
     c.sponsors = [
       {
@@ -29,6 +34,7 @@ export function mock(challenge: Challenge) {
   //   ];
   // }
   if (!c.awardAssorts || c.awardAssorts.length === 0) {
+    c.awardAssorts = [];
   }
 
   if (!c.keySponsors) {
