@@ -1,7 +1,9 @@
-import { Challenge } from "@/services/types";
+import { Challenge, Milestone } from "@/services/types";
 import { format, parseISO, subDays, addDays } from "date-fns";
 const YYYYMMDD = "yyyy-MM-dd";
 const bewaterLogo = "https://build.bewater.xyz/sponsors/bewater.png";
+import { defMilestoneArr as defValArr } from "@/utils/default";
+
 export function mock(challenge: Challenge) {
   let c = { ...challenge };
   if (!c.sponsors) {
@@ -14,37 +16,7 @@ export function mock(challenge: Challenge) {
   }
 
   if (!c.milestones) {
-    let startDate = parseISO(challenge.startTime);
-    let endDate = parseISO(challenge.endTime);
-
-    console.log(format(parseISO(challenge.startTime), YYYYMMDD));
-    console.log(format(parseISO(challenge.endTime), YYYYMMDD));
-    console.log(format(subDays(endDate, 1), YYYYMMDD));
-
-    c.milestones = [
-      {
-        dueDate: format(startDate, YYYYMMDD),
-        stageName: "Preparation",
-      },
-      {
-        dueDate: format(addDays(startDate, 1), YYYYMMDD),
-
-        stageName: "Teaming",
-      },
-      {
-        dueDate: format(subDays(endDate, 2), YYYYMMDD),
-
-        stageName: "Project Submission",
-      },
-      {
-        dueDate: format(subDays(endDate, 1), YYYYMMDD),
-        stageName: "Review",
-      },
-      {
-        dueDate: format(endDate, YYYYMMDD),
-        stageName: "Result",
-      },
-    ];
+    c.milestones = defValArr as Milestone[];
   }
   // if (!c.judges || c.judges.length === 0) {
   //   c.judges = [
