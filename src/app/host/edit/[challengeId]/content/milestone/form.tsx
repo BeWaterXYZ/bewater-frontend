@@ -4,7 +4,7 @@ import { DatePicker } from "@/components/form/datepicker";
 import { Input } from "@/components/form/input";
 import { validationSchema } from "@/schema";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
-import { Challenge, Milestone, defaultMileStones } from "@/services/types";
+import { Challenge, Milestone, minusMileStones } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   DrawingPinFilledIcon,
@@ -171,7 +171,47 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
       }
     }
 
+    let deadlineInfo: any = null;
+    let reviewInfo: any = null;
+    let resultInfo: any = null;
+    let reviewIndex = -1;
+
+    for (let i = 0; i < n.length; ++i) {
+      if (n[i].stageName === 'Project Submission') {
+        deadlineInfo = n[i];
+      }
+      if (n[i].stageName === 'Review') {
+        reviewInfo = n[i];
+        reviewIndex = i;
+      }
+      if (n[i].stageName === 'Result') {
+        resultInfo = n[i];
+      }
+    }
+
+    if (!reviewInfo) {
+      reviewInfo = {
+        dueDate: resultInfo.dueDate,
+        stageName: "Review",
+        showName: "",
+      }
+      reviewIndex = n.length - 1;
+      n.splice(reviewIndex, 0, reviewInfo);
+    }
+
+    if (!deadlineInfo) {
+      deadlineInfo = {
+        dueDate: n[reviewIndex].dueDate,
+        stageName: "Project Submission",
+        showName: "",
+      }
+      n.splice(reviewIndex, 0, deadlineInfo);
+    }
+
+    // console.log(n)
+
     const sysZone = Math.abs(Math.floor(new Date().getTimezoneOffset() / 60));
+
     try {
       await mutation.mutateAsync({
         id: challenge.id,
@@ -217,7 +257,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
             </div>
 
             {fields.map((field, index) => {
-              let isDefault = defaultMileStones.some(
+              let isDefault = minusMileStones.some(
                 (d) => d === field.stageName
               );
               return (
