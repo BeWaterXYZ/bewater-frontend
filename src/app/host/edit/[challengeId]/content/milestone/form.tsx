@@ -55,6 +55,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     for (const it of orgMilestones) {
       if (it.stageName === 'Teaming') {
         it.showName = 'Teaming';
+        break;
       }
     }
   }
@@ -160,6 +161,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
       for (const it of n) {
         if (it.stageName === 'Teaming') {
           it.showName = "";
+          break;
         }
       }
     }
