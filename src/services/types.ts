@@ -164,6 +164,12 @@ export interface Judge {
   email?: string | null;
 }
 
+export const minusMileStones = [
+  "Preparation",
+  "Teaming",
+  "Result",
+] as const;
+
 export const defaultMileStones = [
   "Preparation",
   "Teaming",
