@@ -20,6 +20,7 @@ import Balancer from "react-wrap-balancer";
 import { segmentSchema } from "../../segment-params";
 import { Timeline } from "../timeline";
 import { mock } from "./mock";
+import clsx from "clsx";
 
 export default function Page({ params }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
@@ -210,17 +211,20 @@ export default function Page({ params }: any) {
             id="section-prizes"
             className="relative py-16 border-b border-dashed border-white/30"
           >
-
             <div className="container">
-              <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
-                <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
-                  Total Awards:{" "}
-                  {getSymbolFromCurrency(
-                    challenge?.awardCurrency ? challenge.awardCurrency : "USD"
-                  ) ?? ""}
-                  {formatMoney(challenge.totalAward ?? 0)}{" "}
-                  {challenge?.awardCurrency ? challenge.awardCurrency : "USD"}
-                </h3>
+              <div className={clsx("flex flex-col items-center px-0 pb-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight", {
+                '!pt-20 gap-20' : (challenge.totalAward || challenge.awardAssorts?.length),
+              })}>
+                {challenge.totalAward ? (
+                  <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+                    Total Awards:{" "}
+                    {getSymbolFromCurrency(
+                      challenge?.awardCurrency ? challenge.awardCurrency : "USD"
+                    ) ?? ""}
+                    {formatMoney(challenge.totalAward ?? 0)}{" "}
+                    {challenge?.awardCurrency ? challenge.awardCurrency : "USD"}
+                  </h3>
+                ) : null}
                 <div className="flex flex-row flex-wrap items-top gap-16 p-8">
                   {(challenge.awardAssorts ?? []).map((awardAssort, i) => {
                     return (
