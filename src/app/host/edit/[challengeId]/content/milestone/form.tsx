@@ -27,7 +27,7 @@ const schema = z
       z.object({
         dueDate: validationSchema.date,
         stageName: validationSchema.text,
-        showName: validationSchema.zhName,
+        showName: validationSchema.str,
       })
     ),
   })
