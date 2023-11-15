@@ -11,6 +11,7 @@ import { Radio } from "@/components/form/radio";
 import { DatePicker } from "@/components/form/datepicker";
 import { LOCATION } from "@/constants";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
+import { zoneLiteral } from "@/utils/time-zone";
 
 export function Hero({ challenge }: { challenge: Challenge }) {
   let mutation = useMutationUpdateChallenge(challenge.id);
@@ -18,6 +19,9 @@ export function Hero({ challenge }: { challenge: Challenge }) {
   let [isOnlineOnly, isOnlineOnlySet] = useState(
     challenge.location === LOCATION.ONLINE
   );
+
+  const zoneCity = zoneLiteral(true);
+  const zone = zoneLiteral(false);
 
   const schema = z.object({
     title: validationSchema.text,
@@ -49,9 +53,8 @@ export function Hero({ challenge }: { challenge: Challenge }) {
       city: challenge.city ?? "",
       linkText: challenge.linkText ?? "",
       joinLink: challenge.joinLink ?? "",
-      // fix me
-      startTime: challenge.startTime.substring(0, 10),
-      endTime: challenge.endTime.substring(0, 10),
+      startTime: challenge.startTime,
+      endTime: challenge.endTime,
     },
   });
   watch((data) => {
@@ -140,15 +143,19 @@ export function Hero({ challenge }: { challenge: Challenge }) {
           )}
           <div className="grid grid-cols-2 gap-4">
             <DatePicker
-              label="Start Date"
+              showTimeSelect
+              dateFormat="yyyy/MM/dd HH:mm"
+              label={`Start Date (${zoneCity})`}
               control={control}
               onValueChange={(v) => setValue(`startTime`, v)}
               {...register("startTime")}
               error={errors["startTime"]}
             />
             <DatePicker
+              showTimeSelect
+              dateFormat="yyyy/MM/dd HH:mm"
+              label={`End Date (${zone})`}
               control={control}
-              label="End Date"
               onValueChange={(v) => setValue(`endTime`, v)}
               {...register("endTime")}
               error={errors["endTime"]}

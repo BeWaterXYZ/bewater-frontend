@@ -57,3 +57,40 @@ export const zhZoneCity: any = {
   '13': '',
   '14': '（圣诞岛）',
 };
+
+const zoneCity: any = {
+  '-12': '',
+  '-11': '',
+  '-10': 'Hawaii',
+  '-9':  'Alaska',
+  '-8':  'Los Angeles',
+  '-7':  '',
+  '-6':  'Chicago',
+  '-5':  'New York',
+  '-4':  '',
+  '-3':  '',
+  '-2':  '',
+  '-1':  '',
+  '0':  'London',
+  '1':  'Paris',
+  '2':  'Jerusalem',
+  '3':  'Moscow',
+  '4':  'Dubai',
+  '5':  '',
+  '6':  '',
+  '7':  'Bangkok',
+  '8':  'Shanghai',
+  '9':  'Tokyo',
+  '10': 'Sydney',
+  '11': '',
+  '12': 'Auckland',
+  '13': '',
+  '14': 'Kiritimati',
+};
+
+export function zoneLiteral (city: boolean) {
+  const zone = Math.floor(-(new Date().getTimezoneOffset() / 60));
+  return 'UTC' + (zone === 0 ? (city ? (' ' + zoneCity['0']) : '') :
+    (zone > 0 ? ("+" + zone + (city ? (' ' + zoneCity[`${zone}`]) : '')) :
+      `${zone}` + (city ? (' ' + zoneCity[`${zone}`]) : '')));
+}
