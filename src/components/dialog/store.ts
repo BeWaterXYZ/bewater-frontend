@@ -19,6 +19,9 @@ export type Dialogs = {
   rating_dimensions?: {
     challenge: Challenge;
   };
+  rating_judge_invite?: {
+    challenge: Challenge;
+  };
 };
 
 type State = {

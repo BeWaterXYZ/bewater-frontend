@@ -124,7 +124,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               id={id}
               isMulti={false}
               classNames={styles}
-              placeholder="Search username, email or wallet address"
+              placeholder="username, email or wallet address"
               loadingMessage={() => 'searching'}
               noOptionsMessage={() => 'no options'}
               value={cacheOptions.find((op) => op.id === field.value)}

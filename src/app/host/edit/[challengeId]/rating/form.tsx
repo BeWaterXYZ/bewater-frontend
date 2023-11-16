@@ -8,6 +8,9 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
   let openRatingDimension = () => {
     dialog.open("rating_dimensions", { challenge });
   };
+  let openRatingJudge = () => {
+    dialog.open("rating_judge_invite", { challenge });
+  };
   return (
     <div>
       <div className="text-xl leading-8 text-white py-4 ">Rating</div>
@@ -25,7 +28,9 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
           </div>
           <div></div>
           <div>
-            <button className="btn btn-secondary">Select Judges</button>
+            <button className="btn btn-secondary" onClick={openRatingJudge}>
+              Select Judges
+            </button>
           </div>
         </div>
 
