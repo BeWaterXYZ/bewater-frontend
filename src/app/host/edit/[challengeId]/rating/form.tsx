@@ -1,6 +1,7 @@
 "use client";
 import { useDialogStore } from "@/components/dialog/store";
 import { Challenge } from "@/services/types";
+import { CaretRightIcon } from "@radix-ui/react-icons";
 
 export function EditRating({ challenge }: { challenge: Challenge }) {
   let dialog = useDialogStore();
@@ -52,6 +53,42 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
             <button className="btn btn-secondary" onClick={openRatingDimension}>
               Set Dimensions
             </button>
+          </div>
+        </div>
+      </div>
+      <div className="grid grid-cols-[1fr,250px] text-white gap-8">
+        <div className="bg-latenight border border-[#24254E] rounded p-4">
+          <p className="body-2">Score Details</p>
+
+          <div>
+            <div className="p-4 bg-[#1A1C40] rounded flex justify-between items-center">
+              <div className="flex-1">
+                <p className="body-3">Yet anothjer layer 2</p>
+                <p className="body-4 text-grey-300">Dream team</p>
+              </div>
+              <div className="flex flex-1 justify-between items-center">
+                <div>
+                  <p className="text-grey-300 body-3">All Judges done</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div>
+                    <p className="text-grey-300 body-3">score</p>
+                    <p className="text-day body-1">48/60</p>
+                  </div>
+                  <div>
+                    <CaretRightIcon />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="bg-latenight border border-[#24254E] rounded p-4 mb-4">
+            <p className="body-2">Overall Progress</p>
+          </div>
+          <div className="bg-latenight border border-[#24254E] rounded p-4 mb-4">
+            <p className="body-2">Ranking</p>
           </div>
         </div>
       </div>
