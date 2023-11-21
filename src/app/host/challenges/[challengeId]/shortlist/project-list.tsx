@@ -44,16 +44,16 @@ export function ProjectList({ challengeId, projects, challenge }: {
     projectsFiltered = projects_;
   }
 
-  function score(prjid: string, judgeid: string) {
+  function score(prjID: string, reviewerID: string) {
     let obprj: any;
     for (const it of projects) {
-      if (it.id === prjid) {
+      if (it.id === prjID) {
         obprj = it;
         break;
       }
     }
-    for (const it of (obprj?.projectRank ?? [])) {
-      if (it.judgeId === judgeid) {
+    for (const it of (obprj?.projectScore ?? [])) {
+      if (it.reviewerId === reviewerID) {
         return it.mark.reduce((tot: number, cur: number) => {
           return tot + cur;
         }, 0);
@@ -104,13 +104,13 @@ export function ProjectList({ challengeId, projects, challenge }: {
       let total = 0;
       let judgeNum = 0;
 
-      for (const item of (challenge.judges ?? [])) {
+      for (const item of (challenge.reviewers ?? [])) {
         let tmpcur = score(it.id, item.id);
         if (tmpcur < 0) {
-          obj[item.name ?? item.id!] = '-';
+          obj[item.userName ?? item.firstName ?? item.id!] = '-';
           continue;
         }
-        obj[item.name ?? item.id!] = `${tmpcur}`;
+        obj[item.userName ?? item.firstName ?? item.id!] = `${tmpcur}`;
         total += tmpcur;
         ++judgeNum;
       }

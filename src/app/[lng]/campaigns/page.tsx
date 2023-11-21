@@ -6,6 +6,7 @@ import { useTranslation } from '@/app/i18n';
 async function getChallengesByStatus() {
   let challenges = await getChallenges();
   challenges = challenges.sort((a, b) => Number(b.id) - Number(a.id));
+
   return {
     active: challenges.filter((c) => c.status === 'ACTIVE'),
     completed: challenges.filter((c) => c.status === 'COMPLETED'),

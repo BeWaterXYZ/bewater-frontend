@@ -27,6 +27,7 @@ export default function Page({ params }: any) {
   const { projectId } = segmentSchema.projectId.parse(params);
   const { data: project, isLoading } = useFetchProject(projectId);
   const { data: challenge } = useFetchChallengeById(challengeId);
+
   useLoadingWhen(isLoading);
 
   if (!project || !challenge) return null;
