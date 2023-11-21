@@ -187,10 +187,9 @@ export default function TeamCreateDialog({
     formState: { errors },
   } = useTeamCreateForm(data.team);
   return (
-    <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
-      <p className="body-2 mb-4">{isEditing ? 'Edit Team' : 'Create A Team'}</p>
-
-      <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+    <div className="w-[80vw] max-w-md max-h-[80vh] overflow-y-auto ">
+      <p className="body-2 mb-4 ">{isEditing ? 'Edit Team' : 'Create A Team'}</p>
+      <form method="post" onSubmit={handleSubmit(onSubmit)} className="mr-4">
         <Input
           label="Team Name"
           placeholder="Enter your team name"
@@ -271,7 +270,7 @@ export default function TeamCreateDialog({
             </button>
           ) : null}
           <div className="flex-1" />
-          <div className="flex gap-2">
+          <div className="flex gap-2 ">
             <button
               disabled={isCallingAPI}
               className="btn btn-secondary "

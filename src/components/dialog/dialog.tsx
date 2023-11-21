@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import * as RadixDialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 
@@ -17,7 +18,11 @@ export function Dialog({
           {children}
           <RadixDialog.Close asChild>
             <button
-              className="absolute flex justify-center items-center z-10 top-5 right-5 rounded-full border  border-white/30 w-[30px] h-[30px]"
+              className={
+                clsx("absolute flex justify-center items-center z-10 top-5 right-5 rounded-full border  border-white/30 w-[30px] h-[30px]", {
+                  "mr-8": rest.typeName === "team_create"
+                })
+              }
               aria-label="Close"
             >
               <Cross2Icon className=" text-white" />

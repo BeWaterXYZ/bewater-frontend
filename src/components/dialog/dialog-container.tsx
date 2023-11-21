@@ -71,6 +71,7 @@ export function DialogContainer({
   closeDialog,
 }: DialogContainerProps) {
   const keys = Object.keys(dialogs).filter((k) => !!dialogs[k as DialogsKeys]);
+
   return (
     <>
       {keys.map((_key) => {
@@ -79,6 +80,7 @@ export function DialogContainer({
         return (
           <Dialog
             key={key}
+            typeName={key}
             open
             defaultOpen
             onOpenChange={(open) => {
