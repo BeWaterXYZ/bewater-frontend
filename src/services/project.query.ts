@@ -28,10 +28,10 @@ export function useFetchProject(projectId: ProjectId) {
     },
   });
 }
-export function useFetchProjectRating(projectId: ProjectId,enable:boolean) {
+export function useFetchProjectRating(projectId: ProjectId, enable:boolean) {
   return useQuery({
     queryKey: ['project', projectId, 'rating'],
-    enabled:enable,
+    enabled: enable,
     queryFn: async () => {
       return getProjectRating(projectId);
     },

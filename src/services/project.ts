@@ -30,7 +30,7 @@ export async function updateProject(project: OptionalExceptFor<Project, 'id'>) {
 
 export async function getProjectRating(projectId: ProjectId) {
   const { data } = await agentAuthed.get<{ mark: number[] }>(
-    `/project/${projectId}/rank`,
+    `/project/${projectId}/score`,
     {},
   );
   return data.mark;
@@ -43,7 +43,7 @@ export async function updateProjectRating({
   projectId: ProjectId;
   mark: number[];
 }) {
-  const { data } = await agentAuthed.post(`/project/${projectId}/rank`, {
+  const { data } = await agentAuthed.post(`/project/${projectId}/score`, {
     mark,
   });
   return data;

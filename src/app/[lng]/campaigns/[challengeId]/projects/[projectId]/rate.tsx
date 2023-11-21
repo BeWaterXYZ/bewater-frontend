@@ -1,5 +1,4 @@
 "use client";
-
 import { useDialogStore } from "@/components/dialog/store";
 import { useFetchProjectRating } from "@/services/project.query";
 import { Challenge, Project } from "@/services/types";
@@ -20,16 +19,16 @@ interface Props {
 }
 export function Rate(props: Props) {
   const showDialog = useDialogStore((s) => s.open);
-  let user = useClerk().user;
-  let isJudge = props.challenge.judges.some(
+  const user = useClerk().user;
+  const isJudge = props.challenge.reviewers.some(
     (judge) =>
-      judge.email?.toLowerCase() ===
+      judge.email.toLowerCase() ===
       user?.emailAddresses[0].emailAddress.toLowerCase()
   );
 
-  const { data: rating } = useFetchProjectRating(props.project.id, isJudge);
-  if (!user) return null;
-  if (!isJudge) return null;
+  let { data: rating } = useFetchProjectRating(props.project.id, isJudge);
+
+  if (!user || !isJudge) return null;
 
   let rate = () => {
     showDialog("project_rating", {
@@ -38,7 +37,7 @@ export function Rate(props: Props) {
       rating: (rating?.length ?? 0 > 0
         ? rating
         : new Array(textMaps.length).fill(0))!.map((r, i) => ({
-        label: props.challenge.scoreDimension[i].text ?? textMaps[i],
+        label: props.challenge.scoreDimension ? props.challenge.scoreDimension[i].text : textMaps[i],
         rate: r,
       })),
     });

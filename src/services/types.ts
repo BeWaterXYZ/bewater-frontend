@@ -64,6 +64,7 @@ export interface Challenge {
     locked?:boolean;
   }[]
   judges: Judge[];
+  reviewers: Reviewer[];
   wechatURL?: string;
   telegramLink?: string;
   discordLink?: string;
@@ -164,6 +165,16 @@ export interface Judge {
   email?: string | null;
 }
 
+export interface Reviewer {
+  id: string;
+  challengeId: ChallengeID;
+  userId: UserID;
+  email: string;
+  userName?: string;
+  fullName?: string;
+  firstName?: string;
+}
+
 export const minusMileStones = [
   "Preparation",
   "Teaming",
@@ -241,7 +252,7 @@ export interface Project {
   videoURI?: string;
   demoURI?: string;
   githubURI?: string;
-  projectRank?: any;
+  projectScore?: any;
 }
 export interface TeamMember {
   id: string;
