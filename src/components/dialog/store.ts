@@ -1,4 +1,4 @@
-import { Challenge, Project, Team, TeamID } from "@/services/types";
+import { Challenge, ChallengeID, Project, Team, TeamID } from "@/services/types";
 import { create } from "zustand";
 
 export type Dialogs = {
@@ -20,7 +20,7 @@ export type Dialogs = {
     challenge: Challenge;
   };
   rating_judge_invite?: {
-    challenge: Challenge;
+    challengeId: ChallengeID;
   };
 };
 

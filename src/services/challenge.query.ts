@@ -1,12 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  deleteRatingJudge,
   getChallengeById,
   getChallengeInvitation,
   getHostChallengeList,
+  inviteRatingJudge,
   inviteToChallenge,
   updateChallenge,
 } from "./challenge";
-import { ChallengeID } from "./types";
+import { ChallengeID, UserID } from "./types";
 
 export function useFetchChallengeById(challengeId: ChallengeID) {
   return useQuery({
@@ -51,6 +53,30 @@ export function useMutationInviteToChallenge(challengeId: ChallengeID) {
     {
       onSuccess: (data, variables, context) => {
         queryClient.invalidateQueries(["challenges/invitation", challengeId]);
+      },
+    }
+  );
+}
+
+export function useMutationInviteRatingJudge(challengeId: ChallengeID) {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (userId: UserID) => inviteRatingJudge(challengeId, userId),
+    {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries(["challenges", challengeId]);
+      },
+    }
+  );
+}
+
+export function useMutationDeleteRatingJudge(challengeId: ChallengeID) {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (userId: UserID) => deleteRatingJudge(challengeId, userId),
+    {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries(["challenges", challengeId]);
       },
     }
   );

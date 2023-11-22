@@ -1,4 +1,5 @@
 "use client";
+import { Avatar } from "@/components/avatar/avatar";
 import { useDialogStore } from "@/components/dialog/store";
 import { Challenge } from "@/services/types";
 import { CaretRightIcon } from "@radix-ui/react-icons";
@@ -10,7 +11,7 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
     dialog.open("rating_dimensions", { challenge });
   };
   let openRatingJudge = () => {
-    dialog.open("rating_judge_invite", { challenge });
+    dialog.open("rating_judge_invite", { challengeId: challenge.id });
   };
   return (
     <div>
@@ -27,7 +28,24 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
               Selected users can submit scores
             </p>
           </div>
-          <div></div>
+          <div>
+            <div className="flex ">
+              {challenge.reviewers.map((rv, index) => {
+                return (
+                  <div
+                    key={rv.userId}
+                    className="relative"
+                    style={{ left: -8 * index }}
+                  >
+                    <Avatar
+                      // src={m.userProfile.avatarURI}
+                      className="w-8 h-8"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <div>
             <button className="btn btn-secondary" onClick={openRatingJudge}>
               Select Judges

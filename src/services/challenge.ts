@@ -1,7 +1,7 @@
 import { RoleUnion } from "@/constants/options/role";
 import { SkillUnion } from "@/constants/options/skill";
 import { agentAnon, agentAuthed } from "./agent";
-import { Challenge, ChallengeID, ChallengeInvitation } from "./types";
+import { Challenge, ChallengeID, ChallengeInvitation, UserID } from "./types";
 
 export interface CreateTeamRequest {
   name: string;
@@ -54,7 +54,7 @@ export async function getHostChallengeById(challengeId: ChallengeID) {
 
 export async function getHostChallengeList(id?: string) {
   const { data } = await agentAuthed.get<{ challenges: Challenge[] }>(
-    `/host-challenge/self-challenges${id ? ('?challengeId=' + id) : ''}`,
+    `/host-challenge/self-challenges${id ? "?challengeId=" + id : ""}`,
     {}
   );
   return data.challenges;
@@ -78,7 +78,7 @@ export async function updateChallenge(challenge: Partial<Challenge>) {
 
 export async function deleteChallenge(challengeId: ChallengeID) {
   const { data } = await agentAuthed.delete<Challenge>(
-    `/host-challenge/${challengeId}`,
+    `/host-challenge/${challengeId}`
   );
   return data;
 }
@@ -107,5 +107,31 @@ export async function getChallengeInvitation(id: ChallengeID) {
 }
 
 export function getHostChallengePage(id?: string) {
-  return agentAuthed.get(`/host-challenge/self-challenges${id ? ('?challengeId=' + id) : ''}`);
+  return agentAuthed.get(
+    `/host-challenge/self-challenges${id ? "?challengeId=" + id : ""}`
+  );
+}
+
+export async function inviteRatingJudge(
+  challengeId: ChallengeID,
+  userId: UserID
+) {
+  const { data } = await agentAuthed.post(
+    `/challenge/${challengeId}/reviewer`,
+    { userId }
+  );
+  return data;
+}
+
+export async function deleteRatingJudge(
+  challengeId: ChallengeID,
+  userId: UserID
+) {
+  const { data } = await agentAuthed.delete(
+    `/challenge/${challengeId}/reviewer`,
+    {
+      data: { userId },
+    }
+  );
+  return data;
 }
