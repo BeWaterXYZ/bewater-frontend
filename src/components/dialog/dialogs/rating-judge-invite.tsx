@@ -105,7 +105,7 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
             >
               <div className="flex gap-2">
                 <div>
-                  <Avatar className="w-8 h-8" />
+                  <Avatar className="w-8 h-8" src={rv.avatarURI} />
                 </div>
                 <div>
                   <p className="body-2">
