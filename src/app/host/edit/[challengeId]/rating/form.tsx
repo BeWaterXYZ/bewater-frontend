@@ -1,10 +1,16 @@
 "use client";
 import { Avatar } from "@/components/avatar/avatar";
 import { useDialogStore } from "@/components/dialog/store";
-import { Challenge } from "@/services/types";
+import { Challenge, Project } from "@/services/types";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 
-export function EditRating({ challenge }: { challenge: Challenge }) {
+export function EditRating({
+  challenge,
+  projects,
+}: {
+  challenge: Challenge;
+  projects: Project[];
+}) {
   let dialog = useDialogStore();
 
   let openRatingDimension = () => {
@@ -37,10 +43,7 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
                     className="relative"
                     style={{ left: -8 * index }}
                   >
-                    <Avatar
-                      // src={m.userProfile.avatarURI}
-                      className="w-8 h-8"
-                    />
+                    <Avatar src={rv.avatarURI} className="w-8 h-8" />
                   </div>
                 );
               })}
@@ -61,7 +64,7 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
             </p>
           </div>
           <div>
-            {challenge.scoreDimension.map((d) => (
+            {(challenge.scoreDimension ?? []).map((d) => (
               <div key={d.text} className="body-3 text-grey-300">
                 {d.text}
               </div>
@@ -79,26 +82,57 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
           <p className="body-2">Score Details</p>
 
           <div>
-            <div className="p-4 bg-[#1A1C40] rounded flex justify-between items-center">
-              <div className="flex-1">
-                <p className="body-3">Yet anothjer layer 2</p>
-                <p className="body-4 text-grey-300">Dream team</p>
-              </div>
-              <div className="flex flex-1 justify-between items-center">
-                <div>
-                  <p className="text-grey-300 body-3">All Judges done</p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div>
-                    <p className="text-grey-300 body-3">score</p>
-                    <p className="text-day body-1">48/60</p>
+            {projects.map((proj) => {
+              return (
+                <div
+                  className="p-4 bg-[#1A1C40] rounded flex justify-between items-center my-2"
+                  key={proj.id}
+                >
+                  <div className="flex-1">
+                    <p className="body-3">{proj.name}</p>
+                    <div className="flex gap-2 items-center">
+                      <p className="body-4 text-grey-300">{proj.team.name}</p>
+                      {proj.tags.map((t) => {
+                        return (
+                          <div key={t} className="text-grey-300 body-5 px-1 rounded-sm border ">
+                            {t}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                  <div>
-                    <CaretRightIcon />
+                  <div className="flex flex-1 justify-between items-center">
+                    <div>
+                      <p className="text-grey-300 body-4">
+                        {proj.projectScore.length === challenge.reviewers.length
+                          ? "All Judges done"
+                          : `${proj.projectScore.length}/${challenge.reviewers.length} judges done`}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <div>
+                        <p className="text-grey-300 body-3">score</p>
+                        <p className="text-day body-1">
+                          {proj.projectScore.length > 0
+                            ? `${
+                                proj.projectScore
+                                  .flatMap((s) => s.mark)
+                                  .reduce(
+                                    (partialSum, a) => partialSum + a,
+                                    0
+                                  ) / proj.projectScore.length
+                              }/${(challenge.scoreDimension ?? []).length * 10}`
+                            : "--"}
+                        </p>
+                      </div>
+                      <div>
+                        <CaretRightIcon />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
         <div>
