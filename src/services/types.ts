@@ -173,6 +173,7 @@ export interface Reviewer {
   userName?: string;
   fullName?: string;
   firstName?: string;
+  avatarURI?: string;
 }
 
 export const minusMileStones = [
