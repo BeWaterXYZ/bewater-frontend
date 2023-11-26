@@ -10,7 +10,7 @@ export function SearchInput(props: SearchInputProps) {
       </div>
       <input
         className="body-4 pl-8 border border-grey-800 bg-transparent block flex-1 outline-none text-white  h-[36x] py-2 rounded focus:border-day"
-        placeholder="Search for team or project name"
+        placeholder={props.placeholder ?? 'Search for team or project name'}
         {...props}
       />
     </div>

@@ -1,7 +1,28 @@
+"use client";
+import { Select } from "@/components/form/control";
+import { SearchInput } from "@/components/molecules/search-input";
 import { Challenge, Project } from "@/services/types";
 import { CaretRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { useState } from "react";
+import { ScoreDetail } from "./score-detail";
 
+function getProjects(projects: Project[], search: string, tag: string) {
+  let res = projects;
+  if (search) {
+    res = res.filter((proj) =>
+      proj.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
+  if (tag) {
+    res = res.filter((proj) => proj.tags.some((t) => t === tag));
+  }
+
+  return res;
+}
+function getTags(projects: Project[]) {
+  return Array.from(new Set(projects.flatMap((proj) => proj.tags)));
+}
 export function ScoreDetails({
   projects,
   challenge,
@@ -9,11 +30,42 @@ export function ScoreDetails({
   projects: Project[];
   challenge: Challenge;
 }) {
+  let [search, setSearch] = useState("");
+  let [tag, setTag] = useState("");
+  let projects_ = getProjects(projects, search, tag);
   return (
     <div className="bg-latenight border border-[#24254E] rounded p-4">
       <p className="body-2">Score Details</p>
+      <div className="flex gap-2 items-center">
+        <div>
+          <label>Tags:</label>
+          <select
+            defaultValue={tag}
+            onChange={(e) => {
+              setTag(e.target.value);
+            }}
+            className="bg-[#0F1021] text-white/90 text-[14px] font-normal"
+          >
+            <option key={tag} value={""}>
+              All
+            </option>
+            {getTags(projects).map((tag) => {
+              return (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <SearchInput
+          placeholder="Search project name"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
       <div>
-        {projects.map((proj) => {
+        {projects_.map((proj) => {
           return (
             <div
               className="p-4 bg-[#1A1C40] rounded flex justify-between items-center my-2"
@@ -58,11 +110,7 @@ export function ScoreDetails({
                     </p>
                   </div>
                   <div>
-                    <Link
-                      href={`/campaigns/${challenge.id}/projects/${proj.id}`}
-                    >
-                      <CaretRightIcon />
-                    </Link>
+                   <ScoreDetail challenge={challenge} project={proj}/>
                   </div>
                 </div>
               </div>
