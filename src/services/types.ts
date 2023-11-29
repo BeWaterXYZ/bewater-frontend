@@ -113,6 +113,9 @@ export interface Challenge {
   linkText?: string;
   result?: Array<ChallengeTrackResult>;
   agenda?: Array<AgendaDay>;
+  future: {
+    announceShortlist: string;
+  };
 }
 
 export interface AgendaDay {
@@ -307,4 +310,11 @@ export interface RepoLatestCommit {
 export interface ChallengeInvitation {
   email: string;
   status: "WaitingToJoin" | "Joined";
+}
+
+export interface Shortlist {
+  name: string;
+  display: boolean;
+  projectIdArr: string[];
+  prpjects?: Project[];
 }

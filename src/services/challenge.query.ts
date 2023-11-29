@@ -1,12 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  UpdateShortlistForm,
   deleteRatingJudge,
   getChallengeById,
   getChallengeInvitation,
+  getChallengeShortlist,
   getHostChallengeList,
   inviteRatingJudge,
   inviteToChallenge,
   updateChallenge,
+  updateChallengeShortlist,
 } from "./challenge";
 import { ChallengeID, UserID } from "./types";
 
@@ -24,6 +27,15 @@ export function useFetchChallenges(id?: string) {
     queryKey: ["challenges"],
     queryFn: async () => {
       return getHostChallengeList(id);
+    },
+  });
+}
+
+export function useFetchChallengeShortlist(challengeId: ChallengeID) {
+  return useQuery({
+    queryKey: ["challenges", "shortlist", challengeId],
+    queryFn: async () => {
+      return getChallengeShortlist(challengeId);
     },
   });
 }
@@ -77,6 +89,18 @@ export function useMutationDeleteRatingJudge(challengeId: ChallengeID) {
     {
       onSuccess: (data, variables, context) => {
         queryClient.invalidateQueries(["challenges", challengeId]);
+      },
+    }
+  );
+}
+
+export function useMutationUpdateShortlist(challengeId: ChallengeID) {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (form: UpdateShortlistForm) => updateChallengeShortlist(challengeId, form),
+    {
+      onSuccess: (data, variables, context) => {
+        queryClient.invalidateQueries(["challenges", "shortlist", challengeId]);
       },
     }
   );

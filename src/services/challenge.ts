@@ -1,7 +1,13 @@
 import { RoleUnion } from "@/constants/options/role";
 import { SkillUnion } from "@/constants/options/skill";
 import { agentAnon, agentAuthed } from "./agent";
-import { Challenge, ChallengeID, ChallengeInvitation, UserID } from "./types";
+import {
+  Challenge,
+  ChallengeID,
+  ChallengeInvitation,
+  Shortlist,
+  UserID,
+} from "./types";
 
 export interface CreateTeamRequest {
   name: string;
@@ -133,5 +139,27 @@ export async function deleteRatingJudge(
       data: { userId },
     }
   );
+  return data;
+}
+
+export async function getChallengeShortlist(challengeId: ChallengeID) {
+  const { data } = await agentAuthed.get<Shortlist[]>(
+    `/challenge/${challengeId}/shortlist`
+  );
+  return data;
+}
+export type UpdateShortlistForm = {
+  shortlist: Shortlist[];
+  announceShortlist: null | string;
+};
+export async function updateChallengeShortlist(
+  challengeId: ChallengeID,
+  form: UpdateShortlistForm
+) {
+  const { data } = await agentAuthed.post(
+    `/host-challenge/${challengeId}/shortlist`,
+    form
+  );
+
   return data;
 }

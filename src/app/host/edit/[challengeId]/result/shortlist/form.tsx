@@ -1,7 +1,7 @@
 "use client";
 import { DatePicker } from "@/components/form/datepicker";
 import { validationSchema } from "@/schema";
-import { Challenge, Project } from "@/services/types";
+import { Challenge, Project, Shortlist } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import clsx from "clsx";
@@ -15,15 +15,18 @@ import {
   useForm,
 } from "react-hook-form";
 import { z } from "zod";
+import { SearchInput } from "@/components/molecules/search-input";
+import { useMutationUpdateShortlist } from "@/services/challenge.query";
+import { Switch } from "@/components/form/switch";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
-  tracks: z.array(
+  shortlist: z.array(
     z.object({
       id: z.string().optional(),
       name: validationSchema.text,
-      projects: z.array(z.object({ id: z.string() })),
-      enabled: z.boolean(),
+      projectIdArr: z.array(z.object({ projectId: z.string() })),
+      display: z.boolean(),
     })
   ),
 });
@@ -33,9 +36,11 @@ type Inputs = z.infer<typeof schema>;
 export function Shortlist({
   challenge,
   projects,
+  shortlist,
 }: {
   challenge: Challenge;
   projects: Project[];
+  shortlist: Shortlist[];
 }) {
   let {
     control,
@@ -43,30 +48,43 @@ export function Shortlist({
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      tracks: (challenge.track ?? []).map((t) => ({
-        name: t,
-        projects: [],
-        enabled: true,
-      })),
+      announceShortlist: challenge.future.announceShortlist,
+      shortlist:
+        shortlist.length > 0
+          ? shortlist.map((sl) => ({
+              ...sl,
+              projectIdArr: sl.projectIdArr.map((pid) => ({ projectId: pid })),
+            }))
+          : (challenge.track ?? []).map((t) => ({
+              name: t,
+              projects: [],
+              display: true,
+            })),
     },
   });
-  let [announceNow, announceNowSet] = useState("0");
+  let mutation = useMutationUpdateShortlist(challenge.id);
+  let [announceNow, announceNowSet] = useState(
+    !challenge.future.announceShortlist
+  );
   const onSubmit = async (formData: Inputs) => {
-    // console.log(formData);
     try {
-      // await mutation.mutateAsync({
-      //   id: challenge.id,
-      //   ...formData,
-      // });
+      await mutation.mutateAsync({
+        announceShortlist: announceNow
+          ? null
+          : formData.announceShortlist ?? null,
+        shortlist: formData.shortlist.map((sl) => ({
+          ...sl,
+          projectIdArr: sl.projectIdArr.map((p) => p.projectId),
+        })),
+      });
     } catch (err) {}
   };
   const { fields } = useFieldArray({
     control,
-    name: "tracks",
+    name: "shortlist",
   });
   return (
     <div>
@@ -79,7 +97,19 @@ export function Shortlist({
                 key={f.id}
                 className="bg-[#11111B] border border-[#323232] p-4 my-4"
               >
-                <p className="body-3">Track - ${f.name}</p>
+                <div className="flex justify-between">
+                  <p className="body-3">Track - {f.name}</p>
+                  <div>
+                    <Switch
+                      control={control}
+                      name={`shortlist.${index}.display`}
+                      label={""}
+                      onValueChange={(v) => {
+                        setValue(`shortlist.${index}.display`, v);
+                      }}
+                    />
+                  </div>
+                </div>
 
                 <Projects
                   index={index}
@@ -101,10 +131,10 @@ export function Shortlist({
 
           <RadioGroup.Root
             className="flex flex-col gap-2"
-            defaultValue={announceNow}
-            value={announceNow}
+            defaultValue={announceNow ? "0" : "1"}
+            value={announceNow ? "0" : "1"}
             onValueChange={(v) => {
-              announceNowSet(v);
+              announceNowSet(v === "0");
             }}
           >
             <div
@@ -137,18 +167,22 @@ export function Shortlist({
                 <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
               </RadioGroup.Item>
               <label className="text-[14px]" htmlFor={"ann-item-1"}>
-                Scheduled announcement time
+                Schedule announcement time
               </label>
             </div>
           </RadioGroup.Root>
 
-          <DatePicker
-            label="Start Date"
-            control={control}
-            onValueChange={(v) => setValue("announceShortlist", v)}
-            {...register("announceShortlist")}
-            error={errors["announceShortlist"]}
-          />
+          {!announceNow && (
+            <DatePicker
+              label="Announce Date"
+              control={control}
+              onValueChange={(v) => setValue("announceShortlist", v)}
+              {...register("announceShortlist")}
+              error={errors["announceShortlist"]}
+            />
+          )}
+
+          <button className="btn btn-primary my-8">Save</button>
         </form>
       </div>
     </div>
@@ -171,23 +205,45 @@ function Projects({
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
     {
       control,
-      name: `tracks.${index}.projects`,
+      name: `shortlist.${index}.projectIdArr`,
     }
   );
+  let [search, setSearch] = useState("");
+  let projects_ = projects.filter((p) =>
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
+  let addProject = (projectId: string) => () => {
+    append({
+      projectId: projectId,
+    });
+  };
+  let removeProject = (projectIndex: number) => () => {
+    remove(projectIndex);
+  };
   return (
     <div>
-      <p className="body-4 text-grey-600 pt-2">Projects</p>
+      <p className="body-4 text-grey-600 py-2">Projects</p>
       {fields.map((field, i) => {
+        let project = projects.find((p) => p.id === field.projectId);
         return (
-          <div className=" grid grid-cols-3 gap-4" key={field.id}>
-            {field.id}
+          <div
+            className="  body-3 bg-[#04051B] border border-[#323232] p-4 my-4 flex justify-between items-center"
+            key={field.id}
+          >
+            <div>{project?.name}</div>
+            <div>{project?.team.name}</div>
+            <div>
+              <button className="text-grey-300" onClick={removeProject(i)}>
+                Remove
+              </button>
+            </div>
           </div>
         );
       })}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button
-            className="IconButton"
+            className="btn btn-secondary-invert"
             aria-label="Customise options"
             type="button"
           >
@@ -195,8 +251,28 @@ function Projects({
           </button>
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-            123
+          <DropdownMenu.Content
+            className="bg-[#11111B] border border-[#323232] p-4 my-4"
+            sideOffset={5}
+          >
+            <SearchInput
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search project name"
+            />
+            <div className="max-h-[400px] overflow-y-scroll">
+              {projects_.map((proj) => {
+                return (
+                  <div
+                    key={proj.id}
+                    className="body-3 py-2"
+                    onClick={addProject(proj.id)}
+                  >
+                    {proj.name}
+                  </div>
+                );
+              })}
+            </div>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
