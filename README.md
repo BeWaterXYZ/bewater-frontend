@@ -3,24 +3,24 @@
 This repo is managed via [Yarn](https://yarnpkg.com).
 
 ## Requirements
-Node >= 16.8
-yarn >= 1.22.15
+Node >= 18
+pnpm >= 8.10.3
 
 ## Recipes
 
 * Install dependencies
-  * `yarn install`
+  * `pnpm install`
 
 * Start dev website with qa backend server
   * set `ENVIRONMENT=qa` in `.env` file
-  * `yarn dev`
+  * `pnpm dev`
 
 * Build website
-  * `yarn build`
+  * `pnpm build`
 * Export website
-  * `yarn export`
+  * `pnpm export`
 * Lint everything
-  * `yarn lint`
+  * `pnpm lint`
 
 
 ### .env file
