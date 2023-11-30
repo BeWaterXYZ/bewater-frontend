@@ -18,13 +18,15 @@ import { z } from "zod";
 import { SearchInput } from "@/components/molecules/search-input";
 import { useMutationUpdateShortlist } from "@/services/challenge.query";
 import { Switch } from "@/components/form/switch";
+import { Input } from "@/components/form/control";
+import { CheckIcon } from "@radix-ui/react-icons";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
   shortlist: z.array(
     z.object({
       id: z.string().optional(),
-      name: validationSchema.text,
+      name: z.string(),
       projectIdArr: z.array(z.object({ projectId: z.string() })),
       display: z.boolean(),
     })
@@ -95,7 +97,7 @@ export function Shortlist({
             return (
               <div
                 key={f.id}
-                className="bg-[#11111B] border border-[#323232] p-4 my-4"
+                className="bg-[#0B0C24] border border-[#323232] p-4 my-4"
               >
                 <div className="flex justify-between">
                   <p className="body-3">Track - {f.name}</p>
@@ -110,6 +112,11 @@ export function Shortlist({
                     />
                   </div>
                 </div>
+                <Input
+                  label="Display Name"
+                  {...register(`shortlist.${index}.name`)}
+                  error={errors?.["shortlist"]?.[index]?.["name"]}
+                />
 
                 <Projects
                   index={index}
@@ -222,28 +229,35 @@ function Projects({
   };
   return (
     <div>
-      <p className="body-4 text-grey-600 py-2">Projects</p>
-      {fields.map((field, i) => {
-        let project = projects.find((p) => p.id === field.projectId);
-        return (
-          <div
-            className="  body-3 bg-[#04051B] border border-[#323232] p-4 my-4 flex justify-between items-center"
-            key={field.id}
-          >
-            <div>{project?.name}</div>
-            <div>{project?.team.name}</div>
-            <div>
-              <button className="text-grey-300" onClick={removeProject(i)}>
-                Remove
-              </button>
+      <p className="body-4  py-1 text-grey-500 font-bold">Projects</p>
+      {fields.length > 0 ? (
+        fields.map((field, i) => {
+          let project = projects.find((p) => p.id === field.projectId);
+          return (
+            <div
+              className=" body-3 bg-[#04051B] border border-[#1E293B] p-4 mb-4 flex justify-between items-center"
+              key={field.id}
+            >
+              <div className="flex-1">{project?.name}</div>
+              <div className="flex-1">{project?.team.name}</div>
+              <div className="">
+                <button className="text-grey-300" onClick={removeProject(i)}>
+                  Remove
+                </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <div className="border border-grey-800 p-4 body-4 mb-4 text-grey-300">
+          Please add a project for this track or if you don’t want to show this
+          track you can hidden it.
+        </div>
+      )}
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <button
-            className="btn btn-secondary-invert"
+            className="btn btn-secondary"
             aria-label="Customise options"
             type="button"
           >
@@ -252,7 +266,7 @@ function Projects({
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
           <DropdownMenu.Content
-            className="bg-[#11111B] border border-[#323232] p-4 my-4"
+            className="bg-[#0F1021] border border-[#1E293B] p-4 my-4"
             sideOffset={5}
           >
             <SearchInput
@@ -262,13 +276,15 @@ function Projects({
             />
             <div className="max-h-[400px] overflow-y-scroll">
               {projects_.map((proj) => {
+                let selected = fields.some((f) => f.projectId === proj.id);
                 return (
                   <div
                     key={proj.id}
-                    className="body-3 py-2"
-                    onClick={addProject(proj.id)}
+                    className="body-3 py-2 flex justify-between items-center"
+                    onClick={!selected ? addProject(proj.id) : () => {}}
                   >
-                    {proj.name}
+                    <div className="max-w-[320px]">{proj.name} </div>
+                    <div>{selected && <CheckIcon />}</div>
                   </div>
                 );
               })}
