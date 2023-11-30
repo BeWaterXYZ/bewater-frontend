@@ -19,7 +19,8 @@ import { SearchInput } from "@/components/molecules/search-input";
 import { useMutationUpdateShortlist } from "@/services/challenge.query";
 import { Switch } from "@/components/form/switch";
 import { Input } from "@/components/form/control";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from "@radix-ui/react-icons";
+import { useToastStore } from "@/components/toast/store";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
@@ -44,6 +45,8 @@ export function Shortlist({
   projects: Project[];
   shortlist: Shortlist[];
 }) {
+  const addToast = useToastStore((s) => s.add);
+
   let {
     control,
     register,
@@ -82,12 +85,23 @@ export function Shortlist({
           projectIdArr: sl.projectIdArr.map((p) => p.projectId),
         })),
       });
-    } catch (err) {}
+      addToast({ title: "Updated", type: "success" });
+    } catch (err) {
+      addToast({ title: `${err}` });
+    }
   };
-  const { fields } = useFieldArray({
+  const { fields, move, append } = useFieldArray({
     control,
     name: "shortlist",
   });
+
+  const onAddTrack = () => {
+    append({
+      name: "",
+      projectIdArr: [],
+      display: true,
+    });
+  };
   return (
     <div>
       <div className="my-8">
@@ -101,7 +115,25 @@ export function Shortlist({
               >
                 <div className="flex justify-between">
                   <p className="body-3">Track - {f.name}</p>
-                  <div>
+                  <div className="flex">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        move(index, Math.max(index - 1, 0));
+                      }}
+                    >
+                      <ArrowUpIcon className="mr-1 text-grey-500" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        move(index, Math.min(index + 1, fields.length - 1));
+                      }}
+                    >
+                      <ArrowDownIcon className="mr-1 text-grey-500" />
+                    </button>
                     <Switch
                       control={control}
                       name={`shortlist.${index}.display`}
@@ -129,7 +161,16 @@ export function Shortlist({
             );
           })}
 
-          <p className="body-2">Announcement</p>
+          <button
+            className="btn btn-secondary"
+            aria-label="Customise options"
+            type="button"
+            onClick={onAddTrack}
+          >
+            + Add track
+          </button>
+
+          <p className="body-2 mt-8">Announcement</p>
           <p className="body-3 text-grey-600 mb-4">
             The results will be publicly displayed at the campaign page, and a
             notification email will be posted to the team members in the
