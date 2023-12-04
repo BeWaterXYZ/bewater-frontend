@@ -335,7 +335,7 @@ export default async function ChallengeIntro({ params }: any) {
             <PrizeSection19 t={t} lng={lng} challenge={challenge} />
           ) : challenge.id === "42" ? (
             <ScheduleSection42 />
-          ) : (
+          ) : (!challenge.yotadata?.disableTrack &&
             <div className="container">
               <div className={clsx("flex flex-col items-center px-0 pb-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight", {
                 'gap-20 !pt-20': (challenge.yotadata?.award?.title || !!challenge.totalAward)
