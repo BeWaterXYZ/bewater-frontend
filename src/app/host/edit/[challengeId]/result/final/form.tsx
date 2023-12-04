@@ -26,13 +26,14 @@ import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 
 const schema = z.object({
-  announceShortlist: z.string().optional(),
+  announceResult: z.string().optional(),
   result: z.array(
     z.object({
       track: z.string(),
       awards: z.array(
         z.object({
           awardName: validationSchema.text,
+          prize: z.number().optional(),
           amount: validationSchema.nonNegative,
           count: validationSchema.positive,
           teamIds: z.array(z.object({ teamId: z.string() })),
@@ -64,18 +65,92 @@ export function FinalResult({
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      announceShortlist: challenge.future.announceShortlist,
-      result: [],
+      announceResult: challenge.future.announceResult,
+      result: challenge.result
+        ? challenge.result.map((r) => {
+            return {
+              track: r.track,
+              awards: r.awards.reduce((prev, cur) => {
+                let award = prev.find(
+                  (a) => a.prize === cur.prize || a.awardName === cur.awardName
+                );
+                if (award) {
+                  award.teamIds.push({ teamId: cur.teamId.toString() });
+                  award.count = (+award.count + 1).toString();
+                } else {
+                  prev.push({
+                    awardName: cur.awardName ?? "",
+                    amount: cur.award?.toString() ?? "",
+                    count: "1",
+                    teamIds: [{ teamId: cur.teamId.toString() }],
+                    prize: cur.prize,
+                  });
+                }
+
+                return prev;
+              }, [] as Inputs["result"][number]["awards"]),
+            };
+          })
+        : (
+            challenge.track ??
+            challenge.awardAssorts?.map((aa) => aa.name) ??
+            []
+          ).map((t) => ({
+            track: t,
+            awards: [
+              {
+                awardName: "Winner",
+                amount: "10000",
+                count: "1",
+                teamIds: [],
+                prize: 1,
+              },
+              {
+                awardName: "2nd place",
+                amount: "5000",
+                count: "2",
+
+                teamIds: [],
+                prize: 2,
+              },
+              {
+                awardName: "3rd place",
+                amount: "3000",
+                count: "3",
+
+                teamIds: [],
+                prize: 3,
+              },
+            ],
+          })),
     },
   });
   let mutation = useMutationUpdateChallenge(challenge.id);
+  let mutation2 = useMutationUpdateShortlist(challenge.id);
+
   let [announceNow, announceNowSet] = useState(
     !challenge.future.announceShortlist
   );
   const onSubmit = async (formData: Inputs) => {
     try {
+      await mutation2.mutateAsync({
+        shortlist: shortlist,
+        announceResult: formData.announceResult,
+      });
       await mutation.mutateAsync({
-        result: [],
+        id: challenge.id,
+
+        result: formData.result.map((r) => ({
+          track: r.track,
+          awards: r.awards.flatMap((a) =>
+            a.teamIds.map((tm) => ({
+              teamId: +tm.teamId,
+              prize: a.prize,
+              awardName: a.awardName,
+              award: +a.amount,
+            }))
+          ),
+        })),
       });
       addToast({ title: "Updated", type: "success" });
     } catch (err) {
@@ -96,6 +171,7 @@ export function FinalResult({
           amount: "10000",
           count: "1",
           teamIds: [],
+          prize: 1,
         },
         {
           awardName: "2nd place",
@@ -103,6 +179,7 @@ export function FinalResult({
           count: "2",
 
           teamIds: [],
+          prize: 2,
         },
         {
           awardName: "3rd place",
@@ -110,6 +187,7 @@ export function FinalResult({
           count: "3",
 
           teamIds: [],
+          prize: 3,
         },
       ],
     });
@@ -184,9 +262,8 @@ export function FinalResult({
 
           <p className="body-2 mt-8">Announcement</p>
           <p className="body-3 text-grey-600 mb-4">
-            The results will be publicly displayed at the campaign page, and a
-            notification email will be posted to the team members in the
-            results.{" "}
+            The final results will be publicly displayed on the event page and a
+            notification email will be sent to the project team members.
           </p>
 
           <RadioGroup.Root
@@ -236,9 +313,9 @@ export function FinalResult({
             <DatePicker
               label="Announce Date"
               control={control}
-              onValueChange={(v) => setValue("announceShortlist", v)}
-              {...register("announceShortlist")}
-              error={errors["announceShortlist"]}
+              onValueChange={(v) => setValue("announceResult", v)}
+              {...register("announceResult")}
+              error={errors["announceResult"]}
             />
           )}
 
@@ -303,7 +380,6 @@ function Awards({
               </div>
               <div className="flex-1">
                 <Input
-                  readOnly={i < 3}
                   label="Quantity"
                   {...register(`result.${index}.awards.${i}.count`)}
                   error={
@@ -313,7 +389,6 @@ function Awards({
               </div>
               <div className="flex-1">
                 <Input
-                  readOnly={i < 3}
                   label="Prize"
                   {...register(`result.${index}.awards.${i}.amount`)}
                   error={

@@ -114,7 +114,8 @@ export interface Challenge {
   result?: Array<ChallengeTrackResult>;
   agenda?: Array<AgendaDay>;
   future: {
-    announceShortlist: string;
+    announceShortlist?: string;
+    announceResult?: string;
   };
   shortlist?: Shortlist[];
 }
