@@ -6,7 +6,7 @@ import { useFetchChallengeById } from '@/services/challenge.query';
 import { useFetchChallengeProjects } from '@/services/project.query';
 import Loading from '../loading';
 import { ProjectFilter } from './project-filter';
-import { Project, UserProfile, ProjectStatus } from '@/services/types';
+import { Project, UserProfile, ProjectStatus, Challenge } from '@/services/types';
 import { useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -97,7 +97,8 @@ export default function ChallengeProjects({ params, searchParams }: any) {
     sort,
   });
   const showFilter = () => {
-    showDialog('project_filter', projects);
+    showDialog('project_filter', { challenge, projects }
+    );
   };
 
   if (projects.length === 0) {
@@ -121,7 +122,7 @@ export default function ChallengeProjects({ params, searchParams }: any) {
   return (
     <div className="container flex flex-wrap gap-10 pt-10">
       <div className="w-full lg:w-[200px] hidden lg:block">
-        <ProjectFilter projects={projects} />
+        <ProjectFilter projects={projects} challenge={challenge} />
       </div>
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}

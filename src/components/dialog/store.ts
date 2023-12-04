@@ -10,7 +10,7 @@ export type Dialogs = {
   team_invite_member?: Team;
   team_filter?: Team[];
   email_change?: boolean;
-  project_filter?: Project[];
+  project_filter?: { challenge: Challenge; projects: Project[]; };
   project_edit?: Project;
   project_rating?: {
     project: Project;

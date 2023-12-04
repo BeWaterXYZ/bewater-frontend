@@ -116,6 +116,7 @@ export interface Challenge {
   future: {
     announceShortlist: string;
   };
+  shortlist?: Shortlist[];
 }
 
 export interface AgendaDay {
