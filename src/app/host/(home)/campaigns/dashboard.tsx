@@ -140,23 +140,30 @@ export function Dashboard() {
   const [challenges, setChallenges] = useState([] as Challenge[]);
   const [loading, setLoading] = useState(false);
   const [more, setMore] = useState(true);
-  const org = useOrganization();
+  const roleId = useOrganization().organization?.id ?? user?.id;
 
   const isAdmin = isLoaded && isSignedIn && user?.publicMetadata?.teamMember;
   useLoadingWhen(loading);
 
-  if (isLoaded && isSignedIn && challenges.length === 0 && !loading && more) {
-    getHostChallengePage('0').then((res) => {
-      if (res.status === 200) {
-        setChallenges(challenges.concat(res.data.challenges));
-        if (res.data.challenges.length === 0) {
-          setMore(false);
+  const initChallengePage = (force?: boolean) => {
+    if (force || (isLoaded && isSignedIn && challenges.length === 0 && !loading && more)) {
+      getHostChallengePage('0').then((res) => {
+        if (res.status === 200) {
+          setChallenges([].concat(res.data.challenges));
+          if (res.data.challenges.length === 0) {
+            setMore(false);
+          }
+          setLoading(false);
         }
-        setLoading(false);
-      }
-    });
-    setLoading(true);
+      });
+      setLoading(true);
+    }
   }
+
+  React.useEffect(() => {
+    initChallengePage(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [roleId]);
 
   React.useEffect(() => {
     const node = containerRef.current;

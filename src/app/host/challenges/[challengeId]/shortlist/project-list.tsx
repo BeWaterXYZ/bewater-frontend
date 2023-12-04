@@ -189,8 +189,8 @@ export function ProjectList({ challengeId, projects, challenge }: {
                       onChange={handleChange(it)}
                       className="bg-[#0F1021] text-white/90 text-[14px] font-normal">
                       <option value="INITIATED">INITIATED（默认)</option>
-                      <option value="SELECTED">SELECTED（筛选)</option>
                       <option value="REJECTED">REJECTED（排除)</option>
+                      <option disabled={true} value="SELECTED">SELECTED（筛选)</option>
                     </select>
                   </div>
                 </div>

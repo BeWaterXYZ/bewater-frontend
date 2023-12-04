@@ -34,6 +34,8 @@ export default function Page({ params }: any) {
 
   const { lng } = segmentSchema.lng.parse(params);
 
+  // console.log(project)
+
   const share = () => {
     if (!window) return;
     let url =

@@ -62,7 +62,6 @@ export default authMiddleware({
     '/',
     '/en',
     '/zh',
-    '/host',
     '/zh/campaigns(.*)',
     '/en/campaigns(.*)',
     '/zh/user(.*)',

@@ -1,16 +1,26 @@
 "use client";
+import { Avatar } from "@/components/avatar/avatar";
 import { useDialogStore } from "@/components/dialog/store";
-import { Challenge } from "@/services/types";
+import { Challenge, Project } from "@/services/types";
 import { CaretRightIcon } from "@radix-ui/react-icons";
+import { ScoreDetails } from "./score-details";
+import { OverallProgress } from "./overall-progress";
+import { Ranking } from "./ranking";
 
-export function EditRating({ challenge }: { challenge: Challenge }) {
+export function EditRating({
+  challenge,
+  projects,
+}: {
+  challenge: Challenge;
+  projects: Project[];
+}) {
   let dialog = useDialogStore();
 
   let openRatingDimension = () => {
     dialog.open("rating_dimensions", { challenge });
   };
   let openRatingJudge = () => {
-    dialog.open("rating_judge_invite", { challenge });
+    dialog.open("rating_judge_invite", { challengeId: challenge.id });
   };
   return (
     <div>
@@ -27,7 +37,21 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
               Selected users can submit scores
             </p>
           </div>
-          <div></div>
+          <div>
+            <div className="flex ">
+              {challenge.reviewers.map((rv, index) => {
+                return (
+                  <div
+                    key={rv.userId}
+                    className="relative"
+                    style={{ left: -8 * index }}
+                  >
+                    <Avatar src={rv.avatarURI} className="w-8 h-8" />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
           <div>
             <button className="btn btn-secondary" onClick={openRatingJudge}>
               Select Judges
@@ -43,7 +67,7 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
             </p>
           </div>
           <div>
-            {challenge.scoreDimension.map((d) => (
+            {(challenge.scoreDimension ?? []).map((d) => (
               <div key={d.text} className="body-3 text-grey-300">
                 {d.text}
               </div>
@@ -56,40 +80,12 @@ export function EditRating({ challenge }: { challenge: Challenge }) {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-[1fr,250px] text-white gap-8">
-        <div className="bg-latenight border border-[#24254E] rounded p-4">
-          <p className="body-2">Score Details</p>
-
-          <div>
-            <div className="p-4 bg-[#1A1C40] rounded flex justify-between items-center">
-              <div className="flex-1">
-                <p className="body-3">Yet anothjer layer 2</p>
-                <p className="body-4 text-grey-300">Dream team</p>
-              </div>
-              <div className="flex flex-1 justify-between items-center">
-                <div>
-                  <p className="text-grey-300 body-3">All Judges done</p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div>
-                    <p className="text-grey-300 body-3">score</p>
-                    <p className="text-day body-1">48/60</p>
-                  </div>
-                  <div>
-                    <CaretRightIcon />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="grid grid-cols-[1fr,300px] text-white gap-8">
+        <ScoreDetails challenge={challenge} projects={projects} />
         <div>
-          <div className="bg-latenight border border-[#24254E] rounded p-4 mb-4">
-            <p className="body-2">Overall Progress</p>
-          </div>
-          <div className="bg-latenight border border-[#24254E] rounded p-4 mb-4">
-            <p className="body-2">Ranking</p>
-          </div>
+         <OverallProgress challenge={challenge} projects={projects}/>
+         <Ranking challenge={challenge} projects={projects}/>
+         
         </div>
       </div>
     </div>

@@ -1,13 +1,9 @@
-import { Header } from '@/components/header';
-import { Footer } from '@/components/footer';
+import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
 
-export default function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className=' '>
+    <div className=" ">
       {children}
       <Footer lng={"en"} />
     </div>

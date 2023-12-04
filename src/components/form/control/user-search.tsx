@@ -1,18 +1,18 @@
-import { Avatar } from '@/components/avatar/avatar';
-import { UserID, UserProfile } from '@/services/types';
-import { searchUsers } from '@/services/user';
-import clsx from 'clsx';
-import React, { ForwardedRef, useId } from 'react';
-import type { FieldError } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
+import { Avatar } from "@/components/avatar/avatar";
+import { UserID, UserProfile } from "@/services/types";
+import { searchUsers } from "@/services/user";
+import clsx from "clsx";
+import React, { ForwardedRef, useId } from "react";
+import type { FieldError } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import {
   ClassNamesConfig,
   components,
   OptionProps,
   SingleValue,
   SingleValueProps,
-} from 'react-select';
-import AsyncSelect from 'react-select/async';
+} from "react-select";
+import AsyncSelect from "react-select/async";
 
 const OptionComp = (props: OptionProps<UserProfile>) => {
   let { data } = props;
@@ -20,15 +20,10 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
     <components.Option {...props}>
       <div className="flex gap-2">
         <div>
-          <Avatar
-            className="w-8 h-8"
-            src={data.avatarURI}
-          />
+          <Avatar className="w-8 h-8" src={data.avatarURI} />
         </div>
         <div className="flex flex-col justify-around">
-          <div className="body-4 text-grey-400">
-            {data.userName}
-          </div>
+          <div className="body-4 text-grey-400">{data.userName}</div>
           <div className="body-4 text-grey-600">@{data.userName}</div>
         </div>
       </div>
@@ -38,13 +33,9 @@ const OptionComp = (props: OptionProps<UserProfile>) => {
 
 const SingleValueComp = (props: SingleValueProps<UserProfile>) => {
   return (
-    <div className=" flex gap-2" style={{ gridArea: '1/1/2/3' }}>
-      <Avatar
-        className="w-5 h-5"
-        src={props.data.avatarURI}
-      />
+    <div className=" flex gap-2 ml-2" style={{ gridArea: "1/1/2/3" }}>
+      <Avatar className="w-5 h-5" src={props.data.avatarURI} />
       <span className="body-4 text-grey-400">
-        {' '}
         {props.data.userName ?? props.data.fullName}
       </span>
     </div>
@@ -66,7 +57,7 @@ const searchUserByKeyword =
 
 let cacheOptions: UserProfile[] = [];
 
-interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
+interface UserSearchProps extends React.ComponentPropsWithoutRef<"select"> {
   label?: string;
   name: string;
   exclude?: UserID[];
@@ -76,7 +67,7 @@ interface UserSearchProps extends React.ComponentPropsWithoutRef<'select'> {
 
 export const UserSearch = React.forwardRef(function UserSearch_(
   props: UserSearchProps,
-  ref: ForwardedRef<HTMLSelectElement>,
+  ref: ForwardedRef<HTMLSelectElement>
 ) {
   const {
     label,
@@ -91,27 +82,27 @@ export const UserSearch = React.forwardRef(function UserSearch_(
   const id = useId();
   const styles: ClassNamesConfig<UserProfile> = {
     control: ({ isFocused }) => {
-      return clsx('control !p-0 !flex !shadow-none', {
+      return clsx("control !p-0 !flex !shadow-none", {
         error: error,
-        '!border-day hover:!border-day': isFocused,
+        "!border-day hover:!border-day": isFocused,
       });
     },
-    clearIndicator: () => '!hidden',
-    indicatorSeparator: () => '!hidden',
-    singleValue: () => 'body-4 !text-white',
-    menu: () => '!bg-[#0F1021] !border !border-midnight ',
-    option: () => '!text-white hover:!bg-midnight !bg-transparent',
-    input: () => '!text-white',
+    clearIndicator: () => "!hidden",
+    indicatorSeparator: () => "!hidden",
+    singleValue: () => "body-4 !text-white",
+    menu: () => "!bg-[#0F1021] !border !border-midnight ",
+    option: () => "!text-white hover:!bg-midnight !bg-transparent",
+    input: () => "!text-white",
   };
   return (
-    <div className={clsx('block pb-2', className)}>
+    <div className={clsx("block pb-2", className)}>
       {label ? (
         <label
           className="block body-3 py-1 text-grey-500 font-bold"
           htmlFor={id}
         >
           {label}
-          {required && ' *'}
+          {required && " *"}
         </label>
       ) : null}
 
@@ -119,20 +110,27 @@ export const UserSearch = React.forwardRef(function UserSearch_(
         name={name}
         control={control}
         render={({ field }) => {
+          let value = cacheOptions.find((op) => op.id === field.value);
+
           return (
             <AsyncSelect
               id={id}
               isMulti={false}
               classNames={styles}
               placeholder="username, email or wallet address"
-              loadingMessage={() => 'searching'}
-              noOptionsMessage={() => 'no options'}
-              value={cacheOptions.find((op) => op.id === field.value)}
+              loadingMessage={() => "searching"}
+              noOptionsMessage={() => "no options"}
+              value={value}
+              isClearable
               onChange={(val) => {
                 val && field.onChange((val as SingleValue<UserProfile>)?.id);
               }}
+              onFocus={() => {
+                field.onChange("");
+                console.log("on focus");
+              }}
               loadOptions={searchUserByKeyword(exclude)}
-              defaultOptions
+              // defaultOptions
               cacheOptions
               components={{
                 Option: OptionComp,
@@ -144,11 +142,11 @@ export const UserSearch = React.forwardRef(function UserSearch_(
         }}
       />
       <div
-        className={clsx('whitespace-nowrap body-4 py-1 text-danger', {
+        className={clsx("whitespace-nowrap body-4 py-1 text-danger", {
           invisible: !error,
         })}
       >
-        {error?.message ?? 'placeholder'}
+        {error?.message ?? "placeholder"}
       </div>
     </div>
   );

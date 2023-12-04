@@ -25,14 +25,15 @@ export interface VerifySignedMessageResponse extends APIResponse {
   userProfile?: UserProfile;
 }
 
-export async function submitGetLoginMessage({
-  walletAddress,
-}: GetLoginMessageRequest) {
-  const { data } = await agentAnon.post<GetLoginMessageResponse>(
-    `/auth/${walletAddress}/message`,
-  );
-  return data;
-}
+// todo del
+// export async function submitGetLoginMessage({
+//   walletAddress,
+// }: GetLoginMessageRequest) {
+//   const { data } = await agentAnon.post<GetLoginMessageResponse>(
+//     `/auth/${walletAddress}/message`,
+//   );
+//   return data;
+// }
 
 // todo del
 // export async function submitVerifySignedMessage({

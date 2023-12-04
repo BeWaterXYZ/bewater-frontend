@@ -59,10 +59,10 @@ export interface Challenge {
     | "REFUSED";
   location: string;
   milestones: Milestone[];
-  scoreDimension:{
-    text:string,
-    locked?:boolean;
-  }[]
+  scoreDimension: {
+    text: string;
+    locked?: boolean;
+  }[];
   judges: Judge[];
   reviewers: Reviewer[];
   wechatURL?: string;
@@ -113,26 +113,29 @@ export interface Challenge {
   linkText?: string;
   result?: Array<ChallengeTrackResult>;
   agenda?: Array<AgendaDay>;
+  future: {
+    announceShortlist: string;
+  };
 }
 
 export interface AgendaDay {
-  label: string,
-  time: string,
+  label: string;
+  time: string;
   locations: [
     {
-      location?: string,
+      location?: string;
       sessions: [
         {
-          time: string,
-          topic: string,
+          time: string;
+          topic: string;
           speaker?: {
-            name?: string,
-            title?: string
-          }
+            name?: string;
+            title?: string;
+          };
         }
-      ],
-    },
-  ]
+      ];
+    }
+  ];
 }
 export interface ChallengeTrackResult {
   track: string | null;
@@ -173,13 +176,10 @@ export interface Reviewer {
   userName?: string;
   fullName?: string;
   firstName?: string;
+  avatarURI?: string;
 }
 
-export const minusMileStones = [
-  "Preparation",
-  "Teaming",
-  "Result",
-] as const;
+export const minusMileStones = ["Preparation", "Teaming", "Result"] as const;
 
 export const defaultMileStones = [
   "Preparation",
@@ -252,8 +252,12 @@ export interface Project {
   videoURI?: string;
   demoURI?: string;
   githubURI?: string;
-  projectScore?: any;
+  projectScore: {
+    mark: number[];
+    reviewerId: string;
+  }[];
 }
+
 export interface TeamMember {
   id: string;
   teamId: TeamID;
@@ -303,8 +307,14 @@ export interface RepoLatestCommit {
   commitDate: string;
 }
 
-
-export interface ChallengeInvitation  {
+export interface ChallengeInvitation {
   email: string;
-  status: 'WaitingToJoin'|'Joined';
-};
+  status: "WaitingToJoin" | "Joined";
+}
+
+export interface Shortlist {
+  name: string;
+  display: boolean;
+  projectIdArr: string[];
+  prpjects?: Project[];
+}
