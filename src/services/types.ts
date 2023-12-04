@@ -138,16 +138,16 @@ export interface AgendaDay {
   ];
 }
 export interface ChallengeTrackResult {
-  track: string | null;
+  track: string;
   awards: Array<TrackAward>;
 }
 
 export interface TrackAward {
-  awardName: string | null;
-  prize: number | null;
-  award: number | null;
+  awardName?: string;
+  prize?: number;
+  award?: number;
   teamId: number;
-  score: number | null;
+  score?: number;
 }
 
 export interface Award {
