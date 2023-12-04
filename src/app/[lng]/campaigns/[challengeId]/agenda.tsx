@@ -50,9 +50,11 @@ export function Agenda(props: Props) {
                           className={`flex items-center ${lArray.length > 1 ? "gap-4" : "gap-6"} py-3 font-normal`}
                           key={i}
                         >
-                          <div className={`p-3 ${lArray.length > 1 ? "min-w-[6rem] w-24" : "min-w-[7.5rem] w-30"} text-center border border-gray-600 rounded-full font-normal`}>
+                          {
+                            s.time && (<div className={`p-3 ${lArray.length > 1 ? "min-w-[6rem] w-24" : "min-w-[7.5rem] w-30"} text-center border border-gray-600 rounded-full font-normal`}>
                             {s.time}
-                          </div>
+                          </div>)
+                          }
                           <div className="">
                             {s.topic}
                             {s.speaker &&
