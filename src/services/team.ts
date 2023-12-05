@@ -17,7 +17,7 @@ interface CreateTeamResponse {
 }
 
 export async function getChallengeTeams(challengeId: ChallengeID) {
-  const { data } = await agentAnon.get<{ teams: Team[] }>(
+  const { data } = await agentAuthed.get<{ teams: Team[] }>(
     `/challenge/${challengeId}/teams`,
     {},
   );

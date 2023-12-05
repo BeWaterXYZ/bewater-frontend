@@ -5,7 +5,7 @@ import { ChallengeID, Project,
   TeamID, ProjectStatus, } from './types';
 
 export async function getChallengeTProjects(challengeId: ChallengeID) {
-  const { data } = await agentAnon.get<{ projects: Project[] }>(
+  const { data } = await agentAuthed.get<{ projects: Project[] }>(
     `/challenge/${challengeId}/projects`,
     {},
   );

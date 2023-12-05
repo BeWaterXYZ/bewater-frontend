@@ -43,7 +43,7 @@ export async function getChallenges() {
 }
 
 export async function getChallengeById(challengeId: ChallengeID) {
-  const { data } = await agentAnon.get<{ challenge: Challenge }>(
+  const { data } = await agentAuthed.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
     {}
   );
