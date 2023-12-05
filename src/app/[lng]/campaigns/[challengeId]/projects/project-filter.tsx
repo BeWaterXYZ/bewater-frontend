@@ -1,20 +1,32 @@
 'use client';
 import { prepareProjectTagFilterData, prepareProjectShortlistData } from '@/components/filter/util';
-import { Project } from '@/services/types';
+import { Project, Challenge } from '@/services/types';
 import { FilterTag } from '@/components/filter/FilterTag';
 import { ShortlistTag } from '@/components/filter/ShortlistTag'
 import { useQueryBuilder } from '../query';
 
-export function ProjectFilter({ projects }: { projects: Project[] }) {
+export function ProjectFilter({ projects, challenge }: { projects: Project[], challenge: Challenge }) {
   const { toggle, isOn } = useQueryBuilder();
+
+  let showSL = false;
+  if (Array.isArray(challenge.shortlist)) {
+    const timeedge = new Date('2000-01-01T00:00:00.000Z')
+    if (!challenge.future.announceShortlist) {
+      showSL = true;
+    } else if (new Date(challenge.future.announceShortlist) < timeedge) {
+      /* empty */
+    } else if (new Date(challenge.future.announceShortlist) < new Date()) {
+      showSL = true;
+    }
+  }
 
   const tagsData = prepareProjectTagFilterData(projects);
   const shortlistD = prepareProjectShortlistData(projects);
   return (
     <div className="text-left pt-4">
       <div className="body-3 mb-7">Filter</div>
-
-      <div className="my-2">
+      {
+        showSL && (<div className="my-2">
         <p className="body-5 uppercase my-4">status</p>
         {shortlistD
           .map((item) => {
@@ -30,7 +42,8 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
               />
             );
           })}
-      </div>
+      </div>)
+      }
       <div className="my-2">
         <p className="body-5 uppercase my-4">Tags</p>
         {tagsData

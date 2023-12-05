@@ -92,7 +92,7 @@ export default async function ChallengeIntro({ params }: any) {
   return (
     <div className="container flex flex-col gap-16 md:gap-30 ">
       <div id="milestone">
-        {challenge.milestones?.length > 0 && challenge.id !== "7" ? (
+        {challenge.milestones?.length > 0 && challenge.id !== "7" && !challenge.yotadata?.disableTimeline ? (
           <Timeline
             milestones={challenge.milestones}
             lng={lng}

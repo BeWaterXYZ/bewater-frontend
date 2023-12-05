@@ -150,7 +150,8 @@ export async function getChallengeShortlist(challengeId: ChallengeID) {
 }
 export type UpdateShortlistForm = {
   shortlist: Shortlist[];
-  announceShortlist: null | string;
+  announceShortlist?: null | string;
+  announceResult?: null | string;
 };
 export async function updateChallengeShortlist(
   challengeId: ChallengeID,

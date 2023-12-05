@@ -14,7 +14,7 @@ export default function TeamFilterDialog({
 
   return (
     <div className="w-[80vw] h-[80vh] flex flex-col">
-      <ProjectFilter projects={data} />
+      <ProjectFilter projects={data.projects} challenge={data.challenge} />
       <div className="flex-1"></div>
       <div className="w-full flex gap-2">
         <button className="flex-1 btn btn-secondary" onClick={clear}>
