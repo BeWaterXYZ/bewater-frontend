@@ -35,7 +35,7 @@ export async function getChallenges() {
     {
       params: {
         startTime: "2022-01-01T19:54:35.308Z",
-        endTime: "2023-12-20T19:54:35.308Z",
+        endTime: "2025-01-01T00:00:00.000Z",
       },
     }
   );
@@ -43,7 +43,7 @@ export async function getChallenges() {
 }
 
 export async function getChallengeById(challengeId: ChallengeID) {
-  const { data } = await agentAnon.get<{ challenge: Challenge }>(
+  const { data } = await agentAuthed.get<{ challenge: Challenge }>(
     `/challenge/${challengeId}`,
     {}
   );
