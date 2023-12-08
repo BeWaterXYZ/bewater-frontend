@@ -1,3 +1,4 @@
+"use client";
 import { Milestone } from '@/services/types';
 import clsx from 'clsx';
 import { differenceInDays, format, isSameDay, parseISO } from 'date-fns';
