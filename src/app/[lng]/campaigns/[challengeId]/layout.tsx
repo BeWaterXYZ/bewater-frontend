@@ -22,7 +22,7 @@ export default async function Layout({
 
   return (
     <div>
-      <ChallengeHero challenge={challenge} lng={lng} t={t} />
+      <ChallengeHero challenge={challenge} lng={lng} />
       { !isWorkshop(challenge) ? (
         <ChallengeNav challenge={challenge} lng={lng} />
       ) : null}

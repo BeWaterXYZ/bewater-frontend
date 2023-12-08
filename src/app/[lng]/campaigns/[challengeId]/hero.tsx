@@ -1,16 +1,19 @@
+"use client";
 import { Challenge } from "@/services/types";
 import { formatYYYYMMMDD, formatMMMDDYYYY } from "@/utils/date";
 import { isMileStoneEnabled, isWorkshop, isChallenge } from "./utils";
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslation } from '@/app/i18n/client';
 
 interface ChallengeHeroProps {
   challenge: Challenge;
   lng: string;
-  t: any;
 }
 
-export function ChallengeHero({ challenge, lng, t }: ChallengeHeroProps) {
+export function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
+  const { t } = useTranslation(lng, 'translation');
+
   let isTeamingEnabled = false;
   if (challenge.milestones?.length > 0) {
     isTeamingEnabled = isMileStoneEnabled("Teaming", challenge);
