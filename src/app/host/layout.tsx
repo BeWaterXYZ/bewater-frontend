@@ -5,7 +5,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className=" ">
       {children}
-      <Footer lng={"en"} />
+      <Footer lng={"en"} fullWidth />
     </div>
   );
 }
