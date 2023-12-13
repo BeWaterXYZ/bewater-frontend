@@ -96,7 +96,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
   return (
     <div className="">
       <p className="text-base font-bold text-grey-600 mb-4">
-        {challenge.title}
+        {challenge.title?.substring(0, 35)}
       </p>
       {todos}
     </div>
@@ -222,24 +222,23 @@ export function Dashboard() {
               <div key={challenge.id}>
                 <Link
                   href={`/host/edit/${challenge.id}`}
-                  className={
-                    isAdmin
-                      ? "flex pt-8 pb-4 px-4 justify-between"
-                      : "flex border-b border-grey-800 py-8 px-4 justify-between"
-                  }
+                  className={clsx("flex px-4 justify-between", {
+                    "pt-8 pb-4": isAdmin,
+                    "border-b border-grey-800 py-8": !isAdmin,
+                  })}
                 >
                   <div className="flex gap-4 items-center">
                     <Image
                       src={challenge.bannerUrl ?? unsplash("host")}
                       // fill
-                      alt={challenge.title}
+                      alt={challenge.externalId!}
                       width={60}
                       height={60}
                       className="rounded-full border border-grey-800 w-[60px] h-[60px]"
                     />
                     <div className="space-y-2">
                       <p className="text-base font-bold text-white">
-                        {challenge.title}
+                        {challenge.title.substring(0, 40)}
                         {isAdmin ? `（${challenge.id}）` : ""}
                       </p>
                       <p className="text-sm text-grey-500">
