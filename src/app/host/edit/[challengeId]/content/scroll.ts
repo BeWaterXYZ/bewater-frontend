@@ -15,14 +15,17 @@ import { useEffect } from "react";
 export function useScrollTo(segment: string) {
   useEffect(() => {
     setTimeout(() => {
-      let f = document.getElementById("frame") as HTMLIFrameElement | null;
-      let ele = document.getElementById("section-" + segment);
+      const f = document.getElementById("frame") as HTMLIFrameElement | null;
+      const ele = document.getElementById("section-" + segment);
 
-      let y =
+      const y =
         ele?.offsetTop! -
         window.innerHeight / 2 +
         ele?.getBoundingClientRect().height! / 2;
-      f!.scrollTo({ top: y, behavior: "smooth" });
+
+      if (f) {
+        f.scrollTo({ top: y, behavior: "smooth" });
+      }
     }, 1000);
   }, []);
 }
