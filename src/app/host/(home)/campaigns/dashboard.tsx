@@ -141,29 +141,36 @@ export function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [more, setMore] = useState(true);
   const roleId = useOrganization().organization?.id ?? user?.id;
+  const [version, setVersion] = useState(0);
 
   const isAdmin = isLoaded && isSignedIn && user?.publicMetadata?.teamMember;
   useLoadingWhen(loading);
 
-  const initChallengePage = (force?: boolean) => {
-    if (force || (isLoaded && isSignedIn && challenges.length === 0 && !loading && more)) {
-      getHostChallengePage('0').then((res) => {
-        if (res.status === 200) {
+  const initChallengePage = () => {
+    getHostChallengePage(version, '0').then((res) => {
+      if (res.status === 200) {
+        if (res.data.version === version) {
           setChallenges([].concat(res.data.challenges));
           if (res.data.challenges.length === 0) {
             setMore(false);
           }
           setLoading(false);
         }
-      });
-      setLoading(true);
-    }
+      }
+    });
+    setLoading(true);
   }
 
   React.useEffect(() => {
-    initChallengePage(true);
+    setMore(true);
+    if (isLoaded && isSignedIn) {
+      setVersion(version + 1);
+      setTimeout(() => {
+        initChallengePage();
+      })
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roleId]);
+  }, [roleId, isLoaded, isSignedIn]);
 
   React.useEffect(() => {
     const node = containerRef.current;
@@ -172,13 +179,15 @@ export function Dashboard() {
       if (isLoaded && isSignedIn && challenges.length > 0 && !loading && more) {
         for (const entry of entries) {
           if (entry.isIntersecting) {
-            getHostChallengePage(challenges[challenges.length - 1].id).then((res) => {
+            getHostChallengePage(version, challenges[challenges.length - 1].id).then((res) => {
               if (res.status === 200) {
-                setChallenges(challenges.concat(res.data.challenges));
-                if (res.data.challenges.length === 0) {
-                  setMore(false);
+                if (res.data.version === version) {
+                  setChallenges(challenges.concat(res.data.challenges));
+                  if (res.data.challenges.length === 0) {
+                    setMore(false);
+                  }
+                  setLoading(false);
                 }
-                setLoading(false);
               }
             });
             setLoading(true);
@@ -200,6 +209,7 @@ export function Dashboard() {
       observer.disconnect();
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef, isLoaded, isSignedIn, challenges, loading, more]);
 
   return (

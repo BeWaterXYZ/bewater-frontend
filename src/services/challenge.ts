@@ -112,9 +112,9 @@ export async function getChallengeInvitation(id: ChallengeID) {
   return data;
 }
 
-export function getHostChallengePage(id?: string) {
+export function getHostChallengePage(version: number, id?: string) {
   return agentAuthed.get(
-    `/host-challenge/self-challenges${id ? "?challengeId=" + id : ""}`
+    `/host-challenge/self-challenges?version=${version}${id ? "&challengeId=" + id : ""}`
   );
 }
 
