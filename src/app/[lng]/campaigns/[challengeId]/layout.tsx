@@ -1,11 +1,11 @@
-import { CONFIGS } from '@/config';
+import { redirect } from "next/navigation";
 import { getChallengeById } from '@/services/challenge';
 import { Metadata } from 'next';
 import { ChallengeHero } from './hero';
 import { ChallengeNav } from './nav';
 import { segmentSchema } from './param-schema';
 import { useTranslation } from '@/app/i18n';
-import { isWorkshop } from './utils';
+import { isWorkshop, RegexDigit } from './utils';
 
 export default async function Layout({
   children,
@@ -17,8 +17,10 @@ export default async function Layout({
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
   const { lng } = segmentSchema.lng.parse(params);
-  // eslint-disable-next-line
-  const { t } = await useTranslation(lng, 'translation');
+
+  if (RegexDigit.test(challengeId) || challenge.externalId !== challengeId) {
+    return redirect(`/${lng}/campaigns/${challenge.externalId}`);
+  }
 
   return (
     <div>
