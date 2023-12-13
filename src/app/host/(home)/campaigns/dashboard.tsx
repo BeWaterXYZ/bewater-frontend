@@ -95,8 +95,8 @@ function Todo({ challenge }: { challenge: Challenge }) {
 
   return (
     <div className="">
-      <p className="text-base font-bold text-grey-600 mb-4">
-        {challenge.title?.substring(0, 35)}
+      <p style={{wordBreak: 'break-all'}} className="text-base font-bold text-grey-600 mb-4" >
+        {challenge.title}
       </p>
       {todos}
     </div>
@@ -237,8 +237,8 @@ export function Dashboard() {
                       className="rounded-full border border-grey-800 w-[60px] h-[60px]"
                     />
                     <div className="space-y-2">
-                      <p className="text-base font-bold text-white">
-                        {challenge.title.substring(0, 40)}
+                      <p className="text-base font-bold text-white" style={{wordBreak: 'break-all'}}>
+                        {challenge.title}
                         {isAdmin ? `（${challenge.id}）` : ""}
                       </p>
                       <p className="text-sm text-grey-500">
