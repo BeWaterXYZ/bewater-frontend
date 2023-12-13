@@ -1,6 +1,5 @@
 import getSymbolFromCurrency from "currency-symbol-map";
 import { formatMoney } from "@/utils/numeral";
-import { redirect } from "next/navigation";
 import { Aspect } from "@/components/aspect";
 import { getChallengeById } from "@/services/challenge";
 import { unsplash } from "@/utils/unsplash";
@@ -19,7 +18,7 @@ import { PrizeSection as PrizeSection11 } from "./prize-section/63c82bd12ddc570f
 import { PrizeSection as PrizeSection19 } from "./prize-section/63c82bd12ddc570f32ada86f";
 import { Timeline } from "./timeline";
 import { Timeline7 } from "./timeline-id7";
-import { isMileStoneEnabled, isWorkshop, RegexDigit } from "./utils";
+import { isMileStoneEnabled, isWorkshop } from "./utils";
 
 import Balancer from "react-wrap-balancer";
 import { TwitterLogoIcon } from "@radix-ui/react-icons";
@@ -42,14 +41,9 @@ export default async function ChallengeIntro({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const challenge = await getChallengeById(challengeId);
 
-  // console.log('RegexDigit.test(challengeId)', RegexDigit.test(challengeId))
-
-  if (RegexDigit.test(challengeId) || challenge.externalId !== challengeId) {
-    return redirect(`/${lng}/campaigns/${challenge.externalId}`);
-  }
-
   // eslint-disable-next-line
   const { t } = await useTranslation(lng, "translation");
+
   let isTeamingEnabled = false;
   if (challenge.milestones?.length > 0) {
     isTeamingEnabled = isMileStoneEnabled("Teaming", challenge);

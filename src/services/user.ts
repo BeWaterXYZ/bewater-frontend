@@ -23,10 +23,12 @@ export async function getUserProfile() {
   const { data } = await agentAuthed.get<UserProfile>(`/user`);
   return data;
 }
+
 export async function getUserProfileFull(userId: UserID) {
   const { data } = await agentAuthed.get<UserProfileFull>(`/user/${userId}`);
   return data;
 }
+
 export async function getEmailVerificationCode(emailAddress: string) {
   const { data } = await agentAuthed.post<{ sentVerificationCode: boolean }>(
     '/user/email',
@@ -36,6 +38,7 @@ export async function getEmailVerificationCode(emailAddress: string) {
   return data;
 }
 
+// todo del
 export async function submitCreateUserProfile(
   userProfile: Partial<UserProfile>,
 ) {
@@ -45,6 +48,7 @@ export async function submitCreateUserProfile(
   );
   return data;
 }
+
 
 export async function updateEmail({
   emailAddress,
@@ -79,6 +83,7 @@ export async function searchUsers(keyword: string) {
   });
   return data ?? [];
 }
+
 export function checkUsername(currentUserName: string) {
   return async function (username: string) {
     if (username === currentUserName) return true;
@@ -95,6 +100,7 @@ export async function getSocialConnections() {
   }>('/user/social');
   return data.socialAccounts;
 }
+
 export async function disconnectSocialConnections(platform: string) {
   const { data } = await agentAuthed.post(`/auth/oauth/disconnect/${platform}`);
   return data;

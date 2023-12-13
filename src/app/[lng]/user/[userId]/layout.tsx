@@ -1,7 +1,9 @@
+import { redirect } from "next/navigation";
 import { Avatar } from '@/components/avatar/avatar';
 import { TagRole, TagSkill } from '@/components/tag';
 import { SocialAuth } from '@/services/types';
 import { getUserProfileFull } from '@/services/user';
+import { RegexDigit } from '@/utils/regular';
 import { maskWalletAddress } from '@/utils/wallet-adress';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,8 +25,13 @@ export default async function Layout({
 }) {
   const { userId } = userSchema.parse(params);
   const profile = await getUserProfileFull(userId);
-
   if (!profile) return null;
+
+  if (profile.externalNa) {
+    if (RegexDigit.test(userId) || profile.externalNa !== userId) {
+      return redirect(`/${params.lng}/user/${profile.externalNa}`);
+    }
+  }
 
   return (
     <div className="container my-4 pt-24 lg:pt-20 ">
