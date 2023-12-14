@@ -12,7 +12,7 @@ export function TeamMember({
   lng: string;
 }) {
   return (
-    <Link href={`/${lng}/user/${member.userProfile.id}`}>
+    <Link href={`/${lng}/user/${member.userProfile.externalNa ? member.userProfile.externalNa : member.userProfile.id}`}>
       <div className="flex gap-2 my-4">
         <div>
           <Avatar
@@ -22,7 +22,7 @@ export function TeamMember({
         </div>
         <div className="flex items-start flex-col ">
           <p className="body-3 font-bold mb-0.5">
-            {member.userProfile.userName ?? member.userProfile.fullName}
+            {member.userProfile.userName ?? member.userProfile.firstName ?? member.userProfile.fullName }
           </p>
           <div>
             <TagRole label={member.teamRole} />

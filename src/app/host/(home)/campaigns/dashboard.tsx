@@ -39,7 +39,7 @@ function Todo({ challenge }: { challenge: Challenge }) {
     todos.push(
       <TodoLink
         key={"banner"}
-        copy="Add banner or host image"
+        copy="Add banner image or host icon"
         link={`/host/edit/${challenge.id}/content/hero`}
       />
     );

@@ -6,7 +6,7 @@ import { useSelectedLayoutSegment } from 'next/navigation';
 export function Nav({ userId, externalNa, lng }: { userId: string; externalNa: string; lng: string }) {
   const links = [
     {
-      path: `/${lng}/user/${externalNa ? externalNa:  userId}`,
+      path: `/${lng}/user/${externalNa ? externalNa : userId}`,
       label: 'Overview',
       segment: '(overview)',
     },

@@ -115,7 +115,7 @@ export function Prizes({ challenge }: { challenge: Challenge }) {
     totalAwardSet(total);
   });
   return (
-     
+
       <div>
         <div className="z-30   top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
           <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
@@ -179,13 +179,13 @@ export function Prizes({ challenge }: { challenge: Challenge }) {
             >
               <PlusIcon className="mr-1 text-grey-300" /> Add a new track
             </button>
-
             <div className="grid grid-cols-2 gap-4 mt-6">
               <Input
                 label="Total Award"
                 {...register(`totalAward`)}
                 error={errors["totalAward"]}
               />
+              { /* todo  解决summary货币无法相加 */ }
               <Input
                 label="Award Currency"
                 placeholder="USD/ETH"
