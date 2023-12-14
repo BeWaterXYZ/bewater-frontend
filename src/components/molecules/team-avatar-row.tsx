@@ -14,7 +14,7 @@ export function TeamAvatarRow({
       {teamMembers.map((m, index) => {
         return (
           <Link
-            href={`/${lng}/user/${m.userProfile.id}`}
+            href={`/${lng}/user/${m.userProfile.externalNa ? m.userProfile.externalNa : m.userProfile.id}`}
             key={m.userProfile.id}
           >
             <div key={m.id} className="relative" style={{ left: -8 * index }}>
