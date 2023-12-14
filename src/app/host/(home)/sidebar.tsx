@@ -1,6 +1,11 @@
 "use client";
 import { BeWaterLogo } from "@/components/header/logo";
-import { OrganizationSwitcher, UserButton, useUser } from "@clerk/nextjs";
+import {
+  OrganizationSwitcher,
+  UserButton,
+  useOrganization,
+  useUser,
+} from "@clerk/nextjs";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
@@ -82,8 +87,10 @@ const links = [
 export function Sidebar() {
   let segment = useSelectedLayoutSegment();
   let { user } = useUser();
+  let { organization } = useOrganization();
   let isAdmin = user?.publicMetadata?.teamMember ?? false;
-  let links_ = isAdmin ? links : links.filter((l) => l.path !== "settings");
+  let isOrg = !!organization?.id;
+  let links_ = isOrg ? links : links.filter((l) => l.path !== "settings");
   return (
     <div className="flex-1 border-r border-r-white/20">
       <div className="p-2 flex justify-between items-center">
