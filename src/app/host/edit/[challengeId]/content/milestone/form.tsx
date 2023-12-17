@@ -215,6 +215,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     try {
       await mutation.mutateAsync({
         id: challenge.id,
+        timeZone: -zone,
         milestones: n.map((ms) => ({
           ...ms,
           dueDate: subHours(

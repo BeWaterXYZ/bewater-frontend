@@ -126,6 +126,7 @@ export interface Challenge {
     announceResult?: string;
   };
   shortlist?: Shortlist[];
+  timeZone?: number;
 }
 
 export interface AgendaDay {
