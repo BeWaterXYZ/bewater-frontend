@@ -1,7 +1,8 @@
-import { OngoingChallenge } from "@/services/summary";
+import { CurveData, OngoingChallenge } from "@/services/summary";
 import { CardStyle } from "./summary";
 import Image from "next/image";
 import Link from "next/link";
+import Chart from "./chart";
 
 export default function Campaign(props: { campaign: OngoingChallenge }) {
   const {
@@ -40,7 +41,9 @@ export default function Campaign(props: { campaign: OngoingChallenge }) {
         </div>
       </div>
       <div className="relative">
-        <div className="bg-[cyan]/10 w-[365px] h-[112px]"></div>
+        <div className="bg-[cyan]/10 w-[365px] h-[112px] relative">
+          <Chart data={curveData} />
+        </div>
         <div className="flex justify-end absolute bottom-0 right-0">
           <Link
             href={`/host/edit/${id}`}

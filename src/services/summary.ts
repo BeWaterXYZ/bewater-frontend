@@ -7,6 +7,10 @@ export interface Activity {
   type: number; // 活动类型信息，用数字表示。目前可取 0，1，2，3，4，5
 }
 
+export type CurveData = {
+  [time: string]: number;
+}[];
+
 export interface OngoingChallenge {
   id: string; // challenge的数据库id
   externalId: string;
@@ -20,7 +24,7 @@ export interface OngoingChallenge {
   contestantNum: number; // 本赛事总参与人数
   teamNum: number; // 总队伍个数
   projectNum: number; // 项目个数
-  curveData: []; // 曲线图的数组数据
+  curveData: CurveData; // 曲线图的数组数据
 }
 
 interface Metric {
