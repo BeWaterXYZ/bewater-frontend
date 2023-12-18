@@ -1,3 +1,3 @@
-export const pvCounter = {
-  startView: 0
+export const pvCounter: any = {
+  startView: {},
 }

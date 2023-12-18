@@ -4,20 +4,22 @@ import { pvCounter } from "@/utils/global";
 import { generate } from 'randomstring';
 import { postPvData } from "@/services/wa";
 
-// todo 优化：单独处理登录之后
 export default function WA({ challengeId }: { challengeId: string }) {
-  if (pvCounter.startView > 0) {
+  if (pvCounter.startView[challengeId]) {
     return null;
   }
 
-  pvCounter.startView += 1;
+  pvCounter.startView[challengeId] = true;
 
-  const key = 'bewat_statist_u_2312';
+  const key = `_bw_stic_u_${challengeId}`;
   let value = Cookies.get(key);
   if (!value) {
-    value = `${Date.now()}-${generate(12)}`
+    const timestamp = Date.now();
+    value = `${timestamp}-${generate(5)}`
+    Cookies.set(key, value, { expires: 120 });
   }
-  Cookies.set(key, value, { expires: 365 });
+  const arr = value.split("-");
+  value = arr[0] + '-' + arr[0] + arr[1];
   postPvData(value, challengeId).then((res) => {
   });
   return null;
