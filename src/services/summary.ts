@@ -1,5 +1,6 @@
 import { agentAuthed } from "./agent";
 import { APIResponse } from "@/types/response";
+import { Challenge } from "./types";
 
 export interface Activity {
   description: string;
@@ -25,6 +26,9 @@ export interface OngoingChallenge {
   teamNum: number; // 总队伍个数
   projectNum: number; // 项目个数
   curveData: CurveData; // 曲线图的数组数据
+  visitors: number,
+  status: Challenge['status'] // 这个字段用来判断有没有active的活动。
+  timeZone: number;
 }
 
 interface Metric {
@@ -39,6 +43,7 @@ export interface SummaryData {
   totalBuilder: Metric;
   totalProjects: Metric;
   totalVisitors: Metric;
+  lastUpdated: string;
 }
 
 export async function getSummary() {

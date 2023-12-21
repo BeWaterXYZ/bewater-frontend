@@ -2,7 +2,7 @@
 import { useLoadingWhen } from "@/components/loading/store";
 import { useFetchSummary } from "@/services/summary.query";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { formatDistance, parseISO } from "date-fns";
+import { formatDistance, parseISO, format } from "date-fns";
 import Link from "next/link";
 import { useEffect } from "react";
 import Campaign from "./campaign";
@@ -33,17 +33,45 @@ export default function Summary() {
         <p className="text-3xl font-bold text-[#64748B]">
           Hello, {user.user?.username}
         </p>
-        <Link href="/host/campaigns/new" className="btn btn-primary">
-          + Draft a new campaign
-        </Link>
+        {(data?.ongoing.length ?? 0) > 0 && (
+          <Link href="/host/campaigns/new" className="btn btn-primary">
+            + Draft a new campaign
+          </Link>
+        )}
       </div>
       <div>
-        <p className={SectionTitleStyle}>Ongoing Campaign</p>
-        {data?.ongoing[0] && <Campaign campaign={data?.ongoing[0]} />}
-        <div></div>
+        {(data?.ongoing.length ?? 0) > 0 ? (
+          <>
+            <p className={SectionTitleStyle}>
+              {data?.ongoing[0].status === "ACTIVE"
+                ? "Ongoing Campaign"
+                : "Latest Campaign"}
+            </p>
+            <Campaign campaign={data?.ongoing[0]!} />
+          </>
+        ) : (
+          <div
+            className={`${CardStyle} py-[40px] px-[25px] flex flex-col items-center`}
+          >
+            <p className="text-xl mb-[18px]">⭐️ Create your first campaign</p>
+            <Link href="/host/campaigns/new" className="btn btn-primary w-fit">
+              + Draft a new campaign
+            </Link>
+          </div>
+        )}
       </div>
       <div>
-        <p className={SectionTitleStyle}>Metrics</p>
+        <div className="w-full relative flex items-center">
+          <p className={`${SectionTitleStyle} flex-1`}>Metrics</p>
+          <p className="text-[#64748B] text-xxs leading-[12px] h-fit pb-[18px]">
+            {data?.ongoing.length
+              ? `Last Update: ${format(
+                  parseISO(data?.lastUpdated!),
+                  "yyyy-MM-dd HH:MM"
+                )} UTC${`+${data?.ongoing[0]!.timeZone}`.replace("+-", "-")}`
+              : ""}
+          </p>
+        </div>
         <div className="flex justify-between">
           <MetricCard
             title="Total Visitors"
@@ -70,16 +98,24 @@ export default function Summary() {
       <div>
         <p className={SectionTitleStyle}>Activity</p>
         <div className="grid gap-[10px]">
-          {data?.activitys?.map((activity, index) => (
-            <Activity
-              key={index}
-              description={activity.description}
-              dateDistance={formatDistance(
-                parseISO(activity.createdAt),
-                Date.now()
-              )}
-            />
-          ))}
+          {(data?.activitys?.length ?? 0) > 0 ? (
+            data?.activitys?.map((activity, index) => (
+              <Activity
+                key={index}
+                description={activity.description}
+                dateDistance={formatDistance(
+                  parseISO(activity.createdAt),
+                  Date.now()
+                )}
+              />
+            ))
+          ) : (
+            <p
+              className={`py-[6px] text-[#64748B] text-sm text-center leading-[20px]`}
+            >
+              No activity recorded yet.
+            </p>
+          )}
         </div>
       </div>
     </div>

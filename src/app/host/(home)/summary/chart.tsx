@@ -1,6 +1,6 @@
 import { CurveData } from "@/services/summary";
 import * as echarts from "echarts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const axisOption: echarts.EChartsOption = {
   grid: {
@@ -90,7 +90,7 @@ function formatData(
       });
 }
 
-export default function Chart(props: { data: CurveData }) {
+export default function Chart(props: { data: CurveData; pageViews: number }) {
   const data = formatData(props.data);
   const sum = (data as [any, number]).reduce((acc, cur) => acc + cur[1], 0);
   const chartOption = {
@@ -116,7 +116,7 @@ export default function Chart(props: { data: CurveData }) {
       <p className="absolute right-0 bottom-0 text-xs text-[#B6B6B6] leading-[16px] p-1">
         Page Views
         <span className="ml-[8px] text-[#00FFFF] leading-[20px] text-sm text-bold">
-          {sum}
+          {props.pageViews}
         </span>
       </p>
     </>
