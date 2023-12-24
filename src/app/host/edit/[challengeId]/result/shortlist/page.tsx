@@ -1,9 +1,13 @@
 "use client";
 
 import { segmentSchema } from "@/app/host/segment-params";
-import { useFetchChallengeById, useFetchChallengeShortlist } from "@/services/challenge.query";
+import {
+  useFetchChallengeById,
+  useFetchChallengeShortlist,
+} from "@/services/challenge.query";
 import { useFetchChallengeProjects } from "@/services/project.query";
 import { Shortlist } from "./form";
+import Tab from "../tab";
 
 export default function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
@@ -14,5 +18,14 @@ export default function Page({ params }: any) {
   if (!challenge) return null;
   if (!projects) return null;
   if (!shortlist) return null;
-  return <Shortlist challenge={challenge} projects={projects}  shortlist={shortlist}/>;
+  return (
+    <>
+      <Tab />
+      <Shortlist
+        challenge={challenge}
+        projects={projects}
+        shortlist={shortlist}
+      />
+    </>
+  );
 }
