@@ -6,7 +6,9 @@ import {
   useOrganizationList,
   useUser,
 } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const styles = {
@@ -20,6 +22,14 @@ const styles = {
   userIcon: "bg-[#FFF1] w-[24px] h-[24px] rounded relative",
 };
 
+const dialogStyle = {
+  elements: {
+    card: {
+      maxHeight: "80vh",
+    },
+  },
+};
+
 export default function ProfileMenu(props: {
   user?: ReturnType<typeof useUser>["user"];
   organization?: ReturnType<typeof useOrganization>["organization"];
@@ -27,9 +37,9 @@ export default function ProfileMenu(props: {
   const { user, organization } = props;
   const isOrganization = !!organization;
   const [show, setShow] = useState(false);
-  const [showDialog, setShowDialog] = useState<
-    "CreateOrganization" | "OrganizationProfile" | "UserProfile" | null
-  >(null);
+  const [showDialog, setShowDialog] = useState<"CreateOrganization" | null>(
+    null
+  );
   const { setActive, userMemberships } = useOrganizationList({
     userMemberships: {
       infinite: true,
@@ -58,9 +68,70 @@ export default function ProfileMenu(props: {
     >
       {showDialog && (
         <div className="fixed w-screen h-screen top-0 left-0 z-40 backdrop-blur-[4px] flex items-center justify-center">
-          {showDialog === "CreateOrganization" && <CreateOrganization />}
-          {showDialog === "OrganizationProfile" && <OrganizationProfile />}
-          {showDialog === "UserProfile" && <UserProfile />}
+          <div className="relative">
+            {showDialog === "CreateOrganization" && (
+              <CreateOrganization
+                appearance={{
+                  baseTheme: dark,
+                  variables: { colorPrimary: "#00ffff" },
+                  elements: {
+                    formButtonPrimary:
+                      "bg-day text-night hover:bg-[#00cccc] active:bg-[#009999] rounded-sm focus:shadow-none",
+                    card: "bg-[#25263C] text-white p-0 gap-10",
+                    headerSubtitle: "text-gray-500",
+                    // socialButtons: "hidden",
+                    // dividerRow: "hidden",
+                    formFieldInput:
+                      "bg-night text-white border-gray-800 rounded-sm placeholder-gray-600",
+                    formFieldLabel: "text-gray-500 hidden",
+                    formFieldLabelRow: "mb-2",
+                    // footer: "hidden",
+                    header: "text-xl gap-2",
+                    identityPreviewEditButton: "text-gray-500",
+                    formResendCodeLink:
+                      "text-day hover:text-[#00cccc] active:text-[#009999] rounded-none focus:shadow-none",
+                    // navbar: "hidden",
+                  },
+                }}
+              />
+            )}
+            <div
+              className="absolute right-[3rem] top-[1.5rem] cursor-pointer"
+              onClick={() => setShowDialog(null)}
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  x="0.583333"
+                  y="0.583333"
+                  width="26.8333"
+                  height="26.8333"
+                  rx="13.4167"
+                  stroke="#334155"
+                  stroke-width="1.16667"
+                />
+                <path
+                  d="M17.0625 10.9375L10.9375 17.0625"
+                  stroke="#E2E8F0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10.9375 10.9375L17.0625 17.0625"
+                  stroke="#E2E8F0"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       )}
       <div
@@ -100,29 +171,27 @@ export default function ProfileMenu(props: {
       {show && (
         <div className="absolute bg-[#25263C] rounded top-10 w-[288px] z-50">
           <div className={styles.section}>
-            <div
-              className={styles.item}
-              onClick={() => {
-                setShow(false);
-                setShowDialog("OrganizationProfile");
-              }}
-            >
-              <div>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.9999 10C10.8954 10 9.99994 10.8954 9.99994 12C9.99994 13.1046 10.8954 14 11.9999 14C13.1045 14 13.9999 13.1046 13.9999 12C13.9999 10.8954 13.1045 10 11.9999 10ZM10.9999 12C10.9999 11.4477 11.4477 11 11.9999 11C12.5522 11 12.9999 11.4477 12.9999 12C12.9999 12.5523 12.5522 13 11.9999 13C11.4477 13 10.9999 12.5523 10.9999 12ZM14.618 8.39833C14.233 8.46825 13.8639 8.21413 13.7937 7.83074L13.534 6.41496C13.5082 6.27427 13.3996 6.16301 13.2591 6.13325C12.8482 6.04621 12.4268 6.00195 12 6.00195C11.5729 6.00195 11.1513 6.04627 10.7401 6.13341C10.5996 6.1632 10.491 6.27452 10.4653 6.41527L10.2063 7.8308C10.1994 7.86844 10.1894 7.90551 10.1765 7.9416C10.0448 8.30859 9.6392 8.49978 9.27062 8.36863L7.91115 7.88463C7.77603 7.83652 7.62511 7.87431 7.52891 7.98033C6.96005 8.60729 6.52892 9.34708 6.2672 10.153C6.22305 10.289 6.26562 10.438 6.37502 10.5305L7.47694 11.4621C7.50626 11.4869 7.53352 11.514 7.55843 11.5432C7.81177 11.8403 7.77528 12.2856 7.47693 12.5378L6.37502 13.4693C6.26562 13.5618 6.22305 13.7109 6.2672 13.8469C6.52892 14.6528 6.96005 15.3926 7.52891 16.0196C7.62511 16.1256 7.77603 16.1634 7.91115 16.1153L9.27068 15.6312C9.30687 15.6184 9.3441 15.6084 9.38196 15.6015C9.76701 15.5316 10.1361 15.7857 10.2063 16.1691L10.4653 17.5846C10.491 17.7254 10.5996 17.8367 10.7401 17.8665C11.1513 17.9536 11.5729 17.9979 12 17.9979C12.4268 17.9979 12.8482 17.9537 13.2591 17.8666C13.3996 17.8369 13.5082 17.7256 13.534 17.5849L13.7937 16.1692C13.8006 16.1314 13.8106 16.0944 13.8235 16.0583C13.9552 15.6913 14.3608 15.5001 14.7294 15.6312L16.0888 16.1153C16.224 16.1634 16.3749 16.1256 16.4711 16.0196C17.04 15.3926 17.4711 14.6528 17.7328 13.8469C17.777 13.7109 17.7344 13.5618 17.625 13.4693L16.5231 12.5378C16.4937 12.513 16.4665 12.4859 16.4416 12.4567C16.1882 12.1596 16.2247 11.7143 16.5231 11.462L17.625 10.5305C17.7344 10.438 17.777 10.289 17.7328 10.153C17.4711 9.34708 17.04 8.60729 16.4711 7.98033C16.3749 7.87431 16.224 7.83652 16.0888 7.88463L14.7293 8.36865C14.6931 8.38152 14.6559 8.39146 14.618 8.39833ZM7.99863 8.97726L8.93522 9.3107C9.82017 9.62559 10.7987 9.16815 11.1177 8.2794C11.149 8.19207 11.1732 8.1021 11.19 8.01078L11.3674 7.04113C11.5757 7.01512 11.7868 7.00195 12 7.00195C12.213 7.00195 12.424 7.0151 12.6321 7.04107L12.8101 8.01117C12.9805 8.9408 13.8727 9.55003 14.7967 9.38225C14.8877 9.36572 14.9775 9.34176 15.0647 9.31073L16.0014 8.97726C16.2564 9.31084 16.4684 9.67476 16.6319 10.0606L15.8774 10.6984C15.1566 11.3079 15.0675 12.3865 15.6807 13.1056C15.7408 13.1761 15.8067 13.2417 15.8775 13.3015L16.6319 13.9392C16.4684 14.3251 16.2564 14.689 16.0014 15.0226L15.0646 14.6891C14.1797 14.3742 13.2013 14.8317 12.8823 15.7205C12.851 15.8078 12.8268 15.8978 12.81 15.9891L12.6321 16.9588C12.424 16.9848 12.213 16.9979 12 16.9979C11.7868 16.9979 11.5757 16.9848 11.3674 16.9587L11.1899 15.989C11.0196 15.0592 10.1274 14.4498 9.2033 14.6176C9.11227 14.6342 9.0225 14.6581 8.93528 14.6892L7.99863 15.0226C7.74357 14.689 7.53161 14.3251 7.36814 13.9392L8.12257 13.3015C8.84343 12.692 8.93254 11.6134 8.31933 10.8943C8.25917 10.8238 8.19332 10.7582 8.12254 10.6984L7.36814 10.0606C7.53161 9.67476 7.74357 9.31084 7.99863 8.97726Z"
-                    fill="#F1F5F9"
-                  />
-                </svg>
-              </div>
-              <p>Organization settings</p>
-            </div>
+            {isOrganization && (
+              <Link href="/host/settings/org">
+                <div className={styles.item} onClick={() => setShow(false)}>
+                  <div>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11.9999 10C10.8954 10 9.99994 10.8954 9.99994 12C9.99994 13.1046 10.8954 14 11.9999 14C13.1045 14 13.9999 13.1046 13.9999 12C13.9999 10.8954 13.1045 10 11.9999 10ZM10.9999 12C10.9999 11.4477 11.4477 11 11.9999 11C12.5522 11 12.9999 11.4477 12.9999 12C12.9999 12.5523 12.5522 13 11.9999 13C11.4477 13 10.9999 12.5523 10.9999 12ZM14.618 8.39833C14.233 8.46825 13.8639 8.21413 13.7937 7.83074L13.534 6.41496C13.5082 6.27427 13.3996 6.16301 13.2591 6.13325C12.8482 6.04621 12.4268 6.00195 12 6.00195C11.5729 6.00195 11.1513 6.04627 10.7401 6.13341C10.5996 6.1632 10.491 6.27452 10.4653 6.41527L10.2063 7.8308C10.1994 7.86844 10.1894 7.90551 10.1765 7.9416C10.0448 8.30859 9.6392 8.49978 9.27062 8.36863L7.91115 7.88463C7.77603 7.83652 7.62511 7.87431 7.52891 7.98033C6.96005 8.60729 6.52892 9.34708 6.2672 10.153C6.22305 10.289 6.26562 10.438 6.37502 10.5305L7.47694 11.4621C7.50626 11.4869 7.53352 11.514 7.55843 11.5432C7.81177 11.8403 7.77528 12.2856 7.47693 12.5378L6.37502 13.4693C6.26562 13.5618 6.22305 13.7109 6.2672 13.8469C6.52892 14.6528 6.96005 15.3926 7.52891 16.0196C7.62511 16.1256 7.77603 16.1634 7.91115 16.1153L9.27068 15.6312C9.30687 15.6184 9.3441 15.6084 9.38196 15.6015C9.76701 15.5316 10.1361 15.7857 10.2063 16.1691L10.4653 17.5846C10.491 17.7254 10.5996 17.8367 10.7401 17.8665C11.1513 17.9536 11.5729 17.9979 12 17.9979C12.4268 17.9979 12.8482 17.9537 13.2591 17.8666C13.3996 17.8369 13.5082 17.7256 13.534 17.5849L13.7937 16.1692C13.8006 16.1314 13.8106 16.0944 13.8235 16.0583C13.9552 15.6913 14.3608 15.5001 14.7294 15.6312L16.0888 16.1153C16.224 16.1634 16.3749 16.1256 16.4711 16.0196C17.04 15.3926 17.4711 14.6528 17.7328 13.8469C17.777 13.7109 17.7344 13.5618 17.625 13.4693L16.5231 12.5378C16.4937 12.513 16.4665 12.4859 16.4416 12.4567C16.1882 12.1596 16.2247 11.7143 16.5231 11.462L17.625 10.5305C17.7344 10.438 17.777 10.289 17.7328 10.153C17.4711 9.34708 17.04 8.60729 16.4711 7.98033C16.3749 7.87431 16.224 7.83652 16.0888 7.88463L14.7293 8.36865C14.6931 8.38152 14.6559 8.39146 14.618 8.39833ZM7.99863 8.97726L8.93522 9.3107C9.82017 9.62559 10.7987 9.16815 11.1177 8.2794C11.149 8.19207 11.1732 8.1021 11.19 8.01078L11.3674 7.04113C11.5757 7.01512 11.7868 7.00195 12 7.00195C12.213 7.00195 12.424 7.0151 12.6321 7.04107L12.8101 8.01117C12.9805 8.9408 13.8727 9.55003 14.7967 9.38225C14.8877 9.36572 14.9775 9.34176 15.0647 9.31073L16.0014 8.97726C16.2564 9.31084 16.4684 9.67476 16.6319 10.0606L15.8774 10.6984C15.1566 11.3079 15.0675 12.3865 15.6807 13.1056C15.7408 13.1761 15.8067 13.2417 15.8775 13.3015L16.6319 13.9392C16.4684 14.3251 16.2564 14.689 16.0014 15.0226L15.0646 14.6891C14.1797 14.3742 13.2013 14.8317 12.8823 15.7205C12.851 15.8078 12.8268 15.8978 12.81 15.9891L12.6321 16.9588C12.424 16.9848 12.213 16.9979 12 16.9979C11.7868 16.9979 11.5757 16.9848 11.3674 16.9587L11.1899 15.989C11.0196 15.0592 10.1274 14.4498 9.2033 14.6176C9.11227 14.6342 9.0225 14.6581 8.93528 14.6892L7.99863 15.0226C7.74357 14.689 7.53161 14.3251 7.36814 13.9392L8.12257 13.3015C8.84343 12.692 8.93254 11.6134 8.31933 10.8943C8.25917 10.8238 8.19332 10.7582 8.12254 10.6984L7.36814 10.0606C7.53161 9.67476 7.74357 9.31084 7.99863 8.97726Z"
+                        fill="#F1F5F9"
+                      />
+                    </svg>
+                  </div>
+                  <p>Organization settings</p>
+                </div>
+              </Link>
+            )}
             <div className={styles.item}>
               <div>
                 <svg
@@ -222,25 +291,26 @@ export default function ProfileMenu(props: {
             <p className={styles.sectionTitle}>
               {user!.primaryEmailAddress?.toString()}
             </p>
-            <div
-              className={styles.item}
-              onClick={() => {
-                setShow(false);
-                setShowDialog("UserProfile");
-              }}
-            >
-              <div className={styles.userIcon}>
-                <div className="absolute top-[5px] left-[5px] w-[14px] h-[14px] rounded-[3px] overflow-hidden">
-                  <Image
-                    src={user!.imageUrl}
-                    width={14}
-                    height={14}
-                    alt={user.fullName || user.username!}
-                  />
+            <Link href="/en/settings/basic">
+              <div
+                className={styles.item}
+                onClick={() => {
+                  setShow(false);
+                }}
+              >
+                <div className={styles.userIcon}>
+                  <div className="absolute top-[5px] left-[5px] w-[14px] h-[14px] rounded-[3px] overflow-hidden">
+                    <Image
+                      src={user!.imageUrl}
+                      width={14}
+                      height={14}
+                      alt={user.fullName || user.username!}
+                    />
+                  </div>
                 </div>
+                <p>Account Settings</p>
               </div>
-              <p>Account Settings</p>
-            </div>
+            </Link>
             <div className={styles.item}>
               <div>
                 <svg
