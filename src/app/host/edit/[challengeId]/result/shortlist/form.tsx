@@ -21,6 +21,8 @@ import { Switch } from "@/components/form/switch";
 import { Input } from "@/components/form/control";
 import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
+import DotIcon from "../dot-icon";
+import { ReactSortable } from "react-sortablejs";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
@@ -107,16 +109,27 @@ export function Shortlist({
       <div className="my-8">
         <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
           <p className="body-2">Shortlisted projects</p>
-          {fields.map((f, index) => {
-            return (
-              <div
-                key={f.id}
-                className="bg-[#0B0C24] border border-[#323232] p-4 my-4"
-              >
-                <div className="flex justify-between">
-                  <p className="body-3">Track - {f.name}</p>
-                  <div className="flex">
-                    <button
+          <ReactSortable
+            list={fields}
+            setList={() => {}}
+            animation={150}
+            className=".dot-icon"
+            onEnd={(e) => move(e.oldDraggableIndex!, e.newDraggableIndex!)}
+          >
+            {fields.map((f, index) => {
+              return (
+                <div
+                  key={f.id}
+                  className="bg-[#0B0C24] border border-[#323232] p-4 pl-2 my-4"
+                >
+                  <div className="absolute dot-icon">
+                    <DotIcon />
+                  </div>
+                  <div className="pl-[36px] pt-[4px]">
+                    <div className="flex justify-between">
+                      <p className="body-3">Track - {f.name}</p>
+                      <div className="flex">
+                        {/* <button
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
@@ -133,33 +146,45 @@ export function Shortlist({
                       }}
                     >
                       <ArrowDownIcon className="mr-1 text-grey-500" />
-                    </button>
-                    <Switch
+                    </button> */}
+                        <div className="flex items-center">
+                          <p
+                            className="text-xs leading-4 text-[#64748B]"
+                            style={{
+                              fontFamily: "var(--font-secondary)",
+                            }}
+                          >
+                            Enable
+                          </p>
+                          <Switch
+                            control={control}
+                            name={`shortlist.${index}.display`}
+                            label={""}
+                            onValueChange={(v) => {
+                              setValue(`shortlist.${index}.display`, v);
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <Input
+                      label="Display Name"
+                      {...register(`shortlist.${index}.name`)}
+                      error={errors?.["shortlist"]?.[index]?.["name"]}
+                    />
+
+                    <Projects
+                      index={index}
                       control={control}
-                      name={`shortlist.${index}.display`}
-                      label={""}
-                      onValueChange={(v) => {
-                        setValue(`shortlist.${index}.display`, v);
-                      }}
+                      register={register}
+                      errors={errors}
+                      projects={projects}
                     />
                   </div>
                 </div>
-                <Input
-                  label="Display Name"
-                  {...register(`shortlist.${index}.name`)}
-                  error={errors?.["shortlist"]?.[index]?.["name"]}
-                />
-
-                <Projects
-                  index={index}
-                  control={control}
-                  register={register}
-                  errors={errors}
-                  projects={projects}
-                />
-              </div>
-            );
-          })}
+              );
+            })}
+          </ReactSortable>
 
           <button
             className="btn btn-secondary"

@@ -1,7 +1,7 @@
 "use client";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
-import Summary from "./summary";
+import Summary from "./summary/summary";
 
 export default function Page() {
   let { user } = useUser();

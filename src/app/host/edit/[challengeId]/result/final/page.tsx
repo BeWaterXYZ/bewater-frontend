@@ -7,6 +7,7 @@ import {
 } from "@/services/challenge.query";
 import { useFetchChallengeProjects } from "@/services/project.query";
 import { FinalResult } from "./form";
+import Tab from "../tab";
 
 export default function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
@@ -18,10 +19,13 @@ export default function Page({ params }: any) {
   if (!projects) return null;
   if (!shortlist) return null;
   return (
-    <FinalResult
-      challenge={challenge}
-      projects={projects}
-      shortlist={shortlist}
-    />
+    <>
+      <Tab />
+      <FinalResult
+        challenge={challenge}
+        projects={projects}
+        shortlist={shortlist}
+      />
+    </>
   );
 }

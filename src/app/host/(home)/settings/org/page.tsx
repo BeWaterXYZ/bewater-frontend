@@ -1,10 +1,13 @@
 "use client";
 import { OrganizationProfile, useOrganization } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   let { organization, isLoaded } = useOrganization();
+  const router = useRouter();
   if (isLoaded && !organization) {
+    router.push("/host");
     return (
       <div>
         <p className="body-1">{"Your haven't selected a organization"} </p>

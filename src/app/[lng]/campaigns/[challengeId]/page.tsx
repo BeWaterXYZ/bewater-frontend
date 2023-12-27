@@ -31,6 +31,7 @@ import Marquee from "react-fast-marquee";
 import Markdown from "@/components/markdown";
 import { Agenda } from "./agenda";
 import { EventVenue } from "./event-venue";
+import WA from "./wa";
 
 const ConnectButton = dynamicLoad(() => import("./connect-button"), {
   ssr: false,
@@ -865,6 +866,7 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         ) : null}
       </div>
+      <WA challengeId={challenge.id} />
     </div>
   );
 }

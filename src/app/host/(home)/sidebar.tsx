@@ -1,10 +1,10 @@
 "use client";
-import { BeWaterLogo } from "@/components/header/logo";
-import { OrganizationSwitcher, UserButton, useUser } from "@clerk/nextjs";
+import { useOrganization, useUser } from "@clerk/nextjs";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import ProfileMenu from "./profile-menu";
 
 const links = [
   {
@@ -82,29 +82,24 @@ const links = [
 export function Sidebar() {
   let segment = useSelectedLayoutSegment();
   let { user } = useUser();
+  let { organization } = useOrganization();
   let isAdmin = user?.publicMetadata?.teamMember ?? false;
-  let links_ = isAdmin ? links : links.filter((l) => l.path !== "settings");
+  let isOrg = !!organization?.id;
+  let links_ = isOrg ? links : links.filter((l) => l.path !== "settings");
   return (
     <div className="flex-1 border-r border-r-white/20">
-      <div className="p-2 flex justify-between items-center">
-        <div className="relative h-8 w-32">
-          <div className="absolute">
-            {isAdmin ? (
-              <OrganizationSwitcher />
-            ) : (
-              <Image
-                className="block"
-                src="/logo/bewater-h.svg"
-                width={120}
-                height={24}
-                alt="bewater logo"
-              />
-            )}
-          </div>
-        </div>
-        <div className="">
-          <UserButton />
-        </div>
+      <div className="p-2 flex justify-between items-center h-[48px]">
+        {isAdmin ? (
+          <ProfileMenu user={user} organization={organization} />
+        ) : (
+          <Image
+            className="block"
+            src="/logo/bewater-h.svg"
+            width={120}
+            height={24}
+            alt="bewater logo"
+          />
+        )}
       </div>
       <div className="flex flex-col gap-2 p-2 py-4 ">
         {links_.map((link) => (
