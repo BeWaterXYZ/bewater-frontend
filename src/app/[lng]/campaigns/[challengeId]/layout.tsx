@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
-import { getChallengeById } from '@/services/challenge';
-import { Metadata } from 'next';
-import { ChallengeHero } from './hero';
-import { ChallengeNav } from './nav';
-import { segmentSchema } from './param-schema';
-import { useTranslation } from '@/app/i18n';
-import { isWorkshop, RegexDigit } from './utils';
+import { getChallengeById } from "@/services/challenge";
+import { Metadata } from "next";
+import { ChallengeHero } from "./hero";
+import { ChallengeNav } from "./nav";
+import { segmentSchema } from "./param-schema";
+import { useTranslation } from "@/app/i18n";
+import { isWorkshop, RegexDigit } from "./utils";
 
 export default async function Layout({
   children,
@@ -23,9 +23,13 @@ export default async function Layout({
   }
 
   return (
-    <div>
+    <div
+      style={{
+        fontFamily: "var(--font-secondary)",
+      }}
+    >
       <ChallengeHero challenge={challenge} lng={lng} />
-      { !isWorkshop(challenge) ? (
+      {!isWorkshop(challenge) ? (
         <ChallengeNav challenge={challenge} lng={lng} />
       ) : null}
       <div>{children}</div>
@@ -38,31 +42,42 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
   const { lng } = segmentSchema.lng.parse(params);
   const challenge = await getChallengeById(challengeId);
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(lng, 'translation');
+  const { t } = await useTranslation(lng, "translation");
 
   if (challenge.yotadata?.title) {
-    challenge.title = lng === 'zh' ? (challenge.yotadata.title.zh ?? challenge.yotadata.title.en) : (challenge.yotadata.title.en ?? challenge.yotadata.title.zh);
+    challenge.title =
+      lng === "zh"
+        ? challenge.yotadata.title.zh ?? challenge.yotadata.title.en
+        : challenge.yotadata.title.en ?? challenge.yotadata.title.zh;
   }
 
   if (challenge.yotadata?.description) {
-    challenge.description = lng === 'zh' ? (challenge.yotadata.description.zh ?? challenge.yotadata.description.en) : (challenge.yotadata.description.en ?? challenge.yotadata.description.zh);
+    challenge.description =
+      lng === "zh"
+        ? challenge.yotadata.description.zh ?? challenge.yotadata.description.en
+        : challenge.yotadata.description.en ??
+          challenge.yotadata.description.zh;
   }
 
   return {
-    title: t('bewater') + ' - ' + challenge.title,
+    title: t("bewater") + " - " + challenge.title,
     description: challenge.description,
     twitter: {
-      site: 'BeWater',
-      card: 'summary_large_image',
-      title: 'BeWater - ' + challenge.title,
+      site: "BeWater",
+      card: "summary_large_image",
+      title: "BeWater - " + challenge.title,
       description: challenge.description,
-      images: challenge.yotadata?.ogImgUri ? challenge.yotadata.ogImgUri : `/api/og?challengeId=${challenge.id}`,
+      images: challenge.yotadata?.ogImgUri
+        ? challenge.yotadata.ogImgUri
+        : `/api/og?challengeId=${challenge.id}`,
     },
     openGraph: {
-      type: 'website',
-      title: 'BeWater - ' + challenge.title,
+      type: "website",
+      title: "BeWater - " + challenge.title,
       description: challenge.description,
-      images: challenge.yotadata?.ogImgUri ? challenge.yotadata.ogImgUri : `/api/og?challengeId=${challenge.id}`,
+      images: challenge.yotadata?.ogImgUri
+        ? challenge.yotadata.ogImgUri
+        : `/api/og?challengeId=${challenge.id}`,
     },
   };
 }
