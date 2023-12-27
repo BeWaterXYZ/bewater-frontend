@@ -69,7 +69,7 @@ export function Prizes({ challenge }: { challenge: Challenge }) {
         };
       }),
       keySponsors: challenge.keySponsors ?? [],
-      awardCurrency: challenge.awardCurrency,
+      awardCurrency: challenge.awardCurrency ? challenge.awardCurrency : "USDT",
       totalAward: `${challenge.totalAward ?? 0}`,
     },
   });
@@ -185,10 +185,11 @@ export function Prizes({ challenge }: { challenge: Challenge }) {
                 {...register(`totalAward`)}
                 error={errors["totalAward"]}
               />
-              { /* todo  解决summary货币无法相加 */ }
+              { /* 解决summary货币无法相加 */ }
               <Input
                 label="Award Currency"
-                placeholder="USD/ETH"
+                placeholder="USDT"
+                disabled
                 {...register(`awardCurrency`)}
                 error={errors["awardCurrency"]}
               />
