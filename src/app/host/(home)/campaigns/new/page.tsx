@@ -106,7 +106,7 @@ export default function Page() {
   ];
 
   const { isLoaded, isSignedIn, user } = useUser();
-  if (isLoaded && isSignedIn && user?.publicMetadata?.teamMember) {
+  if (isLoaded && isSignedIn && user?.publicMetadata?.teamMember && false) {
     challengeType.push({
       value: "OTHERS",
       label: (
