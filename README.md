@@ -35,6 +35,3 @@ NEXT_PUBLIC_BASE_PATH=
 # local | qa | prod
 ENVIRONMENT=local
 ```
-
-
-

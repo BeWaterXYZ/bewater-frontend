@@ -18,7 +18,6 @@ const filterMap = [
   ["All", ""],
   ["Challenge", "CHALLENGE"],
   ["Workshop", "WORKSHOP"],
-  ["Others", "OTHERS"],
 ];
 
 export function ChallengeList({ challenges, lng }: ChallengeListProps) {
