@@ -14,7 +14,7 @@ export default function Campaign(props: { campaign: OngoingChallenge }) {
       teamNum,
       projectNum,
       curveData,
-      visitors,
+      pageViews,
     },
   } = props;
   return (
@@ -43,7 +43,7 @@ export default function Campaign(props: { campaign: OngoingChallenge }) {
       </div>
       <div className="relative">
         <div className="bg-[cyan]/10 w-[365px] h-[112px] relative">
-          <Chart data={curveData} pageViews={visitors} />
+          <Chart data={curveData} pageViews={pageViews ?? 0} />
         </div>
         <div className="flex justify-end absolute bottom-0 right-0">
           <Link

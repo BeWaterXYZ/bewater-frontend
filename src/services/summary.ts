@@ -26,7 +26,8 @@ export interface OngoingChallenge {
   teamNum: number; // 总队伍个数
   projectNum: number; // 项目个数
   curveData: CurveData; // 曲线图的数组数据
-  visitors: number,
+  visitors: number, // 不同用户数
+  pageViews: number, // 页面打开数，包含重复
   status: Challenge['status'] // 这个字段用来判断有没有active的活动。
   timeZone: number;
 }
