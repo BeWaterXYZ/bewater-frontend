@@ -83,7 +83,7 @@ export default function ProfileMenu(props: {
                     // dividerRow: "hidden",
                     formFieldInput:
                       "bg-night text-white border-gray-800 rounded-sm placeholder-gray-600",
-                    formFieldLabel: "text-gray-500 hidden",
+                    formFieldLabel: "text-gray-500",
                     formFieldLabelRow: "mb-2",
                     // footer: "hidden",
                     header: "text-xl gap-2",
@@ -96,7 +96,7 @@ export default function ProfileMenu(props: {
               />
             )}
             <div
-              className="absolute right-[3rem] top-[1.5rem] cursor-pointer"
+              className="absolute right-[53px] top-[24px] cursor-pointer"
               onClick={() => setShowDialog(null)}
             >
               <svg
