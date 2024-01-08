@@ -327,5 +327,5 @@ export interface Shortlist {
   name: string;
   display: boolean;
   projectIdArr: string[];
-  prpjects?: Project[];
+  projects?: Project[];
 }

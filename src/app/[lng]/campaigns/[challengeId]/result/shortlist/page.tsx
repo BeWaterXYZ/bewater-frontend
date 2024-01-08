@@ -1,18 +1,20 @@
+"use client";
+import {
+  useFetchChallengeById,
+  useFetchChallengeShortlist,
+} from "@/services/challenge.query";
 import Card from "./card";
+import { useFetchChallengeTeams } from "@/services/team.query";
+import _ from "lodash";
 
-const testData = {
-  title: "Lumiterra",
-  description:
-    "Lumiterra is a brand-new, multiplayer, open-world survival crafting game where you can battle, farm with your friends or mysterious collected creatures in a vast world!",
-  headerImage:
-    "https://upload.wikimedia.org/wikipedia/commons/b/b6/Image_created_with_a_mobile_phone.png",
-  teamName: "TickerLogic.io",
-  teamAvatar:
-    "https://document.intra-mart.jp/library/bis/public/bis_designer_help/_images/display13.png",
-  url: "https://google.com",
-};
-
-export default function Page() {
+export default function Page({ params }: any) {
+  let { challengeId } = params || {};
+  const { data: challenge } = useFetchChallengeById(challengeId);
+  const { data: teams } = useFetchChallengeTeams(challengeId);
+  const { data } = useFetchChallengeShortlist(challenge?.id ?? "");
+  const shortlisted = _.sum(
+    data?.map((shortlist) => shortlist.projects?.length) ?? []
+  );
   return (
     <div className="container-xl mt-[40px] text-center flex flex-col items-center">
       <div>
@@ -48,7 +50,7 @@ export default function Page() {
             </g>
           </svg>
           <div className="text-base text-[#FFF] mr-6">
-            18 teams were shortlisted and entered the final selection
+            {shortlisted} teams were shortlisted and entered the final selection
           </div>
         </div>
         <div
@@ -59,22 +61,37 @@ export default function Page() {
         />
       </div>
       <div className="gap-[56px] grid mt-[56px]">
-        <div className="flex flex-col items-center gap-[40px]">
-          <div className="text-[#FFF] text-3xl/10">On-Chain Innovation</div>
-          <div className="grid grid-cols-2 gap-6">
-            <Card {...testData} />
-            <Card {...testData} />
-            <Card {...testData} />
-          </div>
-        </div>
-        <div className="flex flex-col items-center gap-[40px]">
-          <div className="text-[#FFF] text-3xl/10">Student Innovation</div>
-          <div className="grid grid-cols-2 gap-6">
-            <Card {...testData} />
-            <Card {...testData} />
-            <Card {...testData} />
-          </div>
-        </div>
+        {data &&
+          data.map((shortlist, i) => (
+            <div key={i} className="flex flex-col items-center gap-[40px]">
+              {data.length > 1 && (
+                <div className="text-[#FFF] text-3xl/10">{shortlist.name}</div>
+              )}
+              <div className="grid grid-cols-2 gap-6">
+                {shortlist.projects &&
+                  shortlist.projects.map((project, i) => {
+                    const team = teams?.find(
+                      (team) => team.id === project.teamId
+                    );
+                    return (
+                      <Card
+                        key={i}
+                        title={project.name}
+                        description={project.description}
+                        headerImage={project.mediaURLs[0]}
+                        avatars={
+                          team?.teamMembers.map(
+                            (member) => member.userProfile.avatarURI ?? ""
+                          ) ?? []
+                        }
+                        teamName={team?.name ?? ""}
+                        url={project.githubURI ?? "#"}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );

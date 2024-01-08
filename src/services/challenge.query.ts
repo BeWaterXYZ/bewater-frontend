@@ -34,6 +34,7 @@ export function useFetchChallenges(id?: string) {
 export function useFetchChallengeShortlist(challengeId: ChallengeID) {
   return useQuery({
     queryKey: ["challenges", "shortlist", challengeId],
+    enabled: !!challengeId,
     queryFn: async () => {
       return getChallengeShortlist(challengeId);
     },
