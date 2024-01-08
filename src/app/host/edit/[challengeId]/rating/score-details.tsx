@@ -65,6 +65,12 @@ export function ScoreDetails({
         />
       </div>
       <div>
+        {projects_.length === 0 && (
+          <p className="font-secondary py-6 text-xs text-[#64748B] text-center">
+            Score details will be displayed when the milestone for judging
+            begins.
+          </p>
+        )}
         {projects_.map((proj) => {
           return (
             <div
@@ -110,7 +116,7 @@ export function ScoreDetails({
                     </p>
                   </div>
                   <div>
-                   <ScoreDetail challenge={challenge} project={proj}/>
+                    <ScoreDetail challenge={challenge} project={proj} />
                   </div>
                 </div>
               </div>

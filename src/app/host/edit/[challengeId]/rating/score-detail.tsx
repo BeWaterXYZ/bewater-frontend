@@ -105,9 +105,9 @@ export function ScoreDetail({
                     {(
                       m?.mark ??
                       new Array(challenge.scoreDimension.length).fill("--")
-                    ).map((mark,i) => {
+                    ).map((mark, i) => {
                       return (
-                        <td  key={i} className=" body-3">
+                        <td key={i} className=" body-3">
                           <div className="flex p-2">{mark}</div>
                         </td>
                       );

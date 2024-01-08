@@ -83,9 +83,8 @@ export function EditRating({
       <div className="grid grid-cols-[1fr,300px] text-white gap-8">
         <ScoreDetails challenge={challenge} projects={projects} />
         <div>
-         <OverallProgress challenge={challenge} projects={projects}/>
-         <Ranking challenge={challenge} projects={projects}/>
-         
+          <OverallProgress challenge={challenge} projects={projects} />
+          <Ranking challenge={challenge} projects={projects} />
         </div>
       </div>
     </div>

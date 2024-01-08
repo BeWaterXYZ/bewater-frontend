@@ -9,9 +9,9 @@ export default function Page({ params }: any) {
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge } = useFetchChallengeById(challengeId);
   const { data: projects } = useFetchChallengeProjects(challengeId);
-  
-  if (!challenge ) return null;
-  if (!projects ) return null;
+
+  if (!challenge) return null;
+  if (!projects) return null;
   return (
     <div className="container m-auto">
       <EditRating challenge={challenge} projects={projects} />

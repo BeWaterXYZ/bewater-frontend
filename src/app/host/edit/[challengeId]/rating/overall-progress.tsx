@@ -13,12 +13,21 @@ export function OverallProgress({
       <p className="body-2 mb-2">Overall Progress</p>
 
       <div className="flex flex-col gap-2">
+        {challenge.reviewers.length === 0 && (
+          <p className="font-secondary py-6 text-xs text-[#64748B] text-center">
+            Score details will be displayed when the milestone for judging
+            begins.
+          </p>
+        )}
         {challenge.reviewers.map((rv) => {
           let left = projects.filter(
             (proj) => !proj.projectScore.some((s) => s.reviewerId === rv.userId)
           ).length;
           return (
-            <div key={rv.id} className="flex  justify-between items-center gap-2">
+            <div
+              key={rv.id}
+              className="flex  justify-between items-center gap-2"
+            >
               <div className="flex items-center gap-2">
                 <Avatar className="w-8 h-8" src={rv.avatarURI} />
                 <p className="body-3">
