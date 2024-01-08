@@ -1,19 +1,41 @@
 "use client";
 import { useFetchAnalyticsData } from "@/services/analytics.query";
 import DataCardView from "./dataCardView";
-import localFont from "next/font/local";
 import { segmentSchema } from "@/app/host/segment-params";
 import Chart from "./chart";
 import { format, parseISO } from "date-fns";
 import { useLoadingWhen } from "@/components/loading/store";
-
-const BasementGrotesque = localFont({
-  src: "../../../../../font/BasementGrotesque-Regular.woff2",
-});
+import { useEffect, useState } from "react";
+import { CurveData } from "@/services/summary";
 
 export default function Page({ params }: any) {
+  const fontSecondary = JSON.parse(
+    `[${getComputedStyle(document.body)
+      .getPropertyValue("--font-secondary")
+      .replaceAll(`'`, `"`)}]`
+  )[0];
   const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data } = useFetchAnalyticsData(+challengeId);
+  const [curve, setCurve] = useState<CurveData>([]);
+  const [tooltip, setTooltip] = useState<string>("New projects");
+  const [font, setFont] = useState<string | undefined>();
+  const [chart, setChart] = useState<"projects" | "visitors" | "pageviews">(
+    "projects"
+  );
+  useEffect(() => {
+    setTooltip(`New ${chart}`);
+    setCurve(
+      {
+        projects: data?.curveData.projects,
+        visitors: data?.curveData.visitors,
+        pageviews: data?.curveData.pageViews,
+      }[chart] ?? []
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chart]);
+  useEffect(() => {
+    setFont(fontSecondary);
+  }, [fontSecondary]);
   useLoadingWhen(!data);
   const analyticsData = {
     topProjects: {
@@ -56,7 +78,9 @@ export default function Page({ params }: any) {
       title: "Commits",
       secondary: "",
       histogram: true,
-      data: data?.githubRepo.mostStar ?? [],
+      data: [...(data?.githubRepo.recentlyActive ?? [])].sort(
+        (a, b) => a.totalCommits - b.totalCommits
+      ),
     },
     recentlyActive: {
       title: "Recently Active",
@@ -68,12 +92,12 @@ export default function Page({ params }: any) {
 
   const card =
     "bg-[#0B0C24] border-[1px] border-[#24254E] rounded-[4px] mb-[28px]";
-  const lineChartModule = "pb-[20px] flex";
+  const lineChartModule = "pb-[20px] flex select-none cursor-pointer";
   const currentlineChartModule = `${lineChartModule} border-b-[2px] border-b-[#00FFFF]`;
   const lineChartTitle =
     "font-secondary text-base text-white w-[100px] mr-4 mb-2";
   const lineChartSecondary = "font-secondary text-xs text-[#64748B] uppercase";
-  const lineChartBigNum = `${BasementGrotesque.className} text-5xl text-white font-normal`;
+  const lineChartBigNum = `font-primary text-5xl text-white font-normal`;
 
   return (
     <div className="mx-auto mt-[32px] mb-[120px] w-[1068px]">
@@ -92,21 +116,36 @@ export default function Page({ params }: any) {
             )} UTC${`+${data?.timeZone}`.replace("+-", "-")}`}
         </div>
         <div className="pt-[36px] pl-[36px] flex gap-[80px]">
-          <div className={currentlineChartModule}>
+          <div
+            className={
+              chart === "projects" ? currentlineChartModule : lineChartModule
+            }
+            onClick={() => setChart("projects")}
+          >
             <div>
               <div className={lineChartTitle}>Projects</div>
               <div className={lineChartSecondary}>LAST 20 DAYS</div>
             </div>
             <div className={lineChartBigNum}>{data?.teamNum}</div>
           </div>
-          <div className={lineChartModule}>
+          <div
+            className={
+              chart === "visitors" ? currentlineChartModule : lineChartModule
+            }
+            onClick={() => setChart("visitors")}
+          >
             <div>
               <div className={lineChartTitle}>Vistors</div>
               <div className={lineChartSecondary}>LAST 30 DAYS</div>
             </div>
             <div className={lineChartBigNum}>{data?.visitors}</div>
           </div>
-          <div className={lineChartModule}>
+          <div
+            className={
+              chart === "pageviews" ? currentlineChartModule : lineChartModule
+            }
+            onClick={() => setChart("pageviews")}
+          >
             <div>
               <div className={lineChartTitle}>Pageviews</div>
               <div className={lineChartSecondary}>LAST 30 DAYS</div>
@@ -116,7 +155,7 @@ export default function Page({ params }: any) {
         </div>
         <div className="px-[22px] pt-[33px] pb-5">
           <div className="h-[363px] text-white">
-            <Chart data={data?.curveData ?? []} />
+            <Chart data={curve} title={tooltip} font={font} />
           </div>
         </div>
       </div>

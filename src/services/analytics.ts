@@ -17,6 +17,8 @@ interface MostStarData extends ProjectData {
 interface RecentlyActiveData extends Omit<MostStarData, "num"> {
   text: string;
   lastUpdated: string;
+  totalCommits: number;
+  commitAuthor: string;
 }
 
 export interface AnalyticsData {
@@ -30,7 +32,11 @@ export interface AnalyticsData {
   teamNum: number; // 总队伍个数
   visitors: number; // 本活动不同用户访问量
   pageViews: number; // 本活动页面打开量，重复打开计算在内
-  curveData: CurveData;
+  curveData: {
+    pageViews: CurveData;
+    projects: CurveData;
+    visitors: CurveData;
+  };
 
   topProjects: ProjectData[];
   topReferers: Data[];

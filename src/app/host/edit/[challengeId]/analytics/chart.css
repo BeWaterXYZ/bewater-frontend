@@ -1,0 +1,16 @@
+.analytics-chart-tooltip > p:first-child {
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 10px;
+}
+
+.analytics-chart-tooltip span {
+  margin-left: 12px;
+  font-weight: 700;
+}
+
+.analytics-chart-tooltip > p:last-child {
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 16px;
+}
