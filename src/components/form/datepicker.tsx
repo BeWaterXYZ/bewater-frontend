@@ -58,7 +58,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
                 wrapperClassName="w-full"
                 calendarClassName="!flex"
                 className={clsx("w-full bg-white/0 h-10 px-2 outline-none", {
-                  'text-white/30': !!disabled
+                  "text-white/30": !!disabled,
                 })}
                 placeholderText={placeholder}
                 selected={field.value ? parseISO(field.value as string) : null}
@@ -67,7 +67,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
                 }}
               />
               <CalendarIcon
-                className="text-grey-500 absolute right-2 top-2 pointer-events-none"
+                className="text-grey-500 absolute right-2 top-[10px] pointer-events-none"
                 height={20}
                 width={20}
               />
