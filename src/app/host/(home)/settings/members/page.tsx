@@ -1,10 +1,13 @@
 "use client";
 import { OrganizationProfile, useOrganization } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
   let { organization, isLoaded } = useOrganization();
+  const router = useRouter();
   if (isLoaded && !organization) {
+    router.push("/host");
     return (
       <div>
         <p className="body-1">{"Your haven't selected a organization"} </p>
@@ -18,9 +21,11 @@ export default function Page() {
           baseTheme: dark,
           variables: { colorPrimary: "#00ffff" },
           elements: {
+            navbar: "!hidden",
+            membersPageInviteButton: "text-night",
             formButtonPrimary:
               "bg-day text-night hover:bg-[#00cccc] active:bg-[#009999] rounded-sm focus:shadow-none",
-            card: "bg-night text-white p-0 gap-10",
+            card: "bg-night text-white p-0 gap-10 !font-secondary",
             headerSubtitle: "text-gray-500",
             // socialButtons: "hidden",
             // dividerRow: "hidden",
