@@ -1,5 +1,5 @@
 "use client";
-import { Select } from "@/components/form/control";
+import Select, { ClassNamesConfig } from "react-select";
 import { SearchInput } from "@/components/molecules/search-input";
 import { Challenge, Project } from "@/services/types";
 import { CaretRightIcon } from "@radix-ui/react-icons";
@@ -33,94 +33,57 @@ export function ScoreDetails({
   let [search, setSearch] = useState("");
   let [tag, setTag] = useState("");
   let projects_ = getProjects(projects, search, tag);
+  const options = [
+    { value: "", label: "All" },
+    ...getTags(projects).map((tag) => ({ value: tag, label: tag })),
+  ];
+  const styles: ClassNamesConfig<(typeof options)[number], false> = {
+    control: () => "!bg-transparent !border-none !outline-none !shadow-none",
+    clearIndicator: () => "!hidden",
+    indicatorSeparator: () => "!hidden",
+    indicatorsContainer: () => "!hidden",
+    valueContainer: () => "!bg-transparent",
+    singleValue: () => "body-4 !text-white",
+    menu: () =>
+      "!bg-[#0F1021] !border !border-midnight !w-fit whitespace-nowrap",
+    option: () => "!text-white hover:!bg-midnight !bg-transparent",
+    input: () => "!text-white",
+    container: () => "!inline-block",
+  };
   return (
     <div className="bg-latenight border border-[#24254E] rounded p-4">
-      <p className="body-2">Score Details</p>
-      <div className="flex gap-2 items-center">
-        <div>
-          <label>Tags:</label>
-          <select
-            defaultValue={tag}
-            onChange={(e) => {
-              setTag(e.target.value);
-            }}
-            className="bg-[#0F1021] text-white/90 text-[14px] font-normal"
-          >
-            <option key={tag} value={""}>
-              All
-            </option>
-            {getTags(projects).map((tag) => {
-              return (
-                <option key={tag} value={tag}>
-                  {tag}
-                </option>
-              );
-            })}
-          </select>
+      <p className="body-2 font-bold pb-4">Score Details</p>
+      {projects_.length > 0 && (
+        <div className="flex gap-4 items-center">
+          <div>
+            <label className="text-xs text-[#CBD5E1]">Tags:</label>
+            <Select
+              isSearchable={false}
+              classNames={styles}
+              defaultValue={options[0]}
+              onChange={(val) => {
+                setTag(val!.value);
+              }}
+              options={options}
+            />
+          </div>
+          <SearchInput
+            placeholder="Search Project Name"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
-        <SearchInput
-          placeholder="Search project name"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      )}
       <div>
         {projects_.length === 0 && (
-          <p className="font-secondary py-6 text-xs text-[#64748B] text-center">
+          <p className="font-secondary py-[108px] text-xs text-[#64748B] text-center">
             Score details will be displayed when the milestone for judging
             begins.
           </p>
         )}
         {projects_.map((proj) => {
           return (
-            <div
-              className="p-4 bg-[#1A1C40] rounded flex justify-between items-center my-2"
-              key={proj.id}
-            >
-              <div className="flex-1">
-                <p className="body-3">{proj.name}</p>
-                <div className="flex gap-2 items-center">
-                  <p className="body-4 text-grey-300">{proj.team.name}</p>
-                  {proj.tags.map((t) => {
-                    return (
-                      <div
-                        key={t}
-                        className="text-grey-300 body-5 px-1 rounded border uppercase"
-                      >
-                        {t}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              <div className="flex flex-1 justify-between items-center">
-                <div>
-                  <p className="text-grey-300 body-4">
-                    {proj.projectScore.length === challenge.reviewers.length
-                      ? "All Judges done"
-                      : `${proj.projectScore.length}/${challenge.reviewers.length} judges done`}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div>
-                    <p className="text-grey-300 body-3">score</p>
-                    <p className="text-day body-1">
-                      {proj.projectScore.length > 0
-                        ? `${
-                            proj.projectScore
-                              .flatMap((s) => s.mark)
-                              .reduce((partialSum, a) => partialSum + a, 0) /
-                            proj.projectScore.length
-                          }/${(challenge.scoreDimension ?? []).length * 10}`
-                        : "--"}
-                    </p>
-                  </div>
-                  <div>
-                    <ScoreDetail challenge={challenge} project={proj} />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ScoreDetail key={proj.id} challenge={challenge} project={proj} />
           );
         })}
       </div>

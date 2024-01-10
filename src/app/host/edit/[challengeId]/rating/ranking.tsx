@@ -23,10 +23,10 @@ export function Ranking({
     })
     .filter((c, i) => i < 10);
   return (
-    <div className="bg-latenight border border-[#24254E] rounded p-4 mb-4">
-      <p className="body-2 mb-2">Ranking</p>
+    <div className="bg-latenight border border-[#24254E] rounded p-4">
+      <p className="body-2 mb-4 font-bold">Ranking</p>
 
-      <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-[14px]">
         {top10.length === 0 && (
           <p className="font-secondary py-6 text-xs text-[#64748B] text-center">
             Ranking will be displayed when the milestone for judging begins.
@@ -41,12 +41,12 @@ export function Ranking({
           return (
             <div
               key={proj.id}
-              className="flex  justify-between items-center gap-2"
+              className="flex justify-between items-center gap-2"
             >
-              <div className="flex items-center gap-2 body-3">
+              <div className="flex items-center gap-2 font-secondary text-sm text-grey-300 font-bold">
                 {proj.projectScore.length ? score : "--"}
               </div>
-              <div className="flex flex-1 justify-end body-3 text-grey-300 text-right">
+              <div className="flex flex-1 justify-end font-secondary text-xs text-grey-300 text-right">
                 {proj.name}
               </div>
             </div>

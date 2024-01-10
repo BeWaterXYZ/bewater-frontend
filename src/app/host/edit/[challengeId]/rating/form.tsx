@@ -23,17 +23,17 @@ export function EditRating({
     dialog.open("rating_judge_invite", { challengeId: challenge.id });
   };
   return (
-    <div>
-      <div className="text-xl leading-8 text-white py-4 ">Rating</div>
-      <p className="body-2 text-white/40">
+    <div className="font-secondary z-30 h-full w-full p-8 overflow-y-auto">
+      <div className="text-2xl leading-8 text-white py-4 font-bold">Rating</div>
+      <p className="body-2 text-xs text-white/40">
         Select judges, define scoring criteria, and rate the selected projects.
       </p>
 
-      <div className="bg-latenight border border-[#24254E] rounded px-4 my-6">
+      <div className="bg-latenight border border-[#24254E] rounded px-4 my-8">
         <div className=" border-b border-b-white/10 py-6 flex justify-between items-center">
           <div>
-            <p className="body-2">Judges</p>
-            <p className="body-3 text-grey-600">
+            <p className="body-2 font-bold mb-1">Judges</p>
+            <p className="body-3 text-grey-600 text-xs">
               Selected users can submit scores
             </p>
           </div>
@@ -59,10 +59,10 @@ export function EditRating({
           </div>
         </div>
 
-        <div className="  py-6 flex justify-between items-center">
+        <div className="py-6 flex justify-between items-center">
           <div>
-            <p className="body-2">Rating Dimensions</p>
-            <p className="body-3 text-grey-600">
+            <p className="body-2 font-bold mb-1">Rating Dimensions</p>
+            <p className="body-3 text-xs text-grey-600">
               Set the dimensions for judges to score
             </p>
           </div>

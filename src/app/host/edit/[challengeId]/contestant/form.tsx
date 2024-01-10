@@ -56,8 +56,8 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
   const { data: invitations = [] } = useFetchChallengeInvitation(challenge.id);
 
   return (
-    <div className="z-30    h-full  w-full  p-8 overflow-y-auto">
-      <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
+    <div className="font-secondary z-30 h-full w-full p-8 overflow-y-auto">
+      <div className="font-bold text-2xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
         Contestant Management
       </div>
       <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
@@ -76,8 +76,8 @@ export function EditContestant({ challenge }: { challenge: Challenge }) {
           </div>
         </div>
       </form>
-      <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
-        Contestant list
+      <div className="font-bold text-xl leading-8 text-white py-4 mb-4 border-b border-b-white/20">
+        Contestant List
       </div>
 
       <div className="flex flex-col gap-2">

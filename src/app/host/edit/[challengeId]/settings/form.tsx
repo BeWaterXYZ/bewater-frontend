@@ -31,7 +31,7 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
   };
 
   return (
-    <div className="z-30    h-full  w-full  p-8 overflow-y-auto">
+    <div className="font-secondary z-30 h-full w-full p-8 overflow-y-auto">
       <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
         General
       </div>
@@ -69,8 +69,6 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
           </div>
         )}
       </p>
-
-     
 
       <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
         Danger Zone

@@ -196,7 +196,7 @@ export function FinalResult({
   };
   return (
     <div>
-      <div className="my-8">
+      <div className="my-8 font-secondary">
         <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
           <p className="body-2">Final result</p>
           <ReactSortable

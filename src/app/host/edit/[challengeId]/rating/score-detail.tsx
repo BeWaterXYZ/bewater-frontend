@@ -18,25 +18,116 @@ export function ScoreDetail({
 }) {
   let [open, openSet] = useState(false);
 
+  const closeIcon = (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="0.583333"
+        y="0.583333"
+        width="26.8333"
+        height="26.8333"
+        rx="13.4167"
+        fill="#141527"
+      />
+      <rect
+        x="0.583333"
+        y="0.583333"
+        width="26.8333"
+        height="26.8333"
+        rx="13.4167"
+        stroke="#334155"
+        strokeWidth="1.16667"
+      />
+      <path
+        d="M17.0625 10.9375L10.9375 17.0625"
+        stroke="#E2E8F0"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.9375 10.9375L17.0625 17.0625"
+        stroke="#E2E8F0"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+
   return (
     <Dialog.Root open={open} onOpenChange={(open) => openSet(open)}>
       <Dialog.Trigger asChild>
-        <CaretRightIcon />
+        <div className="p-4 bg-[#1A1C40] border-[1px] border-[#1F2937] rounded flex justify-between items-center mt-[10px] cursor-pointer">
+          <div className="flex-1">
+            <p className="font-secondary text-sm font-bold mb-2">
+              {project.name}
+            </p>
+            <div className="flex gap-2 items-center">
+              <p className="body-4 text-grey-300">{project.team.name}</p>
+              {project.tags.map((t) => {
+                return (
+                  <div
+                    key={t}
+                    className="text-grey-300 body-5 px-1 rounded border uppercase"
+                  >
+                    {t}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div className="flex flex-1 justify-between items-center">
+            <div>
+              <p className="text-grey-300 body-4">
+                {project.projectScore.length === challenge.reviewers.length
+                  ? "All Judges done"
+                  : `${project.projectScore.length}/${challenge.reviewers.length} judges done`}
+              </p>
+            </div>
+            <div className="flex items-center gap-4">
+              <div>
+                <p className="font-secondary font-bold text-xs text-grey-500 text-right">
+                  Score
+                </p>
+                <p className="text-day body-1 text-right">
+                  {project.projectScore.length > 0
+                    ? `${
+                        project.projectScore
+                          .flatMap((s) => s.mark)
+                          .reduce((partialSum, a) => partialSum + a, 0) /
+                        project.projectScore.length
+                      }/${(challenge.scoreDimension ?? []).length * 10}`
+                    : "--"}
+                </p>
+              </div>
+              <CaretRightIcon className="scale-[1.333] text-[#94A3B8]" />
+            </div>
+          </div>
+        </div>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="bg-black/60 z-20 fixed inset-0" />
-        <Dialog.Content className="z-30 bg-[#141527]  fixed top-0 right-0 h-full  w-full md:w-[1000px] p-8 overflow-y-auto">
-          <Dialog.Title className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
+        <Dialog.Content className="z-30 bg-[#141527] outline-none fixed top-0 right-0 h-full w-full md:w-[1000px] p-8 overflow-y-auto">
+          <Dialog.Close className="absolute top-[10px] right-[10px] outline-none">
+            {closeIcon}
+          </Dialog.Close>
+          <Dialog.Title className="font-secondary text-xl leading-8 text-white py-4 mb-4 border-b border-b-white/20">
             Score - {project.name}
           </Dialog.Title>
           <div className="flex flex-wrap rounded border border-[#24254E] my-8">
             <div className="w-full lg:w-[400px]">
               <div className="hidden lg:block h-full relative">
-                <img
+                <Image
                   width={450}
                   height={300}
                   src={project?.mediaURLs?.[0] ?? unsplash("conference")}
-                  alt="project"
+                  alt={project.name}
                   className="object-cover block h-full absolute w-full top-0 left-0"
                 />
               </div>
@@ -117,7 +208,7 @@ export function ScoreDetail({
               })}
 
               <tr>
-                <th className=" text-grey-300 border-t border-t-grey-600">
+                <th className="text-grey-300 border-t border-t-grey-600">
                   Average
                 </th>
                 {(challenge.scoreDimension ?? []).map((d, i) => {
