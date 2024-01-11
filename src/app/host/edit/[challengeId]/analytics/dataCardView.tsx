@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Placeholder from "react-select/dist/declarations/src/components/Placeholder";
 
 export default function DataCardView(props: {
   source: {
@@ -12,8 +13,9 @@ export default function DataCardView(props: {
       num?: number;
     }[];
   };
+  placeholder?: string;
 }) {
-  const { source } = props;
+  const { source, placeholder } = props;
   const [windowView, setWindowView] = useState(false);
   const openWindowView = () => setWindowView(true);
   const closeWindowView = () => setWindowView(false);
@@ -39,20 +41,21 @@ export default function DataCardView(props: {
   const dataCardSecondary =
     "font-secondary text-[14px] leading-[28px] text-[#64748B]";
   const dataCardMain = "my-[7px] flex-1 min-h-[241px]";
-  // const dataCardItemContainer = "pt-[7px] px-4 mb-[-32px]";
   const dataCardItemContainer = "mt-[7px] mx-4 relative";
   const histogramBar = "bg-[#1E293BB3] rounded-[4px] h-8";
   const noHistogram = "h-8";
   const dataCardItemLabel =
-    "h-8 px-2 flex items-center justify-between w-[100%] absolute top-0";
-  // "h-8 px-1 flex items-center justify-between relative top-[-32px]";
-  const dataCardItemName = "font-secondary text-sm font-bold text-[#CBD5E1]";
+    "h-8 px-1 flex items-center justify-between w-[100%] absolute top-0";
+  const dataCardItemName =
+    "font-secondary text-sm font-bold text-[#CBD5E1] pr-1 line-clamp-1";
   const dataCardItemValue =
     "font-secondary text-[14px] leading-[28px] text-[#CBD5E1]";
   const dataCardButton =
     "bg-[#2F3153] border-[1px] border-[#2F3153] rounded-[2px] w-fit py-2 px-4 flex gap-2 items-center font-secondary text-sm text-white";
   const doneButton =
     "bg-[#00FFFF] rounded-[2px] w-fit py-2 px-4 font-secondary text-sm text-[#003333]";
+  const placeholderStyle =
+    "font-secondary text-sm text-[#64748B] h-full flex justify-center items-center";
   const arrowExpand = (
     <svg
       width="17"
@@ -115,23 +118,29 @@ export default function DataCardView(props: {
         <div className={dataCardSecondary}>{source.secondary}</div>
       </div>
       <div className={dataCardMain}>
-        {filterTop6.map((items) => (
-          <div className={dataCardItemContainer} key={items.name}>
-            <div
-              className={source.histogram === true ? histogramBar : noHistogram}
-              style={{
-                width:
-                  source.histogram === true
-                    ? `${percent(items.num as number)}`
-                    : "",
-              }}
-            ></div>
-            <div className={dataCardItemLabel}>
-              <div className={dataCardItemName}>{items.name}</div>
-              <div className={dataCardItemValue}>{items.num}</div>
+        {filterTop6.length === 0 ? (
+          <div className={placeholderStyle}>{placeholder}</div>
+        ) : (
+          filterTop6.map((items) => (
+            <div className={dataCardItemContainer} key={items.name}>
+              <div
+                className={
+                  source.histogram === true ? histogramBar : noHistogram
+                }
+                style={{
+                  width:
+                    source.histogram === true
+                      ? `${percent(items.num as number)}`
+                      : "",
+                }}
+              ></div>
+              <div className={dataCardItemLabel}>
+                <div className={dataCardItemName}>{items.name}</div>
+                <div className={dataCardItemValue}>{items.num}</div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
       <div className="pt-3 pb-4 flex justify-center">
         <button className={dataCardButton} onClick={openWindowView}>
@@ -154,26 +163,35 @@ export default function DataCardView(props: {
                 <button onClick={closeWindowView}>{closeWindow}</button>
               </div>
               <div className="px-[10px] flex-1 overflow-y-auto">
-                <div className={dataCardMain}>
-                  {source.data.map((items) => (
-                    <div className={dataCardItemContainer} key={items.name}>
-                      <div
-                        className={
-                          source.histogram === true ? histogramBar : noHistogram
-                        }
-                        style={{
-                          width:
+                <div
+                  className={dataCardMain}
+                  style={{ height: "calc(100% - 14px)" }}
+                >
+                  {source.data.length === 0 ? (
+                    <div className={placeholderStyle}>{placeholder}</div>
+                  ) : (
+                    source.data.map((items) => (
+                      <div className={dataCardItemContainer} key={items.name}>
+                        <div
+                          className={
                             source.histogram === true
-                              ? `${percent(items.num as number)}`
-                              : "",
-                        }}
-                      ></div>
-                      <div className={dataCardItemLabel}>
-                        <div className={dataCardItemName}>{items.name}</div>
-                        <div className={dataCardItemValue}>{items.num}</div>
+                              ? histogramBar
+                              : noHistogram
+                          }
+                          style={{
+                            width:
+                              source.histogram === true
+                                ? `${percent(items.num as number)}`
+                                : "",
+                          }}
+                        ></div>
+                        <div className={dataCardItemLabel}>
+                          <div className={dataCardItemName}>{items.name}</div>
+                          <div className={dataCardItemValue}>{items.num}</div>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))
+                  )}
                 </div>
               </div>
               <div className="pt-3 pr-6 pb-4 flex justify-end">

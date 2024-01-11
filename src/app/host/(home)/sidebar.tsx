@@ -117,7 +117,7 @@ export function Sidebar() {
     ? links
     : links.filter((l) => !l.path?.startsWith("settings"));
   return (
-    <div className="flex-1 border-r border-r-white/20">
+    <div className="flex flex-col flex-1 border-r border-r-white/20">
       <div className="p-2 flex justify-between items-center h-[48px]">
         {isAdmin ? (
           <ProfileMenu user={user} organization={organization} />
@@ -131,7 +131,7 @@ export function Sidebar() {
           />
         )}
       </div>
-      <div className="flex flex-col gap-2 p-2 py-4 ">
+      <div className="flex flex-1 flex-col gap-2 p-2 py-4 ">
         {links_.map((link) => (
           <Link
             key={link.label}
@@ -148,7 +148,7 @@ export function Sidebar() {
           </Link>
         ))}
       </div>
-      <div className="fixed z-10 bg-[#25263C] bottom-0 w-[262px] mb-4 ml-2 py-[20px] px-4 rounded-lg">
+      <div className="bg-[#25263C] w-[262px] mb-4 ml-2 py-[20px] px-4 rounded-lg relative">
         <div className="absolute top-2 right-2">
           <svg
             width="36"
@@ -160,9 +160,9 @@ export function Sidebar() {
             <path
               d="M23 13L13 23M13 13L23 23"
               stroke="#98A2B3"
-              stroke-width="1.66667"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.66667"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>

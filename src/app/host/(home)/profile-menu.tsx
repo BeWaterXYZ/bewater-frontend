@@ -113,21 +113,21 @@ export default function ProfileMenu(props: {
                   height="26.8333"
                   rx="13.4167"
                   stroke="#334155"
-                  stroke-width="1.16667"
+                  strokeWidth="1.16667"
                 />
                 <path
                   d="M17.0625 10.9375L10.9375 17.0625"
                   stroke="#E2E8F0"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M10.9375 10.9375L17.0625 17.0625"
                   stroke="#E2E8F0"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </div>
@@ -170,8 +170,8 @@ export default function ProfileMenu(props: {
       </div>
       {show && (
         <div className="absolute bg-[#25263C] rounded top-10 w-[288px] z-50">
-          <div className={styles.section}>
-            {isOrganization && (
+          {isOrganization && (
+            <div className={styles.section}>
               <Link href="/host/settings/org">
                 <div className={styles.item} onClick={() => setShow(false)}>
                   <div>
@@ -191,8 +191,9 @@ export default function ProfileMenu(props: {
                   <p>Organization settings</p>
                 </div>
               </Link>
-            )}
-            <div className={styles.item}>
+            </div>
+          )}
+          {/* <div className={styles.item}>
               <div>
                 <svg
                   width="24"
@@ -208,9 +209,8 @@ export default function ProfileMenu(props: {
                 </svg>
               </div>
               <p>Upgrade</p>
-            </div>
-          </div>
-          <div className={styles.divider} />
+            </div> */}
+          {/* <div className={styles.divider} /> */}
           <div className={styles.section}>
             <p className={styles.sectionTitle}>Workspaces</p>
             <div
