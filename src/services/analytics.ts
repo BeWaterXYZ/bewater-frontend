@@ -39,7 +39,7 @@ export interface AnalyticsData {
   };
 
   topProjects: ProjectData[];
-  topReferers: Data[];
+  topReferrers: Data[];
   tags: Data[];
   locations: Data[];
   browsers: Data[];

@@ -55,7 +55,7 @@ export default function Page({ params }: any) {
       title: "Top Referrers",
       secondary: "Page Views",
       histogram: true,
-      data: data?.topReferers ?? [],
+      data: data?.topReferrers ?? [],
     },
     tags: {
       title: "Tags",
@@ -85,9 +85,9 @@ export default function Page({ params }: any) {
       title: "Commits",
       secondary: "",
       histogram: true,
-      data: [...(data?.githubRepo.recentlyActive ?? [])].sort(
-        (a, b) => a.totalCommits - b.totalCommits
-      ),
+      data: [...(data?.githubRepo.recentlyActive ?? [])]
+        .sort((a, b) => a.totalCommits - b.totalCommits)
+        .map((item) => ({ num: item.totalCommits, ...item })),
     },
     recentlyActive: {
       title: "Recently Active",
