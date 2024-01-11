@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 import ProfileMenu from "./profile-menu";
+import Upgrade from "./upgrade";
 
 const links = [
   {
@@ -50,7 +51,7 @@ const links = [
     ),
   },
   {
-    path: `settings/members`,
+    path: `members`,
     label: "Members",
     icon: (
       <svg
@@ -78,7 +79,7 @@ const links = [
     ),
   },
   {
-    path: `settings/org`,
+    path: `settings`,
     label: "Settings",
     icon: (
       <svg
@@ -108,28 +109,20 @@ const links = [
 ] as const;
 
 export function Sidebar() {
-  let segment = usePathname().replace("/host/", "");
+  let segment = useSelectedLayoutSegment();
   let { user } = useUser();
   let { organization } = useOrganization();
-  let isAdmin = user?.publicMetadata?.teamMember ?? false;
   let isOrg = !!organization?.id;
   let links_ = isOrg
     ? links
-    : links.filter((l) => !l.path?.startsWith("settings"));
+    : links.filter(
+        (l) =>
+          !(["members", "settings"] as Array<string | null>).includes(l.path)
+      );
   return (
     <div className="flex flex-col flex-1 border-r border-r-white/20">
-      <div className="p-2 flex justify-between items-center h-[48px]">
-        {isAdmin ? (
-          <ProfileMenu user={user} organization={organization} />
-        ) : (
-          <Image
-            className="block"
-            src="/logo/bewater-h.svg"
-            width={120}
-            height={24}
-            alt="bewater logo"
-          />
-        )}
+      <div className="p-3 pb-2 pt-4 flex justify-between items-center h-[48px]">
+        <ProfileMenu user={user} organization={organization} />
       </div>
       <div className="flex flex-1 flex-col gap-2 p-2 py-4 ">
         {links_.map((link) => (
@@ -138,7 +131,7 @@ export function Sidebar() {
             className={clsx(
               "body-2 p-3 text-gray-500  rounded-[6px] flex gap-2 items-center",
               {
-                "bg-white/20 text-white": link.path?.startsWith(segment),
+                "bg-white/20 text-white": link.path === segment,
               }
             )}
             href={`/host/${link.path ?? ""}`}
@@ -148,39 +141,7 @@ export function Sidebar() {
           </Link>
         ))}
       </div>
-      <div className="bg-[#25263C] w-[262px] mb-4 ml-2 py-[20px] px-4 rounded-lg relative">
-        <div className="absolute top-2 right-2">
-          <svg
-            width="36"
-            height="36"
-            viewBox="0 0 36 36"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M23 13L13 23M13 13L23 23"
-              stroke="#98A2B3"
-              strokeWidth="1.66667"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </div>
-        <p className="font-semibold text-sm text-white mb-1">Used space</p>
-        <p className="text-sm text-[#F1F5F9] mb-4">
-          Your team has used 80% of your available space. Need more?
-        </p>
-        <div className="w-[230px] h-2 rounded bg-[#EAECF0]"></div>
-        <div className="w-[191.76px] h-2 rounded bg-[#00FFFF] relative top-[-8px] mb-2"></div>
-        <div>
-          <button className="font-semibold text-sm text-[#F1F5F9] mr-3">
-            Dismiss
-          </button>
-          <button className="font-semibold text-sm text-[#00FFFF]">
-            Upgrade plan
-          </button>
-        </div>
-      </div>
+      {/* <Upgrade /> */}
     </div>
   );
 }

@@ -1,5 +1,3 @@
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
 import { Sidebar } from "./sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {

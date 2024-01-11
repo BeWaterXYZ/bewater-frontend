@@ -1,7 +1,5 @@
 import {
   CreateOrganization,
-  OrganizationProfile,
-  UserProfile,
   useOrganization,
   useOrganizationList,
   useUser,
@@ -36,6 +34,7 @@ export default function ProfileMenu(props: {
 }) {
   const { user, organization } = props;
   const isOrganization = !!organization;
+  const enableOrg = user?.publicMetadata?.enableOrg ?? false;
   const [show, setShow] = useState(false);
   const [showDialog, setShowDialog] = useState<"CreateOrganization" | null>(
     null
@@ -172,7 +171,7 @@ export default function ProfileMenu(props: {
         <div className="absolute bg-[#25263C] rounded top-10 w-[288px] z-50">
           {isOrganization && (
             <div className={styles.section}>
-              <Link href="/host/settings/org">
+              <Link href="/host/settings">
                 <div className={styles.item} onClick={() => setShow(false)}>
                   <div>
                     <svg
@@ -193,6 +192,7 @@ export default function ProfileMenu(props: {
               </Link>
             </div>
           )}
+          {/* TODO: UPGRADE PLAN */}
           {/* <div className={styles.item}>
               <div>
                 <svg
@@ -262,29 +262,31 @@ export default function ProfileMenu(props: {
                 </div>
               </div>
             ))}
-            <div
-              className={styles.item}
-              onClick={() => {
-                setShow(false);
-                setShowDialog("CreateOrganization");
-              }}
-            >
-              <div>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 6.5C12 6.22386 11.7761 6 11.5 6C11.2239 6 11 6.22386 11 6.5V11H6.5C6.22386 11 6 11.2239 6 11.5C6 11.7761 6.22386 12 6.5 12H11V16.5C11 16.7761 11.2239 17 11.5 17C11.7761 17 12 16.7761 12 16.5V12H16.5C16.7761 12 17 11.7761 17 11.5C17 11.2239 16.7761 11 16.5 11H12V6.5Z"
-                    fill="#F1F5F9"
-                  />
-                </svg>
+            {enableOrg && (
+              <div
+                className={styles.item}
+                onClick={() => {
+                  setShow(false);
+                  setShowDialog("CreateOrganization");
+                }}
+              >
+                <div>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 6.5C12 6.22386 11.7761 6 11.5 6C11.2239 6 11 6.22386 11 6.5V11H6.5C6.22386 11 6 11.2239 6 11.5C6 11.7761 6.22386 12 6.5 12H11V16.5C11 16.7761 11.2239 17 11.5 17C11.7761 17 12 16.7761 12 16.5V12H16.5C16.7761 12 17 11.7761 17 11.5C17 11.2239 16.7761 11 16.5 11H12V6.5Z"
+                      fill="#F1F5F9"
+                    />
+                  </svg>
+                </div>
+                <p>Create a new organization</p>
               </div>
-              <p>Create a new organization</p>
-            </div>
+            )}
           </div>
           <div className={styles.divider} />
           <div className={styles.section}>
