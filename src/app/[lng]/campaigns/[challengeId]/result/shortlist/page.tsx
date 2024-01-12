@@ -6,6 +6,7 @@ import {
 import Card from "./card";
 import { useFetchChallengeTeams } from "@/services/team.query";
 import _ from "lodash";
+import Link from "next/link";
 
 export default function Page({ params }: any) {
   let { challengeId } = params || {};
@@ -15,14 +16,27 @@ export default function Page({ params }: any) {
   const shortlisted = _.sum(
     data?.map((shortlist) => shortlist.projects?.length) ?? []
   );
+  const hasResult = !!challenge?.result;
   return (
     <div className="container-xl mt-[40px] text-center flex flex-col items-center">
       <div>
-        <div className="w-[320px] h-[40px] flex text-[#64748B]">
-          <div className="flex-1 border-[1px] border-[#64748B] flex items-center justify-center">
+        <div
+          className={`w-[320px] h-[40px] flex text-[#64748B] select-none`}
+          style={{ flexDirection: hasResult ? "unset" : "revert" }}
+        >
+          <Link
+            href="."
+            className="block flex-1 border-[1px] border-[#64748B] flex items-center justify-center"
+            style={{
+              borderLeft: hasResult ? "" : "none",
+              borderRight: hasResult ? "none" : "",
+              opacity: hasResult ? "unset" : 0.5,
+              cursor: hasResult ? "pointer" : "not-allowed",
+            }}
+          >
             Award
-          </div>
-          <div className="flex-1 border-[1px] border-[#00FFFF] text-[#00FFFF] flex items-center justify-center">
+          </Link>
+          <div className="flex-1 cursor-pointer border-[1px] border-[#00FFFF] text-[#00FFFF] flex items-center justify-center">
             Shortlist
           </div>
         </div>
