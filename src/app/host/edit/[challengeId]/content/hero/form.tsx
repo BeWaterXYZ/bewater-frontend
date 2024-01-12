@@ -67,23 +67,23 @@ export function Hero({ challenge }: { challenge: Challenge }) {
         id: challenge.id,
         ...formData,
       });
-    } catch (err) { }
+    } catch (err) {}
   };
   return (
-    <div>
+    <div className="font-secondary">
       <div className="z-30   top-0 right-0 h-full  w-full p-8 overflow-y-auto">
         <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
-          Banner Information
+          Hero Information
         </div>
         <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
           <div className="my-4">
             <UploaderInput
-              label="Banner Image"
+              label="Hero Image"
               title="Upload the banner image"
               subTitlte="PNG or JPG, 1440*560px"
               max={1}
-              height={160}
-              width={400}
+              height={140}
+              width={447}
               control={control}
               name="bannerUrl"
               error={errors["bannerUrl"]}
@@ -94,11 +94,11 @@ export function Hero({ challenge }: { challenge: Challenge }) {
           </div>
           <div className="my-4">
             <UploaderInput
-              label=" Host Logo"
+              label="Host Logo"
               title="Upload the host image"
               subTitlte="PNG, 40px height"
-              width={200}
-              height={70}
+              width={447}
+              height={140}
               max={1}
               control={control}
               name="hostIcon"
@@ -135,7 +135,7 @@ export function Hero({ challenge }: { challenge: Challenge }) {
             options={[
               { value: LOCATION.ONLINE, label: "Online" },
               { value: LOCATION.OFFLINE, label: "Offline" },
-              { value: LOCATION.MIXED, label: "Online + Offline" },
+              { value: LOCATION.MIXED, label: "Both" },
             ]}
           />
           {isOnlineOnly ? null : (

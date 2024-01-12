@@ -16,10 +16,14 @@ const schema = z
     sponsors: z.array(
       z.object({
         defname: validationSchema.text,
-        members: z.array(z.object({
-            uri: validationSchema.text,
-            href: z.string().optional(),
-          }).or(validationSchema.text)),
+        members: z.array(
+          z
+            .object({
+              uri: validationSchema.text,
+              href: z.string().optional(),
+            })
+            .or(validationSchema.text)
+        ),
       })
     ),
   })
@@ -56,85 +60,84 @@ export function Sponsors({ challenge }: { challenge: Challenge }) {
     } catch (err) {}
   };
   return (
-     
-      <div>
-        <div className="z-30  top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
-          <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
+    <div className="font-secondary">
+      <div className="z-30  top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
+        <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
           Partners Information
-          </div>
-          <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
-            {fields.map((field, index) => {
-              return (
-                <div
-                  className="relative mb-4 border-b border-grey-800"
-                  key={field.id}
-                >
-                  <Input
-                    label="Sponsor Name"
-                    {...register(`sponsors.${index}.defname`)}
-                    error={errors.sponsors?.[index]?.defname}
-                  />
-                  <UploaderInput
-                    control={control}
-                    label={"Sponsors Logo"}
-                    name={`sponsors.${index}.members`}
-                    title="Upload Avatar"
-                    subTitlte="JPG/PNG"
-                    max={100}
-                    width={200}
-                    height={70}
-                    onValueChange={(v) => {
-                      setValue(`sponsors.${index}.members`, v as string[]);
-                    }}
-                  />
-                  <div className="absolute right-0 top-0 flex ">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        move(index, Math.max(index - 1, 0));
-                      }}
-                    >
-                      <ArrowUpIcon className="mr-1 text-grey-500" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        move(index, Math.min(index + 1, fields.length - 1));
-                      }}
-                    >
-                      <ArrowDownIcon className="mr-1 text-grey-500" />
-                    </button>
-                    <button
-                      className="text-grey-300 flex items-center text-[12px]"
-                      onClick={() => {
-                        remove(index);
-                      }}
-                    >
-                      <Cross2Icon className="mr-1 text-grey-500" />
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-            <button
-              type="button"
-              className="text-[12px] text-grey-300"
-              onClick={() => {
-                append({ defname: "", members: [] });
-              }}
-            >
-              + Add a new sponsor category
-            </button>
-            <div className="flex mt-6 justify-end">
-              <button className="btn btn-primary" type="submit">
-                Save{" "}
-              </button>
-            </div>
-          </form>
         </div>
+        <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+          {fields.map((field, index) => {
+            return (
+              <div
+                className="relative mb-4 border-b border-grey-800"
+                key={field.id}
+              >
+                <Input
+                  label="Sponsor Name"
+                  {...register(`sponsors.${index}.defname`)}
+                  error={errors.sponsors?.[index]?.defname}
+                />
+                <UploaderInput
+                  control={control}
+                  label={"Sponsors Logo"}
+                  name={`sponsors.${index}.members`}
+                  title="Upload Avatar"
+                  subTitlte="JPG/PNG"
+                  max={100}
+                  width={477}
+                  height={140}
+                  onValueChange={(v) => {
+                    setValue(`sponsors.${index}.members`, v as string[]);
+                  }}
+                />
+                <div className="absolute right-0 top-0 flex ">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      move(index, Math.max(index - 1, 0));
+                    }}
+                  >
+                    <ArrowUpIcon className="mr-1 text-grey-500" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      move(index, Math.min(index + 1, fields.length - 1));
+                    }}
+                  >
+                    <ArrowDownIcon className="mr-1 text-grey-500" />
+                  </button>
+                  <button
+                    className="text-grey-300 flex items-center text-[12px]"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    <Cross2Icon className="mr-1 text-grey-500" />
+                    Remove
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+          <button
+            type="button"
+            className="text-[12px] text-grey-300"
+            onClick={() => {
+              append({ defname: "", members: [] });
+            }}
+          >
+            + Add a new sponsor category
+          </button>
+          <div className="flex mt-6 justify-end">
+            <button className="btn btn-primary" type="submit">
+              Save{" "}
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
   );
 }

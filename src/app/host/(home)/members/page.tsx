@@ -21,9 +21,11 @@ export default function Page() {
           baseTheme: dark,
           variables: { colorPrimary: "#00ffff" },
           elements: {
+            navbar: "!hidden",
+            membersPageInviteButton: "text-night",
             formButtonPrimary:
               "bg-day text-night hover:bg-[#00cccc] active:bg-[#009999] rounded-sm focus:shadow-none",
-            card: "bg-night text-white p-0 gap-10",
+            card: "bg-night text-white p-0 gap-10 !font-secondary",
             headerSubtitle: "text-gray-500",
             // socialButtons: "hidden",
             // dividerRow: "hidden",

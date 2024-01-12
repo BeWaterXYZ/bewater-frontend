@@ -16,7 +16,8 @@ export default function WA({ challengeId }: { challengeId: string }) {
   if (!value) {
     const timestamp = Date.now();
     value = `${timestamp}-${generate(5)}`
-    Cookies.set(key, value, { expires: 120 });
+    // todo 永久保存
+    Cookies.set(key, value, { expires: 365 });
   }
   const arr = value.split("-");
   value = arr[0] + '-' + arr[0] + arr[1];

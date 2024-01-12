@@ -36,45 +36,55 @@ const schema = z
 export type Inputs = z.infer<typeof schema>;
 
 export function Milestone({ challenge }: { challenge: Challenge }) {
-  const orgMilestones = Array.isArray(challenge.milestones)
-    && challenge.milestones.length > 0
-    ? challenge.milestones.map((ms) => ({
-      ...ms
-    })) : (defValArr as Milestone[]);
+  const orgMilestones =
+    Array.isArray(challenge.milestones) && challenge.milestones.length > 0
+      ? challenge.milestones.map((ms) => ({
+          ...ms,
+        }))
+      : (defValArr as Milestone[]);
 
   const [{ dueDate }] = orgMilestones.filter((it) => {
-    if (it.stageName === 'Teaming') {
+    if (it.stageName === "Teaming") {
       return true;
     }
     return false;
-  })
+  });
 
-  const [sameTime, sameTimeSet] = useState(dueDate === orgMilestones[0].dueDate);
+  const [sameTime, sameTimeSet] = useState(
+    dueDate === orgMilestones[0].dueDate
+  );
 
   if (sameTime) {
     for (const it of orgMilestones) {
-      if (it.stageName === 'Teaming') {
-        it.showName = 'Teaming';
+      if (it.stageName === "Teaming") {
+        it.showName = "Teaming";
         break;
       }
     }
   }
 
   const mutation = useMutationUpdateChallenge(challenge.id);
-  const [zone, upZone] = useState(Math.floor(new Date().getTimezoneOffset() / 60));
+  const [zone, upZone] = useState(
+    Math.floor(new Date().getTimezoneOffset() / 60)
+  );
   const [topErr, upTopErr] = useState(false);
 
-  const zhLang = navigator.language?.toLowerCase().includes('zh');
+  const zhLang = navigator.language?.toLowerCase().includes("zh");
 
   const zoneCity = zhLang ? zhZoneCity : enZoneCity;
 
   const timezones = [
-    -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1,
-    0,
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+    -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7,
+    8, 9, 10, 11, 12, 13, 14,
   ].map((tz) => ({
     value: tz.toString(),
-    label: "UTC " + (tz === 0 ? zoneCity['0'] : tz > 0 ? ("+" + tz + zoneCity[`${tz}`]) : `${tz}` + zoneCity[`${tz}`] ),
+    label:
+      "UTC " +
+      (tz === 0
+        ? zoneCity["0"]
+        : tz > 0
+        ? "+" + tz + zoneCity[`${tz}`]
+        : `${tz}` + zoneCity[`${tz}`]),
     classes: {
       container: " !bg-transparent  h-5  my-0",
       text: "!text-[12px]",
@@ -93,33 +103,41 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     resolver: zodResolver(schema),
     defaultValues: {
       timezone: [`${zone === 0 ? 0 : -zone}`],
-      milestones: orgMilestones
-        .map((ms) => ({
-          ...ms,
-          dueDate: parseISO(ms.dueDate).toISOString(),
-        })),
+      milestones: orgMilestones.map((ms) => ({
+        ...ms,
+        dueDate: parseISO(ms.dueDate).toISOString(),
+      })),
     },
   });
 
-  const { fields, append, prepend, remove, swap, move, insert, replace, update } =
-    useFieldArray({
-      control, // control props comes from useForm (optional: if you are using FormContext)
-      name: "milestones", // unique name for your Field Array
-    });
+  const {
+    fields,
+    append,
+    prepend,
+    remove,
+    swap,
+    move,
+    insert,
+    replace,
+    update,
+  } = useFieldArray({
+    control, // control props comes from useForm (optional: if you are using FormContext)
+    name: "milestones", // unique name for your Field Array
+  });
 
   const sameTimeToggle = () => {
     const hit = sameTime;
     sameTimeSet(!sameTime);
     if (!hit) {
-      const { milestones: tmArr} = getValues();
+      const { milestones: tmArr } = getValues();
       const n = fields.map((ms, i) => ({
         ...ms,
         showName: tmArr[i].showName,
       }));
 
       for (const it of n) {
-        if (it.stageName === 'Teaming') {
-          it.showName = 'Teaming';
+        if (it.stageName === "Teaming") {
+          it.showName = "Teaming";
           it.dueDate = fields[0].dueDate;
           break;
         }
@@ -129,19 +147,16 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
   };
 
   const zoneSelectHandle = (val: any[]) => {
-    const { milestones: tmArr} = getValues();
-    const delta = parseInt(val[0]) - (-zone);
+    const { milestones: tmArr } = getValues();
+    const delta = parseInt(val[0]) - -zone;
     const n = fields.map((ms, i) => ({
       ...ms,
-      dueDate: subHours(
-        parseISO(ms.dueDate),
-        -delta,
-      ).toISOString(),
+      dueDate: subHours(parseISO(ms.dueDate), -delta).toISOString(),
       showName: tmArr[i].showName,
     }));
     replace(n);
     upZone(parseInt(val[0]) === 0 ? 0 : -parseInt(val[0]));
-  }
+  };
 
   const onSubmit = async (formData: Inputs) => {
     const n = formData.milestones.map((ms) => ({
@@ -149,17 +164,17 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     }));
 
     const [{ dueDate }] = n.filter((it) => {
-      if (it.stageName === 'Teaming') {
+      if (it.stageName === "Teaming") {
         return true;
       }
       return false;
-    })
+    });
 
-    const sameTime = (dueDate === n[0].dueDate);
+    const sameTime = dueDate === n[0].dueDate;
 
     if (sameTime) {
       for (const it of n) {
-        if (it.stageName === 'Teaming') {
+        if (it.stageName === "Teaming") {
           it.showName = "";
           break;
         }
@@ -167,7 +182,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     }
 
     for (let i = n.length - 1; i > 0; --i) {
-      if (n[i].dueDate < n[i-1].dueDate) {
+      if (n[i].dueDate < n[i - 1].dueDate) {
         upTopErr(true);
         return;
       }
@@ -179,14 +194,14 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
     let reviewIndex = -1;
 
     for (let i = 0; i < n.length; ++i) {
-      if (n[i].stageName === 'Project Submission') {
+      if (n[i].stageName === "Project Submission") {
         deadlineInfo = n[i];
       }
-      if (n[i].stageName === 'Review') {
+      if (n[i].stageName === "Review") {
         reviewInfo = n[i];
         reviewIndex = i;
       }
-      if (n[i].stageName === 'Result') {
+      if (n[i].stageName === "Result") {
         resultInfo = n[i];
       }
     }
@@ -196,7 +211,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
         dueDate: resultInfo.dueDate,
         stageName: "Review",
         showName: "",
-      }
+      };
       reviewIndex = n.length - 1;
       n.splice(reviewIndex, 0, reviewInfo);
     }
@@ -206,7 +221,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
         dueDate: n[reviewIndex].dueDate,
         stageName: "Project Submission",
         showName: "",
-      }
+      };
       n.splice(reviewIndex, 0, deadlineInfo);
     }
 
@@ -220,7 +235,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
           ...ms,
           dueDate: subHours(
             parseISO(ms.dueDate),
-            ((-zone) - sysZone),
+            -zone - sysZone
           ).toISOString(),
         })) as Milestone[],
       });
@@ -228,8 +243,8 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
   };
 
   return (
-    <div>
-      <div className="z-30  top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
+    <div className="font-secondary">
+      <div className="z-30 top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
         <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
           Milestone Information
         </div>
@@ -249,12 +264,13 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
               />
             </div>
             <div className="flex flex-row gap-4">
-              <label className=" flex-1 flex text-[12px] my-2 text-grey-500">
+              <label className="flex-1 flex text-[12px] my-2 text-grey-500 font-bold">
                 Date
               </label>
-              <label className=" flex-1 flex  text-[12px] my-2 text-grey-500">
+              <label className="flex-1 flex text-[12px] my-2 text-grey-500 font-bold">
                 Milestone Name
               </label>
+              <div className="w-[38px]"></div>
             </div>
 
             {fields.map((field, index) => {
@@ -269,9 +285,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                   <DatePicker
                     showTimeSelect
                     dateFormat="yyyy/MM/dd HH:mm"
-                    disabled={
-                      sameTime && field.stageName === "Teaming"
-                    }
+                    disabled={sameTime && field.stageName === "Teaming"}
                     control={control}
                     label={
                       <div className="flex gap-1 ">
@@ -287,7 +301,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                       if (sameTime && index === 0) {
                         let tmi = 0;
                         for (const it of fields) {
-                          if (it.stageName === 'Teaming') {
+                          if (it.stageName === "Teaming") {
                             break;
                           }
                           ++tmi;
@@ -301,7 +315,7 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                       update(index, {
                         ...field,
                         dueDate: v,
-                      })
+                      });
 
                       upTopErr(false);
                     }}
@@ -313,11 +327,14 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
                     disabled={sameTime && field.stageName === "Teaming"}
                     {...register(`milestones.${index}.showName`)}
                     error={errors.milestones?.[index]?.showName}
+                    inputClassName="h-[42px]"
                   />
-                  <div className="flex gap-2 pb-5">
+                  <div className="flex gap-2 pb-5 pt-6">
                     <button
                       className={clsx("  text-grey-500", {
-                        invisible: (field.stageName === "Result" || (field.stageName === "Preparation" && sameTime)),
+                        invisible:
+                          field.stageName === "Result" ||
+                          (field.stageName === "Preparation" && sameTime),
                       })}
                       onClick={(e) => {
                         // e.stopPropagation();
@@ -374,20 +391,26 @@ export function Milestone({ challenge }: { challenge: Challenge }) {
               + Add a new milestone
             </button> */}
           <label
-            className={clsx(
-              "body-3 flex items-center my-1 cursor-pointer"
-            )}
+            className={clsx("body-3 flex items-start my-1 cursor-pointer")}
           >
             <input
-              className="mr-2 w-4 h-4 block accent-[#00FFFF]"
+              className="mr-2 w-4 h-4 block accent-[#00FFFF] mt-0.5"
               type="checkbox"
               checked={sameTime}
               onChange={sameTimeToggle}
             ></input>
-            <span>{zhLang ? "赛事开始时，也同时开启项目提交" : 'When the event starts, project submission also opens.'}</span>
+            <span>
+              {zhLang
+                ? "赛事开始时，也同时开启项目提交"
+                : "When the event starts, project submission also opens."}
+            </span>
           </label>
           <p className="body-3 text-red-500 mt-4">
-            {topErr ? (zhLang ? '日期应保持升序' : 'The date field should maintain ascending order from top to bottom' ): ''}
+            {topErr
+              ? zhLang
+                ? "日期应保持升序"
+                : "The date field should maintain ascending order from top to bottom"
+              : ""}
           </p>
           <div className="flex mt-6 justify-end">
             <button className="btn btn-primary" type="submit">

@@ -60,109 +60,108 @@ export function Judge({ challenge }: { challenge: Challenge }) {
     } catch (err) {}
   };
   return (
-     
-      <div>
-        <div className="z-30  top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
-          <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
-          Adjudicators Information
-          </div>
-          <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
-            {fields.map((field, index) => {
-              return (
-                <div
-                  className="relative mb-4 border-b border-grey-800"
-                  key={field.id}
-                >
-                  <Input
-                    label="Judge Name"
-                    {...register(`judges.${index}.name`)}
-                    error={errors.judges?.[index]?.name}
-                  />
-                  <UploaderInput
-                    control={control}
-                    label={"Judge Avatar"}
-                    name={`judges.${index}.avatarURI`}
-                    title="Upload Avatar"
-                    subTitlte="JPG/PNG, 180x180px"
-                    error={errors.judges?.[index]?.avatarURI}
-                    max={1}
-                    width={200}
-                    height={200}
-                    onValueChange={(v) => {
-                      setValue(`judges.${index}.avatarURI`, v as string);
-                    }}
-                  />
-                  <TextArea
-                    label="Judge Title"
-                    {...register(`judges.${index}.title`)}
-                    error={errors.judges?.[index]?.title}
-                  />
-                  <TextArea
-                    label="Detail Info"
-                    {...register(`judges.${index}.description`)}
-                    error={errors.judges?.[index]?.description}
-                  />
-                  <Input
-                    label="Twitter Link"
-                    {...register(`judges.${index}.twitterLink`)}
-                    error={errors.judges?.[index]?.twitterLink}
-                  />
-
-                  <div className="absolute right-0 top-0 flex ">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        move(index, Math.max(index - 1, 0));
-                      }}
-                    >
-                      <ArrowUpIcon className="mr-1 text-grey-500" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        move(index, Math.min(index + 1, fields.length - 1));
-                      }}
-                    >
-                      <ArrowDownIcon className="mr-1 text-grey-500" />
-                    </button>
-                    <button
-                      className="text-grey-300 flex items-center text-[12px]"
-                      onClick={() => {
-                        remove(index);
-                      }}
-                    >
-                      <Cross2Icon className="mr-1 text-grey-500" />
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-
-            <button
-              type="button"
-              className="text-[12px] text-grey-300"
-              onClick={() => {
-                append({
-                  name: "",
-                  title: "",
-                  avatarURI: "",
-                  twitterLink: "",
-                  description: "",
-                });
-              }}
-            >
-              + Add a new judge
-            </button>
-            <div className="flex mt-6 justify-end">
-              <button className="btn btn-primary" type="submit">
-                Save
-              </button>
-            </div>
-          </form>
+    <div className="font-secondary">
+      <div className="z-30  top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
+        <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
+          Judge Information
         </div>
+        <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+          {fields.map((field, index) => {
+            return (
+              <div
+                className="relative mb-4 border-b border-grey-800"
+                key={field.id}
+              >
+                <Input
+                  label="Judge Name"
+                  {...register(`judges.${index}.name`)}
+                  error={errors.judges?.[index]?.name}
+                />
+                <UploaderInput
+                  control={control}
+                  label={"Judge Avatar"}
+                  name={`judges.${index}.avatarURI`}
+                  title="Upload Avatar"
+                  subTitlte="JPG/PNG, 180x180px"
+                  error={errors.judges?.[index]?.avatarURI}
+                  max={1}
+                  width={447}
+                  height={140}
+                  onValueChange={(v) => {
+                    setValue(`judges.${index}.avatarURI`, v as string);
+                  }}
+                />
+                <TextArea
+                  label="Judge Title"
+                  {...register(`judges.${index}.title`)}
+                  error={errors.judges?.[index]?.title}
+                />
+                <TextArea
+                  label="Detail Info"
+                  {...register(`judges.${index}.description`)}
+                  error={errors.judges?.[index]?.description}
+                />
+                <Input
+                  label="Twitter Link"
+                  {...register(`judges.${index}.twitterLink`)}
+                  error={errors.judges?.[index]?.twitterLink}
+                />
+
+                <div className="absolute right-0 top-0 flex ">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      move(index, Math.max(index - 1, 0));
+                    }}
+                  >
+                    <ArrowUpIcon className="mr-1 text-grey-500" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      move(index, Math.min(index + 1, fields.length - 1));
+                    }}
+                  >
+                    <ArrowDownIcon className="mr-1 text-grey-500" />
+                  </button>
+                  <button
+                    className="text-grey-300 flex items-center text-[12px]"
+                    onClick={() => {
+                      remove(index);
+                    }}
+                  >
+                    <Cross2Icon className="mr-1 text-grey-500" />
+                    Remove
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+
+          <button
+            type="button"
+            className="text-[12px] text-grey-300"
+            onClick={() => {
+              append({
+                name: "",
+                title: "",
+                avatarURI: "",
+                twitterLink: "",
+                description: "",
+              });
+            }}
+          >
+            + Add a new judge
+          </button>
+          <div className="flex mt-6 justify-end">
+            <button className="btn btn-primary" type="submit">
+              Save
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
   );
 }

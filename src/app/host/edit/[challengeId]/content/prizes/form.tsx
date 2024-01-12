@@ -20,10 +20,14 @@ import { z } from "zod";
 const schema = z
   .object({
     awardCurrency: z.string().min(1, "min 1 character"),
-    keySponsors: z.array(z.object({
-        uri: validationSchema.text,
-        href: z.string().optional(),
-    }).or(validationSchema.text)),
+    keySponsors: z.array(
+      z
+        .object({
+          uri: validationSchema.text,
+          href: z.string().optional(),
+        })
+        .or(validationSchema.text)
+    ),
     awardAssorts: z.array(
       z.object({
         name: validationSchema.text,
@@ -115,108 +119,107 @@ export function Prizes({ challenge }: { challenge: Challenge }) {
     totalAwardSet(total);
   });
   return (
-
-      <div>
-        <div className="z-30   top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
-          <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
-            Awards Information
-          </div>
-          <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
-            {fields.map((field, index) => {
-              return (
-                <div
-                  className="relative mb-4 border-b border-grey-800"
-                  key={field.id}
-                >
-                  <Input
-                    label="Track Name"
-                    {...register(`awardAssorts.${index}.name`)}
-                    error={errors["awardAssorts"]?.[index]?.["name"]}
-                  />
-                  <Awards
-                    index={index}
-                    control={control}
-                    register={register}
-                    errors={errors}
-                  />
-                  <button
-                    className="absolute right-0 top-0 text-grey-500 flex items-center text-[12px]"
-                    onClick={() => {
-                      remove(index);
-                    }}
-                  >
-                    <Cross2Icon className="mr-1 text-grey-500" />
-                    Remove
-                  </button>
-                </div>
-              );
-            })}
-            <button
-              type="button"
-              className="text-[12px] text-grey-300 flex"
-              onClick={() => {
-                append({
-                  name: "",
-                  awards: [
-                    {
-                      awardName: "1st award",
-                      count: "1",
-                      amount: "3000",
-                    },
-                    {
-                      awardName: "2nd award",
-                      count: "1",
-                      amount: "2000",
-                    },
-                    {
-                      awardName: "3rd award",
-                      count: "1",
-                      amount: "1000",
-                    },
-                  ],
-                });
-              }}
-            >
-              <PlusIcon className="mr-1 text-grey-300" /> Add a new track
-            </button>
-            <div className="grid grid-cols-2 gap-4 mt-6">
-              <Input
-                label="Total Award"
-                {...register(`totalAward`)}
-                error={errors["totalAward"]}
-              />
-              { /* 解决summary货币无法相加 */ }
-              <Input
-                label="Award Currency"
-                placeholder="USDT"
-                disabled
-                {...register(`awardCurrency`)}
-                error={errors["awardCurrency"]}
-              />
-            </div>
-
-            <UploaderInput
-              control={control}
-              label={"Key Sponsors Logo"}
-              name={`keySponsors`}
-              title="Upload "
-              subTitlte="JPG/PNG, 40px height"
-              max={10}
-              width={200}
-              height={70}
-              onValueChange={(v) => {
-                setValue(`keySponsors`, v as string[]);
-              }}
-            />
-
-            <div className="flex mt-6 justify-end">
-              <button className="btn btn-primary" type="submit">
-                Save
-              </button>
-            </div>
-          </form>
+    <div className="font-secondary">
+      <div className="z-30   top-0 right-0 h-full  w-full  p-8 overflow-y-auto">
+        <div className="text-xl leading-8 text-white py-4 mb-4 border-b  border-b-white/20">
+          Awards Information
         </div>
+        <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+          {fields.map((field, index) => {
+            return (
+              <div
+                className="relative mb-4 border-b border-grey-800"
+                key={field.id}
+              >
+                <Input
+                  label="Track Name"
+                  {...register(`awardAssorts.${index}.name`)}
+                  error={errors["awardAssorts"]?.[index]?.["name"]}
+                />
+                <Awards
+                  index={index}
+                  control={control}
+                  register={register}
+                  errors={errors}
+                />
+                <button
+                  className="absolute right-0 top-0 text-grey-500 flex items-center text-[12px]"
+                  onClick={() => {
+                    remove(index);
+                  }}
+                >
+                  <Cross2Icon className="mr-1 text-grey-500" />
+                  Remove
+                </button>
+              </div>
+            );
+          })}
+          <button
+            type="button"
+            className="text-[12px] text-grey-300 flex"
+            onClick={() => {
+              append({
+                name: "",
+                awards: [
+                  {
+                    awardName: "1st award",
+                    count: "1",
+                    amount: "3000",
+                  },
+                  {
+                    awardName: "2nd award",
+                    count: "1",
+                    amount: "2000",
+                  },
+                  {
+                    awardName: "3rd award",
+                    count: "1",
+                    amount: "1000",
+                  },
+                ],
+              });
+            }}
+          >
+            <PlusIcon className="mr-1 text-grey-300" /> Add a new track
+          </button>
+          <div className="grid grid-cols-2 gap-4 mt-6">
+            <Input
+              label="Total Award"
+              {...register(`totalAward`)}
+              error={errors["totalAward"]}
+            />
+            {/* 解决summary货币无法相加 */}
+            <Input
+              label="Award Currency"
+              placeholder="USDT"
+              disabled
+              {...register(`awardCurrency`)}
+              error={errors["awardCurrency"]}
+            />
+          </div>
+
+          <UploaderInput
+            control={control}
+            label={"Key Sponsors Logo"}
+            name={`keySponsors`}
+            title="Upload "
+            subTitlte="JPG/PNG, 40px height"
+            max={10}
+            width={200}
+            height={140}
+            onValueChange={(v) => {
+              setValue(`keySponsors`, v as string[]);
+            }}
+          />
+
+          <div className="flex mt-6 justify-end">
+            <button className="btn btn-primary" type="submit">
+              Save
+            </button>
+          </div>
+        </form>
       </div>
+    </div>
   );
 }
 
@@ -240,16 +243,21 @@ function Awards({
 
   return (
     <div className="mb-2">
-      <div className="grid grid-cols-3 gap-4">
-        <label className=" block text-[12px] my-2 text-grey-500">
+      <div className="flex gap-4">
+        <label className=" block text-[12px] my-2 text-grey-500 flex-1">
           Award Name
         </label>
-        <label className=" block text-[12px] my-2 text-grey-500">Count</label>{" "}
-        <label className=" block text-[12px] my-2 text-grey-500">Amount</label>
+        <label className=" block text-[12px] my-2 text-grey-500 flex-1">
+          Count
+        </label>{" "}
+        <label className=" block text-[12px] my-2 text-grey-500 flex-1">
+          Amount
+        </label>
+        <div className="w-[15px] h-[15px]"></div>
       </div>
       {fields.map((field, i) => {
         return (
-          <div className="relative grid grid-cols-3 gap-4" key={field.id}>
+          <div className="relative flex gap-4 items-center" key={field.id}>
             <Input
               placeholder="Award Name"
               {...register(`awardAssorts.${index}.awards.${i}.awardName`)}
@@ -270,7 +278,7 @@ function Awards({
               }
             />
             <button
-              className="absolute m-2 left-full top-1 text-grey-500"
+              className="text-grey-500 pb-5"
               onClick={() => {
                 remove(i);
               }}

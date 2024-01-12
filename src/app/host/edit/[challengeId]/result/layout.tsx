@@ -71,37 +71,46 @@ export default async function Layout({
   return (
     <div className="container my-8">
       <div className="flex gap-4">
-        <div className="flex-1 h-24 p-4  rounded flex items-center justify-between gap-2 bg-gradient-to-b from-[#53514E] to-[#131928]">
-          <div className="mb-5">{icon1}</div>
-          <div>
-            <p className="body-1">Shortlist</p>
-            <p className="body-3 text-grey-400">
-              Shortlisted projects and participate in the judges’ scoring
-            </p>
+        <Link
+          className="flex-1"
+          href={`/host/edit/${challengeId}/result/shortlist`}
+        >
+          <div className="h-24 p-4 rounded flex items-center bg-gradient-to-b from-[#53514E] to-[#131928]">
+            <div className="mb-5 mr-4">{icon1}</div>
+            <div className="mr-4 flex-1">
+              <p className="body-1 font-bold mb-1">Shortlist</p>
+              <p className="font-secondary text-xs text-[#94A3B8] h-8">
+                Shortlisted projects and participate in the judges’ scoring
+              </p>
+            </div>
+            <div className="font-secondary text-sm text-[#CBD5E1] whitespace-nowrap">
+              {projects.length} Projects
+            </div>
+            <div className="scale-[1.333]">
+              <CaretRightIcon className="text-white/30" />
+            </div>
           </div>
-          <div className="body-3 whitespace-nowrap">
-            {projects.length} Projects
+        </Link>
+        <Link
+          className="flex-1"
+          href={`/host/edit/${challengeId}/result/final`}
+        >
+          <div className="h-24 p-4 rounded bg-gradient-to-b from-[#3C576A] to-[#131628] flex items-center">
+            <div className="mb-5 mr-4">{icon2}</div>
+            <div className="mr-4 flex-1">
+              <p className="body-1 font-bold mb-1">Final Result</p>
+              <p className="font-secondary text-xs text-[#94A3B8] h-8">
+                The projects that finally won the competition prize
+              </p>
+            </div>
+            <div className="font-secondary text-sm text-[#CBD5E1] whitespace-nowrap">
+              Edit
+            </div>
+            <div className="scale-[1.333]">
+              <CaretRightIcon className="text-white/30" />
+            </div>
           </div>
-          <Link
-            className="p-4"
-            href={`/host/edit/${challengeId}/result/shortlist`}
-          >
-            <CaretRightIcon className="text-white/30" />
-          </Link>
-        </div>
-        <div className="flex-1 h-24 p-4 rounded bg-gradient-to-b from-[#3C576A] to-[#131628] flex items-center justify-between gap-2">
-          <div className="mb-5">{icon2}</div>
-          <div>
-            <p className="body-1">Final Result</p>
-            <p className="body-3 text-grey-400">
-              The projects that finally won the competition prize
-            </p>
-          </div>
-          <div className="body-3 whitespace-nowrap">Edit</div>
-          <Link className="p-4" href={`/host/edit/${challengeId}/result/final`}>
-            <CaretRightIcon className="text-white/30" />
-          </Link>
-        </div>
+        </Link>
       </div>
       {children}
     </div>
