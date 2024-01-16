@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { isMileStoneEnabled } from "./utils";
 import { useTranslation } from "@/app/i18n/client";
+import _ from "lodash";
 
 const links = [
   {
@@ -45,6 +46,9 @@ export function ChallengeNav({
     : challenge.id;
   let segment = useSelectedLayoutSegment();
   const { t } = useTranslation(lng, "translation");
+  const shortlisted = _.sum(
+    challenge.shortlist?.map((shortlist) => shortlist.projects?.length) ?? []
+  );
 
   return (
     <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[72px] md:top-[72px] z-10">
@@ -55,7 +59,7 @@ export function ChallengeNav({
           isEnabled = isMileStoneEnabled(link.milestone, challenge);
         }
         if (link.segment === "result") {
-          isEnabled = !!challenge.result || !!challenge.shortlist;
+          isEnabled = !!challenge.result || !!shortlisted;
         }
         return isEnabled ? (
           <Link
