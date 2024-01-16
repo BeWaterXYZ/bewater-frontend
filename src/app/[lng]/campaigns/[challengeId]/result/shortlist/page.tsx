@@ -22,7 +22,7 @@ export default function Page({ params }: any) {
       <div>
         <div
           className={`w-[320px] h-[40px] flex text-[#64748B] select-none`}
-          style={{ flexDirection: hasResult ? "unset" : "revert" }}
+          style={{ flexDirection: hasResult ? "unset" : "row-reverse" }}
         >
           <Link
             href="."

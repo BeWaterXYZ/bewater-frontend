@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 interface SearchInputProps extends React.ComponentPropsWithoutRef<"input"> {}
 export function SearchInput(props: SearchInputProps) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 relative">
       <div className="absolute pl-2">
         <MagnifyingGlassIcon className="text-grey-400" height={20} width={20} />
       </div>

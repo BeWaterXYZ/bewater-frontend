@@ -84,7 +84,7 @@ export function Sponsors({ challenge }: { challenge: Challenge }) {
                   title="Upload Avatar"
                   subTitlte="JPG/PNG"
                   max={100}
-                  width={477}
+                  width={1000}
                   height={140}
                   onValueChange={(v) => {
                     setValue(`sponsors.${index}.members`, v as string[]);

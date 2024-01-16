@@ -79,3 +79,20 @@
 .cl-footer+div{
   display:none;
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: #04051B;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFFFFF33;
+  border: 3px solid #04051B;
+  border-radius: 6px;
+}
+
+* {
+  scrollbar-color: #FFFFFF33 transparent;
+  scrollbar-width: thin;
+}

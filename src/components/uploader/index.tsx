@@ -144,9 +144,14 @@ export function Uploader({
             className="bg-night relative group/image "
             style={{ height, width }}
           >
-            <Image src={url} fill alt="img"></Image>
+            <Image
+              src={url}
+              fill
+              alt="img"
+              className="object-contain h-[100%]"
+            ></Image>
 
-            <div className="absolute top-[8px] right-[8px]  gap-2 hidden group-hover/image:flex bg-black/30 p-2">
+            <div className="absolute top-0 right-0 gap-2 hidden group-hover/image:flex bg-black/30 p-2">
               <label>
                 <input
                   type="file"
