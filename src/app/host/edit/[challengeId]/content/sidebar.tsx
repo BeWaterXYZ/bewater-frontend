@@ -138,7 +138,7 @@ const links = [
 export function Sidebar({ challengeId }: { challengeId: ChallengeID }) {
   let segment = useSelectedLayoutSegment();
   return (
-    <div className="flex-1 border-r border-r-white/20">
+    <div className="flex-1 border-r border-r-white/20 h-[calc(100vh-56px)] overflow-y-auto">
       <div className="flex flex-col gap-2 p-2 py-4 ">
         {links.map((link) => (
           <Link

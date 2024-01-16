@@ -42,7 +42,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
           <div className={clsx("block group relative", className)}>
             {label ? (
               <label
-                className="block text-xs text-grey-500 font-bold mb-2 group-hover:text-day group-focus:text-day transition-colors"
+                className="block text-xs text-grey-500 font-bold pb-2 group-hover:text-day group-focus:text-day group-focus-within:text-day transition-colors"
                 htmlFor={id}
               >
                 {label}
@@ -50,7 +50,10 @@ export const DatePicker = React.forwardRef(function DatePicker_(
               </label>
             ) : null}
 
-            <div className=" relative w-full text-[14px] bg-night  block body-3   rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors">
+            <div
+              className="relative w-full text-[14px] bg-night block body-3 rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors"
+              id={id}
+            >
               <ReactDatePicker
                 showTimeSelect={showTimeSelect}
                 dateFormat={dateFormat}
@@ -75,7 +78,7 @@ export const DatePicker = React.forwardRef(function DatePicker_(
 
             <div
               className={clsx(
-                "absolute whitespace-nowrap text-xs  text-danger",
+                "absolute whitespace-nowrap text-xs text-danger",
                 {
                   invisible: !error,
                 }

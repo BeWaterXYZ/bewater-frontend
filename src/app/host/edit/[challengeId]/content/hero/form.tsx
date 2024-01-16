@@ -97,7 +97,7 @@ export function Hero({ challenge }: { challenge: Challenge }) {
               label="Host Logo"
               title="Upload the host image"
               subTitlte="PNG, 40px height"
-              width={447}
+              width={1000}
               height={140}
               max={1}
               control={control}
@@ -108,13 +108,12 @@ export function Hero({ challenge }: { challenge: Challenge }) {
               }}
             />
           </div>
-          <fieldset className="Fieldset">
-            <label className="block text-xs text-grey-500 font-bold mb-2 group-hover:text-day group-focus:text-day transition-colors">
-              Campaign Title
-            </label>
-            <Input {...register("title")} error={errors["title"]} />
-          </fieldset>
           <>
+            <Input
+              label="Campaign Title"
+              {...register("title")}
+              error={errors["title"]}
+            />
             <Input
               label="Link URL"
               {...register("joinLink")}

@@ -113,7 +113,6 @@ export function Shortlist({
             list={fields}
             setList={() => {}}
             animation={150}
-            className=".dot-icon"
             onEnd={(e) => move(e.oldDraggableIndex!, e.newDraggableIndex!)}
           >
             {fields.map((f, index) => {

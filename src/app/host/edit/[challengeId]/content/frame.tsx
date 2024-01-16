@@ -57,7 +57,9 @@ export function Frame({ challengeId }: { challengeId: ChallengeID }) {
 
   return (
     <div
-      className={clsx(" m-4 rounded-lg   overflow-hidden", {
+      className={clsx("overflow-hidden", {
+        "border-[1px] border-grey-800 rounded-lg my-4 mr-4":
+          mode !== "fullscreen",
         "fixed w-full h-full top-0 left-0 m-0": mode === "fullscreen",
       })}
     >
@@ -91,11 +93,18 @@ export function Frame({ challengeId }: { challengeId: ChallengeID }) {
       </div>
       <div
         id="frame"
-        className={clsx("  max-h-[100vh] overflow-scroll  m-auto", {
-          "w-[580px]": mode === "mobile",
-        })}
+        className="flex flex-row justify-center overflow-y-auto"
+        style={{ scrollbarColor: "#FFFFFF33 #25263C", scrollbarWidth: "thin" }}
       >
-        <Page params={{ challengeId: challengeId }} />
+        <div
+          className={clsx("", {
+            "max-h-[calc(100vh-138px)]": mode === "desktop",
+            "max-h-[calc(100vh-138px)] w-[480px]": mode === "mobile",
+            "max-h-[calc(100vh-48px)] flex-1": mode === "fullscreen",
+          })}
+        >
+          <Page params={{ challengeId: challengeId }} />
+        </div>
       </div>
     </div>
   );
