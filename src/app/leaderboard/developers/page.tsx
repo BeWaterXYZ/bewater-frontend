@@ -5,7 +5,8 @@ import { Fragment } from "react";
 import Image from "next/image";
 
 function Developer(props: { data: DeveloperData; rank: number }) {
-  const histogramBg = "w-[78px] h-[6px] rounded-[20px] bg-[#30313D]";
+  const histogramBg =
+    "w-[78px] h-[6px] rounded-[20px] bg-[#30313D] relative overflow-hidden";
   const { data, rank } = props;
   const langList = Object.keys(data.languageSum)
     .sort((a, b) => data.languageSum[b]! - data.languageSum[a]!)
@@ -44,10 +45,10 @@ function Developer(props: { data: DeveloperData; rank: number }) {
           </div>
         </div>
       </div>
-      <div>
+      <div className="overflow-hidden">
         <p className="text-xs text-[#94A3B8] mb-[9px]">POPULAR REPO</p>
         <a href={`https://github.com/${data.projectArr?.[0]?.full_name}`}>
-          <p className="text-[14px] leading-[18px] text-white mb-[9px]">
+          <p className="text-[14px] leading-[18px] text-white mb-[9px] truncate">
             {data.projectArr?.[0]?.name ?? "N/A"}
           </p>
         </a>
@@ -61,11 +62,13 @@ function Developer(props: { data: DeveloperData; rank: number }) {
             <p className="line-clamp-1">{lang}</p>
             <div className={histogramBg}>
               <div
-                className={"h-[6px] rounded-[20px]"}
+                className={"h-[6px] rounded-[20px] absolute"}
                 style={{
-                  width: `${Math.floor(
+                  transform: "translateX(-6px)",
+                  minWidth: "8px",
+                  width: `calc(${Math.floor(
                     (data.languageSum[lang]! / langSum) * 100
-                  )}%`,
+                  )}% + 6px)`,
                   backgroundColor: colors[lang]?.color ?? "#FFF",
                 }}
               ></div>

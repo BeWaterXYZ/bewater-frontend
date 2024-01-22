@@ -15,7 +15,7 @@ export default function Leaderboard({
 }) {
   const segment = useSelectedLayoutSegment();
   return (
-    <div className="mb-[160px]">
+    <div className="mb-[160px] min-w-[960px]">
       <div className="mt-[59px] mb-[62px] ml-[152px]">
         <Image
           src="/logo/bewater-h.svg"
@@ -46,6 +46,9 @@ export default function Leaderboard({
         </Link>
       </div>
       <div className="mt-[66px] flex justify-center">{children}</div>
+      <p className="mt-[66px] mb-[160px] flex justify-center font-secondary text-[0.65rem] text-[#556]">
+        Updated on: Jan 22, 2024
+      </p>
     </div>
   );
 }
