@@ -5,7 +5,7 @@ import { Fragment } from "react";
 import Image from "next/image";
 
 function Developer(props: { data: DeveloperData; rank: number }) {
-  const histogramBg = "w-[78px] h-[6px] rounded-[20px] bg-[#30313D]";
+  const histogramBg = "w-[78px] h-[6px] rounded-[20px] bg-[#30313D] relative overflow-hidden";
   const { data, rank } = props;
   const langList = Object.keys(data.languageSum)
     .sort((a, b) => data.languageSum[b]! - data.languageSum[a]!)
@@ -61,11 +61,13 @@ function Developer(props: { data: DeveloperData; rank: number }) {
             <p className="line-clamp-1">{lang}</p>
             <div className={histogramBg}>
               <div
-                className={"h-[6px] rounded-[20px]"}
+                className={"h-[6px] rounded-[20px] absolute"}
                 style={{
-                  width: `${Math.floor(
+                  transform: "translateX(-6px)",
+                  minWidth: "8px",
+                  width: `calc(${Math.floor(
                     (data.languageSum[lang]! / langSum) * 100
-                  )}%`,
+                  )}% + 6px)`,
                   backgroundColor: colors[lang]?.color ?? "#FFF",
                 }}
               ></div>

@@ -15,7 +15,7 @@ export default function Leaderboard({
 }) {
   const segment = useSelectedLayoutSegment();
   return (
-    <div className="mb-[160px]">
+    <div className="mb-[160px] min-w-[960px]">
       <div className="mt-[59px] mb-[62px] ml-[152px]">
         <Image
           src="/logo/bewater-h.svg"

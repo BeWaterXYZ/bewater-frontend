@@ -63,7 +63,7 @@ function Project(props: { data: ProjectData; rank: number }) {
           ))}
         </div>
         <div className="text-xs text-white text-right">
-          Updated on Jan 18, 2024
+          {/* Updated on Jan 18, 2024 */}
         </div>
       </div>
     </div>

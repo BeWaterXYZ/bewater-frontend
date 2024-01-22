@@ -68,6 +68,7 @@ export default authMiddleware({
     "/zh/user(.*)",
     "/en/user(.*)",
     "/api/og",
+    "/leaderboard(.*)",
   ],
 });
 
