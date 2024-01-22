@@ -20,6 +20,7 @@ export interface DeveloperData {
   projectArr: {
     name: string;
     description: string;
+    full_name: string;
   }[];
   languageSum: {
     [lang: string]: number | undefined;

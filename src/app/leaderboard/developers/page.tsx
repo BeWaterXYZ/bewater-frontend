@@ -46,9 +46,11 @@ function Developer(props: { data: DeveloperData; rank: number }) {
       </div>
       <div>
         <p className="text-xs text-[#94A3B8] mb-[9px]">POPULAR REPO</p>
-        <p className="text-[14px] leading-[18px] text-white mb-[9px]">
-          {data.projectArr?.[0]?.name ?? "N/A"}
-        </p>
+        <a href={`https://github.com/${data.projectArr?.[0]?.full_name}`}>
+          <p className="text-[14px] leading-[18px] text-white mb-[9px]">
+            {data.projectArr?.[0]?.name ?? "N/A"}
+          </p>
+        </a>
         <p className="text-[11px] leading-[15px] text-[#64748B] line-clamp-2">
           {data.projectArr?.[0]?.description}
         </p>
