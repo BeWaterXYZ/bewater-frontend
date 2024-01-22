@@ -13,25 +13,33 @@ export default function Page({ params }: any) {
   const { data: challenge } = useFetchChallengeById(challengeId);
   const { data: teams } = useFetchChallengeTeams(challengeId);
   const { data } = useFetchChallengeShortlist(challenge?.id ?? "");
-  const shortlisted = _.sum(
+  const hasShortlist = _.sum(
     data?.map((shortlist) => shortlist.projects?.length) ?? []
   );
   const hasResult = !!challenge?.result;
+  const announceShortlist = challenge?.future.announceShortlist
+    ? Date.now() > new Date(challenge.future.announceShortlist).valueOf()
+    : false;
+  const announceResult = challenge?.future.announceResult
+    ? Date.now() > new Date(challenge.future.announceResult).valueOf()
+    : false;
+  const showResult = hasResult && announceResult;
+  const showShortlist = hasShortlist && announceShortlist;
   return (
     <div className="container-xl mt-[40px] text-center flex flex-col items-center">
       <div>
         <div
           className={`w-[320px] h-[40px] flex text-[#64748B] select-none`}
-          style={{ flexDirection: hasResult ? "unset" : "row-reverse" }}
+          style={{ flexDirection: showResult ? "unset" : "row-reverse" }}
         >
           <Link
             href="."
             className="block flex-1 border-[1px] border-[#64748B] flex items-center justify-center"
             style={{
-              borderLeft: hasResult ? "" : "none",
-              borderRight: hasResult ? "none" : "",
-              opacity: hasResult ? "unset" : 0.5,
-              cursor: hasResult ? "pointer" : "not-allowed",
+              borderLeft: showResult ? "" : "none",
+              borderRight: showResult ? "none" : "",
+              opacity: showResult ? "unset" : 0.5,
+              cursor: showResult ? "pointer" : "not-allowed",
             }}
           >
             Award
@@ -64,7 +72,8 @@ export default function Page({ params }: any) {
             </g>
           </svg>
           <div className="text-base text-[#FFF] mr-6">
-            {shortlisted} teams were shortlisted and entered the final selection
+            {hasShortlist} teams were shortlisted and entered the final
+            selection
           </div>
         </div>
         <div
