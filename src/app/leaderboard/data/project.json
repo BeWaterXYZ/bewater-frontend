@@ -3,6 +3,93 @@
     "allow_forking": true,
     "contributors": [
       {
+        "avatar_url": "https://avatars.githubusercontent.com/u/126646?v=4",
+        "login": "laanwj"
+      },
+      {
+        "avatar_url": "https://avatars.githubusercontent.com/u/863730?v=4",
+        "login": "fanquake"
+      },
+      {
+        "avatar_url": "https://avatars.githubusercontent.com/u/548488?v=4",
+        "login": "sipa"
+      },
+      {
+        "avatar_url": "https://avatars.githubusercontent.com/u/32963518?v=4",
+        "login": "hebasto"
+      },
+      {
+        "avatar_url": "https://avatars.githubusercontent.com/u/3782274?v=4",
+        "login": "achow101"
+      }
+    ],
+    "created_at": "2010-12-19T15:16:43Z",
+    "default_branch": "master",
+    "description": "Bitcoin Core integration/staging tree",
+    "fork": false,
+    "forks_count": 36563,
+    "homepage": "https://bitcoincore.org/en/download",
+    "id": 1181927,
+    "isFind": true,
+    "language": "C++",
+    "languages": {
+      "Assembly": 28405,
+      "C": 1807920,
+      "C++": 11432575,
+      "CMake": 58288,
+      "Cap'n Proto": 1256,
+      "Dockerfile": 4737,
+      "HTML": 21833,
+      "Java": 541,
+      "M4": 216099,
+      "Makefile": 149499,
+      "Objective-C++": 5497,
+      "Python": 3474688,
+      "QMake": 438,
+      "Rust": 3827,
+      "Sage": 59399,
+      "Scheme": 21841,
+      "Shell": 184582
+    },
+    "name": "bitcoin",
+    "network_count": 36563,
+    "open_issues_count": 695,
+    "owner": {
+      "avatar_url": "https://avatars.githubusercontent.com/u/528860?v=4",
+      "bio": "",
+      "company": "",
+      "email": "",
+      "followers": 3621,
+      "id": 528860,
+      "location": "",
+      "login": "bitcoin",
+      "name": "Bitcoin",
+      "public_repos": 4,
+      "type": "Organization"
+    },
+    "private": false,
+    "repoName": "bitcoin/bitcoin",
+    "size": 247659,
+    "stargazers_count": 73468,
+    "statusText": "",
+    "subscribers_count": 3967,
+    "topics": [
+      "bitcoin",
+      "c-plus-plus",
+      "cryptocurrency",
+      "cryptography",
+      "p2p"
+    ],
+    "totalCommits": 0,
+    "totalPullRequests": 0,
+    "updated_at": "2024-01-22T10:16:59Z",
+    "visibility": "public",
+    "watchers_count": 73468
+  },
+  {
+    "allow_forking": true,
+    "contributors": [
+      {
         "avatar_url": "https://avatars.githubusercontent.com/u/6264126?v=4",
         "login": "obscuren"
       },
