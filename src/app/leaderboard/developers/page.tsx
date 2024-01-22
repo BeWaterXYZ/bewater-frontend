@@ -33,7 +33,7 @@ function Developer(props: { data: DeveloperData; rank: number }) {
         <div>
           <a href={`https://github.com/${data.login}`}>
             <p className="font-bold text-[16px] leading-[21px] text-white mb-4">
-              {data.name}
+              {data.name || data.login}
             </p>
           </a>
           <div className="text-xs">
