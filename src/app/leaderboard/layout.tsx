@@ -46,6 +46,9 @@ export default function Leaderboard({
         </Link>
       </div>
       <div className="mt-[66px] flex justify-center">{children}</div>
+      <p className="mt-[66px] mb-[160px] flex justify-center font-secondary text-[0.65rem] text-[#556]">
+        Updated on: Jan 22, 2024
+      </p>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import BookIcon from "./book-icon";
 import CodeBoxIcon from "./code-box-icon";
 import { ProjectData } from "../data/type";
 import project from "../data/project.json";
+import { format } from "date-fns";
 
 function Project(props: { data: ProjectData; rank: number }) {
   const avatar =
@@ -63,7 +64,7 @@ function Project(props: { data: ProjectData; rank: number }) {
           ))}
         </div>
         <div className="text-xs text-white text-right">
-          {/* Updated on Jan 18, 2024 */}
+          Updated on {format(new Date(data.updated_at), "LLL dd, yyyy")}
         </div>
       </div>
     </div>

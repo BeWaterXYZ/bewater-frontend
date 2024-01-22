@@ -9,6 +9,7 @@ export interface ProjectData {
   stargazers_count: number;
   repoName: string;
   topics: string[];
+  updated_at: string;
 }
 
 export interface DeveloperData {
