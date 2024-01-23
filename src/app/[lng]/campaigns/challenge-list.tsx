@@ -84,9 +84,10 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     {challenge.title}
                   </div>
                   <div className="body-3 text-grey-500">
-                    {`${formatYYYYMMMDD(
+                    {/* {`${formatYYYYMMMDD(
                       challenge.startTime
-                    )} ->  ${formatYYYYMMMDD(challenge.endTime)}`}
+                    )} ->  ${formatYYYYMMMDD(challenge.endTime)}`} */}
+                    { challenge.startTime.toString().slice(0, 10) + ' -> ' + challenge.endTime.toString().slice(0, 10) }
                   </div>
                 </div>
                 <div className="" style={{ maxWidth: "40%" }}>
