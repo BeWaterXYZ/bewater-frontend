@@ -24,17 +24,17 @@ export default async function ChallengePage({
 
   return (
     <div className="container my-4 pt-20 min-h-[calc(100vh-120px)]">
-      {
+      {(active.length > 0 || completed.length > 0) && (
         <ChallengeList
           challenges={[...active, ...paused, ...completed]}
           lng={lng}
         />
-      }
+      )}
     </div>
   );
 }
 
-export const revalidate = 60;
+// export const revalidate = 60;
 
 export async function generateMetadata({
   params,

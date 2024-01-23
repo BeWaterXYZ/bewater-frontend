@@ -68,7 +68,7 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     challenge.bannerUrl ??
                     `/challenge/assets/${challenge.id}withTitle.png`
                   }
-                  alt="crypto"
+                  alt=""
                   className="object-cover w-full h-full"
                 />
               </Aspect>
