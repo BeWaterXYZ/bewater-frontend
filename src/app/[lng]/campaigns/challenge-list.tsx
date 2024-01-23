@@ -8,9 +8,10 @@ import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useFetchChallengeList } from '@/services/challenge.query';
+import { Loading } from '@/components/loading/loading';
 
 interface ChallengeListProps {
-  challenges: Challenge[];
   lng: string;
 }
 
@@ -20,13 +21,31 @@ const filterMap = [
   ["Workshop", "WORKSHOP"],
 ];
 
-export function ChallengeList({ challenges, lng }: ChallengeListProps) {
+export function ChallengeList({ lng }: ChallengeListProps) {
   let [filter, filterSet] = useState('');
+  let { data: challenges, isLoading } = useFetchChallengeList();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  challenges = challenges ?? [];
+  challenges.sort((a, b) => Number(b.id) - Number(a.id));
+
+  const { active, completed, paused } = {
+    active: challenges.filter((c) => c.status === 'ACTIVE'),
+    completed: challenges.filter((c) => c.status === 'COMPLETED'),
+    paused: challenges.filter((c) => c.status === 'PAUSED'),
+  };
+
+  challenges = [...active, ...paused, ...completed]
+
   for (const it of challenges) {
     if (it?.yotadata?.title) {
       it.title = lng === 'zh' ? (it.yotadata.title.zh ?? it.yotadata.title.en) : (it.yotadata.title.en ?? it.yotadata.title.zh);
     }
   }
+
   let filteredChallenges = challenges.filter((c) =>
     filter !== "" ? c.type === filter : true
   );
@@ -84,10 +103,9 @@ export function ChallengeList({ challenges, lng }: ChallengeListProps) {
                     {challenge.title}
                   </div>
                   <div className="body-3 text-grey-500">
-                    {/* {`${formatYYYYMMMDD(
+                    {`${formatYYYYMMMDD(
                       challenge.startTime
-                    )} ->  ${formatYYYYMMMDD(challenge.endTime)}`} */}
-                    { challenge.startTime.toString().slice(0, 10) + ' -> ' + challenge.endTime.toString().slice(0, 10) }
+                    )} ->  ${formatYYYYMMMDD(challenge.endTime)}`}
                   </div>
                 </div>
                 <div className="" style={{ maxWidth: "40%" }}>

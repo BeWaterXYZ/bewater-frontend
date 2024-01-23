@@ -3,33 +3,19 @@ import { Metadata } from 'next';
 import { ChallengeList } from './challenge-list';
 import { useTranslation } from '@/app/i18n';
 
-async function getChallengesByStatus() {
-  let challenges = await getChallenges();
-  challenges = challenges.sort((a, b) => Number(b.id) - Number(a.id));
-
-  return {
-    active: challenges.filter((c) => c.status === 'ACTIVE'),
-    completed: challenges.filter((c) => c.status === 'COMPLETED'),
-    paused: challenges.filter((c) => c.status === 'PAUSED'),
-  };
-}
-
 export default async function ChallengePage({
   params,
 }: {
   params: { lng: string };
 }) {
   const { lng = 'en' } = params || {};
-  const { active, completed, paused } = await getChallengesByStatus();
-
   return (
     <div className="container my-4 pt-20 min-h-[calc(100vh-120px)]">
-      {(active.length > 0 || completed.length > 0) && (
+      {
         <ChallengeList
-          challenges={[...active, ...paused, ...completed]}
           lng={lng}
         />
-      )}
+      }
     </div>
   );
 }

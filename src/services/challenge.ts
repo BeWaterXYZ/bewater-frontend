@@ -35,7 +35,7 @@ export async function getChallenges() {
     {
       params: {
         startTime: "2022-01-01T19:54:35.308Z",
-        endTime: "2025-01-01T00:00:00.000Z",
+        endTime: "2026-12-31T00:00:00.000Z",
       },
     }
   );

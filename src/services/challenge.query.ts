@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   UpdateShortlistForm,
   deleteRatingJudge,
+  getChallenges,
   getChallengeById,
   getChallengeInvitation,
   getChallengeShortlist,
@@ -12,6 +13,15 @@ import {
   updateChallengeShortlist,
 } from "./challenge";
 import { ChallengeID, UserID } from "./types";
+
+export function useFetchChallengeList() {
+  return useQuery({
+    queryKey: ["challenge-list"],
+    queryFn: async () => {
+      return getChallenges();
+    },
+  });
+}
 
 export function useFetchChallengeById(challengeId: ChallengeID) {
   return useQuery({
