@@ -8,6 +8,7 @@ import { useLoadingWhen } from "@/components/loading/store";
 import { useEffect, useState } from "react";
 import { CurveData } from "@/services/summary";
 import { NoDataImg } from "./noDataImg";
+import useRole from "@/hooks/useRole";
 
 export default function Page({ params }: any) {
   const fontSecondary = JSON.parse(
@@ -15,8 +16,9 @@ export default function Page({ params }: any) {
       .getPropertyValue("--font-secondary")
       .replaceAll(`'`, `"`)}]`
   )[0];
+  const { roleId } = useRole();
   const { challengeId } = segmentSchema.challengeId.parse(params);
-  const { data } = useFetchAnalyticsData(+challengeId);
+  const { data } = useFetchAnalyticsData(+challengeId, roleId);
   const [curve, setCurve] = useState<CurveData>([]);
   const [tooltip, setTooltip] = useState<string>("New projects");
   const [font, setFont] = useState<string | undefined>();
@@ -39,7 +41,7 @@ export default function Page({ params }: any) {
       }[chart] ?? []
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chart]);
+  }, [chart, data]);
   useEffect(() => {
     setFont(fontSecondary);
   }, [fontSecondary]);
@@ -183,7 +185,7 @@ export default function Page({ params }: any) {
               {data?.teamNum === 0 ? projectsChartModule : null}
             </div>
             <div className="px-[22px] pt-[33px] pb-5">
-              <div className="h-[363px] text-white">
+              <div className="h-[363px] text-white relative">
                 <Chart data={curve} title={tooltip} font={font} />
               </div>
             </div>

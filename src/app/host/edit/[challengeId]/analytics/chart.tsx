@@ -123,6 +123,7 @@ export default function Chart(props: {
   title: string;
   font?: string;
 }) {
+  const hasData = props.data.length > 0;
   const data = formatData(props.data);
   const option = {
     series: [
@@ -144,5 +145,18 @@ export default function Chart(props: {
     else chart.setOption(option);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.data, props.font, props.title]);
-  return <div className="w-full h-full" id="analytics-chart" />;
+  return (
+    <>
+      <div
+        className="w-full h-full"
+        style={{ opacity: hasData ? 1 : 0}}
+        id="analytics-chart"
+      />
+      {!hasData && (
+        <div className="w-full h-full flex items-center justify-center text-[#64748B] absolute left-0 top-0 text-sm leading-[20px] font-secondary">
+          No projects submitted yet
+        </div>
+      )}
+    </>
+  );
 }
