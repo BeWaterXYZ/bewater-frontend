@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Campaign from "./campaign";
 import MetricCard from "./metric-card";
 import Activity from "./activity";
+import { icons } from "../icons";
 
 export const SectionTitleStyle = "text-gray-100 text-xl font-bold mb-[18px]";
 export const CardStyle = "border rounded border-[#24254E] bg-[#0B0C24]";
@@ -34,8 +35,12 @@ export default function Summary() {
           Hello, {user.user?.username}
         </p>
         {(data?.ongoing.length ?? 0) > 0 && (
-          <Link href="/host/campaigns/new" className="btn btn-primary">
-            + Draft a new campaign
+          <Link
+            href="/host/campaigns/new"
+            className="btn btn-primary border-none h-auto py-[10px] px-4 text-[#003333]"
+          >
+            {icons.add_16}
+            <span className="ml-[6px] text-sm">Draft a new campaign</span>
           </Link>
         )}
       </div>
@@ -54,8 +59,12 @@ export default function Summary() {
             className={`${CardStyle} py-[40px] px-[25px] flex flex-col items-center`}
           >
             <p className="text-xl mb-[18px]">⭐️ Create your first campaign</p>
-            <Link href="/host/campaigns/new" className="btn btn-primary w-fit">
-              + Draft a new campaign
+            <Link
+              href="/host/campaigns/new"
+              className="btn btn-primary border-none h-auto py-[10px] px-4 text-[#003333]"
+            >
+              {icons.add_16}
+              <span className="ml-[6px] text-sm">Draft a new campaign</span>
             </Link>
           </div>
         )}
