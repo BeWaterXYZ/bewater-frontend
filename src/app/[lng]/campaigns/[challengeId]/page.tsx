@@ -16,8 +16,6 @@ import { PrizeSection as PrizeSection6 } from "./prize-section/63c82bd12ddc570f3
 import { PrizeSection as PrizeSection7 } from "./prize-section/63c82bd12ddc570f32ada86d";
 import { PrizeSection as PrizeSection11 } from "./prize-section/63c82bd12ddc570f32ada86e";
 import { PrizeSection as PrizeSection19 } from "./prize-section/63c82bd12ddc570f32ada86f";
-import { Timeline } from "./timeline";
-import { Timeline7 } from "./timeline-id7";
 import { isMileStoneEnabled, isWorkshop } from "./utils";
 
 import Balancer from "react-wrap-balancer";
@@ -34,6 +32,14 @@ import { EventVenue } from "./event-venue";
 import WA from "./wa";
 
 const ConnectButton = dynamicLoad(() => import("./connect-button"), {
+  ssr: false,
+});
+
+const Timeline = dynamicLoad(() => import("./timeline"), {
+  ssr: false,
+});
+
+const Timeline7 = dynamicLoad(() => import("./timeline-id7"), {
   ssr: false,
 });
 

@@ -34,7 +34,7 @@ const links = [
   },
 ] as const;
 
-export function ChallengeNav({
+export default function ChallengeNav({
   challenge,
   lng,
 }: {

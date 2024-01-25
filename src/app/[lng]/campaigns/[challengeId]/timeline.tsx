@@ -46,7 +46,7 @@ function prepareData(rawMilestones: Milestone[]) {
 const glowing =
   "rounded-full bg-day  shadow-[0_0_0_1px_theme('colors.day')_inset,_0_0_0_3px_white_inset]";
 
-export function Timeline({
+export default function Timeline({
   milestones,
   lng,
   id,

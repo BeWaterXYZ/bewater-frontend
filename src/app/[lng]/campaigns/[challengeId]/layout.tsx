@@ -1,11 +1,13 @@
+import dynamicLoad from 'next/dynamic';
 import { redirect } from "next/navigation";
 import { getChallengeById } from "@/services/challenge";
 import { Metadata } from "next";
-import { ChallengeHero } from "./hero";
-import { ChallengeNav } from "./nav";
 import { segmentSchema } from "./param-schema";
 import { useTranslation } from "@/app/i18n";
 import { isWorkshop, RegexDigit } from "./utils";
+
+const ChallengeHero = dynamicLoad(() => import("./hero"), { ssr: false })
+const ChallengeNav = dynamicLoad(() => import("./nav"), { ssr: false })
 
 export default async function Layout({
   children,

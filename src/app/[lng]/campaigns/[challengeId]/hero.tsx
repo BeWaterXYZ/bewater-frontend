@@ -11,7 +11,7 @@ interface ChallengeHeroProps {
   lng: string;
 }
 
-export function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
+export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
   const { t } = useTranslation(lng, 'translation');
 
   let isTeamingEnabled = false;
