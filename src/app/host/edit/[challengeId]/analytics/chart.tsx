@@ -149,7 +149,7 @@ export default function Chart(props: {
     <>
       <div
         className="w-full h-full"
-        style={{ opacity: hasData ? 1 : 0}}
+        style={{ opacity: hasData ? 1 : 0 }}
         id="analytics-chart"
       />
       {!hasData && (
