@@ -55,7 +55,7 @@ export function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
         <p className="body-4 md:text-[20px]">{challenge.hostName ?? ""}</p>
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
-      <h1 className="body-4 md:text-[24px] uppercase font-light">
+      <h1 className="body-4 md:text-[24px] uppercase font-light" suppressHydrationWarning>
         {challenge.location === "ONLINE" ? `${t("campaign.t30")} | ` : null}
         {(challenge.location === "OFFLINE" ||
           challenge.location === "MIXED" ||
@@ -86,7 +86,7 @@ export function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
         ) : (
           <div className="mt-6 md:mt-12">
             {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
-            <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest">
+            <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest" suppressHydrationWarning>
               {`${t("campaign.t2")} ${lng === "zh"
                 ? formatYYYYMMMDD(
                   challenge.milestones.find(
