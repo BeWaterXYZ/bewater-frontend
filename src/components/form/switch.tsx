@@ -7,25 +7,28 @@ interface SwitchRawProps {
   onCheckedChange: (v: boolean) => void;
   checked: boolean;
 }
-const SwitchRaw = ({ label, onCheckedChange, checked }: SwitchRawProps) => {
+export const SwitchRaw = ({
+  label,
+  onCheckedChange,
+  checked,
+}: SwitchRawProps) => {
   let id = useId();
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
-      <label
-        className="body-3"
-        htmlFor={`switch-${id}`}
-        style={{ paddingRight: 15 }}
-      >
-        {label}
-      </label>
       <RSwitch.Root
         checked={checked}
         onCheckedChange={onCheckedChange}
-        className="bg-black w-[40px] h-[24px] rounded-full relative  data-[state='checked']:bg-day"
+        className="bg-gray-200 w-[32px] h-5 rounded-full relative data-[state='checked']:bg-day mr-2"
         id={`switch-${id}`}
       >
-        <RSwitch.Thumb className="w-5 h-5 block rounded-full translate-x-[2px] bg-white data-[state='checked']:translate-x-[17px] transition-transform" />
+        <RSwitch.Thumb className="w-4 h-4 block rounded-full translate-x-[2px] bg-white data-[state='checked']:translate-x-[14px] transition-transform" />
       </RSwitch.Root>
+      <label
+        className="font-secondary text-sm leading-5"
+        htmlFor={`switch-${id}`}
+      >
+        {label}
+      </label>
     </div>
   );
 };
@@ -44,17 +47,19 @@ export const Switch = ({
   label,
   control,
 }: SwitchProps) => {
-  return <Controller
-    name={name!}
-    control={control}
-    render={({ field }) => {
-      return (
-        <SwitchRaw
-          checked={field.value}
-          label={label ?? ""}
-          onCheckedChange={(b) => onValueChange(b)}
-        />
-      );
-    }}
-  />;
+  return (
+    <Controller
+      name={name!}
+      control={control}
+      render={({ field }) => {
+        return (
+          <SwitchRaw
+            checked={field.value}
+            label={label ?? ""}
+            onCheckedChange={(b) => onValueChange(b)}
+          />
+        );
+      }}
+    />
+  );
 };
