@@ -5,6 +5,7 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import "react-datepicker/dist/react-datepicker.css";
 import ReactDatePicker from "react-datepicker";
 import { format, parseISO } from "date-fns";
+import "./datepicker.css";
 interface Props extends React.ComponentPropsWithoutRef<"input"> {
   label?: ReactNode;
   onValueChange: (v: string) => void;
