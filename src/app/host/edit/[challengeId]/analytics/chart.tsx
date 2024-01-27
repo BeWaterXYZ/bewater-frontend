@@ -154,7 +154,7 @@ export default function Chart(props: {
       />
       {!hasData && (
         <div className="w-full h-full flex items-center justify-center text-[#64748B] absolute left-0 top-0 text-sm leading-[20px] font-secondary">
-          No projects submitted yet
+          No data yet
         </div>
       )}
     </>
