@@ -84,7 +84,7 @@ export default async function Layout({
               </p>
             </div>
             <div className="font-secondary text-sm text-[#CBD5E1] whitespace-nowrap">
-              {projects.length} Projects
+              {projects.length > 0 ? `${projects.length} Projects` : "Edit"}
             </div>
             <div className="scale-[1.333]">
               <CaretRightIcon className="text-white/30" />
