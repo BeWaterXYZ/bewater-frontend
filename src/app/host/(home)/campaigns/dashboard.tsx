@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { useLoadingWhen } from "@/components/loading/store";
-import { getHostChallengePage } from '@/services/challenge';
+import { getHostChallengePage } from "@/services/challenge";
 import { Challenge } from "@/services/types";
 import { unsplash } from "@/utils/unsplash";
 import { useOrganization, useUser } from "@clerk/nextjs";
@@ -9,7 +9,9 @@ import { CaretRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { formatYYYYMMMDD, } from "@/utils/date";
+import { formatYYYYMMMDD } from "@/utils/date";
+import { CardStyle } from "../summary/summary";
+import { icons } from "../icons";
 
 function TodoLink({
   // challenge,
@@ -95,7 +97,10 @@ function Todo({ challenge }: { challenge: Challenge }) {
 
   return (
     <div className="">
-      <p style={{wordBreak: 'break-all'}} className="text-base font-bold text-grey-600 mb-4" >
+      <p
+        style={{ wordBreak: "break-all" }}
+        className="text-base font-bold text-grey-600 mb-4"
+      >
         {challenge.title}
       </p>
       {todos}
@@ -147,7 +152,7 @@ export function Dashboard() {
   useLoadingWhen(loading);
 
   const initChallengePage = () => {
-    getHostChallengePage(version, '0').then((res) => {
+    getHostChallengePage(version, "0").then((res) => {
       if (res.status === 200) {
         if (res.data.version === version) {
           setChallenges([].concat(res.data.challenges));
@@ -159,7 +164,7 @@ export function Dashboard() {
       }
     });
     setLoading(true);
-  }
+  };
 
   React.useEffect(() => {
     setMore(true);
@@ -167,39 +172,50 @@ export function Dashboard() {
       setVersion(version + 1);
       setTimeout(() => {
         initChallengePage();
-      })
+      });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [roleId, isLoaded, isSignedIn]);
 
   React.useEffect(() => {
     const node = containerRef.current;
 
-    const observer = new IntersectionObserver((entries, observer) => {
-      if (isLoaded && isSignedIn && challenges.length > 0 && !loading && more) {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            getHostChallengePage(version, challenges[challenges.length - 1].id).then((res) => {
-              if (res.status === 200) {
-                if (res.data.version === version) {
-                  setChallenges(challenges.concat(res.data.challenges));
-                  if (res.data.challenges.length === 0) {
-                    setMore(false);
+    const observer = new IntersectionObserver(
+      (entries, observer) => {
+        if (
+          isLoaded &&
+          isSignedIn &&
+          challenges.length > 0 &&
+          !loading &&
+          more
+        ) {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              getHostChallengePage(
+                version,
+                challenges[challenges.length - 1].id
+              ).then((res) => {
+                if (res.status === 200) {
+                  if (res.data.version === version) {
+                    setChallenges(challenges.concat(res.data.challenges));
+                    if (res.data.challenges.length === 0) {
+                      setMore(false);
+                    }
+                    setLoading(false);
                   }
-                  setLoading(false);
                 }
-              }
-            });
-            setLoading(true);
-            observer.disconnect();
-            break;
+              });
+              setLoading(true);
+              observer.disconnect();
+              break;
+            }
           }
-        }
-      } // end if
-
-    }, {
-      root: null,
-    });
+        } // end if
+      },
+      {
+        root: null,
+      }
+    );
 
     if (node) {
       observer.observe(node);
@@ -207,100 +223,124 @@ export function Dashboard() {
 
     return () => {
       observer.disconnect();
-    }
+    };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef, isLoaded, isSignedIn, challenges, loading, more]);
 
   return (
-    <div className="w-full grid  md:grid-cols-[2fr,_1fr] gap-16"  >
-      <div>
-        {/* <div className="h-16">filters</div> */}
-        <div>
-          {challenges.map((challenge) => {
-            return (
-              <div key={challenge.id}>
-                <Link
-                  href={`/host/edit/${challenge.id}`}
-                  className={clsx("flex px-4 justify-between", {
-                    "pt-8 pb-4": isAdmin,
-                    "border-b border-grey-800 py-8": !isAdmin,
-                  })}
-                >
-                  <div className="flex gap-4 items-center">
-                    <Image
-                      src={challenge.bannerUrl ?? unsplash("host")}
-                      // fill
-                      alt={challenge.externalId!}
-                      width={60}
-                      height={60}
-                      className="rounded-full border border-grey-800 w-[60px] h-[60px]"
-                    />
-                    <div className="space-y-2">
-                      <p className="text-base font-bold text-white" style={{wordBreak: 'break-all'}}>
-                        {challenge.title}
-                        {isAdmin ? `（${challenge.id}）` : ""}
-                      </p>
-                      <p className="text-sm text-grey-500">
-                        {/* fixme */}
-                        {formatYYYYMMMDD(challenge.startTime)} {"-> "}
-                        {formatYYYYMMMDD(challenge.endTime)}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-center">
-                    <ChallengeStatusButton challenge={challenge} />
-                  </div>
-                </Link>
-                {isAdmin ? (
-                  <div className="flex border-b border-grey-800 pt-4 pb-8 px-4 justify-start">
+    <>
+    <p className="text-xl text-white font-secondary leading-[32px] mb-[32px]">Campaigns</p>
+      {challenges.length > 0 ? (
+        <div className="w-full grid md:grid-cols-[2fr,_1fr] gap-16 font-secondary">
+          <div>
+            <div>
+              {challenges.map((challenge) => {
+                return (
+                  <div key={challenge.id}>
                     <Link
-                      href={`http://bewater.waketu.com/manage?challengeId=${challenge.id}#/detail`}
-                      target={"_blank"}
+                      href={`/host/edit/${challenge.id}`}
+                      className={clsx("flex px-4 justify-between", {
+                        "pt-8 pb-4": isAdmin,
+                        "border-b border-grey-800 py-8": !isAdmin,
+                      })}
                     >
-                      <p className="text-base font-bold text-grey-500 ">
-                      🈺Manage
-                      </p>
+                      <div className="flex gap-4 items-center">
+                        <Image
+                          src={challenge.bannerUrl ?? unsplash("host")}
+                          // fill
+                          alt={challenge.externalId!}
+                          width={60}
+                          height={60}
+                          className="rounded-full border border-grey-800 w-[60px] h-[60px]"
+                        />
+                        <div className="space-y-2">
+                          <p
+                            className="text-base font-bold text-white"
+                            style={{ wordBreak: "break-all" }}
+                          >
+                            {challenge.title}
+                            {isAdmin ? `（${challenge.id}）` : ""}
+                          </p>
+                          <p className="text-sm text-grey-500">
+                            {/* fixme */}
+                            {formatYYYYMMMDD(challenge.startTime)} {"-> "}
+                            {formatYYYYMMMDD(challenge.endTime)}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <ChallengeStatusButton challenge={challenge} />
+                      </div>
                     </Link>
-                    {challenge.type !== 'OTHERS' ? (
-                      <>
-                        <p style={{whiteSpace:"pre"}}>{'    '}</p>
+                    {isAdmin ? (
+                      <div className="flex border-b border-grey-800 pt-4 pb-8 px-4 justify-start">
                         <Link
-                          href={`/host/challenges/${challenge.id}/shortlist`}
+                          href={`http://bewater.waketu.com/manage?challengeId=${challenge.id}#/detail`}
+                          target={"_blank"}
                         >
-                          <p className="text-base font-bold text-grey-500">
-                          💰Shortlist
+                          <p className="text-base font-bold text-grey-500 ">
+                            🈺 Manage
                           </p>
                         </Link>
-                      </>
+                        {challenge.type !== "OTHERS" ? (
+                          <>
+                            <p style={{ whiteSpace: "pre" }}>{"    "}</p>
+                            <Link
+                              href={`/host/challenges/${challenge.id}/shortlist`}
+                            >
+                              <p className="text-base font-bold text-grey-500">
+                                💰 Shortlist
+                              </p>
+                            </Link>
+                          </>
+                        ) : null}
+                      </div>
                     ) : null}
                   </div>
-                ) : null}
+                );
+              })}
+              <p
+                className="text-base font-bold text-grey-500 text-center pt-4 "
+                ref={containerRef}
+              >
+                {more && "Loading..."}
+              </p>
+            </div>
+          </div>
+          <div>
+            <div className="w-full flex justify-end mb-14">
+              <Link href="/host/campaigns/new" className="btn btn-primary">
+                + Draft a new campaign
+              </Link>
+            </div>
+            {challenges.length > 0 ? (
+              <div className="space-y-8">
+                <p className="text-2xl text-white">CHECKLIST</p>
+
+                {challenges.map((c) => {
+                  return <Todo key={c.id} challenge={c}></Todo>;
+                })}
               </div>
-            );
-          })}
-          <p
-            className="text-base font-bold text-grey-500 text-center pt-4 "
-            ref={containerRef}
-          >{more ? 'Loading...' : '--no more data--'}</p>
+            ) : null}
+          </div>
         </div>
-      </div>
-      <div>
-        <div className="w-full flex justify-end mb-14">
-          <Link href="/host/campaigns/new" className="btn btn-primary">
-            + Draft a new campaign
+      ) : (
+        <div
+          className={`${CardStyle} py-[40px] px-[25px] flex flex-col justify-center items-center h-[308px] w-[856px]`}
+        >
+          <p className="text-xl mb-[36px] text-white font-secondary leading-[32px]">
+            ⭐️ Create your first campaign
+          </p>
+          <Link
+            href="/host/campaigns/new"
+            className="btn btn-primary border-none h-auto py-[10px] px-4 text-[#003333]"
+          >
+            {icons.add_16}
+            <span className="ml-[6px] text-sm">Draft a new campaign</span>
           </Link>
         </div>
-        {challenges.length > 0 ? (
-          <div className="space-y-8">
-            <p className="text-2xl text-white">CHECKLIST</p>
-
-            {challenges.map((c) => {
-              return <Todo key={c.id} challenge={c}></Todo>;
-            })}
-          </div>
-        ) : null}
-      </div>
-    </div>
+      )}
+    </>
   );
 }
