@@ -1,5 +1,7 @@
+"use client";
 import {
   CreateOrganization,
+  useClerk,
   useOrganization,
   useOrganizationList,
   useUser,
@@ -9,6 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { icons } from "./icons";
+import { RedirectType, redirect } from "next/navigation";
 
 const styles = {
   section: "p-[6px] grid gap-[2px] grid-cols-1",
@@ -34,6 +37,7 @@ export default function ProfileMenu(props: {
   organization?: ReturnType<typeof useOrganization>["organization"];
 }) {
   const { user, organization } = props;
+  const { signOut } = useClerk();
   const isOrganization = !!organization;
   const enableOrg = user?.publicMetadata?.enableOrg ?? false;
   const [show, setShow] = useState(false);
@@ -61,7 +65,7 @@ export default function ProfileMenu(props: {
   return (
     <div
       id="profile-menu"
-      className="w-full h-full py-1 px-2 flex text-white items-center relative"
+      className="w-full h-full py-1 px-2 flex text-white items-center relative select-none"
       style={{
         fontFamily: "var(--font-secondary)",
       }}
@@ -166,14 +170,6 @@ export default function ProfileMenu(props: {
               </Link>
             </div>
           )}
-          {/* TODO: UPGRADE PLAN */}
-          {/* <div className={styles.item}>
-              <div className="p-1 text-gray-100">
-                {icons.rocket_16}
-              </div>
-              <p>Upgrade</p>
-            </div> */}
-          {/* <div className={styles.divider} /> */}
           <div className={styles.section}>
             <p className={styles.sectionTitle}>Workspaces</p>
             <div
@@ -263,9 +259,12 @@ export default function ProfileMenu(props: {
                 <p>Account Settings</p>
               </div>
             </Link>
-            <div className={styles.item}>
+            <div
+              className={styles.item}
+              onClick={() => signOut(() => void (location.href = "/"))}
+            >
               <div className="p-1 text-gray-100">{icons.arrowExit_16}</div>
-              <p>Logout</p>
+              <p>Sign Out</p>
             </div>
           </div>
         </div>

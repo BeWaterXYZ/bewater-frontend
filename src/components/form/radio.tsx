@@ -12,10 +12,19 @@ interface RadioProps extends React.ComponentPropsWithoutRef<"input"> {
   control: any;
   error?: FieldError;
   label?: string;
+  className?: string;
 }
 
 export const Radio = React.forwardRef(function Radio_(
-  { options, name, onValueChange, control, label, error }: RadioProps,
+  {
+    options,
+    name,
+    onValueChange,
+    control,
+    label,
+    error,
+    className,
+  }: RadioProps,
   ref: any
 ) {
   let id = useId();
@@ -26,7 +35,7 @@ export const Radio = React.forwardRef(function Radio_(
       control={control}
       render={({ field }) => {
         return (
-          <div className="block group relative pb-5">
+          <div className={clsx("block group relative pb-5", className)}>
             {label ? (
               <label
                 className="block text-xs mb-2 text-grey-500 font-bold group-hover:text-day group-focus:text-day transition-colors"

@@ -63,6 +63,8 @@ interface UserSearchProps extends React.ComponentPropsWithoutRef<"select"> {
   exclude?: UserID[];
   error?: FieldError;
   control: any;
+  disableError?: boolean;
+  placeholder?: string;
 }
 
 export const UserSearch = React.forwardRef(function UserSearch_(
@@ -76,7 +78,10 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     className,
     required,
     control,
+
     value,
+    disableError,
+    placeholder = "username, email or wallet address",
     exclude = [],
   } = props;
   const id = useId();
@@ -95,7 +100,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     input: () => "!text-white",
   };
   return (
-    <div className={clsx("block pb-2", className)}>
+    <div className={clsx("block", disableError ? "" : "pb-2", className)}>
       {label ? (
         <label
           className="block body-3 py-1 text-grey-500 font-bold"
@@ -117,9 +122,10 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               id={id}
               isMulti={false}
               classNames={styles}
-              placeholder="username, email or wallet address"
-              loadingMessage={() => "searching"}
-              noOptionsMessage={() => "no options"}
+              className="font-secondary"
+              placeholder={placeholder}
+              loadingMessage={() => "Searching"}
+              noOptionsMessage={() => "No options"}
               value={value}
               isClearable
               onChange={(val) => {
@@ -127,7 +133,6 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               }}
               onFocus={() => {
                 field.onChange("");
-                console.log("on focus");
               }}
               loadOptions={searchUserByKeyword(exclude)}
               // defaultOptions
@@ -144,6 +149,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
       <div
         className={clsx("whitespace-nowrap body-4 py-1 text-danger", {
           invisible: !error,
+          hidden: !!disableError,
         })}
       >
         {error?.message ?? "placeholder"}

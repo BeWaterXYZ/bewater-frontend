@@ -89,7 +89,13 @@ export default function RatingDimensionsDialog({
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      scoreDimension: data.challenge.scoreDimension,
+      scoreDimension: data.challenge.scoreDimension
+        ? data.challenge.scoreDimension
+        : [
+            { text: "Creativity and Innovation", locked: true },
+            { text: "Technical Implementation and Quality", locked: false },
+            { text: "User Experience and Visual Design", locked: false },
+          ],
     },
   });
   const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
@@ -137,7 +143,7 @@ export default function RatingDimensionsDialog({
               <Input
                 className="flex-1"
                 label=""
-                disabled={field.locked}
+                // disabled={field.locked}
                 inputClassName="mb-[2px]"
                 errorClassName="pl-2 mb-[6px]"
                 preserveSpaceForErrorMessage={false}
