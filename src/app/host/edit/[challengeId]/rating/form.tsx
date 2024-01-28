@@ -25,12 +25,14 @@ export function EditRating({
   return (
     <div className="font-secondary z-30 h-full w-full p-8 overflow-y-auto">
       <div className="text-2xl leading-8 text-white py-4 font-bold">Rating</div>
-      <p className="body-2 text-xs text-white/40">
+      <p className="body-2 text-xs text-white/40 mb-8">
         Select judges, define scoring criteria, and rate the selected projects.
       </p>
-
-      <div className="bg-latenight border border-[#24254E] rounded px-4 my-8">
-        <div className=" border-b border-b-white/10 py-6 flex justify-between items-center">
+      {challenge.reviewers.length === 0 && (
+        <p className="text-sm leading-5 text-[#00FFFF] mb-2">Please set up before the rating begins.</p>
+      )}
+      <div className="bg-latenight border border-[#24254E] rounded px-4 mb-8">
+        <div className="border-b border-b-white/10 py-6 items-center grid grid-cols-[1fr_1fr_172px] gap-4">
           <div>
             <p className="body-2 font-bold mb-1">Judges</p>
             <p className="body-3 text-grey-600 text-xs">
@@ -38,28 +40,32 @@ export function EditRating({
             </p>
           </div>
           <div>
-            <div className="flex ">
-              {challenge.reviewers.map((rv, index) => {
-                return (
-                  <div
-                    key={rv.userId}
-                    className="relative"
-                    style={{ left: -8 * index }}
-                  >
-                    <Avatar src={rv.avatarURI} className="w-8 h-8" />
-                  </div>
-                );
-              })}
+            <div className="flex">
+              {challenge.reviewers.length > 0 ? (
+                challenge.reviewers.map((rv, index) => {
+                  return (
+                    <div
+                      key={rv.userId}
+                      className="relative"
+                      style={{ left: -8 * index }}
+                    >
+                      <Avatar src={rv.avatarURI} className="w-8 h-8" />
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="text-xs text-[#F59E0B]">No judges selected</p>
+              )}
             </div>
           </div>
-          <div>
+          <div className="justify-self-end">
             <button className="btn btn-secondary" onClick={openRatingJudge}>
               Select Judges
             </button>
           </div>
         </div>
 
-        <div className="py-6 flex justify-between items-center">
+        <div className="py-6 items-center grid grid-cols-[1fr_1fr_172px] gap-4">
           <div>
             <p className="body-2 font-bold mb-1">Rating Dimensions</p>
             <p className="body-3 text-xs text-grey-600">
@@ -73,7 +79,7 @@ export function EditRating({
               </div>
             ))}
           </div>
-          <div>
+          <div className="justify-self-end">
             <button className="btn btn-secondary" onClick={openRatingDimension}>
               Set Dimensions
             </button>
