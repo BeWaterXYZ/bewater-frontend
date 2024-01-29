@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import { useState } from "react";
 import Placeholder from "react-select/dist/declarations/src/components/Placeholder";
 
@@ -11,7 +12,9 @@ export default function DataCardView(props: {
     data: {
       name: string;
       num?: number;
+      lastUpdated?: string;
     }[];
+    dataType?: string;
   };
   placeholder?: string;
 }) {
@@ -41,15 +44,14 @@ export default function DataCardView(props: {
   const dataCardSecondary =
     "font-secondary text-[14px] leading-[28px] text-[#64748B]";
   const dataCardMain = "my-[7px] flex-1 min-h-[241px]";
-  const dataCardItemContainer = "mt-[7px] mx-4 relative";
+  const dataCardItemContainer = "mt-[7px] mx-[14px] relative";
   const histogramBar = "bg-[#1E293BB3] rounded-[4px] h-8";
   const noHistogram = "h-8";
   const dataCardItemLabel =
-    "h-8 px-1 flex items-center justify-between w-[100%] absolute top-0";
-  const dataCardItemName =
-    "font-secondary text-sm font-bold text-[#CBD5E1] pr-1 line-clamp-1";
+    "h-8 px-[6px] flex items-center justify-between w-[100%] absolute top-0";
+  const dataCardItemName = "font-secondary text-sm text-[#CBD5E1] truncate";
   const dataCardItemValue =
-    "font-secondary text-[14px] leading-[28px] text-[#CBD5E1]";
+    "font-secondary text-[14px] leading-[28px] pl-2 text-[#CBD5E1]";
   const dataCardButton =
     "bg-[#2F3153] border-[1px] border-[#2F3153] rounded-[2px] w-fit py-2 px-4 flex gap-2 items-center font-secondary text-sm text-white";
   const doneButton =
@@ -136,7 +138,11 @@ export default function DataCardView(props: {
               ></div>
               <div className={dataCardItemLabel}>
                 <div className={dataCardItemName}>{items.name}</div>
-                <div className={dataCardItemValue}>{items.num}</div>
+                <div className={dataCardItemValue}>
+                  {source.dataType === "date"
+                    ? format(new Date(items.lastUpdated!), "yyyy/MM/dd")
+                    : items.num}
+                </div>
               </div>
             </div>
           ))
@@ -187,7 +193,14 @@ export default function DataCardView(props: {
                         ></div>
                         <div className={dataCardItemLabel}>
                           <div className={dataCardItemName}>{items.name}</div>
-                          <div className={dataCardItemValue}>{items.num}</div>
+                          <div className={dataCardItemValue}>
+                            {source.dataType === "date"
+                              ? format(
+                                  new Date(items.lastUpdated!),
+                                  "yyyy/MM/dd"
+                                )
+                              : items.num}
+                          </div>
                         </div>
                       </div>
                     ))
