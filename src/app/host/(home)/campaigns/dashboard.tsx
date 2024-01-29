@@ -5,136 +5,53 @@ import { getHostChallengePage } from "@/services/challenge";
 import { Challenge } from "@/services/types";
 import { unsplash } from "@/utils/unsplash";
 import { useOrganization, useUser } from "@clerk/nextjs";
-import { CaretRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { formatYYYYMMMDD } from "@/utils/date";
 import { CardStyle } from "../summary/summary";
 import { icons } from "../icons";
-
-function TodoLink({
-  // challenge,
-  copy,
-  link,
-}: {
-  // challenge: Challenge;
-  copy: string;
-  link: string;
-}) {
-  return (
-    <Link
-      href={link}
-      className="mt-2 w-full text-sm text-white flex justify-between items-center bg-[#0B0C24] rounded-md border border-[#474ABD] p-4"
-    >
-      <div>{copy}</div>
-      <div>
-        <CaretRightIcon />
-      </div>
-    </Link>
-  );
-}
-
-function Todo({ challenge }: { challenge: Challenge }) {
-  let todos = [];
-  if (!challenge.bannerUrl || !challenge.hostIcon) {
-    todos.push(
-      <TodoLink
-        key={"banner"}
-        copy="Add banner image or host icon"
-        link={`/host/edit/${challenge.id}/content/hero`}
-      />
-    );
-  }
-  if (!challenge.milestones || challenge.milestones.length === 0) {
-    todos.push(
-      <TodoLink
-        key={"milestones"}
-        copy="Add milestones"
-        link={`/host/edit/${challenge.id}/content/milestone`}
-      />
-    );
-  }
-  if (!challenge.awardAssorts || challenge.awardAssorts.length === 0) {
-    todos.push(
-      <TodoLink
-        key={"awards"}
-        copy="Add Awards"
-        link={`/host/edit/${challenge.id}/content/prizes`}
-      />
-    );
-  }
-  if (!challenge.judges || challenge.judges.length === 0) {
-    todos.push(
-      <TodoLink
-        key={"judge"}
-        copy="Add Judges"
-        link={`/host/edit/${challenge.id}/content/judge`}
-      />
-    );
-  }
-  if (!challenge.requirements || !challenge.reviewDimension) {
-    todos.push(
-      <TodoLink
-        key={"requirements"}
-        copy="Add Requirements"
-        link={`/host/edit/${challenge.id}/content/requirements`}
-      />
-    );
-  }
-  if (!challenge.sponsors || challenge.sponsors.length === 0) {
-    todos.push(
-      <TodoLink
-        key={"sponsors"}
-        copy="Add Sponsors"
-        link={`/host/edit/${challenge.id}/content/sponsors`}
-      />
-    );
-  }
-  if (todos.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="">
-      <p
-        style={{ wordBreak: "break-all" }}
-        className="text-base font-bold text-grey-600 mb-4"
-      >
-        {challenge.title}
-      </p>
-      {todos}
-    </div>
-  );
-}
+import CampaignMenu from "./campaignMenu";
+import { set } from "lodash";
 
 function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
   return (
-    <button
-      className={clsx("btn rounded flex gap-2 border", {
-        "bg-grey-500/10 border-grey-500/20 text-grey-500":
-          challenge.status === "DRAFT",
-        "bg-yellow-500/10 border-yellow-500/20 text-yellow-500":
-          challenge.status === "INREVIEW",
-        "bg-red-500/10 border-red-500/20 text-red-500":
-          challenge.status === "REFUSED",
-      })}
+    <div
+      className={clsx(
+        "absolute top-4 left-4 py-2 px-3 border rounded-full flex gap-[6px] items-center text-xs font-bold",
+        {
+          "bg-green-500/10 border-green-500/20 text-green-500":
+            challenge.status === "ACTIVE",
+          "bg-[#64748B1A] border-[#64748B33] text-[#64748B]":
+            challenge.status === "COMPLETED" || challenge.status === "DRAFT",
+          "bg-yellow-500/10 border-yellow-500/20 text-yellow-500":
+            challenge.status === "INREVIEW",
+          "bg-red-500/10 border-red-500/20 text-red-500":
+            challenge.status === "REFUSED",
+        }
+      )}
     >
       <div
-        className={clsx("w-3 h-3 rounded-full border-[0.5px]", {
+        className={clsx("w-[6px] h-[6px] rounded-full border-[0.5px]", {
+          "bg-green-500/30 border-green-600": challenge.status === "ACTIVE",
+          "bg-gray-[#64748B4D] border-gray-600":
+            challenge.status === "COMPLETED" || challenge.status === "DRAFT",
           "bg-yellow-500/30 border-yellow-600": challenge.status === "INREVIEW",
-          "bg-grey-500/30 border-grey-600": challenge.status === "DRAFT",
           "bg-red-500/30 border-red-600": challenge.status === "REFUSED",
         })}
       ></div>
-      {challenge.status === "DRAFT"
+      {challenge.status === "ACTIVE"
+        ? "Active"
+        : challenge.status === "COMPLETED"
+        ? "Closed"
+        : challenge.status === "DRAFT"
         ? "In Draft"
         : challenge.status === "INREVIEW"
         ? "In Review"
         : challenge.status === "REFUSED"
         ? "Audit Failed"
         : challenge.status}
-    </button>
+    </div>
   );
 }
 
@@ -147,6 +64,9 @@ export function Dashboard() {
   const [more, setMore] = useState(true);
   const roleId = useOrganization().organization?.id ?? user?.id;
   const [version, setVersion] = useState(0);
+  const [menu, setMenu] = useState(false);
+  const [menuId, setMenuId] = useState("");
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
   const isAdmin = isLoaded && isSignedIn && user?.publicMetadata?.teamMember;
   useLoadingWhen(loading);
@@ -230,101 +150,91 @@ export function Dashboard() {
 
   return (
     <>
-    <p className="text-xl text-white font-secondary leading-[32px] mb-[32px]">Campaigns</p>
+      <div className="flex justify-between mb-8">
+        <p className="text-xl font-bold text-white">Campaigns</p>
+        {challenges.length > 0 && (
+          <Link
+            href="/host/campaigns/new"
+            className="btn btn-primary border-none h-auto py-2 px-4 text-[#003333]"
+          >
+            {icons.add_16}
+            <span className="ml-2 text-sm">Draft a new campaign</span>
+          </Link>
+        )}
+      </div>
       {challenges.length > 0 ? (
-        <div className="w-full grid md:grid-cols-[2fr,_1fr] gap-16 font-secondary">
-          <div>
-            <div>
-              {challenges.map((challenge) => {
-                return (
-                  <div key={challenge.id}>
-                    <Link
-                      href={`/host/edit/${challenge.id}`}
-                      className={clsx("flex px-4 justify-between", {
-                        "pt-8 pb-4": isAdmin,
-                        "border-b border-grey-800 py-8": !isAdmin,
-                      })}
-                    >
-                      <div className="flex gap-4 items-center">
-                        <Image
-                          src={challenge.bannerUrl ?? unsplash("host")}
-                          // fill
-                          alt={challenge.externalId!}
-                          width={60}
-                          height={60}
-                          className="rounded-full border border-grey-800 w-[60px] h-[60px]"
-                        />
-                        <div className="space-y-2">
-                          <p
-                            className="text-base font-bold text-white"
-                            style={{ wordBreak: "break-all" }}
-                          >
-                            {challenge.title}
-                            {isAdmin ? `（${challenge.id}）` : ""}
-                          </p>
-                          <p className="text-sm text-grey-500">
-                            {/* fixme */}
-                            {formatYYYYMMMDD(challenge.startTime)} {"-> "}
-                            {formatYYYYMMMDD(challenge.endTime)}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center">
-                        <ChallengeStatusButton challenge={challenge} />
-                      </div>
-                    </Link>
-                    {isAdmin ? (
-                      <div className="flex border-b border-grey-800 pt-4 pb-8 px-4 justify-start">
-                        <Link
-                          href={`http://bewater.waketu.com/manage?challengeId=${challenge.id}#/detail`}
-                          target={"_blank"}
-                        >
-                          <p className="text-base font-bold text-grey-500 ">
-                            🈺 Manage
-                          </p>
-                        </Link>
-                        {challenge.type !== "OTHERS" ? (
-                          <>
-                            <p style={{ whiteSpace: "pre" }}>{"    "}</p>
-                            <Link
-                              href={`/host/challenges/${challenge.id}/shortlist`}
-                            >
-                              <p className="text-base font-bold text-grey-500">
-                                💰 Shortlist
-                              </p>
-                            </Link>
-                          </>
-                        ) : null}
-                      </div>
-                    ) : null}
+        <>
+          <div className="grid grid-cols-3 gap-4">
+            {challenges.map((challenge) => {
+              return (
+                <div
+                  className="bg-[#0B0C24] border border-[#24254E] rounded"
+                  key={challenge.id}
+                >
+                  <div className="relative">
+                    <Image
+                      src={challenge.bannerUrl ?? unsplash("host")}
+                      alt={challenge.externalId!}
+                      width={0}
+                      height={0}
+                      className="w-[274.667px] h-[186px] rounded-t object-cover"
+                    />
+                    <ChallengeStatusButton challenge={challenge} />
                   </div>
-                );
-              })}
-              <p
-                className="text-base font-bold text-grey-500 text-center pt-4 "
-                ref={containerRef}
-              >
-                {more && "Loading..."}
-              </p>
-            </div>
+                  <div className="p-4">
+                    <p className="font-bold text-white truncate mb-2">
+                      {challenge.title}
+                    </p>
+                    <div className="text-xs text-gray-500 flex justify-between gap-2">
+                      <p>
+                        {formatYYYYMMMDD(challenge.startTime)}
+                        {" -> "}
+                        {formatYYYYMMMDD(challenge.endTime)}
+                      </p>
+                      {isAdmin === true && <p>{challenge.id}</p>}
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="p-4">
+                      <Link href={`/host/edit/${challenge.id}`}>
+                        <button className="py-2 px-3 bg-[#2F3153] rounded-lg flex gap-4 items-center text-sm leading-5 text-white hover:bg-[#2F315380] transition-colors">
+                          <span>EDIT</span>
+                          {icons.campaignsIconsGo}
+                        </button>
+                      </Link>
+                    </div>
+                    <div className="p-4">
+                      <button
+                        className="p-[6px] text-gray-500"
+                        onClick={(e) => {
+                          setMenu(!menu);
+                          setMenuId(challenge.id);
+                          setMenuPosition({
+                            x: e.pageX,
+                            y: e.pageY,
+                          });
+                        }}
+                      >
+                        {icons.moreHorizontal_24}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            <div ref={containerRef}></div>
           </div>
-          <div>
-            <div className="w-full flex justify-end mb-14">
-              <Link href="/host/campaigns/new" className="btn btn-primary">
-                + Draft a new campaign
-              </Link>
-            </div>
-            {challenges.length > 0 ? (
-              <div className="space-y-8">
-                <p className="text-2xl text-white">CHECKLIST</p>
-
-                {challenges.map((c) => {
-                  return <Todo key={c.id} challenge={c}></Todo>;
-                })}
-              </div>
-            ) : null}
-          </div>
-        </div>
+          <p className="text-sm leading-5 text-gray-500 text-center pt-4">
+            {more && "Loading..."}
+          </p>
+          {menu && (
+            <CampaignMenu
+              menuPosition={menuPosition}
+              id={menuId}
+              close={() => setMenu(false)}
+            />
+          )}
+        </>
       ) : (
         <div
           className={`${CardStyle} py-[40px] px-[25px] flex flex-col justify-center items-center h-[308px] w-[856px]`}
