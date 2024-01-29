@@ -82,7 +82,7 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
         className="mt-4 flex items-center"
       >
         <div className="h-full">
-          <button className="h-full btn btn-secondary-invert rounded border-r-0">
+          <button className="h-full btn btn-secondary-invert pointer-events-none select-none rounded border-r-0">
             Add Judges
           </button>
         </div>
@@ -94,6 +94,7 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
             {...register("user")}
             disableError
             placeholder="Select or Search username"
+            handleSelect={(id) => void onSubmit({ user: id })}
           />
         </div>
       </form>

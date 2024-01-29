@@ -65,6 +65,7 @@ interface UserSearchProps extends React.ComponentPropsWithoutRef<"select"> {
   control: any;
   disableError?: boolean;
   placeholder?: string;
+  handleSelect?: (id: string) => void;
 }
 
 export const UserSearch = React.forwardRef(function UserSearch_(
@@ -78,7 +79,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     className,
     required,
     control,
-
+    handleSelect,
     value,
     disableError,
     placeholder = "username, email or wallet address",
@@ -116,7 +117,6 @@ export const UserSearch = React.forwardRef(function UserSearch_(
         control={control}
         render={({ field }) => {
           let value = cacheOptions.find((op) => op.id === field.value);
-
           return (
             <AsyncSelect
               id={id}
@@ -130,6 +130,7 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               isClearable
               onChange={(val) => {
                 val && field.onChange((val as SingleValue<UserProfile>)?.id);
+                handleSelect?.((val as SingleValue<UserProfile>)?.id!);
               }}
               onFocus={() => {
                 field.onChange("");
