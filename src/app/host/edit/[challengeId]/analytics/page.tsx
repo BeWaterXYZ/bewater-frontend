@@ -96,6 +96,7 @@ export default function Page({ params }: any) {
       secondary: "",
       histogram: false,
       data: data?.githubRepo.recentlyActive ?? [],
+      dataType: "date",
     },
   };
 
