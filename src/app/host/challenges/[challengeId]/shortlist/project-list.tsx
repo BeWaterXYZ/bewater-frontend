@@ -196,7 +196,7 @@ export function ProjectList({
                     <div style={{ whiteSpace: "pre" }}>
                       <select
                         defaultValue={it.status}
-                        handleChange={handleChange(it)}
+                        onChange={handleChange(it)}
                         className="bg-[#0F1021] text-white/90 text-[14px] font-normal"
                       >
                         <option value="INITIATED">INITIATED（默认)</option>
