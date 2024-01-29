@@ -81,18 +81,20 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
         onSubmit={handleSubmit(onSubmit)}
         className="mt-4 flex items-center"
       >
+        <div className="h-full">
+          <button className="h-full btn btn-secondary-invert rounded border-r-0">
+            Add Judges
+          </button>
+        </div>
         <div className="flex-1">
           <UserSearch
-            label="Name"
             required
             error={errors["user"]}
             control={control}
             {...register("user")}
+            disableError
+            placeholder="Select or Search username"
           />
-        </div>
-
-        <div className="mb-1">
-          <button className="btn btn-secondary-invert">Add Judges</button>
         </div>
       </form>
 

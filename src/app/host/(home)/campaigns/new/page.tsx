@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { Challenge, Milestone } from "@/services/types";
 import Link from "next/link";
 import { createUnionSchema } from "@/types/utils";
-import { useUser } from '@clerk/nextjs';
+import { useUser } from "@clerk/nextjs";
 import { defMilestoneArr as defValArr } from "@/utils/default";
 
 const init: Partial<Challenge> = {
@@ -102,7 +102,7 @@ export default function Page() {
           Workshop
         </div>
       ),
-    }
+    },
   ];
 
   const { isLoaded, isSignedIn, user } = useUser();
@@ -119,13 +119,13 @@ export default function Page() {
           />
           Others
         </div>
-      )
+      ),
     });
   }
 
   return (
     <>
-      <div className="container my-4 pt-20 flex flex-1 justify-center">
+      <div className="container my-4 pt-20 flex flex-1 justify-center font-secondary">
         <div className="w-full max-w-[800px]">
           <Link href="/host" className="text-grey-500">
             {"< Back"}
@@ -141,8 +141,9 @@ export default function Page() {
             <Radio
               control={control}
               name="type"
-              onValueChange={(v) => setValue("type", v as  CAMPAIGN_TYPE)}
+              onValueChange={(v) => setValue("type", v as CAMPAIGN_TYPE)}
               options={challengeType}
+              className="[&_div_div]:relative [&_div_div]:h-[96px] [&_div_div_label]:absolute [&_div_div_label]:w-full [&_div_div_label]:left-0 [&_div_div_label]:px-[48px]"
             />
             <Input
               label="Campaign Title"
@@ -173,6 +174,7 @@ export default function Page() {
                 { value: LOCATION.OFFLINE, label: "Offline" },
                 { value: LOCATION.MIXED, label: "Online + Offline" },
               ]}
+              className="[&_div_div]:relative [&_div_div]:h-[54px] [&_div_div_label]:absolute [&_div_div_label]:w-full [&_div_div_label]:h-full [&_div_div_label]:py-[16.5px] [&_div_div_label]:left-0 [&_div_div_label]:px-[48px]"
             />
             {isOnlineOnly ? null : (
               <Input

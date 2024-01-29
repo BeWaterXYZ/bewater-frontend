@@ -10,9 +10,11 @@ const chartOption: (tooltip: string, font?: string) => echarts.EChartsOption = (
 ) => ({
   grid: {
     show: false,
-    left: 20,
     top: 10,
     bottom: 20,
+    left: 10,
+    right: 10,
+    containLabel: true,
   },
   axisPointer: [
     {
@@ -91,20 +93,17 @@ const seriesOption: echarts.LineSeriesOption = {
   },
   lineStyle: {
     color: "#00FFFF",
+    width: 1,
   },
   areaStyle: {
     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
         offset: 0,
-        color: "rgba(0, 255, 255, 1)",
-      },
-      {
-        offset: 0.5,
-        color: "rgba(0, 255, 255, 0.29)",
+        color: "#003333FF",
       },
       {
         offset: 1,
-        color: "rgba(0, 255, 255, 0)",
+        color: "#00333300",
       },
     ]),
   },
@@ -154,7 +153,7 @@ export default function Chart(props: {
       />
       {!hasData && (
         <div className="w-full h-full flex items-center justify-center text-[#64748B] absolute left-0 top-0 text-sm leading-[20px] font-secondary">
-          No projects submitted yet
+          No data yet
         </div>
       )}
     </>

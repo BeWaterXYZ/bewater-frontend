@@ -219,24 +219,6 @@ export function FinalResult({
                     <div className="flex justify-between">
                       <p className="body-3">Track - {f.track}</p>
                       <div className="flex">
-                        {/* <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        move(index, Math.max(index - 1, 0));
-                      }}
-                    >
-                      <ArrowUpIcon className="mr-1 text-grey-500" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        move(index, Math.min(index + 1, fields.length - 1));
-                      }}
-                    >
-                      <ArrowDownIcon className="mr-1 text-grey-500" />
-                    </button> */}
                         <div className="flex items-center">
                           <p
                             className="text-xs leading-4 text-[#64748B]"
