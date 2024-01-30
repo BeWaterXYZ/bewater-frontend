@@ -8,6 +8,7 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   inputClassName?: string;
   errorClassName?: string;
   preserveSpaceForErrorMessage?: boolean;
+  labelClassName?: string;
 }
 
 export const Input = React.forwardRef(function Input_(
@@ -22,6 +23,7 @@ export const Input = React.forwardRef(function Input_(
     required,
     inputClassName,
     errorClassName,
+    labelClassName,
     preserveSpaceForErrorMessage = true,
     ...restProps
   } = props;
@@ -30,7 +32,7 @@ export const Input = React.forwardRef(function Input_(
     <div className={clsx("block", className)}>
       {label ? (
         <label
-          className="block body-4 py-1 text-grey-500 font-bold"
+          className={`block body-4 py-1 text-grey-500 font-bold ${labelClassName}`}
           htmlFor={id}
         >
           {label}

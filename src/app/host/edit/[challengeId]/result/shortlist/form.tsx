@@ -1,10 +1,6 @@
 "use client";
-import { DatePicker } from "@/components/form/datepicker";
-import { validationSchema } from "@/schema";
 import { Challenge, Project, Shortlist } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as RadioGroup from "@radix-ui/react-radio-group";
-import clsx from "clsx";
 import { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
@@ -19,10 +15,11 @@ import { SearchInput } from "@/components/molecules/search-input";
 import { useMutationUpdateShortlist } from "@/services/challenge.query";
 import { Switch } from "@/components/form/switch";
 import { Input } from "@/components/form/control";
-import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 import DotIcon from "../dot-icon";
 import { ReactSortable } from "react-sortablejs";
+import { set } from "lodash";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
@@ -55,6 +52,7 @@ export function Shortlist({
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -125,16 +123,13 @@ export function Shortlist({
                     <DotIcon />
                   </div>
                   <div className="pl-[36px] pt-[4px]">
-                    <div className="flex justify-between">
-                      <p className="body-3">Track - {f.name}</p>
+                    <div className="flex justify-between mb-2">
+                      <p className="body-3">
+                        Track - {watch(`shortlist.${index}.name`)}
+                      </p>
                       <div className="flex">
                         <div className="flex items-center">
-                          <p
-                            className="text-xs leading-4 text-[#64748B]"
-                            style={{
-                              fontFamily: "var(--font-secondary)",
-                            }}
-                          >
+                          <p className="text-xs leading-4 text-[#64748B] font-secondary mr-2">
                             Enable
                           </p>
                           <Switch
@@ -151,6 +146,9 @@ export function Shortlist({
                     <Input
                       label="Display Name"
                       {...register(`shortlist.${index}.name`)}
+                      onChange={(e) => {
+                        setValue(`shortlist.${index}.name`, e.target.value);
+                      }}
                       error={errors?.["shortlist"]?.[index]?.["name"]}
                     />
 
@@ -166,76 +164,14 @@ export function Shortlist({
               );
             })}
           </ReactSortable>
-
-          <button
-            className="btn btn-secondary"
+          {/* <button
+            className="btn btn-secondary mr-4"
             aria-label="Customise options"
             type="button"
             onClick={onAddTrack}
           >
             + Add track
-          </button>
-
-          <p className="body-2 mt-8">Announcement</p>
-          <p className="body-3 text-grey-600 mb-4">
-            The results will be publicly displayed at the campaign page, and a
-            notification email will be posted to the team members in the
-            results.{" "}
-          </p>
-
-          <RadioGroup.Root
-            className="flex flex-col gap-2"
-            defaultValue={announceNow ? "0" : "1"}
-            value={announceNow ? "0" : "1"}
-            onValueChange={(v) => {
-              announceNowSet(v === "0");
-            }}
-          >
-            <div
-              className={clsx(
-                "flex-1 flex gap-3 items-center rounded-sm  p-2 text-grey-300"
-              )}
-            >
-              <RadioGroup.Item
-                className="bg-white h-5 min-w-[20px] w-5 rounded-full "
-                value={"0"}
-                id={"ann-item-0"}
-              >
-                <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
-              </RadioGroup.Item>
-              <label className="text-[14px]" htmlFor={"ann-item-0"}>
-                Announce immediately
-              </label>
-            </div>
-
-            <div
-              className={clsx(
-                "flex-1 flex gap-3 items-center rounded-sm  p-2 text-grey-300"
-              )}
-            >
-              <RadioGroup.Item
-                className="bg-white h-5 min-w-[20px] w-5 rounded-full"
-                value={"1"}
-                id={"ann-item-1"}
-              >
-                <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
-              </RadioGroup.Item>
-              <label className="text-[14px]" htmlFor={"ann-item-1"}>
-                Schedule announcement time
-              </label>
-            </div>
-          </RadioGroup.Root>
-
-          {!announceNow && (
-            <DatePicker
-              label="Announce Date"
-              control={control}
-              onValueChange={(v) => setValue("announceShortlist", v)}
-              {...register("announceShortlist")}
-              error={errors["announceShortlist"]}
-            />
-          )}
-
+          </button> */}
           <button className="btn btn-primary my-8">Save</button>
         </form>
       </div>
@@ -321,13 +257,13 @@ function Projects({
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search project name"
             />
-            <div className="max-h-[400px] overflow-y-scroll">
+            <div className="max-h-[400px] overflow-y-scroll mt-2">
               {projects_.map((proj) => {
                 let selected = fields.some((f) => f.projectId === proj.id);
                 return (
                   <div
                     key={proj.id}
-                    className="body-3 py-2 flex justify-between items-center"
+                    className="body-3 p-2 flex justify-between items-center hover:bg-[#FFF1] rounded select-none cursor-pointer"
                     onClick={!selected ? addProject(proj.id) : () => {}}
                   >
                     <div className="max-w-[320px]">{proj.name} </div>
