@@ -1,10 +1,7 @@
 "use client";
-import { DatePicker } from "@/components/form/datepicker";
 import { validationSchema } from "@/schema";
 import { Challenge, Project, Shortlist } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as RadioGroup from "@radix-ui/react-radio-group";
-import clsx from "clsx";
 import { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
@@ -26,6 +23,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 import DotIcon from "../dot-icon";
 import { ReactSortable } from "react-sortablejs";
+import Announcement from "../announcement";
 
 const schema = z.object({
   announceResult: z.string().optional(),
@@ -264,6 +262,20 @@ export function FinalResult({
           </button>
           <button className="btn btn-primary my-8">Save</button>
         </form>
+        <Announcement
+          date={challenge.future.announceResult}
+          milestone={[...challenge.milestones].pop()?.dueDate}
+          onDateChange={async (date: string | null) => {
+            try {
+              await mutation2.mutateAsync({
+                announceResult: date,
+              });
+              addToast({ title: "Updated", type: "success" });
+            } catch (err) {
+              addToast({ title: `${err}` });
+            }
+          }}
+        />
       </div>
     </div>
   );

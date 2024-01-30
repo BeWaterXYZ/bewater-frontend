@@ -19,7 +19,7 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 import DotIcon from "../dot-icon";
 import { ReactSortable } from "react-sortablejs";
-import { set } from "lodash";
+import Announcement from "../announcement";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
@@ -77,9 +77,9 @@ export function Shortlist({
   const onSubmit = async (formData: Inputs) => {
     try {
       await mutation.mutateAsync({
-        announceShortlist: announceNow
-          ? null
-          : formData.announceShortlist ?? null,
+        // announceShortlist: announceNow
+        //   ? null
+        //   : formData.announceShortlist ?? null,
         shortlist: formData.shortlist.map((sl) => ({
           ...sl,
           projectIdArr: sl.projectIdArr.map((p) => p.projectId),
@@ -174,6 +174,20 @@ export function Shortlist({
           </button> */}
           <button className="btn btn-primary my-8">Save</button>
         </form>
+        <Announcement
+          date={challenge.future.announceShortlist}
+          milestone={[...challenge.milestones].pop()?.dueDate}
+          onDateChange={async (date: string | null) => {
+            try {
+              await mutation.mutateAsync({
+                announceShortlist: date,
+              });
+              addToast({ title: "Updated", type: "success" });
+            } catch (err) {
+              addToast({ title: `${err}` });
+            }
+          }}
+        />
       </div>
     </div>
   );
