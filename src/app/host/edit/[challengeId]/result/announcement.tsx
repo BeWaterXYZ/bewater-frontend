@@ -2,12 +2,17 @@ import * as RadioGroup from "@radix-ui/react-radio-group";
 import { SwitchRaw } from "@/components/form/switch";
 import ReactDatePicker from "react-datepicker";
 import { CalendarIcon } from "@radix-ui/react-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import "@/components/form/datepicker.css";
 import { format } from "date-fns";
 import clsx from "clsx";
+import useRole from "@/hooks/useRole";
 
+const button =
+  "w-fit rounded-[2px] py-2 px-4 text-sm leading-5 cursor-pointer select-none";
+const buttonNormal = "bg-[#2F3153] text-white";
+const buttonPrimary = "bg-[#00FFFF] text-[#003333]";
 const radio = "bg-white w-5 h-5 rounded-full";
 const radioChecked =
   "flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white";
@@ -18,6 +23,7 @@ export default function Announcement(props: {
   milestone?: string;
   onDateChange?: (date: string | null) => void | Promise<void>;
 }) {
+  const { roleId } = useRole();
   const [scheduled, setScheduled] = useState(
     !(props.date === null || props.date === "1970-01-01T00:00:00.000Z")
   );
@@ -27,6 +33,48 @@ export default function Announcement(props: {
   );
   const [mode, setMode] = useState<"custom" | "milestone">(
     props.date === "1971-01-01T00:00:00.000Z" ? "milestone" : "custom"
+  );
+  const [confirmDialog, setConfirmDialog] = useState(false);
+  useEffect(() => {
+    if (!roleId) return;
+    if (!scheduled && !disabled)
+      props.onDateChange?.("1970-01-01T00:00:00.000Z");
+    else if (!scheduled && disabled) props.onDateChange?.(null);
+    else if (mode === "milestone")
+      props.onDateChange?.("1971-01-01T00:00:00.000Z");
+    else if (mode === "custom" && selectedDate !== null)
+      props.onDateChange?.(selectedDate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scheduled, selectedDate, mode, disabled]);
+  const confirmDialogContent = (
+    <div className="fixed top-0 left-0 w-[100vw] h-[100vh] flex justify-center items-center bg-[#04051BB2] backdrop-blur-sm">
+      <div className="bg-[#141527] rounded shadow-[0_16px_24px_0_#00000026] p-6">
+        <p className="font-bold text-gray-200 mb-6">Announce now</p>
+        <p className="text-sm text-gray-500 mb-6">
+          Are you sure to announce the result?
+          <br />
+          This action cannot be undone.
+        </p>
+        <div className="flex justify-end">
+          <div
+            className={`${button} ${buttonNormal} mr-[10px]`}
+            onClick={() => setConfirmDialog(false)}
+          >
+            Cancel
+          </div>
+          <div
+            className={`${button} ${buttonPrimary}`}
+            onClick={() => {
+              props.onDateChange?.(null);
+              setDisabled(true);
+              setConfirmDialog(false);
+            }}
+          >
+            Confirm
+          </div>
+        </div>
+      </div>
+    </div>
   );
   return (
     <div className="font-secondary min-h-[240px]">
@@ -53,7 +101,10 @@ export default function Announcement(props: {
           />
         </div>
         {!scheduled ? (
-          <div className="w-fit rounded-[2px] py-2 px-4 bg-[#00FFFF] text-sm leading-5 text-[#003333] cursor-pointer select-none">
+          <div
+            className={`${button} ${buttonPrimary}`}
+            onClick={() => setConfirmDialog(true)}
+          >
             Announce now
           </div>
         ) : (
@@ -118,6 +169,7 @@ export default function Announcement(props: {
           </>
         )}
       </div>
+      {confirmDialog && confirmDialogContent}
     </div>
   );
 }
