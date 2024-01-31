@@ -1,7 +1,7 @@
 "use client";
 import { Challenge, Project, Shortlist } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   Control,
@@ -13,13 +13,14 @@ import {
 import { z } from "zod";
 import { SearchInput } from "@/components/molecules/search-input";
 import { useMutationUpdateShortlist } from "@/services/challenge.query";
-import { Switch } from "@/components/form/switch";
+import { Switch, SwitchRaw } from "@/components/form/switch";
 import { Input } from "@/components/form/control";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 import DotIcon from "../dot-icon";
 import { ReactSortable } from "react-sortablejs";
 import Announcement from "../announcement";
+import clsx from "clsx";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
@@ -45,13 +46,16 @@ export function Shortlist({
   shortlist: Shortlist[];
 }) {
   const addToast = useToastStore((s) => s.add);
-
+  const [classify, setClassify] = useState(
+    shortlist.length !== 1 && shortlist[0].name !== ""
+  );
   let {
     control,
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
     watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
@@ -74,6 +78,31 @@ export function Shortlist({
   let [announceNow, announceNowSet] = useState(
     !challenge.future.announceShortlist
   );
+  useEffect(() => {
+    const addTrack = (name: string) => {
+      append({
+        name,
+        projectIdArr: [],
+        display: true,
+      });
+    };
+    if (classify) {
+      const trackNames = challenge.track ?? [];
+      setValue(
+        "shortlist",
+        getValues().shortlist.filter((sl) => trackNames.includes(sl.name))
+      );
+      const shortlistNames = shortlist.map((sl) => sl.name);
+      challenge.track
+        ?.filter((t) => shortlistNames.includes(t))
+        .forEach((t) => addTrack(t));
+    } else {
+      setValue("shortlist", []);
+      addTrack("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classify]);
+  console.log(getValues());
   const onSubmit = async (formData: Inputs) => {
     try {
       await mutation.mutateAsync({
@@ -95,39 +124,45 @@ export function Shortlist({
     name: "shortlist",
   });
 
-  const onAddTrack = () => {
-    append({
-      name: "",
-      projectIdArr: [],
-      display: true,
-    });
-  };
   return (
     <div>
       <div className="my-8 font-secondary">
         <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
-          <p className="body-2">Shortlisted projects</p>
+          <p className="body-2 mb-6">Shortlisted projects</p>
+          <div className="text-sm text-[#CBD5E1] leading-5 mb-6">
+            <SwitchRaw
+              label="Classify Shortlist by Track"
+              onCheckedChange={(v) => setClassify(v)}
+              checked={classify}
+            />
+          </div>
           <ReactSortable
             list={fields}
             setList={() => {}}
             animation={150}
+            disabled={!classify}
             onEnd={(e) => move(e.oldDraggableIndex!, e.newDraggableIndex!)}
           >
             {fields.map((f, index) => {
               return (
                 <div
                   key={f.id}
-                  className="bg-[#0B0C24] border border-[#323232] p-4 pl-2 my-4"
+                  className="bg-[#0B0C24] border border-[#323232] p-4 pl-2 mb-4"
                 >
-                  <div className="absolute dot-icon">
+                  <div
+                    className={clsx("absolute dot-icon", {
+                      invisible: !classify,
+                    })}
+                  >
                     <DotIcon />
                   </div>
                   <div className="pl-[36px] pt-[4px]">
                     <div className="flex justify-between mb-2">
                       <p className="body-3">
-                        Track - {watch(`shortlist.${index}.name`)}
+                        Track -{" "}
+                        {watch(`shortlist.${index}.name`) || "Shortlist"}
                       </p>
-                      <div className="flex">
+                      <div className={clsx("flex", { invisible: !classify })}>
                         <div className="flex items-center">
                           <p className="text-xs leading-4 text-[#64748B] font-secondary mr-2">
                             Enable
@@ -143,14 +178,16 @@ export function Shortlist({
                         </div>
                       </div>
                     </div>
-                    <Input
-                      label="Display Name"
-                      {...register(`shortlist.${index}.name`)}
-                      onChange={(e) => {
-                        setValue(`shortlist.${index}.name`, e.target.value);
-                      }}
-                      error={errors?.["shortlist"]?.[index]?.["name"]}
-                    />
+                    <div className={clsx({ hidden: !classify })}>
+                      <Input
+                        label="Display Name"
+                        {...register(`shortlist.${index}.name`)}
+                        onChange={(e) => {
+                          setValue(`shortlist.${index}.name`, e.target.value);
+                        }}
+                        error={errors?.["shortlist"]?.[index]?.["name"]}
+                      />
+                    </div>
 
                     <Projects
                       index={index}

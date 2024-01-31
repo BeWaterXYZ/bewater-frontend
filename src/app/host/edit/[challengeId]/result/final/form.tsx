@@ -165,7 +165,7 @@ export function FinalResult({
 
   const onAddTrack = () => {
     append({
-      track: "",
+      track: "New track",
       awards: [
         {
           awardName: "Winner",
