@@ -36,14 +36,14 @@ export default function Announcement(props: {
   );
   const [confirmDialog, setConfirmDialog] = useState(false);
   useEffect(() => {
+    let payload;
     if (!roleId) return;
-    if (!scheduled && !disabled)
-      props.onDateChange?.("1970-01-01T00:00:00.000Z");
-    else if (!scheduled && disabled) props.onDateChange?.(null);
-    else if (mode === "milestone")
-      props.onDateChange?.("1971-01-01T00:00:00.000Z");
-    else if (mode === "custom" && selectedDate !== null)
-      props.onDateChange?.(selectedDate);
+    if (!scheduled && !disabled) payload = "1970-01-01T00:00:00.000Z";
+    else if (!scheduled && disabled) payload = null;
+    else if (mode === "milestone") payload = "1971-01-01T00:00:00.000Z";
+    else if (mode === "custom" && selectedDate !== null) payload = selectedDate;
+    if (payload === props.date) return;
+    props.onDateChange?.(payload ?? "1970-01-01T00:00:00.000Z");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduled, selectedDate, mode, disabled]);
   const confirmDialogContent = (
