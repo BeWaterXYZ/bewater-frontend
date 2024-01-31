@@ -1,7 +1,7 @@
 "use client";
 
 import "./style.css";
-import { ChallengeTrackResult, TrackAward } from "@/services/types";
+import { Challenge, ChallengeTrackResult, TrackAward } from "@/services/types";
 import { ResultCard } from "./result-card";
 import { useFetchChallengeTeams } from "@/services/team.query";
 import { useFetchChallengeById } from "@/services/challenge.query";
@@ -11,19 +11,52 @@ import { formatMoneyWithCurreny } from "@/utils/numeral";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { useState } from "react";
+
+export function isResultShow(challenge: Challenge | undefined): boolean {
+  if (!challenge) return false;
+  const {
+    future: { announceResult },
+    milestones,
+  } = challenge;
+  const milestoneTime = [...milestones].pop()?.dueDate!;
+  if (announceResult === "1970-01-01T00:00:00.000Z") return false;
+  else if (announceResult === "1971-01-01T00:00:00.000Z") {
+    return Date.now() > new Date(milestoneTime).getTime();
+  } else if (announceResult) {
+    return Date.now() > new Date(announceResult).getTime();
+  } else return true;
+}
+
+export function isShortlistShow(challenge: Challenge | undefined): boolean {
+  if (!challenge) return false;
+  const {
+    future: { announceShortlist },
+    milestones,
+  } = challenge;
+  const milestoneTime = [...milestones].pop()?.dueDate!;
+  if (announceShortlist === "1970-01-01T00:00:00.000Z") return false;
+  else if (announceShortlist === "1971-01-01T00:00:00.000Z") {
+    return Date.now() > new Date(milestoneTime).getTime();
+  } else if (announceShortlist) {
+    return Date.now() > new Date(announceShortlist).getTime();
+  } else return false;
+}
 
 export default function Page({ params }: any) {
   let { challengeId } = params || {};
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
+  const [showResult] = useState(isResultShow(challenge));
+  const [showShortlist] = useState(isShortlistShow(challenge));
   const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);
   if (isLoading || isLoadingTeam) {
     return <Loading />;
   }
 
-  if (challenge?.result) {
+  if (showResult) {
     return <Result params={params} challenge={challenge} teams={teams} />;
-  } else if (challenge?.shortlist) redirect("result/shortlist");
+  } else if (showShortlist) redirect("result/shortlist");
   else redirect(".");
 }
 

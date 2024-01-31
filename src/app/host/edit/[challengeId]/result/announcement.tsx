@@ -43,7 +43,9 @@ export default function Announcement(props: {
     else if (mode === "milestone") payload = "1971-01-01T00:00:00.000Z";
     else if (mode === "custom" && selectedDate !== null) payload = selectedDate;
     if (payload === props.date) return;
-    props.onDateChange?.(payload ?? "1970-01-01T00:00:00.000Z");
+    props.onDateChange?.(
+      payload === undefined ? "1970-01-01T00:00:00.000Z" : payload
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduled, selectedDate, mode, disabled]);
   const confirmDialogContent = (

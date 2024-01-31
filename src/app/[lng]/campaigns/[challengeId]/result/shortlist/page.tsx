@@ -7,24 +7,18 @@ import Card from "./card";
 import { useFetchChallengeTeams } from "@/services/team.query";
 import _ from "lodash";
 import Link from "next/link";
+import { useState } from "react";
+import { isResultShow } from "../page";
 
 export default function Page({ params }: any) {
   let { challengeId } = params || {};
   const { data: challenge } = useFetchChallengeById(challengeId);
   const { data: teams } = useFetchChallengeTeams(challengeId);
   const { data } = useFetchChallengeShortlist(challenge?.id ?? "");
-  const hasShortlist = _.sum(
-    data?.map((shortlist) => shortlist.projects?.length) ?? []
+  const [showResult] = useState(isResultShow(challenge));
+  const [shortlisted] = useState(
+    _.sum(data?.map((shortlist) => shortlist.projects?.length) ?? [])
   );
-  const hasResult = !!challenge?.result;
-  const announceShortlist = challenge?.future.announceShortlist
-    ? Date.now() > new Date(challenge.future.announceShortlist).valueOf()
-    : false;
-  const announceResult = challenge?.future.announceResult
-    ? Date.now() > new Date(challenge.future.announceResult).valueOf()
-    : false;
-  const showResult = hasResult && announceResult;
-  const showShortlist = hasShortlist && announceShortlist;
   return (
     <div className="container-xl mt-[40px] text-center flex flex-col items-center">
       <div>
@@ -72,8 +66,7 @@ export default function Page({ params }: any) {
             </g>
           </svg>
           <div className="text-base text-[#FFF] mr-6">
-            {hasShortlist} teams were shortlisted and entered the final
-            selection
+            {shortlisted} teams were shortlisted and entered the final selection
           </div>
         </div>
         <div
