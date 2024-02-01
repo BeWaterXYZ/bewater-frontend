@@ -149,7 +149,7 @@ export async function getChallengeShortlist(challengeId: ChallengeID) {
   return data;
 }
 export type UpdateShortlistForm = {
-  shortlist: Shortlist[];
+  shortlist?: Shortlist[];
   announceShortlist?: null | string;
   announceResult?: null | string;
 };

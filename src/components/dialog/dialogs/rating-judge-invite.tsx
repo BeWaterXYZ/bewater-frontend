@@ -70,7 +70,7 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
   };
 
   return (
-    <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
+    <div className="flex flex-col justify-center w-[80vw] max-w-md">
       <p className="heading-6">Judges</p>
       <p className="body-3 text-grey-500">
         Judges can rate the project on the project introduction page.
@@ -82,7 +82,7 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
         className="mt-4 flex items-center"
       >
         <div className="h-full">
-          <button className="h-full btn btn-secondary-invert rounded border-r-0">
+          <button className="h-full btn btn-secondary-invert pointer-events-none select-none rounded border-r-0 rounded-r-none">
             Add Judges
           </button>
         </div>
@@ -94,6 +94,8 @@ function RatingJudgeInviteDialog({ challenge }: { challenge: Challenge }) {
             {...register("user")}
             disableError
             placeholder="Select or Search username"
+            handleSelect={(id) => void onSubmit({ user: id })}
+            controlClassName="!rounded-l-none !border-[#2F3153]"
           />
         </div>
       </form>

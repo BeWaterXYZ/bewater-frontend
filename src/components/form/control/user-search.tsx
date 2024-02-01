@@ -65,6 +65,9 @@ interface UserSearchProps extends React.ComponentPropsWithoutRef<"select"> {
   control: any;
   disableError?: boolean;
   placeholder?: string;
+  singleValue?: (props: SingleValueProps) => React.ReactElement | null;
+  handleSelect?: (id: string) => void;
+  controlClassName?: string;
 }
 
 export const UserSearch = React.forwardRef(function UserSearch_(
@@ -78,19 +81,25 @@ export const UserSearch = React.forwardRef(function UserSearch_(
     className,
     required,
     control,
-
+    handleSelect,
     value,
     disableError,
+    singleValue,
+    controlClassName,
     placeholder = "username, email or wallet address",
     exclude = [],
   } = props;
   const id = useId();
   const styles: ClassNamesConfig<UserProfile> = {
     control: ({ isFocused }) => {
-      return clsx("control !p-0 !flex !shadow-none", {
-        error: error,
-        "!border-day hover:!border-day": isFocused,
-      });
+      return clsx(
+        "control !p-0 !flex !shadow-none",
+        {
+          error: error,
+          "!border-day hover:!border-day": isFocused,
+        },
+        controlClassName
+      );
     },
     clearIndicator: () => "!hidden",
     indicatorSeparator: () => "!hidden",
@@ -116,7 +125,6 @@ export const UserSearch = React.forwardRef(function UserSearch_(
         control={control}
         render={({ field }) => {
           let value = cacheOptions.find((op) => op.id === field.value);
-
           return (
             <AsyncSelect
               id={id}
@@ -129,17 +137,14 @@ export const UserSearch = React.forwardRef(function UserSearch_(
               value={value}
               isClearable
               onChange={(val) => {
-                val && field.onChange((val as SingleValue<UserProfile>)?.id);
-              }}
-              onFocus={() => {
-                field.onChange("");
+                val && handleSelect?.((val as SingleValue<UserProfile>)?.id!);
               }}
               loadOptions={searchUserByKeyword(exclude)}
               // defaultOptions
               cacheOptions
               components={{
                 Option: OptionComp,
-                SingleValue: SingleValueComp,
+                SingleValue: () => null,
                 DropdownIndicator: () => null,
               }}
             />

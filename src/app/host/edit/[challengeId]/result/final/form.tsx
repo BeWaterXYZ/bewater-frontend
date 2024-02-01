@@ -1,10 +1,7 @@
 "use client";
-import { DatePicker } from "@/components/form/datepicker";
 import { validationSchema } from "@/schema";
 import { Challenge, Project, Shortlist } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as RadioGroup from "@radix-ui/react-radio-group";
-import clsx from "clsx";
 import { useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
@@ -22,10 +19,11 @@ import {
 } from "@/services/challenge.query";
 import { Switch } from "@/components/form/switch";
 import { Input } from "@/components/form/control";
-import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 import DotIcon from "../dot-icon";
 import { ReactSortable } from "react-sortablejs";
+import Announcement from "../announcement";
 
 const schema = z.object({
   announceResult: z.string().optional(),
@@ -64,6 +62,7 @@ export function FinalResult({
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -166,7 +165,7 @@ export function FinalResult({
 
   const onAddTrack = () => {
     append({
-      track: "",
+      track: "New track",
       awards: [
         {
           awardName: "Winner",
@@ -216,23 +215,21 @@ export function FinalResult({
                     <DotIcon />
                   </div>
                   <div className="pl-[36px] pt-[4px]">
-                    <div className="flex justify-between">
-                      <p className="body-3">Track - {f.track}</p>
+                    <div className="flex justify-between mb-2">
+                      <p className="body-3">
+                        Track - {watch(`result.${index}.track`)}
+                      </p>
                       <div className="flex">
                         <div className="flex items-center">
-                          <p
-                            className="text-xs leading-4 text-[#64748B]"
-                            style={{
-                              fontFamily: "var(--font-secondary)",
-                            }}
-                          >
+                          <p className="text-xs leading-4 text-[#64748B] font-secondary mr-2">
                             Enable
                           </p>
                           <Switch
                             control={control}
-                            name={`shortlist.${index}.display`}
+                            name={`result.${index}.display`}
                             onValueChange={(v) => {
-                              // setValue(`shortlist.${index}.display`, v);
+                              // TODO: result 赛道需要 display 字段
+                              // setValue(`result.${index}.display`, v);
                             }}
                           />
                         </div>
@@ -243,7 +240,6 @@ export function FinalResult({
                       {...register(`result.${index}.track`)}
                       error={errors?.["result"]?.[index]?.["track"]}
                     />
-
                     <Awards
                       index={index}
                       control={control}
@@ -256,77 +252,30 @@ export function FinalResult({
               );
             })}
           </ReactSortable>
-
           <button
-            className="btn btn-secondary"
+            className="btn btn-secondary mr-4"
             aria-label="Customise options"
             type="button"
             onClick={onAddTrack}
           >
             + Add track
           </button>
-
-          <p className="body-2 mt-8">Announcement</p>
-          <p className="body-3 text-grey-600 mb-4">
-            The final results will be publicly displayed on the event page and a
-            notification email will be sent to the project team members.
-          </p>
-
-          <RadioGroup.Root
-            className="flex flex-col gap-2"
-            defaultValue={announceNow ? "0" : "1"}
-            value={announceNow ? "0" : "1"}
-            onValueChange={(v) => {
-              announceNowSet(v === "0");
-            }}
-          >
-            <div
-              className={clsx(
-                "flex-1 flex gap-3 items-center rounded-sm  p-2 text-grey-300"
-              )}
-            >
-              <RadioGroup.Item
-                className="bg-white h-5 min-w-[20px] w-5 rounded-full "
-                value={"0"}
-                id={"ann-item-0"}
-              >
-                <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
-              </RadioGroup.Item>
-              <label className="text-[14px]" htmlFor={"ann-item-0"}>
-                Announce immediately
-              </label>
-            </div>
-
-            <div
-              className={clsx(
-                "flex-1 flex gap-3 items-center rounded-sm  p-2 text-grey-300"
-              )}
-            >
-              <RadioGroup.Item
-                className="bg-white h-5 min-w-[20px] w-5 rounded-full"
-                value={"1"}
-                id={"ann-item-1"}
-              >
-                <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
-              </RadioGroup.Item>
-              <label className="text-[14px]" htmlFor={"ann-item-1"}>
-                Schedule announcement time
-              </label>
-            </div>
-          </RadioGroup.Root>
-
-          {!announceNow && (
-            <DatePicker
-              label="Announce Date"
-              control={control}
-              onValueChange={(v) => setValue("announceResult", v)}
-              {...register("announceResult")}
-              error={errors["announceResult"]}
-            />
-          )}
-
           <button className="btn btn-primary my-8">Save</button>
         </form>
+        <Announcement
+          date={challenge.future.announceResult}
+          milestone={[...challenge.milestones].pop()?.dueDate}
+          onDateChange={async (date: string | null) => {
+            try {
+              await mutation2.mutateAsync({
+                announceResult: date,
+              });
+              addToast({ title: "Updated", type: "success" });
+            } catch (err) {
+              addToast({ title: `${err}` });
+            }
+          }}
+        />
       </div>
     </div>
   );
@@ -403,7 +352,7 @@ function Awards({
                 />
               </div>
               <div className="">
-                <button className="text-grey-300" onClick={removeAward(i)}>
+                <button className="text-grey-300 pr-4" onClick={removeAward(i)}>
                   Remove
                 </button>
               </div>
@@ -511,13 +460,13 @@ function Projects({
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search project name"
             />
-            <div className="max-h-[400px] overflow-y-scroll">
+            <div className="max-h-[400px] overflow-y-scroll mt-2">
               {projects_.map((proj) => {
                 let selected = fields.some((f) => f.teamId === proj.teamId);
                 return (
                   <div
                     key={proj.id}
-                    className="body-3 py-2 flex justify-between items-center"
+                    className="body-3 p-2 flex justify-between items-center hover:bg-[#FFF1] rounded select-none cursor-pointer"
                     onClick={!selected ? addProject(proj.id) : () => {}}
                   >
                     <div className="max-w-[320px]">{proj.name} </div>

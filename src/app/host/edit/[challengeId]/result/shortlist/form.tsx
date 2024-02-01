@@ -1,11 +1,7 @@
 "use client";
-import { DatePicker } from "@/components/form/datepicker";
-import { validationSchema } from "@/schema";
 import { Challenge, Project, Shortlist } from "@/services/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as RadioGroup from "@radix-ui/react-radio-group";
-import clsx from "clsx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import {
   Control,
@@ -17,12 +13,14 @@ import {
 import { z } from "zod";
 import { SearchInput } from "@/components/molecules/search-input";
 import { useMutationUpdateShortlist } from "@/services/challenge.query";
-import { Switch } from "@/components/form/switch";
+import { Switch, SwitchRaw } from "@/components/form/switch";
 import { Input } from "@/components/form/control";
-import { ArrowDownIcon, ArrowUpIcon, CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon } from "@radix-ui/react-icons";
 import { useToastStore } from "@/components/toast/store";
 import DotIcon from "../dot-icon";
 import { ReactSortable } from "react-sortablejs";
+import Announcement from "../announcement";
+import clsx from "clsx";
 
 const schema = z.object({
   announceShortlist: z.string().optional(),
@@ -48,13 +46,17 @@ export function Shortlist({
   shortlist: Shortlist[];
 }) {
   const addToast = useToastStore((s) => s.add);
-
+  const [classify, setClassify] = useState(
+    shortlist.length !== 1 && shortlist[0].name !== ""
+  );
   let {
     control,
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -76,12 +78,37 @@ export function Shortlist({
   let [announceNow, announceNowSet] = useState(
     !challenge.future.announceShortlist
   );
+  useEffect(() => {
+    const addTrack = (name: string) => {
+      append({
+        name,
+        projectIdArr: [],
+        display: true,
+      });
+    };
+    if (classify) {
+      const trackNames = challenge.track ?? [];
+      setValue(
+        "shortlist",
+        getValues().shortlist.filter((sl) => trackNames.includes(sl.name))
+      );
+      const shortlistNames = shortlist.map((sl) => sl.name);
+      challenge.track
+        ?.filter((t) => shortlistNames.includes(t))
+        .forEach((t) => addTrack(t));
+    } else {
+      setValue("shortlist", []);
+      addTrack("");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classify]);
+  console.log(getValues());
   const onSubmit = async (formData: Inputs) => {
     try {
       await mutation.mutateAsync({
-        announceShortlist: announceNow
-          ? null
-          : formData.announceShortlist ?? null,
+        // announceShortlist: announceNow
+        //   ? null
+        //   : formData.announceShortlist ?? null,
         shortlist: formData.shortlist.map((sl) => ({
           ...sl,
           projectIdArr: sl.projectIdArr.map((p) => p.projectId),
@@ -97,44 +124,47 @@ export function Shortlist({
     name: "shortlist",
   });
 
-  const onAddTrack = () => {
-    append({
-      name: "",
-      projectIdArr: [],
-      display: true,
-    });
-  };
   return (
     <div>
       <div className="my-8 font-secondary">
         <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
-          <p className="body-2">Shortlisted projects</p>
+          <p className="body-2 mb-6">Shortlisted projects</p>
+          <div className="text-sm text-[#CBD5E1] leading-5 mb-6">
+            <SwitchRaw
+              label="Classify Shortlist by Track"
+              onCheckedChange={(v) => setClassify(v)}
+              checked={classify}
+            />
+          </div>
           <ReactSortable
             list={fields}
             setList={() => {}}
             animation={150}
+            disabled={!classify}
             onEnd={(e) => move(e.oldDraggableIndex!, e.newDraggableIndex!)}
           >
             {fields.map((f, index) => {
               return (
                 <div
                   key={f.id}
-                  className="bg-[#0B0C24] border border-[#323232] p-4 pl-2 my-4"
+                  className="bg-[#0B0C24] border border-[#323232] p-4 pl-2 mb-4"
                 >
-                  <div className="absolute dot-icon">
+                  <div
+                    className={clsx("absolute dot-icon", {
+                      invisible: !classify,
+                    })}
+                  >
                     <DotIcon />
                   </div>
                   <div className="pl-[36px] pt-[4px]">
-                    <div className="flex justify-between">
-                      <p className="body-3">Track - {f.name}</p>
-                      <div className="flex">
+                    <div className="flex justify-between mb-2">
+                      <p className="body-3">
+                        Track -{" "}
+                        {watch(`shortlist.${index}.name`) || "Shortlist"}
+                      </p>
+                      <div className={clsx("flex", { invisible: !classify })}>
                         <div className="flex items-center">
-                          <p
-                            className="text-xs leading-4 text-[#64748B]"
-                            style={{
-                              fontFamily: "var(--font-secondary)",
-                            }}
-                          >
+                          <p className="text-xs leading-4 text-[#64748B] font-secondary mr-2">
                             Enable
                           </p>
                           <Switch
@@ -148,11 +178,16 @@ export function Shortlist({
                         </div>
                       </div>
                     </div>
-                    <Input
-                      label="Display Name"
-                      {...register(`shortlist.${index}.name`)}
-                      error={errors?.["shortlist"]?.[index]?.["name"]}
-                    />
+                    <div className={clsx({ hidden: !classify })}>
+                      <Input
+                        label="Display Name"
+                        {...register(`shortlist.${index}.name`)}
+                        onChange={(e) => {
+                          setValue(`shortlist.${index}.name`, e.target.value);
+                        }}
+                        error={errors?.["shortlist"]?.[index]?.["name"]}
+                      />
+                    </div>
 
                     <Projects
                       index={index}
@@ -166,78 +201,30 @@ export function Shortlist({
               );
             })}
           </ReactSortable>
-
-          <button
-            className="btn btn-secondary"
+          {/* <button
+            className="btn btn-secondary mr-4"
             aria-label="Customise options"
             type="button"
             onClick={onAddTrack}
           >
             + Add track
-          </button>
-
-          <p className="body-2 mt-8">Announcement</p>
-          <p className="body-3 text-grey-600 mb-4">
-            The results will be publicly displayed at the campaign page, and a
-            notification email will be posted to the team members in the
-            results.{" "}
-          </p>
-
-          <RadioGroup.Root
-            className="flex flex-col gap-2"
-            defaultValue={announceNow ? "0" : "1"}
-            value={announceNow ? "0" : "1"}
-            onValueChange={(v) => {
-              announceNowSet(v === "0");
-            }}
-          >
-            <div
-              className={clsx(
-                "flex-1 flex gap-3 items-center rounded-sm  p-2 text-grey-300"
-              )}
-            >
-              <RadioGroup.Item
-                className="bg-white h-5 min-w-[20px] w-5 rounded-full "
-                value={"0"}
-                id={"ann-item-0"}
-              >
-                <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
-              </RadioGroup.Item>
-              <label className="text-[14px]" htmlFor={"ann-item-0"}>
-                Announce immediately
-              </label>
-            </div>
-
-            <div
-              className={clsx(
-                "flex-1 flex gap-3 items-center rounded-sm  p-2 text-grey-300"
-              )}
-            >
-              <RadioGroup.Item
-                className="bg-white h-5 min-w-[20px] w-5 rounded-full"
-                value={"1"}
-                id={"ann-item-1"}
-              >
-                <RadioGroup.Indicator className=" flex items-center justify-center relative w-full h-full rounded-full bg-day after:content-[''] after:block after:w-[8px] after:h-[8px] after:rounded-full after:bg-white" />
-              </RadioGroup.Item>
-              <label className="text-[14px]" htmlFor={"ann-item-1"}>
-                Schedule announcement time
-              </label>
-            </div>
-          </RadioGroup.Root>
-
-          {!announceNow && (
-            <DatePicker
-              label="Announce Date"
-              control={control}
-              onValueChange={(v) => setValue("announceShortlist", v)}
-              {...register("announceShortlist")}
-              error={errors["announceShortlist"]}
-            />
-          )}
-
+          </button> */}
           <button className="btn btn-primary my-8">Save</button>
         </form>
+        <Announcement
+          date={challenge.future.announceShortlist}
+          milestone={[...challenge.milestones].pop()?.dueDate}
+          onDateChange={async (date: string | null) => {
+            try {
+              await mutation.mutateAsync({
+                announceShortlist: date,
+              });
+              addToast({ title: "Updated", type: "success" });
+            } catch (err) {
+              addToast({ title: `${err}` });
+            }
+          }}
+        />
       </div>
     </div>
   );
@@ -321,13 +308,13 @@ function Projects({
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search project name"
             />
-            <div className="max-h-[400px] overflow-y-scroll">
+            <div className="max-h-[400px] overflow-y-scroll mt-2">
               {projects_.map((proj) => {
                 let selected = fields.some((f) => f.projectId === proj.id);
                 return (
                   <div
                     key={proj.id}
-                    className="body-3 py-2 flex justify-between items-center"
+                    className="body-3 p-2 flex justify-between items-center hover:bg-[#FFF1] rounded select-none cursor-pointer"
                     onClick={!selected ? addProject(proj.id) : () => {}}
                   >
                     <div className="max-w-[320px]">{proj.name} </div>
