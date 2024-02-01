@@ -850,7 +850,7 @@ export default async function ChallengeIntro({ params }: any) {
             <div>
               <Link
                 prefetch={false}
-                href={`/${lng}/campaigns/${challengeId}/teams`}
+                href={`/${lng}/campaigns/${challenge.externalId}/teams`}
                 className="btn btn-primary-invert body-4 text-day  uppercase w-64 py-6"
               >
                 {`${t("campaign.t17")}`}

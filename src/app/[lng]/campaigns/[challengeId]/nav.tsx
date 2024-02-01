@@ -7,7 +7,7 @@ import { isMileStoneEnabled } from "./utils";
 import { useTranslation } from "@/app/i18n/client";
 import _ from "lodash";
 import { useState } from "react";
-import { isResultShow, isShortlistShow } from "./result/page";
+import { isResultShow, isShortlistShow } from "./result/utils";
 
 const links = [
   {

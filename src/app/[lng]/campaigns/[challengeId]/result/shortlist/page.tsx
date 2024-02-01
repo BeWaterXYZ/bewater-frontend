@@ -8,7 +8,7 @@ import { useFetchChallengeTeams } from "@/services/team.query";
 import _ from "lodash";
 import Link from "next/link";
 import { useState } from "react";
-import { isResultShow } from "../page";
+import { isResultShow } from "../utils";
 
 export default function Page({ params }: any) {
   let { challengeId } = params || {};

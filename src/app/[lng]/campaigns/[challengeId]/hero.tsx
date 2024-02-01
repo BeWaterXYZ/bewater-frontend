@@ -77,7 +77,7 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
             <Link
-              href={`/${lng}/campaigns/${challenge.id}/teams`}
+              href={`/${lng}/campaigns/${challenge.externalId}/teams`}
               className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
             >
               {t("campaign.t1")}
