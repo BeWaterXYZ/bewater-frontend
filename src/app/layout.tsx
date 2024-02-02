@@ -79,6 +79,13 @@ export default function RootLayout({
            gtag('config', 'G-1FYW2MFVEG');
         `}
           </Script>
+          <Script id="prevent-iframe" strategy="afterInteractive">
+            {`
+            if (window.top != window.self) {
+              window.top.location = window.self.location;
+            }
+            `}
+          </Script>
         </body>
       </html>
     </ClerkProvider>
