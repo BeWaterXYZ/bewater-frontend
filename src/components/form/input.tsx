@@ -20,6 +20,7 @@ export const Input = React.forwardRef(function Input_(
     className,
     required,
     inputClassName,
+    disabled,
     ...restProps
   } = props;
   const did = useId();
@@ -27,7 +28,11 @@ export const Input = React.forwardRef(function Input_(
     <div className={clsx("block group relative mb-5", className)}>
       {label ? (
         <label
-          className="block text-xs text-grey-500 font-bold pb-2 group-hover:text-day group-focus:text-day group-focus-within:text-day transition-colors"
+          className={clsx("block text-xs text-grey-500 font-bold pb-2",
+            {
+              "group-hover:text-day group-focus:text-day group-focus-within:text-day transition-colors": !disabled
+            }
+          )}
           htmlFor={did}
         >
           {label}
@@ -37,12 +42,14 @@ export const Input = React.forwardRef(function Input_(
       <input
         id={id ? id : did}
         className={clsx(
-          "w-full text-[14px] bg-night disabled:bg-night/50 disabled:text-grey-600 block body-3 py-2 px-2 rounded-sm text-white border border-midnight hover:!border-day focus:!border-day focus:outline-none transition-colors",
+          "w-full text-[14px] bg-night disabled:bg-night/50 disabled:text-grey-600 block body-3 py-2 px-2 rounded-sm text-white border border-midnight",
           inputClassName,
           {
             error: error,
+            "hover:!border-day focus:!border-day focus:outline-none transition-colors": !disabled,
           }
         )}
+        disabled={!!disabled}
         ref={ref}
         {...restProps}
         name={name}
