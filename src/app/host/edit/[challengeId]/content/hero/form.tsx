@@ -116,11 +116,13 @@ export function Hero({ challenge }: { challenge: Challenge }) {
             />
             <Input
               label="Link URL"
+              disabled={challenge.type === "CHALLENGE"}
               {...register("joinLink")}
               error={errors["joinLink"]}
             />
             <Input
               label="Link Text"
+              disabled={challenge.type === "CHALLENGE"}
               {...register("linkText")}
               error={errors["linkText"]}
             />
