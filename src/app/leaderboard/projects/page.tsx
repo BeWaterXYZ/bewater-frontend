@@ -1,55 +1,48 @@
 import Image from "next/image";
-import BookIcon from "./book-icon";
-import CodeBoxIcon from "./code-box-icon";
 import { ProjectData } from "../data/type";
 import project from "../data/project.json";
 import { format } from "date-fns";
+import { icons } from "../icons";
+import PageSwitcher from "../page-switcher";
+
+const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 function Project(props: { data: ProjectData; rank: number }) {
   const avatar =
-    "w-6 h-6 rounded-full border-[#515151] border-[1px] bg-[#456789] overflow-hidden";
+    "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
   const { data, rank } = props;
   const [owner, repo] = data.repoName.split("/");
   const contributors = data.contributors.slice(0, 5);
   return (
-    <div className="grid grid-cols-[2fr_1fr_1fr] gap-6 items-center">
-      <div className="flex items-center">
-        <p className="font-bold text-[16px] leading-[21px] text-white mr-6">
-          #{rank}
-        </p>
-        <div>
-          <a href={`https://github.com/${data.repoName}`}>
-            <div className="flex items-center font-bold text-[16px] leading-[21px] mb-3 ">
-              <div className="text-[#B4B4BB] mr-[10px]">
-                <BookIcon />
-              </div>
-              <span className="text-[#FFFFFFB3] mr-[10px] line-clamp-1">
-                {owner}
-              </span>
-              <span className="text-white mr-[10px]">/</span>
-              <span className="text-white line-clamp-1">{repo}</span>
-            </div>
-          </a>
-          <p className="text-[11px] leading-[15px] text-[#64748B] line-clamp-2">
-            {data.description}
+    <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
+      <p>{rank}</p>
+      <a href={`https://github.com/${data.repoName}`}>
+        <div className="flex items-center font-bold text-base mb-2">
+          <div className="text-[#B4B4BB] mr-1">
+            {icons.book}
+          </div>
+          <p className="truncate" title={`${owner} / ${repo}`}>
+            <span className="text-[#94A3B8] mr-1">{owner}</span>
+            <span className="text-white mr-1">/</span>
+            <span>{repo}</span>
           </p>
         </div>
-      </div>
-      <div className="text-xs">
-        <div className="flex items-center mb-[6px]">
+        <div className="flex items-center">
           <div className="text-[#919191] mr-1">
-            <CodeBoxIcon />
+            {icons.codeBox}
           </div>
-          <span className="text-white">{data.language ?? "N/A"}</span>
+          <span>{data.language ?? "N/A"}</span>
         </div>
-        <div className="text-[#94A3B8] mb-[6px]">
-          <span className="mr-[20px]">Stars: {data.stargazers_count}</span>
-          <span>Fork: {data.forks_count}</span>
-        </div>
-        {/* <p className="text-white">Token & NFT, DeFi</p> */}
-      </div>
-      <div className="w-[276.67px]">
-        <div className="flex justify-end gap-[6px] mb-[6px]">
+      </a>
+      <p>{data.stargazers_count}</p>
+      <p>{data.forks_count}</p>
+      <p>Token & NFT, DeFi</p>
+      <p className="line-clamp-2">
+        {data.description}
+      </p>
+      <div>
+        <div className="flex ml-2 mb-[6px]">
           {contributors.map((contributor, i) => (
             <a href={`https://github.com/${contributor.login}`} key={i}>
               <div className={avatar}>
@@ -62,8 +55,12 @@ function Project(props: { data: ProjectData; rank: number }) {
               </div>
             </a>
           ))}
+          {contributors.length > 5 &&
+            <div className={`${avatar} font-bold text-[10px] leading-6 text-center`}>
+              +{contributors.length - 5}
+          </div>}
         </div>
-        <div className="text-xs text-white text-right">
+        <div className="text-[10px] leading-3 text-[#64748B]">
           Updated on {format(new Date(data.updated_at), "LLL dd, yyyy")}
         </div>
       </div>
@@ -74,10 +71,20 @@ function Project(props: { data: ProjectData; rank: number }) {
 export default function Page() {
   const projectList = project.slice(0, 50);
   return (
-    <div className="w-[900px] flex flex-col gap-[24px] font-secondary">
+    <>
+      <div className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}>
+        <p>Rank</p>
+        <p>Project</p>
+        <p>Stars</p>
+        <p>Fork</p>
+        <p>Topic</p>
+        <p>Description</p>
+        <p>Activity</p>
+      </div>
       {projectList.map((data, index) => (
         <Project data={data} rank={index + 1} key={index} />
       ))}
-    </div>
+      <PageSwitcher />
+    </>
   );
 }

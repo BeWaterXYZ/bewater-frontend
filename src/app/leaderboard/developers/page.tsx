@@ -3,6 +3,10 @@ import developer from "../data/developer.json";
 import colors from "../data/colors.json";
 import { Fragment } from "react";
 import Image from "next/image";
+import PageSwitcher from "../page-switcher";
+
+const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 function Developer(props: { data: DeveloperData; rank: number }) {
   const histogramBg =
@@ -16,43 +20,35 @@ function Developer(props: { data: DeveloperData; rank: number }) {
     0
   );
   return (
-    <div className="grid grid-cols-[2fr_1fr_1fr] gap-6 items-center">
-      <div className="flex items-center">
-        <p className="font-bold text-[16px] leading-[21px] text-white mr-6">
-          #{rank}
-        </p>
-        <a href={`https://github.com/${data.login}`}>
-          <Image
-            src={data.avatar_url}
-            alt={data.name || data.login}
-            width={60}
-            height={60}
-            className="rounded-full mr-6"
-          />
-        </a>
+    <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
+      <p>{rank}</p>
+      <a href={`https://github.com/${data.login}`} className="flex">
+        <Image
+          src={data.avatar_url}
+          alt={data.name || data.login}
+          width={48}
+          height={48}
+          className="rounded-full mr-2"
+        />
         <div>
-          <a href={`https://github.com/${data.login}`}>
-            <p className="font-bold text-[16px] leading-[21px] text-white mb-4">
-              {data.name || data.login}
-            </p>
-          </a>
-          <div className="text-xs">
-            <div className="text-[#94A3B8]">
-              <span className="mr-[20px]">Total Stars: {data.totalStars}</span>
-              <span>Followers: {data.followers}</span>
-            </div>
-            {/* <p className="text-white">Token & NFT, DeFi</p> */}
-          </div>
+          <p className="font-bold text-base text-[#F8FAFC] line-clamp-1 mb-2">
+            {data.name || data.login}
+          </p>
+          <p className="text-xs text-[#CBD5E1]">
+            @{data.login}
+          </p>
         </div>
-      </div>
+      </a>
+      <p>{data.totalStars}</p>
+      <p>{data.followers}</p>
+      <p>Token & NFT, DeFi</p>
       <div className="overflow-hidden">
-        <p className="text-xs text-[#94A3B8] mb-[9px]">POPULAR REPO</p>
         <a href={`https://github.com/${data.projectArr?.[0]?.full_name}`}>
-          <p className="text-[14px] leading-[18px] text-white mb-[9px] truncate">
+          <p className="text-sm leading-5 text-white mb-[9px] truncate">
             {data.projectArr?.[0]?.name ?? "N/A"}
           </p>
         </a>
-        <p className="text-[11px] leading-[15px] text-[#64748B] line-clamp-2">
+        <p className="text-xs text-[#64748B] line-clamp-2">
           {data.projectArr?.[0]?.description}
         </p>
       </div>
@@ -85,10 +81,20 @@ export default function Page() {
     // .sort((a, b) => b.totalStars - a.totalStars)
     .slice(0, 50);
   return (
-    <div className="w-[900px] flex flex-col gap-[24px] font-secondary">
+    <>
+      <div className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}>
+        <p>Rank</p>
+        <p>Name</p>
+        <p>Stars</p>
+        <p>Followers</p>
+        <p>Topic</p>
+        <p>Popular Repo</p>
+        <p>Stack</p>
+      </div>
       {developerList.map((data, index) => (
         <Developer data={data} rank={index + 1} key={index} />
       ))}
-    </div>
+      <PageSwitcher />
+    </>
   );
 }
