@@ -114,18 +114,22 @@ export function Hero({ challenge }: { challenge: Challenge }) {
               {...register("title")}
               error={errors["title"]}
             />
-            <Input
-              label="Link URL"
-              disabled={challenge.type === "CHALLENGE"}
-              {...register("joinLink")}
-              error={errors["joinLink"]}
-            />
-            <Input
-              label="Link Text"
-              disabled={challenge.type === "CHALLENGE"}
-              {...register("linkText")}
-              error={errors["linkText"]}
-            />
+            {
+              challenge.type === "CHALLENGE" ? null : (
+                <>
+                  <Input
+                    label="Link URL"
+                    {...register("joinLink")}
+                    error={errors["joinLink"]}
+                  />
+                  <Input
+                    label="Link Text"
+                    {...register("linkText")}
+                    error={errors["linkText"]}
+                  />
+                </>
+              )
+            }
           </>
           <Radio
             label="Campaign mode"
