@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const currentTopic = "text-[#00FFFF]";
 const inactiveTopic = "hover:text-gray-300 transition-colors";
@@ -24,6 +24,8 @@ export default function TopicSelector(props: {
   onChange: (topic: string) => void;
 }) {
   const [selectedTopic, setSelectedTopic] = useState("");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => props.onChange(selectedTopic), [selectedTopic]);
   return (
     <div
       id="topic-bar"
