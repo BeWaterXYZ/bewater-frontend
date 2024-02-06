@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { icons } from "./icons";
 import clsx from "clsx";
