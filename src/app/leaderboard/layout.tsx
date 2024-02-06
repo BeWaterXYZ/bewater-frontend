@@ -1,24 +1,29 @@
 "use client";
+import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { useState } from "react";
 
 const tab =
   "w-[160px] h-[36px] font-secondary font-bold text-[20px] leading-[26px] text-center border-b-[3px]";
 const activeTab = "text-white border-[#00FFFF]";
 const inactiveTab = "text-[#FFFFFF80] border-transparent";
 const currentTopic = "text-[#00FFFF]";
+const inactiveTopic = "hover:text-gray-300 transition-colors";
 
-const tempTopicList = [
-  "Token & NFT",
-  "DeFi",
-  "Nfrastructure",
-  "Gaming",
-  "Social",
-  "Wallet",
-  "B2B",
-  "Metaverse",
-  "DAO",
+const TopicList = [
+  "C++",
+  "Assembly",
+  "TypeScript",
+  "Python",
+  "Rust",
+  "Go",
+  "Java",
+  "Solidity",
+  "Move",
+  "Cairo",
+  "Leo",
 ];
 
 export default function Leaderboard({
@@ -27,6 +32,7 @@ export default function Leaderboard({
   children: React.ReactNode;
 }) {
   const segment = useSelectedLayoutSegment();
+  const [selectedTopic, setSelectedTopic] = useState("");
   return (
     <div className="mb-[160px] min-w-[960px] font-secondary">
       <div className="h-[72px] mx-[152px] mb-[72px] flex justify-center">
@@ -59,12 +65,32 @@ export default function Leaderboard({
         </Link>
       </div>
       <div className="w-[1104px] mx-auto">
-        <div className="flex gap-6 text-sm font-bold leading-5 text-gray-500 cursor-pointer">
-          <p className={currentTopic}>All</p>
-          {tempTopicList.map((topic, index) => (
-            <p key={index} className="hover:text-gray-300 transition-colors">{topic}</p>
-          ))}
-        </div>
+        {segment === "projects" && (
+          <div
+            id="topic-bar"
+            className="flex gap-6 text-sm font-bold leading-5 text-gray-500 cursor-pointer"
+          >
+            <p
+              className={clsx(
+                selectedTopic === "" ? currentTopic : inactiveTopic
+              )}
+              onClick={() => setSelectedTopic("")}
+            >
+              All
+            </p>
+            {TopicList.map((topic, index) => (
+              <p
+                key={index}
+                className={clsx(
+                  selectedTopic === topic ? currentTopic : inactiveTopic
+                )}
+                onClick={() => setSelectedTopic(topic)}
+              >
+                {topic}
+              </p>
+            ))}
+          </div>
+        )}
         <div className="mt-[70px]">{children}</div>
       </div>
     </div>

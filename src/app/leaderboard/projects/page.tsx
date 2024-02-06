@@ -5,7 +5,8 @@ import { format } from "date-fns";
 import { icons } from "../icons";
 import PageSwitcher from "../page-switcher";
 
-const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const gridTemplate =
+  "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 function Project(props: { data: ProjectData; rank: number }) {
@@ -19,9 +20,7 @@ function Project(props: { data: ProjectData; rank: number }) {
       <p>{rank}</p>
       <a href={`https://github.com/${data.repoName}`}>
         <div className="flex items-center font-bold text-base mb-2">
-          <div className="text-[#B4B4BB] mr-1">
-            {icons.book}
-          </div>
+          <div className="text-[#B4B4BB] mr-1">{icons.book}</div>
           <p className="truncate" title={`${owner} / ${repo}`}>
             <span className="text-[#94A3B8] mr-1">{owner}</span>
             <span className="text-white mr-1">/</span>
@@ -29,18 +28,14 @@ function Project(props: { data: ProjectData; rank: number }) {
           </p>
         </div>
         <div className="flex items-center">
-          <div className="text-[#919191] mr-1">
-            {icons.codeBox}
-          </div>
+          <div className="text-[#919191] mr-1">{icons.codeBox}</div>
           <span>{data.language ?? "N/A"}</span>
         </div>
       </a>
       <p>{data.stargazers_count}</p>
       <p>{data.forks_count}</p>
       <p>Token & NFT, DeFi</p>
-      <p className="line-clamp-2">
-        {data.description}
-      </p>
+      <p className="line-clamp-2">{data.description}</p>
       <div>
         <div className="flex ml-2 mb-[6px]">
           {contributors.map((contributor, i) => (
@@ -55,10 +50,13 @@ function Project(props: { data: ProjectData; rank: number }) {
               </div>
             </a>
           ))}
-          {contributors.length > 5 &&
-            <div className={`${avatar} font-bold text-[10px] leading-6 text-center`}>
+          {contributors.length > 5 && (
+            <div
+              className={`${avatar} font-bold text-[10px] leading-6 text-center`}
+            >
               +{contributors.length - 5}
-          </div>}
+            </div>
+          )}
         </div>
         <div className="text-[10px] leading-3 text-[#64748B]">
           Updated on {format(new Date(data.updated_at), "LLL dd, yyyy")}
@@ -72,7 +70,9 @@ export default function Page() {
   const projectList = project.slice(0, 50);
   return (
     <>
-      <div className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}>
+      <div
+        className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}
+      >
         <p>Rank</p>
         <p>Project</p>
         <p>Stars</p>
@@ -84,7 +84,7 @@ export default function Page() {
       {projectList.map((data, index) => (
         <Project data={data} rank={index + 1} key={index} />
       ))}
-      <PageSwitcher />
+      {/* <PageSwitcher /> */}
     </>
   );
 }

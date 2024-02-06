@@ -5,7 +5,8 @@ import { Fragment } from "react";
 import Image from "next/image";
 import PageSwitcher from "../page-switcher";
 
-const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const gridTemplate =
+  "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 function Developer(props: { data: DeveloperData; rank: number }) {
@@ -34,9 +35,7 @@ function Developer(props: { data: DeveloperData; rank: number }) {
           <p className="font-bold text-base text-[#F8FAFC] line-clamp-1 mb-2">
             {data.name || data.login}
           </p>
-          <p className="text-xs text-[#CBD5E1]">
-            @{data.login}
-          </p>
+          <p className="text-xs text-[#CBD5E1]">@{data.login}</p>
         </div>
       </a>
       <p>{data.totalStars}</p>
@@ -82,7 +81,9 @@ export default function Page() {
     .slice(0, 50);
   return (
     <>
-      <div className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}>
+      <div
+        className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}
+      >
         <p>Rank</p>
         <p>Name</p>
         <p>Stars</p>
@@ -94,7 +95,7 @@ export default function Page() {
       {developerList.map((data, index) => (
         <Developer data={data} rank={index + 1} key={index} />
       ))}
-      <PageSwitcher />
+      {/* <PageSwitcher /> */}
     </>
   );
 }
