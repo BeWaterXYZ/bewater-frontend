@@ -1,11 +1,11 @@
 "use client";
-import colors from "../data/colors.json";
+import colors from "./data/colors.json";
 import { Fragment, useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import PageSwitcher from "../page-switcher";
+import PageSwitcher from "./page-switcher";
 import { LeaderboardDeveloper } from "@/services/leaderboard";
 import { useLeaderboardDeveloper } from "@/services/leaderboard.query";
-import { TopicContext } from "../topic-selector";
+import { TopicContext } from "./topic-selector";
 
 const gridTemplate =
   "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
@@ -77,8 +77,7 @@ function Developer(props: { data: LeaderboardDeveloper; rank: number }) {
   );
 }
 
-export default function Page() {
-  const language = useContext(TopicContext);
+export default function Developers({ language }: { language: string }) {
   const { data } = useLeaderboardDeveloper(200, language);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState<10 | 25 | 50 | 100>(10);

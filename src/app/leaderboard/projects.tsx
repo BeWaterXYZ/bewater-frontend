@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { format } from "date-fns";
-import { icons } from "../icons";
-import PageSwitcher from "../page-switcher";
+import { icons } from "./icons";
+import PageSwitcher from "./page-switcher";
 import { LeaderboardProject } from "@/services/leaderboard";
 import { useLeaderboardProject } from "@/services/leaderboard.query";
 import { useState } from "react";
@@ -68,7 +68,7 @@ function Project(props: { data: LeaderboardProject; rank: number }) {
   );
 }
 
-export default function Page() {
+export default function Projects() {
   const { data } = useLeaderboardProject(200);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState<10 | 25 | 50 | 100>(10);
