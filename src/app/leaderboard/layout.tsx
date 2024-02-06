@@ -4,29 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { createContext, useState } from "react";
+import TopicSelector, { TopicContext } from "./topic-selector";
 
 const tab =
   "w-[160px] h-[36px] font-secondary font-bold text-[20px] leading-[26px] text-center border-b-[3px]";
 const activeTab = "text-white border-[#00FFFF]";
 const inactiveTab = "text-[#FFFFFF80] border-transparent";
-const currentTopic = "text-[#00FFFF]";
-const inactiveTopic = "hover:text-gray-300 transition-colors";
-
-const TopicList = [
-  "C++",
-  "Assembly",
-  "TypeScript",
-  "Python",
-  "Rust",
-  "Go",
-  "Java",
-  "Solidity",
-  "Move",
-  "Cairo",
-  "Leo",
-];
-
-export const TopicContext = createContext("");
 
 export default function Leaderboard({
   children,
@@ -68,30 +51,7 @@ export default function Leaderboard({
       </div>
       <div className="w-[1104px] mx-auto">
         {segment === "developers" && (
-          <div
-            id="topic-bar"
-            className="flex gap-6 text-sm font-bold leading-5 text-gray-500 cursor-pointer"
-          >
-            <p
-              className={clsx(
-                selectedTopic === "" ? currentTopic : inactiveTopic
-              )}
-              onClick={() => setSelectedTopic("")}
-            >
-              All
-            </p>
-            {TopicList.map((topic, index) => (
-              <p
-                key={index}
-                className={clsx(
-                  selectedTopic === topic ? currentTopic : inactiveTopic
-                )}
-                onClick={() => setSelectedTopic(topic)}
-              >
-                {topic}
-              </p>
-            ))}
-          </div>
+          <TopicSelector onChange={setSelectedTopic} />
         )}
         <div className="mt-[70px]">
           <TopicContext.Provider value={selectedTopic}>

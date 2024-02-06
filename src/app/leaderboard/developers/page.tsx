@@ -5,7 +5,7 @@ import Image from "next/image";
 import PageSwitcher from "../page-switcher";
 import { LeaderboardDeveloper } from "@/services/leaderboard";
 import { useLeaderboardDeveloper } from "@/services/leaderboard.query";
-import { TopicContext } from "../layout";
+import { TopicContext } from "../topic-selector";
 
 const gridTemplate =
   "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
