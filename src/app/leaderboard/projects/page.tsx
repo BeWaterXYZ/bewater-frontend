@@ -1,15 +1,17 @@
+"use client";
 import Image from "next/image";
-import { ProjectData } from "../data/type";
-import project from "../data/project.json";
 import { format } from "date-fns";
 import { icons } from "../icons";
 import PageSwitcher from "../page-switcher";
+import { LeaderboardProject } from "@/services/leaderboard";
+import { useLeaderboardProject } from "@/services/leaderboard.query";
+import { useState } from "react";
 
 const gridTemplate =
   "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
-function Project(props: { data: ProjectData; rank: number }) {
+function Project(props: { data: LeaderboardProject; rank: number }) {
   const avatar =
     "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
   const { data, rank } = props;
@@ -67,7 +69,14 @@ function Project(props: { data: ProjectData; rank: number }) {
 }
 
 export default function Page() {
-  const projectList = project.slice(0, 50);
+  const { data } = useLeaderboardProject(200);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState<10 | 25 | 50 | 100>(10);
+  const projectList = (data ?? []).slice(
+    rowsPerPage * (currentPage - 1),
+    rowsPerPage * currentPage
+  );
+
   return (
     <>
       <div
@@ -84,7 +93,17 @@ export default function Page() {
       {projectList.map((data, index) => (
         <Project data={data} rank={index + 1} key={index} />
       ))}
-      {/* <PageSwitcher /> */}
+
+      <PageSwitcher
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+        totalRows={data?.length ?? 0}
+        onPageChange={(p) => setCurrentPage(p)}
+        onRowsPerPageChange={(r) => {
+          setRowsPerPage(r);
+          setCurrentPage(1);
+        }}
+      />
     </>
   );
 }

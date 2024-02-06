@@ -5,7 +5,7 @@ import { icons } from "./icons";
 import clsx from "clsx";
 
 const chevron = "p-2 text-[#F8FAFC] cursor-pointer";
-const chevronDisabled = `${chevron} text-[#475569]`;
+const chevronDisabled = `${chevron} !text-[#475569]`;
 const pageNum =
   "w-5 h-5 py-[2px] text-[#64748B] text-center rounded-full cursor-pointer";
 const currentPageNum = `${pageNum} bg-[#00FFFF] text-[#1E293B]`;
@@ -22,7 +22,7 @@ export default function PageSwitcher(props: {
   rowsPerPage: 10 | 25 | 50 | 100;
   totalRows: number;
   onPageChange: (page: number) => void;
-  onRowsPerPageChange: (rowsPerPage: number) => void;
+  onRowsPerPageChange: (rowsPerPage: 10 | 25 | 50 | 100) => void;
 }) {
   const {
     currentPage,
@@ -33,10 +33,12 @@ export default function PageSwitcher(props: {
   } = props;
   const [showRowsMenu, setShowRowsMenu] = useState(false);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
+  console.log(totalPages, currentPage, rowsPerPage, totalRows);
   const pageOptions = [1, 2, 3, 4, 5].map(
-    (num) => num + Math.min(Math.max(currentPage - 3, 0), totalPages - 5)
+    (num) =>
+      num + Math.min(Math.max(currentPage - 3, 0), Math.max(totalPages - 5, 0))
   );
-
+  if (totalRows === 0) return null;
   return (
     <>
       <div className="mt-8 flex text-xs items-center justify-end">
@@ -46,6 +48,7 @@ export default function PageSwitcher(props: {
               [chevronDisabled]: currentPage === 1,
               [chevron]: currentPage !== 1,
             })}
+            onClick={() => currentPage !== 1 && onPageChange(currentPage - 1)}
           >
             {icons.chevronLeft}
           </div>
@@ -70,6 +73,9 @@ export default function PageSwitcher(props: {
               [chevronDisabled]: currentPage === totalPages,
               [chevron]: currentPage !== totalPages,
             })}
+            onClick={() =>
+              currentPage !== totalPages && onPageChange(currentPage + 1)
+            }
           >
             {icons.chevronRight}
           </div>
@@ -92,7 +98,7 @@ export default function PageSwitcher(props: {
               key={option.value}
               className="py-1 px-2 select-none cursor-pointer hover:bg-gray-200 transition-colors"
               onClick={() => {
-                onRowsPerPageChange(option.value);
+                onRowsPerPageChange(option.value as 10 | 25 | 50 | 100);
                 onPageChange(1);
                 setShowRowsMenu(false);
               }}

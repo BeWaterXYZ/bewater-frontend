@@ -1,15 +1,17 @@
-import { DeveloperData } from "../data/type";
-import developer from "../data/developer.json";
+"use client";
 import colors from "../data/colors.json";
-import { Fragment } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import PageSwitcher from "../page-switcher";
+import { LeaderboardDeveloper } from "@/services/leaderboard";
+import { useLeaderboardDeveloper } from "@/services/leaderboard.query";
+import { TopicContext } from "../layout";
 
 const gridTemplate =
   "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
-function Developer(props: { data: DeveloperData; rank: number }) {
+function Developer(props: { data: LeaderboardDeveloper; rank: number }) {
   const histogramBg =
     "w-[78px] h-[6px] rounded-[20px] bg-[#30313D] relative overflow-hidden";
   const { data, rank } = props;
@@ -76,9 +78,16 @@ function Developer(props: { data: DeveloperData; rank: number }) {
 }
 
 export default function Page() {
-  const developerList = developer
-    // .sort((a, b) => b.totalStars - a.totalStars)
-    .slice(0, 50);
+  const language = useContext(TopicContext);
+  const { data } = useLeaderboardDeveloper(200, language);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState<10 | 25 | 50 | 100>(10);
+  const developerList = (data ?? []).slice(
+    rowsPerPage * (currentPage - 1),
+    rowsPerPage * currentPage
+  );
+  useEffect(() => setCurrentPage(1), [language]);
+
   return (
     <>
       <div
@@ -93,9 +102,22 @@ export default function Page() {
         <p>Stack</p>
       </div>
       {developerList.map((data, index) => (
-        <Developer data={data} rank={index + 1} key={index} />
+        <Developer
+          data={data}
+          rank={index + 1 + (currentPage - 1) * rowsPerPage}
+          key={index}
+        />
       ))}
-      {/* <PageSwitcher /> */}
+      <PageSwitcher
+        currentPage={currentPage}
+        rowsPerPage={rowsPerPage}
+        totalRows={data?.length ?? 0}
+        onPageChange={(p) => setCurrentPage(p)}
+        onRowsPerPageChange={(r) => {
+          setRowsPerPage(r);
+          setCurrentPage(1);
+        }}
+      />
     </>
   );
 }
