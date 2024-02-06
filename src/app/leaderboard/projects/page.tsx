@@ -31,12 +31,12 @@ function Project(props: { data: LeaderboardProject; rank: number }) {
         </div>
         <div className="flex items-center">
           <div className="text-[#919191] mr-1">{icons.codeBox}</div>
-          <span>{data.language ?? "N/A"}</span>
+          <span>{data.language || "N/A"}</span>
         </div>
       </a>
       <p>{data.stargazers_count}</p>
       <p>{data.forks_count}</p>
-      <p>Token & NFT, DeFi</p>
+      <p className="line-clamp-2">{data.topics.join(", ")}</p>
       <p className="line-clamp-2">{data.description}</p>
       <div>
         <div className="flex ml-2 mb-[6px]">
@@ -91,7 +91,11 @@ export default function Page() {
         <p>Activity</p>
       </div>
       {projectList.map((data, index) => (
-        <Project data={data} rank={index + 1} key={index} />
+        <Project
+          data={data}
+          rank={index + 1 + (currentPage - 1) * rowsPerPage}
+          key={index}
+        />
       ))}
 
       <PageSwitcher

@@ -15,9 +15,9 @@ function Developer(props: { data: LeaderboardDeveloper; rank: number }) {
   const histogramBg =
     "w-[78px] h-[6px] rounded-[20px] bg-[#30313D] relative overflow-hidden";
   const { data, rank } = props;
-  const langList = Object.keys(data.languageSum)
-    .sort((a, b) => data.languageSum[b]! - data.languageSum[a]!)
-    .slice(0, 3);
+  const langList = Object.keys(data.languageSum).sort(
+    (a, b) => data.languageSum[b]! - data.languageSum[a]!
+  );
   const langSum = Object.keys(data.languageSum).reduce(
     (sum, lang) => sum + data.languageSum[lang]!,
     0
@@ -42,7 +42,7 @@ function Developer(props: { data: LeaderboardDeveloper; rank: number }) {
       </a>
       <p>{data.totalStars}</p>
       <p>{data.followers}</p>
-      <p>Token & NFT, DeFi</p>
+      <p className="line-clamp-2">{langList.join(", ")}</p>
       <div className="overflow-hidden">
         <a href={`https://github.com/${data.projectArr?.[0]?.full_name}`}>
           <p className="text-sm leading-5 text-white mb-[9px] truncate">
@@ -54,7 +54,7 @@ function Developer(props: { data: LeaderboardDeveloper; rank: number }) {
         </p>
       </div>
       <div className="text-xs text-white grid grid-cols-[1fr_78px] gap-x-[13px] gap-y-2 items-center">
-        {langList.map((lang, i) => (
+        {langList.slice(0, 3).map((lang, i) => (
           <Fragment key={i}>
             <p className="line-clamp-1">{lang}</p>
             <div className={histogramBg}>
