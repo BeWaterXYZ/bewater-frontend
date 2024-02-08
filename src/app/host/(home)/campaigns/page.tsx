@@ -4,7 +4,7 @@ import SignIn from "../../signup";
 
 export default function Page() {
   return (
-    <div className="font-secondary w-[856px] my-[72px] mx-auto">
+    <div className="font-secondary my-[72px] flex justify-center">
       <Dashboard />
     </div>
   );

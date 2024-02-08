@@ -12,7 +12,7 @@ import { formatYYYYMMMDD } from "@/utils/date";
 import { CardStyle } from "../summary/summary";
 import { icons } from "../icons";
 import CampaignMenu from "./campaignMenu";
-import { set } from "lodash";
+import "./gridView.css";
 
 function ChallengeStatusButton({ challenge }: { challenge: Challenge }) {
   return (
@@ -150,25 +150,25 @@ export function Dashboard() {
 
   return (
     <>
-      <div className="flex justify-between mb-8">
-        <p className="text-xl font-bold text-white">Campaigns</p>
-        {challenges.length > 0 && (
-          <Link
-            href="/host/campaigns/new"
-            className="btn btn-primary border-none h-auto py-2 px-4 text-[#003333]"
-          >
-            {icons.add_16}
-            <span className="ml-2 text-sm">Draft a new campaign</span>
-          </Link>
-        )}
-      </div>
-      {challenges.length > 0 ? (
-        <>
-          <div className="grid grid-cols-3 gap-4">
+      <div id="grid-view" className="grid gap-4">
+        <div id="grid-view-header" className="flex justify-between mb-8">
+          <p className="text-xl font-bold text-white">Campaigns</p>
+          {challenges.length > 0 && (
+            <Link
+              href="/host/campaigns/new"
+              className="btn btn-primary border-none h-auto py-2 px-4 text-[#003333]"
+            >
+              {icons.add_16}
+              <span className="ml-2 text-sm">Draft a new campaign</span>
+            </Link>
+          )}
+        </div>
+        {challenges.length > 0 ? (
+          <>
             {challenges.map((challenge) => {
               return (
                 <div
-                  className="bg-[#0B0C24] border border-[#24254E] rounded"
+                  className="bg-[#0B0C24] border border-[#24254E] rounded border-box"
                   key={challenge.id}
                 >
                   <div className="relative">
@@ -177,7 +177,7 @@ export function Dashboard() {
                       alt={challenge.externalId!}
                       width={0}
                       height={0}
-                      className="w-[274.667px] h-[186px] rounded-t object-cover"
+                      className="w-[254px] h-[186px] rounded-t object-cover"
                     />
                     <ChallengeStatusButton challenge={challenge} />
                   </div>
@@ -223,34 +223,38 @@ export function Dashboard() {
               );
             })}
             <div ref={containerRef}></div>
-          </div>
-          <p className="text-sm leading-5 text-gray-500 text-center pt-4">
-            {more && "Loading..."}
-          </p>
-          {menu && (
-            <CampaignMenu
-              menuPosition={menuPosition}
-              id={menuId}
-              close={() => setMenu(false)}
-            />
-          )}
-        </>
-      ) : (
-        <div
-          className={`${CardStyle} py-[40px] px-[25px] flex flex-col justify-center items-center h-[308px] w-[856px]`}
-        >
-          <p className="text-xl mb-[36px] text-white font-secondary leading-[32px]">
-            ⭐️ Create your first campaign
-          </p>
-          <Link
-            href="/host/campaigns/new"
-            className="btn btn-primary border-none h-auto py-[10px] px-4 text-[#003333]"
+            <p
+              id="loading"
+              className="text-sm leading-5 text-gray-500 text-center pt-4"
+            >
+              {more && "Loading..."}
+            </p>
+            {menu && (
+              <CampaignMenu
+                menuPosition={menuPosition}
+                id={menuId}
+                close={() => setMenu(false)}
+              />
+            )}
+          </>
+        ) : (
+          <div
+            id="grid-view-empty"
+            className={`${CardStyle} py-[40px] px-[25px] flex flex-col justify-center items-center h-[308px]`}
           >
-            {icons.add_16}
-            <span className="ml-[6px] text-sm">Draft a new campaign</span>
-          </Link>
-        </div>
-      )}
+            <p className="text-xl mb-[36px] text-white font-secondary leading-[32px]">
+              ⭐️ Create your first campaign
+            </p>
+            <Link
+              href="/host/campaigns/new"
+              className="btn btn-primary border-none h-auto py-[10px] px-4 text-[#003333]"
+            >
+              {icons.add_16}
+              <span className="ml-[6px] text-sm">Draft a new campaign</span>
+            </Link>
+          </div>
+        )}
+      </div>
     </>
   );
 }
