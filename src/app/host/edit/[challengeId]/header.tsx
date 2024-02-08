@@ -129,7 +129,7 @@ export function Header({ challengeId }: { challengeId: ChallengeID }) {
               <Link
                 key={link.label}
                 className={clsx(
-                  "body-2 p-3 rounded-[6px] flex gap-2 items-center",
+                  "body-2 p-3 rounded-[6px] flex gap-2 items-center hover:text-day transition-colors ease-out duration-300",
                   link.path === segment ? "text-day" : "text-gray-500"
                 )}
                 href={`/host/edit/${challengeId}/${link.path ?? ""}`}

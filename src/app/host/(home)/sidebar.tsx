@@ -52,7 +52,7 @@ export function Sidebar() {
           <Link
             key={link.label}
             className={clsx(
-              "body-3 leading-5 p-2 rounded flex gap-2 items-center",
+              "body-3 leading-5 p-2 rounded flex gap-2 items-center hover:bg-white/20 hover:text-gray-100 transition-colors ease-out duration-300",
               {
                 "text-gray-500": link.path !== segment,
                 "bg-white/20 text-gray-100": link.path === segment,
