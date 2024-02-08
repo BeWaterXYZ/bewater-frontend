@@ -44,13 +44,13 @@ function Developer(props: { data: LeaderboardDeveloper; rank: number }) {
       <p>{data.followers}</p>
       <p className="line-clamp-2">{langList.join(", ")}</p>
       <div className="overflow-hidden">
-        <a href={`https://github.com/${data.projectArr?.[0]?.full_name}`}>
+        <a href={`https://github.com/${(data.repos ?? []).length > 0 ? data.repos![0].full_name : data.projectArr?.[0]?.full_name}`}>
           <p className="text-sm leading-5 text-white mb-[9px] truncate">
-            {data.projectArr?.[0]?.name ?? "N/A"}
+            {(data.repos ?? []).length > 0 ? data.repos![0].name : (data.projectArr?.[0]?.name ?? "N/A")}
           </p>
         </a>
         <p className="text-xs text-[#64748B] line-clamp-2">
-          {data.projectArr?.[0]?.description}
+          {(data.repos ?? []).length > 0 ? data.repos![0].description : data.projectArr?.[0]?.description}
         </p>
       </div>
       <div className="text-xs text-white grid grid-cols-[1fr_78px] gap-x-[13px] gap-y-2 items-center">

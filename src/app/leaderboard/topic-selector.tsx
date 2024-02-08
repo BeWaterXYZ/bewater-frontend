@@ -15,7 +15,7 @@ const TopicList = [
   "Solidity",
   "Move",
   "Cairo",
-  "Leo",
+  // "Leo",
 ];
 
 export const TopicContext = createContext("");

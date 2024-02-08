@@ -79,6 +79,12 @@ export interface LeaderboardDeveloper {
   updated_at: string;
   createdAt: string;
   updatedAt: string;
+  repos?: {
+    name: string;
+    full_name: string;
+    description: string;
+    stargazers_count: number;
+  }[];
 }
 
 export async function getLeaderboardProject(limit: number) {

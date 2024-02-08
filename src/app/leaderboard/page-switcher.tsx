@@ -31,7 +31,9 @@ export default function PageSwitcher(props: {
   } = props;
   const [showRowsMenu, setShowRowsMenu] = useState(false);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
-  console.log(totalPages, currentPage, rowsPerPage, totalRows);
+
+  // console.log(totalPages, currentPage, rowsPerPage, totalRows);
+
   const pageOptions = [1, 2, 3, 4, 5].map(
     (num) =>
       num + Math.min(Math.max(currentPage - 3, 0), Math.max(totalPages - 5, 0))
