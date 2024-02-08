@@ -50,12 +50,12 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
         ) : challenge.type === "WORKSHOP" ? (
           <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">
             <Image
-              src="/assets/hackathon.png"
+              src="/assets/workshop.png"
               width={64}
               height={64}
-              alt="hackathon"
+              alt="workshop"
             />
-            Hackathon
+            Workshop
           </div>
         ) : (
           <div className="flex flex-col md:flex-row items-center gap-2 text-grey-300">

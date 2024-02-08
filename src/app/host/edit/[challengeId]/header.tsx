@@ -1,15 +1,17 @@
 "use client";
-import { ChallengeID } from "@/services/types";
+import { Challenge, ChallengeID } from "@/services/types";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { PublishButton } from "./publish-button";
 import useRole from "@/hooks/useRole";
+import { useFetchChallengeById } from "@/services/challenge.query";
 const links = [
   {
     path: "content",
     label: "Content",
+    hackathonOnly: false,
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -28,6 +30,7 @@ const links = [
   {
     path: "rating",
     label: "Rating",
+    hackathonOnly: true,
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -46,6 +49,7 @@ const links = [
   {
     path: "result",
     label: "Result",
+    hackathonOnly: true,
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -64,6 +68,7 @@ const links = [
   {
     path: "analytics",
     label: "Analytics",
+    hackathonOnly: true,
     orgOnly: true,
     icon: (
       <svg
@@ -83,6 +88,7 @@ const links = [
   {
     path: `settings`,
     label: "Settings",
+    hackathonOnly: false,
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -102,6 +108,7 @@ const links = [
 export function Header({ challengeId }: { challengeId: ChallengeID }) {
   let segment = useSelectedLayoutSegment();
   const { isOrganization } = useRole();
+  const { data: challenge } = useFetchChallengeById(challengeId);
   return (
     <div className="text-white flex justify-between w-full h-14 items-center p-4 border-b border-b-white/20">
       <div className="">
@@ -117,11 +124,12 @@ export function Header({ challengeId }: { challengeId: ChallengeID }) {
       <div className="flex">
         {links.map(
           (link) =>
-            ((isOrganization && link.orgOnly) || !link.orgOnly) && (
+            ((isOrganization && link.orgOnly) || !link.orgOnly) &&
+            (challenge?.type === "CHALLENGE" || !link.hackathonOnly) && (
               <Link
                 key={link.label}
                 className={clsx(
-                  "body-2 p-3   rounded-[6px] flex  gap-2 items-center",
+                  "body-2 p-3 rounded-[6px] flex gap-2 items-center",
                   link.path === segment ? "text-day" : "text-gray-500"
                 )}
                 href={`/host/edit/${challengeId}/${link.path ?? ""}`}
