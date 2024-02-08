@@ -17,7 +17,7 @@ const links = [
   {
     path: `campaigns`,
     label: "Campaigns",
-    icon: icons.layer_20,
+    icon: icons.tableSimple_20,
   },
   {
     path: `members`,
