@@ -47,7 +47,7 @@ export function Shortlist({
 }) {
   const addToast = useToastStore((s) => s.add);
   const [classify, setClassify] = useState(
-    shortlist.length !== 1 && shortlist[0].name !== ""
+    shortlist.length !== 1 && shortlist[0]?.name !== ""
   );
   let {
     control,
