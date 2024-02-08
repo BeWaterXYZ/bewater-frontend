@@ -1,5 +1,4 @@
 "use client";
-
 import "./style.css";
 import { Challenge, ChallengeTrackResult, TrackAward } from "@/services/types";
 import { ResultCard } from "./result-card";
@@ -15,20 +14,26 @@ import { useState } from "react";
 import { isResultShow, isShortlistShow } from './utils'
 
 export default function Page({ params }: any) {
-  let { challengeId } = params || {};
+  const { challengeId } = segmentSchema.challengeId.parse(params);
   const { data: challenge, isLoading } = useFetchChallengeById(challengeId);
-  const [showResult] = useState(isResultShow(challenge));
-  const [showShortlist] = useState(isShortlistShow(challenge));
   const { data: teams, isLoading: isLoadingTeam } =
     useFetchChallengeTeams(challengeId);
   if (isLoading || isLoadingTeam) {
     return <Loading />;
   }
+  // console.log(challenge)
+  // console.log(teams)
+  const showResult = isResultShow(challenge);
+  const showShortlist = isShortlistShow(challenge);
+  // console.log(showResult, showShortlist)
 
   if (showResult) {
     return <Result params={params} challenge={challenge} teams={teams} />;
-  } else if (showShortlist) redirect("result/shortlist");
-  else redirect(".");
+  } else if (showShortlist) {
+    redirect("result/shortlist");
+  } else {
+    return <></>
+  }
 }
 
 function Result({ params, challenge, teams }: any) {

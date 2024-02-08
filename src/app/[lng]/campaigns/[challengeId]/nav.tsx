@@ -43,9 +43,7 @@ export default function ChallengeNav({
   challenge: Challenge;
   lng: string;
 }) {
-  const challengeId = challenge.externalId
-    ? challenge.externalId
-    : challenge.id;
+  const challengeId = challenge.externalId;
   let segment = useSelectedLayoutSegment();
   const { t } = useTranslation(lng, "translation");
   const [showResult] = useState(isResultShow(challenge));

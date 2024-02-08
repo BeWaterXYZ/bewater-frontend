@@ -7,12 +7,19 @@ export function isResultShow(challenge: Challenge | undefined): boolean {
     milestones,
   } = challenge;
   const milestoneTime = [...milestones].pop()?.dueDate!;
-  if (announceResult === "1970-01-01T00:00:00.000Z") return false;
-  else if (announceResult === "1971-01-01T00:00:00.000Z") {
+  if (announceResult === "1970-01-01T00:00:00.000Z") {
+    // 永远不显示
+    return false;
+  } else if (announceResult === "1971-01-01T00:00:00.000Z") {
+    // 时间线决定是否显示
     return Date.now() > new Date(milestoneTime).getTime();
   } else if (announceResult) {
+    // 指定日期后显示
     return Date.now() > new Date(announceResult).getTime();
-  } else return true;
+  } else {
+    // 为 null，立即显示
+    return true;
+  }
 }
 
 export function isShortlistShow(challenge: Challenge | undefined): boolean {
@@ -22,10 +29,18 @@ export function isShortlistShow(challenge: Challenge | undefined): boolean {
     milestones,
   } = challenge;
   const milestoneTime = [...milestones].pop()?.dueDate!;
-  if (announceShortlist === "1970-01-01T00:00:00.000Z") return false;
+  if (announceShortlist === "1970-01-01T00:00:00.000Z") {
+    // 永远不显示
+    return false;
+  }
   else if (announceShortlist === "1971-01-01T00:00:00.000Z") {
+    // 时间线决定是否显示
     return Date.now() > new Date(milestoneTime).getTime();
   } else if (announceShortlist) {
+    // 指定日期后显示
     return Date.now() > new Date(announceShortlist).getTime();
-  } else return false;
+  } else {
+    // 为 null，立即显示
+    return true;
+  }
 }
