@@ -5,16 +5,16 @@ const currentTopic = "text-[#00FFFF]";
 const inactiveTopic = "hover:text-gray-300 transition-colors";
 
 const TopicList = [
-  "C++",
-  "Assembly",
-  "TypeScript",
-  "Python",
-  "Rust",
-  "Go",
-  "Java",
   "Solidity",
   "Move",
   "Cairo",
+  "C++",
+  "Java",
+  "Rust",
+  "TypeScript",
+  "Python",
+  "Go",
+  "Assembly",
   // "Leo",
 ];
 
