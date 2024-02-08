@@ -93,7 +93,7 @@ export function Frame({ challengeId }: { challengeId: ChallengeID }) {
       </div>
       <div
         id="frame"
-        className="flex flex-row justify-center overflow-y-auto"
+        className="flex flex-row justify-center overflow-y-auto bg-[#25263C33]"
         style={{ scrollbarColor: "#FFFFFF33 #25263C", scrollbarWidth: "thin" }}
       >
         <div

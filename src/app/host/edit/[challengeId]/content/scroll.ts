@@ -19,9 +19,7 @@ export function useScrollTo(segment: string) {
       const ele = document.getElementById("section-" + segment);
 
       const y =
-        ele?.offsetTop! -
-        window.innerHeight / 2 +
-        ele?.getBoundingClientRect().height! / 2;
+        ele?.offsetTop! - 168;
 
       if (f) {
         f.scrollTo({ top: y, behavior: "smooth" });
