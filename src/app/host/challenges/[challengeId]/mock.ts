@@ -14,7 +14,7 @@ export function mock(challenge: Challenge) {
   if (!c.sponsors) {
     c.sponsors = [
       {
-        defname: "golden sponsors",
+        defname: "Sponsors Examples",
         members: [bewaterLogo],
       },
     ];
