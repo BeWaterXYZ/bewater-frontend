@@ -5,12 +5,12 @@ import { icons } from "./icons";
 
 export const Callout = () => {
   const [callout, setCallout] = useState(
-    localStorage.getItem("callout") === "false" ? false : true
+    globalThis.localStorage?.getItem("callout") === "false" ? false : true
   );
 
   callout
-    ? localStorage.setItem("callout", "true")
-    : localStorage.setItem("callout", "false");
+    ? globalThis.localStorage?.setItem("callout", "true")
+    : globalThis.localStorage?.setItem("callout", "false");
 
   return (
     <>
