@@ -19,8 +19,10 @@ export const Callout = () => {
           <div className="ml-[40px] flex-1 flex justify-center">
             <div className="mr-2">{icons.partyPopper_16}</div>
             <p className="font-bold text-xs">
-              <span>Discover groundbreaking insights in the </span>
-              <span className="text-day">new AI × Crypto Report</span>
+              <span>Discover groundbreaking insights in the new </span>
+              <a href="https://docs.bewater.xyz/zh/aixcrypto/">
+                <span className="text-day">AI × Crypto Report</span>
+              </a>
             </p>
           </div>
           <div className="p-3">
