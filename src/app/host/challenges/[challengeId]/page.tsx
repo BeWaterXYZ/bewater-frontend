@@ -25,7 +25,15 @@ import {
   isWorkshop,
 } from "@/app/[lng]/campaigns/[challengeId]/utils";
 
-export default function Page({ params }: any) {
+export default function Page({
+  params,
+  mode,
+  frameWidth,
+}: {
+  params: any;
+  mode: "desktop" | "mobile" | "fullscreen";
+  frameWidth: number;
+}) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
   let { data: challenge } = useFetchChallengeById(challengeId);
   let [publishRequested, publishRequestedSet] = useState(false);
@@ -65,11 +73,19 @@ export default function Page({ params }: any) {
     isTeamingEnabled = isMileStoneEnabled("Teaming", challenge);
   }
 
+  const isMobile = mode === "mobile" ? true : frameWidth < 768 ? true : false;
+
   return (
     <div className="bg-night">
       <div
         id="section-hero"
-        className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center bg-cover bg-center`}
+        className={clsx(
+          "relative overflow-hidden text-center flex flex-col justify-center bg-cover bg-center",
+          {
+            "pb-30 pt-[160px]": !isMobile,
+            "pb-12 pt-[92px]": isMobile,
+          }
+        )}
         style={{ backgroundImage: `url("${challenge.bannerUrl}")` }}
       >
         {challenge.hostIcon?.length ? (
@@ -78,16 +94,34 @@ export default function Page({ params }: any) {
             width={144}
             height={40}
             alt=""
-            className="mx-auto mb-2 md:mb-3 max-w-[80%] w-auto h-full max-h-[40px]"
+            className={clsx("mx-auto max-w-[80%] w-auto h-full max-h-[40px]", {
+              "mb-3": !isMobile,
+              "mb-2": isMobile,
+            })}
           />
         ) : (
-          <p className="body-4 md:text-[20px]">{challenge.hostName ?? ""}</p>
+          <p
+            className={clsx("body-4", {
+              "text-[20px]": !isMobile,
+              "": isMobile,
+            })}
+          >
+            {challenge.hostName ?? ""}
+          </p>
         )}
-        <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">
+        <h1
+          className={clsx("", {
+            "heading-2 pb-3": !isMobile,
+            "heading-6 pb-2": isMobile,
+          })}
+        >
           {challenge.title}
         </h1>
         <h1
-          className="body-4 md:text-[24px] uppercase font-light"
+          className={clsx("body-4 uppercase font-light", {
+            "text-[24px]": !isMobile,
+            "": isMobile,
+          })}
           suppressHydrationWarning
         >
           {challenge.location === "ONLINE" ? `ONLINE | ` : null}
@@ -103,18 +137,37 @@ export default function Page({ params }: any) {
         </h1>
         {isChallenge(challenge) ? (
           isTeamingEnabled ? (
-            <div className="mt-6 md:mt-12">
+            <div
+              className={clsx("", {
+                "mt-12": !isMobile,
+                "mt-6": isMobile,
+              })}
+            >
               <Link
                 href=""
-                className="btn btn-primary-invert body-4 text-day uppercase px-4 py-3 md:px-8 md:py-6"
+                className={clsx(
+                  "btn btn-primary-invert body-4 text-day uppercase",
+                  {
+                    "px-8 py-6": !isMobile,
+                    "px-4 py-3": isMobile,
+                  }
+                )}
               >
                 Join / Create Team
               </Link>
             </div>
           ) : (
-            <div className="mt-6 md:mt-12">
+            <div
+              className={clsx("", {
+                "mt-12": !isMobile,
+                "mt-6": isMobile,
+              })}
+            >
               <div
-                className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest"
+                className={clsx("text-day/70 uppercase tracking-widest", {
+                  "body-1 font-normal px-8 py-6": !isMobile,
+                  "body-3 px-4 py-3": isMobile,
+                })}
                 suppressHydrationWarning
               >
                 {`TEAM INFORMATION AND PROJECT SUBMISSION WILL BE OPEN ON ${formatMMMDDYYYY(
@@ -127,15 +180,24 @@ export default function Page({ params }: any) {
         ) : null}
         {isChallenge(challenge) && "Register Now" ? (
           challenge.joinLink ? (
-            <div className="mt-6 md:mt-12">
+            <div
+              className={clsx("", {
+                "mt-12": !isMobile,
+                "mt-6": isMobile,
+              })}
+            >
               <Link
                 target="_blank"
                 href={challenge.joinLink}
-                className={`btn btn-primary rounded-none body-4 text-night uppercase ${
-                  "Register Now".length > 26
-                    ? "px-4 py-8 md:px-8 md:py-10"
-                    : "px-4 py-3 md:px-8 md:py-6"
-                }`}
+                className={clsx(
+                  "btn btn-primary rounded-none body-4 text-night uppercase",
+                  {
+                    "px-8 py-10": "Register Now".length > 26 && !isMobile,
+                    "px-4 py-8": "Register Now".length > 26 && isMobile,
+                    "px-8 py-6": "Register Now".length <= 26 && !isMobile,
+                    "px-4 py-3": "Register Now".length <= 26 && isMobile,
+                  }
+                )}
               >
                 <p
                   className="text-center max-w-[250px]"
@@ -149,15 +211,24 @@ export default function Page({ params }: any) {
         ) : null}
         {isWorkshop(challenge) ? (
           challenge.joinLink ? (
-            <div className="mt-6 md:mt-12">
+            <div
+              className={clsx("", {
+                "mt-12": !isMobile,
+                "mt-6": isMobile,
+              })}
+            >
               <Link
                 target="_blank"
                 href={challenge.joinLink}
-                className={`btn btn-primary rounded-none body-4 text-night uppercase ${
-                  "Register Now".length > 26
-                    ? "px-4 py-8 md:px-8 md:py-10"
-                    : "px-4 py-3 md:px-8 md:py-6"
-                }`}
+                className={clsx(
+                  "btn btn-primary rounded-none body-4 text-night uppercase",
+                  {
+                    "px-8 py-10": "Register Now".length > 26 && !isMobile,
+                    "px-4 py-8": "Register Now".length > 26 && isMobile,
+                    "px-8 py-6": "Register Now".length <= 26 && !isMobile,
+                    "px-4 py-3": "Register Now".length <= 26 && isMobile,
+                  }
+                )}
               >
                 <p
                   className="text-center max-w-[250px]"
@@ -170,7 +241,7 @@ export default function Page({ params }: any) {
           ) : null
         ) : null}
       </div>
-      <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-0 md:top-0 z-10 [&_p]:py-3 [&_p]:mx-3 [&_p]:text-center [&_p]:uppercase [&_p]:cursor-pointer">
+      <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-0 z-10 [&_p]:py-3 [&_p]:mx-3 [&_p]:text-center [&_p]:uppercase [&_p]:cursor-pointer">
         <p className="text-day border-b-2 border-day [text-shadow:0_0_6px_theme(colors.day)]">
           INTRODUCTION
         </p>
@@ -191,12 +262,38 @@ export default function Page({ params }: any) {
         className="relative py-[100px] border-b border-dashed border-white/30"
       >
         <div className="container">
-          <div className="flex flex-col gap-10 md:gap-20 items-center my-10">
-            <div className="flex flex-col gap-4 md:flex-row md:gap-20 items-center w-full">
-              <div className="text-[32px] md:text-[36px] whitespace-nowrap py-4 text-white font-primary font-bold">
+          <div
+            className={clsx("flex flex-col items-center my-10", {
+              "gap-20": !isMobile,
+              "gap-10": isMobile,
+            })}
+          >
+            <div
+              className={clsx(
+                "flex flex-col items-center my-10 items-center w-full",
+                {
+                  "flex-row gap-20": !isMobile,
+                  "flex-col gap-4": isMobile,
+                }
+              )}
+            >
+              <div
+                className={clsx(
+                  "whitespace-nowrap py-4 text-white font-primary font-bold",
+                  {
+                    "text-[36px]": !isMobile,
+                    "text-[32px]": isMobile,
+                  }
+                )}
+              >
                 Introduction
               </div>
-              <div className="text-[18px] md:body-2 text-white">
+              <div
+                className={clsx("text-white", {
+                  "body-2": !isMobile,
+                  "text-[18px]": isMobile,
+                })}
+              >
                 {challenge.description?.endsWith("--edit-by-markdown") ? (
                   <Markdown style={{ color: "white" }}>
                     {challenge.description.substring(
@@ -213,7 +310,7 @@ export default function Page({ params }: any) {
                 )}
               </div>
             </div>
-            <div className="flex gap-4 flex-wrap">
+            <div className="flex gap-4 flex-wrap justify-center">
               {challenge.telegramLink ? (
                 <Link
                   className="btn btn-primary-invert min-w-[256px] py-6 flex gap-2 text-xs"
@@ -294,7 +391,15 @@ export default function Page({ params }: any) {
             )}
           >
             {challenge.totalAward ? (
-              <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center font-primary font-bold">
+              <h3
+                className={clsx(
+                  "text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center font-primary font-bold",
+                  {
+                    "text-[36px]": !isMobile,
+                    "text-[24px]": isMobile,
+                  }
+                )}
+              >
                 Total Awards:{" "}
                 {getSymbolFromCurrency(
                   challenge?.awardCurrency ? challenge.awardCurrency : "USD"
@@ -310,12 +415,30 @@ export default function Page({ params }: any) {
                     className="flex-1 flex flex-col items-center gap-10"
                     key={i}
                   >
-                    <div className="flex flex-row gap-[min(32px,2vw)] ">
-                      <div className="flex flex-col gap-4 md:gap-7 items-center">
-                        <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center h-20 line-clamp-3">
+                    <div className="flex flex-row gap-[min(32px,2vw)]">
+                      <div
+                        className={clsx("flex flex-col items-center", {
+                          "gap-7": !isMobile,
+                          "gap-4": isMobile,
+                        })}
+                      >
+                        <p
+                          className={clsx(
+                            "uppercase text-[#00cccc] text-center h-20 line-clamp-3",
+                            {
+                              "body-1": !isMobile,
+                              "body-3": isMobile,
+                            }
+                          )}
+                        >
                           {awardAssort.name}
                         </p>
-                        <div className="prizeList px-3 py-4 gap-3 md:px-5 md:py-7 md:gap-4">
+                        <div
+                          className={clsx("prizeList", {
+                            "px-5 py-7 gap-4": !isMobile,
+                            "px-3 py-4 gap-3": isMobile,
+                          })}
+                        >
                           {awardAssort.awards.map((award, i) => {
                             return (
                               <Fragment key={i}>
@@ -364,20 +487,34 @@ export default function Page({ params }: any) {
               })}
             </div>
             <div className="relative w-full flex flex-col gap-10 items-center">
-              <p className="body-1 md:text-[24px] font-bold text-white/30 md:text-white/30 font-primary">
+              <p
+                className={clsx("body-1 font-bold text-white/30 font-primary", {
+                  "text-[24px]": !isMobile,
+                  "": isMobile,
+                })}
+              >
                 Core Sponsors
               </p>
+
               <Marquee>
                 {(challenge.keySponsors ?? []).map((sp, i) => {
                   return (
                     <div
-                      className="rounded-lg border-solid border-[1px] border-white/20 w-48 h-16 md:w-60 md:h-20 flex flex-row items-center justify-center mr-3"
+                      className={clsx(
+                        "rounded-lg border-solid border-[1px] border-white/20 flex flex-row items-center justify-center mr-3",
+                        {
+                          "w-60 h-20": !isMobile,
+                          "w-48 h-16": isMobile,
+                        }
+                      )}
                       key={i}
                     >
-                      {/* // fixme/ */}
                       <img
                         src={typeof sp === "string" ? sp : sp.uri}
-                        className="h-8 md:h-10"
+                        className={clsx("", {
+                          "h-10": !isMobile,
+                          "h-8": isMobile,
+                        })}
                       />
                     </div>
                   );
@@ -392,7 +529,15 @@ export default function Page({ params }: any) {
         className="relative py-16 border-b border-dashed border-white/30"
       >
         <div className="container">
-          <h3 className="text-white text-[24px] md:text-[36px] font-bold mb-16 text-center font-primary">
+          <h3
+            className={clsx(
+              "text-white font-bold mb-16 text-center font-primary",
+              {
+                "text-[36px]": !isMobile,
+                "text-[24px]": isMobile,
+              }
+            )}
+          >
             Adjudicators
           </h3>
           <div className="flex flex-row flex-wrap gap-6 justify-center">
@@ -451,7 +596,12 @@ export default function Page({ params }: any) {
         className="relative py-16 border-b border-dashed border-white/30"
       >
         <div className="container">
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+          <div
+            className={clsx("w-full grid gap-8 mt-16", {
+              "grid-cols-2": !isMobile,
+              "grid-cols-1": isMobile,
+            })}
+          >
             <div className="flex-1 p-8 bg-white/5 border border-grey-800">
               <h3 className="text-[24px] font-bold mb-8 text-white font-secondary">
                 Event Details
@@ -473,14 +623,27 @@ export default function Page({ params }: any) {
       >
         <div className="container">
           <div>
-            <h3 className="text-white text-[24px] md:text-[36px] font-bold mb-16 text-center font-primary">
+            <h3
+              className={clsx(
+                "text-white font-bold mb-16 text-center font-primary",
+                {
+                  "text-[36px]": !isMobile,
+                  "text-[24px]": isMobile,
+                }
+              )}
+            >
               Event Partners
             </h3>
             <div className="flex flex-col gap-12 items-center">
               {challenge.sponsors.map((s, i) => {
                 return (
                   <div className="flex flex-col gap-7 items-center" key={i}>
-                    <p className="body-1 md: text-[20px] font-bold text-white/30 md:text-white/30">
+                    <p
+                      className={clsx("body-1 font-bold text-white/30", {
+                        "text-[20px]": !isMobile,
+                        "text-[24px]": isMobile,
+                      })}
+                    >
                       {s.defname}
                     </p>
                     <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
@@ -488,7 +651,10 @@ export default function Page({ params }: any) {
                         <img
                           src={typeof member === "string" ? member : member.uri}
                           key={i}
-                          className="h-8 md:h-10 mb-4 mx-4"
+                          className={clsx("mb-4 mx-4", {
+                            "h-10": !isMobile,
+                            "h-8": isMobile,
+                          })}
                         />
                       ))}
                     </div>
@@ -500,12 +666,25 @@ export default function Page({ params }: any) {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
-        <p className="text-[20px] md:text-[30px] text-center text-white font-primary font-bold">
+        <p
+          className={clsx("text-center text-white font-primary font-bold", {
+            "text-[30px]": !isMobile,
+            "text-[20px]": isMobile,
+          })}
+        >
           <Balancer ratio={0.9}>
             Interested in a campaign? Form your dream team and join us
           </Balancer>
         </p>
-        <p className="text-[14px] md:text-[16px] text-grey-400 md:text-grey-400 pt-5 pb-8 text-center font-secondary">
+        <p
+          className={clsx(
+            "text-grey-400 pt-5 pb-8 text-center font-secondary",
+            {
+              "text-[16px]": !isMobile,
+              "text-[14px]": isMobile,
+            }
+          )}
+        >
           <Balancer>
             Nearly 25,000 pre-registered developers and designers have already
             claimed their BeWater Early Bird badges

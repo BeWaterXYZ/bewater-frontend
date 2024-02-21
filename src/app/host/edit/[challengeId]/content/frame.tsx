@@ -2,7 +2,7 @@
 import Page from "@/app/host/challenges/[challengeId]/page";
 import { ChallengeID } from "@/services/types";
 import clsx from "clsx";
-import { useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 
 let desktop = (
   <svg
@@ -51,9 +51,22 @@ let fullscreen = (
 );
 
 export function Frame({ challengeId }: { challengeId: ChallengeID }) {
+  const frameRef = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<"desktop" | "mobile" | "fullscreen">(
     "desktop"
   );
+  const [frameWidth, setFrameWidth] = useState(0);
+  useEffect(() => {
+    if (frameRef.current) {
+      setFrameWidth(frameRef.current.offsetWidth);
+    }
+    window.addEventListener("resize", () => {
+      if (frameRef.current) {
+        setFrameWidth(frameRef.current.offsetWidth);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [frameRef.current]);
 
   return (
     <div
@@ -95,6 +108,7 @@ export function Frame({ challengeId }: { challengeId: ChallengeID }) {
         id="frame"
         className="flex flex-row justify-center overflow-y-auto bg-[#25263C33]"
         style={{ scrollbarColor: "#FFFFFF33 #25263C", scrollbarWidth: "thin" }}
+        ref={frameRef}
       >
         <div
           className={clsx("", {
@@ -103,7 +117,11 @@ export function Frame({ challengeId }: { challengeId: ChallengeID }) {
             "max-h-[calc(100vh-48px)] flex-1": mode === "fullscreen",
           })}
         >
-          <Page params={{ challengeId: challengeId }} />
+          <Page
+            params={{ challengeId: challengeId }}
+            mode={mode}
+            frameWidth={frameWidth}
+          />
         </div>
       </div>
     </div>
