@@ -4,7 +4,7 @@ import { formatYYYYMMMDD, formatMMMDDYYYY } from "@/utils/date";
 import { isMileStoneEnabled, isWorkshop, isChallenge } from "./utils";
 import Link from "next/link";
 import Image from "next/image";
-import { useTranslation } from '@/app/i18n/client';
+import { useTranslation } from "@/app/i18n/client";
 
 interface ChallengeHeroProps {
   challenge: Challenge;
@@ -12,7 +12,7 @@ interface ChallengeHeroProps {
 }
 
 export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
-  const { t } = useTranslation(lng, 'translation');
+  const { t } = useTranslation(lng, "translation");
 
   let isTeamingEnabled = false;
   if (challenge.milestones?.length > 0) {
@@ -37,10 +37,11 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
   return (
     <div
       id="hero"
-      className={`relative overflow-hidden pb-12 md:pb-30 pt-[93px] md:pt-[160px] text-center flex flex-col justify-center  bg-cover bg-center `}
+      className={`relative overflow-hidden pb-12 md:pb-30 pt-[92px] md:pt-[160px] mt-[-72px] text-center flex flex-col justify-center bg-cover bg-center`}
       style={{
-        backgroundImage: `url("${challenge.yotadata?.mainBanner ?? challenge.bannerUrl
-          }")`,
+        backgroundImage: `url("${
+          challenge.yotadata?.mainBanner ?? challenge.bannerUrl
+        }")`,
       }}
     >
       {challenge.hostIcon?.length ? (
@@ -55,22 +56,27 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
         <p className="body-4 md:text-[20px]">{challenge.hostName ?? ""}</p>
       )}
       <h1 className="heading-6 md:heading-2 pb-2 md:pb-3">{challenge.title}</h1>
-      <h1 className="body-4 md:text-[24px] uppercase font-light" suppressHydrationWarning>
+      <h1
+        className="body-4 md:text-[24px] uppercase font-light"
+        suppressHydrationWarning
+      >
         {challenge.location === "ONLINE" ? `${t("campaign.t30")} | ` : null}
         {(challenge.location === "OFFLINE" ||
           challenge.location === "MIXED" ||
           challenge.location === "OTHERS") &&
-          challenge.city
+        challenge.city
           ? `${challenge.city} | `
           : null}
-        {`${lng === "zh"
-          ? formatYYYYMMMDD(challenge.startTime)
-          : formatMMMDDYYYY(challenge.startTime)
-          }`}
+        {`${
+          lng === "zh"
+            ? formatYYYYMMMDD(challenge.startTime)
+            : formatMMMDDYYYY(challenge.startTime)
+        }`}
         {challenge.startTime !== challenge.endTime &&
-          ` - ${lng === "zh"
-            ? formatYYYYMMMDD(challenge.endTime)
-            : formatMMMDDYYYY(challenge.endTime)
+          ` - ${
+            lng === "zh"
+              ? formatYYYYMMMDD(challenge.endTime)
+              : formatMMMDDYYYY(challenge.endTime)
           }`}
       </h1>
       {isChallenge(challenge) ? (
@@ -86,19 +92,23 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
         ) : (
           <div className="mt-6 md:mt-12">
             {/* <div className="btn btn-primary-invert body-4 text-day/70 border-day/30 uppercase px-4 py-3 md:px-8 md:py-6 hover:border-day/30 hover:bg-transparent hover:text-day/70 hover:cursor-default bg-transparent"> */}
-            <div className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest" suppressHydrationWarning>
-              {`${t("campaign.t2")} ${lng === "zh"
-                ? formatYYYYMMMDD(
-                  challenge.milestones.find(
-                    (ms) => ms.stageName === "Teaming"
-                  )?.dueDate!
-                )
-                : formatMMMDDYYYY(
-                  challenge.milestones.find(
-                    (ms) => ms.stageName === "Teaming"
-                  )?.dueDate!
-                )
-                } ${t("campaign.t3")}`}
+            <div
+              className="body-3 md:body-1 md:font-normal text-day/70 md:text-day/70 uppercase px-4 py-3 md:px-8 md:py-6 tracking-widest"
+              suppressHydrationWarning
+            >
+              {`${t("campaign.t2")} ${
+                lng === "zh"
+                  ? formatYYYYMMMDD(
+                      challenge.milestones.find(
+                        (ms) => ms.stageName === "Teaming"
+                      )?.dueDate!
+                    )
+                  : formatMMMDDYYYY(
+                      challenge.milestones.find(
+                        (ms) => ms.stageName === "Teaming"
+                      )?.dueDate!
+                    )
+              } ${t("campaign.t3")}`}
             </div>
           </div>
         )
@@ -109,10 +119,11 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
             <Link
               target="_blank"
               href={challenge.joinLink}
-              className={`btn btn-primary rounded-none body-4 text-night uppercase ${topRegisterBtnText.length > 26
-                ? "px-4 py-8 md:px-8 md:py-10"
-                : "px-4 py-3 md:px-8 md:py-6"
-                }`}
+              className={`btn btn-primary rounded-none body-4 text-night uppercase ${
+                topRegisterBtnText.length > 26
+                  ? "px-4 py-8 md:px-8 md:py-10"
+                  : "px-4 py-3 md:px-8 md:py-6"
+              }`}
             >
               <p
                 className="text-center max-w-[250px]"
@@ -130,10 +141,11 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
             <Link
               target="_blank"
               href={challenge.joinLink}
-              className={`btn btn-primary rounded-none body-4 text-night uppercase ${topRegisterBtnText.length > 26
-                ? "px-4 py-8 md:px-8 md:py-10"
-                : "px-4 py-3 md:px-8 md:py-6"
-                }`}
+              className={`btn btn-primary rounded-none body-4 text-night uppercase ${
+                topRegisterBtnText.length > 26
+                  ? "px-4 py-8 md:px-8 md:py-10"
+                  : "px-4 py-3 md:px-8 md:py-6"
+              }`}
             >
               <p
                 className="text-center max-w-[250px]"

@@ -48,9 +48,12 @@ export default function ChallengeNav({
   const { t } = useTranslation(lng, "translation");
   const [showResult] = useState(isResultShow(challenge));
   const [showShortlist] = useState(isShortlistShow(challenge));
+  const top = localStorage.getItem("callout") === "false" ? "72px" : "112px";
 
   return (
-    <nav className="w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[72px] md:top-[72px] z-10">
+    <nav
+      className={`w-full body-3 flex justify-center border-b border-white/20 bg-night sticky top-[${top}] z-10`}
+    >
       {links.map((link) => {
         let isAcitve = link.segment === segment;
         let isEnabled = false;

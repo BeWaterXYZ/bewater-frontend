@@ -1,21 +1,17 @@
-import { getChallenges } from '@/services/challenge';
-import { Metadata } from 'next';
-import { ChallengeList } from './challenge-list';
-import { useTranslation } from '@/app/i18n';
+import { getChallenges } from "@/services/challenge";
+import { Metadata } from "next";
+import { ChallengeList } from "./challenge-list";
+import { useTranslation } from "@/app/i18n";
 
 export default async function ChallengePage({
   params,
 }: {
   params: { lng: string };
 }) {
-  const { lng = 'en' } = params || {};
+  const { lng = "en" } = params || {};
   return (
-    <div className="container my-4 pt-20 min-h-[calc(100vh-120px)]">
-      {
-        <ChallengeList
-          lng={lng}
-        />
-      }
+    <div className={`container mb-4 min-h-[calc(100vh-120px)]`}>
+      {<ChallengeList lng={lng} />}
     </div>
   );
 }
@@ -27,13 +23,13 @@ export async function generateMetadata({
 }: {
   params: { lng: string };
 }): Promise<Metadata> {
-  const { lng = 'en' } = params || {};
+  const { lng = "en" } = params || {};
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(lng, 'translation');
+  const { t } = await useTranslation(lng, "translation");
 
   return {
-    title: t('title'),
+    title: t("title"),
     description:
-      'BeWater is the ultimate builder community based on the SOP management system we built for open innovation campaigns including hackathon, design contest, demo day and more. It serves cutting-edge fields and also connects traditional industries. BeWater engages builders with different skill sets to build a better future together.',
+      "BeWater is the ultimate builder community based on the SOP management system we built for open innovation campaigns including hackathon, design contest, demo day and more. It serves cutting-edge fields and also connects traditional industries. BeWater engages builders with different skill sets to build a better future together.",
   };
 }
