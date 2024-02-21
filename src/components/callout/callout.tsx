@@ -5,7 +5,7 @@ import { icons } from "./icons";
 
 export const Callout = () => {
   const [callout, setCallout] = useState(
-    globalThis.localStorage?.getItem("callout") === "false" ? false : true
+    globalThis.localStorage?.getItem("callout") === "true" ? true : false
   );
 
   callout
