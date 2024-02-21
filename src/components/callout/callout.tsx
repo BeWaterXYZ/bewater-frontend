@@ -4,22 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { icons } from "./icons";
 
 export const Callout = () => {
-  const callout = globalThis.localStorage?.getItem("callout") === "true" ? true : false
   const elRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (elRef.current) {
-      elRef.current.style.display = callout ? "flex" : "none";
+      elRef.current.style.display = globalThis.localStorage?.getItem("hideCallout")
+        ? "none"
+        : "flex";
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elRef.current]);
 
-  callout
-    ? globalThis.localStorage?.setItem("callout", "true")
-    : globalThis.localStorage?.setItem("callout", "false");
-
   return (
     <>
-      <div ref={elRef} className="w-full h-[40px] bg-gradient-to-r from-[#F62584] to-[#480CA7] sticky top-0 z-[12] font-secondary text-gray-50 flex items-center">
+      <div ref={elRef} className="w-full h-[40px] bg-gradient-to-r from-[#F62584] to-[#480CA7] sticky top-0 z-[12] font-secondary text-gray-50 hidden items-center">
           <div className="ml-[40px] flex-1 flex justify-center">
             <div className="mr-2">{icons.partyPopper_16}</div>
             <p className="font-bold text-xs">
@@ -31,7 +28,7 @@ export const Callout = () => {
           </div>
           <div className="p-3">
             <div className="cursor-pointer" onClick={() => {
-              globalThis.localStorage?.setItem("callout", "false");
+              globalThis.localStorage?.setItem("hideCallout", "1");
               if (elRef.current) elRef.current.style.display = "none";
             }}>
               {icons.close_16}

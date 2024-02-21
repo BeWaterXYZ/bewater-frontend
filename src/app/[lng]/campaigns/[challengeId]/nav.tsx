@@ -48,7 +48,7 @@ export default function ChallengeNav({
   const { t } = useTranslation(lng, "translation");
   const [showResult] = useState(isResultShow(challenge));
   const [showShortlist] = useState(isShortlistShow(challenge));
-  const top = localStorage.getItem("callout") === "false" ? "72px" : "112px";
+  const top = localStorage.getItem("hideCallout") === "1" ? "72px" : "112px";
 
   return (
     <nav
