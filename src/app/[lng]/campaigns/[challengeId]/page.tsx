@@ -339,7 +339,7 @@ export default async function ChallengeIntro({ params }: any) {
           ) : (!challenge.yotadata?.disableTrack &&
             <div className="container">
               <div className={clsx("flex flex-col items-center px-0 pb-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight", {
-                'gap-20 !pt-20': (challenge.yotadata?.award?.title || !!challenge.totalAward)
+                'gap-20 !pt-20': (challenge.yotadata?.award?.title || !!challenge.totalAward || true)
               })}>
                 {challenge.yotadata?.award?.title ? (
                   <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
@@ -358,7 +358,11 @@ export default async function ChallengeIntro({ params }: any) {
                     {formatMoney(challenge.totalAward)}{" "}
                     {challenge.awardCurrency ? challenge.awardCurrency : "USD"}
                   </h3>
-                ) : null}
+                ) : (
+                  <h3 className="text-[24px] md:text-[36px] text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+                    {t("campaign.t32")}
+                  </h3>
+                )}
                 {challenge.yotadata?.award?.truck?.maintitle ? (
                   <p className="body-3 md:body-1 md:heading-5 font-bold text-white/30 md:text-white/30 h-8">
                     {challenge.yotadata.award.truck.maintitle}

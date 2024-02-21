@@ -320,22 +320,37 @@ export default function Page({ params }: any) {
                             return (
                               <Fragment key={i}>
                                 <div className="flex flex-col gap-1 w-full">
-                                  <p className="body-3 text-white whitespace-nowrap">
-                                    {award.awardName}
-                                  </p>
+                                { award.amount === 0 ? (
+                                    <div className="flex flex-row justify-between">
+                                      <p className="body-3 text-white/60">
+                                        {award.awardName}
+                                      </p>
+                                      <p className="body-3 text-white/60">
+                                        x{award.count}
+                                      </p>
+                                    </div>
+                                  ) : (
+                                    <p className="body-3 text-white">
+                                      {award.awardName}
+                                    </p>
+                                  )
+                                }
+                                {award.amount > 0 ? (
                                   <div className="flex flex-row justify-between">
                                     <p className="body-3 text-white/60">
-                                      {getSymbolFromCurrency(
-                                        challenge?.awardCurrency
-                                          ? challenge.awardCurrency
-                                          : "USD"
-                                      ) ?? ""}
-                                      {formatMoney(award.amount)}
+                                    {getSymbolFromCurrency(
+                                      challenge?.awardCurrency
+                                        ? challenge.awardCurrency
+                                        : "USD"
+                                    ) ?? ""}
+                                      { formatMoney(award.amount) }
+                                      {challenge?.awardCurrency && getSymbolFromCurrency(challenge.awardCurrency) ? '' : ' ' + challenge?.awardCurrency ?? '' }
                                     </p>
                                     <p className="body-3 text-white/60">
                                       x{award.count}
                                     </p>
                                   </div>
+                                ) : null}
                                 </div>
                                 <hr className="border-none bg-white/20 h-[0.5px] w-full" />
                               </Fragment>

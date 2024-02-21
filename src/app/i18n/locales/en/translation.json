@@ -79,6 +79,7 @@
     "t30": "ONLINE",
     "agenda": "Agenda",
     "venue": "Event Venue",
-    "t31": "Scan QR code to join {{name}} group chat"
+    "t31": "Scan QR code to join {{name}} group chat",
+    "t32": "Tracks"
   }
 }
