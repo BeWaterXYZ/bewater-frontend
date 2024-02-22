@@ -25,15 +25,7 @@ import {
   isWorkshop,
 } from "@/app/[lng]/campaigns/[challengeId]/utils";
 
-export default function Page({
-  params,
-  mode,
-  frameWidth,
-}: {
-  params: any;
-  mode: "desktop" | "mobile" | "fullscreen";
-  frameWidth: number;
-}) {
+export default function Page({ params, mode, frameWidth }: any) {
   let { challengeId } = segmentSchema.challengeId.parse(params);
   let { data: challenge } = useFetchChallengeById(challengeId);
   let [publishRequested, publishRequestedSet] = useState(false);
