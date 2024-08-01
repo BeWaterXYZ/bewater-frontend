@@ -1,0 +1,32 @@
+@layer components {
+  .DialogOverlay {
+    @apply bg-black/60 z-20 fixed inset-0;
+    animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .DialogContent {
+    @apply outline-none z-30 bg-[#141527] rounded-md shadow-[0_16px_24px_0px_#00000026] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-h-[200px] min-w-[200px] p-6 border-[#1E293B] border-[1px];
+    animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@layer utilities {
+  @keyframes overlayShow {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes contentShow {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -0%) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+}

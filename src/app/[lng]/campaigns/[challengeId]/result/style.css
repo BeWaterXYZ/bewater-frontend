@@ -1,0 +1,13 @@
+.rp-text-gradient {
+  background: linear-gradient(
+    51.06deg,
+    #9358f7 0.87%,
+    #7b78f2 25.96%,
+    #6197ee 49.23%,
+    #45b5e9 74.93%,
+    #10d7e2 97.48%
+  );
+  /* this style can not be applied with tailwind or inline style. */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

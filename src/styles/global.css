@@ -1,0 +1,116 @@
+@layer base {
+  html {
+    @apply bg-night;
+  }
+  body {
+    min-height: 100vh;
+  }
+}
+
+.prizeList {
+  margin: auto;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 240px;
+  min-width: 100px;
+  width: 20vw;
+  /* gap: 16px; */
+  align-items: center;
+  /* padding: 28px 20px; */
+  border-radius: 4px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0)
+  );
+  color: #2bafff;
+  font-size: 100px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  line-height: 100px;
+  /*  border width   */
+  --size: 1px;
+  --gradient: radial-gradient(
+    200% 100% at 50% 0,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0)
+  );
+}
+
+.prizeList::before {
+  position: absolute;
+  padding: var(--size);
+  border-radius: inherit;
+  background: var(--gradient);
+  content: "";
+  inset: 0;
+  -webkit-mask: linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.prizeList2 {
+  margin: auto;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 240px;
+  min-width: 100px;
+  width: 20vw;
+  /* gap: 16px; */
+  align-items: center;
+  /* padding: 28px 20px; */
+  border-radius: 4px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  color: #2bafff;
+  /*  border width   */
+  --size: 1px;
+  --gradient: radial-gradient(
+    200% 100% at 50% 0,
+    rgba(255, 255, 255, 0.25),
+    rgba(255, 255, 255, 0.05)
+  );
+}
+
+.prizeList2::before {
+  z-index: 0;
+  position: absolute;
+  padding: var(--size);
+  border-radius: inherit;
+  background: var(--gradient);
+  content: "";
+  inset: 0;
+  -webkit-mask: linear-gradient(#000, #000) content-box,
+    linear-gradient(#000, #000);
+  mask: linear-gradient(#000, #000) content-box, linear-gradient(#000, #000);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.cl-footer + div {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: #04051b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffffff33;
+  border: 3px solid #04051b;
+  border-radius: 6px;
+}
+
+* {
+  scrollbar-color: #ffffff33 transparent;
+  scrollbar-width: thin;
+}
