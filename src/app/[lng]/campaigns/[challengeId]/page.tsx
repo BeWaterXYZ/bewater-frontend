@@ -18,6 +18,7 @@ import { PrizeSection as PrizeSection11 } from "./prize-section/63c82bd12ddc570f
 import { PrizeSection as PrizeSection19 } from "./prize-section/63c82bd12ddc570f32ada86f";
 import { PrizeSection as PrizeSection125 } from "./prize-section/campaign-125";
 import { PrizeSection as PrizeSection130 } from "./prize-section/campaign-130";
+import { PrizeSection as PrizeSection136 } from "./prize-section/campaign-136";
 import { isMileStoneEnabled, isWorkshop } from "./utils";
 
 import Balancer from "react-wrap-balancer";
@@ -126,14 +127,17 @@ export default async function ChallengeIntro({ params }: any) {
         }`}
       >
         <div
-          className={`flex flex-col gap-4 md:flex-row md:gap-20 items-center
-          ${challenge.milestones?.length === 0 && "mt-[100px]"}
-          `}
+          className={clsx(
+            "flex flex-col gap-4 md:flex-row md:gap-20 items-center",
+            {
+              "mt-[100px]": challenge.milestones?.length === 0,
+            }
+          )}
         >
           <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
             {t("campaign.t5")}
           </div>
-          <div className="body-3 md:body-2 text-white [&_a]:border-b border-b-white [&_p]:my-1 md:[&_p]:my-2 [&_h1]:my-4">
+          <div className="body-3 md:body-2 [&_p]:px-[4vw] [&_p]:md:px-0 text-white [&_p]:w-dvw md:[&_p]:w-fit [&_a]:border-b [&_a]:border-b-white [&_p]:break-all [&_p]:my-1 md:[&_p]:my-2 [&_h1]:my-4">
             {challenge.description?.endsWith("--edit-by-markdown") ? (
               <Markdown style={{ color: "white" }}>
                 {challenge.description.substring(
@@ -343,6 +347,8 @@ export default async function ChallengeIntro({ params }: any) {
             <PrizeSection125 t={t} lng={lng} challenge={challenge} />
           ) : challenge.id === "130" ? (
             <PrizeSection130 t={t} lng={lng} challenge={challenge} />
+          ) : challenge.id === "136" ? (
+            <PrizeSection136 t={t} lng={lng} challenge={challenge} />
           ) : (
             !challenge.yotadata?.disableTrack && (
               <div className="container">
