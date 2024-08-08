@@ -32,32 +32,38 @@ import {
 import { off } from "process";
 import { useUser } from "@clerk/nextjs";
 
-const schema = z
-  .object({
-    name: validationSchema.text,
-    title: validationSchema.text,
-    description: validationSchema.text,
-    role: validationSchema.role,
-    tags: validationSchema.tags,
-    roles: validationSchema.roles,
-    skills: validationSchema.skills,
-    nation: z.array(z.string()).length(1, "Please choose a country"),
-    pastGrant: validationSchema.text,
-    builtDate: z.string(),
-    deckURI: validationSchema.text,
-    demoURI: z.string(),
-    siteURI: z.string(),
-    contact: validationSchema.text,
-    recommendedFrom: z.string(),
-    userEmail: z.string().email(),
-  })
-  .required();
+const schema = (challengeId?: string) =>
+  z
+    .object({
+      name: validationSchema.text,
+      title: validationSchema.text,
+      description: validationSchema.text,
+      role: validationSchema.role,
+      tags: validationSchema.tags,
+      roles: validationSchema.roles,
+      skills: validationSchema.skills,
+      nation: z.array(z.string()).length(1, ""),
+      pastGrant: validationSchema.text,
+      builtDate: z.string(),
+      deckURI: challengeId === "136" ? z.string() : validationSchema.text,
+      demoURI: z.string(),
+      siteURI: z.string(),
+      githubURI: challengeId === "136" ? validationSchema.text : z.string(),
+      contact: validationSchema.text,
+      recommendedFrom: z.string(),
+      userEmail: z.string().email(),
+      membersCount: z.number().int().positive(),
+      offlineDemoDay: z.string().refine((v) => v === "0" || v === "1", {
+        message: "Please choose an option",
+      }),
+    })
+    .required();
 
-export type Inputs = z.infer<typeof schema>;
+export type Inputs = z.infer<ReturnType<typeof schema>>;
 
-export function useTeamCreateForm(team?: Team & Project) {
+export function useTeamCreateForm(team?: Team & Project, challengeId?: string) {
   return useForm<Inputs>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema(challengeId)),
     defaultValues: {
       name: team?.name ?? "",
       title: team?.project.name ?? "",
@@ -76,6 +82,9 @@ export function useTeamCreateForm(team?: Team & Project) {
       contact: team?.project.contact ?? "",
       recommendedFrom: team?.project.recommendedFrom ?? "",
       userEmail: useUser().user?.emailAddresses[0].emailAddress ?? "",
+      membersCount: team?.project.membersCount ?? 1,
+      offlineDemoDay: team?.project.offlineDemoDay ? "1" : "0",
+      githubURI: team?.project.githubURI ?? "",
     },
   });
 }
@@ -169,6 +178,9 @@ export default function TeamCreateDialog({
           siteURI: formData.siteURI,
           contact: formData.contact,
           recommendedFrom: formData.recommendedFrom,
+          githubURI: formData.githubURI,
+          membersCount: formData.membersCount,
+          offlineDemoDay: Number(formData.offlineDemoDay),
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -200,6 +212,9 @@ export default function TeamCreateDialog({
           contact: formData.contact,
           recommendedFrom: formData.recommendedFrom,
           userEmail: formData.userEmail,
+          githubURI: formData.githubURI,
+          membersCount: formData.membersCount,
+          offlineDemoDay: Number(formData.offlineDemoDay),
         };
 
         let res = await createTeamMutaion.mutateAsync(payload);
@@ -237,7 +252,7 @@ export default function TeamCreateDialog({
     register,
     handleSubmit,
     formState: { errors },
-  } = useTeamCreateForm(data.team);
+  } = useTeamCreateForm(data.team, data.challenge?.id);
 
   const refSkillNeeded = useRef<HTMLSelectElement>(null);
 
@@ -260,80 +275,282 @@ export default function TeamCreateDialog({
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
         {isEditing ? "Edit Team" : "Create a team"}
       </p>
-      <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
-        <div className="max-h-[60vh] overflow-y-auto mb-4">
-          <Input
-            label="Team Name"
-            placeholder="Enter your team name"
-            required
-            error={errors["name"]}
-            {...register("name")}
-          />
-          <Select
-            id="select-nation"
-            label="Country"
-            required
-            isSingle
-            options={COUNTRIES}
-            error={errors["nation"]}
-            control={control}
-            {...register("nation")}
-          />
-          <Input
-            label="Project Title"
-            required
-            placeholder="Enter your project title"
-            error={errors["title"]}
-            {...register("title")}
-          />
-          <Select
-            id="select-tags"
-            label="Project Tag"
-            required
-            maxSelections={5}
-            options={hackProjectTagSetOptions}
-            error={errors["tags"]}
-            control={control}
-            {...register("tags")}
-          />
-          <TextArea
-            label="Project Description"
-            required
-            placeholder="Enter your project description"
-            error={errors["description"]}
-            {...register("description")}
-          />
-          {isEditing ? null : (
+      {data.challenge?.id === "136" ? (
+        <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
+          <div className="max-h-[60vh] overflow-y-auto mb-4">
+            <Input
+              label="Team Name"
+              placeholder="Enter your team name"
+              required
+              error={errors["name"]}
+              {...register("name")}
+            />
+            <Controller
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label="Team Members Count"
+                  placeholder="Enter your team members count"
+                  type="number"
+                  min="1"
+                  required
+                  error={errors["membersCount"]}
+                  onChange={(e) => {
+                    field.onChange(Number(e.target.value));
+                  }}
+                />
+              )}
+              {...register("membersCount")}
+            />
+            <p className="block body-4 py-1 text-grey-500 font-bold mb-1">
+              Join offline demo day? *
+            </p>
+            <Controller
+              control={control}
+              render={({ field }) => (
+                <RadioGroup
+                  className="flex items-center mb-4"
+                  {...field}
+                  value={field.value.toString()}
+                >
+                  <RadioGroupItem
+                    className={radio}
+                    id="offlineDemoDay1"
+                    value="1"
+                    onClick={() => field.onChange("1")}
+                  >
+                    <RadioGroupIndicator className={radioChecked} />
+                  </RadioGroupItem>
+                  <label className={radioLabel} htmlFor="offlineDemoDay1">
+                    Yes
+                  </label>
+                  <RadioGroupItem
+                    className={radio}
+                    id="offlineDemoDay0"
+                    value="0"
+                    onClick={() => field.onChange("0")}
+                  >
+                    <RadioGroupIndicator className={radioChecked} />
+                  </RadioGroupItem>
+                  <label className={radioLabel} htmlFor="offlineDemoDay0">
+                    No
+                  </label>
+                </RadioGroup>
+              )}
+              {...register("offlineDemoDay")}
+            />
             <Select
-              id="select-role"
-              label="You’re going to play"
+              id="select-nation"
+              label="Country"
               required
               isSingle
-              options={RoleSetOptions}
-              error={errors["role"]}
+              options={COUNTRIES}
+              error={errors["nation"]}
               control={control}
-              {...register("role")}
+              {...register("nation")}
             />
-          )}
-          <Select
-            id="select-roles"
-            label="Roles Needed"
-            isSingle
-            options={RoleSetOptions}
-            error={errors["roles"]}
-            control={control}
-            {...register("roles")}
-          />
-          <Select
-            id="select-skills"
-            label="Skill Needed"
-            maxSelections={10}
-            options={SkillSetOptions}
-            error={errors["skills"]}
-            control={control}
-            {...register("skills")}
-          />
-          {/* <p className="block body-4 py-1 text-grey-500 font-bold mb-1">
+            <Input
+              label="Project Title"
+              required
+              placeholder="Enter your project title"
+              error={errors["title"]}
+              {...register("title")}
+            />
+            <Select
+              id="select-tags"
+              label="Project Tag"
+              required
+              maxSelections={5}
+              options={hackProjectTagSetOptions}
+              error={errors["tags"]}
+              control={control}
+              {...register("tags")}
+            />
+            <TextArea
+              label="Project Description"
+              required
+              placeholder="Enter your project description"
+              error={errors["description"]}
+              {...register("description")}
+            />
+            {isEditing ? null : (
+              <Select
+                id="select-role"
+                label="You’re going to play"
+                required
+                isSingle
+                options={RoleSetOptions}
+                error={errors["role"]}
+                control={control}
+                {...register("role")}
+              />
+            )}
+            <Select
+              id="select-roles"
+              label="Roles Needed"
+              isSingle
+              options={RoleSetOptions}
+              error={errors["roles"]}
+              control={control}
+              {...register("roles")}
+            />
+            <Select
+              id="select-skills"
+              label="Skill Needed"
+              maxSelections={10}
+              options={SkillSetOptions}
+              error={errors["skills"]}
+              control={control}
+              {...register("skills")}
+            />
+            <TextArea
+              label="Awards, grants or funding received in the past (if any)"
+              required
+              placeholder="Enter your past awards, grants or funding information"
+              error={errors["pastGrant"]}
+              {...register("pastGrant")}
+            />
+            <Input
+              label="When was your project built? (please specify the year and month.)"
+              type="month"
+              max={new Date().toISOString().substring(0, 7)}
+              pattern="[0-9]{4}-[0-9]{2}"
+              placeholder="YYYY-MM"
+              required
+              error={errors["builtDate"]}
+              {...register("builtDate")}
+            />
+            <Input
+              label="GitHub Link"
+              required
+              placeholder="Enter your GitHub link"
+              error={errors["githubURI"]}
+              {...register("githubURI")}
+            />
+            <Input
+              label="Demo"
+              placeholder="Enter your demo link"
+              {...register("demoURI")}
+            />
+            <Input
+              label="Official Website"
+              placeholder="Enter your official website link"
+              {...register("siteURI")}
+            />
+            <Input
+              label="WeChat / Telegram"
+              required
+              placeholder="Enter your WeChat / Telegram ID"
+              error={errors["contact"]}
+              {...register("contact")}
+            />
+            <Input
+              label="From which community or person were you recommended to register? (if any)"
+              placeholder="Enter the community or person's name"
+              {...register("recommendedFrom")}
+            />
+          </div>
+          <div className="flex justify-between">
+            {isEditing ? (
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={onDismiss}
+              >
+                Dismiss
+              </button>
+            ) : null}
+            <div className="flex-1" />
+            <div className="flex gap-2">
+              <button
+                disabled={isCallingAPI}
+                className="btn btn-secondary"
+                type="button"
+                onClick={close}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-primary" disabled={isCallingAPI}>
+                {isEditing ? "Update" : "Create"}
+              </button>
+            </div>
+          </div>
+        </form>
+      ) : (
+        <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
+          <div className="max-h-[60vh] overflow-y-auto mb-4">
+            <Input
+              label="Team Name"
+              placeholder="Enter your team name"
+              required
+              error={errors["name"]}
+              {...register("name")}
+            />
+            <Select
+              id="select-nation"
+              label="Country"
+              required
+              isSingle
+              options={COUNTRIES}
+              error={errors["nation"]}
+              control={control}
+              {...register("nation")}
+            />
+            <Input
+              label="Project Title"
+              required
+              placeholder="Enter your project title"
+              error={errors["title"]}
+              {...register("title")}
+            />
+            <Select
+              id="select-tags"
+              label="Project Tag"
+              required
+              maxSelections={5}
+              options={hackProjectTagSetOptions}
+              error={errors["tags"]}
+              control={control}
+              {...register("tags")}
+            />
+            <TextArea
+              label="Project Description"
+              required
+              placeholder="Enter your project description"
+              error={errors["description"]}
+              {...register("description")}
+            />
+            {isEditing ? null : (
+              <Select
+                id="select-role"
+                label="You’re going to play"
+                required
+                isSingle
+                options={RoleSetOptions}
+                error={errors["role"]}
+                control={control}
+                {...register("role")}
+              />
+            )}
+            <Select
+              id="select-roles"
+              label="Roles Needed"
+              isSingle
+              options={RoleSetOptions}
+              error={errors["roles"]}
+              control={control}
+              {...register("roles")}
+            />
+            <Select
+              id="select-skills"
+              label="Skill Needed"
+              maxSelections={10}
+              options={SkillSetOptions}
+              error={errors["skills"]}
+              control={control}
+              {...register("skills")}
+            />
+            {/* <p className="block body-4 py-1 text-grey-500 font-bold mb-1">
             Have you participated in a hackathon before? *
           </p>
           <Controller control={control} render={({ field }) => (
@@ -355,77 +572,80 @@ export default function TeamCreateDialog({
               </label>
             </RadioGroup>
           )} {...register('experience')} /> */}
-          <TextArea
-            label="Awards, grants or funding received in the past (if any)"
-            required
-            placeholder="Enter your past awards, grants or funding information"
-            {...register("pastGrant")}
-          />
-          <Input
-            label="When was your project built? (please specify the year and month.)"
-            type="month"
-            max={new Date().toISOString().substring(0, 7)}
-            pattern="[0-9]{4}-[0-9]{2}"
-            placeholder="YYYY-MM"
-            required
-            {...register("builtDate")}
-          />
-          <Input
-            label="Deck"
-            required
-            placeholder="Enter your deck link"
-            error={errors["deckURI"]}
-            {...register("deckURI")}
-          />
-          <Input
-            label="Demo"
-            placeholder="Enter your demo link"
-            {...register("demoURI")}
-          />
-          <Input
-            label="Official Website"
-            placeholder="Enter your official website link"
-            {...register("siteURI")}
-          />
-          <Input
-            label="WeChat / Telegram"
-            required
-            placeholder="Enter your WeChat / Telegram ID"
-            error={errors["contact"]}
-            {...register("contact")}
-          />
-          <Input
-            label="From which community or person were you recommended to register? (if any)"
-            placeholder="Enter the community or person's name"
-            {...register("recommendedFrom")}
-          />
-        </div>
-        <div className="flex justify-between">
-          {isEditing ? (
-            <button
-              className="btn btn-danger"
-              type="button"
-              onClick={onDismiss}
-            >
-              Dismiss
-            </button>
-          ) : null}
-          <div className="flex-1" />
-          <div className="flex gap-2">
-            <button
-              disabled={isCallingAPI}
-              className="btn btn-secondary"
-              type="button"
-              onClick={close}
-            >
-              Cancel
-            </button>
-            <button className="btn btn-primary" disabled={isCallingAPI}>
-              {isEditing ? "Update" : "Create"}
-            </button>
+            <TextArea
+              label="Awards, grants or funding received in the past (if any)"
+              required
+              placeholder="Enter your past awards, grants or funding information"
+              error={errors["pastGrant"]}
+              {...register("pastGrant")}
+            />
+            <Input
+              label="When was your project built? (please specify the year and month.)"
+              type="month"
+              max={new Date().toISOString().substring(0, 7)}
+              pattern="[0-9]{4}-[0-9]{2}"
+              placeholder="YYYY-MM"
+              required
+              error={errors["builtDate"]}
+              {...register("builtDate")}
+            />
+            <Input
+              label="Deck"
+              required
+              placeholder="Enter your deck link"
+              error={errors["deckURI"]}
+              {...register("deckURI")}
+            />
+            <Input
+              label="Demo"
+              placeholder="Enter your demo link"
+              {...register("demoURI")}
+            />
+            <Input
+              label="Official Website"
+              placeholder="Enter your official website link"
+              {...register("siteURI")}
+            />
+            <Input
+              label="WeChat / Telegram"
+              required
+              placeholder="Enter your WeChat / Telegram ID"
+              error={errors["contact"]}
+              {...register("contact")}
+            />
+            <Input
+              label="From which community or person were you recommended to register? (if any)"
+              placeholder="Enter the community or person's name"
+              {...register("recommendedFrom")}
+            />
           </div>
-        </div>
-      </form>
+          <div className="flex justify-between">
+            {isEditing ? (
+              <button
+                className="btn btn-danger"
+                type="button"
+                onClick={onDismiss}
+              >
+                Dismiss
+              </button>
+            ) : null}
+            <div className="flex-1" />
+            <div className="flex gap-2">
+              <button
+                disabled={isCallingAPI}
+                className="btn btn-secondary"
+                type="button"
+                onClick={close}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-primary" disabled={isCallingAPI}>
+                {isEditing ? "Update" : "Create"}
+              </button>
+            </div>
+          </div>
+        </form>
+      )}
     </div>
   );
 }

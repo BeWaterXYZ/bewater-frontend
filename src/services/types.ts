@@ -277,6 +277,8 @@ export interface Project {
   siteURI?: string;
   contact?: string;
   recommendedFrom?: string;
+  membersCount?: number;
+  offlineDemoDay?: number;
 }
 
 export interface TeamMember {
