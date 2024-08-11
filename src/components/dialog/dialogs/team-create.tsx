@@ -43,9 +43,9 @@ const schema = (challengeId?: string) =>
       roles: validationSchema.roles,
       skills: validationSchema.skills,
       nation: z.array(z.string()).length(1, ""),
-      pastGrant: validationSchema.text,
+      pastGrant: validationSchema.str,
       builtDate: z.string(),
-      deckURI: challengeId === "136" ? z.string() : validationSchema.text,
+      deckURI: challengeId === "136" ? z.string() : validationSchema.str,
       demoURI: z.string(),
       siteURI: z.string(),
       githubURI: challengeId === "136" ? validationSchema.text : z.string(),
@@ -405,9 +405,9 @@ export default function TeamCreateDialog({
             />
             <TextArea
               label="Awards, grants or funding received in the past (if any)"
-              required
+              // required
               placeholder="Enter your past awards, grants or funding information"
-              error={errors["pastGrant"]}
+              // error={errors["pastGrant"]}
               {...register("pastGrant")}
             />
             <Input
@@ -574,9 +574,9 @@ export default function TeamCreateDialog({
           )} {...register('experience')} /> */}
             <TextArea
               label="Awards, grants or funding received in the past (if any)"
-              required
+              // required
               placeholder="Enter your past awards, grants or funding information"
-              error={errors["pastGrant"]}
+              // error={errors["pastGrant"]}
               {...register("pastGrant")}
             />
             <Input
@@ -591,9 +591,9 @@ export default function TeamCreateDialog({
             />
             <Input
               label="Deck"
-              required
+              // required
               placeholder="Enter your deck link"
-              error={errors["deckURI"]}
+              // error={errors["deckURI"]}
               {...register("deckURI")}
             />
             <Input
