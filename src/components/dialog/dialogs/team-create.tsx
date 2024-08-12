@@ -194,6 +194,7 @@ export default function TeamCreateDialog({
           projectName: formData.title,
           projectDescription: formData.description,
           projectTags: formData.tags,
+          projectBountyTrack: formData.bountyTrack,
           openingRoles: formData.roles,
           skills: formData.skills,
           nation: formData.nation[0],
