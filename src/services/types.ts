@@ -118,6 +118,7 @@ export interface Challenge {
   yotadata?: any;
   joinLink?: string;
   track?: string[];
+  otherInfo?: {[key:string]: unknown};
   linkText?: string;
   result?: Array<ChallengeTrackResult>;
   agenda?: Array<AgendaDay>;
@@ -258,6 +259,7 @@ export interface Project {
   name: string;
   description: string;
   tags: string[];
+  bountyTrack?: string[];
   status: ProjectStatus;
   teamId: string;
   team: Team;
