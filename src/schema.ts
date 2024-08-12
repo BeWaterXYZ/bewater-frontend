@@ -33,6 +33,7 @@ export const validationSchema = {
     .array(SkillSetScheme)
     .max(10, { message: "You can only choose 10 skills" }),
   tags: z.string().array().min(1, { message: "You need to choose one tag" }),
+  bountyTrack: z.string().array().min(1, { message: "You need to choose one track" }),
   date: z
     .string()
     .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),

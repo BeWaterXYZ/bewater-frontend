@@ -40,6 +40,10 @@ const schema = (challengeId?: string) =>
       description: validationSchema.text,
       role: validationSchema.role,
       tags: validationSchema.tags,
+      bountyTrack:
+        challengeId === "136"
+          ? validationSchema.bountyTrack
+          : z.array(z.string()),
       roles: validationSchema.roles,
       skills: validationSchema.skills,
       nation: z.array(z.string()).length(1, ""),
@@ -73,6 +77,7 @@ export function useTeamCreateForm(team?: Team & Project, challengeId?: string) {
       description: team?.project.description ?? "",
       role: team ? ["Frontend Developer"] : [],
       tags: team?.project.tags ?? [],
+      bountyTrack: team?.project.bountyTrack ?? [],
       roles: team?.openingRoles ?? [],
       skills: team?.skills ?? [],
       nation: team?.nation ? [team?.nation] : [],
@@ -119,6 +124,25 @@ export default function TeamCreateDialog({
   ) {
     hackProjectTagSetOptions = obtainProjectTagOptions(
       data.team.challenge.track
+    );
+  }
+
+  let hackBountyTrackSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
+  if (
+    data?.challenge?.otherInfo &&
+    (data.challenge.otherInfo.bountyTrack as string[]).length > 0
+  ) {
+    hackBountyTrackSetOptions = obtainProjectTagOptions(
+      data.challenge.otherInfo.bountyTrack as string[]
+    );
+  }
+  if (
+    isEditing &&
+    data?.challenge?.otherInfo &&
+    (data.challenge.otherInfo.bountyTrack as string[]).length > 0
+  ) {
+    hackBountyTrackSetOptions = obtainProjectTagOptions(
+      data.challenge.otherInfo.bountyTrack as string[]
     );
   }
 
@@ -170,6 +194,7 @@ export default function TeamCreateDialog({
           projectName: formData.title,
           projectDescription: formData.description,
           projectTags: formData.tags,
+          projectBountyTrack: formData.bountyTrack,
           openingRoles: formData.roles,
           skills: formData.skills,
           nation: formData.nation[0],
@@ -363,11 +388,21 @@ export default function TeamCreateDialog({
               id="select-tags"
               label="Project Tag"
               required
-              maxSelections={5}
+              isSingle
               options={hackProjectTagSetOptions}
               error={errors["tags"]}
               control={control}
               {...register("tags")}
+            />
+            <Select
+              id="select-bounty-track"
+              label="Bounty Track"
+              required
+              maxSelections={5}
+              options={hackBountyTrackSetOptions}
+              error={errors["bountyTrack"]}
+              control={control}
+              {...register("bountyTrack")}
             />
             <TextArea
               label="Project Description"
