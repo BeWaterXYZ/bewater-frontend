@@ -494,6 +494,8 @@ export default function Page({ params, mode, frameWidth }: any) {
                       key={i}
                     >
                       <Image
+                        height={256}
+                        width={256}
                         src={typeof sp === "string" ? sp : sp.uri}
                         className={clsx("", {
                           "h-10": !isMobile,
@@ -634,6 +636,8 @@ export default function Page({ params, mode, frameWidth }: any) {
                     <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
                       {(s.members ?? []).map((member, i) => (
                         <Image
+                          height={256}
+                          width={256}
                           src={typeof member === "string" ? member : member.uri}
                           key={i}
                           className={clsx("mb-4 mx-4", {
