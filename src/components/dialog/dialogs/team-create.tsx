@@ -226,6 +226,7 @@ export default function TeamCreateDialog({
           projectName: formData.title,
           projectDescription: formData.description,
           projectTags: formData.tags,
+          projectBountyTrack: formData.bountyTrack,
           challengeId: data.challenge!.id,
           openingRoles: formData.roles,
           skills: formData.skills,
@@ -303,7 +304,7 @@ export default function TeamCreateDialog({
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
         {isEditing ? "Edit Team" : "Create a team"}
       </p>
-      {data.challenge?.id === "136" ? (
+      {data.challenge?.id === "136" || data.team?.challengeId === "136" ? (
         <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
           <div className="max-h-[60vh] overflow-y-auto mb-4">
             <Input
