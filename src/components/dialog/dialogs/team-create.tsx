@@ -138,11 +138,11 @@ export default function TeamCreateDialog({
   }
   if (
     isEditing &&
-    data?.challenge?.otherInfo &&
-    (data.challenge.otherInfo.bountyTrack as string[]).length > 0
+    data?.team?.challenge?.otherInfo &&
+    (data.team.challenge.otherInfo.bountyTrack as string[]).length > 0
   ) {
     hackBountyTrackSetOptions = obtainProjectTagOptions(
-      data.challenge.otherInfo.bountyTrack as string[]
+      data.team.challenge.otherInfo.bountyTrack as string[]
     );
   }
 
