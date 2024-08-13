@@ -70,7 +70,7 @@ export type Inputs = z.infer<ReturnType<typeof schema>>;
 
 export function useTeamCreateForm(team?: Team & Project, challengeId?: string) {
   return useForm<Inputs>({
-    resolver: zodResolver(schema(challengeId)),
+    resolver: zodResolver(schema(challengeId || team?.challengeId)),
     defaultValues: {
       name: team?.name ?? "",
       title: team?.project.name ?? "",
@@ -396,7 +396,7 @@ export default function TeamCreateDialog({
               {...register("tags")}
             />
             <Select
-              id="select-bounty-track"
+              id="select-bountyTrack"
               label="Bounty Track"
               required
               maxSelections={5}

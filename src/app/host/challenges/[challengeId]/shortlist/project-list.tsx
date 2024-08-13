@@ -92,6 +92,7 @@ export function ProjectList({
         项目名称: it.name,
         项目描述: it.description,
         赛道: it?.tags.join(",") ?? "",
+        bounty赛道: it?.bountyTrack?.join(",") ?? "",
         Demo地址: it.demoURI ?? "",
         Deck地址: it.deckURI ?? "",
         GitHub地址: it.githubURI ?? "",
