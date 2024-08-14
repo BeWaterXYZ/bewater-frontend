@@ -322,6 +322,7 @@ export default function TeamCreateDialog({
                   label="Team Members Count"
                   placeholder="Enter your team members count"
                   type="number"
+                  value={field.value}
                   min="1"
                   required
                   error={errors["membersCount"]}

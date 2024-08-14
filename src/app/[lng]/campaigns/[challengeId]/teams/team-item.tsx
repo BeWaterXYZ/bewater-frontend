@@ -28,6 +28,14 @@ export function TeamItem({ challenge, team, lng }: TeamItemProps) {
               ))}
             </div>
           </div>
+          {team.project.bountyTrack && team.project.bountyTrack.length > 0 && (
+            <div className="flex items-center flex-wrap">
+              <span className="body-2 text-grey-300">Bounty Track:</span>
+              {team.project.bountyTrack?.map((tag) => (
+                <TagProjectTag key={tag} label={tag} />
+              ))}
+            </div>
+          )}
           <div className="body-2 text-grey-300"> {team.name}</div>
         </div>
         <div className="flex flex-col p-4 h-full">
