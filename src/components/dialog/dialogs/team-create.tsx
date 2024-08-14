@@ -40,10 +40,11 @@ const schema = (challengeId?: string) =>
       description: validationSchema.text,
       role: validationSchema.role,
       tags: validationSchema.tags,
-      bountyTrack:
-        challengeId === "136"
-          ? validationSchema.bountyTrack
-          : z.array(z.string()),
+      // bountyTrack:
+      //   challengeId === "136"
+      //     ? validationSchema.bountyTrack
+      //     : z.array(z.string()),
+      bountyTrack: z.array(z.string()),
       roles: validationSchema.roles,
       skills: validationSchema.skills,
       nation: z.array(z.string()).length(1, ""),
@@ -398,7 +399,7 @@ export default function TeamCreateDialog({
             <Select
               id="select-bountyTrack"
               label="Bounty Track"
-              required
+              // required
               maxSelections={5}
               options={hackBountyTrackSetOptions}
               error={errors["bountyTrack"]}
