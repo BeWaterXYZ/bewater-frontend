@@ -37,11 +37,11 @@ export function PrizeSection({
             </p>
             <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
               <div className="flex z-[1] flex-col items-center gap-5 w-full body-3 text-white/60">
-                NEAR is seeking innovative projects that leverage NEAR&rsquo;s AI tech
-                stack and ecosystem partner integrations to push the boundaries
-                of user-owned AI and decentralized applications. Ideal
-                submissions will demonstrate creative use of AI experiences,
-                such as:
+                NEAR is seeking innovative projects that leverage NEAR&rsquo;s
+                AI tech stack and ecosystem partner integrations to push the
+                boundaries of user-owned AI and decentralized applications.
+                Ideal submissions will demonstrate creative use of AI
+                experiences, such as:
               </div>
               <ul className="pl-4 mt-3 list-disc flex z-[1] flex-col items-center w-full body-3 text-white/60">
                 <li>
@@ -173,13 +173,9 @@ https://templates.mintbase.xyz/bounty"
                                       </span>
                                     ) : awardAssort.name ===
                                       "Hyperbolic Bounty" ? (
-                                      <span>
-                                        ${formatMoney(award.amount)}
-                                      </span>
+                                      <span>${formatMoney(award.amount)}</span>
                                     ) : awardAssort.name === "Bitte Bounty" ? (
-                                      <span>
-                                        ${formatMoney(award.amount)}
-                                      </span>
+                                      <span>${formatMoney(award.amount)}</span>
                                     ) : awardAssort.name ===
                                       "Exabits Bounty" ? (
                                       <span>
@@ -221,13 +217,14 @@ https://templates.mintbase.xyz/bounty"
                   key={i}
                 >
                   {/* // fixme/ */}
-                  <Image
+                  {/* <Image
                     src={sp}
                     className="h-8 md:h-10 w-fit"
                     alt="Sponsors"
                     height={32}
                     width={0}
-                  />
+                  /> */}
+                  <img src={sp} alt="Sponsors" className="h-8 md:h-10 object-cover"/>
                 </div>
               );
             })}
