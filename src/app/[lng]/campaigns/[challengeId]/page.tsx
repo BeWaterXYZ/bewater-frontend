@@ -19,6 +19,7 @@ import { PrizeSection as PrizeSection19 } from "./prize-section/63c82bd12ddc570f
 import { PrizeSection as PrizeSection125 } from "./prize-section/campaign-125";
 import { PrizeSection as PrizeSection130 } from "./prize-section/campaign-130";
 import { PrizeSection as PrizeSection136 } from "./prize-section/campaign-136";
+import { PrizeSection as PrizeSection134 } from "./prize-section/campaign-134";
 import { isMileStoneEnabled, isWorkshop } from "./utils";
 
 import Balancer from "react-wrap-balancer";
@@ -154,6 +155,7 @@ export default async function ChallengeIntro({ params }: any) {
             )}
           </div>
         </div>
+        {/* Contact information */}
         <div>
           {challenge.id === "7" ? (
             <>
@@ -345,6 +347,8 @@ export default async function ChallengeIntro({ params }: any) {
             <ScheduleSection42 />
           ) : challenge.id === "125" ? (
             <PrizeSection125 t={t} lng={lng} challenge={challenge} />
+          ) : challenge.id === "134" ? (
+            <PrizeSection134 t={t} lng={lng} challenge={challenge} />
           ) : challenge.id === "130" ? (
             <PrizeSection130 t={t} lng={lng} challenge={challenge} />
           ) : challenge.id === "136" ? (

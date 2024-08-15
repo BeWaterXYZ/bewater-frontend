@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    icons: "/icons/favicon.png",
+    icons: "/logo/favicon.png",
     title: "BeWater - I Build Therefore I Am",
     description:
       "BeWater is the ultimate builder community based on the SOP management system we built for open innovation campaigns including hackathon, design contest, demo day and more. It serves cutting-edge fields and also connects traditional industries. BeWater engages builders with different skill sets to build a better future together.",
