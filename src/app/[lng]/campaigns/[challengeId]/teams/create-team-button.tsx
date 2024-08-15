@@ -34,13 +34,16 @@ export function CreateTeamButton({
       clerk.redirectToSignIn();
       return;
     }
-
-    showDialog("team_create", { challenge });
+    if (challenge.id == "134") {
+      window.open("https://forms.gle/xKdUoNv3Z6PfEyV17", "_blank");
+    } else {
+      showDialog("team_create", { challenge });
+    }
   };
 
   return (
     <button className="btn btn-primary" onClick={onClick} disabled={disabled}>
-      Create a team
+      {challenge.id == "134" ? "Submit a team" : "Create a team"}
     </button>
   );
 }
