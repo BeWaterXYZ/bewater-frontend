@@ -37,7 +37,7 @@ export function PrizeSection({
             </p>
             <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
               <div className="flex z-[1] flex-col items-center gap-5 w-full body-3 text-white/60">
-                NEAR is seeking innovative projects that leverage NEAR's AI tech
+                NEAR is seeking innovative projects that leverage NEAR&rsquo;s AI tech
                 stack and ecosystem partner integrations to push the boundaries
                 of user-owned AI and decentralized applications. Ideal
                 submissions will demonstrate creative use of AI experiences,
@@ -123,7 +123,7 @@ https://templates.mintbase.xyz/bounty"
                   Exabits provides a revolutionary platform that democratizes
                   access to AI GPU compute resources. By tokenizing compute,
                   Exabits allows individual users to own and benefit from
-                  high-performance AI infrastructure. Participants'
+                  high-performance AI infrastructure. Participants&apos;
                   contributions go towards the expansion of enterprise-grade GPU
                   clusters, enhancing compute capacity and efficiency while
                   earning maximum returns.
