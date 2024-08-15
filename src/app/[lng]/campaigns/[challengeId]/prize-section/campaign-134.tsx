@@ -174,11 +174,11 @@ https://templates.mintbase.xyz/bounty"
                                     ) : awardAssort.name ===
                                       "Hyperbolic Bounty" ? (
                                       <span>
-                                        ${formatMoney(award.amount)} USD
+                                        ${formatMoney(award.amount)}
                                       </span>
                                     ) : awardAssort.name === "Bitte Bounty" ? (
                                       <span>
-                                        ${formatMoney(award.amount)} USD
+                                        ${formatMoney(award.amount)}
                                       </span>
                                     ) : awardAssort.name ===
                                       "Exabits Bounty" ? (
