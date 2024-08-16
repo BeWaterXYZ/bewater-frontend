@@ -137,6 +137,27 @@ https://templates.mintbase.xyz/bounty"
               </div>
             </div>
           </div>
+          <div className="flex flex-col gap-4 md:gap-7 items-center">
+            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+              Nillion Bounty
+            </p>
+            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+              <div className="flex flex-col gap-5 w-full body-3 text-white/60 z-10 [&_a]:border-b [&_a]:border-b-white/60 [&_a]:break-all">
+                <p>
+                  Nillion developed Nada-AI, a Python library designed for AI
+                  and ML on the Nillion Network. With Nada AI, you can integrate
+                  supported models and execute “blind inference,” where the
+                  model state stays hidden from the party providing new input.
+                </p>
+                <p>
+                  Nillion Bounty Track Guideline：:&nbsp;
+                  <Link href="https://docs.google.com/document/d/1s50EKpfQzoU0l_0pTDtUkWCuDi3--0R3BInC0qeDjZs/edit#heading=h.nuebfc90ax7o">
+                    https://docs.google.com/document/d/1s50EKpfQzoU0l_0pTDtUkWCuDi3--0R3BInC0qeDjZs/edit#heading=h.nuebfc90ax7o
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="relative w-full flex flex-col gap-10 items-center">
@@ -224,7 +245,11 @@ https://templates.mintbase.xyz/bounty"
                     height={32}
                     width={0}
                   /> */}
-                  <img src={sp} alt="Sponsors" className="h-8 md:h-10 object-cover"/>
+                  <img
+                    src={sp}
+                    alt="Sponsors"
+                    className="h-8 md:h-10 object-cover"
+                  />
                 </div>
               );
             })}
