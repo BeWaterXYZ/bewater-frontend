@@ -56,6 +56,16 @@ export function ProjectItem({
           }/projects/${project.id}`}
         >
           <h2 className="heading-6 mb-2">{project.name}</h2>
+          {project.bountyTrack && project.bountyTrack.length > 0 && (
+            <div className="flex items-center flex-wrap mb-2">
+              <span className="body-2 !text-xs text-grey-300">
+                Bounty Track:
+              </span>
+              {project.bountyTrack?.map((tag) => (
+                <TagProjectTag key={tag} label={tag} />
+              ))}
+            </div>
+          )}
           <p className="body-3 text-gray-400 text-left ">{desc}</p>
         </Link>
         <div className="h-[20px] invisible flex-1">_</div>

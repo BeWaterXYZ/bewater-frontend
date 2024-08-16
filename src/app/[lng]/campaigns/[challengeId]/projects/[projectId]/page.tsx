@@ -113,6 +113,14 @@ export default function Page({ params }: any) {
               <TagProjectTag label={tag} key={tag} />
             ))}
           </div>
+          {project.bountyTrack && project.bountyTrack.length > 0 && (
+            <div className="flex items-center flex-wrap mt-2">
+              <span className="body-2 !text-xs text-grey-300">Bounty Track:</span>
+              {project.bountyTrack?.map((tag) => (
+                <TagProjectTag key={tag} label={tag} />
+              ))}
+            </div>
+          )}
           <Rate project={project} challenge={challenge} />
         </div>
       </div>
