@@ -8,6 +8,7 @@ import {
   updateProject,
   updateProjectRating,
   putProjectStatus,
+  getProjects,
 } from "./project";
 import { ChallengeID, ProjectId, TeamID, ProjectStatus } from "./types";
 
@@ -16,6 +17,14 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
     queryKey: ["campaigns", challengeId, "projects"],
     queryFn: async () => {
       return getChallengeTProjects(challengeId);
+    },
+  });
+}
+export function useFetchProjects() {
+  return useQuery({
+    queryKey: ["projects"],
+    queryFn: async () => {
+      return getProjects();
     },
   });
 }

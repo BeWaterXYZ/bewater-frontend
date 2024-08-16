@@ -17,6 +17,14 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
   return data.projects;
 }
 
+export async function getProjects() {
+  const { data } = await agentAuthed.get<{ projects: Project[] }>(
+    `/project`,
+    {}
+  );
+  return data.projects;
+}
+
 export async function getProject(projectId: ProjectId) {
   const { data } = await agentAnon.get<{ project: Project }>(
     `/project/${projectId}`,
