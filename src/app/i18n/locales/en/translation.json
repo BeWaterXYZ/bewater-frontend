@@ -6,7 +6,8 @@
     "text": ""
   },
   "header": {
-    "campaign": "Campaigns"
+    "campaign": "Campaigns",
+    "project": "Projects"
   },
   "footer": {
     "dot": ".",

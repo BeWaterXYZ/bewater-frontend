@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "@/app/i18n";
-
+import Menu from "./menu";
 export const BeWaterLogo = async (params: { lng: string }) => {
   const lng = (params || {}).lng ? params.lng : "en";
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -9,6 +9,7 @@ export const BeWaterLogo = async (params: { lng: string }) => {
 
   return (
     <div className="flex flex-row relative">
+      <Menu lng={lng}></Menu>
       <Link href="https://bewater.xyz">
         <Image
           src="/logo/bewater_black.svg"
