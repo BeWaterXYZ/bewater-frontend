@@ -82,11 +82,10 @@ export function PrizeSection({
                 </p>
                 <p>
                   Bitte Bounty Track Guideline：:&nbsp;
-                  <Link
-                    href="https://docs.google.com/document/d/1RGtaciIHUL9iyqTyFAitwzWJr7e1OV7_fuuJlz8Nk7c/edit
-https://templates.mintbase.xyz/bounty"
-                  >
+                  <Link href="https://docs.google.com/document/d/1RGtaciIHUL9iyqTyFAitwzWJr7e1OV7_fuuJlz8Nk7c/edit">
                     https://docs.google.com/document/d/1RGtaciIHUL9iyqTyFAitwzWJr7e1OV7_fuuJlz8Nk7c/edit
+                  </Link>
+                  <Link href="https://templates.mintbase.xyz/bounty">
                     https://templates.mintbase.xyz/bounty
                   </Link>
                 </p>
