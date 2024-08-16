@@ -81,10 +81,12 @@ export function PrizeSection({
                   accessible to everyone.
                 </p>
                 <p>
-                  Bitte Bounty Track Guideline：:&nbsp;
+                  Bitte Bounty Track Guideline:&nbsp;
+                  <br />
                   <Link href="https://docs.google.com/document/d/1RGtaciIHUL9iyqTyFAitwzWJr7e1OV7_fuuJlz8Nk7c/edit">
                     https://docs.google.com/document/d/1RGtaciIHUL9iyqTyFAitwzWJr7e1OV7_fuuJlz8Nk7c/edit
                   </Link>
+                  <br />
                   <Link href="https://templates.mintbase.xyz/bounty">
                     https://templates.mintbase.xyz/bounty
                   </Link>
@@ -104,7 +106,8 @@ export function PrizeSection({
                   asset types within AI products to tackle incentive issues.
                 </p>
                 <p>
-                  Hyperbolic Bounty Track Guideline：:&nbsp;
+                  Hyperbolic Bounty Track Guideline:&nbsp;
+                  <br />
                   <Link href="https://docs.google.com/document/d/1Ltrr-fGsjrA7uem7E-bqr2ABJ5FZ5iPZc6RW1XWzrWw/edit#heading=h.jslorxj9v5qa">
                     https://docs.google.com/document/d/1Ltrr-fGsjrA7uem7E-bqr2ABJ5FZ5iPZc6RW1XWzrWw/edit#heading=h.jslorxj9v5qa
                   </Link>
@@ -128,7 +131,8 @@ export function PrizeSection({
                   earning maximum returns.
                 </p>
                 <p>
-                  Exabits Bounty Track Guideline：:&nbsp;
+                  Exabits Bounty Track Guideline:&nbsp;
+                  <br />
                   <Link href="https://docs.google.com/document/d/1AgaUysbixQA6wZZqzFY-xHiHQAZbn-IZaFqbdA6PQqQ/edit?usp=sharing">
                     https://docs.google.com/document/d/1AgaUysbixQA6wZZqzFY-xHiHQAZbn-IZaFqbdA6PQqQ/edit?usp=sharing
                   </Link>
@@ -149,7 +153,8 @@ export function PrizeSection({
                   model state stays hidden from the party providing new input.
                 </p>
                 <p>
-                  Nillion Bounty Track Guideline：:&nbsp;
+                  Nillion Bounty Track Guideline:&nbsp;
+                  <br />
                   <Link href="https://docs.google.com/document/d/1s50EKpfQzoU0l_0pTDtUkWCuDi3--0R3BInC0qeDjZs/edit#heading=h.nuebfc90ax7o">
                     https://docs.google.com/document/d/1s50EKpfQzoU0l_0pTDtUkWCuDi3--0R3BInC0qeDjZs/edit#heading=h.nuebfc90ax7o
                   </Link>
