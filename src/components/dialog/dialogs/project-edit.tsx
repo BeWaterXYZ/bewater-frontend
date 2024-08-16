@@ -18,6 +18,7 @@ const schema = z
     title: validationSchema.text,
     description: validationSchema.text,
     tags: validationSchema.tags,
+    bountyTrack: z.array(z.string()),
   })
   .required();
 
@@ -43,6 +44,7 @@ export default function ProjectEditDialog({
         projectName: formData.title,
         projectDescription: formData.description,
         projectTags: formData.tags,
+        projectBountyTrack: formData.bountyTrack,
       };
       await mutation.mutateAsync({ teamId: data.team?.id!, payload });
       addToast({
@@ -68,6 +70,7 @@ export default function ProjectEditDialog({
       title: data.name ?? "",
       description: data.description ?? "",
       tags: data.tags ?? [],
+      bountyTrack: data.bountyTrack ?? [],
     },
   });
   data.team;
@@ -76,6 +79,16 @@ export default function ProjectEditDialog({
   if (data.team?.challenge?.track && data.team.challenge.track.length > 0) {
     hackProjectTagSetOptions = obtainProjectTagOptions(
       data.team.challenge.track
+    );
+  }
+
+  let hackBountyTrackSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
+  if (
+    data?.team?.challenge?.otherInfo &&
+    (data.team.challenge.otherInfo.bountyTrack as string[]).length > 0
+  ) {
+    hackBountyTrackSetOptions = obtainProjectTagOptions(
+      data.team.challenge.otherInfo.bountyTrack as string[]
     );
   }
 
@@ -95,6 +108,7 @@ export default function ProjectEditDialog({
         <Select
           label="Project Tag"
           required
+          isSingle={data.team.challengeId === "136" ? true : false}
           maxSelections={5}
           options={hackProjectTagSetOptions}
           error={errors["tags"]}
@@ -102,6 +116,18 @@ export default function ProjectEditDialog({
           {...register("tags")}
         />
 
+        {data.team.challengeId === "136" && (
+          <Select
+            id="select-bountyTrack"
+            label="Bounty Track"
+            // required
+            maxSelections={5}
+            options={hackBountyTrackSetOptions}
+            error={errors["bountyTrack"]}
+            control={control}
+            {...register("bountyTrack")}
+          />
+        )}
         <TextArea
           label="Project Description"
           placeholder="Enter your project description"
