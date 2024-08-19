@@ -162,6 +162,29 @@ export function PrizeSection({
               </div>
             </div>
           </div>
+          <div className="flex flex-col gap-4 md:gap-7 items-center">
+            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+              Masa Bounty
+            </p>
+            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+              <div className="flex flex-col gap-5 w-full body-3 text-white/60 z-10 [&_a]:border-b [&_a]:border-b-white/60 [&_a]:break-all">
+                <p>
+                  Masa is a decentralized network for Fair AI, where people earn
+                  by contributing data. Leveraging a competitive global network
+                  of workers and validators, Masa empowers AI developers
+                  anywhere to train generalized and specialized artificial
+                  intelligence with the world&rsquo;s data.
+                </p>
+                <p>
+                  Masa Bounty Track Guideline:&nbsp;
+                  <br />
+                  <Link href="https://docs.google.com/document/d/13DWhQ49hZNPs6gQ7AXYyVOBp4hW1FWKAoSFbag6kzWU/edit#heading=h.mv2poiu9yjlx">
+                    https://docs.google.com/document/d/13DWhQ49hZNPs6gQ7AXYyVOBp4hW1FWKAoSFbag6kzWU/edit#heading=h.mv2poiu9yjlx
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="relative w-full flex flex-col gap-10 items-center">
