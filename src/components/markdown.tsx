@@ -46,7 +46,7 @@ export default function Markdown(props: Props) {
             ol: {
               component: "ol",
               props: {
-                className: "list-decimal ml-5",
+                className: "list-decimal list-inside",
               },
             },
             ul: {
@@ -58,7 +58,7 @@ export default function Markdown(props: Props) {
             li: {
               component: "li",
               props: {
-                className: " text-[14px] my-2",
+                className: " text-[14px] my-2 [&_p]:inline",
               },
             },
             p: {
