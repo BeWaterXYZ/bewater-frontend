@@ -6,7 +6,7 @@ import {
 import { Project, Challenge } from "@/services/types";
 import { FilterTag } from "@/components/filter/FilterTag";
 import { ShortlistTag } from "@/components/filter/ShortlistTag";
-import { useQueryBuilder } from "../query";
+import { useQueryBuilder } from "./query";
 
 export function ProjectFilter({
   projects,

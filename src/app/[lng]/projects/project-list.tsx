@@ -76,7 +76,7 @@ function filterAndSortProject(
   });
 }
 
-export default function ProjectList({ params, searchParams }: any) {
+export default function ProjectList({ lng }: { lng: string }) {
   const sp = useSearchParams();
   const showDialog = useDialogStore((s) => s.open);
   const user = useClerk().user;
@@ -88,7 +88,7 @@ export default function ProjectList({ params, searchParams }: any) {
     useFetchChallengeProjects(challengeId);
   const { data: userProfile } = useFetchUser(user?.id);
 
-  const { lng = "en" } = segmentSchema.lng.parse(params);
+  // const { lng = "en" } = segmentSchema.lng.parse(params);
 
   if (isLoading || isLoadingProject) return <Loading />;
   if (!challenge || !projects) return null;

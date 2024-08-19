@@ -10,6 +10,7 @@ interface DesktopMenuProps {
 enum MenuItems {
   CAMPAIGN = "campaign",
   PROJECT = "project",
+  NONE = "none",
 }
 const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState(
@@ -19,8 +20,10 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
   useEffect(() => {
     if (pathname.includes("/campaigns")) {
       setSelectedMenuItem(MenuItems.CAMPAIGN);
-    } else {
+    } else if (pathname.includes("/projects")) {
       setSelectedMenuItem(MenuItems.PROJECT);
+    } else {
+      setSelectedMenuItem(MenuItems.NONE);
     }
   }, [pathname]);
   const lng = (params || {}).lng ? params.lng : "en";
@@ -32,9 +35,9 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
         <div
           className="text-day body-2 [text-shadow:0_0_6px_theme(colors.day)] flex flex-row gap-2 items-center"
           style={
-            selectedMenuItem !== MenuItems.CAMPAIGN
-              ? { color: "#FFF", textShadow: "none" }
-              : {}
+            selectedMenuItem === MenuItems.CAMPAIGN
+              ? {}
+              : { color: "#FFF", textShadow: "none" }
           }
         >
           <div className="font-bold">/</div>
@@ -43,13 +46,13 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
           </div>
         </div>
       </Link>
-      <Link href={params?.lng === lng ? `/${lng}/` : "/"}>
+      <Link href={params?.lng === lng ? `/${lng}/projects` : "/en/projects"}>
         <div
-          className="ml-2 flex flex-row gap-2 items-center"
+          className="ml-2 text-day body-2 [text-shadow:0_0_6px_theme(colors.day)] flex flex-row gap-2 items-center"
           style={
-            selectedMenuItem !== MenuItems.PROJECT
-              ? { color: "#FFF", textShadow: "none" }
-              : {}
+            selectedMenuItem === MenuItems.PROJECT
+              ? {}
+              : { color: "#FFF", textShadow: "none" }
           }
         >
           <div className="font-bold">/</div>

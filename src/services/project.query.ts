@@ -20,11 +20,13 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
     },
   });
 }
-export function useFetchProjects() {
+
+export function useFetchProjects(tags?: string[]) {
+  const projectTags = tags ? tags : ["all"];
   return useQuery({
-    queryKey: ["projects"],
+    queryKey: ["projects", ...projectTags],
     queryFn: async () => {
-      return getProjects();
+      return getProjects(projectTags);
     },
   });
 }

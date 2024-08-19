@@ -17,18 +17,18 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
   return data.projects;
 }
 
-export async function getProjects() {
-  const { data } = await agentAuthed.get<{ projects: Project[] }>(
-    `/project`,
-    {}
-  );
+export async function getProjects(tags?: string[]) {
+  const { data } = await agentAuthed.get<{ projects: Project[] }>(`/project`, {
+    params: {
+      tags,
+    },
+  });
   return data.projects;
 }
 
 export async function getProject(projectId: ProjectId) {
   const { data } = await agentAnon.get<{ project: Project }>(
-    `/project/${projectId}`,
-    {}
+    `/project/${projectId}`
   );
   return data.project;
 }

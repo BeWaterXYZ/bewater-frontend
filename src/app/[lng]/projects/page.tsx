@@ -3,15 +3,13 @@ import { Metadata } from "next";
 import ProjectList from "./project-list";
 import { useTranslation } from "@/app/i18n";
 
-export default async function ChallengePage({
+export default async function ProjectsPage({
   params,
 }: {
   params: { lng: string };
 }) {
   const { lng = "en" } = params || {};
-  return (
-    <ProjectList></ProjectList>
-  );
+  return <ProjectList lng={lng}></ProjectList>;
 }
 
 // export const revalidate = 60;
