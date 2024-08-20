@@ -185,6 +185,30 @@ export function PrizeSection({
               </div>
             </div>
           </div>
+          <div className="flex flex-col gap-4 md:gap-7 items-center">
+            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+              MIZU Bounty
+            </p>
+            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
+              <div className="flex flex-col gap-5 w-full body-3 text-white/60 z-10 [&_a]:border-b [&_a]:border-b-white/60 [&_a]:break-all">
+                <p>
+                  MIZU is building the world&rsquo;s largest open AI data
+                  collection, providing a fast, comprehensive, affordable, and
+                  safe data solution for global AI communities. By developing a
+                  DePIN network, MIZU will continuously engage a diverse range
+                  of contributors, from mobile users to professional GPU cloud
+                  operators, to collaboratively build its data collection.
+                </p>
+                <p>
+                  MIZU Bounty Track Guideline:&nbsp;
+                  <br />
+                  <Link href="https://docs.google.com/document/d/1ZI-NDcl4mOPCcHuGXYGecM95Nan7s_DugwsA0MmVwIE/edit#heading=h.dxzoyprpa4en">
+                    https://docs.google.com/document/d/1ZI-NDcl4mOPCcHuGXYGecM95Nan7s_DugwsA0MmVwIE/edit#heading=h.dxzoyprpa4en
+                  </Link>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="relative w-full flex flex-col gap-10 items-center">
