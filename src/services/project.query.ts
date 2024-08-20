@@ -9,6 +9,7 @@ import {
   updateProjectRating,
   putProjectStatus,
   getProjects,
+  getProjectTags,
 } from "./project";
 import { ChallengeID, ProjectId, TeamID, ProjectStatus } from "./types";
 
@@ -21,12 +22,21 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
   });
 }
 
-export function useFetchProjects(tags?: string[]) {
+export function useFetchProjects(limit = 20, tags?: string[], cursor?: string) {
   const projectTags = tags ? tags : ["all"];
   return useQuery({
     queryKey: ["projects", ...projectTags],
     queryFn: async () => {
-      return getProjects(projectTags);
+      return getProjects(limit, tags, cursor);
+    },
+  });
+}
+
+export function useFetchProjectTags() {
+  return useQuery({
+    queryKey: ["projects", "tags"],
+    queryFn: async () => {
+      return getProjectTags();
     },
   });
 }

@@ -17,13 +17,23 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
   return data.projects;
 }
 
-export async function getProjects(tags?: string[]) {
+export async function getProjects(
+  limit: number,
+  tags?: string[],
+  cursor?: string
+) {
   const { data } = await agentAuthed.get<{ projects: Project[] }>(`/project`, {
     params: {
-      tags,
+      limit,
+      tags: tags?.join(","),
+      cursor,
     },
   });
   return data.projects;
+}
+export async function getProjectTags() {
+  const { data } = await agentAuthed.get<{ tags: string[] }>(`/project/tags`);
+  return data.tags;
 }
 
 export async function getProject(projectId: ProjectId) {
