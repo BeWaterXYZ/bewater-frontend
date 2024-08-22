@@ -51,6 +51,12 @@ const dialogMaps: DialogMap = {
   project_filter: dynamicLoad(() => import("./dialogs/project-filter"), {
     loading: () => <Loading />,
   }),
+  project_page_filter: dynamicLoad(
+    () => import("./dialogs/project-page-filter"),
+    {
+      loading: () => <Loading />,
+    }
+  ),
   project_rating: dynamicLoad(() => import("./dialogs/project-rating"), {
     loading: () => <Loading />,
   }),
