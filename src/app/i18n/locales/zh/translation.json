@@ -6,7 +6,8 @@
     "text": ""
   },
   "header": {
-    "campaign": "赛事"
+    "campaign": "赛事",
+    "project": "项目"
   },
   "footer": {
     "dot": " -",
@@ -81,5 +82,9 @@
     "venue": "活动场地",
     "t31": "扫码加小助手，进入“{{name}}”微信群",
     "t32": "赛道"
+  },
+  "common": {
+    "load_more": "加载更多",
+    "loading": "加载中..."
   }
 }

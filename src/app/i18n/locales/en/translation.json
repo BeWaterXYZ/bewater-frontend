@@ -6,7 +6,8 @@
     "text": ""
   },
   "header": {
-    "campaign": "Campaigns"
+    "campaign": "Campaigns",
+    "project": "Projects"
   },
   "footer": {
     "dot": ".",
@@ -81,5 +82,9 @@
     "venue": "Event Venue",
     "t31": "Scan QR code to join {{name}} group chat",
     "t32": "Tracks"
+  },
+  "common": {
+    "load_more": "Load More",
+    "loading": "Loading..."
   }
 }
