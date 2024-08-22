@@ -47,9 +47,6 @@ module.exports = {
         300: "repeat(auto-fit, minmax(300px, 1fr))",
         100: "repeat(auto-fit, minmax(100px, 1fr))",
       },
-      animation: {
-        "spin-ripple": "ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;",
-      },
       keyframes: {
         ripple: {
           "0%": {
@@ -99,6 +96,7 @@ module.exports = {
         },
       },
       animation: {
+        "spin-ripple": "ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;",
         slideDownAndFade:
           "slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)",
         slideLeftAndFade:
