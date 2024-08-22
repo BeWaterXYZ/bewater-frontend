@@ -22,12 +22,17 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
   });
 }
 
-export function useFetchProjects(limit = 20, tags?: string[], cursor?: string) {
-  const projectTags = tags ? tags : ["all"];
+export function useFetchProjects(
+  limit = 20,
+  tags?: string[],
+  cursorId?: string
+) {
+  const projectKey = tags ? tags : ["all"];
+  const cursorIdKey = cursorId ? cursorId : "none";
   return useQuery({
-    queryKey: ["projects", ...projectTags],
+    queryKey: ["projects", ...projectKey, limit, cursorIdKey],
     queryFn: async () => {
-      return getProjects(limit, tags, cursor);
+      return getProjects(limit, tags, cursorId);
     },
   });
 }

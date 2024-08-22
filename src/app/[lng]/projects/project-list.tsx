@@ -23,22 +23,24 @@ import { SearchInput } from "@/components/molecules/search-input";
 import { useDialogStore } from "@/components/dialog/store";
 import { useClerk } from "@clerk/nextjs";
 import { useFetchUser } from "@/services/user.query";
+import { useTranslation } from "@/app/i18n/client";
 
 export default function ProjectList({ lng }: { lng: string }) {
+  const { t } = useTranslation(lng, "translation");
   const sp = useSearchParams();
   const { tag } = querySchema.parse(Object.fromEntries(sp!));
   const showDialog = useDialogStore((s) => s.open);
   const [search, searchSet] = useState("");
-  const [cursor, setCursor] = useState<string | undefined>(undefined);
+  const [cursorId, setCursorId] = useState<string | undefined>(undefined);
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[] | undefined>(
     undefined
   );
-  const { data: projectsFetched, isLoading: isLoadingProject } =
-    useFetchProjects(20, selectedTags, cursor);
-  const { data: tags = [], isLoading: isLoadingTags } = useFetchProjectTags();
+  const { data: projectsFetched, isLoading: isLoadingProject,isFetching:isFetchongProject } =
+    useFetchProjects(20, selectedTags, cursorId);
+  // const { data: tags = [], isLoading: isLoadingTags } = useFetchProjectTags();
   const loadMore = () => {
-    setCursor(projects[projects.length - 1].externalId);
+    setCursorId(projects[projects.length - 1].externalId);
   };
   useEffect(() => {
     setSelectedTags(tag?.split(","));
@@ -52,9 +54,9 @@ export default function ProjectList({ lng }: { lng: string }) {
   if (isLoadingProject && projects.length <= 0) return <Loading />;
   if (!(projects && projects.length > 0)) return null;
 
-  const showFilter = () => {
-    showDialog("project_page_filter", { tags });
-  };
+  // const showFilter = () => {
+  //   showDialog("project_page_filter", { tags });
+  // };
 
   if (projects.length === 0) {
     return (
@@ -75,12 +77,12 @@ export default function ProjectList({ lng }: { lng: string }) {
 
   return (
     <div className="container flex flex-wrap gap-10 pt-10">
-      <div className="w-full lg:w-[200px] hidden lg:block">
+      {/* <div className="w-full lg:w-[200px] hidden lg:block">
         <ProjectFilter tags={tags} />
-      </div>
+      </div> */}
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
-        <div className="flex justify-between py-4">
+        {/* <div className="flex justify-between py-4">
           <div className="hidden lg:block invisible">
             <button className="body-3 flex gap-1">
               <Image
@@ -112,23 +114,20 @@ export default function ProjectList({ lng }: { lng: string }) {
                 />
                 Filter
               </button>
-              {/* <button className="btn btn-secondary-invert w-full gap-1 invisible">
-                <Image
-                  src="/icons/sort.svg"
-                  height={16}
-                  width={16}
-                  alt="filter"
-                />
-                Sort
-              </button> */}
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="grid gap-4 grid-cols-300">
           {projects.map((project) => {
             return <ProjectItem key={project.id} project={project} lng={lng} />;
           })}
         </div>
+        <button
+          className="w-full bg-white/5 rounded border border-[#24254E] text-white h-12 mt-2"
+          onClick={loadMore}
+        >
+          {isFetchongProject ? t("common.loading") : t("common.load_more")}
+        </button>
       </div>
     </div>
   );

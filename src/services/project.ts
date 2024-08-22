@@ -20,19 +20,22 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
 export async function getProjects(
   limit: number,
   tags?: string[],
-  cursor?: string
+  cursorId?: string
 ) {
-  const { data } = await agentAuthed.get<{ projects: Project[] }>(`/project`, {
-    params: {
-      limit,
-      tags: tags?.join(","),
-      cursor,
-    },
-  });
+  const { data } = await agentAuthed.get<{ projects: Project[] }>(
+    `/project/projects`,
+    {
+      params: {
+        limit,
+        tags: tags?.join(","),
+        cursorId,
+      },
+    }
+  );
   return data.projects;
 }
 export async function getProjectTags() {
-  const { data } = await agentAuthed.get<{ tags: string[] }>(`/project/tags`);
+  const { data } = await agentAuthed.get<{ tags: string[] }>(`challenge/tags`);
   return data.tags;
 }
 
