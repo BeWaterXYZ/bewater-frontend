@@ -3,7 +3,7 @@ import { useTranslation } from "@/app/i18n/client";
 import React, { useEffect } from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { HamburgerMenuIcon, TriangleRightIcon } from "@radix-ui/react-icons";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 type MenuProps = {
   lng: string;
 };
@@ -13,13 +13,18 @@ enum MenuItems {
 }
 const Menu: React.FC<MenuProps> = ({ lng }) => {
   const { t } = useTranslation(lng || "en", "translation");
+  const router = useRouter();
   const pathname = usePathname();
   const [selectedMenuItem, setSelectedMenuItem] = React.useState(
     MenuItems.CAMPAIGN
   );
   const routeToPage = (menuItem: string) => {
     setSelectedMenuItem(menuItem as MenuItems);
-    console.log(menuItem);
+    if (menuItem === MenuItems.CAMPAIGN) {
+      router.push(lng ? `/${lng}` : "/");
+    } else {
+      router.push(lng ? `/${lng}/projects` : "/en/projects");
+    }
   };
   useEffect(() => {
     if (pathname.includes("/campaigns")) {
