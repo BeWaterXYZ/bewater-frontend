@@ -17,6 +17,7 @@ export type Dialogs = {
   team_filter?: Team[];
   email_change?: boolean;
   project_filter?: { challenge: Challenge; projects: Project[] };
+  project_page_filter?: { tags: string[]; };
   project_edit?: Project;
   project_rating?: {
     project: Project;

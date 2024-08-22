@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslation } from "@/app/i18n";
-
+import Menu from "./menu";
+import DesktopMenu from "./desktop-menu";
 export const BeWaterLogo = async (params: { lng: string }) => {
   const lng = (params || {}).lng ? params.lng : "en";
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -9,6 +10,7 @@ export const BeWaterLogo = async (params: { lng: string }) => {
 
   return (
     <div className="flex flex-row relative">
+      <Menu lng={lng}></Menu>
       <Link href="https://bewater.xyz">
         <Image
           src="/logo/bewater_black.svg"
@@ -22,14 +24,7 @@ export const BeWaterLogo = async (params: { lng: string }) => {
           </div>
         </div> */}
       </Link>
-      <Link href={params?.lng === lng ? `/${lng}/` : "/"}>
-        <div className="absolute left-[126px] hidden sm:flex flex-row gap-2 items-center">
-          <div className="text-white body-2 font-bold">/</div>
-          <div className="text-day body-2 font-bold uppercase [text-shadow:0_0_6px_theme(colors.day)] whitespace-nowrap">
-            {t("header.campaign")}
-          </div>
-        </div>
-      </Link>
+      <DesktopMenu lng={lng}></DesktopMenu>
     </div>
   );
 };

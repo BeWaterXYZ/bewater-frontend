@@ -8,6 +8,8 @@ import {
   updateProject,
   updateProjectRating,
   putProjectStatus,
+  getProjects,
+  getProjectTags,
 } from "./project";
 import { ChallengeID, ProjectId, TeamID, ProjectStatus } from "./types";
 
@@ -16,6 +18,30 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
     queryKey: ["campaigns", challengeId, "projects"],
     queryFn: async () => {
       return getChallengeTProjects(challengeId);
+    },
+  });
+}
+
+export function useFetchProjects(
+  limit = 20,
+  tags?: string[],
+  cursorId?: string
+) {
+  const projectKey = tags ? tags : ["all"];
+  const cursorIdKey = cursorId ? cursorId : "none";
+  return useQuery({
+    queryKey: ["projects", ...projectKey, limit, cursorIdKey],
+    queryFn: async () => {
+      return getProjects(limit, tags, cursorId);
+    },
+  });
+}
+
+export function useFetchProjectTags() {
+  return useQuery({
+    queryKey: ["projects", "tags"],
+    queryFn: async () => {
+      return getProjectTags();
     },
   });
 }

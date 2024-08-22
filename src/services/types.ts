@@ -256,6 +256,7 @@ export type ProjectId = string;
 export type ProjectStatus = "INITIATED | REJECTED | SELECTED"; // 后台不会返回 TERMINATED
 export interface Project {
   id: ProjectId;
+  externalId:string;
   name: string;
   description: string;
   tags: string[];
