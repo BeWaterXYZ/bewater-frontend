@@ -50,6 +50,10 @@ export function ProjectItem({
         </div>
       </Link>
       <div className="p-4 bg-white/5 flex-1 flex flex-col">
+        <TagProjectTag
+          label={project.team.challenge?.title || ""}
+          className="border-none relative -top-[2px] "
+        />
         <Link
           href={`/${lng}/campaigns/${
             project.team.challenge!.externalId ?? project.team.challenge!.id
