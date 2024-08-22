@@ -2,7 +2,7 @@ import { CONFIGS } from "@/config";
 import { getChallengeById } from "@/services/challenge";
 import { getProject } from "@/services/project";
 import { Metadata } from "next";
-import { segmentSchema } from "../../param-schema";
+import { segmentSchema } from "../param-schema";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return children;

@@ -10,7 +10,7 @@ import { formatDistance, parseISO } from "date-fns";
 import dynamicLoad from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { segmentSchema } from "../../param-schema";
+import { segmentSchema } from "../param-schema";
 import { ProjectAssets } from "./project-assets";
 import { GithubStats } from "./project-github";
 import { Rate } from "./rate";
