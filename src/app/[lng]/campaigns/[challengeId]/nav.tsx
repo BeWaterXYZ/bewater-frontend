@@ -63,6 +63,9 @@ export default function ChallengeNav({
         if (link.segment === "result") {
           isEnabled = showResult || showShortlist;
         }
+        if (challenge.id === "134" && link.segment === "teams") {
+          return null;
+        }
         return isEnabled ? (
           <Link
             key={link.path}
