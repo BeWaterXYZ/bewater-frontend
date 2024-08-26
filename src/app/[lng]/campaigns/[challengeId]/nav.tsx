@@ -63,7 +63,7 @@ export default function ChallengeNav({
         if (link.segment === "result") {
           isEnabled = showResult || showShortlist;
         }
-        if (challenge.id === "134" && link.segment === "teams") {
+        if (challenge.id === "134" && link.segment !== null) {
           return null;
         }
         return isEnabled ? (
