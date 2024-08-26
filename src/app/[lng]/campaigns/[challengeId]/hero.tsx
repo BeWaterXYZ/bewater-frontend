@@ -97,7 +97,7 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
                 )}
                 target="_blank"
               >
-                {t("campaign.t1")}
+                {t("campaign.submit")}
               </a>
             ) : (
               <Link
