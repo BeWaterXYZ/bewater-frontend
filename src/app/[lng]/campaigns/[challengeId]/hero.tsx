@@ -83,20 +83,38 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
       {isChallenge(challenge) ? (
         isTeamingEnabled ? (
           <div className="mt-6 md:mt-12">
-            <Link
-              href={`/${lng}/campaigns/${challenge.externalId}/teams`}
-              className={clsx(
-                "btn body-4 uppercase px-4 py-3 md:px-8 md:py-6",
-                {
-                  "btn-primary text-night":
-                    !challenge.yotadata?.control?.hero?.solidbtn,
-                  "btn-primary rounded-none text-night":
-                    challenge.yotadata?.control?.hero?.solidbtn,
-                }
-              )}
-            >
-              {t("campaign.t1")}
-            </Link>
+            {challenge.id === "134" ? (
+              <a
+                href={`https://forms.gle/xKdUoNv3Z6PfEyV17`}
+                className={clsx(
+                  "btn body-4 uppercase px-4 py-3 md:px-8 md:py-6",
+                  {
+                    "btn-primary text-night":
+                      !challenge.yotadata?.control?.hero?.solidbtn,
+                    "btn-primary rounded-none text-night":
+                      challenge.yotadata?.control?.hero?.solidbtn,
+                  }
+                )}
+                target="_blank"
+              >
+                {t("campaign.t1")}
+              </a>
+            ) : (
+              <Link
+                href={`/${lng}/campaigns/${challenge.externalId}/teams`}
+                className={clsx(
+                  "btn body-4 uppercase px-4 py-3 md:px-8 md:py-6",
+                  {
+                    "btn-primary text-night":
+                      !challenge.yotadata?.control?.hero?.solidbtn,
+                    "btn-primary rounded-none text-night":
+                      challenge.yotadata?.control?.hero?.solidbtn,
+                  }
+                )}
+              >
+                {t("campaign.t1")}
+              </Link>
+            )}
           </div>
         ) : (
           <div className="mt-6 md:mt-12">
