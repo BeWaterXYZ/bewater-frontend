@@ -81,7 +81,8 @@
     "agenda": "Agenda",
     "venue": "Event Venue",
     "t31": "Scan QR code to join {{name}} group chat",
-    "t32": "Tracks"
+    "t32": "Tracks",
+    "submit": "Submit"
   },
   "common": {
     "load_more": "Load More",
