@@ -2,11 +2,12 @@ import clsx from "clsx";
 
 interface Props {
   cover?: boolean;
+  icon?: boolean;
 }
 
-export function Loading({ cover = true }: Props) {
+export function Loading({ cover = true, icon = false }: Props) {
   return (
-    <div className="min-h-[calc(100vh-120px)]">
+    <div className={icon ? "h-auto" : "min-h-[calc(100vh-120px)]"}>
       {cover ? (
         <div className="fixed z-[99] top-0 left-0 right-0 bottom-0 bg-black/50" />
       ) : null}

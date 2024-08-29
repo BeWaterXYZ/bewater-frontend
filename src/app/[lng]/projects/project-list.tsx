@@ -6,7 +6,7 @@ import { useFetchChallengeById } from "@/services/challenge.query";
 import {
   useFetchChallengeProjects,
   useFetchProjects,
-  useFetchProjectTags,
+  useFetchProjectFilterOptions,
 } from "@/services/project.query";
 import Loading from "./loading";
 import { ProjectFilter } from "./project-filter";
@@ -28,7 +28,7 @@ import { useTranslation } from "@/app/i18n/client";
 export default function ProjectList({ lng }: { lng: string }) {
   const { t } = useTranslation(lng, "translation");
   const sp = useSearchParams();
-  const { tag } = querySchema.parse(Object.fromEntries(sp!));
+  const { tag, challengeTitle } = querySchema.parse(Object.fromEntries(sp!));
   const showDialog = useDialogStore((s) => s.open);
   const [search, searchSet] = useState("");
   const [cursorId, setCursorId] = useState<string | undefined>(undefined);
@@ -36,53 +36,123 @@ export default function ProjectList({ lng }: { lng: string }) {
   const [selectedTags, setSelectedTags] = useState<string[] | undefined>(
     undefined
   );
-  const { data: projectsFetched, isLoading: isLoadingProject,isFetching:isFetchongProject } =
-    useFetchProjects(20, selectedTags, cursorId);
-  // const { data: tags = [], isLoading: isLoadingTags } = useFetchProjectTags();
+  const [loadedProjectFirstPage, setLoadedProjectFirstPage] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [selectedChallengeTitle, setSelectedChallengeTitle] = useState<
+    string[] | undefined
+  >(undefined);
+  const {
+    data: projectsFetched,
+    isLoading: isLoadingProject,
+    isFetching: isFetchongProject,
+    isSuccess: projectsFetchedSuccess,
+  } = useFetchProjects(
+    20,
+    { challengeTitle: selectedChallengeTitle, tags: selectedTags },
+    cursorId
+  );
+  const {
+    data: filterOptions = { titles: [], tags: [] },
+    isLoading: isLoadingfilterOptions,
+  } = useFetchProjectFilterOptions();
   const loadMore = () => {
     setCursorId(projects[projects.length - 1].externalId);
   };
   useEffect(() => {
-    setSelectedTags(tag?.split(","));
-  }, [tag]);
+    let selectedTags = undefined;
+    let selectedChallengeTitle = undefined;
+    if (tag) {
+      const tagsArray = tag.split(",");
+      if (tagsArray[0] == "") {
+        tagsArray.shift();
+      }
+      selectedTags = tagsArray;
+    }
+    if (challengeTitle) {
+      const challengeTitleArray = challengeTitle.split(",");
+      if (challengeTitleArray[0] == "") {
+        challengeTitleArray.shift();
+      }
+      selectedChallengeTitle = challengeTitleArray;
+    }
+    setCursorId(undefined);
+    setLoadedProjectFirstPage(false);
+    setHasMore(true);
+    setSelectedTags(selectedTags);
+    setSelectedChallengeTitle(selectedChallengeTitle);
+  }, [tag, challengeTitle]);
+
   useEffect(() => {
-    if (projectsFetched && projectsFetched.length > 0) {
-      setProjects((prev) => [...prev, ...projectsFetched]);
+    if (!projectsFetchedSuccess) {
+      return;
+    }
+    if (isLoadingProject) {
+      return;
+    }
+    if (isFetchongProject) {
+      return;
+    }
+    if (projectsFetched && projectsFetched.projects.length > 0) {
+      if (loadedProjectFirstPage) {
+        setProjects((prev) => [...prev, ...projectsFetched.projects]);
+      } else {
+        setProjects(projectsFetched.projects);
+        setLoadedProjectFirstPage(true);
+      }
+    } else {
+      if (cursorId === undefined) {
+        setProjects([]);
+      } else {
+        setHasMore(false);
+      }
     }
   }, [projectsFetched]);
 
-  if (isLoadingProject && projects.length <= 0) return <Loading />;
-  if (!(projects && projects.length > 0)) return null;
+  // if (isLoadingProject && projects.length <= 0) return <Loading />;
+  // if (!(projects && projects.length > 0)) return null;
 
-  // const showFilter = () => {
-  //   showDialog("project_page_filter", { tags });
-  // };
+  const showFilter = () => {
+    showDialog("project_page_filter", filterOptions);
+  };
 
   if (projects.length === 0) {
     return (
-      <div className="container flex flex-col items-center justify-center gap-4 my-20">
-        <Image
-          src="/icons/no-project.svg"
-          height={180}
-          width={270}
-          alt="no teams"
-        />
-        <p className="body-1 text-[20px] text-center">No Projects Here yet</p>
-        <p className="body-2 text-grey-500 text-center">
-          Create yours and be the first challenger!
-        </p>
+      <div className="container flex flex-wrap gap-10 pt-10">
+        <div className="w-full lg:w-[200px] hidden lg:block">
+          <ProjectFilter filterOptions={filterOptions} />
+        </div>
+        <div className="w-full min-h-96 lg:w-auto flex-1 mb-30 flex flex-col items-center justify-center gap-4 my-20">
+          {isLoadingProject ? (
+            <Loading cover={false} icon={true} />
+          ) : (
+            <>
+              <Image
+                src="/icons/no-project.svg"
+                height={180}
+                width={270}
+                alt="no teams"
+              />
+              <p className="body-1 text-[20px] text-center">
+                No Projects Here yet
+              </p>
+              <p className="body-2 text-grey-500 text-center">
+                Create yours and be the first challenger!
+              </p>
+            </>
+          )}
+        </div>
       </div>
     );
   }
 
   return (
     <div className="container flex flex-wrap gap-10 pt-10">
-      {/* <div className="w-full lg:w-[200px] hidden lg:block">
-        <ProjectFilter tags={tags} />
-      </div> */}
+      <div className="w-full lg:w-[200px] hidden lg:block">
+        <ProjectFilter filterOptions={filterOptions} />
+      </div>
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
-        {/* <div className="flex justify-between py-4">
+        <div className="flex justify-between py-4">
           <div className="hidden lg:block invisible">
             <button className="body-3 flex gap-1">
               <Image
@@ -116,17 +186,22 @@ export default function ProjectList({ lng }: { lng: string }) {
               </button>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="grid gap-4 grid-cols-300">
           {projects.map((project) => {
             return <ProjectItem key={project.id} project={project} lng={lng} />;
           })}
         </div>
         <button
+          disabled={!hasMore}
           className="w-full bg-white/5 rounded border border-[#24254E] text-white h-12 mt-2"
           onClick={loadMore}
         >
-          {isFetchongProject ? t("common.loading") : t("common.load_more")}
+          {hasMore
+            ? isFetchongProject
+              ? t("common.loading")
+              : t("common.load_more")
+            : t("common.no_more")}
         </button>
       </div>
     </div>
