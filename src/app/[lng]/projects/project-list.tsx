@@ -152,8 +152,8 @@ export default function ProjectList({ lng }: { lng: string }) {
       </div>
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
-        {/* <div className="flex justify-between py-4">
-          <div className="hidden lg:block invisible">
+        <div className="flex justify-between py-4">
+          {/* <div className="hidden lg:block invisible">
             <button className="body-3 flex gap-1">
               <Image
                 src="/icons/sort.svg"
@@ -163,14 +163,14 @@ export default function ProjectList({ lng }: { lng: string }) {
               />
               Sort
             </button>
-          </div>
+          </div> */}
           <div className="w-full lg:w-auto flex  flex-col gap-4">
-            <div className="lg:min-w-[300px]">
+            {/* <div className="lg:min-w-[300px]">
               <SearchInput
                 value={search}
                 onChange={(e) => searchSet(e.target.value)}
               />
-            </div>
+            </div> */}
             <div className="flex lg:hidden justify-between gap-2">
               <button
                 className="btn btn-secondary-invert w-full gap-1"
@@ -186,7 +186,7 @@ export default function ProjectList({ lng }: { lng: string }) {
               </button>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="grid gap-4 grid-cols-300">
           {projects.map((project) => {
             return <ProjectItem key={project.id} project={project} lng={lng} />;

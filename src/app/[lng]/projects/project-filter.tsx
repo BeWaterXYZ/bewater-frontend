@@ -19,8 +19,8 @@ export function ProjectFilter({
   return (
     <div className="text-left pt-4">
       <div className="body-3 mb-7">Filter</div>
-      <div className="my-2">
-        <p className="body-5 uppercase my-4">Campaigns</p>
+      <p className="body-5 uppercase my-4">Campaigns</p>
+      <div className="my-2 lg:h-auto h-[65vh] overflow-scroll lg:overflow-auto">
         {filterOptions.titles.map((title, index) => {
           return (
             <PageFilterOption
