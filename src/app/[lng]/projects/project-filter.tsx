@@ -20,7 +20,7 @@ export function ProjectFilter({
     <div className="text-left pt-4">
       <div className="body-3 mb-7">Filter</div>
       <div className="my-2">
-        <p className="body-5 uppercase my-4">Challenge</p>
+        <p className="body-5 uppercase my-4">Campaigns</p>
         {filterOptions.titles.map((title, index) => {
           return (
             <PageFilterOption
