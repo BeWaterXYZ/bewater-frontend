@@ -152,7 +152,7 @@ export default function ProjectList({ lng }: { lng: string }) {
       </div>
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
-        <div className="flex justify-between py-4">
+        {/* <div className="flex justify-between py-4">
           <div className="hidden lg:block invisible">
             <button className="body-3 flex gap-1">
               <Image
@@ -186,7 +186,7 @@ export default function ProjectList({ lng }: { lng: string }) {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="grid gap-4 grid-cols-300">
           {projects.map((project) => {
             return <ProjectItem key={project.id} project={project} lng={lng} />;
