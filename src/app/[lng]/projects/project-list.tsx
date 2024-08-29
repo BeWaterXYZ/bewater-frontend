@@ -6,7 +6,7 @@ import { useFetchChallengeById } from "@/services/challenge.query";
 import {
   useFetchChallengeProjects,
   useFetchProjects,
-  useFetchProjectTags,
+  useFetchProjectFilterOptions,
 } from "@/services/project.query";
 import Loading from "./loading";
 import { ProjectFilter } from "./project-filter";
@@ -28,7 +28,7 @@ import { useTranslation } from "@/app/i18n/client";
 export default function ProjectList({ lng }: { lng: string }) {
   const { t } = useTranslation(lng, "translation");
   const sp = useSearchParams();
-  const { tag } = querySchema.parse(Object.fromEntries(sp!));
+  const { tag, challengeTitle } = querySchema.parse(Object.fromEntries(sp!));
   const showDialog = useDialogStore((s) => s.open);
   const [search, searchSet] = useState("");
   const [cursorId, setCursorId] = useState<string | undefined>(undefined);
@@ -36,17 +36,31 @@ export default function ProjectList({ lng }: { lng: string }) {
   const [selectedTags, setSelectedTags] = useState<string[] | undefined>(
     undefined
   );
+  const [loadedProjectFirstPage, setLoadedProjectFirstPage] = useState(true);
+  const [hasMore, setHasMore] = useState(true);
+  const [selectedChallengeTitle, setSelectedChallengeTitle] = useState<
+    string[] | undefined
+  >(undefined);
   const {
     data: projectsFetched,
     isLoading: isLoadingProject,
     isFetching: isFetchongProject,
-  } = useFetchProjects(20, selectedTags, cursorId);
-  const { data: tags = [], isLoading: isLoadingTags } = useFetchProjectTags();
+    isSuccess: projectsFetchedSuccess,
+  } = useFetchProjects(
+    20,
+    { challengeTitle: selectedChallengeTitle, tags: selectedTags },
+    cursorId
+  );
+  const {
+    data: filterOptions = { titles: [], tags: [] },
+    isLoading: isLoadingfilterOptions,
+  } = useFetchProjectFilterOptions();
   const loadMore = () => {
     setCursorId(projects[projects.length - 1].externalId);
   };
   useEffect(() => {
     let selectedTags = undefined;
+    let selectedChallengeTitle = undefined;
     if (tag) {
       const tagsArray = tag.split(",");
       if (tagsArray[0] == "") {
@@ -54,15 +68,42 @@ export default function ProjectList({ lng }: { lng: string }) {
       }
       selectedTags = tagsArray;
     }
+    if (challengeTitle) {
+      const challengeTitleArray = challengeTitle.split(",");
+      if (challengeTitleArray[0] == "") {
+        challengeTitleArray.shift();
+      }
+      selectedChallengeTitle = challengeTitleArray;
+    }
     setCursorId(undefined);
+    setLoadedProjectFirstPage(false);
+    setHasMore(true);
     setSelectedTags(selectedTags);
-  }, [tag]);
+    setSelectedChallengeTitle(selectedChallengeTitle);
+  }, [tag, challengeTitle]);
+
   useEffect(() => {
-    if (projectsFetched && projectsFetched.length > 0) {
-      setProjects((prev) => [...prev, ...projectsFetched]);
+    if (!projectsFetchedSuccess) {
+      return;
+    }
+    if (isLoadingProject) {
+      return;
+    }
+    if (isFetchongProject) {
+      return;
+    }
+    if (projectsFetched && projectsFetched.projects.length > 0) {
+      if (loadedProjectFirstPage) {
+        setProjects((prev) => [...prev, ...projectsFetched.projects]);
+      } else {
+        setProjects(projectsFetched.projects);
+        setLoadedProjectFirstPage(true);
+      }
     } else {
       if (cursorId === undefined) {
         setProjects([]);
+      } else {
+        setHasMore(false);
       }
     }
   }, [projectsFetched]);
@@ -71,14 +112,14 @@ export default function ProjectList({ lng }: { lng: string }) {
   // if (!(projects && projects.length > 0)) return null;
 
   const showFilter = () => {
-    showDialog("project_page_filter", { tags });
+    showDialog("project_page_filter", filterOptions);
   };
 
   if (projects.length === 0) {
     return (
       <div className="container flex flex-wrap gap-10 pt-10">
         <div className="w-full lg:w-[200px] hidden lg:block">
-          <ProjectFilter tags={tags} />
+          <ProjectFilter filterOptions={filterOptions} />
         </div>
         <div className="w-full min-h-96 lg:w-auto flex-1 mb-30 flex flex-col items-center justify-center gap-4 my-20">
           {isLoadingProject ? (
@@ -107,7 +148,7 @@ export default function ProjectList({ lng }: { lng: string }) {
   return (
     <div className="container flex flex-wrap gap-10 pt-10">
       <div className="w-full lg:w-[200px] hidden lg:block">
-        <ProjectFilter tags={tags} />
+        <ProjectFilter filterOptions={filterOptions} />
       </div>
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
@@ -152,10 +193,15 @@ export default function ProjectList({ lng }: { lng: string }) {
           })}
         </div>
         <button
+          disabled={!hasMore}
           className="w-full bg-white/5 rounded border border-[#24254E] text-white h-12 mt-2"
           onClick={loadMore}
         >
-          {isFetchongProject ? t("common.loading") : t("common.load_more")}
+          {hasMore
+            ? isFetchongProject
+              ? t("common.loading")
+              : t("common.load_more")
+            : t("common.no_more")}
         </button>
       </div>
     </div>

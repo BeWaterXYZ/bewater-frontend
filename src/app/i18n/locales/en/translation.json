@@ -86,6 +86,7 @@
   },
   "common": {
     "load_more": "Load More",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "no_more": "Loaded all"
   }
 }

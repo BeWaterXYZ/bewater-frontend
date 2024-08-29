@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 
-export function PageFilterTag({
+export function PageFilterOption({
   keyword,
   value,
   label,

@@ -19,7 +19,7 @@ export async function getChallengeTProjects(challengeId: ChallengeID) {
 
 export async function getProjects(
   limit: number,
-  tags?: string[],
+  filterOptions: { tags?: string[]; challengeTitle?: string[] } = {},
   cursorId?: string
 ) {
   const { data } = await agentAuthed.get<{ projects: Project[] }>(
@@ -27,16 +27,19 @@ export async function getProjects(
     {
       params: {
         limit,
-        tags: tags?.join(","),
+        tag: filterOptions?.tags?.join(","),
+        challengeTitle: filterOptions?.challengeTitle?.join(","),
         cursorId,
       },
     }
   );
-  return data.projects;
+  return { projects: data.projects, cursorId, filterOptions };
 }
-export async function getProjectTags() {
-  const { data } = await agentAuthed.get<{ tags: string[] }>(`challenge/tags`);
-  return data.tags;
+export async function getProjectFilterOptions() {
+  const { data } = await agentAuthed.get<{ tags: string[]; titles: string[] }>(
+    `challenge/filterOptions`
+  );
+  return data;
 }
 
 export async function getProject(projectId: ProjectId) {

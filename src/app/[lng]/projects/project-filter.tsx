@@ -7,12 +7,12 @@ import { Project, Challenge } from "@/services/types";
 import { FilterTag } from "@/components/filter/FilterTag";
 import { ShortlistTag } from "@/components/filter/ShortlistTag";
 import { useQueryBuilder } from "./query";
-import { PageFilterTag } from "@/components/filter/PageFilterTag";
+import { PageFilterOption } from "@/components/filter/PageFilterTag";
 
 export function ProjectFilter({
-  tags,
+  filterOptions,
 }: {
-  tags:string[];
+  filterOptions: { tags: string[]; titles: string[] };
 }) {
   const { toggle, isOn } = useQueryBuilder();
 
@@ -20,20 +20,19 @@ export function ProjectFilter({
     <div className="text-left pt-4">
       <div className="body-3 mb-7">Filter</div>
       <div className="my-2">
-        <p className="body-5 uppercase my-4">Tags</p>
-        {tags
-          .map((tag) => {
-            return (
-              <PageFilterTag
-                key={tag}
-                keyword="tag"
-                value={tag}
-                label={tag}
-                on={isOn("tag", tag)}
-                toggle={toggle}
-              />
-            );
-          })}
+        <p className="body-5 uppercase my-4">Challenge</p>
+        {filterOptions.titles.map((title, index) => {
+          return (
+            <PageFilterOption
+              key={`${title}-${index}`}
+              keyword="challengeTitle"
+              value={title}
+              label={title}
+              on={isOn("challengeTitle", title)}
+              toggle={toggle}
+            />
+          );
+        })}
       </div>
     </div>
   );
