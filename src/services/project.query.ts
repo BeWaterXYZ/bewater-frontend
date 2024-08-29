@@ -9,7 +9,7 @@ import {
   updateProjectRating,
   putProjectStatus,
   getProjects,
-  getProjectTags,
+  getProjectFilterOptions,
 } from "./project";
 import { ChallengeID, ProjectId, TeamID, ProjectStatus } from "./types";
 
@@ -24,25 +24,36 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
 
 export function useFetchProjects(
   limit = 20,
-  tags?: string[],
+  filterOptions: { tags?: string[]; challengeTitle?: string[] } = {},
   cursorId?: string
 ) {
-  const projectKey = tags ? tags : ["all"];
+  const projectTagKey = filterOptions?.tags ? filterOptions.tags : ["all-tag"];
+  const projectTitleKey = filterOptions?.challengeTitle
+    ? filterOptions.challengeTitle
+    : ["all-title"];
   const cursorIdKey = cursorId ? cursorId : "none";
   return useQuery({
-    queryKey: ["projects", ...projectKey, limit, cursorIdKey],
+    queryKey: [
+      "projects",
+      ...projectTagKey,
+      ,
+      projectTitleKey,
+      limit,
+      cursorIdKey,
+    ],
     queryFn: async () => {
-      return getProjects(limit, tags, cursorId);
+      return getProjects(limit, filterOptions, cursorId);
     },
   });
 }
 
-export function useFetchProjectTags() {
+export function useFetchProjectFilterOptions() {
   return useQuery({
-    queryKey: ["projects", "tags"],
+    queryKey: ["projects", "filterOptions"],
     queryFn: async () => {
-      return getProjectTags();
+      return getProjectFilterOptions();
     },
+    cacheTime: 1000 * 60 * 60 * 24,
   });
 }
 

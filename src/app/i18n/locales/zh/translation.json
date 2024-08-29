@@ -86,6 +86,7 @@
   },
   "common": {
     "load_more": "加载更多",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "no_more": "已经到底了"
   }
 }

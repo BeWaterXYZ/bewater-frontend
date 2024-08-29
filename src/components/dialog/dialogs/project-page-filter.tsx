@@ -14,7 +14,7 @@ export default function ProjectPageFilterDialog({
 
   return (
     <div className="w-[80vw] h-[80vh] flex flex-col">
-      <ProjectFilter tags={data.tags} />
+      <ProjectFilter filterOptions={data} />
       <div className="flex-1"></div>
       <div className="w-full flex gap-2">
         <button className="flex-1 btn btn-secondary" onClick={clear}>
