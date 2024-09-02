@@ -178,8 +178,8 @@ export function PrizeSection({
                 <p>
                   Masa Bounty Track Guideline:&nbsp;
                   <br />
-                  <Link href="https://docs.google.com/document/d/13DWhQ49hZNPs6gQ7AXYyVOBp4hW1FWKAoSFbag6kzWU/edit#heading=h.mv2poiu9yjlx">
-                    https://docs.google.com/document/d/13DWhQ49hZNPs6gQ7AXYyVOBp4hW1FWKAoSFbag6kzWU/edit#heading=h.mv2poiu9yjlx
+                  <Link href="https://docs.google.com/document/d/1uBE7Om78wdu-scFfo0Bm5r9nV5jyQkCx5ZdhXK-utpQ/edit?usp=sharing">
+                    https://docs.google.com/document/d/1uBE7Om78wdu-scFfo0Bm5r9nV5jyQkCx5ZdhXK-utpQ/edit?usp=sharing
                   </Link>
                 </p>
               </div>
