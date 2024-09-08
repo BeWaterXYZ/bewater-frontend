@@ -9,6 +9,7 @@ import {
   useFetchUserSocialConnections,
   useMutationDisconnectSocialConnection,
   useMutationDeleteUserGithubRepo,
+  useFetchProjectsByUser,
 } from "@/services/user.query";
 import { useClerk } from "@clerk/nextjs";
 import Image from "next/image";
@@ -17,12 +18,15 @@ import { useDialogStore } from "@/components/dialog/store";
 import { useEffect, useState } from "react";
 import { GithubRepo } from "@/services/types";
 import { useToastStore } from "@/components/toast/store";
+import { ProjectItem } from "@/app/[lng]/projects/project-item";
 export default function Page() {
   const showDialog = useDialogStore((s) => s.open);
   const user = useClerk().user;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
   const { data: userProfile, isLoading } = useFetchUser(user?.id);
+  const { data: userProjects, isLoading: isLoadingProjects } =
+    useFetchProjectsByUser(user?.id);
   const mutation = useMutationDisconnectSocialConnection();
   const mutationDeleteUserGithubRepo = useMutationDeleteUserGithubRepo();
   const [githubRepo, setGithubRepo] = useState<GithubRepo[]>([]);
@@ -121,6 +125,34 @@ export default function Page() {
   return (
     <div className="container">
       <FormUserSettings data={userProfile!} />
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-3 text-gray-500">
+          Your Projects
+        </h3>
+        {userProjects && userProjects.length > 0 ? (
+          userProjects.length > 3 ? (
+            <>
+              {userProjects.slice(0, 3).map((project) => (
+                <ProjectItem key={project.id} project={project} lng={"en"} />
+              ))}
+              <details className="mt-2">
+                <summary className="cursor-pointer text-blue-500 hover:text-blue-600">
+                  Show {userProjects.length - 3} more projects
+                </summary>
+                {userProjects.slice(3).map((project) => (
+                  <ProjectItem key={project.id} project={project} lng={"en"} />
+                ))}
+              </details>
+            </>
+          ) : (
+            userProjects.map((project) => (
+              <ProjectItem key={project.id} project={project} lng={"en"} />
+            ))
+          )
+        ) : (
+          <p className="text-gray-500">You don&apos;t have any projects yet</p>
+        )}
+      </div>
       {(userProfile.githubRepo && userProfile.githubRepo.length > 0) ||
       githubRepo.length > 0 ? (
         <div className="mt-6">
