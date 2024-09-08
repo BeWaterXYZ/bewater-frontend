@@ -27,6 +27,24 @@ export interface UserProfile {
   aspectaLink?: string;
   aboutMe?: string;
   externalNa?: string;
+  githubRepo?: GithubRepo[];
+}
+
+export interface GithubRepo {
+  tags: string[];
+  url: string;
+  owner: string;
+  name: string;
+  description: string;
+  externalId: string;
+}
+
+export interface AddGithubRepo {
+  tags: string[];
+  url: string;
+  owner: string;
+  name: string;
+  description: string;
 }
 
 export interface SocialAuth {
@@ -118,7 +136,7 @@ export interface Challenge {
   yotadata?: any;
   joinLink?: string;
   track?: string[];
-  otherInfo?: {[key:string]: unknown};
+  otherInfo?: { [key: string]: unknown };
   linkText?: string;
   result?: Array<ChallengeTrackResult>;
   agenda?: Array<AgendaDay>;
@@ -256,7 +274,7 @@ export type ProjectId = string;
 export type ProjectStatus = "INITIATED | REJECTED | SELECTED"; // 后台不会返回 TERMINATED
 export interface Project {
   id: ProjectId;
-  externalId:string;
+  externalId: string;
   name: string;
   description: string;
   tags: string[];

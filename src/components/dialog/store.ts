@@ -1,6 +1,7 @@
 import {
   Challenge,
   ChallengeID,
+  GithubRepo,
   Project,
   Team,
   TeamID,
@@ -28,6 +29,9 @@ export type Dialogs = {
   };
   rating_judge_invite?: {
     challengeId: ChallengeID;
+  };
+  github_repo_import?: {
+    onRepoImport?: (repoInfo: GithubRepo) => void;
   };
 };
 
