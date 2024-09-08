@@ -150,15 +150,15 @@ export default function Page() {
             ))
           )
         ) : (
-          <p className="text-gray-500">You don&apos;t have any projects yet</p>
+          <p className="text-gray-500 text-center">You don&apos;t have any projects yet</p>
         )}
       </div>
-      {(userProfile.githubRepo && userProfile.githubRepo.length > 0) ||
-      githubRepo.length > 0 ? (
-        <div className="mt-6">
-          <h3 className="text-lg font-semibold mb-3 text-gray-500">
-            GitHub Repositories
-          </h3>
+      <div className="mt-6">
+        <h3 className="text-lg font-semibold mb-3 text-gray-500">
+          GitHub Repositories
+        </h3>
+        {(userProfile.githubRepo && userProfile.githubRepo.length > 0) ||
+        githubRepo.length > 0 ? (
           <div className="flex flex-col gap-2">
             {githubRepo.map((repo, index) => (
               <div
@@ -193,14 +193,14 @@ export default function Page() {
               </div>
             ))}
           </div>
-        </div>
-      ) : (
-        <div className="mt-6">
-          <p className="text-gray-500 text-center">
-            You haven&apos;t imported any projects yet
-          </p>
-        </div>
-      )}
+        ) : (
+          <div className="mt-6">
+            <p className="text-gray-500 text-center">
+              You haven&apos;t imported any projects yet
+            </p>
+          </div>
+        )}
+      </div>
 
       <div className="mt-6 flex justify-end">
         <button className="btn btn-primary" onClick={showImportRepoDialog}>
