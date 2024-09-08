@@ -70,6 +70,9 @@ const dialogMaps: DialogMap = {
       loading: () => <Loading />,
     }
   ),
+  github_repo_import: dynamicLoad(() => import("./dialogs/github-repo-import"), {
+    loading: () => <Loading />,
+  }),
 };
 
 export function DialogContainer({
