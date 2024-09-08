@@ -4,6 +4,7 @@ import { agentAnon, agentAuthed } from "./agent";
 import {
   AddGithubRepo,
   GithubRepo,
+  Project,
   UserID,
   UserProfile,
   UserProfileFull,
@@ -28,6 +29,12 @@ export interface UpdateUserProfileResponse extends APIResponse {
 export async function getUserProfile() {
   const { data } = await agentAuthed.get<UserProfile>(`/user`);
   return data;
+}
+export async function getUserProjects(userId: UserID) {
+  const { data } = await agentAuthed.get<{ projects: Project[] }>(
+    `/project/user/${userId}`
+  );
+  return data.projects;
 }
 
 export async function getUserProfileFull(userId: UserID) {
