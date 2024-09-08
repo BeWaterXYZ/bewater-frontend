@@ -9,6 +9,7 @@ import {
   disconnectSocialConnections,
   addUserGithubRepo,
   deleteUserGithubRepo,
+  getUserProjects,
 } from "./user";
 
 export function useFetchUser(userId?: UserID) {
@@ -17,6 +18,15 @@ export function useFetchUser(userId?: UserID) {
     enabled: !!userId,
     queryFn: async () => {
       return getUserProfile();
+    },
+  });
+}
+export function useFetchProjectsByUser(userId?: UserID) {
+  return useQuery({
+    queryKey: ["user", userId, "projects"],
+    enabled: !!userId,
+    queryFn: async () => {
+      return getUserProjects(userId!);
     },
   });
 }
