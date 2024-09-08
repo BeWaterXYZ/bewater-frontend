@@ -1,7 +1,13 @@
 import { APIResponse } from "@/types/response";
 
 import { agentAnon, agentAuthed } from "./agent";
-import { UserID, UserProfile, UserProfileFull } from "./types";
+import {
+  AddGithubRepo,
+  GithubRepo,
+  UserID,
+  UserProfile,
+  UserProfileFull,
+} from "./types";
 
 export interface GetUserProfileByIdResponse extends APIResponse {
   userExist: boolean;
@@ -72,6 +78,24 @@ export async function submitUpdateUserProfile(
   const { data } = await agentAuthed.put<UpdateUserProfileResponse>(
     `/user`,
     userProfile
+  );
+  return data;
+}
+
+export async function addUserGithubRepo(githubRepo: AddGithubRepo) {
+  const { data } = await agentAuthed.post<UpdateUserProfileResponse>(
+    `/user/github-repo`,
+    githubRepo
+  );
+  return data;
+}
+
+export async function deleteUserGithubRepo(githubRepo: GithubRepo) {
+  if (!githubRepo.externalId) {
+    throw new Error("Cannot delete GitHub repo without externalId");
+  }
+  const { data } = await agentAuthed.delete<UpdateUserProfileResponse>(
+    `/user/github-repo/${githubRepo.externalId}`
   );
   return data;
 }

@@ -33,7 +33,10 @@ export const validationSchema = {
     .array(SkillSetScheme)
     .max(10, { message: "You can only choose 10 skills" }),
   tags: z.string().array().min(1, { message: "You need to choose one tag" }),
-  bountyTrack: z.string().array().min(1, { message: "You need to choose one track" }),
+  bountyTrack: z
+    .string()
+    .array()
+    .min(1, { message: "You need to choose one track" }),
   date: z
     .string()
     .regex(/\d{4}-\d{2}-\d{2}/, { message: "Please pick a date" }),
@@ -41,4 +44,10 @@ export const validationSchema = {
   positive: z.string().regex(/^[1-9]\d*$/, "wrong number"),
   nonNegative: z.string().regex(/^\d+$/, "invalid number"),
   str: z.string(),
+  githubURL: z
+    .string()
+    .url()
+    .regex(/^https:\/\/github\.com\/[^\/]+\/[^\/]+$/, {
+      message: "Please enter a valid GitHub repository URL",
+    }),
 };

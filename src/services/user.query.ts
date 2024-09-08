@@ -7,6 +7,8 @@ import {
   submitUpdateUserProfile,
   updateEmail,
   disconnectSocialConnections,
+  addUserGithubRepo,
+  deleteUserGithubRepo,
 } from "./user";
 
 export function useFetchUser(userId?: UserID) {
@@ -42,6 +44,24 @@ export function useMutationUpdateUserProfile() {
   return useMutation(submitUpdateUserProfile, {
     onSuccess: (data, variables, context) => {
       queryClient.setQueryData(["user", data.userProfile?.id], data);
+      queryClient.invalidateQueries(["user", data.userProfile?.id]);
+    },
+  });
+}
+
+export function useMutationAddUserGithubRepo() {
+  const queryClient = useQueryClient();
+  return useMutation(addUserGithubRepo, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(["user", data.userProfile?.id]);
+    },
+  });
+}
+
+export function useMutationDeleteUserGithubRepo() {
+  const queryClient = useQueryClient();
+  return useMutation(deleteUserGithubRepo, {
+    onSuccess: (data, variables, context) => {
       queryClient.invalidateQueries(["user", data.userProfile?.id]);
     },
   });
