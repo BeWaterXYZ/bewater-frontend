@@ -494,10 +494,11 @@ export default function Page({ params, mode, frameWidth }: any) {
                       key={i}
                     >
                       <Image
-                        height={256}
-                        width={256}
+                        height={0}
+                        width={0}
+                        sizes="100%"
                         src={typeof sp === "string" ? sp : sp.uri}
-                        className={clsx("", {
+                        className={clsx("w-fit object-contain", {
                           "h-10": !isMobile,
                           "h-8": isMobile,
                         })}
@@ -636,11 +637,12 @@ export default function Page({ params, mode, frameWidth }: any) {
                     <div className="flex flex-row flex-wrap gap-0 items-center justify-center">
                       {(s.members ?? []).map((member, i) => (
                         <Image
-                          height={256}
-                          width={256}
+                          height={0}
+                          width={0}
+                          sizes="100%"
                           src={typeof member === "string" ? member : member.uri}
                           key={i}
-                          className={clsx("mb-4 mx-4", {
+                          className={clsx("mb-4 mx-4 w-fit object-contain", {
                             "h-10": !isMobile,
                             "h-8": isMobile,
                           })}
