@@ -54,9 +54,12 @@ const schema = (challengeId?: string) =>
         challengeId === "136" || challengeId === "135"
           ? z.string()
           : validationSchema.text,
-      demoURI: z.string(),
+      demoURI: challengeId === "144" ? validationSchema.text : z.string(),
       siteURI: z.string(),
-      githubURI: challengeId === "136" ? validationSchema.text : z.string(),
+      githubURI:
+        challengeId === "136" || challengeId === "144"
+          ? validationSchema.text
+          : z.string(),
       contact: validationSchema.text,
       recommendedFrom: z.string(),
       userEmail: z.string().email(),
@@ -471,6 +474,8 @@ export default function TeamCreateDialog({
             <Input
               label="Demo"
               placeholder="Enter your demo link"
+              required={data.challenge?.id == "144"}
+              error={errors["demoURI"]}
               {...register("demoURI")}
             />
             <Input
@@ -637,9 +642,23 @@ export default function TeamCreateDialog({
               error={errors["deckURI"]}
               {...register("deckURI")}
             />
+            {(data.challenge?.id == "144" ||
+              data.team?.challengeId === "144") && (
+              <Input
+                label="GitHub Link"
+                required={data.challenge?.id == "144"}
+                placeholder="Enter your GitHub link"
+                error={errors["githubURI"]}
+                {...register("githubURI")}
+              />
+            )}
             <Input
               label="Demo"
+              required={
+                data.challenge?.id == "144" || data.team?.challengeId === "144"
+              }
               placeholder="Enter your demo link"
+              error={errors["demoURI"]}
               {...register("demoURI")}
             />
             <Input
