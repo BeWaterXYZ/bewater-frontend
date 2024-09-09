@@ -177,7 +177,7 @@ export default async function ChallengeIntro({ params }: any) {
               {challenge.wechatURL ? (
                 <div className="flex flex-col items-center mb-8">
                   <p className="body-3 md:body-1 text-[#00cccc] md:text-[#00cccc]">
-                    {`${t("campaign.t31", { name: challenge.hostName ?? "" })}`}
+                    {`${t("campaign.t31", { name: challenge.id === "144" ? "OpenBuild" : challenge.hostName ?? "" })}`}
                   </p>
                   <br />
                   <br />
