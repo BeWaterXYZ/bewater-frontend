@@ -51,7 +51,7 @@ const schema = (challengeId?: string) =>
       pastGrant: challengeId === "135" ? z.string() : validationSchema.text,
       builtDate: z.string(),
       deckURI:
-        challengeId === "136" || challengeId === "135"
+        challengeId === "136" || challengeId === "135" || challengeId === "144"
           ? z.string()
           : validationSchema.text,
       demoURI: challengeId === "144" ? validationSchema.text : z.string(),
@@ -637,7 +637,7 @@ export default function TeamCreateDialog({
             />
             <Input
               label="Deck"
-              required={data.challenge?.id !== "135"}
+              required={data.challenge?.id !== "135" && data.challenge?.id !=="144"}
               placeholder="Enter your deck link"
               error={errors["deckURI"]}
               {...register("deckURI")}
