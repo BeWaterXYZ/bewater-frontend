@@ -532,6 +532,27 @@ export default function TeamCreateDialog({
               error={errors["name"]}
               {...register("name")}
             />
+            {(data.challenge?.id === "144" ||
+              data.team?.challengeId === "144") && (
+              <Controller
+                control={control}
+                render={({ field }) => (
+                  <Input
+                    label="Team Members Count"
+                    placeholder="Enter your team members count"
+                    type="number"
+                    value={field.value}
+                    min="1"
+                    required={data.challenge?.id == "144"}
+                    error={errors["membersCount"]}
+                    onChange={(e) => {
+                      field.onChange(Number(e.target.value));
+                    }}
+                  />
+                )}
+                {...register("membersCount")}
+              />
+            )}
             <Select
               id="select-nation"
               label="Country"
