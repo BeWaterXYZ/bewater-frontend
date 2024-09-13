@@ -10,7 +10,7 @@
     "format": "prettier . -w"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.31.3",
+    "@clerk/nextjs": "^5.5.2",
     "@clerk/themes": "^1.7.17",
     "@hookform/resolvers": "^3.6.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
