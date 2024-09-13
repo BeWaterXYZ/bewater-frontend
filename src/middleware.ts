@@ -1,4 +1,5 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+// import { authMiddleware } from "@clerk/nextjs";
 import { NextResponse, NextRequest } from "next/server";
 import acceptLanguage from "accept-language";
 import { fallbackLng, languages } from "./app/i18n/settings";
@@ -55,24 +56,46 @@ function i18n(req: NextRequest) {
   return NextResponse.next();
 }
 
-export default authMiddleware({
-  beforeAuth: (req) => {
-    return i18n(req);
-  },
-  publicRoutes: [
-    "/",
-    "/en",
-    "/zh",
-    "/zh/campaigns(.*)",
-    "/en/campaigns(.*)",
-    "/zh/projects(.*)",
-    "/en/projects(.*)",
-    "/zh/user(.*)",
-    "/en/user(.*)",
-    "/api/og",
-    "/leaderboard(.*)",
-  ],
-});
+const isPublicRoute = createRouteMatcher([
+  "/",
+  "/en",
+  "/zh",
+  "/zh/campaigns(.*)",
+  "/en/campaigns(.*)",
+  "/zh/projects(.*)",
+  "/en/projects(.*)",
+  "/zh/user(.*)",
+  "/en/user(.*)",
+  "/api/og",
+  "/leaderboard(.*)",
+]);
+export default clerkMiddleware(
+  async (auth,req) => {
+    if (isPublicRoute(req)) {
+      return i18n(req);
+    }
+    return NextResponse.next();
+  }
+);
+
+// export default authMiddleware({
+//   beforeAuth: (req) => {
+//     return i18n(req);
+//   },
+//   publicRoutes: [
+//     "/",
+//     "/en",
+//     "/zh",
+//     "/zh/campaigns(.*)",
+//     "/en/campaigns(.*)",
+//     "/zh/projects(.*)",
+//     "/en/projects(.*)",
+//     "/zh/user(.*)",
+//     "/en/user(.*)",
+//     "/api/og",
+//     "/leaderboard(.*)",
+//   ],
+// });
 
 export const config = {
   matcher: [
