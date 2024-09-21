@@ -8,7 +8,6 @@ import {
   useFetchUser,
   useFetchUserSocialConnections,
   useMutationDisconnectSocialConnection,
-  useMutationDeleteUserGithubRepo,
   useFetchProjectsByUser,
 } from "@/services/user.query";
 import { useClerk } from "@clerk/nextjs";
@@ -16,9 +15,17 @@ import Image from "next/image";
 import { FormUserSettings } from "./form/form-settings";
 import { useDialogStore } from "@/components/dialog/store";
 import { useEffect, useState } from "react";
-import { GithubRepo } from "@/services/types";
+import { GithubRepo, Project } from "@/services/types";
 import { useToastStore } from "@/components/toast/store";
 import { ProjectItem } from "@/app/[lng]/projects/project-item";
+import { unsplash } from "@/utils/unsplash";
+import { Aspect } from "@/components/aspect";
+import { TagProjectTag } from "@/components/tag/project-tag";
+import Link from "next/link";
+import { TeamAvatarRow } from "@/components/molecules/team-avatar-row";
+import GithubProjectItem from "./component/github-project-item";
+import { useRouter } from "next/navigation";
+
 export default function Page() {
   const showDialog = useDialogStore((s) => s.open);
   const user = useClerk().user;
@@ -28,18 +35,18 @@ export default function Page() {
   const { data: userProjects, isLoading: isLoadingProjects } =
     useFetchProjectsByUser(user?.id);
   const mutation = useMutationDisconnectSocialConnection();
-  const mutationDeleteUserGithubRepo = useMutationDeleteUserGithubRepo();
-  const [githubRepo, setGithubRepo] = useState<GithubRepo[]>([]);
+  const [githubRepo, setGithubRepo] = useState<Project[]>([]);
   const { data: socialConnections, isLoading: isLoading2 } =
     useFetchUserSocialConnections(user?.id);
+  const router = useRouter();
 
   useLoadingWhen(isLoading || isLoading2);
 
   useEffect(() => {
-    if (userProfile?.githubRepo) {
-      setGithubRepo(userProfile.githubRepo);
+    if (userProjects) {
+      setGithubRepo(userProjects);
     }
-  }, [userProfile?.githubRepo]);
+  }, [userProjects]);
 
   if (isLoading || isLoading2) return null;
 
@@ -64,13 +71,17 @@ export default function Page() {
 
   const showImportRepoDialog = () => {
     showDialog("github_repo_import", {
-      onRepoImport: (repoInfo: GithubRepo) => {
+      onRepoImport: (repoInfo: Project) => {
         console.log(repoInfo);
         setGithubRepo([...githubRepo, repoInfo]);
       },
+      onRepoDelete: (repoId: string) => {
+        console.log(repoId);
+        setGithubRepo((prevRepos) => prevRepos.filter((r) => r.id !== repoId));
+      },
     });
   };
-  const handleUpdateRepo = async (repo: GithubRepo) => {
+  const handleUpdateRepo = async (repo: Project) => {
     showLoading();
     try {
       const response = await fetch(
@@ -82,10 +93,12 @@ export default function Page() {
       const repoData = await response.json();
       const updatedRepo = {
         ...repo,
-        tags: repoData.topics || [],
+        githubTags: repoData.topics || [],
       };
       setGithubRepo((prevRepos) =>
-        prevRepos.map((r) => (r.url === repo.url ? updatedRepo : r))
+        prevRepos.map((r) =>
+          r.githubURI && r.githubURI === repo.githubURI ? updatedRepo : r
+        )
       );
       addToast({
         type: "success",
@@ -104,20 +117,32 @@ export default function Page() {
       dismissLoading();
     }
   };
-  const handleDeleteRepo = async (repo: GithubRepo) => {
-    try {
-      await mutationDeleteUserGithubRepo.mutateAsync(repo);
-      setGithubRepo((prevRepos) => prevRepos.filter((r) => r.url !== repo.url));
-      addToast({
-        type: "success",
-        title: "Repository deleted",
-        description: `Deleted ${repo.name}.`,
-      });
-    } catch (error) {
-      addToast({
-        type: "error",
-        title: "Error deleting repository",
-        description: "Failed to delete the repository. Please try again.",
+
+  const handleEditProject = (project: Project) => {
+    if (!project.userId) {
+      router.push(
+        `/en/campaigns/${
+          project.team.challenge!.externalId ?? project.team.challenge!.id
+        }/projects/${project.id}`
+      );
+    } else {
+      showDialog("github_repo_import", {
+        repo: project,
+        onRepoImport: (updatedProject: Project) => {
+          // Handle the updated project
+          setGithubRepo((prevRepos) =>
+            prevRepos.map((r) =>
+              r.externalId === updatedProject.externalId ? updatedProject : r
+            )
+          );
+          console.log(updatedProject);
+        },
+        onRepoDelete: (repoId: string) => {
+          console.log(repoId);
+          setGithubRepo((prevRepos) =>
+            prevRepos.filter((r) => r.externalId !== repoId)
+          );
+        },
       });
     }
   };
@@ -129,76 +154,42 @@ export default function Page() {
         <h3 className="text-lg font-semibold mb-3 text-gray-500">
           Your Projects
         </h3>
-        {userProjects && userProjects.length > 0 ? (
-          userProjects.length > 3 ? (
+        {githubRepo && githubRepo.length > 0 ? (
+          githubRepo.length > 3 ? (
             <>
-              {userProjects.slice(0, 3).map((project) => (
-                <ProjectItem key={project.id} project={project} lng={"en"} />
+              {githubRepo.slice(0, 3).map((project) => (
+                <div key={project.id} className="mb-4">
+                  <ProjectItem project={project} lng={"en"} />
+                </div>
               ))}
               <details className="mt-2">
                 <summary className="cursor-pointer text-blue-500 hover:text-blue-600">
-                  Show {userProjects.length - 3} more projects
+                  Show {githubRepo.length - 3} more projects
                 </summary>
-                {userProjects.slice(3).map((project) => (
-                  <ProjectItem key={project.id} project={project} lng={"en"} />
+                {githubRepo.slice(3).map((project) => (
+                  <div key={project.id} className="mt-4">
+                    <GithubProjectItem
+                      project={project}
+                      onEdit={handleEditProject}
+                    />
+                  </div>
                 ))}
               </details>
             </>
           ) : (
-            userProjects.map((project) => (
-              <ProjectItem key={project.id} project={project} lng={"en"} />
+            githubRepo.map((project) => (
+              <div key={project.id} className="mb-4">
+                <GithubProjectItem
+                  project={project}
+                  onEdit={handleEditProject}
+                />
+              </div>
             ))
           )
         ) : (
-          <p className="text-gray-500 text-center">You don&apos;t have any projects yet</p>
-        )}
-      </div>
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3 text-gray-500">
-          GitHub Repositories
-        </h3>
-        {(userProfile.githubRepo && userProfile.githubRepo.length > 0) ||
-        githubRepo.length > 0 ? (
-          <div className="flex flex-col gap-2">
-            {githubRepo.map((repo, index) => (
-              <div
-                className="flex flex-col gap-2 p-3 border border-gray-500 rounded"
-                key={index}
-              >
-                <p className="font-semibold text-white">{repo.name}</p>
-                <div className="flex flex-wrap gap-2">
-                  {repo.tags.map((tag, tagIndex) => (
-                    <span
-                      className="px-2 py-1 bg-midnight text-white rounded-full text-sm"
-                      key={`${index}-${tagIndex}`}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex justify-end gap-2 mt-2">
-                  <button
-                    onClick={() => handleUpdateRepo(repo)}
-                    className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
-                  >
-                    Update
-                  </button>
-                  <button
-                    onClick={() => handleDeleteRepo(repo)}
-                    className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-6">
-            <p className="text-gray-500 text-center">
-              You haven&apos;t imported any projects yet
-            </p>
-          </div>
+          <p className="text-gray-500 text-center">
+            You don&apos;t have any projects yet
+          </p>
         )}
       </div>
 

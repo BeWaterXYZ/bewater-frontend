@@ -20,37 +20,57 @@ import {
 } from "@/services/team.query";
 import { useRef, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { useMutationAddUserGithubRepo } from "@/services/user.query";
+import {
+  useMutationAddUserGithubRepo,
+  useMutationDeleteUserGithubRepo,
+  useMutationUpdateUserGithubRepo,
+} from "@/services/user.query";
+import { COUNTRIES } from "@/constants/options/country";
+import { RoleSetOptions } from "@/constants/options/role";
+import { SkillSetOptions } from "@/constants/options/skill";
+import { GithubRepo, Project } from "@/services/types";
 
-const schema = () =>
+const schema = (isEditing: boolean) =>
   z
     .object({
       githubRepoURL: validationSchema.githubURL,
+      title: validationSchema.text,
+      description: validationSchema.text,
+      tags: validationSchema.tags,
+      contact: validationSchema.str,
     })
     .required();
 
 export type Inputs = z.infer<ReturnType<typeof schema>>;
 
-export function useImportGithubRepoForm() {
+export function useImportGithubRepoForm(
+  initialData?: Project,
+  isEditing: boolean = false
+) {
   return useForm<Inputs>({
-    resolver: zodResolver(schema()),
+    resolver: zodResolver(schema(isEditing)),
     defaultValues: {
-      githubRepoURL: "",
+      githubRepoURL: initialData?.githubURI ?? "",
+      title: initialData?.name ?? "",
+      description: initialData?.description ?? "",
+      tags: initialData?.tags ?? [],
+      contact: initialData?.contact ?? "",
     },
   });
 }
 
-interface TeamCreateDialogProps {
+interface GithubRepoImportDialogProps {
   data: NonNullable<Dialogs["github_repo_import"]>;
   close: () => void;
 }
-export default function TeamCreateDialog({
+
+export default function GithubRepoImportDialog({
   data,
   close,
-}: TeamCreateDialogProps) {
-  const isEditing = false;
+}: GithubRepoImportDialogProps) {
+  const isEditing = !!data.repo;
 
-  let hackProjectTagSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
+  // let hackProjectTagSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
 
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
@@ -61,12 +81,14 @@ export default function TeamCreateDialog({
   const showDialog = useDialogStore((s) => s.open);
   const [isCallingAPI, setIsCallingAPI] = useState(false);
   const mutationAddUserGithubRepo = useMutationAddUserGithubRepo();
-
-  const onDismiss = async () => {
+  const mutationUpdateUserGithubRepo = useMutationUpdateUserGithubRepo();
+  const mutationDeleteUserGithubRepo = useMutationDeleteUserGithubRepo();
+  
+  const handleDeleteRepo = async () => {
     let confirmed = await confirm({
       title: "Are you sure?",
-      description: "You are going to dismiss the team",
-      okCopy: "Dismiss",
+      description: "You are going to delete this repository",
+      okCopy: "Delete",
       cancelCopy: "Cancel",
       type: "warning",
     });
@@ -74,16 +96,24 @@ export default function TeamCreateDialog({
     showLoading();
 
     try {
-      await dismissTeamMutation.mutateAsync("1");
-      router.gotoTeamList("1");
-      close();
+      if (data.repo?.id) {
+        await mutationDeleteUserGithubRepo.mutateAsync(data.repo.id);
+        addToast({
+          type: "success",
+          title: "Repository deleted",
+          description: `Deleted ${data.repo?.name}.`,
+        });
+        data.onRepoDelete && data.onRepoDelete(data.repo?.externalId || "");
+        close();
+       }else {
+        throw new Error("Repository not found");
+       }
+    } catch (error) {
       addToast({
-        type: "success",
-        title: "Team dismissed",
-        description: "",
+        type: "error",
+        title: "Error deleting repository",
+        description: "Failed to delete the repository. Please try again.",
       });
-    } catch (err) {
-      console.log(err);
     } finally {
       dismissLoading();
     }
@@ -119,26 +149,59 @@ export default function TeamCreateDialog({
 
         const repoData = await response.json();
         const topics = repoData.topics || [];
-        const repoInfo = {
-          name: repoData.name,
+        const repoInfo: GithubRepo = {
+          externalId: data.repo?.externalId || "",
+          githubTags: topics,
           owner: owner,
           url: repoUrl,
-          tags: topics,
-          description: repoData.description || "",
+          tags: formData.tags || topics,
+          description: formData.description || "",
+          title: formData.title || "",
+          contact: formData.contact,
         };
-        const res = await mutationAddUserGithubRepo.mutateAsync(repoInfo);
-        console.log(res);
-        data.onRepoImport &&
-          data.onRepoImport(
-            res.userProfile?.githubRepo?.filter(
-              (repo) => repo.url === repoInfo.url
-            )[0] || { ...repoInfo, externalId: "" }
-          );
+
+        if (isEditing) {
+          // Update existing repo
+          const res = await mutationUpdateUserGithubRepo.mutateAsync({
+            ...repoInfo,
+            externalId: data.repo?.externalId || "",
+          });
+          console.log(res);
+          if (res) {
+            data.onRepoImport && data.onRepoImport(res);
+          } else {
+            addToast({
+              type: "error",
+              title: "Error importing repository",
+              description:
+                "Unable to fetch repository data. Please check the URL and try again.",
+            });
+          }
+          console.log("Updating repo:", repoInfo);
+        } else {
+          // Create new repo
+          const res = await mutationAddUserGithubRepo.mutateAsync(repoInfo);
+          console.log(res);
+          if (res) {
+            data.onRepoImport && data.onRepoImport(res);
+          } else {
+            addToast({
+              type: "error",
+              title: "Error importing repository",
+              description:
+                "Unable to fetch repository data. Please check the URL and try again.",
+            });
+          }
+        }
 
         addToast({
           type: "success",
-          title: "Repository imported successfully",
-          description: `Imported ${repoData.name} with ${topics.length} tags.`,
+          title: isEditing
+            ? "Repository updated successfully"
+            : "Repository imported successfully",
+          description: `${isEditing ? "Updated" : "Imported"} ${
+            repoInfo.title
+          } with ${repoInfo.tags.length} tags.`,
         });
 
         close();
@@ -154,98 +217,6 @@ export default function TeamCreateDialog({
         dismissLoading();
         setIsCallingAPI(false);
       }
-      // let confirmed = await confirm({
-      //   title: "",
-      //   description: "You are going to dismiss the team",
-      //   okCopy: "Dismiss",
-      //   cancelCopy: "Cancel",
-      //   type: "warning",
-      // });
-      // if (!confirmed) return;
-      // if (isEditing) {
-      /**
-       *  edit team
-       */
-      //   let payload = {
-      //     name: formData.name,
-      //     projectName: formData.title,
-      //     projectDescription: formData.description,
-      //     projectTags: formData.tags,
-      //     projectBountyTrack: formData.bountyTrack,
-      //     openingRoles: formData.roles,
-      //     skills: formData.skills,
-      //     nation: formData.nation[0],
-      //     // expericence: Number(formData.experience),
-      //     pastGrant: formData.pastGrant,
-      //     builtDate: new Date(formData.builtDate.concat("-01")).toISOString(),
-      //     deckURI: formData.deckURI,
-      //     demoURI: formData.demoURI,
-      //     siteURI: formData.siteURI,
-      //     contact: formData.contact,
-      //     recommendedFrom: formData.recommendedFrom,
-      //     githubURI: formData.githubURI,
-      //     membersCount: formData.membersCount,
-      //     offlineDemoDay: Number(formData.offlineDemoDay),
-      //   };
-      //   let res = await updateTeam({ teamId: "1", payload });
-      //   addToast({
-      //     type: "success",
-      //     title: "Team info updated",
-      //     description: "",
-      //   });
-      //   router.refresh();
-      // } else {
-      //   /**
-      //    * create new team
-      //    */
-      //   let payload = {
-      //     name: formData.name,
-      //     projectName: formData.title,
-      //     projectDescription: formData.description,
-      //     projectTags: formData.tags,
-      //     projectBountyTrack: formData.bountyTrack,
-      //     challengeId: "data.challenge!.id",
-      //     openingRoles: formData.roles,
-      //     skills: formData.skills,
-      //     nation: formData.nation[0],
-      //     leaderRole: formData.role[0],
-      //     // expericence: Number(formData.experience),
-      //     pastGrant: formData.pastGrant,
-      //     builtDate: new Date(formData.builtDate.concat("-01")).toISOString(),
-      //     deckURI: formData.deckURI,
-      //     demoURI: formData.demoURI,
-      //     siteURI: formData.siteURI,
-      //     contact: formData.contact,
-      //     recommendedFrom: formData.recommendedFrom,
-      //     userEmail: formData.userEmail,
-      //     githubURI: formData.githubURI,
-      //     membersCount: formData.membersCount,
-      //     offlineDemoDay: Number(formData.offlineDemoDay),
-      //   };
-
-      //   let res = await createTeamMutaion.mutateAsync(payload);
-      //   if (res.leaderAlreadyInChallenge) {
-      //     addToast({
-      //       type: "error",
-      //       title: "Already in challenge",
-      //       description: "You already have a team",
-      //     });
-      //   } else if (res.team) {
-      //     router.gotoTeam("data.challenge!.id", res.team.id);
-
-      // addToast({
-      //   type: 'success',
-      //   title: 'team created',
-      //   description: '',
-      // });
-
-      // showDialog("team_created", {
-      //   challenge: data.challenge!,
-      //   teamId: res.team.id,
-      // });
-      //   }
-      // }
-      // close();
     } catch (err) {
       console.log(err);
     } finally {
@@ -258,7 +229,7 @@ export default function TeamCreateDialog({
     register,
     handleSubmit,
     formState: { errors },
-  } = useImportGithubRepoForm();
+  } = useImportGithubRepoForm(data.repo, isEditing);
 
   const onInvalid = (e: any) => {
     console.log("invalid", e);
@@ -267,22 +238,61 @@ export default function TeamCreateDialog({
   return (
     <div className="w-[80vw] max-w-md">
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
-        Import github repo
+        {isEditing ? "Edit GitHub Repository" : "Import GitHub Repository"}
       </p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
         <div className="max-h-[60vh] overflow-y-auto mb-4">
           <Input
             label="Repository URL"
-            placeholder="Enter your github repo url"
+            placeholder="Enter your GitHub repo URL"
             required
             error={errors["githubRepoURL"]}
             {...register("githubRepoURL")}
           />
+          <Input
+            label="Project Title"
+            required
+            placeholder="Enter your project title"
+            error={errors["title"]}
+            {...register("title")}
+          />
+          <Select
+            id="select-tags"
+            label="Project Tag"
+            required
+            maxSelections={5}
+            options={ProjectTagSetOptions}
+            error={errors["tags"]}
+            control={control}
+            {...register("tags")}
+          />
+          <TextArea
+            label="Project Description"
+            required
+            placeholder="Enter your project description"
+            error={errors["description"]}
+            {...register("description")}
+          />
+          <Input
+            label="WeChat / Telegram"
+            placeholder="Enter your WeChat / Telegram ID"
+            error={errors["contact"]}
+            {...register("contact")}
+          />
         </div>
         <div className="flex justify-between">
-          <div className="flex-1" />
-          <div className="flex gap-2">
+          {isEditing && (
+            <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleDeleteRepo}
+              disabled={isCallingAPI}
+            >
+              Delete
+            </button>
+          )}
+          <div className="flex gap-2 ml-auto">
             <button
               disabled={isCallingAPI}
               className="btn btn-secondary"
@@ -292,7 +302,7 @@ export default function TeamCreateDialog({
               Cancel
             </button>
             <button className="btn btn-primary" disabled={isCallingAPI}>
-              Import
+              {isEditing ? "Update" : "Import"}
             </button>
           </div>
         </div>

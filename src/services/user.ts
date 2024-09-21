@@ -26,6 +26,10 @@ export interface UpdateUserProfileResponse extends APIResponse {
   userProfile?: UserProfile;
 }
 
+export interface UpdateUserProjectResponse extends APIResponse {
+  project?: Project;
+}
+
 export async function getUserProfile() {
   const { data } = await agentAuthed.get<UserProfile>(`/user`);
   return data;
@@ -89,20 +93,25 @@ export async function submitUpdateUserProfile(
   return data;
 }
 
-export async function addUserGithubRepo(githubRepo: AddGithubRepo) {
-  const { data } = await agentAuthed.post<UpdateUserProfileResponse>(
+export async function addUserGithubRepo(githubRepo: GithubRepo) {
+  const { data } = await agentAuthed.post<Project>(
     `/user/github-repo`,
     githubRepo
   );
   return data;
 }
 
-export async function deleteUserGithubRepo(githubRepo: GithubRepo) {
-  if (!githubRepo.externalId) {
-    throw new Error("Cannot delete GitHub repo without externalId");
-  }
+export async function updateUserGithubRepo(githubRepo: GithubRepo) {
+  const { data } = await agentAuthed.put<Project>(
+    `/user/github-repo/${githubRepo.externalId}`,
+    githubRepo
+  );
+  return data;
+}
+
+export async function deleteUserGithubRepo(projectId: string) {
   const { data } = await agentAuthed.delete<UpdateUserProfileResponse>(
-    `/user/github-repo/${githubRepo.externalId}`
+    `/user/github-repo/${projectId}`
   );
   return data;
 }
