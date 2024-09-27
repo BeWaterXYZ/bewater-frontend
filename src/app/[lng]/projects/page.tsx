@@ -14,7 +14,7 @@ export default async function ProjectsPage({
     <>
       <div className="container mx-auto px-4 pt-12 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[rgb(0,255,255)] drop-shadow-md">
-          BeWater Open Network
+          BeWater Open Network 
         </h1>
         <p className="text-xl md:text-2xl mb-6 text-gray-100 max-w-3xl mx-auto leading-relaxed">
           Link builders and projects with the BeWater Open Network
