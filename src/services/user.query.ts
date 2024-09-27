@@ -10,6 +10,7 @@ import {
   addUserGithubRepo,
   deleteUserGithubRepo,
   getUserProjects,
+  updateUserGithubRepo,
 } from "./user";
 
 export function useFetchUser(userId?: UserID) {
@@ -63,7 +64,16 @@ export function useMutationAddUserGithubRepo() {
   const queryClient = useQueryClient();
   return useMutation(addUserGithubRepo, {
     onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries(["user", data.userProfile?.id]);
+      queryClient.invalidateQueries(["project", data?.id]);
+    },
+  });
+}
+
+export function useMutationUpdateUserGithubRepo() {
+  const queryClient = useQueryClient();
+  return useMutation(updateUserGithubRepo, {
+    onSuccess: (data, variables, context) => {
+      queryClient.invalidateQueries(["project", data?.id]);
     },
   });
 }

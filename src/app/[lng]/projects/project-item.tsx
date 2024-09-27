@@ -30,7 +30,7 @@ export function ProjectItem({
           <Image
             width={450}
             height={300}
-            src={project.mediaURLs[0] ?? unsplash("project")}
+            src={project.mediaURLs && project.mediaURLs.length > 0 ? project.mediaURLs[0] : unsplash("project")}
             alt={project.description}
             className="object-cover block w-full h-full"
           />
