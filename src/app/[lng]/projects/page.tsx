@@ -19,7 +19,7 @@ export default async function ProjectsPage({
         <p className="text-xl md:text-2xl mb-6 text-gray-100 max-w-3xl mx-auto leading-relaxed">
           Link builders and projects with the BeWater Open Network
         </p>
-        <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+        <p className="text-xl md:text-2xl text-gray-100 max-w-3xl mx-auto leading-relaxed">
           Check the deck & contact with us 👉{" "}
           <Link
             href="https://drive.google.com/file/d/1_y3wfbIeZN855S8_sBmWvFdsLTBT2qPU/view?usp=sharing"
