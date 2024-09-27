@@ -83,7 +83,7 @@ export default function GithubRepoImportDialog({
   const mutationAddUserGithubRepo = useMutationAddUserGithubRepo();
   const mutationUpdateUserGithubRepo = useMutationUpdateUserGithubRepo();
   const mutationDeleteUserGithubRepo = useMutationDeleteUserGithubRepo();
-  
+
   const handleDeleteRepo = async () => {
     let confirmed = await confirm({
       title: "Are you sure?",
@@ -105,9 +105,9 @@ export default function GithubRepoImportDialog({
         });
         data.onRepoDelete && data.onRepoDelete(data.repo?.externalId || "");
         close();
-       }else {
+      } else {
         throw new Error("Repository not found");
-       }
+      }
     } catch (error) {
       addToast({
         type: "error",
@@ -149,6 +149,28 @@ export default function GithubRepoImportDialog({
 
         const repoData = await response.json();
         const topics = repoData.topics || [];
+
+        // Check if the user is a contributor
+        const contributorsResponse = await fetch(
+          `https://api.github.com/repos/${owner}/${repo}/contributors`
+        );
+        const contributors = await contributorsResponse.json();
+
+        if (
+          !contributors.some(
+            (contributor: any) => contributor.login === data.githubOwnerName
+          )
+        ) {
+          addToast({
+            type: "error",
+            title: "Not a contributor",
+            description:
+              "You must be a contributor to this repository to import it.",
+          });
+          dismissLoading();
+          setIsCallingAPI(false);
+          return;
+        }
         const repoInfo: GithubRepo = {
           externalId: data.repo?.externalId || "",
           githubTags: topics,

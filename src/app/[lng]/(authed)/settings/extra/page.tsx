@@ -70,7 +70,21 @@ export default function Page() {
   };
 
   const showImportRepoDialog = () => {
+    const githubOwnerName = socialConnections?.find(
+      (c) => c.platform.toLowerCase() === "github"
+    )?.handle;
+
+    if (!githubOwnerName) {
+      addToast({
+        type: "warning",
+        title: "GitHub Account Not Connected",
+        description:
+          "Please connect your GitHub account before importing repositories.",
+      });
+      return;
+    }
     showDialog("github_repo_import", {
+      githubOwnerName,
       onRepoImport: (repoInfo: Project) => {
         console.log(repoInfo);
         setGithubRepo([...githubRepo, repoInfo]);
@@ -125,26 +139,39 @@ export default function Page() {
           project.team.challenge!.externalId ?? project.team.challenge!.id
         }/projects/${project.id}`
       );
-    } else {
-      showDialog("github_repo_import", {
-        repo: project,
-        onRepoImport: (updatedProject: Project) => {
-          // Handle the updated project
-          setGithubRepo((prevRepos) =>
-            prevRepos.map((r) =>
-              r.externalId === updatedProject.externalId ? updatedProject : r
-            )
-          );
-          console.log(updatedProject);
-        },
-        onRepoDelete: (repoId: string) => {
-          console.log(repoId);
-          setGithubRepo((prevRepos) =>
-            prevRepos.filter((r) => r.externalId !== repoId)
-          );
-        },
-      });
+      return;
     }
+    const githubOwnerName = socialConnections?.find(
+      (c) => c.platform.toLowerCase() === "github"
+    )?.handle;
+    if (!githubOwnerName) {
+      addToast({
+        type: "warning",
+        title: "GitHub Account Not Connected",
+        description:
+          "Please connect your GitHub account before editing repositories.",
+      });
+      return;
+    }
+    showDialog("github_repo_import", {
+      githubOwnerName,
+      repo: project,
+      onRepoImport: (updatedProject: Project) => {
+        // Handle the updated project
+        setGithubRepo((prevRepos) =>
+          prevRepos.map((r) =>
+            r.externalId === updatedProject.externalId ? updatedProject : r
+          )
+        );
+        console.log(updatedProject);
+      },
+      onRepoDelete: (repoId: string) => {
+        console.log(repoId);
+        setGithubRepo((prevRepos) =>
+          prevRepos.filter((r) => r.externalId !== repoId)
+        );
+      },
+    });
   };
 
   return (
@@ -159,7 +186,12 @@ export default function Page() {
             <>
               {githubRepo.slice(0, 3).map((project) => (
                 <div key={project.id} className="mb-4">
-                  <ProjectItem project={project} lng={"en"} />
+                  <div key={project.id} className="mt-4">
+                    <GithubProjectItem
+                      project={project}
+                      onEdit={handleEditProject}
+                    />
+                  </div>
                 </div>
               ))}
               <details className="mt-2">

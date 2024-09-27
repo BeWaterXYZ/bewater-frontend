@@ -31,6 +31,7 @@ export type Dialogs = {
     challengeId: ChallengeID;
   };
   github_repo_import?: {
+    githubOwnerName: string;
     onRepoImport?: (repoInfo: Project) => void;
     onRepoDelete?: (repoId: string) => void;
     repo?: Project;
