@@ -2,6 +2,7 @@ import { getChallenges } from "@/services/challenge";
 import { Metadata } from "next";
 import ProjectList from "./project-list";
 import { useTranslation } from "@/app/i18n";
+import Link from "next/link";
 
 export default async function ProjectsPage({
   params,
@@ -9,7 +10,30 @@ export default async function ProjectsPage({
   params: { lng: string };
 }) {
   const { lng = "en" } = params || {};
-  return <ProjectList lng={lng}></ProjectList>;
+  return (
+    <>
+      <div className="container mx-auto px-4 pt-12 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-[rgb(0,255,255)] drop-shadow-md">
+          BeWater Open Network
+        </h1>
+        <p className="text-xl md:text-2xl mb-6 text-gray-100 max-w-3xl mx-auto leading-relaxed">
+          Link builders and projects with the BeWater Open Network
+        </p>
+        <p className="text-lg text-gray-200 max-w-2xl mx-auto">
+          Check the deck & contact with us 👉{" "}
+          <Link
+            href="https://drive.google.com/file/d/1_y3wfbIeZN855S8_sBmWvFdsLTBT2qPU/view?usp=sharing"
+            className="text-[rgb(0,255,255)] hover:text-white hover:underline font-medium transition duration-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Deck
+          </Link>
+        </p>
+      </div>
+      <ProjectList lng={lng}></ProjectList>
+    </>
+  );
 }
 
 // export const revalidate = 60;

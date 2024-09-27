@@ -31,20 +31,24 @@ export interface UserProfile {
 }
 
 export interface GithubRepo {
+  githubTags: string[];
   tags: string[];
   url: string;
   owner: string;
-  name: string;
   description: string;
   externalId: string;
+  title: string;
+  contact: string;
 }
 
 export interface AddGithubRepo {
+  githubTags: string[];
   tags: string[];
   url: string;
   owner: string;
-  name: string;
   description: string;
+  title: string;
+  contact: string;
 }
 
 export interface SocialAuth {
@@ -278,10 +282,13 @@ export interface Project {
   name: string;
   description: string;
   tags: string[];
+  githubTags?: string[];
   bountyTrack?: string[];
   status: ProjectStatus;
   teamId: string;
   team: Team;
+  userId: UserID;
+  owner: UserProfile;
   mediaURLs: string[];
   updatedAt: string;
   deckURI?: string;
