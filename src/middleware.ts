@@ -58,6 +58,8 @@ function i18n(req: NextRequest) {
 
 const isPublicRoute = createRouteMatcher([
   "/",
+  "/sign-in",
+  "/sign-up",
   "/en",
   "/zh",
   "/zh/campaigns(.*)",
@@ -71,6 +73,9 @@ const isPublicRoute = createRouteMatcher([
 ]);
 export default clerkMiddleware(
   async (auth,req) => {
+    if(!isPublicRoute(req)) {
+      auth().protect();
+    }
     if (isPublicRoute(req)) {
       return i18n(req);
     }
