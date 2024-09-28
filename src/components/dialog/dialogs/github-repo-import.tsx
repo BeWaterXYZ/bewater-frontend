@@ -260,7 +260,7 @@ export default function GithubRepoImportDialog({
   return (
     <div className="w-[80vw] max-w-md">
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
-        {isEditing ? "Edit GitHub Repository" : "Import GitHub Repository"}
+        {isEditing ? "Edit Project" : "Create New Project"}
       </p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
@@ -324,7 +324,7 @@ export default function GithubRepoImportDialog({
               Cancel
             </button>
             <button className="btn btn-primary" disabled={isCallingAPI}>
-              {isEditing ? "Update" : "Import"}
+              {isEditing ? "Update" : "Create"}
             </button>
           </div>
         </div>
