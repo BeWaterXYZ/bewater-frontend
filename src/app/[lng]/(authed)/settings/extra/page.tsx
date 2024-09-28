@@ -79,7 +79,7 @@ export default function Page() {
         type: "warning",
         title: "GitHub Account Not Connected",
         description:
-          "Please connect your GitHub account before importing repositories.",
+          "Please connect your GitHub account before creating new projects.",
       });
       return;
     }
@@ -227,7 +227,7 @@ export default function Page() {
 
       <div className="mt-6 flex justify-end">
         <button className="btn btn-primary" onClick={showImportRepoDialog}>
-          Import GitHub Projects
+          Create New Project
         </button>
       </div>
 
