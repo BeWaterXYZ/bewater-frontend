@@ -61,7 +61,7 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
         className="body-4 md:text-[24px] uppercase font-light"
         suppressHydrationWarning
       >
-        {challenge.location === "ONLINE" ? `${t("campaign.t30")} | ` : null}
+        {challenge.location === "ONLINE" && challenge.title !== "General" ? `${t("campaign.t30")} | ` : null}
         {(challenge.location === "OFFLINE" ||
           challenge.location === "MIXED" ||
           challenge.location === "OTHERS") &&
@@ -69,11 +69,11 @@ export default function ChallengeHero({ challenge, lng }: ChallengeHeroProps) {
           ? `${challenge.city} | `
           : null}
         {`${
-          lng === "zh"
+          challenge.title !== "General"?lng === "zh" 
             ? formatYYYYMMMDD(challenge.startTime)
-            : formatMMMDDYYYY(challenge.startTime)
+            : formatMMMDDYYYY(challenge.startTime) : ''
         }`}
-        {challenge.startTime !== challenge.endTime &&
+        {challenge.startTime !== challenge.endTime && challenge.title !== "General" &&
           ` - ${
             lng === "zh"
               ? formatYYYYMMMDD(challenge.endTime)

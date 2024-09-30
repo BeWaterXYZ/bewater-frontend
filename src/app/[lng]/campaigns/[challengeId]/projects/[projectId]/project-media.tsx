@@ -26,11 +26,11 @@ export default function ProjectMedia({
     .some((m) => m.userProfile.clerkId === user?.id);
 
   const [medias, mediaSet] = useState<Media[]>(() =>
-    project.mediaURLs.map((img) => ({
+    project.mediaURLs &&  project.mediaURLs.map((img) => ({
       url: img,
       id: counter++,
       status: "existing",
-    }))
+    })) || []
   );
   const [changed, changedSet] = useState(false);
 

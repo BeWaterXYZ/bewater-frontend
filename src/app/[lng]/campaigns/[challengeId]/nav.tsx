@@ -66,6 +66,9 @@ export default function ChallengeNav({
         if (challenge.id === "134" && link.segment !== null) {
           return null;
         }
+        if(challenge.title === "General") {
+          return null;
+        }
         return isEnabled ? (
           <Link
             key={link.path}
