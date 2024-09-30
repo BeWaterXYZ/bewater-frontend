@@ -2,6 +2,7 @@ import { Challenge, ChallengeTrackResult, TrackAward } from "@/services/types";
 
 export function isResultShow(challenge: Challenge | undefined): boolean {
   if (!challenge) return false;
+  if (!challenge.future) return false;
   const {
     future: { announceResult },
     milestones,
@@ -24,6 +25,7 @@ export function isResultShow(challenge: Challenge | undefined): boolean {
 
 export function isShortlistShow(challenge: Challenge | undefined): boolean {
   if (!challenge) return false;
+  if (!challenge.future) return false;
   const {
     future: { announceShortlist },
     milestones,
