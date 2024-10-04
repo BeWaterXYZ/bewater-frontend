@@ -24,6 +24,7 @@ import { useDialogStore } from "@/components/dialog/store";
 import { useClerk } from "@clerk/nextjs";
 import { useFetchUser } from "@/services/user.query";
 import { useTranslation } from "@/app/i18n/client";
+import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 
 export default function ProjectList({ lng }: { lng: string }) {
   const { t } = useTranslation(lng, "translation");
@@ -52,7 +53,7 @@ export default function ProjectList({ lng }: { lng: string }) {
     cursorId
   );
   const {
-    data: filterOptions = { titles: [], tags: [] },
+    data: filterOptions = { titles: [], tags: [], githubTags: [] },
     isLoading: isLoadingfilterOptions,
   } = useFetchProjectFilterOptions();
   const loadMore = () => {
@@ -152,7 +153,7 @@ export default function ProjectList({ lng }: { lng: string }) {
       </div>
       <div className="w-full lg:w-auto flex-1 mb-30">
         {/* search and filter bar  */}
-        <div className="flex justify-between py-4">
+        <div className="flex justify-end py-4">
           {/* <div className="hidden lg:block invisible">
             <button className="body-3 flex gap-1">
               <Image
@@ -164,13 +165,25 @@ export default function ProjectList({ lng }: { lng: string }) {
               Sort
             </button>
           </div> */}
-          <div className="w-full lg:w-auto flex  flex-col gap-4">
-            {/* <div className="lg:min-w-[300px]">
-              <SearchInput
-                value={search}
-                onChange={(e) => searchSet(e.target.value)}
-              />
-            </div> */}
+          <div className="w-full lg:w-auto flex flex-col gap-4">
+            <div className="lg:min-w-[300px] flex items-center">
+              <div className="flex-1">
+                <SearchInput
+                  placeholder="Search for project name or description"
+                  value={search}
+                  onChange={(e) => searchSet(e.target.value)}
+                />
+              </div>
+              <button
+                className="btn btn-secondary flex items-center gap-2 ml-2"
+                onClick={() => {
+                  // Implement search functionality here
+                  console.log("Search clicked with query:", search);
+                }}
+              >
+                Search
+              </button>
+            </div>
             <div className="flex lg:hidden justify-between gap-2">
               <button
                 className="btn btn-secondary-invert w-full gap-1"
