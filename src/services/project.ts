@@ -36,9 +36,11 @@ export async function getProjects(
   return { projects: data.projects, cursorId, filterOptions };
 }
 export async function getProjectFilterOptions() {
-  const { data } = await agentAuthed.get<{ tags: string[]; titles: string[] }>(
-    `challenge/filterOptions`
-  );
+  const { data } = await agentAuthed.get<{
+    tags: string[];
+    titles: string[];
+    githubTags: string[];
+  }>(`challenge/filterOptions`);
   return data;
 }
 
