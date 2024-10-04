@@ -24,22 +24,24 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
 
 export function useFetchProjects(
   limit = 20,
-  filterOptions: { tags?: string[]; challengeTitle?: string[] } = {},
+  filterOptions: { tags?: string[]; challengeTitle?: string[], githubTags?: string[], searchQuery?: string } = {},
   cursorId?: string
 ) {
   const projectTagKey = filterOptions?.tags ? filterOptions.tags : ["all-tag"];
   const projectTitleKey = filterOptions?.challengeTitle
     ? filterOptions.challengeTitle
     : ["all-title"];
+  const projectGithubTagKey = filterOptions?.githubTags ? filterOptions.githubTags : ["all-github-tag"];
   const cursorIdKey = cursorId ? cursorId : "none";
   return useQuery({
     queryKey: [
       "projects",
       ...projectTagKey,
-      ,
+      ...projectGithubTagKey,
       projectTitleKey,
       limit,
       cursorIdKey,
+      filterOptions?.searchQuery,
     ],
     queryFn: async () => {
       return getProjects(limit, filterOptions, cursorId);
