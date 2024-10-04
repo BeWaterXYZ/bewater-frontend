@@ -36,6 +36,17 @@ export function ProjectItem({
           />
         </Aspect>
         <div className="absolute top-[8px] right-[8px] flex gap-2">
+          {project.githubTags?.map((tag) => (
+            <div
+              key={tag}
+              className="inline h-6 rounded  gap-1 bg-[rgba(0,_0,_0,_0.3)] backdrop-blur-[2px]"
+            >
+              <TagProjectTag
+                label={tag}
+                className="border-none relative -top-[2px] "
+              />
+            </div>
+          ))}
           {project.tags.map((tag) => (
             <div
               key={tag}
