@@ -29,7 +29,9 @@ import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
 export default function ProjectList({ lng }: { lng: string }) {
   const { t } = useTranslation(lng, "translation");
   const sp = useSearchParams();
-  const { tag, challengeTitle } = querySchema.parse(Object.fromEntries(sp!));
+  const { tag, challengeTitle, githubTag } = querySchema.parse(
+    Object.fromEntries(sp!)
+  );
   const showDialog = useDialogStore((s) => s.open);
   const [search, searchSet] = useState("");
   const [cursorId, setCursorId] = useState<string | undefined>(undefined);
@@ -37,6 +39,10 @@ export default function ProjectList({ lng }: { lng: string }) {
   const [selectedTags, setSelectedTags] = useState<string[] | undefined>(
     undefined
   );
+  const [selectedGithubTags, setSelectedGithubTags] = useState<
+    string[] | undefined
+  >(undefined);
+  const [searchQuery, setSearchQuery] = useState("");
   const [loadedProjectFirstPage, setLoadedProjectFirstPage] = useState(true);
   const [hasMore, setHasMore] = useState(true);
   const [selectedChallengeTitle, setSelectedChallengeTitle] = useState<
@@ -49,11 +55,16 @@ export default function ProjectList({ lng }: { lng: string }) {
     isSuccess: projectsFetchedSuccess,
   } = useFetchProjects(
     20,
-    { challengeTitle: selectedChallengeTitle, tags: selectedTags },
+    {
+      challengeTitle: selectedChallengeTitle,
+      tags: selectedTags,
+      githubTags: selectedGithubTags,
+      searchQuery: searchQuery,
+    },
     cursorId
   );
   const {
-    data: filterOptions = { titles: [], tags: [], githubTags: [] },
+    data: filterOptions = { titles: [], tags: [], githubTags: []},
     isLoading: isLoadingfilterOptions,
   } = useFetchProjectFilterOptions();
   const loadMore = () => {
@@ -62,6 +73,7 @@ export default function ProjectList({ lng }: { lng: string }) {
   useEffect(() => {
     let selectedTags = undefined;
     let selectedChallengeTitle = undefined;
+    let selectedGithubTags = undefined;
     if (tag) {
       const tagsArray = tag.split(",");
       if (tagsArray[0] == "") {
@@ -76,12 +88,20 @@ export default function ProjectList({ lng }: { lng: string }) {
       }
       selectedChallengeTitle = challengeTitleArray;
     }
+    if (githubTag) {
+      const githubTagArray = githubTag.split(",");
+      if (githubTagArray[0] == "") {
+        githubTagArray.shift();
+      }
+      selectedGithubTags = githubTagArray;
+    }
     setCursorId(undefined);
     setLoadedProjectFirstPage(false);
     setHasMore(true);
     setSelectedTags(selectedTags);
+    setSelectedGithubTags(selectedGithubTags);
     setSelectedChallengeTitle(selectedChallengeTitle);
-  }, [tag, challengeTitle]);
+  }, [tag, challengeTitle, githubTag]);
 
   useEffect(() => {
     if (!projectsFetchedSuccess) {
@@ -94,10 +114,10 @@ export default function ProjectList({ lng }: { lng: string }) {
       return;
     }
     if (projectsFetched && projectsFetched.projects.length > 0) {
-      if (loadedProjectFirstPage) {
+      if (cursorId) {
         setProjects((prev) => [...prev, ...projectsFetched.projects]);
       } else {
-        setProjects(projectsFetched.projects);
+        setProjects([...projectsFetched.projects]);
         setLoadedProjectFirstPage(true);
       }
     } else {
@@ -179,6 +199,7 @@ export default function ProjectList({ lng }: { lng: string }) {
                 onClick={() => {
                   // Implement search functionality here
                   console.log("Search clicked with query:", search);
+                  setSearchQuery(search);
                 }}
               >
                 Search
