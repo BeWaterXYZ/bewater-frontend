@@ -1,4 +1,8 @@
 "use client";
+import { useState, useMemo } from "react";
+import { useDialogStore } from "@/components/dialog/store";
+import { useFetchChallengeList } from "@/services/challenge.query";
+import { Loading } from "@/components/loading/loading";
 import { Aspect } from "@/components/aspect";
 import { Challenge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
@@ -7,9 +11,6 @@ import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { useFetchChallengeList } from "@/services/challenge.query";
-import { Loading } from "@/components/loading/loading";
 
 interface ChallengeListProps {
   lng: string;
@@ -23,7 +24,22 @@ const filterMap = [
 
 export function ChallengeList({ lng }: ChallengeListProps) {
   let [filter, filterSet] = useState("");
+  let [selectedTags, setSelectedTags] = useState<string[]>([]);
   let { data: challenges, isLoading } = useFetchChallengeList();
+  const showDialog = useDialogStore((s) => s.open);
+
+  const tagOptions = useMemo(() => {
+    if (!challenges) return [];
+    
+    const uniqueTags = new Set<string>();
+    challenges.forEach(challenge => {
+      if (challenge.challengeTags) {
+        challenge.challengeTags.forEach(tag => uniqueTags.add(tag));
+      }
+    });
+    
+    return Array.from(uniqueTags);
+  }, [challenges]);
 
   if (isLoading) {
     return <Loading />;
@@ -51,23 +67,67 @@ export function ChallengeList({ lng }: ChallengeListProps) {
 
   let filteredChallenges = challenges.filter((c) =>
     filter !== "" ? c.type === filter : true
+  ).filter((c) => 
+    selectedTags.length === 0 || 
+    (c.challengeTags && c.challengeTags.some(tag => selectedTags.includes(tag)))
   );
+
+  const showFilter = () => {
+    showDialog("challenge_page_filter", { tagOptions, selectedTags, setSelectedTags });
+  };
 
   return (
     <>
-      <div className="flex gap-4 text-white font-secondary my-6">
-        {filterMap.map((t) => (
-          <button
-            key={t[0]}
-            onClick={() => filterSet(t[1])}
-            className={clsx({
-              "text-day": filter === t[1],
-            })}
-          >
-            {t[0]}
-          </button>
-        ))}
+      <div className="flex justify-between items-center my-6">
+        <div className="flex gap-4 text-white font-secondary">
+          {filterMap.map((t) => (
+            <button
+              key={t[0]}
+              onClick={() => filterSet(t[1])}
+              className={clsx({
+                "text-day": filter === t[1],
+              })}
+            >
+              {t[0]}
+            </button>
+          ))}
+        </div>
+        <button
+          onClick={showFilter}
+          className="flex items-center gap-2 text-white"
+        >
+          <Image
+            src="/icons/filter.svg"
+            height={16}
+            width={16}
+          alt="filter"
+        />
+          Filter
+        </button>
       </div>
+
+      {selectedTags.length > 0 && (
+        <div className="flex flex-wrap gap-2 mb-4">
+          {selectedTags.map(tag => (
+            <span key={tag} className="bg-day text-white px-2 py-1 rounded text-sm">
+              {tag}
+              <button 
+                className="ml-2"
+                onClick={() => setSelectedTags(prev => prev.filter(t => t !== tag))}
+              >
+                ×
+              </button>
+            </span>
+          ))}
+          <button 
+            className="text-day underline"
+            onClick={() => setSelectedTags([])}
+          >
+            Clear all
+          </button>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
         {filteredChallenges.map((challenge) => (
           <div
