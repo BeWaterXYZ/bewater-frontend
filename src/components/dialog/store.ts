@@ -36,10 +36,10 @@ export type Dialogs = {
     onRepoDelete?: (repoId: string) => void;
     repo?: Project;
   };
-  add_challenge_tag: {
+  add_challenge_tag?: {
     onAdd: (tag: string) => void;
   };
-  challenge_page_filter: {
+  challenge_page_filter?: {
     tagOptions: string[];
     selectedTags: string[];
     setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
