@@ -109,10 +109,10 @@ export function ChallengeList({ lng }: ChallengeListProps) {
       {selectedTags.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
           {selectedTags.map(tag => (
-            <span key={tag} className="bg-day text-white px-2 py-1 rounded text-sm">
+            <span key={tag} className="bg-gray-700 text-gray-200 px-3 py-1 rounded text-sm">
               {tag}
               <button 
-                className="ml-2"
+                className="ml-2 text-gray-400 hover:text-gray-300"
                 onClick={() => setSelectedTags(prev => prev.filter(t => t !== tag))}
               >
                 ×
@@ -120,7 +120,7 @@ export function ChallengeList({ lng }: ChallengeListProps) {
             </span>
           ))}
           <button 
-            className="text-day underline"
+            className="text-day hover:text-day text-sm"
             onClick={() => setSelectedTags([])}
           >
             Clear all
