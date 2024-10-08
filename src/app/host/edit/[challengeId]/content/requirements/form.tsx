@@ -9,8 +9,8 @@ import { z } from "zod";
 
 const schema = z
   .object({
-    requirements: validationSchema.text,
-    reviewDimension: validationSchema.text,
+    requirements: validationSchema.str,
+    reviewDimension: validationSchema.str,
   })
   .required();
 
