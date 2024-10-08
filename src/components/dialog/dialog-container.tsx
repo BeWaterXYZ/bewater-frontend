@@ -73,6 +73,12 @@ const dialogMaps: DialogMap = {
   github_repo_import: dynamicLoad(() => import("./dialogs/github-repo-import"), {
     loading: () => <Loading />,
   }),
+  add_challenge_tag: dynamicLoad(() => import("./dialogs/add-challenge-tag"), {
+    loading: () => <Loading />,
+  }),
+  challenge_page_filter: dynamicLoad(() => import("./dialogs/challenge-filter"), {
+    loading: () => <Loading />,
+  }),
 };
 
 export function DialogContainer({

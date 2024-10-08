@@ -70,6 +70,7 @@ export interface Challenge {
   id: ChallengeID;
   externalId?: string;
   title: string;
+  challengeTags?: string[];
   hostName: string;
   description: string;
   bannerUrl: string;
