@@ -11,6 +11,7 @@ import { UploaderInput } from "@/components/form/uploader";
 import { TextArea } from "@/components/form/textarea";
 import { updateChallenge } from "@/services/challenge";
 import { useMutationUpdateChallenge } from "@/services/challenge.query";
+import { useDialogStore } from "@/components/dialog/store";
 
 const schema = z.object({
   description: validationSchema.text,
@@ -18,6 +19,7 @@ const schema = z.object({
   wechatURL: z.string(),
   discordLink: z.string(),
   twitterLink: z.string(),
+  challengeTags: z.array(z.string()),
 });
 
 export type Inputs = z.infer<typeof schema>;
@@ -31,6 +33,8 @@ export function Intro({
   tinymce: any;
 }) {
   // console.log(tinymce);
+  const showDialog = useDialogStore((s) => s.open);
+
   let mutation = useMutationUpdateChallenge(challenge.id);
   let {
     control,
@@ -38,6 +42,7 @@ export function Intro({
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -46,6 +51,7 @@ export function Intro({
       wechatURL: challenge.wechatURL ?? "",
       discordLink: challenge.discordLink ?? "",
       twitterLink: challenge.twitterLink ?? "",
+      challengeTags: challenge.challengeTags ?? [],
     },
   });
 
@@ -87,6 +93,50 @@ export function Intro({
               {...register("twitterLink")}
               error={errors["twitterLink"]}
             />
+
+            <div className="relative mb-4">
+              <label className="block body-4 py-1 text-grey-500 font-bold mb-1">
+                Challenge Tags
+              </label>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {watch("challengeTags").map((tag, index) => (
+                  <div
+                    key={index}
+                    className="bg-grey-800 text-white px-2 py-1 rounded flex items-center"
+                  >
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newTags = [...watch("challengeTags")];
+                        newTags.splice(index, 1);
+                        setValue("challengeTags", newTags);
+                      }}
+                      className="ml-2 text-grey-500 hover:text-white"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  showDialog("add_challenge_tag", {
+                    onAdd: (tag) => {
+                      setValue("challengeTags", [
+                        ...watch("challengeTags"),
+                        tag,
+                      ]);
+                    },
+                  })
+                }
+                className="btn btn-secondary"
+              >
+                + Add Tag
+              </button>
+            </div>
+
             <UploaderInput
               label="Wechat QR code"
               title="Upload Wechat QR code "
