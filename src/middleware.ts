@@ -58,8 +58,8 @@ function i18n(req: NextRequest) {
 
 const isPublicRoute = createRouteMatcher([
   "/",
-  "/sign-in",
-  "/sign-up",
+  "/sign-in(.*)",
+  "/sign-up(.*)",
   "/en",
   "/zh",
   "/zh/campaigns(.*)",
