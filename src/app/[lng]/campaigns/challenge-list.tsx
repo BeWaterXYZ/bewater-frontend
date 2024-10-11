@@ -1,16 +1,17 @@
 "use client";
 import { useState, useMemo } from "react";
-import { useDialogStore } from "@/components/dialog/store";
+// import { useDialogStore } from "@/components/dialog/store";
 import { useFetchChallengeList } from "@/services/challenge.query";
 import { Loading } from "@/components/loading/loading";
 import { Aspect } from "@/components/aspect";
-import { Challenge } from "@/services/types";
+// import { Challenge } from "@/services/types";
 import { formatYYYYMMMDD } from "@/utils/date";
 import { formatMoney } from "@/utils/numeral";
 import { ArrowTopRightIcon } from "@radix-ui/react-icons";
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { Switch } from "@/components/switch";
 
 interface ChallengeListProps {
   lng: string;
@@ -26,18 +27,18 @@ export function ChallengeList({ lng }: ChallengeListProps) {
   let [filter, filterSet] = useState("");
   let [selectedTags, setSelectedTags] = useState<string[]>([]);
   let { data: challenges, isLoading } = useFetchChallengeList();
-  const showDialog = useDialogStore((s) => s.open);
-
+  // const showDialog = useDialogStore((s) => s.open);
+const [showActiveOnly, setShowActiveOnly] = useState(false);
   const tagOptions = useMemo(() => {
     if (!challenges) return [];
-    
+
     const uniqueTags = new Set<string>();
     challenges.forEach(challenge => {
       if (challenge.challengeTags) {
         challenge.challengeTags.forEach(tag => uniqueTags.add(tag));
       }
     });
-    
+
     return Array.from(uniqueTags);
   }, [challenges]);
 
@@ -65,16 +66,18 @@ export function ChallengeList({ lng }: ChallengeListProps) {
     }
   }
 
+  
+
   let filteredChallenges = challenges.filter((c) =>
     filter !== "" ? c.type === filter : true
-  ).filter((c) => 
-    selectedTags.length === 0 || 
+  ).filter((c) =>
+    selectedTags.length === 0 ||
     (c.challengeTags && c.challengeTags.some(tag => selectedTags.includes(tag)))
-  );
+  ).filter((c) => !showActiveOnly || c.status === "ACTIVE"); // Add this filter
 
-  const showFilter = () => {
-    showDialog("challenge_page_filter", { tagOptions, selectedTags, setSelectedTags });
-  };
+  // const showFilter = () => {
+  //   showDialog("challenge_page_filter", { tagOptions, selectedTags, setSelectedTags });
+  // };
 
   return (
     <>
@@ -92,7 +95,7 @@ export function ChallengeList({ lng }: ChallengeListProps) {
             </button>
           ))}
         </div>
-        <button
+        {/* <button
           onClick={showFilter}
           className="flex items-center gap-2 text-white"
         >
@@ -103,7 +106,14 @@ export function ChallengeList({ lng }: ChallengeListProps) {
           alt="filter"
         />
           Filter
-        </button>
+        </button> */}
+        <div className="flex items-center gap-2">
+          <Switch
+            checked={showActiveOnly}
+            onCheckedChange={setShowActiveOnly}
+          />
+          <span className="text-white text-sm">Show Active Only</span>
+        </div>
       </div>
 
       {selectedTags.length > 0 && (
@@ -111,7 +121,7 @@ export function ChallengeList({ lng }: ChallengeListProps) {
           {selectedTags.map(tag => (
             <span key={tag} className="bg-gray-700 text-gray-200 px-3 py-1 rounded text-sm">
               {tag}
-              <button 
+              <button
                 className="ml-2 text-gray-400 hover:text-gray-300"
                 onClick={() => setSelectedTags(prev => prev.filter(t => t !== tag))}
               >
@@ -119,7 +129,7 @@ export function ChallengeList({ lng }: ChallengeListProps) {
               </button>
             </span>
           ))}
-          <button 
+          <button
             className="text-day hover:text-day text-sm"
             onClick={() => setSelectedTags([])}
           >
@@ -181,8 +191,8 @@ export function ChallengeList({ lng }: ChallengeListProps) {
                     {challenge.location === "ONLINE"
                       ? "ONLINE"
                       : challenge.city
-                      ? challenge.city
-                      : ""}
+                        ? challenge.city
+                        : ""}
                   </div>
                 </div>
               </div>

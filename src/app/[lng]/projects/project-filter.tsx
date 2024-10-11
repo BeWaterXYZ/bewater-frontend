@@ -6,7 +6,7 @@ import { PageFilterOption } from "@/components/filter/PageFilterTag";
 const FILTER_TYPES = [
   { key: "challengeTitle", label: "Campaigns" },
   { key: "tag", label: "Tags" },
-  { key: "githubTag", label: "GitHub Tags" },
+  // { key: "githubTag", label: "GitHub Tags" },
 ] as const;
 
 type FilterType = typeof FILTER_TYPES[number]['key'];
@@ -15,7 +15,7 @@ export function ProjectFilter({
   filterOptions,
 }: {
   filterOptions: {
-    tags: string[];
+    filterTags: string[];
     titles: string[];
     githubTags: string[];
   };
@@ -28,9 +28,9 @@ export function ProjectFilter({
       case "challengeTitle":
         return filterOptions.titles;
       case "tag":
-        return filterOptions.tags;
-      case "githubTag":
-        return filterOptions.githubTags;
+        return filterOptions.filterTags;
+      // case "githubTag":
+      //   return filterOptions.githubTags;
     }
   };
 
