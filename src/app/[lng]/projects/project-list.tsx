@@ -64,7 +64,7 @@ export default function ProjectList({ lng }: { lng: string }) {
     cursorId
   );
   const {
-    data: filterOptions = { titles: [], tags: [], githubTags: []},
+    data: filterOptions = { titles: [], filterTags: [], githubTags: []},
     isLoading: isLoadingfilterOptions,
   } = useFetchProjectFilterOptions();
   const loadMore = () => {
