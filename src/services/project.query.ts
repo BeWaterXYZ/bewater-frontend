@@ -27,7 +27,7 @@ export function useFetchProjects(
   filterOptions: { filterTags?: string[]; challengeTitle?: string[], githubTags?: string[], searchQuery?: string } = {},
   cursorId?: string
 ) {
-  const projectTagKey = filterOptions?.filterTags ? filterOptions.filterTags : ["all-tag"];
+  const projectTagKey = filterOptions?.filterTags ? filterOptions.filterTags : ["all-filter-tag"];
   const projectTitleKey = filterOptions?.challengeTitle
     ? filterOptions.challengeTitle
     : ["all-title"];

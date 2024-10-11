@@ -283,6 +283,7 @@ export interface Project {
   name: string;
   description: string;
   tags: string[];
+  filterTags?: string[];
   githubTags?: string[];
   bountyTrack?: string[];
   status: ProjectStatus;

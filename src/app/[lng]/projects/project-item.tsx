@@ -47,7 +47,7 @@ export function ProjectItem({
               />
             </div>
           ))}
-          {project.tags.map((tag) => (
+          {project.filterTags?.map((tag) => (
             <div
               key={tag}
               className="inline h-6 rounded  gap-1 bg-[rgba(0,_0,_0,_0.3)] backdrop-blur-[2px]"
