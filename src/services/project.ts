@@ -39,7 +39,7 @@ export async function getProjects(
 }
 export async function getProjectFilterOptions() {
   const { data } = await agentAuthed.get<{
-    tags: string[];
+    filterTags: string[];
     titles: string[];
     githubTags: string[];
   }>(`challenge/filterOptions`);
