@@ -57,7 +57,7 @@ export default function ProjectList({ lng }: { lng: string }) {
     20,
     {
       challengeTitle: selectedChallengeTitle,
-      tags: selectedTags,
+      filterTags: selectedTags,
       githubTags: selectedGithubTags,
       searchQuery: searchQuery,
     },

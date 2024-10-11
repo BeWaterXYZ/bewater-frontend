@@ -24,10 +24,10 @@ export function useFetchChallengeProjects(challengeId: ChallengeID) {
 
 export function useFetchProjects(
   limit = 20,
-  filterOptions: { tags?: string[]; challengeTitle?: string[], githubTags?: string[], searchQuery?: string } = {},
+  filterOptions: { filterTags?: string[]; challengeTitle?: string[], githubTags?: string[], searchQuery?: string } = {},
   cursorId?: string
 ) {
-  const projectTagKey = filterOptions?.tags ? filterOptions.tags : ["all-tag"];
+  const projectTagKey = filterOptions?.filterTags ? filterOptions.filterTags : ["all-tag"];
   const projectTitleKey = filterOptions?.challengeTitle
     ? filterOptions.challengeTitle
     : ["all-title"];
