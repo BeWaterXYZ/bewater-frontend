@@ -4,8 +4,8 @@ import { useQueryBuilder } from "./query";
 import { PageFilterOption } from "@/components/filter/PageFilterTag";
 
 const FILTER_TYPES = [
-  { key: "challengeTitle", label: "Campaigns" },
   { key: "tag", label: "Tags" },
+  { key: "challengeTitle", label: "Campaigns" },
   // { key: "githubTag", label: "GitHub Tags" },
 ] as const;
 
