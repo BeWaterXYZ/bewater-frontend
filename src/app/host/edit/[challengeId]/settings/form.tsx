@@ -14,7 +14,7 @@ export function EditSettings({ challenge }: { challenge: Challenge }) {
   const { confirm } = useAlert();
   const router = useRouter();
   const [hideTeamProfile, setHideTeamProfile] = useState(
-    challenge.yotadata?.hideTeamProfile ?? true
+    challenge.yotadata?.hideTeamProfile ?? false
   );
 
   const onDelete = async () => {

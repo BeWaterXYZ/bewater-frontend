@@ -98,7 +98,7 @@ export default function ProjectMedia({
             Not uploaded images yet.
           </div>
         )}
-      {isLeader || !(challenge.yotadata?.hideTeamProfile ?? true) ? (
+      {isLeader || !(challenge.yotadata?.hideTeamProfile ?? false) ? (
         <div className="flex gap-3 flex-wrap">
           {medias.map((media) => (
             <ImageContainer
