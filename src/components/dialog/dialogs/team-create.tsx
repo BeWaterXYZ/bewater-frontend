@@ -67,6 +67,7 @@ const schema = (challengeId?: string) =>
       offlineDemoDay: z.string().refine((v) => v === "0" || v === "1", {
         message: "Please choose an option",
       }),
+      onSiteDays: validationSchema.text,
     })
     .required();
 
@@ -97,6 +98,7 @@ export function useTeamCreateForm(team?: Team & Project, challengeId?: string) {
       membersCount: team?.project.membersCount ?? 1,
       offlineDemoDay: team?.project.offlineDemoDay ? "1" : "0",
       githubURI: team?.project.githubURI ?? "",
+      onSiteDays: team?.project.onSiteDays ?? "",
     },
   });
 }
@@ -213,6 +215,7 @@ export default function TeamCreateDialog({
           githubURI: formData.githubURI,
           membersCount: formData.membersCount,
           offlineDemoDay: Number(formData.offlineDemoDay),
+          onSiteDays: formData.onSiteDays,
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -248,6 +251,7 @@ export default function TeamCreateDialog({
           githubURI: formData.githubURI,
           membersCount: formData.membersCount,
           offlineDemoDay: Number(formData.offlineDemoDay),
+          onSiteDays: formData.onSiteDays,
         };
 
         let res = await createTeamMutaion.mutateAsync(payload);
@@ -553,9 +557,22 @@ export default function TeamCreateDialog({
                 {...register("membersCount")}
               />
             )}
+            {(data.challenge?.id === "146" ||
+                data.team?.challengeId === "146") && (
+              <Input
+                label="How many days will you be onsite? (e.g., 3 days, 2 days (8th, 9th), 1 day (8th), Not available)"
+                required
+                placeholder="Enter your onsite days"
+                error={errors["onSiteDays"]}
+                {...register("onSiteDays")}
+              />
+            )}
             <Select
               id="select-nation"
-              label="Country"
+              label={(data.challenge?.id === "146" ||
+                data.team?.challengeId === "146")
+                  ? "Where is your base located (e.g., Singapore)?"
+                  : "Country"}
               required
               isSingle
               options={COUNTRIES}
@@ -572,7 +589,10 @@ export default function TeamCreateDialog({
             />
             <Select
               id="select-tags"
-              label="Project Tag"
+              label={(data.challenge?.id === "146" ||
+                data.team?.challengeId === "146")
+                  ? "Game Track"
+                  : "Project Tag"}
               required
               maxSelections={5}
               options={hackProjectTagSetOptions}
@@ -580,6 +600,19 @@ export default function TeamCreateDialog({
               control={control}
               {...register("tags")}
             />
+            {(data.challenge?.id === "146" ||
+                data.team?.challengeId === "146") && (
+              <Select
+                id="select-bountyTrack"
+                label="MEME Track"
+                required
+                maxSelections={5}
+                options={hackBountyTrackSetOptions}
+                error={errors["bountyTrack"]}
+                control={control}
+                {...register("bountyTrack")}
+              />
+            )}
             <TextArea
               label="Project Description"
               required
