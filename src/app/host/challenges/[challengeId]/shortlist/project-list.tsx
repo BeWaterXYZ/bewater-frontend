@@ -87,7 +87,36 @@ export function ProjectList({
       }
       const teamMem = teamMemInfo(it.team.teamMembers);
 
-      const obj: any = {
+      let obj: any;
+
+      challengeId === '146' ? obj = {
+        序号: -1,
+        项目名称: it.name,
+        项目描述: it.description,
+        Game赛道: it?.tags.join(",") ?? "",
+        Meme赛道: it?.bountyTrack?.join(",") ?? "",
+        Demo地址: it.demoURI ?? "",
+        Deck地址: it.deckURI ?? "",
+        GitHub地址: it.githubURI ?? "",
+        官网地址: it.siteURI ?? "",
+        微信或tg: it.contact ?? "",
+        MediaURLs: it.mediaURLs?.join("\n") ?? "",
+        视频地址: it.videoURI ?? "",
+        筛选状态: it.status,
+        队名: it.team.name,
+        队员数: it.membersCount,
+        队伍国别: it.team.nation,
+        队长邮箱: teamMem.email,
+        队长昵称: teamMem.userName,
+        队长TG: teamMem.tg,
+        队长钱包: teamMem.walletAddress,
+        所有队员邮箱: teamMem.all.join("\n"),
+        是否参加过Hackathon: it.experience ? "是" : "否",
+        历史融资奖项: it.pastGrant ?? "",
+        何时创建的项目: it.builtDate ?? "",
+        推荐自: it.recommendedFrom ?? "",
+        线下活动参加时间: it.onSiteDays ?? "",
+      } : obj = {
         序号: -1,
         项目名称: it.name,
         项目描述: it.description,

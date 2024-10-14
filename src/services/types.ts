@@ -309,6 +309,7 @@ export interface Project {
   recommendedFrom?: string;
   membersCount?: number;
   offlineDemoDay?: number;
+  onSiteDays?: string;
 }
 
 export interface TeamMember {

@@ -138,7 +138,7 @@ export default async function ChallengeIntro({ params }: any) {
           <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
             {t("campaign.t5")}
           </div>
-          <div className="body-3 md:body-2 [&_p]:px-[4vw] [&_p]:md:px-0 text-white [&_p]:w-dvw md:[&_p]:w-fit [&_a]:border-b [&_a]:border-b-white [&_p]:break-all [&_p]:my-1 md:[&_p]:my-2 [&_h1]:my-4">
+          <div className="body-3 md:body-2 [&_p]:px-[4vw] [&_p]:md:px-0 text-white [&_p]:w-dvw md:[&_p]:w-fit [&_a]:border-b [&_a]:border-b-white [&_p]:break-words [&_p]:my-1 md:[&_p]:my-2 [&_h1]:my-4">
             {challenge.description?.endsWith("--edit-by-markdown") ? (
               <Markdown style={{ color: "white" }}>
                 {challenge.description.substring(
@@ -218,7 +218,7 @@ export default async function ChallengeIntro({ params }: any) {
                     </div>
                   </Link>
                 ) : null}
-                {challenge?.discordLink ? (
+                {challenge?.discordLink && (
                   <>
                     <Link
                       prefetch={false}
@@ -255,7 +255,8 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     </Link>
                   </>
-                ) : challenge?.telegramLink ? (
+                )}
+                {challenge?.telegramLink && (
                   <Link
                     prefetch={false}
                     href={challenge.telegramLink}
@@ -290,8 +291,8 @@ export default async function ChallengeIntro({ params }: any) {
                       {t("campaign.t6")}
                     </div>
                   </Link>
-                ) : null}
-                {challenge?.twitterLink ? (
+                )}
+                {challenge?.twitterLink && (
                   <Link
                     prefetch={false}
                     href={challenge.twitterLink}
@@ -303,8 +304,8 @@ export default async function ChallengeIntro({ params }: any) {
                       {t("campaign.t7")}
                     </div>
                   </Link>
-                ) : null}
-                {challenge?.yotadata?.tgOtherLink ? (
+                )}
+                {challenge?.yotadata?.tgOtherLink && (
                   <Link
                     prefetch={false}
                     href={challenge.yotadata.tgOtherLink.url}
@@ -315,7 +316,7 @@ export default async function ChallengeIntro({ params }: any) {
                       {challenge.yotadata.tgOtherLink.name}
                     </div>
                   </Link>
-                ) : null}
+                )}
               </div>
             </div>
           )}
