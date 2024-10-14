@@ -22,7 +22,7 @@ export function GithubStats({
       <h3 className="body-3 font-bold text-grey-500">Github Stats</h3>
       <div className="mt-5">
         {projectHasConnectedGithub ? (
-          !(challenge.yotadata?.hideTeamProfile ?? true) ? (
+          !(challenge.yotadata?.hideTeamProfile ?? false) ? (
             <GithubStatsDisplay project={project} />
           ) : (
             <div className="rounded border border-[#24254E] bg-latenight p-4 my-3 body-2 text-grey-600">
