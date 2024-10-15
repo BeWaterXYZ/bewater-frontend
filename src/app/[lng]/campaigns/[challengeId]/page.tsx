@@ -840,7 +840,7 @@ export default async function ChallengeIntro({ params }: any) {
                                       : member.uri
                                   }
                                   key={i}
-                                  className="h-8 md:h-10 mb-4 mx-4 w-fit"
+                                  className="h-8 md:h-10 mb-4 mx-4 !w-auto"
                                   height={32}
                                   width={0}
                                   alt="Sponsors"
@@ -855,7 +855,7 @@ export default async function ChallengeIntro({ params }: any) {
                                     src={member.uri}
                                     width={0}
                                     height={40}
-                                    className="w-fit h-8 md:h-10 mb-4 mx-4"
+                                    className="!w-auto h-8 md:h-10 mb-4 mx-4"
                                     alt="Sponsors"
                                   />
                                 </Link>
