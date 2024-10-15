@@ -642,7 +642,7 @@ export default function Page({ params, mode, frameWidth }: any) {
                           sizes="100%"
                           src={typeof member === "string" ? member : member.uri}
                           key={i}
-                          className={clsx("mb-4 mx-4 w-fit object-contain", {
+                          className={clsx("mb-4 mx-4 !w-auto object-contain", {
                             "h-10": !isMobile,
                             "h-8": isMobile,
                           })}
