@@ -21,7 +21,7 @@ export function ProjectFilter({
   };
 }) {
   const { toggle, isOn } = useQueryBuilder();
-  const [activeTab, setActiveTab] = useState<FilterType>("challengeTitle");
+  const [activeTab, setActiveTab] = useState<FilterType>("tag");
 
   const getOptionsForType = (type: FilterType) => {
     switch (type) {
