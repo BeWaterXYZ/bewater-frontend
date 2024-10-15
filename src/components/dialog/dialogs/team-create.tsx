@@ -591,28 +591,17 @@ export default function TeamCreateDialog({
               id="select-tags"
               label={(data.challenge?.id === "146" ||
                 data.team?.challengeId === "146")
-                  ? "Game Track"
+                  ? "Track"
                   : "Project Tag"}
               required
-              maxSelections={5}
+              isSingle={data.challenge?.id !== "146" || data.team?.challengeId !== "146"}
+              maxSelections={(data.challenge?.id === "146" ||
+                data.team?.challengeId === "146") ? 1 : 5 }
               options={hackProjectTagSetOptions}
               error={errors["tags"]}
               control={control}
               {...register("tags")}
             />
-            {(data.challenge?.id === "146" ||
-                data.team?.challengeId === "146") && (
-              <Select
-                id="select-bountyTrack"
-                label="MEME Track"
-                required
-                maxSelections={5}
-                options={hackBountyTrackSetOptions}
-                error={errors["bountyTrack"]}
-                control={control}
-                {...register("bountyTrack")}
-              />
-            )}
             <TextArea
               label="Project Description"
               required
