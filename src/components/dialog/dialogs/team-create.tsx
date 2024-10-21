@@ -663,7 +663,7 @@ export default function TeamCreateDialog({
           )} {...register('experience')} /> */}
             <TextArea
               label="Awards, grants or funding received in the past (if any)"
-              required={data.challenge?.id !== "135"}
+              required={data.challenge?.id !== "135" && data.challenge?.id !== "146"}
               placeholder="Enter your past awards, grants or funding information"
               error={errors["pastGrant"]}
               {...register("pastGrant")}
@@ -674,13 +674,13 @@ export default function TeamCreateDialog({
               max={new Date().toISOString().substring(0, 7)}
               pattern="[0-9]{4}-[0-9]{2}"
               placeholder="YYYY-MM"
-              required
+              required={data.challenge?.id !== "146"}
               error={errors["builtDate"]}
               {...register("builtDate")}
             />
             <Input
               label="Deck"
-              required={data.challenge?.id !== "135" && data.challenge?.id !=="144"}
+              required={data.challenge?.id !== "135" && data.challenge?.id !=="144" && data.challenge?.id !== "146"}
               placeholder="Enter your deck link"
               error={errors["deckURI"]}
               {...register("deckURI")}
