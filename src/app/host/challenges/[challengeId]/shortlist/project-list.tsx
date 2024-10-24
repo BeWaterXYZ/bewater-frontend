@@ -93,8 +93,7 @@ export function ProjectList({
         序号: -1,
         项目名称: it.name,
         项目描述: it.description,
-        Game赛道: it?.tags.join(",") ?? "",
-        Meme赛道: it?.bountyTrack?.join(",") ?? "",
+        赛道: it?.tags.join(",") ?? "",
         Demo地址: it.demoURI ?? "",
         Deck地址: it.deckURI ?? "",
         GitHub地址: it.githubURI ?? "",
@@ -116,6 +115,7 @@ export function ProjectList({
         何时创建的项目: it.builtDate ?? "",
         推荐自: it.recommendedFrom ?? "",
         线下活动参加时间: it.onSiteDays ?? "",
+        "对eligible startups感兴趣": it.creditsInterested ? "是" : "否",
       } : obj = {
         序号: -1,
         项目名称: it.name,
