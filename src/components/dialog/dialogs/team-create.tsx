@@ -68,6 +68,9 @@ const schema = (challengeId?: string) =>
         message: "Please choose an option",
       }),
       onSiteDays: validationSchema.text,
+      creditsInterested: z.string().refine((v) => v === "0" || v === "1", {
+        message: "Please choose an option",
+      }),
     })
     .required();
 
@@ -99,6 +102,7 @@ export function useTeamCreateForm(team?: Team & Project, challengeId?: string) {
       offlineDemoDay: team?.project.offlineDemoDay ? "1" : "0",
       githubURI: team?.project.githubURI ?? "",
       onSiteDays: team?.project.onSiteDays ?? "",
+      creditsInterested: team?.project.offlineDemoDay ? "1" : "0",
     },
   });
 }
@@ -216,6 +220,7 @@ export default function TeamCreateDialog({
           membersCount: formData.membersCount,
           offlineDemoDay: Number(formData.offlineDemoDay),
           onSiteDays: formData.onSiteDays,
+          creditsInterested: Number(formData.creditsInterested),
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -252,6 +257,7 @@ export default function TeamCreateDialog({
           membersCount: formData.membersCount,
           offlineDemoDay: Number(formData.offlineDemoDay),
           onSiteDays: formData.onSiteDays,
+          creditsInterested: Number(formData.creditsInterested),
         };
 
         let res = await createTeamMutaion.mutateAsync(payload);
@@ -721,6 +727,47 @@ export default function TeamCreateDialog({
               placeholder="Enter the community or person's name"
               {...register("recommendedFrom")}
             />
+            {data.challenge?.id === "146" && (
+              <>
+                <p className="block body-4 py-1 text-grey-500 font-bold mb-1">
+                  AWS provides eligible startups with up to $100k credits. Are you interested? *
+                </p>
+                <Controller
+                  control={control}
+                  render={({ field }) => (
+                    <RadioGroup
+                      className="flex items-center mb-4"
+                      {...field}
+                      value={field.value.toString()}
+                    >
+                      <RadioGroupItem
+                        className={radio}
+                        id="creditsInterested1"
+                        value="1"
+                        onClick={() => field.onChange("1")}
+                      >
+                        <RadioGroupIndicator className={radioChecked} />
+                      </RadioGroupItem>
+                      <label className={radioLabel} htmlFor="creditsInterested1">
+                        Yes
+                      </label>
+                      <RadioGroupItem
+                        className={radio}
+                        id="creditsInterested0"
+                        value="0"
+                        onClick={() => field.onChange("0")}
+                      >
+                        <RadioGroupIndicator className={radioChecked} />
+                      </RadioGroupItem>
+                      <label className={radioLabel} htmlFor="creditsInterested0">
+                        No
+                      </label>
+                    </RadioGroup>
+                  )}
+                {...register("creditsInterested")}
+              />
+            </>
+          )}
           </div>
           <div className="flex justify-between">
             {isEditing ? (

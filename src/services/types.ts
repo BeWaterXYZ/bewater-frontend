@@ -310,6 +310,7 @@ export interface Project {
   membersCount?: number;
   offlineDemoDay?: number;
   onSiteDays?: string;
+  creditsInterested?: number;
 }
 
 export interface TeamMember {
