@@ -11,7 +11,7 @@ import { z } from "zod";
 
 import { useAlert } from "@/components/alert/store";
 import { OptionItem } from "@/constants/options/types";
-import { ProjectTagSetOptions } from "@/constants/options/project-tag";
+import { obtainProjectTagOptions, ProjectTagSetOptions } from "@/constants/options/project-tag";
 import { useNavigator } from "@/hooks/useNavigator";
 import { validationSchema } from "@/schema";
 import {
@@ -257,6 +257,23 @@ export default function GithubRepoImportDialog({
     console.log("invalid", e);
   };
 
+  let hackProjectTagSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
+  if (data.repo?.team.challenge?.track && data.repo?.team.challenge?.track.length > 0) {
+    hackProjectTagSetOptions = obtainProjectTagOptions(
+        data.repo?.team.challenge?.track
+    );
+  }
+
+  let hackBountyTrackSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
+  if (
+    data.repo?.team.challenge?.otherInfo &&
+    (data.repo?.team.challenge?.otherInfo.bountyTrack as string[]).length > 0
+  ) {
+    hackBountyTrackSetOptions = obtainProjectTagOptions(
+      data.repo?.team.challenge?.otherInfo.bountyTrack as string[]
+    );
+  }
+
   return (
     <div className="w-[80vw] max-w-md">
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
@@ -281,10 +298,15 @@ export default function GithubRepoImportDialog({
           />
           <Select
             id="select-tags"
-            label="Project Tag"
+            label={(data.repo?.team.challenge?.id === "146" ||
+              data.repo?.team.challengeId === "146")
+                ? "Track"
+                : "Project Tag"}
             required
-            maxSelections={5}
-            options={ProjectTagSetOptions}
+            isSingle={data.repo?.team.challenge?.id === "146"}
+            maxSelections={(data.repo?.team.challenge?.id === "146" ||
+              data.repo?.team.challengeId === "146") ? 1 : 5 }
+            options={hackProjectTagSetOptions}
             error={errors["tags"]}
             control={control}
             {...register("tags")}

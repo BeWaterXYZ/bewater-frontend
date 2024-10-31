@@ -104,18 +104,21 @@ export default function ProjectEditDialog({
           error={errors["title"]}
           {...register("title")}
         />
-
         <Select
-          label="Project Tag"
+          id="select-tags"
+          label={(data.team.challenge?.id === "146" ||
+            data.team.challengeId === "146")
+              ? "Track"
+              : "Project Tag"}
           required
-          isSingle={data.team.challengeId === "136" ? true : false}
-          maxSelections={5}
+          isSingle={data.team.challenge?.id === "146"}
+          maxSelections={(data.team.challenge?.id === "146" ||
+            data.team.challengeId === "146") ? 1 : 5 }
           options={hackProjectTagSetOptions}
           error={errors["tags"]}
           control={control}
           {...register("tags")}
         />
-
         {data.team.challengeId === "136" && (
           <Select
             id="select-bountyTrack"

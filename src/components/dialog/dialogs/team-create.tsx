@@ -67,10 +67,12 @@ const schema = (challengeId?: string) =>
       offlineDemoDay: z.string().refine((v) => v === "0" || v === "1", {
         message: "Please choose an option",
       }),
-      onSiteDays: validationSchema.text,
-      creditsInterested: z.string().refine((v) => v === "0" || v === "1", {
-        message: "Please choose an option",
-      }),
+      onSiteDays: challengeId === "146" ? validationSchema.text : z.string(),
+      creditsInterested: challengeId === "146" ?
+        z.string().refine((v) => v === "0" || v === "1", {
+          message: "Please choose an option",
+        })
+        : z.string(),
     })
     .required();
 
@@ -600,7 +602,7 @@ export default function TeamCreateDialog({
                   ? "Track"
                   : "Project Tag"}
               required
-              isSingle={data.challenge?.id !== "146" || data.team?.challengeId !== "146"}
+              isSingle={data.challenge?.id === "146" || data.team?.challengeId === "146"}
               maxSelections={(data.challenge?.id === "146" ||
                 data.team?.challengeId === "146") ? 1 : 5 }
               options={hackProjectTagSetOptions}
