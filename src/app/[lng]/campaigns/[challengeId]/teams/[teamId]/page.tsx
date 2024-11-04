@@ -89,8 +89,8 @@ export default async function Page({ params }: any) {
       </div>
 
       <div className="mb-30">
-        <p className="body-3 text-grey-500 font-bold my-5"> Project Overview</p>
-        <div className="flex justify-between  flex-col lg:flex-row gap-3 mb-3">
+        <p className="body-3 text-grey-500 font-bold my-5">Project Overview</p>
+        <div className="flex justify-between flex-col lg:flex-row gap-3 mb-3">
           <div className="flex items-center flex-wrap gap-2">
             <h2 className="body-2 font-bold break-words">
               {team.project.name}{" "}
@@ -103,7 +103,7 @@ export default async function Page({ params }: any) {
             href={`/${lng}/campaigns/${challengeId}/projects/${team.project.id}`}
             className="body-2 hidden lg:flex items-center h-10 btn text-night font-bold whitespace-nowrap btn-primary"
           >
-            {"SUBMIT ->"}
+            {"More Details ->"}
           </Link>
         </div>
 
@@ -119,7 +119,7 @@ export default async function Page({ params }: any) {
           href={`/${lng}/campaigns/${challengeId}/projects/${team.project.id}`}
           className="body-2 flex lg:hidden mt-3 items-center h-10 btn text-night font-bold whitespace-nowrap btn-primary"
         >
-          {"SUBMIT ->"}
+          {"More Details ->"}
         </Link>
       </div>
     </div>
