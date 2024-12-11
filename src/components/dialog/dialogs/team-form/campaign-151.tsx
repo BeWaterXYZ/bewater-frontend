@@ -51,6 +51,7 @@ export const supportDesiredOptions = [
 
 export default function TeamCreateForm_151(props: TeamCreateFormProps) {
   const {
+    close,
     control,
     data,
     errors,
