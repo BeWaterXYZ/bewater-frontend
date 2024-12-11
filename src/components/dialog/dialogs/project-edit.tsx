@@ -1,17 +1,19 @@
-import { Input, Select, TextArea } from "@/components/form/control";
-
-import { Dialogs } from "../store";
-
-import { useLoadingStoreAction } from "@/components/loading/store";
-import { useToastStore } from "@/components/toast/store";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { Input, Select, TextArea } from "@/components/form/control";
+import { useLoadingStoreAction } from "@/components/loading/store";
+import { useToastStore } from "@/components/toast/store";
+import {
+  obtainProjectTagOptions,
+  ProjectTagSetOptions,
+} from "@/constants/options/project-tag";
 import { OptionItem } from "@/constants/options/types";
-import { ProjectTagSetOptions } from "@/constants/options/project-tag";
-import { obtainProjectTagOptions } from "@/constants/options/project-tag";
 import { validationSchema } from "@/schema";
 import { useMutationUpdateTeam } from "@/services/team.query";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Dialogs } from "../store";
 
 const schema = z
   .object({
@@ -78,7 +80,7 @@ export default function ProjectEditDialog({
   let hackProjectTagSetOptions: OptionItem<string>[] = ProjectTagSetOptions;
   if (data.team?.challenge?.track && data.team.challenge.track.length > 0) {
     hackProjectTagSetOptions = obtainProjectTagOptions(
-      data.team.challenge.track
+      data.team.challenge.track,
     );
   }
 
@@ -88,7 +90,7 @@ export default function ProjectEditDialog({
     (data.team.challenge.otherInfo.bountyTrack as string[]).length > 0
   ) {
     hackBountyTrackSetOptions = obtainProjectTagOptions(
-      data.team.challenge.otherInfo.bountyTrack as string[]
+      data.team.challenge.otherInfo.bountyTrack as string[],
     );
   }
 
@@ -96,7 +98,7 @@ export default function ProjectEditDialog({
     <div className="flex flex-col justify-center  w-[80vw]  max-w-md ">
       <p className="body-2 mb-4">Edit Project Detail</p>
 
-      <form method="post" onSubmit={handleSubmit(onSubmit)} className="">
+      <form method="post" onSubmit={handleSubmit(onSubmit)}>
         <Input
           label="Project title"
           required
@@ -106,14 +108,18 @@ export default function ProjectEditDialog({
         />
         <Select
           id="select-tags"
-          label={(data.team.challenge?.id === "146" ||
-            data.team.challengeId === "146")
+          label={
+            data.team.challenge?.id === "146" || data.team.challengeId === "146"
               ? "Track"
-              : "Project Tag"}
+              : "Project Tag"
+          }
           required
           isSingle={data.team.challenge?.id === "146"}
-          maxSelections={(data.team.challenge?.id === "146" ||
-            data.team.challengeId === "146") ? 1 : 5 }
+          maxSelections={
+            data.team.challenge?.id === "146" || data.team.challengeId === "146"
+              ? 1
+              : 5
+          }
           options={hackProjectTagSetOptions}
           error={errors["tags"]}
           control={control}

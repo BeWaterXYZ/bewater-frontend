@@ -1,36 +1,69 @@
-import { Input, Select, TextArea } from "@/components/form/control";
-
-import { Dialogs, useDialogStore } from "../store";
-
-import { useLoadingStoreAction } from "@/components/loading/store";
-import { useToastStore } from "@/components/toast/store";
-import { updateTeam } from "@/services/team";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useRef, useState } from "react";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  useForm,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 import { z } from "zod";
 
 import { useAlert } from "@/components/alert/store";
-import { OptionItem } from "@/constants/options/types";
-import { ProjectTagSetOptions } from "@/constants/options/project-tag";
-import { obtainProjectTagOptions } from "@/constants/options/project-tag";
+import { Input, Select, TextArea } from "@/components/form/control";
+import { useLoadingStoreAction } from "@/components/loading/store";
+import { useToastStore } from "@/components/toast/store";
+import { COUNTRIES } from "@/constants/options/country";
+import {
+  obtainProjectTagOptions,
+  ProjectTagSetOptions,
+} from "@/constants/options/project-tag";
 import { RoleSetOptions } from "@/constants/options/role";
 import { SkillSetOptions } from "@/constants/options/skill";
+import { OptionItem } from "@/constants/options/types";
 import { useNavigator } from "@/hooks/useNavigator";
 import { validationSchema } from "@/schema";
+import { updateTeam } from "@/services/team";
 import {
   useMutaionCreateTeam,
   useMutaionDismissTeam,
 } from "@/services/team.query";
-import { Project, Team } from "@/services/types";
-import { useRef, useState } from "react";
-import { COUNTRIES } from "@/constants/options/country";
+import { Challenge, Project, Team } from "@/services/types";
+import { useUser } from "@clerk/nextjs";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   RadioGroup,
   RadioGroupIndicator,
   RadioGroupItem,
 } from "@radix-ui/react-radio-group";
-import { off } from "process";
-import { useUser } from "@clerk/nextjs";
+
+import { Dialogs, useDialogStore } from "../store";
+import TeamCreateForm_151 from "./team-form/campaign-151";
+
+export type TeamCreateFormProps = {
+  form: {
+    control: Control<Inputs>;
+    data: {
+      challenge?: Challenge;
+      team?: Team & Project;
+    };
+    errors: FieldErrors<Inputs>;
+    hackBountyTrackSetOptions: OptionItem<string>[];
+    hackProjectTagSetOptions: OptionItem<string>[];
+    handleSubmit: UseFormHandleSubmit<Inputs>;
+    isCallingAPI: boolean;
+    isEditing: boolean;
+    onDismiss: () => Promise<void>;
+    onInvalid: (e: any) => void;
+    onSubmit: (formData: Inputs) => Promise<void>;
+    radio: string;
+    radioChecked: string;
+    radioLabel: string;
+    register: UseFormRegister<Inputs>;
+    RoleSetOptions: OptionItem<string>[];
+    SkillSetOptions: OptionItem<string>[];
+  };
+};
 
 const schema = (challengeId?: string) =>
   z
@@ -68,11 +101,18 @@ const schema = (challengeId?: string) =>
         message: "Please choose an option",
       }),
       onSiteDays: challengeId === "146" ? validationSchema.text : z.string(),
-      creditsInterested: challengeId === "146" ?
-        z.string().refine((v) => v === "0" || v === "1", {
-          message: "Please choose an option",
-        })
-        : z.string(),
+      creditsInterested:
+        challengeId === "146"
+          ? z.string().refine((v) => v === "0" || v === "1", {
+              message: "Please choose an option",
+            })
+          : z.string(),
+      customSelect1:
+        challengeId === "151" ? z.array(z.string()).length(1, "") : z.string(),
+      customSelect2:
+        challengeId === "151" ? z.array(z.string()).length(1, "") : z.string(),
+      customSelect3:
+        challengeId === "151" ? z.array(z.string()).length(1, "") : z.string(),
     })
     .required();
 
@@ -105,6 +145,15 @@ export function useTeamCreateForm(team?: Team & Project, challengeId?: string) {
       githubURI: team?.project.githubURI ?? "",
       onSiteDays: team?.project.onSiteDays ?? "",
       creditsInterested: team?.project.offlineDemoDay ? "1" : "0",
+      customSelect1: team?.project.customSelect1
+        ? [team?.project.customSelect1]
+        : [],
+      customSelect2: team?.project.customSelect2
+        ? [team?.project.customSelect2]
+        : [],
+      customSelect3: team?.project.customSelect3
+        ? [team?.project.customSelect3]
+        : [],
     },
   });
 }
@@ -135,7 +184,7 @@ export default function TeamCreateDialog({
     data.team.challenge.track.length > 0
   ) {
     hackProjectTagSetOptions = obtainProjectTagOptions(
-      data.team.challenge.track
+      data.team.challenge.track,
     );
   }
 
@@ -145,7 +194,7 @@ export default function TeamCreateDialog({
     (data.challenge.otherInfo.bountyTrack as string[]).length > 0
   ) {
     hackBountyTrackSetOptions = obtainProjectTagOptions(
-      data.challenge.otherInfo.bountyTrack as string[]
+      data.challenge.otherInfo.bountyTrack as string[],
     );
   }
   if (
@@ -154,7 +203,7 @@ export default function TeamCreateDialog({
     (data.team.challenge.otherInfo.bountyTrack as string[]).length > 0
   ) {
     hackBountyTrackSetOptions = obtainProjectTagOptions(
-      data.team.challenge.otherInfo.bountyTrack as string[]
+      data.team.challenge.otherInfo.bountyTrack as string[],
     );
   }
 
@@ -223,6 +272,9 @@ export default function TeamCreateDialog({
           offlineDemoDay: Number(formData.offlineDemoDay),
           onSiteDays: formData.onSiteDays,
           creditsInterested: Number(formData.creditsInterested),
+          customSelect1: formData.customSelect1,
+          customSelect2: formData.customSelect2,
+          customSelect3: formData.customSelect3,
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -260,6 +312,9 @@ export default function TeamCreateDialog({
           offlineDemoDay: Number(formData.offlineDemoDay),
           onSiteDays: formData.onSiteDays,
           creditsInterested: Number(formData.creditsInterested),
+          customSelect1: formData.customSelect1,
+          customSelect2: formData.customSelect2,
+          customSelect3: formData.customSelect3,
         };
 
         let res = await createTeamMutaion.mutateAsync(payload);
@@ -313,6 +368,26 @@ export default function TeamCreateDialog({
     };
 
     return { ...field, ref: customRef };
+  };
+
+  const formData = {
+    control,
+    data,
+    errors,
+    hackBountyTrackSetOptions,
+    hackProjectTagSetOptions,
+    handleSubmit,
+    isCallingAPI,
+    isEditing,
+    onDismiss,
+    onInvalid,
+    onSubmit,
+    radio,
+    radioChecked,
+    radioLabel,
+    register,
+    RoleSetOptions,
+    SkillSetOptions,
   };
 
   return (
@@ -534,6 +609,8 @@ export default function TeamCreateDialog({
             </div>
           </div>
         </form>
+      ) : data.challenge?.id === "151" || data.team?.challengeId === "151" ? (
+        <TeamCreateForm_151 form={formData} />
       ) : (
         <form method="post" onSubmit={handleSubmit(onSubmit, onInvalid)}>
           <div className="max-h-[60vh] overflow-y-auto mb-4">
@@ -566,7 +643,7 @@ export default function TeamCreateDialog({
               />
             )}
             {(data.challenge?.id === "146" ||
-                data.team?.challengeId === "146") && (
+              data.team?.challengeId === "146") && (
               <Input
                 label="How many days will you be onsite? (e.g., 3 days, 2 days (8th, 9th), 1 day (8th), Not available)"
                 required
@@ -577,10 +654,11 @@ export default function TeamCreateDialog({
             )}
             <Select
               id="select-nation"
-              label={(data.challenge?.id === "146" ||
-                data.team?.challengeId === "146")
+              label={
+                data.challenge?.id === "146" || data.team?.challengeId === "146"
                   ? "Where is your base located (e.g., Singapore)?"
-                  : "Country"}
+                  : "Country"
+              }
               required
               isSingle
               options={COUNTRIES}
@@ -597,14 +675,20 @@ export default function TeamCreateDialog({
             />
             <Select
               id="select-tags"
-              label={(data.challenge?.id === "146" ||
-                data.team?.challengeId === "146")
+              label={
+                data.challenge?.id === "146" || data.team?.challengeId === "146"
                   ? "Track"
-                  : "Project Tag"}
+                  : "Project Tag"
+              }
               required
-              isSingle={data.challenge?.id === "146" || data.team?.challengeId === "146"}
-              maxSelections={(data.challenge?.id === "146" ||
-                data.team?.challengeId === "146") ? 1 : 5 }
+              isSingle={
+                data.challenge?.id === "146" || data.team?.challengeId === "146"
+              }
+              maxSelections={
+                data.challenge?.id === "146" || data.team?.challengeId === "146"
+                  ? 1
+                  : 5
+              }
               options={hackProjectTagSetOptions}
               error={errors["tags"]}
               control={control}
@@ -671,7 +755,9 @@ export default function TeamCreateDialog({
           )} {...register('experience')} /> */}
             <TextArea
               label="Awards, grants or funding received in the past (if any)"
-              required={data.challenge?.id !== "135" && data.challenge?.id !== "146"}
+              required={
+                data.challenge?.id !== "135" && data.challenge?.id !== "146"
+              }
               placeholder="Enter your past awards, grants or funding information"
               error={errors["pastGrant"]}
               {...register("pastGrant")}
@@ -688,7 +774,11 @@ export default function TeamCreateDialog({
             />
             <Input
               label="Deck"
-              required={data.challenge?.id !== "135" && data.challenge?.id !=="144" && data.challenge?.id !== "146"}
+              required={
+                data.challenge?.id !== "135" &&
+                data.challenge?.id !== "144" &&
+                data.challenge?.id !== "146"
+              }
               placeholder="Enter your deck link"
               error={errors["deckURI"]}
               {...register("deckURI")}
@@ -732,7 +822,8 @@ export default function TeamCreateDialog({
             {data.challenge?.id === "146" && (
               <>
                 <p className="block body-4 py-1 text-grey-500 font-bold mb-1">
-                  AWS provides eligible startups with up to $100k credits. Are you interested? *
+                  AWS provides eligible startups with up to $100k credits. Are
+                  you interested? *
                 </p>
                 <Controller
                   control={control}
@@ -750,7 +841,10 @@ export default function TeamCreateDialog({
                       >
                         <RadioGroupIndicator className={radioChecked} />
                       </RadioGroupItem>
-                      <label className={radioLabel} htmlFor="creditsInterested1">
+                      <label
+                        className={radioLabel}
+                        htmlFor="creditsInterested1"
+                      >
                         Yes
                       </label>
                       <RadioGroupItem
@@ -761,15 +855,18 @@ export default function TeamCreateDialog({
                       >
                         <RadioGroupIndicator className={radioChecked} />
                       </RadioGroupItem>
-                      <label className={radioLabel} htmlFor="creditsInterested0">
+                      <label
+                        className={radioLabel}
+                        htmlFor="creditsInterested0"
+                      >
                         No
                       </label>
                     </RadioGroup>
                   )}
-                {...register("creditsInterested")}
-              />
-            </>
-          )}
+                  {...register("creditsInterested")}
+                />
+              </>
+            )}
           </div>
           <div className="flex justify-between">
             {isEditing ? (

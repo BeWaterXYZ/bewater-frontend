@@ -167,9 +167,9 @@ export interface AgendaDay {
             name?: string;
             title?: string;
           };
-        }
+        },
       ];
-    }
+    },
   ];
 }
 export interface ChallengeTrackResult {
@@ -273,6 +273,7 @@ export interface Team {
   experience?: number;
   pastGrant?: string;
   builtDate?: string;
+  description?: string;
 }
 
 export type ProjectId = string;
@@ -311,6 +312,9 @@ export interface Project {
   offlineDemoDay?: number;
   onSiteDays?: string;
   creditsInterested?: number;
+  customSelect1?: string;
+  customSelect2?: string;
+  customSelect3?: string;
 }
 
 export interface TeamMember {

@@ -1,15 +1,16 @@
 "use client";
-import clsx from "clsx";
-import * as XLSX from "xlsx";
 import { format } from "date-fns";
-import { useUser } from "@clerk/nextjs";
-import { Project, ProjectStatus } from "@/services/types";
-import Markdown from "@/components/markdown";
 import { useState } from "react";
-import { resetProjectStatus } from "@/services/project.query";
-import { openSaveDialog, workbook2Blob } from "@/utils/saver";
+import * as XLSX from "xlsx";
+
 import { useLoadingWhen } from "@/components/loading/store";
+import Markdown from "@/components/markdown";
 import { SearchInput } from "@/components/molecules/search-input";
+import { resetProjectStatus } from "@/services/project.query";
+import { Project, ProjectStatus } from "@/services/types";
+import { openSaveDialog, workbook2Blob } from "@/utils/saver";
+import { useUser } from "@clerk/nextjs";
+
 import { teamMemInfo } from "./utils";
 
 export function ProjectList({
@@ -89,62 +90,85 @@ export function ProjectList({
 
       let obj: any;
 
-      challengeId === '146' ? obj = {
-        序号: -1,
-        项目名称: it.name,
-        项目描述: it.description,
-        赛道: it?.tags.join(",") ?? "",
-        Demo地址: it.demoURI ?? "",
-        Deck地址: it.deckURI ?? "",
-        GitHub地址: it.githubURI ?? "",
-        官网地址: it.siteURI ?? "",
-        微信或tg: it.contact ?? "",
-        MediaURLs: it.mediaURLs?.join("\n") ?? "",
-        视频地址: it.videoURI ?? "",
-        筛选状态: it.status,
-        队名: it.team.name,
-        队员数: it.membersCount,
-        队伍国别: it.team.nation,
-        队长邮箱: teamMem.email,
-        队长昵称: teamMem.userName,
-        队长TG: teamMem.tg,
-        队长钱包: teamMem.walletAddress,
-        所有队员邮箱: teamMem.all.join("\n"),
-        是否参加过Hackathon: it.experience ? "是" : "否",
-        历史融资奖项: it.pastGrant ?? "",
-        何时创建的项目: it.builtDate ?? "",
-        推荐自: it.recommendedFrom ?? "",
-        线下活动参加时间: it.onSiteDays ?? "",
-        "对eligible startups感兴趣": it.creditsInterested ? "是" : "否",
-      } : obj = {
-        序号: -1,
-        项目名称: it.name,
-        项目描述: it.description,
-        赛道: it?.tags.join(",") ?? "",
-        bounty赛道: it?.bountyTrack?.join(",") ?? "",
-        Demo地址: it.demoURI ?? "",
-        Deck地址: it.deckURI ?? "",
-        GitHub地址: it.githubURI ?? "",
-        官网地址: it.siteURI ?? "",
-        微信或tg: it.contact ?? "",
-        MediaURLs: it.mediaURLs?.join("\n") ?? "",
-        视频地址: it.videoURI ?? "",
-        筛选状态: it.status,
-        队名: it.team.name,
-        队员数: it.membersCount,
-        队伍国别: it.team.nation,
-        队长邮箱: teamMem.email,
-        队长昵称: teamMem.userName,
-        队长TG: teamMem.tg,
-        队长钱包: teamMem.walletAddress,
-        所有队员邮箱: teamMem.all.join("\n"),
-        // 所有队员TG: teamMem.tgAll.join("\n"),
-        是否参加过Hackathon: it.experience ? "是" : "否",
-        历史融资奖项: it.pastGrant ?? "",
-        何时创建的项目: it.builtDate ?? "",
-        推荐自: it.recommendedFrom ?? "",
-        是否线下DemoDay: it.offlineDemoDay ? "是" : "否",
-      };
+      if (challengeId === "146") {
+        obj = {
+          序号: -1,
+          项目名称: it.name,
+          项目描述: it.description,
+          赛道: it?.tags.join(",") ?? "",
+          Demo地址: it.demoURI ?? "",
+          Deck地址: it.deckURI ?? "",
+          GitHub地址: it.githubURI ?? "",
+          官网地址: it.siteURI ?? "",
+          微信或tg: it.contact ?? "",
+          MediaURLs: it.mediaURLs?.join("\n") ?? "",
+          视频地址: it.videoURI ?? "",
+          筛选状态: it.status,
+          队名: it.team.name,
+          队员数: it.membersCount,
+          队伍国别: it.team.nation,
+          队长邮箱: teamMem.email,
+          队长昵称: teamMem.userName,
+          队长TG: teamMem.tg,
+          队长钱包: teamMem.walletAddress,
+          所有队员邮箱: teamMem.all.join("\n"),
+          是否参加过Hackathon: it.experience ? "是" : "否",
+          历史融资奖项: it.pastGrant ?? "",
+          何时创建的项目: it.builtDate ?? "",
+          推荐自: it.recommendedFrom ?? "",
+          线下活动参加时间: it.onSiteDays ?? "",
+          "对eligible startups感兴趣": it.creditsInterested ? "是" : "否",
+        };
+      } else if (challengeId === "151") {
+        obj = {
+          序号: -1,
+          项目名称: it.name,
+          项目描述: it.description,
+          产品阶段: it.customSelect1 ?? "",
+          融资阶段: it.customSelect2 ?? "",
+          团队名称: it.team.name,
+          团队简介: it.team.description,
+          预期报名赛道: it?.tags.join(",") ?? "",
+          希望获得的支持: it.customSelect3 ?? "",
+          "TG(未加群为空)": it.contact ?? "",
+          历史参与黑客松及奖项: it.pastGrant ?? "",
+          Demo地址: it.demoURI ?? "",
+          Deck地址: it.deckURI ?? "",
+          GitHub地址: it.githubURI ?? "",
+          官网地址: it.siteURI ?? "",
+        };
+      } else {
+        obj = {
+          序号: -1,
+          项目名称: it.name,
+          项目描述: it.description,
+          赛道: it?.tags.join(",") ?? "",
+          bounty赛道: it?.bountyTrack?.join(",") ?? "",
+          Demo地址: it.demoURI ?? "",
+          Deck地址: it.deckURI ?? "",
+          GitHub地址: it.githubURI ?? "",
+          官网地址: it.siteURI ?? "",
+          微信或tg: it.contact ?? "",
+          MediaURLs: it.mediaURLs?.join("\n") ?? "",
+          视频地址: it.videoURI ?? "",
+          筛选状态: it.status,
+          队名: it.team.name,
+          队员数: it.membersCount,
+          队伍国别: it.team.nation,
+          队长邮箱: teamMem.email,
+          队长昵称: teamMem.userName,
+          队长TG: teamMem.tg,
+          队长钱包: teamMem.walletAddress,
+          所有队员邮箱: teamMem.all.join("\n"),
+          // 所有队员TG: teamMem.tgAll.join("\n"),
+          是否参加过Hackathon: it.experience ? "是" : "否",
+          历史融资奖项: it.pastGrant ?? "",
+          何时创建的项目: it.builtDate ?? "",
+          推荐自: it.recommendedFrom ?? "",
+          是否线下DemoDay: it.offlineDemoDay ? "是" : "否",
+        };
+      }
+
       let total = 0;
       let judgeNum = 0;
 
@@ -203,7 +227,7 @@ export function ProjectList({
       workbookBlob,
       `${format(new Date(), "yyyy-MM-dd HH-mm")}[${challengeId}]${
         promoted ? "初筛" : "所有"
-      }team和project信息统计.xlsx`
+      }team和project信息统计.xlsx`,
     );
   };
 
