@@ -16,13 +16,13 @@ export function PrizeSection({
 }) {
   return (
     <div className="flex flex-col items-center py-20 px-0 gap-20 bg-[radial-gradient(210%_100%_at_50%_0%,_var(--tw-gradient-stops))] from-day/[0.15] via-night/0 to-day/[0.15] rounded-xl border-solid border-[1px] border-midnight">
-      <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
+      {/* <h3 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center">
         Total Awards:{" "}
         {getSymbolFromCurrency(
           challenge.awardCurrency ? challenge.awardCurrency : "USD"
         ) ?? ""}
         {formatMoney(challenge.totalAward)}{" "}
-      </h3>
+      </h3> */}
       <div className="flex flex-col items-center gap-16">
         <div className="flex flex-col items-center gap-10">
           <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
@@ -63,7 +63,7 @@ export function PrizeSection({
           </div>
         </div>
       </div>
-      <div className="relative w-full flex flex-col gap-10 items-center">
+      {/* <div className="relative w-full flex flex-col gap-10 items-center">
         <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
           Prizes
         </p>
@@ -109,7 +109,7 @@ export function PrizeSection({
             );
           })}
         </div>
-      </div>
+      </div> */}
       {(challenge.keySponsors ?? []).length > 0 ? (
         <div className="relative w-full flex flex-col gap-10 items-center">
           <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">

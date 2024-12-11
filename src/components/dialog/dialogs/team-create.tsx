@@ -42,6 +42,7 @@ import TeamCreateForm_151 from "./team-form/campaign-151";
 
 export type TeamCreateFormProps = {
   form: {
+    close: () => void;
     control: Control<Inputs>;
     data: {
       challenge?: Challenge;
@@ -371,6 +372,7 @@ export default function TeamCreateDialog({
   };
 
   const formData = {
+    close,
     control,
     data,
     errors,
