@@ -279,9 +279,9 @@ export default function TeamCreateDialog({
           offlineDemoDay: Number(formData.offlineDemoDay),
           onSiteDays: formData.onSiteDays,
           creditsInterested: Number(formData.creditsInterested),
-          customSelect1: formData.customSelect1,
-          customSelect2: formData.customSelect2,
-          customSelect3: formData.customSelect3,
+          customSelect1: formData.customSelect1[0],
+          customSelect2: formData.customSelect2[0],
+          customSelect3: formData.customSelect3[0],
         };
         let res = await updateTeam({ teamId: data.team?.id!, payload });
         addToast({
@@ -319,9 +319,9 @@ export default function TeamCreateDialog({
           offlineDemoDay: Number(formData.offlineDemoDay),
           onSiteDays: formData.onSiteDays,
           creditsInterested: Number(formData.creditsInterested),
-          customSelect1: formData.customSelect1,
-          customSelect2: formData.customSelect2,
-          customSelect3: formData.customSelect3,
+          customSelect1: formData.customSelect1[0],
+          customSelect2: formData.customSelect2[0],
+          customSelect3: formData.customSelect3[0],
         };
 
         let res = await createTeamMutaion.mutateAsync(payload);
