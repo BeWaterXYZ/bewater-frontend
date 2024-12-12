@@ -242,11 +242,12 @@ export const COUNTRIES = [
   "Yemen",
   "Zambia",
   "Zimbabwe",
+  "Others",
 ].map((c) => ({
   value: c,
   label: c,
   classes: {
-    container: "!rounded-full !bg-midnight  h-5  my-0",
+    container: "!rounded-full !bg-midnight h-5 my-0",
     text: "!text-grey-400 body-4 leading-5 !py-0",
   },
 }));

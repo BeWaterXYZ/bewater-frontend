@@ -28,38 +28,66 @@ export function PrizeSection({
           <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
             {challenge.awardAssorts.length} {t("cryptoArt.t6")}
           </p>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
-              Track 1: Data as Perception – Empowering AI with Decentralized Data
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full body-3 text-white/60">
-                In this track, we explore how data acts as the &quot;perception&quot; of Crypto AI Agents. We invite teams to develop AI infrastructure for data collection, labeling, privacy, and validation using BNB Chain Greenfield. The focus is on creating innovative data solutions and standards, transforming decentralized data into user value through applications like decentralized insurance, prediction markets, and dynamic NFTs.
+          <div className="flex flex-col xl:flex-row gap-10 xl:px-10">
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+                Track 1: Data as Perception – Empowering AI with Decentralized
+                Data
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5 xl:h-full">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full body-3 text-white/60">
+                  In this track, we explore how data acts as the
+                  &quot;perception&quot; of Crypto AI Agents. We invite teams to
+                  develop AI infrastructure for data collection, labeling,
+                  privacy, and validation using BNB Chain Greenfield. The focus
+                  is on creating innovative data solutions and standards,
+                  transforming decentralized data into user value through
+                  applications like decentralized insurance, prediction markets,
+                  and dynamic NFTs.
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
-              Track 2: Real-Time dApp Development – Building with APRO Oracle
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full body-3 text-white/60">
-                This track encourages teams to integrate APRO Oracle&apos;s real-time data feeds into their dApps. The goal is to build decentralized applications on BNB Chain that leverage live market and transaction data, offering solutions such as AI trading assistants, decentralized risk management, and dynamic NFT generation. Participants will develop functional dApps that can directly create value for users within 24 hours.
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+                Track 2: Real-Time dApp Development – BUILDING WITH AI INFRA
+                AGENTS
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5 xl:h-full">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full body-3 text-white/60">
+                  This track encourages teams to integrate APRO Oracle&apos;s
+                  real-time data feeds into their dApps. The goal is to build
+                  decentralized applications on BNB Chain that leverage live
+                  market and transaction data, offering solutions such as AI
+                  trading assistants, decentralized risk management, and dynamic
+                  NFT generation. Participants will develop functional dApps
+                  that can directly create value for users within 24 hours.
+                </div>
               </div>
             </div>
-          </div>
-          <div className="flex flex-col gap-4 md:gap-7 items-center">
-            <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
-              Track 3: Autonomous AI Agents – Building the Future of AI Collaboration
-            </p>
-            <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5">
-              <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full body-3 text-white/60">
-                In this track, participants will focus on developing autonomous AI Agents using APRO CCAP to enable communication between agents. The focus is on creating AI-driven, interactive agents that can collaborate and make autonomous decisions. Key use cases include building investment-assisting tools, decentralized governance systems, and AI-driven creative solutions, all while integrating BNB Wallet, BNB DAO, and PancakeSwap to enhance the agents&apos; capabilities.
+            <div className="flex flex-col gap-4 md:gap-7 items-center">
+              <p className="body-3 md:body-1 uppercase text-[#00cccc] md:text-[#00cccc] text-center">
+                Track 3: Autonomous AI Agents – Building the Future of AI
+                Collaboration
+              </p>
+              <div className="prizeList2 w-auto max-w-[620px] mx-5 px-5 py-5 xl:h-full">
+                <div className="flex z-[1] flex-col sm:flex-row items-center gap-5 w-full body-3 text-white/60">
+                  In this track, participants will focus on developing
+                  autonomous AI Agents using APRO Oracle&apos;s unique
+                  communication services tailored for Crypto AI Agents. The
+                  emphasis is on creating AI-driven, interactive agents capable
+                  of collaboration and autonomous decision-making. Key use cases
+                  include building investment-assisting tools, decentralized
+                  governance systems, and AI-driven creative solutions, all
+                  seamlessly integrating with Binance Web3 Wallet, Trust Wallet,
+                  or PancakeSwap to enhance the agents&apos; capabilities.
+                </div>
               </div>
             </div>
           </div>
           <div className="w-auto max-w-[620px] mx-5 px-5 py-5 flex z-[1] flex-col sm:flex-row items-center gap-5 body-3 text-white/60">
-            Each track is designed to push the boundaries of Crypto AI, unlocking new possibilities in data, applications, and autonomous agent behavior.
+            Each track is designed to push the boundaries of Crypto AI,
+            unlocking new possibilities in data, applications, and autonomous
+            agent behavior.
           </div>
         </div>
       </div>

@@ -33,6 +33,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     maxSelections,
     isSingle = false,
     usHandler,
+    defaultValue,
   } = props;
 
   const id = useId();
@@ -123,6 +124,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
                 field.onChange(values);
               }}
               onBlur={field.onBlur}
+              defaultValue={defaultValue}
             />
           );
         }}
