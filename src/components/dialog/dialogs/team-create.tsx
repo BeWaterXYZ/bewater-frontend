@@ -81,17 +81,23 @@ const schema = (challengeId?: string) =>
       bountyTrack: z.array(z.string()),
       roles: validationSchema.roles,
       skills: validationSchema.skills,
-      nation: z.array(z.string()).length(1, ""),
-      pastGrant: challengeId === "135" ? z.string() : validationSchema.text,
+      nation: validationSchema.nation,
+      pastGrant:
+        challengeId === "135" || challengeId === "151"
+          ? z.string()
+          : validationSchema.text,
       builtDate: z.string(),
       deckURI:
         challengeId === "136" || challengeId === "135" || challengeId === "144"
           ? z.string()
           : validationSchema.text,
-      demoURI: challengeId === "144" ? validationSchema.text : z.string(),
-      siteURI: z.string(),
+      demoURI:
+        challengeId === "144" || challengeId === "151"
+          ? validationSchema.text
+          : z.string(),
+      siteURI: challengeId === "151" ? validationSchema.text : z.string(),
       githubURI:
-        challengeId === "136" || challengeId === "144"
+        challengeId === "136" || challengeId === "144" || challengeId === "151"
           ? validationSchema.text
           : z.string(),
       contact: validationSchema.text,
@@ -109,11 +115,11 @@ const schema = (challengeId?: string) =>
             })
           : z.string(),
       customSelect1:
-        challengeId === "151" ? z.array(z.string()).length(1, "") : z.string(),
+        challengeId === "151" ? validationSchema.customSelect1 : z.string(),
       customSelect2:
-        challengeId === "151" ? z.array(z.string()).length(1, "") : z.string(),
+        challengeId === "151" ? validationSchema.customSelect2 : z.string(),
       customSelect3:
-        challengeId === "151" ? z.array(z.string()).length(1, "") : z.string(),
+        challengeId === "151" ? validationSchema.customSelect3 : z.string(),
     })
     .required();
 

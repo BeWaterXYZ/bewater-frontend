@@ -3,6 +3,7 @@ import type { TeamCreateFormProps } from "../team-create";
 import Link from "next/link";
 
 import { Input, Select, TextArea } from "@/components/form/control";
+import { COUNTRIES } from "@/constants/options/country";
 
 export const productStageOptions = [
   "Idea",
@@ -122,6 +123,17 @@ export default function TeamCreateForm_151(props: TeamCreateFormProps) {
           {...register("description")}
         />
         <Select
+          id="select-nation"
+          label="Team Country"
+          required
+          isSingle
+          options={COUNTRIES}
+          defaultValue="Others"
+          error={errors["nation"]}
+          control={control}
+          {...register("nation")}
+        />
+        <Select
           id="select-tags"
           label="Track"
           required
@@ -131,6 +143,19 @@ export default function TeamCreateForm_151(props: TeamCreateFormProps) {
           control={control}
           {...register("tags")}
         />
+        {isEditing ? null : (
+          <Select
+            id="select-role"
+            label="You’re going to play"
+            required
+            isSingle
+            options={RoleSetOptions}
+            defaultValue="Others"
+            error={errors["role"]}
+            control={control}
+            {...register("role")}
+          />
+        )}
         <Select
           id="select-support-desired"
           label="Support Desired"
@@ -150,15 +175,7 @@ export default function TeamCreateForm_151(props: TeamCreateFormProps) {
         <Input
           label="If yes, please provide your Telegram ID"
           placeholder="Enter your Telegram ID"
-          error={errors["contact"]}
           {...register("contact")}
-        />
-        <TextArea
-          label="Hackathons participated in and rankings"
-          required
-          placeholder="Enter the Hackathons you have participated in and your rankings"
-          error={errors["pastGrant"]}
-          {...register("pastGrant")}
         />
         <Input
           label="Demo"
@@ -183,7 +200,9 @@ export default function TeamCreateForm_151(props: TeamCreateFormProps) {
         />
         <Input
           label="Official Website"
+          required
           placeholder="Enter your official website link"
+          error={errors["siteURI"]}
           {...register("siteURI")}
         />
       </div>

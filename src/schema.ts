@@ -50,4 +50,16 @@ export const validationSchema = {
     .regex(/^https:\/\/github\.com\/[^\/]+\/[^\/]+$/, {
       message: "Please enter a valid GitHub repository URL",
     }),
+  nation: z
+    .array(z.string())
+    .length(1, { message: "You need to choose one option" }),
+  customSelect1: z
+    .array(z.string())
+    .length(1, { message: "You need to choose one option" }),
+  customSelect2: z
+    .array(z.string())
+    .length(1, { message: "You need to choose one option" }),
+  customSelect3: z
+    .array(z.string())
+    .length(1, { message: "You need to choose one option" }),
 };
