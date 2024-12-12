@@ -115,11 +115,11 @@ const schema = (challengeId?: string) =>
             })
           : z.string(),
       customSelect1:
-        challengeId === "151" ? validationSchema.customSelect1 : z.string(),
+        challengeId === "151" ? validationSchema.customSelect1 : z.array(z.string()),
       customSelect2:
-        challengeId === "151" ? validationSchema.customSelect2 : z.string(),
+        challengeId === "151" ? validationSchema.customSelect2 : z.array(z.string()),
       customSelect3:
-        challengeId === "151" ? validationSchema.customSelect3 : z.string(),
+        challengeId === "151" ? validationSchema.customSelect3 : z.array(z.string()),
     })
     .required();
 
