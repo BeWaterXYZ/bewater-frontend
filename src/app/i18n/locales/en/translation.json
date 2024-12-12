@@ -7,7 +7,8 @@
   },
   "header": {
     "campaign": "Campaigns",
-    "project": "Projects"
+    "project": "Projects",
+    "builderboard": "Builderboard"
   },
   "footer": {
     "dot": ".",
@@ -88,5 +89,9 @@
     "load_more": "Load More",
     "loading": "Loading...",
     "no_more": "Loaded all"
+  },
+  "builderboard": {
+    "title": "BeWater Builders Leaderboard",
+    "contributions": "contributions"
   }
 }
