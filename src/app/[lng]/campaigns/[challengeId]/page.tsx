@@ -21,6 +21,7 @@ import { PrizeSection as PrizeSection130 } from "./prize-section/campaign-130";
 import { PrizeSection as PrizeSection136 } from "./prize-section/campaign-136";
 import { PrizeSection as PrizeSection134 } from "./prize-section/campaign-134";
 import { PrizeSection as PrizeSection151 } from "./prize-section/campaign-151";
+import { PrizeSection as PrizeSection153 } from "./prize-section/campaign-153";
 import { isMileStoneEnabled, isWorkshop } from "./utils";
 
 import Balancer from "react-wrap-balancer";
@@ -357,6 +358,8 @@ export default async function ChallengeIntro({ params }: any) {
             <PrizeSection136 t={t} lng={lng} challenge={challenge} />
           ) : challenge.id === "151" ? (
             <PrizeSection151 t={t} lng={lng} challenge={challenge} />
+          ) : challenge.id === "153" ? (
+            <PrizeSection153 t={t} lng={lng} challenge={challenge} />
           ) : (
             !challenge.yotadata?.disableTrack && (
               <div className="container">
