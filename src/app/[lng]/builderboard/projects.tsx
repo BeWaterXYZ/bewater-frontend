@@ -1,47 +1,123 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
-import { useTranslation } from "@/app/i18n/client";
-import PageSwitcher from "./page-switcher";
 import { BookmarkIcon, CodeSandboxLogoIcon } from "@radix-ui/react-icons";
-import { LeaderboardProject } from "@/services/leaderboard";
 import { format } from "date-fns";
 
-const gridTemplate =
-  "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_1fr)_minmax(0,_1fr)_minmax(0,_3fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
-function Project(props: { data: LeaderboardProject; rank: number }) {
-  const avatar =
-    "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
+interface Contributor {
+  login: string;
+  avatar_url: string;
+}
+
+interface Project {
+  repoName: string;          // 仓库全名 (owner/repo)
+  name: string;              // 仓库名称
+  description: string;       // 仓库描述
+  language: string;          // 主要编程语言
+  stargazers_count: number;  // star 数量
+  forks_count: number;       // fork 数量
+  topics: string[];         // 项目标签
+  updated_at: string;       // 最后更新时间
+  contributors: Contributor[]; // 贡献者列表
+}
+
+async function fetchTopProjects(): Promise<Project[]> {
+  try {
+    const response = await fetch(
+      'https://api.github.com/search/repositories?q=stars:>1000+language:solidity+language:rust+language:typescript&sort=stars&order=desc&per_page=20',
+      {
+        headers: {
+          'Accept': 'application/vnd.github.v3+json',
+          // 'Authorization': `token `
+        }
+      }
+    );
+    const data = await response.json();
+    
+    // 获取每个仓库的贡献者信息
+    const projectsWithContributors = await Promise.all(
+      data.items.map(async (repo: any) => {
+        const contributorsResponse = await fetch(
+          `${repo.contributors_url}?per_page=5`,
+          {
+            headers: {
+              'Accept': 'application/vnd.github.v3+json',
+              // 'Authorization': `token `
+            }
+          }
+        );
+        const contributors = await contributorsResponse.json();
+        
+        return {
+          repoName: repo.full_name,
+          name: repo.name,
+          description: repo.description,
+          language: repo.language,
+          stargazers_count: repo.stargazers_count,
+          forks_count: repo.forks_count,
+          topics: repo.topics,
+          updated_at: repo.updated_at,
+          contributors: contributors.map((c: any) => ({
+            login: c.login,
+            avatar_url: c.avatar_url
+          }))
+        };
+      })
+    );
+
+    return projectsWithContributors;
+  } catch (error) {
+    console.error('Error fetching GitHub data:', error);
+    return [];
+  }
+}
+
+function Project(props: { data: Project; rank: number }) {
+  const avatar = "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
   const { data, rank } = props;
   const [owner, repo] = data.repoName.split("/");
-  const contributors = data.contributors.slice(0, 5);
+  const contributors = data.contributors || [];
   
   return (
     <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
-      <p>{rank}</p>
-      <a href={`https://github.com/${data.repoName}`}>
-        <div className="flex items-center font-bold text-base mb-2">
-          <div className="text-[#B4B4BB] mr-1">{<BookmarkIcon/>}</div>
+      {/* Rank */}
+      <p className="text-base">#{rank}</p>
+
+      {/* Project Info */}
+      <div className="flex flex-col gap-2">
+        <a href={`https://github.com/${data.repoName}`} className="flex items-center font-bold text-base mb-2">
+          <div className="text-[#B4B4BB] mr-1"><BookmarkIcon /></div>
           <p className="truncate" title={`${owner} / ${repo}`}>
             <span className="text-[#94A3B8] mr-1">{owner}</span>
             <span className="text-white mr-1">/</span>
             <span>{repo}</span>
           </p>
+        </a>
+        <p className="text-sm text-[#94A3B8] line-clamp-2">
+          {data.description}
+        </p>
+      </div>
+
+      {/* Stats & Tags */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center gap-2">
+          <div className="text-[#919191]"><CodeSandboxLogoIcon /></div>
+          <span className="text-[#F8FAFC]">{data.language || "N/A"}</span>
         </div>
-        <div className="flex items-center">
-          <div className="text-[#919191] mr-1">{<CodeSandboxLogoIcon/>}</div>
-          <span>{data.language || "N/A"}</span>
+        <div className="flex gap-4 text-[#94A3B8]">
+          <span>{data.stargazers_count} stars</span>
+          <span>{data.forks_count} forks</span>
         </div>
-      </a>
-      <p>{data.stargazers_count}</p>
-      <p>{data.forks_count}</p>
-      <p className="line-clamp-2">{data.topics.join(", ")}</p>
-      <p className="line-clamp-2">{data.description}</p>
-      <div>
-        <div className="flex ml-2 mb-[6px]">
-          {contributors.map((contributor, i) => (
+        <p className="text-[#94A3B8] line-clamp-2">{data.topics.join(", ")}</p>
+      </div>
+
+      {/* Contributors & Activity */}
+      <div className="flex flex-col gap-3">
+        <div className="flex ml-2">
+          {contributors.map((contributor: any, i: number) => (
             <a href={`https://github.com/${contributor.login}`} key={i}>
               <div className={avatar}>
                 <Image
@@ -74,59 +150,42 @@ interface ProjectsProps {
 }
 
 export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
-  const { t } = useTranslation(lng, "translation");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState<25 | 50 | 100>(25);
-  const [data, setData] = useState<LeaderboardProject[]>([]);
+  const [data, setData] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Reset page when filters change
   useEffect(() => {
-    setCurrentPage(1);
-  }, [ecosystem, sector]);
+    async function loadData() {
+      setLoading(true);
+      const projects = await fetchTopProjects();
+      setData(projects);
+      setLoading(false);
+    }
 
-  // TODO: Replace with actual API call that uses both ecosystem and sector
-  // const { data } = useLeaderboardProjects(ecosystem, sector);
+    loadData();
+  }, [ecosystem, sector]); 
+
+  if (loading) {
+    return <div className="text-white">Loading...</div>;
+  }
 
   return (
     <>
-      <div className={`${rowStyle} py-2 font-medium text-[12px] leading-[22px] text-[#CBD5E1] uppercase`}>
-        <p>{t('builderboard.rank')}</p>
-        <p>{t('builderboard.name')}</p>
-        <p>{t('builderboard.stars')}</p>
-        <p>{t('builderboard.followers')}</p>
-        <p>{t('builderboard.topic')}</p>
-        <p>{t('builderboard.description')}</p>
-        <p>{t('builderboard.activity')}</p>
-      </div>
-
-      {/* Show selected filters if any */}
+      <div className={`${rowStyle} py-2`} />
+      
       {(ecosystem || sector) && (
         <div className="py-4 text-sm text-gray-400">
           {ecosystem && <span className="mr-4">Ecosystem: {ecosystem}</span>}
           {sector && <span>Sector: {sector}</span>}
         </div>
       )}
-      
-      {(data ?? [])
-        .slice(rowsPerPage * (currentPage - 1), rowsPerPage * currentPage)
-        .map((data, index) => (
-          <Project
-            data={data}
-            rank={index + 1 + (currentPage - 1) * rowsPerPage}
-            key={index}
-          />
-        ))}
 
-      <PageSwitcher
-        currentPage={currentPage}
-        rowsPerPage={rowsPerPage}
-        totalRows={data?.length ?? 0}
-        onPageChange={(p) => setCurrentPage(p)}
-        onRowsPerPageChange={(r) => {
-          setRowsPerPage(r);
-          setCurrentPage(1);
-        }}
-      />
+      {(data ?? []).map((data, index) => (
+        <Project
+          data={data}
+          rank={index + 1}
+          key={index}
+        />
+      ))}
     </>
   );
 } 
