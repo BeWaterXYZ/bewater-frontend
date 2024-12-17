@@ -66,6 +66,8 @@ const isPublicRoute = createRouteMatcher([
   "/en/campaigns(.*)",
   "/zh/projects(.*)",
   "/en/projects(.*)",
+  "/en/builderboard(.*)",
+  "/zh/builderboard(.*)",
   "/zh/user(.*)",
   "/en/user(.*)",
   "/api/og",
