@@ -2,6 +2,8 @@
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslation } from "@/app/i18n/client";
+import { BuilderboardDeveloper, BuilderboardLanguage } from "@/services/leaderboard";
+import { useBuilderboardDeveloper } from "@/services/leaderboard.query";
 
 const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
@@ -28,37 +30,13 @@ const languageColors: { [key: string]: string } = {
   
 };
 
-interface Language {
-  name: string;
-  percentage: number;
-}
 
-interface Repository {
-  html_url: string;
-  name: string;
-  description: string | null;
-}
 
-interface Developer {
-  html_url: string;          // GitHub 个人主页链接
-  avatar_url: string;        // 头像 URL
-  login: string;            // GitHub 用户名
-  total_stars: number;      // 总 star 数
-  followers: number;        // 关注者数量
-  bio: string | null;       // 个人简介
-  popular_repo: {          // 最受欢迎的仓库
-    html_url: string;
-    name: string;
-    description: string | null;
-  };
-  languages: Language[];    // 使用的编程语言及占比
-}
-
-function Developer(props: { data: Developer; rank: number }) {
+function Developer(props: { data: BuilderboardDeveloper; rank: number }) {
   const { data, rank } = props;
   
   // 确保只显示前三种语言
-  const topLanguages = data.languages?.slice(0, 3) || [];
+  const topLanguages = data.popular_repo.languages?.slice(0, 3) || [];
   
   return (
     <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
@@ -100,7 +78,7 @@ function Developer(props: { data: Developer; rank: number }) {
 
       {/* Languages */}
       <div className="flex flex-col gap-3">
-        {topLanguages.map((lang: Language) => (
+        {topLanguages.map((lang: BuilderboardLanguage) => (
           <div key={lang.name} className="flex flex-col gap-1">
             <span className="text-[#F8FAFC]">{lang.name}</span>
             <div className="h-1 bg-[#1E293B] rounded-full overflow-hidden">
@@ -119,7 +97,7 @@ function Developer(props: { data: Developer; rank: number }) {
   );
 } 
 
-async function fetchTopDevelopers(): Promise<Developer[]> {
+async function fetchTopDevelopers(): Promise<BuilderboardDeveloper[]> {
   try {
     // 首先获取排名靠前的仓库
     const reposResponse = await fetch(
@@ -127,7 +105,7 @@ async function fetchTopDevelopers(): Promise<Developer[]> {
       {
         headers: {
           'Accept': 'application/vnd.github.v3+json',
-          // 'Authorization': `token `
+          'Authorization': `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
         }
       }
     );
@@ -140,11 +118,26 @@ async function fetchTopDevelopers(): Promise<Developer[]> {
         {
           headers: {
             'Accept': 'application/vnd.github.v3+json',
-            // 'Authorization': `token `
+            'Authorization': `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
           }
         }
       );
       const userData = await userResponse.json();
+      
+      // 获取用户所有的仓库
+      const allReposResponse = await fetch(
+        `https://api.github.com/users/${userData.login}/repos?per_page=100`,
+        {
+          headers: {
+            'Accept': 'application/vnd.github.v3+json',
+            'Authorization': `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
+          }
+        }
+      );
+      const allRepos = await allReposResponse.json();
+      
+      // 计算所有仓库的总 star 数
+      const totalStars = allRepos.reduce((sum: number, repo: any) => sum + repo.stargazers_count, 0);
       
       // 获取用户最受欢迎的仓库
       const reposResponse = await fetch(
@@ -152,7 +145,7 @@ async function fetchTopDevelopers(): Promise<Developer[]> {
         {
           headers: {
             'Accept': 'application/vnd.github.v3+json',
-            // 'Authorization': `token `
+            'Authorization': `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
           }
         }
       );
@@ -162,7 +155,7 @@ async function fetchTopDevelopers(): Promise<Developer[]> {
       const languagesResponse = await fetch(popularRepo.languages_url, {
         headers: {
           'Accept': 'application/vnd.github.v3+json',
-          // 'Authorization': `token `
+          'Authorization': `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`
         }
       });
       const languagesData = await languagesResponse.json();
@@ -181,19 +174,80 @@ async function fetchTopDevelopers(): Promise<Developer[]> {
         html_url: userData.html_url,
         avatar_url: userData.avatar_url,
         login: userData.login,
-        total_stars: userData.public_repos,
+        total_stars: totalStars,
         followers: userData.followers,
         bio: userData.bio,
         popular_repo: {
           html_url: popularRepo.html_url,
           name: popularRepo.name,
-          description: popularRepo.description
+          description: popularRepo.description,
+          languages: languages
         },
-        languages
       };
     });
 
-    return await Promise.all(developersPromises);
+    // 等待所有 Promise 解析完成
+    const developers = await Promise.all(developersPromises);
+    
+//     // 构建批量插入的 VALUES 部分
+//     const values = developers.map(developer => {
+//       // 使用 MySQL 的 JSON_OBJECT 函数来构建 JSON
+//       const popularRepoJson = `JSON_OBJECT(
+//         'html_url', '${developer.popular_repo.html_url}',
+//         'name', '${developer.popular_repo.name}',
+//         'description', ${developer.popular_repo.description ? `'${developer.popular_repo.description.replace(/'/g, "''")}'` : 'NULL'},
+//         'languages', JSON_ARRAY(${developer.popular_repo.languages.map((lang: { name: any; percentage: any; }) => 
+//           `JSON_OBJECT('name', '${lang.name}', 'percentage', ${lang.percentage})`
+//         ).join(', ')})
+//       )`;
+
+//       return `(
+//         '${developer.html_url}',
+//         '${developer.avatar_url}',
+//         '${developer.login}',
+//         ${developer.bio ? `'${developer.bio.replace(/'/g, "''")}'` : 'NULL'},
+//         ${developer.followers},
+//         ${developer.total_stars},
+//         ${popularRepoJson},
+//         NOW(),
+//         NOW(),
+//         NOW(),
+//         NOW()
+//       )`;
+//     }).join(',\n');
+
+//     // 构建完整的批量插入 SQL
+//     const sql = `
+// INSERT INTO operationDeveloper (
+//   html_url,
+//   avatar_url,
+//   login,
+//   bio,
+//   followers,
+//   total_stars,
+//   popular_repo,
+//   created_at,
+//   updated_at,
+//   createdAt,
+//   updatedAt
+// ) VALUES 
+// ${values}
+// ON DUPLICATE KEY UPDATE
+//   avatar_url = VALUES(avatar_url),
+//   login = VALUES(login),
+//   bio = VALUES(bio),
+//   followers = VALUES(followers),
+//   total_stars = VALUES(total_stars),
+//   popular_repo = VALUES(popular_repo),
+//   updated_at = NOW(),
+//   updatedAt = NOW();
+// `;
+
+//     console.log('Batch SQL for all developers:');
+//     console.log(sql);
+//     console.log('----------------------------------------');
+
+    return developers;
   } catch (error) {
     console.error('Error fetching GitHub data:', error);
     return [];
@@ -206,22 +260,39 @@ interface DevelopersProps {
   lng: string;
 }
 
+
+const USE_API = process.env.NEXT_PUBLIC_USE_BUILDERBOARD_API === 'true';
+
 export default function Developers({ ecosystem, sector, lng }: DevelopersProps) {
-  const [data, setData] = useState<Developer[]>([]);
+  const [data, setData] = useState<BuilderboardDeveloper[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // 使用 API 的查询
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(20, 'all');
 
   useEffect(() => {
     async function loadData() {
+      if (USE_API) {
+        
+        return;
+      }
+      
       setLoading(true);
       const developers = await fetchTopDevelopers();
       setData(developers);
       setLoading(false);
     }
 
-    loadData();
+    if (!USE_API) {
+      loadData();
+    }
   }, [ecosystem, sector]);
 
-  if (loading) {
+  
+  const displayLoading = USE_API ? apiLoading : loading;
+  const displayData = USE_API ? apiData : data;
+
+  if (displayLoading) {
     return <div className="text-white">Loading...</div>;
   }
 
@@ -236,7 +307,7 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
         </div>
       )}
 
-      {(data ?? []).map((data, index) => (
+      {(displayData ?? []).map((data, index) => (
         <Developer
           data={data}
           rank={index + 1}

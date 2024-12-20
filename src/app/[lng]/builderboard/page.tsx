@@ -23,7 +23,7 @@ export default function BuilderBoard({
     <div className="mb-[160px]">
       <div className="container mx-auto py-20">
         <div className="flex flex-col items-center">
-          <h1 className="heading-5 md:heading-3 text-day md:text-day [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center mb-12">
+          <h1 className="heading-5 md:heading-3 text-white [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center mb-12">
             {t("builderboard.title")}
           </h1>
 
