@@ -21,6 +21,8 @@ import GithubProjectItem from "../component/github-project-item";
 import { User } from "@clerk/nextjs/dist/types/server";
 import { useDialogStore } from "@/components/dialog/store";
 import { ProjectSettings } from "../component/project-settings";
+import { Switch } from "@/components/form/switch";
+import { PinnedLinks } from "../component/pinned-links";
 
 interface Props {
   data: UserProfile;
@@ -32,10 +34,17 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
   const schema = z.object({
     bio: validationSchema.bio,
     telegramLink: z.string().optional(),
-    websiteLink: z.string().url().optional(),
     roles: validationSchema.roles,
     skills: validationSchema.skills,
     pinnedProjects: z.array(z.any()).optional(),
+    showChallenges: z.boolean().optional(),
+    showTeamwork: z.boolean().optional(),
+    showStats: z.boolean().optional(),
+    links: z.array(z.object({
+      icon: z.string(),
+      url: z.string(),
+      pinned: z.boolean()
+    })).optional(),
   });
 
   type Inputs = z.infer<typeof schema>;
@@ -59,13 +68,17 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     defaultValues: {
       ...data,
       bio: data?.bio ?? "",
-      websiteLink: data?.websiteLink ?? "",
       telegramLink: data?.telegramLink ?? "",
       pinnedProjects: data?.pinnedProjects ?? [],
+      showChallenges: data?.showChallenges ?? false,
+      showTeamwork: data?.showTeamwork ?? false,
+      showStats: data?.showStats ?? false,
+      links: data?.links ?? [],
     },
   });
 
   const pinnedProjects = watch('pinnedProjects') || [];
+  const links = watch('links') || [];
   
   useEffect(() => {
     if (userProjects) {
@@ -152,6 +165,21 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     });
   };
 
+  const handleTogglePin = (url: string) => {
+    setValue(
+      'links',
+      links.map(link => 
+        link.url === url 
+          ? { ...link, pinned: !link.pinned }
+          : link
+      )
+    );
+  };
+
+  const handleAddLink = (newLink: { icon: string; url: string; pinned: boolean }) => {
+    setValue('links', [...links, newLink]);
+  };
+
   const onSubmit = async (formData: FieldValues) => {
     showLoading();
     try {
@@ -176,45 +204,110 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
   return (
     <form
       method="post"
-      className={clsx("mt-8")}
+      className={clsx("mt-8 space-y-6")}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <TextArea
-        label="Bio"
-        rows={3}
-        placeholder="Introduce yourself :)"
-        error={errors["bio"]}
-        {...register("bio", { required: "Bio is required." })}
-      />
+      {/* Bio Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <TextArea
+          label={<span className="text-white">Bio</span>}
+          rows={3}
+          placeholder="Introduce yourself :)"
+          error={errors["bio"]}
+          {...register("bio", { required: "Bio is required." })}
+        />
+      </div>
 
-      <Select
-        label="Roles "
-        options={RoleSetOptions}
-        error={errors["roles"]}
-        control={control}
-        {...register("roles")}
-      />
+      {/* Roles Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center gap-4">
+          <span className="text-white whitespace-nowrap w-20">Roles</span>
+          <div className="flex-1">
+            <Select
+              options={RoleSetOptions}
+              error={errors["roles"]}
+              control={control}
+              hideError={true}
+              {...register("roles")}
+            />
+          </div>
+        </div>
+      </div>
 
-      <Select
-        label="Skills "
-        options={SkillSetOptions}
-        error={errors["skills"]}
-        control={control}
-        {...register("skills")}
-      />
-      <Input
-        label="Website "
-        placeholder="Enter your website"
-        error={errors["websiteLink"]}
-        {...register("websiteLink")}
-      />
-      <Input
-        label="Telegram"
-        placeholder="Enter your telegram id"
-        error={errors["telegramLink"]}
-        {...register("telegramLink")}
-      />
+      {/* Skills Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center gap-4">
+          <span className="text-white whitespace-nowrap w-20">Skills</span>
+          <div className="flex-1">
+            <Select
+              options={SkillSetOptions}
+              error={errors["skills"]}
+              control={control}
+              hideError={true}
+              {...register("skills")}
+            />
+          </div>
+        </div>
+      </div>
 
+      {/* Telegram Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center gap-4">
+          <span className="text-white whitespace-nowrap w-20">Telegram</span>
+          <div className="flex-1">
+            <Input
+              placeholder="Enter your telegram id"
+              error={errors["telegramLink"]}
+              hideError={true}
+              {...register("telegramLink")}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Challenges Visibility Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">
+            Challenges
+          </h4>
+          <Switch
+            name="showChallenges"
+            control={control}
+            onValueChange={(value) => setValue('showChallenges', value)}
+          />
+        </div>
+      </div>
+
+      {/* Teamwork Visibility Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">
+            Teamwork
+          </h4>
+          <Switch
+            name="showTeamwork"
+            control={control}
+            onValueChange={(value) => setValue('showTeamwork', value)}
+          />
+        </div>
+      </div>
+
+      {/* Stats Visibility Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">
+            Stats
+          </h4>
+          <Switch
+            name="showStats"
+            control={control}
+            onValueChange={(value) => setValue('showStats', value)}
+          />
+        </div>
+      </div>
+
+      {/* Projects Section */}
       <ProjectSettings 
         user={user}
         socialConnections={socialConnections}
@@ -225,6 +318,15 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
         onEditProject={handleEditProject}
         onShowImportDialog={handleShowImportDialog}
         register={register}
+        control={control}
+      />
+
+      <PinnedLinks 
+        links={links}
+        onTogglePin={handleTogglePin}
+        onAddLink={handleAddLink}
+        register={register}
+        control={control}
       />
 
       <div className="flex justify-end mt-4 mb-20">

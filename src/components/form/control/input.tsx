@@ -9,6 +9,7 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
   errorClassName?: string;
   preserveSpaceForErrorMessage?: boolean;
   labelClassName?: string;
+  hideError?: boolean;
 }
 
 export const Input = React.forwardRef(function Input_(
@@ -25,6 +26,7 @@ export const Input = React.forwardRef(function Input_(
     errorClassName,
     labelClassName,
     preserveSpaceForErrorMessage = true,
+    hideError = false,
     ...restProps
   } = props;
   const id = useId();
@@ -49,18 +51,20 @@ export const Input = React.forwardRef(function Input_(
         name={name}
       ></input>
 
-      <div
-        className={clsx(
-          "whitespace-nowrap body-4 text-danger",
-          errorClassName,
-          {
-            invisible: !error,
-          }
-        )}
-      >
-        {error?.message ??
-          (preserveSpaceForErrorMessage ? "placeholder" : null)}
-      </div>
+      {!hideError && (
+        <div
+          className={clsx(
+            "whitespace-nowrap body-4 text-danger",
+            errorClassName,
+            {
+              invisible: !error,
+            }
+          )}
+        >
+          {error?.message ??
+            (preserveSpaceForErrorMessage ? "placeholder" : null)}
+        </div>
+      )}
     </div>
   );
 });

@@ -3,7 +3,7 @@ import clsx from "clsx";
 import type { FieldError } from "react-hook-form";
 
 interface Props extends React.ComponentPropsWithoutRef<"textarea"> {
-  label?: string;
+  label?: string | React.ReactNode;
   error?: FieldError;
 }
 

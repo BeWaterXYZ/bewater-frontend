@@ -29,6 +29,14 @@ export interface UserProfile {
   externalNa?: string;
   githubRepo?: GithubRepo[];
   pinnedProjects: Project[];
+  showChallenges?: boolean;
+  showTeamwork?: boolean;
+  showStats?: boolean;
+  links: Array<{
+    icon: string;
+    url: string;
+    pinned: boolean;
+  }>;
 }
 
 export interface GithubRepo {

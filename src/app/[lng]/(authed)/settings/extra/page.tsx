@@ -7,9 +7,6 @@ import { getOAuthUrl } from "@/services/auth";
 import {
   useFetchUser,
   useFetchUserSocialConnections,
-  useMutationDisconnectSocialConnection,
-  useFetchProjectsByUser,
-  useMutationUpdatePinnedProjects,
 } from "@/services/user.query";
 import { useClerk } from "@clerk/nextjs";
 import Image from "next/image";

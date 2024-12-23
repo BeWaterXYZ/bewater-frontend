@@ -48,6 +48,9 @@ export type Dialogs = {
     selectedTags: string[];
     setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
   };
+  link_import?: {
+    onLinkAdd: (linkInfo: { icon: string; url: string }) => void;
+  };
 };
 
 type State = {
