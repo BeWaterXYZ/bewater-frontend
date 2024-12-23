@@ -37,6 +37,10 @@ export interface UserProfile {
     url: string;
     pinned: boolean;
   }>;
+  showAdditionalInfo?: boolean;
+  additionalInfo?: string;
+  showPinnedLinks?: boolean;
+  showPinnedProjects?: boolean;
 }
 
 export interface GithubRepo {

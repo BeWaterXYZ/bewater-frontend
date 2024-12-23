@@ -1,5 +1,5 @@
 import { Select } from "@/components/form/control";
-import { Control, UseFormRegister } from "react-hook-form";
+import { Control, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { PlusIcon } from "@radix-ui/react-icons";
 import { Switch } from "@/components/form/switch";
 import { useDialogStore } from "@/components/dialog/store";
@@ -15,6 +15,7 @@ interface Props {
   onAddLink: (newLink: { icon: string; url: string; pinned: boolean }) => void;
   register: UseFormRegister<any>;
   control: Control<any>;
+  setValue: UseFormSetValue<any>;
 }
 
 export const PinnedLinks = ({ 
@@ -23,6 +24,7 @@ export const PinnedLinks = ({
   onAddLink,
   register,
   control,
+  setValue,
 }: Props) => {
   const showDialog = useDialogStore((s) => s.open);
 
@@ -51,9 +53,16 @@ export const PinnedLinks = ({
     <div className="mt-6">
       <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
         <div>
-          <h4 className="text-md font-semibold mb-3 text-white">
-            Project Links
-          </h4>
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-md font-semibold text-white">
+              Project Links
+            </h4>
+            <Switch
+              name="showPinnedLinks"
+              control={control}
+              onValueChange={(value) => setValue('showPinnedLinks', value)}
+            />
+          </div>
           
           <div className="mb-4">
             <Select

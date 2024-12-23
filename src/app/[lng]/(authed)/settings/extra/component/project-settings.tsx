@@ -11,6 +11,7 @@ import { Select } from "@/components/form/control";
 import { Control } from "react-hook-form";
 import { OptionItem } from "@/constants/options/types";
 import { PlusIcon } from "@radix-ui/react-icons";
+import { Switch } from "@/components/form/switch";
 
 interface Props {
   user?: User;
@@ -23,6 +24,7 @@ interface Props {
   onShowImportDialog: () => void;
   register: UseFormRegister<any>;
   control: Control<any>;
+  setValue: UseFormSetValue<any>;
 }
 
 export const ProjectSettings = ({ 
@@ -36,6 +38,7 @@ export const ProjectSettings = ({
   onShowImportDialog,
   register,
   control,
+  setValue,
 }: Props) => {
   const projectOptions: OptionItem<string>[] = githubRepo.map(project => ({
     value: project.id,
@@ -51,9 +54,16 @@ export const ProjectSettings = ({
       <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
         {/* Pinned Projects */}
         <div>
-          <h4 className="text-md font-semibold mb-3 text-white">
-            Pinned Projects
-          </h4>
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-md font-semibold text-white">
+              Pinned Projects
+            </h4>
+            <Switch
+              name="showPinnedProjects"
+              control={control}
+              onValueChange={(value) => setValue('showPinnedProjects', value)}
+            />
+          </div>
           
           <div className="mb-4">
             <Select

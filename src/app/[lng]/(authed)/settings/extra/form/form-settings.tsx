@@ -40,6 +40,10 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     showChallenges: z.boolean().optional(),
     showTeamwork: z.boolean().optional(),
     showStats: z.boolean().optional(),
+    showAdditionalInfo: z.boolean().optional(),
+    showPinnedProjects: z.boolean().optional(),
+    showPinnedLinks: z.boolean().optional(),
+    additionalInfo: z.string().optional(),
     links: z.array(z.object({
       icon: z.string(),
       url: z.string(),
@@ -73,6 +77,10 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
       showChallenges: data?.showChallenges ?? false,
       showTeamwork: data?.showTeamwork ?? false,
       showStats: data?.showStats ?? false,
+      showAdditionalInfo: data?.showAdditionalInfo ?? false,
+      showPinnedProjects: data?.showPinnedProjects ?? false,
+      showPinnedLinks: data?.showPinnedLinks ?? false,
+      additionalInfo: data?.additionalInfo ?? "",
       links: data?.links ?? [],
     },
   });
@@ -307,6 +315,26 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
         </div>
       </div>
 
+      {/* Additional Info Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">
+            Additional Info
+          </h4>
+          <Switch
+            name="showAdditionalInfo"
+            control={control}
+            onValueChange={(value) => setValue('showAdditionalInfo', value)}
+          />
+        </div>
+        <TextArea
+          rows={3}
+          placeholder="Add any additional information you'd like to share"
+          error={errors["additionalInfo"]}
+          {...register("additionalInfo")}
+        />
+      </div>
+
       {/* Projects Section */}
       <ProjectSettings 
         user={user}
@@ -319,14 +347,17 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
         onShowImportDialog={handleShowImportDialog}
         register={register}
         control={control}
+        setValue={setValue}
       />
 
-      <PinnedLinks 
+      {/* Pinned Links Section */}
+      <PinnedLinks
         links={links}
         onTogglePin={handleTogglePin}
         onAddLink={handleAddLink}
         register={register}
         control={control}
+        setValue={setValue}
       />
 
       <div className="flex justify-end mt-4 mb-20">
