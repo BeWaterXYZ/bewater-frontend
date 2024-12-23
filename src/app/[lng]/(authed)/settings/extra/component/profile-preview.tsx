@@ -1,19 +1,17 @@
-import { Project } from "@/services/types";
+import { Project, UserProfile } from "@/services/types";
 import Image from "next/image";
 import GithubProjectItem from "./github-project-item";
 import { User } from "@clerk/nextjs/server";
 
 interface ProfilePreviewProps {
   user: User | null | undefined;
-  bio?: string;
-  projects: Project[];
+  userProfile: UserProfile;
   onBack: () => void;
 }
 
 export default function ProfilePreview({ 
   user, 
-  bio, 
-  projects, 
+  userProfile, 
   onBack 
 }: ProfilePreviewProps) {
   return (
@@ -38,13 +36,13 @@ export default function ProfilePreview({
           />
           <div>
             <h2 className="text-2xl font-bold">{user?.username}</h2>
-            <p className="text-gray-600">{bio}</p>
+            <p className="text-gray-600">{userProfile?.bio}</p>
           </div>
         </div>
 
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-3 text-gray-500">Projects</h3>
-          {projects && projects.map((project) => (
+          {userProfile?.pinnedProjects && userProfile?.pinnedProjects.map((project) => (
             <div key={project.id} className="mb-4">
               <GithubProjectItem
                 project={project}

@@ -28,6 +28,7 @@ export interface UserProfile {
   aboutMe?: string;
   externalNa?: string;
   githubRepo?: GithubRepo[];
+  pinnedProjects: Project[];
 }
 
 export interface GithubRepo {
