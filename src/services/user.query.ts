@@ -105,24 +105,3 @@ export function useMutationDisconnectSocialConnection() {
   });
 }
 
-export const useMutationUpdatePinnedProjects = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: async (pinnedProjectIds: string[]) => {
-      const response = await fetch('/api/user/pinned-projects', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ pinnedProjectIds }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update pinned projects');
-      }
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['user'] });
-    },
-  });
-};

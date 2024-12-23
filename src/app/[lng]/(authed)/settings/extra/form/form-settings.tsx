@@ -14,12 +14,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { UserProfile } from "@/services/types";
-import { useMutationUpdateUserProfile, useMutationUpdatePinnedProjects, useFetchProjectsByUser } from "@/services/user.query";
+import { useMutationUpdateUserProfile, useFetchProjectsByUser } from "@/services/user.query";
 import { validationSchema } from "@/schema";
 import { Project } from "@/services/types";
 import GithubProjectItem from "../component/github-project-item";
 import { User } from "@clerk/nextjs/dist/types/server";
 import { useDialogStore } from "@/components/dialog/store";
+import { ProjectSettings } from "../component/project-settings";
 
 interface Props {
   data: UserProfile;
@@ -40,8 +41,7 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
   type Inputs = z.infer<typeof schema>;
   const showDialog = useDialogStore((s) => s.open);
   const [githubRepo, setGithubRepo] = useState<Project[]>([]);
-  const { data: userProjects, isLoading: isLoadingProjects } = useFetchProjectsByUser(user?.id);
-  const updatePinnedProjectsMutation = useMutationUpdatePinnedProjects();
+  const { data: userProjects } = useFetchProjectsByUser(user?.id);
   const addToast = useToastStore((s) => s.add);
   const router = useRouter();
   const { showLoading, dismissLoading } = useLoadingStoreAction();
@@ -128,27 +128,6 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     );
   };
 
-  const onSubmit = async (formData: FieldValues) => {
-    showLoading();
-    try {
-      await mutation.mutateAsync({
-        ...formData,
-        pinnedProjects: formData.pinnedProjects,
-      });
-      addToast({
-        title: "Saved!",
-        type: "success",
-      });
-    } catch (err) {
-      addToast({
-        title: "Save failed",
-        type: "error",
-      });
-    } finally {
-      dismissLoading();
-    }
-  };
-
   const handleShowImportDialog = () => {
     const githubOwnerName = socialConnections?.find(
       (c) => c.platform.toLowerCase() === "github"
@@ -173,20 +152,33 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     });
   };
 
+  const onSubmit = async (formData: FieldValues) => {
+    showLoading();
+    try {
+      await mutation.mutateAsync({
+        ...formData,
+        pinnedProjects: formData.pinnedProjects,
+      });
+      addToast({
+        title: "Saved!",
+        type: "success",
+      });
+    } catch (err) {
+      addToast({
+        title: "Save failed",
+        type: "error",
+      });
+    } finally {
+      dismissLoading();
+    }
+  };
+
   return (
     <form
       method="post"
       className={clsx("mt-8")}
       onSubmit={handleSubmit(onSubmit)}
     >
-      {/* <Input
-        label="Username"
-        placeholder="Enter your username"
-        required
-        error={errors['userName']}
-        {...register('userName', { required: 'Username is required.' })}
-      />
-       */}
       <TextArea
         label="Bio"
         rows={3}
@@ -223,83 +215,17 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
         {...register("telegramLink")}
       />
 
-      {/* Projects Section */}
-      <div className="mt-6">
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold text-gray-500">
-            Your Projects
-          </h3>
-          <button 
-            type="button"
-            className="btn btn-primary" 
-            onClick={handleShowImportDialog}
-          >
-            Create New Project
-          </button>
-        </div>
-
-        {/* Pinned Projects */}
-        <div className="mb-6">
-          <h4 className="text-md font-semibold mb-3 text-gray-500">
-            Pinned Projects
-          </h4>
-          
-          <div className="mb-4">
-            <select 
-              className="select select-bordered w-full"
-              onChange={(e) => handlePinProject(e.target.value)}
-              value=""
-            >
-              <option value="" disabled>Select a project to pin</option>
-              {githubRepo.map((project) => (
-                <option 
-                  key={project.id} 
-                  value={project.id}
-                  disabled={!!pinnedProjects.find(p => p.id === project.id)}
-                >
-                  {project.name}
-                </option>
-              ))}
-            </select>
-            {pinnedProjects.length >= 3 && (
-              <p className="text-sm text-gray-500 mt-1">
-                You can pin up to 3 projects
-              </p>
-            )}
-          </div>
-
-          <input 
-            type="hidden" 
-            {...register('pinnedProjects')}
-          />
-
-          {pinnedProjects.length > 0 ? (
-            <div>
-              {pinnedProjects.map((project) => (
-                <div key={project.id} className="mb-4 relative">
-                  <button
-                    type="button"
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-                    onClick={() => handleUnpinProject(project.id)}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                  <GithubProjectItem
-                    project={project}
-                    onEdit={handleEditProject}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500 text-center">
-              No pinned projects yet. Select projects to pin them to your profile.
-            </p>
-          )}
-        </div>
-      </div>
+      <ProjectSettings 
+        user={user}
+        socialConnections={socialConnections}
+        githubRepo={githubRepo}
+        pinnedProjects={pinnedProjects}
+        onPinProject={handlePinProject}
+        onUnpinProject={handleUnpinProject}
+        onEditProject={handleEditProject}
+        onShowImportDialog={handleShowImportDialog}
+        register={register}
+      />
 
       <div className="flex justify-end mt-4 mb-20">
         <button className="btn btn-primary" type="submit">
