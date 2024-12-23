@@ -91,7 +91,18 @@
     "no_more": "Loaded all"
   },
   "builderboard": {
-    "title": "BeWater Builders Leaderboard",
-    "contributions": "contributions"
+    "title": "Builderboard",
+    "contributions": "contributions",
+    "rank": "Rank",
+    "name": "Name",
+    "stars": "Stars",
+    "followers": "Followers",
+    "topic": "Topic",
+    "popularRepo": "Popular Repo",
+    "stack": "Stack",
+    "developers": "Developers",
+    "projects": "Projects",
+    "description": "Description",
+    "activity": "Activity"
   }
 }

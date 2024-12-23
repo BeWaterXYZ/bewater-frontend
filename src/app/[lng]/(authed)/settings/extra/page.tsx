@@ -25,6 +25,8 @@ import Link from "next/link";
 import { TeamAvatarRow } from "@/components/molecules/team-avatar-row";
 import GithubProjectItem from "./component/github-project-item";
 import { useRouter } from "next/navigation";
+import ProfilePreview from "./component/profile-preview";
+import { User } from "@clerk/nextjs/dist/types/server";
 
 export default function Page() {
   const showDialog = useDialogStore((s) => s.open);
@@ -39,6 +41,7 @@ export default function Page() {
   const { data: socialConnections, isLoading: isLoading2 } =
     useFetchUserSocialConnections(user?.id);
   const router = useRouter();
+  const [isPreviewMode, setIsPreviewMode] = useState(false);
 
   useLoadingWhen(isLoading || isLoading2);
 
@@ -174,122 +177,110 @@ export default function Page() {
     });
   };
 
+  const handlePreview = () => {
+    setIsPreviewMode(true);
+  };
+
+  const handleBack = () => {
+    setIsPreviewMode(false);
+  };
+
+  const handleShare = () => {
+    // Copy profile URL to clipboard
+    if (userProfile) {
+      const profileUrl = `${window.location.origin}/en/profile/${userProfile.id}`;
+      navigator.clipboard.writeText(profileUrl).then(() => {
+        addToast({
+          type: "success",
+          title: "Link Copied",
+          description: "Profile link has been copied to clipboard",
+        });
+      });
+    }
+  };
+
   return (
     <div className="container">
-      <FormUserSettings data={userProfile!} />
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-3 text-gray-500">
-          Your Projects
-        </h3>
-        {githubRepo && githubRepo.length > 0 ? (
-          githubRepo.length > 3 ? (
-            <>
-              {githubRepo.slice(0, 3).map((project) => (
-                <div key={project.id} className="mb-4">
-                  <div key={project.id} className="mt-4">
+      {isPreviewMode ? (
+        <ProfilePreview
+          user={user as unknown as User}
+          bio={userProfile?.bio}
+          projects={githubRepo}
+          onBack={handleBack}
+        />
+      ) : (
+        <>
+          <div className="flex justify-end gap-3 mb-6">
+            <button 
+              className="btn btn-secondary"
+              onClick={handlePreview}
+            >
+              Preview
+            </button>
+            <button 
+              className="btn btn-primary"
+              onClick={handleShare}
+            >
+              Share
+            </button>
+          </div>
+
+          <FormUserSettings data={userProfile!} />
+          <div className="mt-6">
+            <h3 className="text-lg font-semibold mb-3 text-gray-500">
+              Your Projects
+            </h3>
+            {githubRepo && githubRepo.length > 0 ? (
+              githubRepo.length > 3 ? (
+                <>
+                  {githubRepo.slice(0, 3).map((project) => (
+                    <div key={project.id} className="mb-4">
+                      <div key={project.id} className="mt-4">
+                        <GithubProjectItem
+                          project={project}
+                          onEdit={handleEditProject}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                  <details className="mt-2">
+                    <summary className="cursor-pointer text-blue-500 hover:text-blue-600">
+                      Show {githubRepo.length - 3} more projects
+                    </summary>
+                    {githubRepo.slice(3).map((project) => (
+                      <div key={project.id} className="mt-4">
+                        <GithubProjectItem
+                          project={project}
+                          onEdit={handleEditProject}
+                        />
+                      </div>
+                    ))}
+                  </details>
+                </>
+              ) : (
+                githubRepo.map((project) => (
+                  <div key={project.id} className="mb-4">
                     <GithubProjectItem
                       project={project}
                       onEdit={handleEditProject}
                     />
                   </div>
-                </div>
-              ))}
-              <details className="mt-2">
-                <summary className="cursor-pointer text-blue-500 hover:text-blue-600">
-                  Show {githubRepo.length - 3} more projects
-                </summary>
-                {githubRepo.slice(3).map((project) => (
-                  <div key={project.id} className="mt-4">
-                    <GithubProjectItem
-                      project={project}
-                      onEdit={handleEditProject}
-                    />
-                  </div>
-                ))}
-              </details>
-            </>
-          ) : (
-            githubRepo.map((project) => (
-              <div key={project.id} className="mb-4">
-                <GithubProjectItem
-                  project={project}
-                  onEdit={handleEditProject}
-                />
-              </div>
-            ))
-          )
-        ) : (
-          <p className="text-gray-500 text-center">
-            You don&apos;t have any projects yet
-          </p>
-        )}
-      </div>
+                ))
+              )
+            ) : (
+              <p className="text-gray-500 text-center">
+                You don&apos;t have any projects yet
+              </p>
+            )}
+          </div>
 
-      <div className="mt-6 flex justify-end">
-        <button className="btn btn-primary" onClick={showImportRepoDialog}>
-          Create New Project
-        </button>
-      </div>
-
-      <div className="flex flex-row h-full  flex-wrap min-h-[50vh]">
-        <div className="w-full mt-6 flex flex-col gap-3">
-          {/* github figma */}
-          {["GitHub", "Figma"].map((platform) => {
-            let connection = socialConnections?.find(
-              (c) => c.platform.toLowerCase() === platform.toLowerCase()
-            );
-            return (
-              <div
-                key={platform}
-                className="rounded p-3 border border-midnight bg-latenight flex gap-2 justify-between "
-              >
-                <div className="flex  p-2">
-                  <Image
-                    src={`/icons/${platform.toLowerCase()}.svg`}
-                    width={24}
-                    height={24}
-                    alt={platform}
-                  />
-                </div>
-                <div className="flex flex-col justify-around flex-1">
-                  {connection ? (
-                    <>
-                      <p className="body-4 text-gray-500 font-bold capitalize">
-                        {platform}
-                      </p>
-                      <p className="body-4 text-gray-300">
-                        {connection?.handle}
-                      </p>
-                    </>
-                  ) : (
-                    <p className="body-4 text-grey-500">
-                      Connect your{" "}
-                      <span className="capitalize">{platform}</span> account
-                    </p>
-                  )}
-                </div>
-                <div>
-                  {connection ? (
-                    <button
-                      className="btn btn-secondary-invert"
-                      onClick={() => disconnect(platform)}
-                    >
-                      Disconnect
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => connect(platform)}
-                    >
-                      Connect
-                    </button>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+          <div className="mt-6 flex justify-end">
+            <button className="btn btn-primary" onClick={showImportRepoDialog}>
+              Create New Project
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }

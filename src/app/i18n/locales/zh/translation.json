@@ -91,7 +91,18 @@
     "no_more": "已经到底了"
   },
   "builderboard": {
-    "title": "BeWater 开发者排行榜",
-    "contributions": "贡献"
+    "title": "开发者排行榜",
+    "contributions": "贡献",
+    "rank": "排名",
+    "name": "名称",
+    "stars": "星标数",
+    "followers": "关注者",
+    "topic": "主题",
+    "popularRepo": "热门仓库",
+    "stack": "技术栈",
+    "developers": "开发者",
+    "projects": "项目",
+    "description": "描述",
+    "activity": "活动"
   }
 }
