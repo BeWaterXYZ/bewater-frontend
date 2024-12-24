@@ -61,7 +61,7 @@ export default function Page() {
         />
       ) : (
         <>
-          <div className="flex justify-end gap-3 mb-6">
+          <div className="flex justify-start gap-3 mb-6">
             <button 
               className="btn btn-secondary"
               onClick={() => setIsPreviewMode(true)}
@@ -69,7 +69,7 @@ export default function Page() {
               Preview
             </button>
             <button 
-              className="btn btn-primary"
+              className="btn btn-secondary"
               onClick={handleShare}
             >
               Share

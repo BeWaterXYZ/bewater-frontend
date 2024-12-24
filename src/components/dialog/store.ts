@@ -49,7 +49,7 @@ export type Dialogs = {
     setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
   };
   link_import?: {
-    onLinkAdd: (linkInfo: { icon: string; url: string }) => void;
+    onLinkAdd: (linkInfo: { icon: string; url: string; description: string }) => void;
   };
 };
 

@@ -84,7 +84,7 @@ export async function updateEmail({
 }
 
 export async function submitUpdateUserProfile(
-  userProfile: Partial<UserProfile>
+  userProfile: Omit<Partial<UserProfile>, 'pinnedProjects'> & { pinnedProjectIds?: string[] }
 ) {
   const { data } = await agentAuthed.put<UpdateUserProfileResponse>(
     `/user`,

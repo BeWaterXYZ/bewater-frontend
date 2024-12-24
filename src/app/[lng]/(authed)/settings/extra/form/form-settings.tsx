@@ -14,7 +14,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { UserProfile } from "@/services/types";
-import { useMutationUpdateUserProfile, useFetchProjectsByUser } from "@/services/user.query";
+import {
+  useMutationUpdateUserProfile,
+  useFetchProjectsByUser,
+} from "@/services/user.query";
 import { validationSchema } from "@/schema";
 import { Project } from "@/services/types";
 import GithubProjectItem from "../component/github-project-item";
@@ -27,10 +30,14 @@ import { PinnedLinks } from "../component/pinned-links";
 interface Props {
   data: UserProfile;
   user?: User;
-  socialConnections?: Array<{platform: string; handle: string}>;
+  socialConnections?: Array<{ platform: string; handle: string }>;
 }
 
-export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) => {
+export const FormUserSettings = ({
+  data,
+  user,
+  socialConnections = [],
+}: Props) => {
   const schema = z.object({
     bio: validationSchema.bio,
     telegramLink: z.string().optional(),
@@ -44,11 +51,15 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     showPinnedProjects: z.boolean().optional(),
     showPinnedLinks: z.boolean().optional(),
     additionalInfo: z.string().optional(),
-    links: z.array(z.object({
-      icon: z.string(),
-      url: z.string(),
-      pinned: z.boolean()
-    })).optional(),
+    links: z
+      .array(
+        z.object({
+          icon: z.string(),
+          url: z.string(),
+          pinned: z.boolean(),
+        })
+      )
+      .optional(),
   });
 
   type Inputs = z.infer<typeof schema>;
@@ -73,7 +84,7 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
       ...data,
       bio: data?.bio ?? "",
       telegramLink: data?.telegramLink ?? "",
-      pinnedProjects: data?.pinnedProjects ?? [],
+      pinnedProjects: data?.projects.filter((p) => p.isPinned) ?? [],
       showChallenges: data?.showChallenges ?? false,
       showTeamwork: data?.showTeamwork ?? false,
       showStats: data?.showStats ?? false,
@@ -85,9 +96,9 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     },
   });
 
-  const pinnedProjects = watch('pinnedProjects') || [];
-  const links = watch('links') || [];
-  
+  const pinnedProjects = watch("pinnedProjects") || [];
+  const links = watch("links") || [];
+
   useEffect(() => {
     if (userProjects) {
       setGithubRepo(userProjects);
@@ -134,18 +145,18 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
   };
 
   const handlePinProject = (projectId: string) => {
-    const selectedProject = githubRepo.find(p => p.id === projectId);
+    const selectedProject = githubRepo.find((p) => p.id === projectId);
     if (selectedProject && pinnedProjects.length < 3) {
-      if (!pinnedProjects.find(p => p.id === selectedProject.id)) {
-        setValue('pinnedProjects', [...pinnedProjects, selectedProject]);
+      if (!pinnedProjects.find((p) => p.id === selectedProject.id)) {
+        setValue("pinnedProjects", [...pinnedProjects, selectedProject]);
       }
     }
   };
 
   const handleUnpinProject = (projectId: string) => {
     setValue(
-      'pinnedProjects', 
-      pinnedProjects.filter(project => project.id !== projectId)
+      "pinnedProjects",
+      pinnedProjects.filter((project) => project.id !== projectId)
     );
   };
 
@@ -158,7 +169,8 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
       addToast({
         type: "warning",
         title: "GitHub Account Not Connected",
-        description: "Please connect your GitHub account before creating new projects.",
+        description:
+          "Please connect your GitHub account before creating new projects.",
       });
       return;
     }
@@ -175,17 +187,19 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
 
   const handleTogglePin = (url: string) => {
     setValue(
-      'links',
-      links.map(link => 
-        link.url === url 
-          ? { ...link, pinned: !link.pinned }
-          : link
+      "links",
+      links.map((link) =>
+        link.url === url ? { ...link, pinned: !link.pinned } : link
       )
     );
   };
 
-  const handleAddLink = (newLink: { icon: string; url: string; pinned: boolean }) => {
-    setValue('links', [...links, newLink]);
+  const handleAddLink = (newLink: {
+    icon: string;
+    url: string;
+    pinned: boolean;
+  }) => {
+    setValue("links", [...links, newLink]);
   };
 
   const onSubmit = async (formData: FieldValues) => {
@@ -193,7 +207,7 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
     try {
       await mutation.mutateAsync({
         ...formData,
-        pinnedProjects: formData.pinnedProjects,
+        pinnedProjectIds: formData.pinnedProjects?.map((p: Project) => p.id),
       });
       addToast({
         title: "Saved!",
@@ -276,67 +290,17 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
       {/* Challenges Visibility Card */}
       <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-md font-semibold text-white">
-            Challenges
-          </h4>
+          <h4 className="text-md font-semibold text-white">Challenges</h4>
           <Switch
             name="showChallenges"
             control={control}
-            onValueChange={(value) => setValue('showChallenges', value)}
+            onValueChange={(value) => setValue("showChallenges", value)}
           />
         </div>
-      </div>
-
-      {/* Teamwork Visibility Card */}
-      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-md font-semibold text-white">
-            Teamwork
-          </h4>
-          <Switch
-            name="showTeamwork"
-            control={control}
-            onValueChange={(value) => setValue('showTeamwork', value)}
-          />
-        </div>
-      </div>
-
-      {/* Stats Visibility Card */}
-      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-md font-semibold text-white">
-            Stats
-          </h4>
-          <Switch
-            name="showStats"
-            control={control}
-            onValueChange={(value) => setValue('showStats', value)}
-          />
-        </div>
-      </div>
-
-      {/* Additional Info Card */}
-      <div className="border border-[#1E293B] bg-[#0B0C24] p-4 space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-md font-semibold text-white">
-            Additional Info
-          </h4>
-          <Switch
-            name="showAdditionalInfo"
-            control={control}
-            onValueChange={(value) => setValue('showAdditionalInfo', value)}
-          />
-        </div>
-        <TextArea
-          rows={3}
-          placeholder="Add any additional information you'd like to share"
-          error={errors["additionalInfo"]}
-          {...register("additionalInfo")}
-        />
       </div>
 
       {/* Projects Section */}
-      <ProjectSettings 
+      <ProjectSettings
         user={user}
         socialConnections={socialConnections}
         githubRepo={githubRepo}
@@ -359,6 +323,48 @@ export const FormUserSettings = ({ data, user, socialConnections = [] }: Props) 
         control={control}
         setValue={setValue}
       />
+
+      {/* Additional Info Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4 space-y-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">Additional Info</h4>
+          <Switch
+            name="showAdditionalInfo"
+            control={control}
+            onValueChange={(value) => setValue("showAdditionalInfo", value)}
+          />
+        </div>
+        <TextArea
+          rows={3}
+          placeholder="Add any additional information you'd like to share"
+          error={errors["additionalInfo"]}
+          {...register("additionalInfo")}
+        />
+      </div>
+
+      {/* Teamwork Visibility Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">Teamwork</h4>
+          <Switch
+            name="showTeamwork"
+            control={control}
+            onValueChange={(value) => setValue("showTeamwork", value)}
+          />
+        </div>
+      </div>
+
+      {/* Stats Visibility Card */}
+      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
+        <div className="flex items-center justify-between">
+          <h4 className="text-md font-semibold text-white">Stats</h4>
+          <Switch
+            name="showStats"
+            control={control}
+            onValueChange={(value) => setValue("showStats", value)}
+          />
+        </div>
+      </div>
 
       <div className="flex justify-end mt-4 mb-20">
         <button className="btn btn-primary" type="submit">

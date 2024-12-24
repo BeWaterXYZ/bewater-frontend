@@ -28,13 +28,14 @@ export interface UserProfile {
   aboutMe?: string;
   externalNa?: string;
   githubRepo?: GithubRepo[];
-  pinnedProjects: Project[];
+  projects: Project[];
   showChallenges?: boolean;
   showTeamwork?: boolean;
   showStats?: boolean;
   links: Array<{
     icon: string;
     url: string;
+    description: string;
     pinned: boolean;
   }>;
   showAdditionalInfo?: boolean;
@@ -328,6 +329,7 @@ export interface Project {
   customSelect1?: string;
   customSelect2?: string;
   customSelect3?: string;
+  isPinned?: boolean;
 }
 
 export interface TeamMember {
