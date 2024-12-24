@@ -61,7 +61,7 @@ export default function Page() {
         />
       ) : (
         <>
-          <div className="flex justify-start gap-3 mb-6">
+          <div className="flex justify-start gap-3 my-2">
             <button 
               className="btn btn-secondary"
               onClick={() => setIsPreviewMode(true)}

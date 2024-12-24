@@ -8,6 +8,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 const schema = z.object({
+  icon: z.string().optional(),
   url: z.string().url("Please enter a valid URL"),
   description: z.string().max(100, "Description cannot exceed 100 characters").optional(),
 });
@@ -30,11 +31,15 @@ export default function LinkImportDialog({
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      description: '',
+      icon: data.initialData?.icon || '',
+      url: data.initialData?.url || '',
+      description: data.initialData?.description || '',
     }
   });
 
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(
+    data.initialData?.icon || null
+  );
   const [isUploading, setIsUploading] = useState(false);
 
   const handleIconSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +62,7 @@ export default function LinkImportDialog({
 
   const onSubmit = (formData: Inputs) => {
     data.onLinkAdd({
-      icon: selectedIcon || 'link',
+      icon: selectedIcon || '',
       url: formData.url,
       description: formData.description || '',
     });
@@ -67,7 +72,7 @@ export default function LinkImportDialog({
   return (
     <div className="w-[80vw] max-w-md">
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
-        Add Link
+        {data.editMode ? 'Edit Link' : 'Add Link'}
       </p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit)}>
@@ -138,7 +143,7 @@ export default function LinkImportDialog({
             Cancel
           </button>
           <button className="btn btn-primary" disabled={isUploading}>
-            Add
+            {data.editMode ? 'Save' : 'Add'}
           </button>
         </div>
       </form>

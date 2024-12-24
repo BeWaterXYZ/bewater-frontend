@@ -78,7 +78,7 @@ export const ProjectSettings = ({
                 }
               }}
               hideError={true}
-              placeholder="Select a project to pin"
+              placeholder="Select Projects (Up to 3)"
               alwaysShowPlaceholder={true}
               isOptionDisabled={(option) => !!pinnedProjects.find(p => p.id === option.value)}
             />
@@ -129,7 +129,7 @@ export const ProjectSettings = ({
               onClick={onShowImportDialog}
             >
               <PlusIcon className="w-3 h-3" />
-              Add New Project
+              <span className="text-sm">Add New Project</span>
             </button>
           </div>
         </div>

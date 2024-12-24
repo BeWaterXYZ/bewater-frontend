@@ -2,6 +2,7 @@ import { Project, UserProfile } from "@/services/types";
 import Image from "next/image";
 import GithubProjectItem from "./github-project-item";
 import { User } from "@clerk/nextjs/server";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 
 interface ProfilePreviewProps {
   user: User | null | undefined;
@@ -16,12 +17,13 @@ export default function ProfilePreview({
 }: ProfilePreviewProps) {
   return (
     <div>
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 my-2">
         <button 
-          className="btn btn-secondary"
+          className="btn btn-ghost border-none"
           onClick={onBack}
         >
-          ← Back to Edit
+          <ChevronLeftIcon className="w-5 h-5" />
+          Back
         </button>
       </div>
       
@@ -42,7 +44,7 @@ export default function ProfilePreview({
 
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-3 text-gray-500">Projects</h3>
-          {userProfile?.pinnedProjects && userProfile?.pinnedProjects.map((project) => (
+          {userProfile?.showPinnedProjects && userProfile?.projects.map((project) => (
             <div key={project.id} className="mb-4">
               <GithubProjectItem
                 project={project}

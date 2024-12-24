@@ -50,6 +50,12 @@ export type Dialogs = {
   };
   link_import?: {
     onLinkAdd: (linkInfo: { icon: string; url: string; description: string }) => void;
+    editMode?: boolean;
+    initialData?: {
+      icon: string;
+      url: string;
+      description?: string;
+    };
   };
 };
 

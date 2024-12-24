@@ -57,6 +57,7 @@ export const FormUserSettings = ({
           icon: z.string(),
           url: z.string(),
           pinned: z.boolean(),
+          description: z.string().optional(),
         })
       )
       .optional(),
@@ -197,9 +198,19 @@ export const FormUserSettings = ({
   const handleAddLink = (newLink: {
     icon: string;
     url: string;
+    description?: string;
     pinned: boolean;
   }) => {
     setValue("links", [...links, newLink]);
+  };
+
+  const handleUpdateLink = (url: string, updatedLink: {
+    icon: string;
+    url: string;
+    description?: string;
+    pinned: boolean;
+  }) => {
+    setValue("links", links.map(link => link.url === url ? updatedLink : link));
   };
 
   const onSubmit = async (formData: FieldValues) => {
@@ -226,18 +237,22 @@ export const FormUserSettings = ({
   return (
     <form
       method="post"
-      className={clsx("mt-8 space-y-6")}
+      className={clsx("mt-2 space-y-6")}
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Bio Card */}
       <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
-        <TextArea
-          label={<span className="text-white">Bio</span>}
-          rows={3}
-          placeholder="Introduce yourself :)"
-          error={errors["bio"]}
-          {...register("bio", { required: "Bio is required." })}
-        />
+        <div className="text-white whitespace-nowrap w-20">About me</div>
+        <div className="flex-1">
+          <TextArea
+            label={<span className="text-white">content</span>}
+            maxLength={1000}
+            rows={3}
+            placeholder="Introduce yourself :)"
+            error={errors["bio"]}
+            {...register("bio", { required: "Bio is required." })}
+          />
+        </div>
       </div>
 
       {/* Roles Card */}
@@ -319,6 +334,7 @@ export const FormUserSettings = ({
         links={links}
         onTogglePin={handleTogglePin}
         onAddLink={handleAddLink}
+        onUpdateLink={handleUpdateLink}
         register={register}
         control={control}
         setValue={setValue}
@@ -335,10 +351,12 @@ export const FormUserSettings = ({
           />
         </div>
         <TextArea
+          label={<span className="text-white">content</span>}
           rows={3}
-          placeholder="Add any additional information you'd like to share"
+          placeholder="Work Experience, Idea..."
           error={errors["additionalInfo"]}
           {...register("additionalInfo")}
+          maxLength={1000}
         />
       </div>
 
