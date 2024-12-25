@@ -29,7 +29,7 @@ export default function Page() {
     if (userProfile && !formData) {
       setFormData(userProfile);
     }
-  }, [userProfile]);
+  }, [formData, userProfile]);
 
   const handleFormChange = (data: UserProfile) => {
     setFormData(data);
