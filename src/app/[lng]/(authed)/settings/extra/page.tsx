@@ -9,20 +9,10 @@ import {
   useFetchUserSocialConnections,
 } from "@/services/user.query";
 import { useClerk } from "@clerk/nextjs";
-import Image from "next/image";
 import { FormUserSettings } from "./form/form-settings";
-import { useDialogStore } from "@/components/dialog/store";
 import { useEffect, useState } from "react";
-import { GithubRepo, Project } from "@/services/types";
+import { UserProfile } from "@/services/types";
 import { useToastStore } from "@/components/toast/store";
-import { ProjectItem } from "@/app/[lng]/projects/project-item";
-import { unsplash } from "@/utils/unsplash";
-import { Aspect } from "@/components/aspect";
-import { TagProjectTag } from "@/components/tag/project-tag";
-import Link from "next/link";
-import { TeamAvatarRow } from "@/components/molecules/team-avatar-row";
-import GithubProjectItem from "./component/github-project-item";
-import { useRouter } from "next/navigation";
 import ProfilePreview from "./component/profile-preview";
 import { User } from "@clerk/nextjs/dist/types/server";
 
@@ -31,7 +21,19 @@ export default function Page() {
   const { data: userProfile, isLoading } = useFetchUser(user?.id);
   const { data: socialConnections, isLoading: isLoading2 } = useFetchUserSocialConnections(user?.id);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [formData, setFormData] = useState<UserProfile | null>(null);
   const addToast = useToastStore((s) => s.add);
+
+  // 当获取到初始数据时设置表单数据
+  useEffect(() => {
+    if (userProfile && !formData) {
+      setFormData(userProfile);
+    }
+  }, [userProfile]);
+
+  const handleFormChange = (data: UserProfile) => {
+    setFormData(data);
+  };
 
   useLoadingWhen(isLoading || isLoading2);
 
@@ -51,12 +53,16 @@ export default function Page() {
     }
   };
 
+  const handlePreview = () => {
+    setIsPreviewMode(true);
+  };
+
   return (
     <div className="container">
       {isPreviewMode ? (
         <ProfilePreview
           user={user as unknown as User}
-          userProfile={userProfile}
+          userProfile={formData || userProfile}
           onBack={() => setIsPreviewMode(false)}
         />
       ) : (
@@ -64,7 +70,7 @@ export default function Page() {
           <div className="flex justify-start gap-3 my-2">
             <button 
               className="btn btn-secondary"
-              onClick={() => setIsPreviewMode(true)}
+              onClick={handlePreview}
             >
               Preview
             </button>
@@ -77,9 +83,10 @@ export default function Page() {
           </div>
 
           <FormUserSettings 
-            data={userProfile}
+            data={formData || userProfile}
             user={user as unknown as User}
             socialConnections={socialConnections}
+            onFormChange={handleFormChange}
           />
         </>
       )}

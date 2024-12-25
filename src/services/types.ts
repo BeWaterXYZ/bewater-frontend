@@ -35,7 +35,7 @@ export interface UserProfile {
   links: Array<{
     icon: string;
     url: string;
-    description: string;
+    description?: string;
     pinned: boolean;
   }>;
   showAdditionalInfo?: boolean;

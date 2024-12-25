@@ -31,12 +31,14 @@ interface Props {
   data: UserProfile;
   user?: User;
   socialConnections?: Array<{ platform: string; handle: string }>;
+  onFormChange?: (data: UserProfile) => void;
 }
 
 export const FormUserSettings = ({
   data,
   user,
   socialConnections = [],
+  onFormChange,
 }: Props) => {
   const schema = z.object({
     bio: validationSchema.bio,
@@ -99,6 +101,18 @@ export const FormUserSettings = ({
 
   const pinnedProjects = watch("pinnedProjects") || [];
   const links = watch("links") || [];
+
+  useEffect(() => {
+    if (onFormChange) {
+      const subscription = watch((value) => {
+        onFormChange({
+          ...data,
+          ...value as UserProfile,
+        });
+      });
+      return () => subscription.unsubscribe();
+    }
+  }, [watch, data, onFormChange]);
 
   useEffect(() => {
     if (userProjects) {
