@@ -261,7 +261,7 @@ interface DevelopersProps {
 }
 
 
-const USE_API = process.env.NEXT_PUBLIC_USE_BUILDERBOARD_API === 'true';
+const USE_GITHUB_API = process.env.NEXT_PUBLIC_USE_BUILDERBOARD_GITHUB_API === 'true';
 
 export default function Developers({ ecosystem, sector, lng }: DevelopersProps) {
   const [data, setData] = useState<BuilderboardDeveloper[]>([]);
@@ -272,8 +272,7 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
 
   useEffect(() => {
     async function loadData() {
-      if (USE_API) {
-        
+      if (!USE_GITHUB_API) {
         return;
       }
       
@@ -283,14 +282,14 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
       setLoading(false);
     }
 
-    if (!USE_API) {
+    if (USE_GITHUB_API) {
       loadData();
     }
   }, [ecosystem, sector]);
 
   
-  const displayLoading = USE_API ? apiLoading : loading;
-  const displayData = USE_API ? apiData : data;
+  const displayLoading = USE_GITHUB_API ? loading:apiLoading;
+  const displayData = USE_GITHUB_API ?   data:apiData
 
   if (displayLoading) {
     return <div className="text-white">Loading...</div>;
