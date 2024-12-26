@@ -7,57 +7,7 @@ import { uniqBy } from "remeda";
 import { userSchema } from "./param-schema";
 import { TeamCard } from "./team-card";
 import { Project, TeamMember } from "@/services/types";
-
-export const formatDate = (dateString?: string) => {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  return date
-    .toLocaleDateString("zh-CN", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    .replace(/\//g, "/");
-};
-
-export const calculateMostPlayedRole = (teamMembers: TeamMember[] = []) => {
-  if (!teamMembers.length) return 'N/A';
-
-  
-  
-  const roleCount: Record<string, number> = {};
-  
-  
-  for (const tm of teamMembers) {
-    // console.log('Team Member:', tm);
-    // 只有当 role 存在且不为空时才计数
-    if (tm.teamRole && typeof tm.teamRole === 'string' && tm.team?.challenge?.title !== 'General') {
-      const role = tm.teamRole;
-      // console.log('Role:', role);
-      roleCount[role] = (roleCount[role] || 0) + 1;
-    }
-  }
-
-  // console.log('Role Count:', roleCount);
-
-  let maxCount = 0;
-  let mostPlayedRole = 'N/A';
-  
-  // 找出出现次数最多的角色
-  for (const [role, count] of Object.entries(roleCount)) {
-    if (count > maxCount) {
-      maxCount = count;
-      mostPlayedRole = role;
-    }
-  }
-
-  // 如果没有有效的角色记录，返回 N/A
-  if (maxCount === 0) {
-    return 'N/A';
-  }
-
-  return mostPlayedRole;
-};
+import { calculateMostPlayedRole, formatDate } from "@/utils/common";
 
 export default async function Page({ params }: any) {
   const { userId } = userSchema.parse(params);

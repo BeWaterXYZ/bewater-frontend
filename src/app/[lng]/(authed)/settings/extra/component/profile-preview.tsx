@@ -6,15 +6,11 @@ import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { styleMap } from "@/constants/options/role";
 import type { RoleUnion } from "@/constants/options/role";
 import { uniqBy } from "lodash";
-import {
-  calculateMostPlayedRole,
-  formatDate,
-} from "@/app/[lng]/user/[userId]/page";
 import { unsplash } from "@/utils/unsplash";
 import Link from "next/link";
 import { TeamCard } from "@/app/[lng]/user/[userId]/team-card";
 import { maskWalletAddress } from "@/utils/wallet-adress";
-import { getSocialConnectLink } from "@/utils/common";
+import { calculateMostPlayedRole, formatDate, getSocialConnectLink } from "@/utils/common";
 import { TagRole, TagSkill } from "@/components/tag";
 
 interface ProfilePreviewProps {
