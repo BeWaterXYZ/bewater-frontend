@@ -10,7 +10,10 @@ import Image from "next/image";
 const schema = z.object({
   icon: z.string().optional(),
   url: z.string().url("Please enter a valid URL"),
-  description: z.string().max(100, "Description cannot exceed 100 characters").optional(),
+  description: z
+    .string()
+    .max(100, "Description cannot exceed 100 characters")
+    .optional(),
 });
 
 type Inputs = z.infer<typeof schema>;
@@ -31,10 +34,10 @@ export default function LinkImportDialog({
   } = useForm<Inputs>({
     resolver: zodResolver(schema),
     defaultValues: {
-      icon: data.initialData?.icon || '',
-      url: data.initialData?.url || '',
-      description: data.initialData?.description || '',
-    }
+      icon: data.initialData?.icon || "",
+      url: data.initialData?.url || "",
+      description: data.initialData?.description || "",
+    },
   });
 
   const [selectedIcon, setSelectedIcon] = useState<string | null>(
@@ -62,9 +65,9 @@ export default function LinkImportDialog({
 
   const onSubmit = (formData: Inputs) => {
     data.onLinkAdd({
-      icon: selectedIcon || '',
+      icon: selectedIcon || "",
       url: formData.url,
-      description: formData.description || '',
+      description: formData.description || "",
     });
     close();
   };
@@ -72,11 +75,11 @@ export default function LinkImportDialog({
   return (
     <div className="w-[80vw] max-w-md">
       <p className="font-secondary text-base text-gray-200 leading-[30px] mb-4">
-        {data.editMode ? 'Edit Link' : 'Add Link'}
+        {data.editMode ? "Edit Link" : "Add Link"}
       </p>
 
       <form method="post" onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-4">
+        <div>
           <Input
             label="URL"
             placeholder="Enter your link URL (e.g., https://example.com)"
@@ -84,16 +87,6 @@ export default function LinkImportDialog({
             {...register("url")}
           />
         </div>
-
-        <div className="mb-4">
-          <TextArea
-            label="Description (Optional)"
-            placeholder="Enter a description for this link (max 100 characters)"
-            error={errors["description"]}
-            {...register("description")}
-          />
-        </div>
-
         <div className="mb-4">
           <label className="block text-[12px] mb-2 text-grey-500 font-bold">
             Icon
@@ -119,7 +112,7 @@ export default function LinkImportDialog({
               className="cursor-pointer flex items-center gap-2 px-3 py-2 text-day hover:text-day/80 transition-colors duration-200"
             >
               <PlusIcon className="w-3 h-3" />
-              {selectedIcon ? 'Change Icon' : 'Add Icon'}
+              {selectedIcon ? "Change Icon" : "Add Icon"}
               <input
                 type="file"
                 id="icon-upload"
@@ -129,24 +122,28 @@ export default function LinkImportDialog({
               />
             </label>
           </div>
-          <p className="text-xs text-gray-500 mt-1">
-            PNG or JPG, max 3MB
-          </p>
+          <p className="text-xs text-gray-500 mt-1">PNG or JPG, max 3MB</p>
+        </div>
+
+        <div className="mb-4">
+          <TextArea
+            label="Description (Optional)"
+            placeholder="Enter a description for this link (max 100 characters)"
+            error={errors["description"]}
+            maxLength={260}
+            {...register("description")}
+          />
         </div>
 
         <div className="flex justify-end gap-2">
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={close}
-          >
+          <button className="btn btn-secondary" type="button" onClick={close}>
             Cancel
           </button>
           <button className="btn btn-primary" disabled={isUploading}>
-            {data.editMode ? 'Save' : 'Add'}
+            {data.editMode ? "Save" : "Add"}
           </button>
         </div>
       </form>
     </div>
   );
-} 
+}

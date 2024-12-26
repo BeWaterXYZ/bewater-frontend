@@ -11,7 +11,7 @@ import {
 import { useClerk } from "@clerk/nextjs";
 import { FormUserSettings } from "./form/form-settings";
 import { useEffect, useState } from "react";
-import { UserProfile } from "@/services/types";
+import { UserProfile, UserProfileFull } from "@/services/types";
 import { useToastStore } from "@/components/toast/store";
 import ProfilePreview from "./component/profile-preview";
 import { User } from "@clerk/nextjs/dist/types/server";
@@ -21,7 +21,7 @@ export default function Page() {
   const { data: userProfile, isLoading } = useFetchUser(user?.id);
   const { data: socialConnections, isLoading: isLoading2 } = useFetchUserSocialConnections(user?.id);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [formData, setFormData] = useState<UserProfile | null>(null);
+  const [formData, setFormData] = useState<UserProfileFull | null>(null);
   const addToast = useToastStore((s) => s.add);
 
   // 当获取到初始数据时设置表单数据
@@ -31,7 +31,7 @@ export default function Page() {
     }
   }, [formData, userProfile]);
 
-  const handleFormChange = (data: UserProfile) => {
+  const handleFormChange = (data: UserProfileFull) => {
     setFormData(data);
   };
 

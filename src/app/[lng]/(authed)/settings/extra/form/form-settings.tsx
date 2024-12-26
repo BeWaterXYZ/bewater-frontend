@@ -13,7 +13,7 @@ import { SkillSetOptions, SkillSetScheme } from "@/constants/options/skill";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { UserProfile } from "@/services/types";
+import { UserProfile, UserProfileFull } from "@/services/types";
 import {
   useMutationUpdateUserProfile,
   useFetchProjectsByUser,
@@ -28,10 +28,10 @@ import { Switch } from "@/components/form/switch";
 import { PinnedLinks } from "../component/pinned-links";
 
 interface Props {
-  data: UserProfile;
+  data: UserProfileFull;
   user?: User;
   socialConnections?: Array<{ platform: string; handle: string }>;
-  onFormChange?: (data: UserProfile) => void;
+  onFormChange?: (data: UserProfileFull) => void;
 }
 
 export const FormUserSettings = ({

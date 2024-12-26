@@ -13,6 +13,9 @@ import {
 import { unsplash } from "@/utils/unsplash";
 import Link from "next/link";
 import { TeamCard } from "@/app/[lng]/user/[userId]/team-card";
+import { maskWalletAddress } from "@/utils/wallet-adress";
+import { getSocialConnectLink } from "@/utils/common";
+import { TagRole, TagSkill } from "@/components/tag";
 
 interface ProfilePreviewProps {
   user: User | null | undefined;
@@ -54,58 +57,64 @@ export default function ProfilePreview({
                 width={205}
                 height={205}
               />
-              <h2 className="text-2xl font-bold mb-2 text-white">
-                {user?.username}
-              </h2>
-
-              {/* Contact Info */}
-              {userProfile?.telegramLink && (
-                <div className="mb-4 text-center">
-                  <p className="text-gray-400">
-                    Telegram: {userProfile.telegramLink}
-                  </p>
-                </div>
-              )}
-
-              {/* Roles */}
-              {userProfile?.roles && userProfile.roles.length > 0 && (
-                <div className="mb-4 w-full">
-                  <h3 className="text-sm font-semibold text-white mb-2">
-                    Roles
-                  </h3>
-                  <div className="flex flex-col gap-2">
-                    {userProfile.roles.map((role, index) => (
-                      <span
-                        key={index}
-                        className={`px-2 py-1 max-w-fit rounded-[2px] text-sm text-white text-center ${
-                          styleMap[role as RoleUnion]
-                        }`}
+              <div className="w-full border-b border-b-grey-800 mb-2 pb-6 ">
+                <p className="body-2 font-bold mb-2">{user?.username}</p>
+                <p className="body-4 text-grey-400">
+                  {maskWalletAddress(userProfile.walletAddress)}
+                </p>
+                <div className="flex gap-3 flex-col flex">
+                  {userProfile.socialAuths
+                    .filter((con) => con.authStatus === "AUTHORIZED")
+                    .filter((con) => con.platform !== "Figma")
+                    .map((con) => (
+                      <Link
+                        className="flex items-center gap-2"
+                        href={getSocialConnectLink(con)}
+                        key={con.platform}
                       >
-                        {role}
-                      </span>
+                        <Image
+                          src={`/icons/${con.platform.toLowerCase()}.svg`}
+                          alt={con.platform}
+                          height={20}
+                          width={20}
+                        />
+                        <p className="body-4 text-grey-400">@{con.handle}</p>
+                      </Link>
                     ))}
-                  </div>
+                  {userProfile.telegramLink && (
+                    <div
+                      className="flex items-center gap-2"
+                    >
+                      <Image
+                        src={`/icons/telegram.svg`}
+                        height={20}
+                        width={20}
+                        alt={""}
+                      />
+                      <p className="body-4 text-grey-400">
+                        @{userProfile.telegramLink}
+                      </p>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
 
-              {/* Skills */}
-              {userProfile?.skills && userProfile.skills.length > 0 && (
-                <div className="w-full">
-                  <h3 className="text-sm font-semibold text-white mb-2">
-                    Skills
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {userProfile.skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-[#1E293B] text-gray-300 rounded-full text-sm"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
+              <div className="w-full border-b border-b-grey-800 my-2 py-6 ">
+                <p className="body-4 font-bold mb-3">Roles</p>
+                <div className="flex gap-2 flex-wrap">
+                  {userProfile.roles.map((role) => (
+                    <TagRole label={role} key={role} />
+                  ))}
                 </div>
-              )}
+              </div>
+              <div className="w-full border-b border-b-grey-800 my-2 py-6">
+                <p className="body-4 font-bold mb-3">Skills</p>
+                <div className="flex gap-2 flex-wrap">
+                  {userProfile.skills.map((skill) => (
+                    <TagSkill label={skill} key={skill} />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 

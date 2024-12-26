@@ -27,18 +27,18 @@ export const calculateMostPlayedRole = (teamMembers: TeamMember[] = []) => {
   
   const roleCount: Record<string, number> = {};
   
-  // 统计每个角色出现的次数，只统计有 role 属性的成员
+  
   for (const tm of teamMembers) {
-    console.log('Team Member:', tm);
+    // console.log('Team Member:', tm);
     // 只有当 role 存在且不为空时才计数
     if (tm.teamRole && typeof tm.teamRole === 'string' && tm.team?.challenge?.title !== 'General') {
       const role = tm.teamRole;
-      console.log('Role:', role);
+      // console.log('Role:', role);
       roleCount[role] = (roleCount[role] || 0) + 1;
     }
   }
 
-  console.log('Role Count:', roleCount);
+  // console.log('Role Count:', roleCount);
 
   let maxCount = 0;
   let mostPlayedRole = 'N/A';

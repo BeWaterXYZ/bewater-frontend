@@ -10,14 +10,8 @@ import Link from "next/link";
 import { userSchema } from "./param-schema";
 import { clerkClient } from "@clerk/nextjs/server";
 import React from "react";
+import { getSocialConnectLink } from "@/utils/common";
 
-function getSocialConnectLink(con: SocialAuth) {
-  if (con.platform.toLowerCase() === "github")
-    return `https://github.com/${con.handle}`;
-  if (con.platform.toLowerCase() === "figma")
-    return `https://figma.com/@${con.handle}`;
-  return "";
-}
 export default async function Layout({
   children,
   params,
@@ -50,7 +44,7 @@ export default async function Layout({
               className="w-20 h-20 lg:w-48 lg:h-48"
               src={clerkUser?.imageUrl}
             />
-            <div className="mt-0 lg:mt-6">
+            <div className="mt-0 lg:mt-3">
               <p className="body-2 font-bold">{clerkUser?.username}</p>
               <p className="body-4 text-grey-400">
                 {profile.firstName ? `@${profile.firstName}` : ""}
@@ -58,7 +52,7 @@ export default async function Layout({
               <p className="body-4 text-grey-400">
                 {maskWalletAddress(profile.walletAddress)}
               </p>
-              <div className="flex gap-3">
+              <div className="gap-3 flex-col mt-3 flex">
                 {profile.socialAuths
                   .filter((con) => con.authStatus === "AUTHORIZED")
                   .filter((con) => con.platform !== "Figma")
@@ -72,6 +66,21 @@ export default async function Layout({
                       />
                     </Link>
                   ))}
+                  {profile.telegramLink && (
+                    <div
+                      className="flex items-center gap-2"
+                    >
+                      <Image
+                        src={`/icons/telegram.svg`}
+                        height={20}
+                        width={20}
+                        alt={""}
+                      />
+                      <p className="body-4 text-grey-400">
+                        @{profile.telegramLink}
+                      </p>
+                    </div>
+                  )}
               </div>
             </div>
           </div>

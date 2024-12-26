@@ -31,7 +31,7 @@ export interface UpdateUserProjectResponse extends APIResponse {
 }
 
 export async function getUserProfile() {
-  const { data } = await agentAuthed.get<UserProfile>(`/user`);
+  const { data } = await agentAuthed.get<UserProfileFull>(`/user`);
   return data;
 }
 export async function getUserProjects(userId: UserID) {
