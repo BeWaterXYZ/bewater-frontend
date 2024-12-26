@@ -57,13 +57,14 @@ export default async function Layout({
                   .filter((con) => con.authStatus === "AUTHORIZED")
                   .filter((con) => con.platform !== "Figma")
                   .map((con) => (
-                    <Link href={getSocialConnectLink(con)} key={con.platform}>
+                    <Link className="flex items-center gap-2" href={getSocialConnectLink(con)} key={con.platform}>
                       <Image
                         src={`/icons/${con.platform.toLowerCase()}.svg`}
                         alt={con.platform}
                         height={20}
                         width={20}
                       />
+                      <p className="body-4 text-grey-400">@{con.handle}</p>
                     </Link>
                   ))}
                   {profile.telegramLink && (
