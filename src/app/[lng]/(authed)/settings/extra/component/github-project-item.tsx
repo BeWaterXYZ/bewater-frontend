@@ -7,9 +7,14 @@ import { Project } from '@/services/types';
 interface GithubProjectItemProps {
   project: Project;
   onEdit?: (project: Project) => void;
+  isPreview?: boolean;
 }
 
-const GithubProjectItem: React.FC<GithubProjectItemProps> = ({ project, onEdit }) => {
+export default function GithubProjectItem({ 
+  project, 
+  onEdit, 
+  isPreview = false 
+}: GithubProjectItemProps) {
   return (
     <div
       key={project.id}
@@ -49,16 +54,16 @@ const GithubProjectItem: React.FC<GithubProjectItemProps> = ({ project, onEdit }
           <div className="body-3">
             <TeamAvatarRow teamMembers={project.team.teamMembers} lng="en" />
           </div>
-          <button
-            onClick={() => onEdit && onEdit(project)}
-            className="btn btn-secondary"
-          >
-            Edit
-          </button>
+          {!isPreview && onEdit && (
+            <button
+              className="btn btn-secondary"
+              onClick={() => onEdit(project)}
+            >
+              Edit
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
-};
-
-export default GithubProjectItem;
+}

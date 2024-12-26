@@ -4,6 +4,7 @@ import type { FieldError, Merge } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import RSelect, { ClassNamesConfig } from "react-select";
 import { OptionItem } from "@/constants/options/types";
+
 interface SelectProps<T extends string>
   extends React.ComponentPropsWithoutRef<"select"> {
   label?: string;
@@ -15,6 +16,10 @@ interface SelectProps<T extends string>
   maxSelections?: number;
   isSingle?: boolean;
   usHandler?: (newValue: any[]) => void;
+  placeholder?: string;
+  alwaysShowPlaceholder?: boolean;
+  isOptionDisabled?: (option: OptionItem<T>) => boolean;
+  hideError?: boolean;
 }
 
 export const Select = React.forwardRef(function Select_<T extends string>(
@@ -34,6 +39,10 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     isSingle = false,
     usHandler,
     defaultValue,
+    placeholder,
+    alwaysShowPlaceholder = false,
+    isOptionDisabled,
+    hideError = false,
   } = props;
 
   const id = useId();
@@ -54,8 +63,13 @@ export const Select = React.forwardRef(function Select_<T extends string>(
     menu: () =>
       "!top-[40px] !bg-[#0F1021] !rounded-sm !border !border-midnight",
     menuList: () => "!p-0",
-    option: ({ data }) =>
-      `font-secondary !text-gray-300 !text-sm !p-2 hover:!bg-midnight !bg-transparent`,
+    option: ({ data, isDisabled }) =>
+      clsx(
+        "font-secondary !text-gray-300 !text-sm !p-2 hover:!bg-midnight !bg-transparent",
+        {
+          "!opacity-50 !cursor-not-allowed": isDisabled,
+        }
+      ),
     placeholder: () => "!text-gray-600",
   };
   const elRef = useRef<HTMLDivElement>(null);
@@ -80,6 +94,7 @@ export const Select = React.forwardRef(function Select_<T extends string>(
 
           let reachMax = maxSelections ? cur.length === maxSelections : false;
           let showOptions = !reachMax || maxSelections === 1;
+
           return (
             <RSelect
               id={id}
@@ -102,9 +117,11 @@ export const Select = React.forwardRef(function Select_<T extends string>(
                   return "You have reached max selections";
                 return "no options";
               }}
-              value={cur.map((value: string) =>
+              value={alwaysShowPlaceholder ? null : cur.map((value: string) =>
                 options.find((op) => value === op.value)
               )}
+              placeholder={placeholder}
+              isOptionDisabled={isOptionDisabled}
               onChange={(val: any) => {
                 if (!Array.isArray(val)) {
                   val = [val];
@@ -122,20 +139,25 @@ export const Select = React.forwardRef(function Select_<T extends string>(
                   usHandler(rawVal);
                 }
                 field.onChange(values);
+                if (alwaysShowPlaceholder) {
+                  setTimeout(() => field.onChange([]), 0);
+                }
               }}
               onBlur={field.onBlur}
-              defaultValue={defaultValue}
+              defaultValue={defaultValue as any}
             />
           );
         }}
       />
-      <div
-        className={clsx("whitespace-nowrap body-4 text-danger", {
-          invisible: !error,
-        })}
-      >
-        {error?.message ?? "placeholder"}
-      </div>
+      {!hideError && (
+        <div
+          className={clsx("whitespace-nowrap body-4 text-danger", {
+            invisible: !error,
+          })}
+        >
+          {error?.message ?? "placeholder"}
+        </div>
+      )}
     </div>
   );
 });

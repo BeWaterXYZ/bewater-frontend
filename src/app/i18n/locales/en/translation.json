@@ -7,7 +7,8 @@
   },
   "header": {
     "campaign": "Campaigns",
-    "project": "Projects"
+    "project": "Projects",
+    "builderboard": "Builderboard"
   },
   "footer": {
     "dot": ".",
@@ -88,5 +89,20 @@
     "load_more": "Load More",
     "loading": "Loading...",
     "no_more": "Loaded all"
+  },
+  "builderboard": {
+    "title": "Builderboard",
+    "contributions": "contributions",
+    "rank": "Rank",
+    "name": "Name",
+    "stars": "Stars",
+    "followers": "Followers",
+    "topic": "Topic",
+    "popularRepo": "Popular Repo",
+    "stack": "Stack",
+    "developers": "Developers",
+    "projects": "Projects",
+    "description": "Description",
+    "activity": "Activity"
   }
 }

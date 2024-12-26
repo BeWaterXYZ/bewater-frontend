@@ -10,6 +10,7 @@ interface DesktopMenuProps {
 enum MenuItems {
   CAMPAIGN = "campaign",
   PROJECT = "project",
+  BUILDERBOARD = "builderboard",
   NONE = "none",
 }
 const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
@@ -22,6 +23,8 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
       setSelectedMenuItem(MenuItems.CAMPAIGN);
     } else if (pathname.includes("/projects")) {
       setSelectedMenuItem(MenuItems.PROJECT);
+    } else if (pathname.includes("/builderboard")) {
+      setSelectedMenuItem(MenuItems.BUILDERBOARD);
     } else {
       setSelectedMenuItem(MenuItems.NONE);
     }
@@ -30,17 +33,16 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = useTranslation(lng, "translation");
   return (
-    <div className="hidden sm:flex absolute left-[130px]">
+    <div className="hidden sm:flex absolute left-[180px] gap-8">
       <Link href={params?.lng === lng ? `/${lng}/` : "/"}>
         <div
-          className="text-day body-2 [text-shadow:0_0_6px_theme(colors.day)] flex flex-row gap-2 items-center"
+          className="text-day body-2 [text-shadow:0_0_6px_theme(colors.day)]"
           style={
             selectedMenuItem === MenuItems.CAMPAIGN
               ? {}
               : { color: "#FFF", textShadow: "none" }
           }
         >
-          <div className="font-bold">/</div>
           <div className="font-bold uppercase whitespace-nowrap">
             {t("header.campaign")}
           </div>
@@ -48,16 +50,29 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
       </Link>
       <Link href={params?.lng === lng ? `/${lng}/projects` : "/en/projects"}>
         <div
-          className="ml-2 text-day body-2 [text-shadow:0_0_6px_theme(colors.day)] flex flex-row gap-2 items-center"
+          className="text-day body-2 [text-shadow:0_0_6px_theme(colors.day)]"
           style={
             selectedMenuItem === MenuItems.PROJECT
               ? {}
               : { color: "#FFF", textShadow: "none" }
           }
         >
-          <div className="font-bold">/</div>
           <div className="font-bold uppercase whitespace-nowrap">
             {t("header.project")}
+          </div>
+        </div>
+      </Link>
+      <Link href={params?.lng === lng ? `/${lng}/builderboard` : "/en/builderboard"}>
+        <div
+          className="text-day body-2 [text-shadow:0_0_6px_theme(colors.day)]"
+          style={
+            selectedMenuItem === MenuItems.BUILDERBOARD
+              ? {}
+              : { color: "#FFF", textShadow: "none" }
+          }
+        >
+          <div className="font-bold uppercase whitespace-nowrap">
+            {t("header.builderboard")}
           </div>
         </div>
       </Link>

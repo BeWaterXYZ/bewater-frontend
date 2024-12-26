@@ -31,7 +31,7 @@ export interface UpdateUserProjectResponse extends APIResponse {
 }
 
 export async function getUserProfile() {
-  const { data } = await agentAuthed.get<UserProfile>(`/user`);
+  const { data } = await agentAuthed.get<UserProfileFull>(`/user`);
   return data;
 }
 export async function getUserProjects(userId: UserID) {
@@ -84,7 +84,7 @@ export async function updateEmail({
 }
 
 export async function submitUpdateUserProfile(
-  userProfile: Partial<UserProfile>
+  userProfile: Omit<Partial<UserProfile>, 'pinnedProjects'> & { pinnedProjectIds?: string[] }
 ) {
   const { data } = await agentAuthed.put<UpdateUserProfileResponse>(
     `/user`,
