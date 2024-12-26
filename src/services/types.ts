@@ -10,6 +10,7 @@ export type UserID = string;
 export interface UserProfile {
   id: UserID;
   email: string;
+  createdAt: string;
   walletAddress: string;
   userName?: string;
   avatarURI?: string;
