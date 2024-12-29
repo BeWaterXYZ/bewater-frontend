@@ -1,0 +1,80 @@
+
+INSERT INTO rankingTags (
+  name,
+  type,
+  description,
+  createdAt,
+  updatedAt
+) VALUES 
+(
+      'Bitcoin',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Ethereum',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Solana',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Optimism',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Arbitrum',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Movement',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Aptos',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Sui',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Others',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Polkadot',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    )
+ON DUPLICATE KEY UPDATE
+  updatedAt = NOW();
