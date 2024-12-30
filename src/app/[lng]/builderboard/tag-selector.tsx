@@ -25,7 +25,7 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
     <div className="flex flex-col gap-6">
       {/* Ecosystem Row */}
       <div className="flex">
-        <span className="text-[16px] font-bold leading-[21.12px] text-white whitespace-nowrap text-center w-[120px] h-[34px] flex items-center">Ecosystem:</span>
+        <span className="text-[16px] font-bold leading-[21.12px] text-white whitespace-nowrap text-center w-[120px] h-[34px] flex items-center">Ecosystem </span>
         <div className="flex flex-wrap gap-[10px] text-sm font-bold leading-5 cursor-pointer">
           <p
             className={clsx(selectedEcosystem === "" ? currentTag : inactiveTag)}
@@ -49,7 +49,7 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
 
       {/* Sector Row */}
       <div className="flex">
-        <span className="text-[16px] font-bold leading-[21.12px] text-white whitespace-nowrap text-center w-[120px] h-[34px] flex items-center">Sector:</span>
+        <span className="text-[16px] font-bold leading-[21.12px] text-white whitespace-nowrap text-center w-[120px] h-[34px] flex items-center">Sector </span>
         <div className="flex flex-wrap gap-[10px] text-sm font-bold leading-5 cursor-pointer">
           <p
             className={clsx(selectedSector === "" ? currentTag : inactiveTag)}

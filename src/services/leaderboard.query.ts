@@ -35,20 +35,20 @@ export function useLeaderboardDeveloper(limit: number, language: string) {
   });
 }
 
-export function useBuilderboardDeveloper(limit: number, language: string) {
+export function useBuilderboardDeveloper(limit: number, ecosystem: string, sector: string) {
   return useQuery({
-    queryKey: ["BuilderboardDeveloper", limit, language],
+    queryKey: ["BuilderboardDeveloper", limit, ecosystem, sector],
     queryFn: async () => {
-      return getBuilderboardDeveloper(limit, encodeURIComponent(language));
+      return getBuilderboardDeveloper(limit, ecosystem, sector);
     },
   });
 }
 
-export function useBuilderboardProject(limit: number) {
+export function useBuilderboardProject(limit: number, ecosystem: string, sector: string) {
   return useQuery({
-    queryKey: ["BuilderboardProject", limit],
+    queryKey: ["BuilderboardProject", limit, ecosystem, sector],
     queryFn: async () => {
-      return getBuilderboardProject(limit);
+      return getBuilderboardProject(limit, ecosystem, sector);
     },
   });
 }

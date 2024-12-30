@@ -34,9 +34,9 @@ const languageColors: { [key: string]: string } = {
 
 function Developer(props: { data: BuilderboardDeveloper; rank: number }) {
   const { data, rank } = props;
-  
+  const popularRepo = JSON.parse(data.popular_repo as unknown as string || '{}');
   // 确保只显示前三种语言
-  const topLanguages = data.popular_repo.languages?.slice(0, 3) || [];
+  const topLanguages = popularRepo.languages?.slice(0, 3) || [];
   
   return (
     <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
@@ -68,11 +68,11 @@ function Developer(props: { data: BuilderboardDeveloper; rank: number }) {
 
       {/* Popular Repo */}
       <div className="flex flex-col gap-2">
-        <a href={data.popular_repo?.html_url} className="font-bold text-base text-[#F8FAFC] hover:underline">
-          {data.popular_repo?.name}
+        <a href={popularRepo?.html_url} className="font-bold text-base text-[#F8FAFC] hover:underline">
+          {popularRepo?.name}
         </a>
         <p className="text-sm text-[#94A3B8] line-clamp-2">
-          {data.popular_repo?.description}
+          {popularRepo?.description}
         </p>
       </div>
 
@@ -268,7 +268,7 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
   const [loading, setLoading] = useState(true);
 
   // 使用 API 的查询
-  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(20, 'all');
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(20, ecosystem, sector);
 
   useEffect(() => {
     async function loadData() {

@@ -235,8 +235,7 @@ export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
   const [data, setData] = useState<BuilderboardProject[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 使用 API 的查询
-  const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(20);
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(20, ecosystem, sector);
 
   useEffect(() => {
     async function loadData() {

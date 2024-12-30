@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src/index.ts bewater_syncer_resources.csv",
+    "start": "ts-node src/index.ts",
     "sync": "npm run build && npm start",
     "generate-tags": "npm run build && node dist/generate_ranking_tags.js",
     "dev": "ts-node-dev --respawn src/index.ts"
