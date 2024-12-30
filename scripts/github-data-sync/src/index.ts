@@ -561,7 +561,6 @@ async function fetchUserInfo(username: string, ecosystem: string, existingData?:
   // Parse existing ecosystems if available
   const existingEcosystems = existingData?.ecosystems ? JSON.parse(existingData.ecosystems) : [];
   const updatedEcosystems = mergeEcosystems(existingEcosystems, ecosystem);
-
   return {
     html_url: user.html_url,
     avatar_url: user.avatar_url,
@@ -576,15 +575,15 @@ async function fetchUserInfo(username: string, ecosystem: string, existingData?:
     following: user.following,
     public_repos: user.public_repos,
     total_stars: totalStars,
-    popular_repo: JSON.stringify(popularRepo ? {
+    popular_repo: popularRepo ? {
       html_url: `https://github.com/${popularRepo.full_name}`,
       name: popularRepo.name,
       description: popularRepo.description,
       languages
-    } : null),
+    } : null,
     created_at: existingData?.created_at || user.created_at,
     updated_at: user.updated_at,
-    ecosystems: JSON.stringify(updatedEcosystems),
+    ecosystems: updatedEcosystems,
     sectors: existingData?.sectors || '[]'
   };
 }
@@ -642,8 +641,12 @@ function generateDevelopersSql(developers: Developer[]): string {
     try {
       // Handle JSON and array fields safely
       const popularRepo = dev.popular_repo ? safeJsonStringify(dev.popular_repo) : 'NULL';
-      const ecosystems = Array.isArray(dev.ecosystems) ? safeJsonStringify(dev.ecosystems) : "'[]'";
-      const sectors = Array.isArray(dev.sectors) ? safeJsonStringify(dev.sectors) : "'[]'";
+      const ecosystems = Array.isArray(dev.ecosystems) ? 
+        escapeSQLString(JSON.stringify(dev.ecosystems)) : 
+        dev.ecosystems;
+      const sectors = Array.isArray(dev.sectors) ? 
+        escapeSQLString(JSON.stringify(dev.sectors)) : 
+        "'[]'";
 
       // Handle numeric fields with defaults
       const followers = typeof dev.followers === 'number' ? dev.followers : 0;
@@ -957,13 +960,13 @@ async function main() {
             console.log(`Skipping archived project: ${projectFullName}`);
             return null;
           }
-          return fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TOPIC] || row[COLUMN_INDICES.ORG_TOPIC] || '');
+          return fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TOPIC] || '');
         })().catch(error => {
           console.error(`Error processing project ${projectFullName}:`, error);
           return null;
         }) : Promise.resolve(null),
         
-        username ? fetchUserInfo(username, row[COLUMN_INDICES.BUILDER_TOPIC] || row[COLUMN_INDICES.ORG_TOPIC] || '').catch(error => {
+        username ? fetchUserInfo(username, row[COLUMN_INDICES.BUILDER_TOPIC] || '').catch(error => {
           console.error(`Error processing user ${username}:`, error);
           return null;
         }) : Promise.resolve(null)

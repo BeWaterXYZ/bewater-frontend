@@ -7,49 +7,14 @@ INSERT INTO rankingTags (
   updatedAt
 ) VALUES 
 (
-      'BTC',
+      'Cosmos',
       'ECOSYSTEM',
       NULL,
       NOW(),
       NOW()
     ),
 (
-      'EVM',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Solana',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Move',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'All',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Other',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Polkadot',
+      'Ton',
       'ECOSYSTEM',
       NULL,
       NOW(),
