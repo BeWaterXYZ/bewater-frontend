@@ -5,9 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "ts-node src/index.ts bewater_syncer_resources.csv",
     "sync": "npm run build && npm start",
-    "generate-tags": "npm run build && node dist/generate_ranking_tags.js"
+    "generate-tags": "npm run build && node dist/generate_ranking_tags.js",
+    "dev": "ts-node-dev --respawn src/index.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.11.24",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
   }
 }

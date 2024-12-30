@@ -65,6 +65,13 @@ interface GithubUser {
   updated_at: string;
 }
 
+interface Developer extends GithubUser {
+  total_stars: number;
+  popular_repo: any | null;
+  ecosystems: string[];
+  sectors: string[];
+}
+
 interface Contributor {
   login: string;
   avatar_url: string;
@@ -127,11 +134,82 @@ function extractRepoFullName(url: string): string | null {
   return match ? match[1] : null;
 }
 
-// GitHub API client with rate limiting
+// Add TokenManager class before the Types section
+class TokenManager {
+  private tokens: string[];
+  private currentTokenIndex: number = 0;
+  private tokenUsage: Map<string, number> = new Map();
+
+  constructor(tokens: string[]) {
+    this.tokens = tokens;
+    tokens.forEach(token => this.tokenUsage.set(token, 0));
+  }
+
+  getCurrentToken(): string {
+    return this.tokens[this.currentTokenIndex];
+  }
+
+  rotateToken(): string {
+    this.currentTokenIndex = (this.currentTokenIndex + 1) % this.tokens.length;
+    return this.getCurrentToken();
+  }
+
+  async checkTokenStatus(token: string): Promise<boolean> {
+    try {
+      const response = await axios.get('https://api.github.com/rate_limit', {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      });
+      const remaining = response.data.resources.core.remaining;
+      return remaining > RATE_LIMIT_BUFFER;
+    } catch (error) {
+      console.error(`Error checking token status: ${token}`, error);
+      return false;
+    }
+  }
+
+  async getValidToken(): Promise<string> {
+    const startIndex = this.currentTokenIndex;
+    
+    do {
+      const currentToken = this.getCurrentToken();
+      if (await this.checkTokenStatus(currentToken)) {
+        return currentToken;
+      }
+      this.rotateToken();
+    } while (this.currentTokenIndex !== startIndex);
+
+    throw new Error('All tokens have reached their rate limits. Please wait or add more tokens.');
+  }
+
+  incrementTokenUsage(token: string) {
+    const currentUsage = this.tokenUsage.get(token) || 0;
+    this.tokenUsage.set(token, currentUsage + 1);
+  }
+
+  getTokenUsageStats(): string {
+    return Array.from(this.tokenUsage.entries())
+      .map(([token, usage]) => `${token.slice(0, 8)}...${token.slice(-8)}: ${usage} requests`)
+      .join('\n');
+  }
+}
+
+// Replace the single token initialization with multiple tokens
+const tokens = (process.env.GITHUB_TOKENS || process.env.GITHUB_TOKEN || '').split(',').filter(Boolean);
+
+if (tokens.length === 0) {
+  console.error('Please set GITHUB_TOKENS (comma-separated) or GITHUB_TOKEN in .env file');
+  process.exit(1);
+}
+
+const tokenManager = new TokenManager(tokens);
+
+// Update the github axios instance to use token manager
 const github = axios.create({
   baseURL: 'https://api.github.com',
   headers: {
-    Authorization: `token ${GITHUB_TOKEN}`,
     Accept: 'application/vnd.github.v3+json',
   },
 });
@@ -212,22 +290,24 @@ async function githubRequest<T>(url: string): Promise<T> {
   console.log(`[Request #${stats.total}] ${url}`);
   
   try {
-    // Check rate limit every 100 requests
-    if (++requestCount % 100 === 0) {
-      await checkRateLimit();
-    }
-
-    const response = await github.get<T>(url);
+    // Get a valid token before making the request
+    const token = await tokenManager.getValidToken();
+    
+    const response = await github.get<T>(url, {
+      headers: {
+        Authorization: `token ${token}`,
+      },
+    });
+    
+    tokenManager.incrementTokenUsage(token);
     stats.successful++;
     console.log(`[Success] ${url}`);
     
-    // Add delay between requests
     await delay(REQUEST_DELAY);
     return response.data;
   } catch (error: any) {
     stats.failed++;
     
-    // Log the complete error response
     console.error('\n=== Error Details ===');
     console.error('URL:', url);
     console.error('Status:', error.response?.status);
@@ -238,27 +318,22 @@ async function githubRequest<T>(url: string): Promise<T> {
     console.error('===================\n');
     
     if (error.response?.status === 403) {
-      // Check if it's actually a rate limit error
       if (error.response?.data?.message?.includes('rate limit')) {
-        const resetTime = error.response.headers['x-ratelimit-reset'];
-        const remaining = error.response.headers['x-ratelimit-remaining'];
-        const limit = error.response.headers['x-ratelimit-limit'];
-        
-        console.log(`\n=== Rate Limit Hit ===`);
-        console.log(`Total limit: ${limit}`);
-        console.log(`Remaining: ${remaining}`);
-        console.log(`Reset time: ${new Date(parseInt(resetTime) * 1000).toLocaleString()}`);
-        
-        const waitTime = (parseInt(resetTime) * 1000) - Date.now();
-        console.log(`Waiting ${Math.ceil(waitTime / 1000)} seconds...`);
-        console.log(`========================\n`);
-        
-        // Wait for the full reset time
-        await new Promise(resolve => setTimeout(resolve, waitTime + 1000));
-        semaphore.release();
-        return githubRequest(url);
+        console.log('\n=== Rate Limit Hit ===');
+        // Try to rotate to next token
+        try {
+          await tokenManager.rotateToken();
+          semaphore.release();
+          return githubRequest(url);
+        } catch (tokenError) {
+          const resetTime = error.response.headers['x-ratelimit-reset'];
+          const waitTime = (parseInt(resetTime) * 1000) - Date.now();
+          console.log(`All tokens exhausted. Waiting ${Math.ceil(waitTime / 1000)} seconds...`);
+          await new Promise(resolve => setTimeout(resolve, waitTime + 1000));
+          semaphore.release();
+          return githubRequest(url);
+        }
       } else {
-        // If it's a different kind of 403 error
         console.error('403 Error but not rate limit:', error.response?.data?.message);
         throw error;
       }
@@ -416,6 +491,141 @@ async function fetchUserInfo(username: string, ecosystem: string, existingData?:
   };
 }
 
+function escapeSQLString(str: string | null): string {
+  if (str === null || str === undefined || str === 'NULL') return 'NULL';
+  if (str === 'NOW()') return str;
+
+  // Handle JSON strings specially
+  if (typeof str === 'string' && (str.startsWith('{') || str.startsWith('['))) {
+    try {
+      // Try to parse and re-stringify to ensure valid JSON
+      const jsonObj = JSON.parse(str);
+      return `'${JSON.stringify(jsonObj).replace(/'/g, "''")}'`;
+    } catch (e) {
+      console.error('Invalid JSON:', str);
+      return 'NULL';
+    }
+  }
+
+  // Convert to string and handle special characters
+  return `'${String(str)
+    .replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, (char) => {
+      switch (char) {
+        case "'": return "''";
+        case "\0": return "\\0";
+        case "\x08": return "\\b";
+        case "\x09": return "\\t";
+        case "\x1a": return "\\z";
+        case "\n": return "\\n";
+        case "\r": return "\\r";
+        case "\"": return '\\"';
+        case "\\": return "\\\\";
+        case "%": return "\\%";
+        default: return char;
+      }
+    })
+    // Additional safety replacements
+    .replace(/\?/g, "\\?")
+    .replace(/`/g, "\\`")}'`;
+}
+
+function safeJsonStringify(obj: any): string {
+  try {
+    if (obj === null || obj === undefined) return 'NULL';
+    return escapeSQLString(JSON.stringify(obj));
+  } catch (e) {
+    console.error('Failed to stringify JSON:', e);
+    return 'NULL';
+  }
+}
+
+function generateDevelopersSql(developers: Developer[]): string {
+  const values = developers.map(dev => {
+    try {
+      // Handle JSON and array fields safely
+      const popularRepo = dev.popular_repo ? safeJsonStringify(dev.popular_repo) : 'NULL';
+      const ecosystems = Array.isArray(dev.ecosystems) ? safeJsonStringify(dev.ecosystems) : "'[]'";
+      const sectors = Array.isArray(dev.sectors) ? safeJsonStringify(dev.sectors) : "'[]'";
+
+      // Handle numeric fields with defaults
+      const followers = typeof dev.followers === 'number' ? dev.followers : 0;
+      const following = typeof dev.following === 'number' ? dev.following : 0;
+      const public_repos = typeof dev.public_repos === 'number' ? dev.public_repos : 0;
+      const total_stars = typeof dev.total_stars === 'number' ? dev.total_stars : 0;
+
+      return `(
+      ${escapeSQLString(dev.html_url)},
+      ${escapeSQLString(dev.avatar_url)},
+      ${escapeSQLString(dev.login)},
+      ${escapeSQLString(dev.name)},
+      ${escapeSQLString(dev.bio)},
+      ${escapeSQLString(dev.company)},
+      ${escapeSQLString(dev.location)},
+      ${escapeSQLString(dev.email)},
+      ${escapeSQLString(dev.twitter_username)},
+      ${followers},
+      ${following},
+      ${public_repos},
+      ${total_stars},
+      ${popularRepo},
+      ${escapeSQLString(dev.created_at)},
+      ${escapeSQLString(dev.updated_at)},
+      ${ecosystems},
+      ${sectors},
+      NOW(),
+      NOW()
+    )`;
+    } catch (e) {
+      console.error('Error generating SQL for developer:', dev.login, e);
+      return null;
+    }
+  })
+  .filter(Boolean) // Remove any failed records
+  .join(',\n');
+
+  return `
+INSERT INTO operationDeveloper (
+  html_url,
+  avatar_url,
+  login,
+  name,
+  bio,
+  company,
+  location,
+  email,
+  twitter_username,
+  followers,
+  following,
+  public_repos,
+  total_stars,
+  popular_repo,
+  created_at,
+  updated_at,
+  ecosystems,
+  sectors,
+  createdAt,
+  updatedAt
+) VALUES 
+${values}
+ON DUPLICATE KEY UPDATE
+  avatar_url = VALUES(avatar_url),
+  name = VALUES(name),
+  bio = VALUES(bio),
+  company = VALUES(company),
+  location = VALUES(location),
+  email = VALUES(email),
+  twitter_username = VALUES(twitter_username),
+  followers = VALUES(followers),
+  following = VALUES(following),
+  public_repos = VALUES(public_repos),
+  total_stars = VALUES(total_stars),
+  popular_repo = VALUES(popular_repo),
+  updated_at = VALUES(updated_at),
+  ecosystems = JSON_MERGE_PRESERVE(ecosystems, VALUES(ecosystems)),
+  updatedAt = NOW();
+`;
+}
+
 function generateProjectSql(projects: any[]) {
   const values = projects.map(project => {
     return `(
@@ -464,75 +674,6 @@ ON DUPLICATE KEY UPDATE
   forks_count = VALUES(forks_count),
   topics = VALUES(topics),
   contributors = VALUES(contributors),
-  updated_at = VALUES(updated_at),
-  ecosystems = JSON_MERGE_PRESERVE(ecosystems, VALUES(ecosystems)),
-  updatedAt = NOW();
-`;
-}
-
-function generateDeveloperSql(developers: any[]) {
-  const values = developers.map(dev => {
-    return `(
-      '${dev.html_url}',
-      '${dev.avatar_url}',
-      '${dev.login}',
-      ${dev.name ? `'${dev.name.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.bio ? `'${dev.bio.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.company ? `'${dev.company.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.location ? `'${dev.location.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.email ? `'${dev.email}'` : 'NULL'},
-      ${dev.twitter_username ? `'${dev.twitter_username}'` : 'NULL'},
-      ${dev.followers},
-      ${dev.following},
-      ${dev.public_repos},
-      ${dev.total_stars},
-      '${dev.popular_repo}',
-      '${dev.created_at}',
-      '${dev.updated_at}',
-      '${dev.ecosystems}',
-      '${dev.sectors}',
-      NOW(),
-      NOW()
-    )`;
-  }).join(',\n');
-
-  return `
-INSERT INTO operationDeveloper (
-  html_url,
-  avatar_url,
-  login,
-  name,
-  bio,
-  company,
-  location,
-  email,
-  twitter_username,
-  followers,
-  following,
-  public_repos,
-  total_stars,
-  popular_repo,
-  created_at,
-  updated_at,
-  ecosystems,
-  sectors,
-  createdAt,
-  updatedAt
-) VALUES 
-${values}
-ON DUPLICATE KEY UPDATE
-  avatar_url = VALUES(avatar_url),
-  name = VALUES(name),
-  bio = VALUES(bio),
-  company = VALUES(company),
-  location = VALUES(location),
-  email = VALUES(email),
-  twitter_username = VALUES(twitter_username),
-  followers = VALUES(followers),
-  following = VALUES(following),
-  public_repos = VALUES(public_repos),
-  total_stars = VALUES(total_stars),
-  popular_repo = VALUES(popular_repo),
   updated_at = VALUES(updated_at),
   ecosystems = JSON_MERGE_PRESERVE(ecosystems, VALUES(ecosystems)),
   updatedAt = NOW();
@@ -601,6 +742,7 @@ async function processOrganization(orgName: string, ecosystem: string) {
 
 async function main() {
   console.log('Starting GitHub data sync...\n');
+  console.log(`Using ${tokens.length} GitHub tokens\n`);
   
   // Create SQL output directory
   const sqlOutputDir = path.join(process.cwd(), 'sql_output');
@@ -608,27 +750,42 @@ async function main() {
     fs.mkdirSync(sqlOutputDir);
   }
 
-  // Check initial rate limit status
-  try {
-    const response = await github.get('/rate_limit');
-    const { resources } = response.data;
-    console.log('\n=== Initial Rate Limit Status ===');
-    console.log('Core API:');
-    console.log(`  Total limit: ${resources.core.limit}`);
-    console.log(`  Remaining: ${resources.core.remaining}`);
-    console.log(`  Reset time: ${new Date(resources.core.reset * 1000).toLocaleString()}`);
-    console.log('\nSearch API:');
-    console.log(`  Total limit: ${resources.search.limit}`);
-    console.log(`  Remaining: ${resources.search.remaining}`);
-    console.log(`  Reset time: ${new Date(resources.search.reset * 1000).toLocaleString()}`);
-    console.log('===============================\n');
+  // Check initial rate limit status for all tokens
+  console.log('\n=== Initial Rate Limit Status ===');
+  let hasValidToken = false;
 
-    if (resources.core.remaining < 100) {
-      console.error('Token has insufficient remaining requests. Please wait until the reset time or use a different token.');
-      process.exit(1);
+  for (const token of tokens) {
+    try {
+      const response = await axios.get('https://api.github.com/rate_limit', {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        }
+      });
+      const { resources } = response.data;
+      const tokenPreview = `${token.slice(0, 8)}...${token.slice(-8)}`;
+      
+      console.log(`\nToken: ${tokenPreview}`);
+      console.log('Core API:');
+      console.log(`  Total limit: ${resources.core.limit}`);
+      console.log(`  Remaining: ${resources.core.remaining}`);
+      console.log(`  Reset time: ${new Date(resources.core.reset * 1000).toLocaleString()}`);
+      console.log('Search API:');
+      console.log(`  Total limit: ${resources.search.limit}`);
+      console.log(`  Remaining: ${resources.search.remaining}`);
+      console.log(`  Reset time: ${new Date(resources.search.reset * 1000).toLocaleString()}`);
+
+      if (resources.core.remaining >= 100) {
+        hasValidToken = true;
+      }
+    } catch (error: any) {
+      console.error(`Error checking rate limit for token ${token.slice(0, 8)}...${token.slice(-8)}:`, error.message);
     }
-  } catch (error) {
-    console.error('Error checking initial rate limit:', error);
+  }
+  console.log('===============================\n');
+
+  if (!hasValidToken) {
+    console.error('All tokens have insufficient remaining requests. Please wait until the reset time or use different tokens.');
     process.exit(1);
   }
 
@@ -742,7 +899,7 @@ async function main() {
   }
 
   if (uniqueDevelopers.length > 0) {
-    const developerSql = generateDeveloperSql(uniqueDevelopers);
+    const developerSql = generateDevelopersSql(uniqueDevelopers);
     fs.writeFileSync(path.join(sqlOutputDir, 'developers.sql'), developerSql);
     console.log(`Generated SQL for ${uniqueDevelopers.length} developers (including contributors)`);
   }
@@ -757,13 +914,17 @@ async function main() {
     '-- Projects SQL',
     projects.length > 0 ? generateProjectSql(projects) : '',
     '\n-- Developers SQL',
-    developers.length > 0 ? generateDeveloperSql(developers) : '',
+    developers.length > 0 ? generateDevelopersSql(developers) : '',
     '\n-- Ranking Tags SQL',
     tagsSql
   ].join('\n');
   
   fs.writeFileSync(path.join(sqlOutputDir, 'combined.sql'), combinedSql);
   console.log('Generated combined SQL file');
+  
+  console.log('\n=== Token Usage Statistics ===');
+  console.log(tokenManager.getTokenUsageStats());
+  console.log('============================\n');
   
   console.log('\nSQL files have been saved to:', sqlOutputDir);
   console.log('\nSync completed!');

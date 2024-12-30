@@ -96,11 +96,69 @@ function extractRepoFullName(url) {
     const match = url.match(/github\.com\/([^\/]+\/[^\/]+)/);
     return match ? match[1] : null;
 }
-// GitHub API client with rate limiting
+// Add TokenManager class before the Types section
+class TokenManager {
+    constructor(tokens) {
+        this.currentTokenIndex = 0;
+        this.tokenUsage = new Map();
+        this.tokens = tokens;
+        tokens.forEach(token => this.tokenUsage.set(token, 0));
+    }
+    getCurrentToken() {
+        return this.tokens[this.currentTokenIndex];
+    }
+    rotateToken() {
+        this.currentTokenIndex = (this.currentTokenIndex + 1) % this.tokens.length;
+        return this.getCurrentToken();
+    }
+    async checkTokenStatus(token) {
+        try {
+            const response = await axios_1.default.get('https://api.github.com/rate_limit', {
+                headers: {
+                    Authorization: `token ${token}`,
+                    Accept: 'application/vnd.github.v3+json',
+                },
+            });
+            const remaining = response.data.resources.core.remaining;
+            return remaining > RATE_LIMIT_BUFFER;
+        }
+        catch (error) {
+            console.error(`Error checking token status: ${token}`, error);
+            return false;
+        }
+    }
+    async getValidToken() {
+        const startIndex = this.currentTokenIndex;
+        do {
+            const currentToken = this.getCurrentToken();
+            if (await this.checkTokenStatus(currentToken)) {
+                return currentToken;
+            }
+            this.rotateToken();
+        } while (this.currentTokenIndex !== startIndex);
+        throw new Error('All tokens have reached their rate limits. Please wait or add more tokens.');
+    }
+    incrementTokenUsage(token) {
+        const currentUsage = this.tokenUsage.get(token) || 0;
+        this.tokenUsage.set(token, currentUsage + 1);
+    }
+    getTokenUsageStats() {
+        return Array.from(this.tokenUsage.entries())
+            .map(([token, usage]) => `${token.slice(0, 8)}...${token.slice(-8)}: ${usage} requests`)
+            .join('\n');
+    }
+}
+// Replace the single token initialization with multiple tokens
+const tokens = (process.env.GITHUB_TOKENS || process.env.GITHUB_TOKEN || '').split(',').filter(Boolean);
+if (tokens.length === 0) {
+    console.error('Please set GITHUB_TOKENS (comma-separated) or GITHUB_TOKEN in .env file');
+    process.exit(1);
+}
+const tokenManager = new TokenManager(tokens);
+// Update the github axios instance to use token manager
 const github = axios_1.default.create({
     baseURL: 'https://api.github.com',
     headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
         Accept: 'application/vnd.github.v3+json',
     },
 });
@@ -169,20 +227,21 @@ async function githubRequest(url) {
     stats.byEndpoint.set(endpoint, (stats.byEndpoint.get(endpoint) || 0) + 1);
     console.log(`[Request #${stats.total}] ${url}`);
     try {
-        // Check rate limit every 100 requests
-        if (++requestCount % 100 === 0) {
-            await checkRateLimit();
-        }
-        const response = await github.get(url);
+        // Get a valid token before making the request
+        const token = await tokenManager.getValidToken();
+        const response = await github.get(url, {
+            headers: {
+                Authorization: `token ${token}`,
+            },
+        });
+        tokenManager.incrementTokenUsage(token);
         stats.successful++;
         console.log(`[Success] ${url}`);
-        // Add delay between requests
         await delay(REQUEST_DELAY);
         return response.data;
     }
     catch (error) {
         stats.failed++;
-        // Log the complete error response
         console.error('\n=== Error Details ===');
         console.error('URL:', url);
         console.error('Status:', error.response?.status);
@@ -192,25 +251,24 @@ async function githubRequest(url) {
         console.error('Response Data:', JSON.stringify(error.response?.data, null, 2));
         console.error('===================\n');
         if (error.response?.status === 403) {
-            // Check if it's actually a rate limit error
             if (error.response?.data?.message?.includes('rate limit')) {
-                const resetTime = error.response.headers['x-ratelimit-reset'];
-                const remaining = error.response.headers['x-ratelimit-remaining'];
-                const limit = error.response.headers['x-ratelimit-limit'];
-                console.log(`\n=== Rate Limit Hit ===`);
-                console.log(`Total limit: ${limit}`);
-                console.log(`Remaining: ${remaining}`);
-                console.log(`Reset time: ${new Date(parseInt(resetTime) * 1000).toLocaleString()}`);
-                const waitTime = (parseInt(resetTime) * 1000) - Date.now();
-                console.log(`Waiting ${Math.ceil(waitTime / 1000)} seconds...`);
-                console.log(`========================\n`);
-                // Wait for the full reset time
-                await new Promise(resolve => setTimeout(resolve, waitTime + 1000));
-                semaphore.release();
-                return githubRequest(url);
+                console.log('\n=== Rate Limit Hit ===');
+                // Try to rotate to next token
+                try {
+                    await tokenManager.rotateToken();
+                    semaphore.release();
+                    return githubRequest(url);
+                }
+                catch (tokenError) {
+                    const resetTime = error.response.headers['x-ratelimit-reset'];
+                    const waitTime = (parseInt(resetTime) * 1000) - Date.now();
+                    console.log(`All tokens exhausted. Waiting ${Math.ceil(waitTime / 1000)} seconds...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime + 1000));
+                    semaphore.release();
+                    return githubRequest(url);
+                }
             }
             else {
-                // If it's a different kind of 403 error
                 console.error('403 Error but not rate limit:', error.response?.data?.message);
                 throw error;
             }
@@ -528,32 +586,45 @@ async function processOrganization(orgName, ecosystem) {
 }
 async function main() {
     console.log('Starting GitHub data sync...\n');
+    console.log(`Using ${tokens.length} GitHub tokens\n`);
     // Create SQL output directory
     const sqlOutputDir = path.join(process.cwd(), 'sql_output');
     if (!fs.existsSync(sqlOutputDir)) {
         fs.mkdirSync(sqlOutputDir);
     }
-    // Check initial rate limit status
-    try {
-        const response = await github.get('/rate_limit');
-        const { resources } = response.data;
-        console.log('\n=== Initial Rate Limit Status ===');
-        console.log('Core API:');
-        console.log(`  Total limit: ${resources.core.limit}`);
-        console.log(`  Remaining: ${resources.core.remaining}`);
-        console.log(`  Reset time: ${new Date(resources.core.reset * 1000).toLocaleString()}`);
-        console.log('\nSearch API:');
-        console.log(`  Total limit: ${resources.search.limit}`);
-        console.log(`  Remaining: ${resources.search.remaining}`);
-        console.log(`  Reset time: ${new Date(resources.search.reset * 1000).toLocaleString()}`);
-        console.log('===============================\n');
-        if (resources.core.remaining < 100) {
-            console.error('Token has insufficient remaining requests. Please wait until the reset time or use a different token.');
-            process.exit(1);
+    // Check initial rate limit status for all tokens
+    console.log('\n=== Initial Rate Limit Status ===');
+    let hasValidToken = false;
+    for (const token of tokens) {
+        try {
+            const response = await axios_1.default.get('https://api.github.com/rate_limit', {
+                headers: {
+                    Authorization: `token ${token}`,
+                    Accept: 'application/vnd.github.v3+json',
+                }
+            });
+            const { resources } = response.data;
+            const tokenPreview = `${token.slice(0, 8)}...${token.slice(-8)}`;
+            console.log(`\nToken: ${tokenPreview}`);
+            console.log('Core API:');
+            console.log(`  Total limit: ${resources.core.limit}`);
+            console.log(`  Remaining: ${resources.core.remaining}`);
+            console.log(`  Reset time: ${new Date(resources.core.reset * 1000).toLocaleString()}`);
+            console.log('Search API:');
+            console.log(`  Total limit: ${resources.search.limit}`);
+            console.log(`  Remaining: ${resources.search.remaining}`);
+            console.log(`  Reset time: ${new Date(resources.search.reset * 1000).toLocaleString()}`);
+            if (resources.core.remaining >= 100) {
+                hasValidToken = true;
+            }
+        }
+        catch (error) {
+            console.error(`Error checking rate limit for token ${token.slice(0, 8)}...${token.slice(-8)}:`, error.message);
         }
     }
-    catch (error) {
-        console.error('Error checking initial rate limit:', error);
+    console.log('===============================\n');
+    if (!hasValidToken) {
+        console.error('All tokens have insufficient remaining requests. Please wait until the reset time or use different tokens.');
         process.exit(1);
     }
     const csvFile = process.argv[2];
@@ -665,6 +736,9 @@ async function main() {
     ].join('\n');
     fs.writeFileSync(path.join(sqlOutputDir, 'combined.sql'), combinedSql);
     console.log('Generated combined SQL file');
+    console.log('\n=== Token Usage Statistics ===');
+    console.log(tokenManager.getTokenUsageStats());
+    console.log('============================\n');
     console.log('\nSQL files have been saved to:', sqlOutputDir);
     console.log('\nSync completed!');
 }
