@@ -43,6 +43,7 @@ interface GithubRepo {
   topics: string[];
   updated_at: string;
   contributors_url: string;
+  archived: boolean;
   owner: {
     login: string;
   };
@@ -718,12 +719,16 @@ async function processOrganization(orgName: string, ecosystem: string) {
   console.log(`Processing organization: ${orgName}`);
   const repos = await githubRequest<GithubRepo[]>(`/orgs/${orgName}/repos?per_page=100`);
   
+  // Filter out archived repos
+  const activeRepos = repos.filter(repo => !repo.archived);
+  console.log(`Found ${repos.length} total repos, ${activeRepos.length} active repos in ${orgName}`);
+  
   // 使用批量处理而不是串行处理
   const repoInfos = [];
   const batchSize = 5; // 每批处理5个仓库
   
-  for (let i = 0; i < repos.length; i += batchSize) {
-    const batch = repos.slice(i, i + batchSize);
+  for (let i = 0; i < activeRepos.length; i += batchSize) {
+    const batch = activeRepos.slice(i, i + batchSize);
     const batchResults = await Promise.all(
       batch.map(async repo => {
         try {
@@ -849,7 +854,14 @@ async function main() {
           return [];
         }) : Promise.resolve([]),
         
-        projectFullName ? fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TAG] || row[COLUMN_INDICES.ORG_TAG] || '').catch(error => {
+        projectFullName ? (async () => {
+          const repoInfo = await githubRequest<GithubRepo>(`/repos/${projectFullName}`);
+          if (repoInfo.archived) {
+            console.log(`Skipping archived project: ${projectFullName}`);
+            return null;
+          }
+          return fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TAG] || row[COLUMN_INDICES.ORG_TAG] || '');
+        })().catch(error => {
           console.error(`Error processing project ${projectFullName}:`, error);
           return null;
         }) : Promise.resolve(null),
