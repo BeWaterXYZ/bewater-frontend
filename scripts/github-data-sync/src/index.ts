@@ -17,20 +17,20 @@ if (!GITHUB_TOKEN) {
 // Types
 const COLUMN_INDICES = {
   ORG_NAME: 0,
-  ORG_TAG: 1,
+  ORG_TOPIC: 1,
   PROJECT_NAME: 2,
-  PROJECT_TAG: 3,
+  PROJECT_TOPIC: 3,
   BUILDER_NAME: 4,
-  BUILDER_TAG: 5
+  BUILDER_TOPIC: 5
 };
 
 interface CsvRow {
   'Github Organizations': string;
-  'Tags': string;
+  'Topics': string;
   'Github Projects': string;
-  'Tags.1': string;
+  'Topics.1': string;
   'Github Builders': string;
-  'Tags.2': string;
+  'Topics.2': string;
 }
 
 interface GithubRepo {
@@ -140,10 +140,28 @@ class TokenManager {
   private tokens: string[];
   private currentTokenIndex: number = 0;
   private tokenUsage: Map<string, number> = new Map();
+  private tokenStatus: Map<string, boolean> = new Map();
+  private rateLimitInfo: Map<string, {
+    remaining: number;
+    reset: number;
+    lastCheck: number;
+  }> = new Map();
 
   constructor(tokens: string[]) {
     this.tokens = tokens;
-    tokens.forEach(token => this.tokenUsage.set(token, 0));
+    tokens.forEach(token => {
+      this.tokenUsage.set(token, 0);
+      this.tokenStatus.set(token, true);
+    });
+  }
+
+  private shouldCheckStatus(token: string): boolean {
+    const info = this.rateLimitInfo.get(token);
+    if (!info) return true;
+
+    const now = Date.now();
+    // 只在到达重置时间时才需要重新检查
+    return now >= info.reset * 1000;
   }
 
   getCurrentToken(): string {
@@ -151,11 +169,31 @@ class TokenManager {
   }
 
   rotateToken(): string {
-    this.currentTokenIndex = (this.currentTokenIndex + 1) % this.tokens.length;
+    const startIndex = this.currentTokenIndex;
+    let attempts = 0;
+    
+    do {
+      this.currentTokenIndex = (this.currentTokenIndex + 1) % this.tokens.length;
+      attempts++;
+      
+      // If we've tried all tokens, reset their status and try again
+      if (attempts === this.tokens.length) {
+        console.log('Resetting all token statuses and trying again...');
+        this.tokens.forEach(token => this.tokenStatus.set(token, true));
+      }
+      
+      // If we've gone through all tokens twice, throw an error
+      if (attempts >= this.tokens.length * 2) {
+        throw new Error('All tokens are exhausted and reset attempt failed');
+      }
+    } while (!this.tokenStatus.get(this.getCurrentToken()) && attempts < this.tokens.length * 2);
+    
+    console.log(`Rotated to token: ${this.getCurrentToken().slice(0, 8)}...${this.getCurrentToken().slice(-8)}`);
     return this.getCurrentToken();
   }
 
-  async checkTokenStatus(token: string): Promise<boolean> {
+  async handleRateLimitError(token: string): Promise<boolean> {
+    console.log(`Checking rate limit status for token ${token.slice(0, 8)}...${token.slice(-8)}`);
     try {
       const response = await axios.get('https://api.github.com/rate_limit', {
         headers: {
@@ -163,36 +201,95 @@ class TokenManager {
           Accept: 'application/vnd.github.v3+json',
         },
       });
-      const remaining = response.data.resources.core.remaining;
-      return remaining > RATE_LIMIT_BUFFER;
+      const { remaining, reset } = response.data.resources.core;
+      const now = Date.now();
+
+      // 更新缓存
+      this.rateLimitInfo.set(token, {
+        remaining,
+        reset,
+        lastCheck: now
+      });
+
+      const isValid = remaining > RATE_LIMIT_BUFFER;
+      this.tokenStatus.set(token, isValid);
+
+      const resetTime = new Date(reset * 1000);
+      console.log(`Token ${token.slice(0, 8)}...${token.slice(-8)} has ${remaining} requests remaining, resets at ${resetTime.toLocaleString()}`);
+
+      return isValid;
     } catch (error) {
-      console.error(`Error checking token status: ${token}`, error);
+      console.error(`Error checking token status: ${token.slice(0, 8)}...${token.slice(-8)}`, error);
+      this.tokenStatus.set(token, false);
       return false;
     }
   }
 
   async getValidToken(): Promise<string> {
     const startIndex = this.currentTokenIndex;
+    let attempts = 0;
     
     do {
       const currentToken = this.getCurrentToken();
-      if (await this.checkTokenStatus(currentToken)) {
+      const info = this.rateLimitInfo.get(currentToken);
+      
+      // 如果有缓存的信息并且还没到重置时间，直接使用缓存的状态
+      if (info && Date.now() < info.reset * 1000) {
+        if (info.remaining > RATE_LIMIT_BUFFER) {
+          return currentToken;
+        }
+      } else if (await this.handleRateLimitError(currentToken)) {
         return currentToken;
       }
+      
+      console.log(`Token ${currentToken.slice(0, 8)}...${currentToken.slice(-8)} is not valid, rotating...`);
       this.rotateToken();
-    } while (this.currentTokenIndex !== startIndex);
-
-    throw new Error('All tokens have reached their rate limits. Please wait or add more tokens.');
+      attempts++;
+      
+      // If we've tried all tokens, wait a bit before trying again
+      if (attempts === this.tokens.length) {
+        const nextReset = Math.min(...Array.from(this.rateLimitInfo.values()).map(info => info.reset * 1000));
+        const waitTime = Math.max(0, nextReset - Date.now());
+        if (waitTime > 0) {
+          console.log(`All tokens exhausted, waiting ${Math.ceil(waitTime / 1000)} seconds until next reset...`);
+          await new Promise(resolve => setTimeout(resolve, waitTime + 1000));
+        }
+      }
+      
+      // If we've tried too many times, throw an error
+      if (attempts >= this.tokens.length * 2) {
+        throw new Error('All tokens have reached their rate limits. Please wait or add more tokens.');
+      }
+    } while (attempts < this.tokens.length * 2);
+    
+    throw new Error('Failed to find a valid token after multiple attempts');
   }
 
   incrementTokenUsage(token: string) {
     const currentUsage = this.tokenUsage.get(token) || 0;
     this.tokenUsage.set(token, currentUsage + 1);
+    
+    // 更新剩余请求数的估计值
+    const info = this.rateLimitInfo.get(token);
+    if (info) {
+      info.remaining = Math.max(0, info.remaining - 1);
+    }
+    
+    // Log token usage every 100 requests
+    if (currentUsage % 100 === 0) {
+      console.log(`\nToken Usage Update (${new Date().toLocaleString()}):`);
+      console.log(this.getTokenUsageStats());
+    }
   }
 
   getTokenUsageStats(): string {
     return Array.from(this.tokenUsage.entries())
-      .map(([token, usage]) => `${token.slice(0, 8)}...${token.slice(-8)}: ${usage} requests`)
+      .map(([token, usage]) => {
+        const info = this.rateLimitInfo.get(token);
+        const status = this.tokenStatus.get(token) ? 'valid' : 'exhausted';
+        const remaining = info ? `${info.remaining} remaining` : '';
+        return `${token.slice(0, 8)}...${token.slice(-8)}: ${usage} requests (${status}, ${remaining})`;
+      })
       .join('\n');
   }
 }
@@ -832,9 +929,9 @@ async function main() {
 
     // 收集所有的标签
     const rowTags = [
-      row[COLUMN_INDICES.ORG_TAG],
-      row[COLUMN_INDICES.PROJECT_TAG],
-      row[COLUMN_INDICES.BUILDER_TAG]
+      row[COLUMN_INDICES.ORG_TOPIC],
+      row[COLUMN_INDICES.PROJECT_TOPIC],
+      row[COLUMN_INDICES.BUILDER_TOPIC]
     ].filter(tag => tag && tag.trim() !== '');
 
     rowTags.forEach(tag => {
@@ -849,7 +946,7 @@ async function main() {
       
       // 使用对应的标签
       const [orgRepoInfos, projectInfo, userInfo] = await Promise.all([
-        orgName ? processOrganization(orgName, row[COLUMN_INDICES.ORG_TAG] || '').catch(error => {
+        orgName ? processOrganization(orgName, row[COLUMN_INDICES.ORG_TOPIC] || '').catch(error => {
           console.error(`Error processing organization ${orgName}:`, error);
           return [];
         }) : Promise.resolve([]),
@@ -860,13 +957,13 @@ async function main() {
             console.log(`Skipping archived project: ${projectFullName}`);
             return null;
           }
-          return fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TAG] || row[COLUMN_INDICES.ORG_TAG] || '');
+          return fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TOPIC] || row[COLUMN_INDICES.ORG_TOPIC] || '');
         })().catch(error => {
           console.error(`Error processing project ${projectFullName}:`, error);
           return null;
         }) : Promise.resolve(null),
         
-        username ? fetchUserInfo(username, row[COLUMN_INDICES.BUILDER_TAG] || row[COLUMN_INDICES.ORG_TAG] || '').catch(error => {
+        username ? fetchUserInfo(username, row[COLUMN_INDICES.BUILDER_TOPIC] || row[COLUMN_INDICES.ORG_TOPIC] || '').catch(error => {
           console.error(`Error processing user ${username}:`, error);
           return null;
         }) : Promise.resolve(null)

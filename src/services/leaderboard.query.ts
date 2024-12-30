@@ -1,5 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBuilderboardDeveloper, getBuilderboardProject, getLeaderboardDeveloper, getLeaderboardProject } from "./leaderboard";
+import { getBuilderboardDeveloper, getBuilderboardProject, getLeaderboardDeveloper, getLeaderboardProject, getRankingTags, RankingTagType } from "./leaderboard";
+
+export function useRankingTags(type?: RankingTagType) {
+  const { data: allTags = [], ...rest } = useQuery({
+    queryKey: ["RankingTags"],
+    queryFn: getRankingTags,
+    // staleTime: 24 * 60 * 60 * 1000,
+    // cacheTime: 24 * 60 * 60 * 1000,
+  });
+
+  const filteredTags = type ? allTags.filter(tag => tag.type === type) : allTags;
+  
+  return {
+    ...rest,
+    data: filteredTags,
+  };
+}
 
 export function useLeaderboardProject(limit: number) {
   return useQuery({

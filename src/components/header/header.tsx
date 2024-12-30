@@ -4,6 +4,7 @@ import { Lng } from "./lng";
 import dynamicLoad from "next/dynamic";
 import { HeaderScrollHelper } from "./scroll-helper";
 import { Callout } from "../callout";
+import { headers } from 'next/headers';
 
 interface HeaderImplProps {
   logo: React.ReactNode;

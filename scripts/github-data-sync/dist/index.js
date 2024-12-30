@@ -51,11 +51,11 @@ if (!GITHUB_TOKEN) {
 // Types
 const COLUMN_INDICES = {
     ORG_NAME: 0,
-    ORG_TAG: 1,
+    ORG_TOPIC: 1,
     PROJECT_NAME: 2,
-    PROJECT_TAG: 3,
+    PROJECT_TOPIC: 3,
     BUILDER_NAME: 4,
-    BUILDER_TAG: 5
+    BUILDER_TOPIC: 5
 };
 const stats = {
     total: 0,
@@ -101,17 +101,46 @@ class TokenManager {
     constructor(tokens) {
         this.currentTokenIndex = 0;
         this.tokenUsage = new Map();
+        this.tokenStatus = new Map();
+        this.rateLimitInfo = new Map();
         this.tokens = tokens;
-        tokens.forEach(token => this.tokenUsage.set(token, 0));
+        tokens.forEach(token => {
+            this.tokenUsage.set(token, 0);
+            this.tokenStatus.set(token, true);
+        });
+    }
+    shouldCheckStatus(token) {
+        const info = this.rateLimitInfo.get(token);
+        if (!info)
+            return true;
+        const now = Date.now();
+        // 只在到达重置时间时才需要重新检查
+        return now >= info.reset * 1000;
     }
     getCurrentToken() {
         return this.tokens[this.currentTokenIndex];
     }
     rotateToken() {
-        this.currentTokenIndex = (this.currentTokenIndex + 1) % this.tokens.length;
+        const startIndex = this.currentTokenIndex;
+        let attempts = 0;
+        do {
+            this.currentTokenIndex = (this.currentTokenIndex + 1) % this.tokens.length;
+            attempts++;
+            // If we've tried all tokens, reset their status and try again
+            if (attempts === this.tokens.length) {
+                console.log('Resetting all token statuses and trying again...');
+                this.tokens.forEach(token => this.tokenStatus.set(token, true));
+            }
+            // If we've gone through all tokens twice, throw an error
+            if (attempts >= this.tokens.length * 2) {
+                throw new Error('All tokens are exhausted and reset attempt failed');
+            }
+        } while (!this.tokenStatus.get(this.getCurrentToken()) && attempts < this.tokens.length * 2);
+        console.log(`Rotated to token: ${this.getCurrentToken().slice(0, 8)}...${this.getCurrentToken().slice(-8)}`);
         return this.getCurrentToken();
     }
-    async checkTokenStatus(token) {
+    async handleRateLimitError(token) {
+        console.log(`Checking rate limit status for token ${token.slice(0, 8)}...${token.slice(-8)}`);
         try {
             const response = await axios_1.default.get('https://api.github.com/rate_limit', {
                 headers: {
@@ -119,32 +148,82 @@ class TokenManager {
                     Accept: 'application/vnd.github.v3+json',
                 },
             });
-            const remaining = response.data.resources.core.remaining;
-            return remaining > RATE_LIMIT_BUFFER;
+            const { remaining, reset } = response.data.resources.core;
+            const now = Date.now();
+            // 更新缓存
+            this.rateLimitInfo.set(token, {
+                remaining,
+                reset,
+                lastCheck: now
+            });
+            const isValid = remaining > RATE_LIMIT_BUFFER;
+            this.tokenStatus.set(token, isValid);
+            const resetTime = new Date(reset * 1000);
+            console.log(`Token ${token.slice(0, 8)}...${token.slice(-8)} has ${remaining} requests remaining, resets at ${resetTime.toLocaleString()}`);
+            return isValid;
         }
         catch (error) {
-            console.error(`Error checking token status: ${token}`, error);
+            console.error(`Error checking token status: ${token.slice(0, 8)}...${token.slice(-8)}`, error);
+            this.tokenStatus.set(token, false);
             return false;
         }
     }
     async getValidToken() {
         const startIndex = this.currentTokenIndex;
+        let attempts = 0;
         do {
             const currentToken = this.getCurrentToken();
-            if (await this.checkTokenStatus(currentToken)) {
+            const info = this.rateLimitInfo.get(currentToken);
+            // 如果有缓存的信息并且还没到重置时间，直接使用缓存的状态
+            if (info && Date.now() < info.reset * 1000) {
+                if (info.remaining > RATE_LIMIT_BUFFER) {
+                    return currentToken;
+                }
+            }
+            else if (await this.handleRateLimitError(currentToken)) {
                 return currentToken;
             }
+            console.log(`Token ${currentToken.slice(0, 8)}...${currentToken.slice(-8)} is not valid, rotating...`);
             this.rotateToken();
-        } while (this.currentTokenIndex !== startIndex);
-        throw new Error('All tokens have reached their rate limits. Please wait or add more tokens.');
+            attempts++;
+            // If we've tried all tokens, wait a bit before trying again
+            if (attempts === this.tokens.length) {
+                const nextReset = Math.min(...Array.from(this.rateLimitInfo.values()).map(info => info.reset * 1000));
+                const waitTime = Math.max(0, nextReset - Date.now());
+                if (waitTime > 0) {
+                    console.log(`All tokens exhausted, waiting ${Math.ceil(waitTime / 1000)} seconds until next reset...`);
+                    await new Promise(resolve => setTimeout(resolve, waitTime + 1000));
+                }
+            }
+            // If we've tried too many times, throw an error
+            if (attempts >= this.tokens.length * 2) {
+                throw new Error('All tokens have reached their rate limits. Please wait or add more tokens.');
+            }
+        } while (attempts < this.tokens.length * 2);
+        throw new Error('Failed to find a valid token after multiple attempts');
     }
     incrementTokenUsage(token) {
         const currentUsage = this.tokenUsage.get(token) || 0;
         this.tokenUsage.set(token, currentUsage + 1);
+        // 更新剩余请求数的估计值
+        const info = this.rateLimitInfo.get(token);
+        if (info) {
+            info.remaining = Math.max(0, info.remaining - 1);
+        }
+        // Log token usage every 100 requests
+        if (currentUsage % 100 === 0) {
+            console.log(`\nToken Usage Update (${new Date().toLocaleString()}):`);
+            console.log(this.getTokenUsageStats());
+        }
     }
     getTokenUsageStats() {
         return Array.from(this.tokenUsage.entries())
-            .map(([token, usage]) => `${token.slice(0, 8)}...${token.slice(-8)}: ${usage} requests`)
+            .map(([token, usage]) => {
+            const info = this.rateLimitInfo.get(token);
+            const status = this.tokenStatus.get(token) ? 'valid' : 'exhausted';
+            const remaining = info ? `${info.remaining} remaining` : '';
+            return `${token.slice(0, 8)}...${token.slice(-8)}: ${usage} requests (${status}, ${remaining})`;
+        })
             .join('\n');
     }
 }
@@ -413,6 +492,139 @@ async function fetchUserInfo(username, ecosystem, existingData) {
         sectors: existingData?.sectors || '[]'
     };
 }
+function escapeSQLString(str) {
+    if (str === null || str === undefined || str === 'NULL')
+        return 'NULL';
+    if (str === 'NOW()')
+        return str;
+    // Handle JSON strings specially
+    if (typeof str === 'string' && (str.startsWith('{') || str.startsWith('['))) {
+        try {
+            // Try to parse and re-stringify to ensure valid JSON
+            const jsonObj = JSON.parse(str);
+            return `'${JSON.stringify(jsonObj).replace(/'/g, "''")}'`;
+        }
+        catch (e) {
+            console.error('Invalid JSON:', str);
+            return 'NULL';
+        }
+    }
+    // Convert to string and handle special characters
+    return `'${String(str)
+        .replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, (char) => {
+        switch (char) {
+            case "'": return "''";
+            case "\0": return "\\0";
+            case "\x08": return "\\b";
+            case "\x09": return "\\t";
+            case "\x1a": return "\\z";
+            case "\n": return "\\n";
+            case "\r": return "\\r";
+            case "\"": return '\\"';
+            case "\\": return "\\\\";
+            case "%": return "\\%";
+            default: return char;
+        }
+    })
+        // Additional safety replacements
+        .replace(/\?/g, "\\?")
+        .replace(/`/g, "\\`")}'`;
+}
+function safeJsonStringify(obj) {
+    try {
+        if (obj === null || obj === undefined)
+            return 'NULL';
+        return escapeSQLString(JSON.stringify(obj));
+    }
+    catch (e) {
+        console.error('Failed to stringify JSON:', e);
+        return 'NULL';
+    }
+}
+function generateDevelopersSql(developers) {
+    const values = developers.map(dev => {
+        try {
+            // Handle JSON and array fields safely
+            const popularRepo = dev.popular_repo ? safeJsonStringify(dev.popular_repo) : 'NULL';
+            const ecosystems = Array.isArray(dev.ecosystems) ? safeJsonStringify(dev.ecosystems) : "'[]'";
+            const sectors = Array.isArray(dev.sectors) ? safeJsonStringify(dev.sectors) : "'[]'";
+            // Handle numeric fields with defaults
+            const followers = typeof dev.followers === 'number' ? dev.followers : 0;
+            const following = typeof dev.following === 'number' ? dev.following : 0;
+            const public_repos = typeof dev.public_repos === 'number' ? dev.public_repos : 0;
+            const total_stars = typeof dev.total_stars === 'number' ? dev.total_stars : 0;
+            return `(
+      ${escapeSQLString(dev.html_url)},
+      ${escapeSQLString(dev.avatar_url)},
+      ${escapeSQLString(dev.login)},
+      ${escapeSQLString(dev.name)},
+      ${escapeSQLString(dev.bio)},
+      ${escapeSQLString(dev.company)},
+      ${escapeSQLString(dev.location)},
+      ${escapeSQLString(dev.email)},
+      ${escapeSQLString(dev.twitter_username)},
+      ${followers},
+      ${following},
+      ${public_repos},
+      ${total_stars},
+      ${popularRepo},
+      ${escapeSQLString(dev.created_at)},
+      ${escapeSQLString(dev.updated_at)},
+      ${ecosystems},
+      ${sectors},
+      NOW(),
+      NOW()
+    )`;
+        }
+        catch (e) {
+            console.error('Error generating SQL for developer:', dev.login, e);
+            return null;
+        }
+    })
+        .filter(Boolean) // Remove any failed records
+        .join(',\n');
+    return `
+INSERT INTO operationDeveloper (
+  html_url,
+  avatar_url,
+  login,
+  name,
+  bio,
+  company,
+  location,
+  email,
+  twitter_username,
+  followers,
+  following,
+  public_repos,
+  total_stars,
+  popular_repo,
+  created_at,
+  updated_at,
+  ecosystems,
+  sectors,
+  createdAt,
+  updatedAt
+) VALUES 
+${values}
+ON DUPLICATE KEY UPDATE
+  avatar_url = VALUES(avatar_url),
+  name = VALUES(name),
+  bio = VALUES(bio),
+  company = VALUES(company),
+  location = VALUES(location),
+  email = VALUES(email),
+  twitter_username = VALUES(twitter_username),
+  followers = VALUES(followers),
+  following = VALUES(following),
+  public_repos = VALUES(public_repos),
+  total_stars = VALUES(total_stars),
+  popular_repo = VALUES(popular_repo),
+  updated_at = VALUES(updated_at),
+  ecosystems = JSON_MERGE_PRESERVE(ecosystems, VALUES(ecosystems)),
+  updatedAt = NOW();
+`;
+}
 function generateProjectSql(projects) {
     const values = projects.map(project => {
         return `(
@@ -465,73 +677,6 @@ ON DUPLICATE KEY UPDATE
   updatedAt = NOW();
 `;
 }
-function generateDeveloperSql(developers) {
-    const values = developers.map(dev => {
-        return `(
-      '${dev.html_url}',
-      '${dev.avatar_url}',
-      '${dev.login}',
-      ${dev.name ? `'${dev.name.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.bio ? `'${dev.bio.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.company ? `'${dev.company.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.location ? `'${dev.location.replace(/'/g, "''")}'` : 'NULL'},
-      ${dev.email ? `'${dev.email}'` : 'NULL'},
-      ${dev.twitter_username ? `'${dev.twitter_username}'` : 'NULL'},
-      ${dev.followers},
-      ${dev.following},
-      ${dev.public_repos},
-      ${dev.total_stars},
-      '${dev.popular_repo}',
-      '${dev.created_at}',
-      '${dev.updated_at}',
-      '${dev.ecosystems}',
-      '${dev.sectors}',
-      NOW(),
-      NOW()
-    )`;
-    }).join(',\n');
-    return `
-INSERT INTO operationDeveloper (
-  html_url,
-  avatar_url,
-  login,
-  name,
-  bio,
-  company,
-  location,
-  email,
-  twitter_username,
-  followers,
-  following,
-  public_repos,
-  total_stars,
-  popular_repo,
-  created_at,
-  updated_at,
-  ecosystems,
-  sectors,
-  createdAt,
-  updatedAt
-) VALUES 
-${values}
-ON DUPLICATE KEY UPDATE
-  avatar_url = VALUES(avatar_url),
-  name = VALUES(name),
-  bio = VALUES(bio),
-  company = VALUES(company),
-  location = VALUES(location),
-  email = VALUES(email),
-  twitter_username = VALUES(twitter_username),
-  followers = VALUES(followers),
-  following = VALUES(following),
-  public_repos = VALUES(public_repos),
-  total_stars = VALUES(total_stars),
-  popular_repo = VALUES(popular_repo),
-  updated_at = VALUES(updated_at),
-  ecosystems = JSON_MERGE_PRESERVE(ecosystems, VALUES(ecosystems)),
-  updatedAt = NOW();
-`;
-}
 function generateRankingTagsSql(tags) {
     const values = Array.from(tags).map(tag => {
         return `(
@@ -566,11 +711,14 @@ ON DUPLICATE KEY UPDATE
 async function processOrganization(orgName, ecosystem) {
     console.log(`Processing organization: ${orgName}`);
     const repos = await githubRequest(`/orgs/${orgName}/repos?per_page=100`);
+    // Filter out archived repos
+    const activeRepos = repos.filter(repo => !repo.archived);
+    console.log(`Found ${repos.length} total repos, ${activeRepos.length} active repos in ${orgName}`);
     // 使用批量处理而不是串行处理
     const repoInfos = [];
     const batchSize = 5; // 每批处理5个仓库
-    for (let i = 0; i < repos.length; i += batchSize) {
-        const batch = repos.slice(i, i + batchSize);
+    for (let i = 0; i < activeRepos.length; i += batchSize) {
+        const batch = activeRepos.slice(i, i + batchSize);
         const batchResults = await Promise.all(batch.map(async (repo) => {
             try {
                 return await fetchRepoInfo(repo.full_name, ecosystem);
@@ -657,9 +805,9 @@ async function main() {
         console.log('Processing row:', row);
         // 收集所有的标签
         const rowTags = [
-            row[COLUMN_INDICES.ORG_TAG],
-            row[COLUMN_INDICES.PROJECT_TAG],
-            row[COLUMN_INDICES.BUILDER_TAG]
+            row[COLUMN_INDICES.ORG_TOPIC],
+            row[COLUMN_INDICES.PROJECT_TOPIC],
+            row[COLUMN_INDICES.BUILDER_TOPIC]
         ].filter(tag => tag && tag.trim() !== '');
         rowTags.forEach(tag => {
             ecosystemTags.add(tag.trim());
@@ -671,15 +819,22 @@ async function main() {
             const username = extractGithubName(row[COLUMN_INDICES.BUILDER_NAME]);
             // 使用对应的标签
             const [orgRepoInfos, projectInfo, userInfo] = await Promise.all([
-                orgName ? processOrganization(orgName, row[COLUMN_INDICES.ORG_TAG] || '').catch(error => {
+                orgName ? processOrganization(orgName, row[COLUMN_INDICES.ORG_TOPIC] || '').catch(error => {
                     console.error(`Error processing organization ${orgName}:`, error);
                     return [];
                 }) : Promise.resolve([]),
-                projectFullName ? fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TAG] || row[COLUMN_INDICES.ORG_TAG] || '').catch(error => {
+                projectFullName ? (async () => {
+                    const repoInfo = await githubRequest(`/repos/${projectFullName}`);
+                    if (repoInfo.archived) {
+                        console.log(`Skipping archived project: ${projectFullName}`);
+                        return null;
+                    }
+                    return fetchRepoInfo(projectFullName, row[COLUMN_INDICES.PROJECT_TOPIC] || row[COLUMN_INDICES.ORG_TOPIC] || '');
+                })().catch(error => {
                     console.error(`Error processing project ${projectFullName}:`, error);
                     return null;
                 }) : Promise.resolve(null),
-                username ? fetchUserInfo(username, row[COLUMN_INDICES.BUILDER_TAG] || row[COLUMN_INDICES.ORG_TAG] || '').catch(error => {
+                username ? fetchUserInfo(username, row[COLUMN_INDICES.BUILDER_TOPIC] || row[COLUMN_INDICES.ORG_TOPIC] || '').catch(error => {
                     console.error(`Error processing user ${username}:`, error);
                     return null;
                 }) : Promise.resolve(null)
@@ -717,7 +872,7 @@ async function main() {
         console.log(`\nGenerated SQL for ${projects.length} projects`);
     }
     if (uniqueDevelopers.length > 0) {
-        const developerSql = generateDeveloperSql(uniqueDevelopers);
+        const developerSql = generateDevelopersSql(uniqueDevelopers);
         fs.writeFileSync(path.join(sqlOutputDir, 'developers.sql'), developerSql);
         console.log(`Generated SQL for ${uniqueDevelopers.length} developers (including contributors)`);
     }
@@ -730,7 +885,7 @@ async function main() {
         '-- Projects SQL',
         projects.length > 0 ? generateProjectSql(projects) : '',
         '\n-- Developers SQL',
-        developers.length > 0 ? generateDeveloperSql(developers) : '',
+        developers.length > 0 ? generateDevelopersSql(developers) : '',
         '\n-- Ranking Tags SQL',
         tagsSql
     ].join('\n');

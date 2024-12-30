@@ -123,6 +123,26 @@ export interface BuilderboardProject {
   updated_at: string;       // 最后更新时间
   contributors: BuilderboardContributor[]; // 贡献者列表
 }
+
+export enum RankingTagType {
+  ECOSYSTEM = 'ECOSYSTEM',
+  SECTOR = 'SECTOR'
+}
+
+export interface RankingTag {
+  id: number;
+  name: string;
+  type: RankingTagType;
+  description?: string;
+}
+
+export async function getRankingTags() {
+  const { data } = await agentAuthed.get<{ data: RankingTag[] }>(
+    `/billboard/ranking-tags`
+  );
+  return data.data;
+}
+
 export async function getLeaderboardProject(limit: number) {
   const { data } = await agentAuthed.get<LeaderboardProject[]>(
     `/billboard/project-list?limit=${limit}`

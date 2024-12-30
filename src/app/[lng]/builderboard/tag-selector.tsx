@@ -1,31 +1,10 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { useRankingTags } from "@/services/leaderboard.query";
+import { RankingTagType } from "@/services/leaderboard";
 
 const currentTag = "bg-[#475569] text-white px-5 h-[34px] flex items-center rounded-[6px] whitespace-nowrap";
 const inactiveTag = "text-white hover:bg-[#475569] transition-all px-5 h-[34px] flex items-center rounded-[6px] whitespace-nowrap";
-
-const EcosystemList = [
-  "Ethereum",
-  "Solana",
-  "Polygon",
-  "BNB Chain",
-  "Arbitrum",
-  "Optimism",
-  "Base",
-  "Sui",
-  "Aptos",
-];
-
-const SectorList = [
-  "DeFi",
-  "NFT",
-  "GameFi",
-  "Web3",
-  "AIGC",
-  "DAO Tool",
-  "Web3 Security",
-  "Zero Knowledge",
-];
 
 interface TagSelectorProps {
   onChange: (tags: { ecosystem: string; sector: string }) => void;
@@ -34,6 +13,9 @@ interface TagSelectorProps {
 export default function TagSelector({ onChange }: TagSelectorProps) {
   const [selectedEcosystem, setSelectedEcosystem] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
+  
+  const { data: ecosystemTags = [] } = useRankingTags(RankingTagType.ECOSYSTEM);
+  const { data: sectorTags = [] } = useRankingTags(RankingTagType.SECTOR);
   
   useEffect(() => {
     onChange({ ecosystem: selectedEcosystem, sector: selectedSector });
@@ -51,15 +33,15 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
           >
             All
           </p>
-          {EcosystemList.map((ecosystem) => (
+          {ecosystemTags.map((tag) => (
             <p
-              key={ecosystem}
+              key={tag.id}
               className={clsx(
-                selectedEcosystem === ecosystem ? currentTag : inactiveTag
+                selectedEcosystem === tag.name ? currentTag : inactiveTag
               )}
-              onClick={() => setSelectedEcosystem(ecosystem)}
+              onClick={() => setSelectedEcosystem(tag.name)}
             >
-              {ecosystem}
+              {tag.name}
             </p>
           ))}
         </div>
@@ -75,15 +57,15 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
           >
             All
           </p>
-          {SectorList.map((sector) => (
+          {sectorTags.map((tag) => (
             <p
-              key={sector}
+              key={tag.id}
               className={clsx(
-                selectedSector === sector ? currentTag : inactiveTag
+                selectedSector === tag.name ? currentTag : inactiveTag
               )}
-              onClick={() => setSelectedSector(sector)}
+              onClick={() => setSelectedSector(tag.name)}
             >
-              {sector}
+              {tag.name}
             </p>
           ))}
         </div>

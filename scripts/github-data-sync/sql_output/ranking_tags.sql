@@ -7,14 +7,14 @@ INSERT INTO rankingTags (
   updatedAt
 ) VALUES 
 (
-      'Bitcoin',
+      'BTC',
       'ECOSYSTEM',
       NULL,
       NOW(),
       NOW()
     ),
 (
-      'Ethereum',
+      'EVM',
       'ECOSYSTEM',
       NULL,
       NOW(),
@@ -28,42 +28,21 @@ INSERT INTO rankingTags (
       NOW()
     ),
 (
-      'Optimism',
+      'Move',
       'ECOSYSTEM',
       NULL,
       NOW(),
       NOW()
     ),
 (
-      'Arbitrum',
+      'All',
       'ECOSYSTEM',
       NULL,
       NOW(),
       NOW()
     ),
 (
-      'Movement',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Aptos',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Sui',
-      'ECOSYSTEM',
-      NULL,
-      NOW(),
-      NOW()
-    ),
-(
-      'Others',
+      'Other',
       'ECOSYSTEM',
       NULL,
       NOW(),

@@ -10,7 +10,7 @@ type MenuProps = {
 enum MenuItems {
   CAMPAIGN = "campaign",
   PROJECT = "project",
-  BUILDERBOARD = "builderboard",
+  // BUILDERBOARD = "builderboard",
   NONE = "none",
 }
 const Menu: React.FC<MenuProps> = ({ lng }) => {
@@ -35,6 +35,10 @@ const Menu: React.FC<MenuProps> = ({ lng }) => {
       setSelectedMenuItem(MenuItems.PROJECT);
     }
   }, [pathname]);
+  const showNav = !pathname?.includes('builderboard');
+  if (!showNav) {
+    return null;
+  }
   return (
     <div className="flex mr-1 sm:hidden flex-row gap-2 items-center">
       <DropdownMenu.Root modal={false}>
@@ -81,7 +85,7 @@ const Menu: React.FC<MenuProps> = ({ lng }) => {
                 </DropdownMenu.ItemIndicator>
                 {t("header.project")}
               </DropdownMenu.RadioItem>
-              <DropdownMenu.RadioItem
+              {/* <DropdownMenu.RadioItem
                 className="text-base leading-none flex items-center w-auto h-10 relative px-[25px] select-none outline-none data-[disabled]:text-mauve8 data-[disabled]:pointer-events-none data-[highlighted]:bg-violet9 data-[highlighted]:text-violet1"
                 style={
                   selectedMenuItem !== MenuItems.BUILDERBOARD
@@ -94,7 +98,7 @@ const Menu: React.FC<MenuProps> = ({ lng }) => {
                   <TriangleRightIcon />
                 </DropdownMenu.ItemIndicator>
                 {t("header.builderboard")}
-              </DropdownMenu.RadioItem>
+              </DropdownMenu.RadioItem> */}
             </DropdownMenu.RadioGroup>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>

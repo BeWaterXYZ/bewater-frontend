@@ -10,7 +10,7 @@ interface DesktopMenuProps {
 enum MenuItems {
   CAMPAIGN = "campaign",
   PROJECT = "project",
-  BUILDERBOARD = "builderboard",
+  // BUILDERBOARD = "builderboard",
   NONE = "none",
 }
 const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
@@ -23,8 +23,8 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
       setSelectedMenuItem(MenuItems.CAMPAIGN);
     } else if (pathname.includes("/projects")) {
       setSelectedMenuItem(MenuItems.PROJECT);
-    } else if (pathname.includes("/builderboard")) {
-      setSelectedMenuItem(MenuItems.BUILDERBOARD);
+    // } else if (pathname.includes("/builderboard")) {
+    //   setSelectedMenuItem(MenuItems.BUILDERBOARD);
     } else {
       setSelectedMenuItem(MenuItems.NONE);
     }
@@ -32,6 +32,10 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
   const lng = (params || {}).lng ? params.lng : "en";
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = useTranslation(lng, "translation");
+  const showNav = !pathname?.includes('builderboard');
+  if (!showNav) {
+    return null;
+  }
   return (
     <div className="hidden sm:flex absolute left-[180px] gap-8">
       <Link href={params?.lng === lng ? `/${lng}/` : "/"}>
@@ -62,7 +66,7 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
           </div>
         </div>
       </Link>
-      <Link href={params?.lng === lng ? `/${lng}/builderboard` : "/en/builderboard"}>
+      {/* <Link href={params?.lng === lng ? `/${lng}/builderboard` : "/en/builderboard"}>
         <div
           className="text-day body-2 [text-shadow:0_0_6px_theme(colors.day)]"
           style={
@@ -75,7 +79,7 @@ const DesktopMenu: React.FC<DesktopMenuProps> = (params) => {
             {t("header.builderboard")}
           </div>
         </div>
-      </Link>
+      </Link> */}
     </div>
   );
 };
