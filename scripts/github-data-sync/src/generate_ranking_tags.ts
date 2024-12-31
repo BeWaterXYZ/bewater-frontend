@@ -148,7 +148,7 @@ async function main() {
         contributors.forEach((contributor: any) => {
           if (contributor.login) {
             const existingSectors = developerSectors.get(contributor.login) || [];
-            const newSectors = [...new Set([...existingSectors, ...sectors])];
+            const newSectors = Array.from(new Set([...existingSectors, ...sectors]));
             developerSectors.set(contributor.login, newSectors);
           }
         });
