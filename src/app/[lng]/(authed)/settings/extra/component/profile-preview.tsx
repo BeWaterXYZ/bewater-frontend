@@ -30,7 +30,7 @@ export default function ProfilePreview({
   );
   const mostPlayedRole = calculateMostPlayedRole(userProfile?.teamMembers);
   return (
-    <div className="bg-[#04051B]">
+    <div className="bg-[#04051B] font-secondary">
       <div className="flex items-center gap-3 my-2">
         <button
           className="btn btn-ghost border-none text-white"
@@ -42,23 +42,23 @@ export default function ProfilePreview({
       </div>
 
       <div className="border border-[#1E293B] rounded-lg p-6 bg-[#04051B]">
-        <div className="flex gap-8">
+        <div className="flex gap-5 w-full">
           {/* Left Column - Fixed width sidebar */}
-          <div className="w-64 flex-shrink-0">
+          <div className="w-[21.35%] flex-shrink-0">
             <div className="flex flex-col items-center">
               <Image
                 src={user?.imageUrl || "/default-avatar.png"}
                 alt="Profile"
-                className="w-[205px] h-[205px] rounded-full mb-4"
-                width={205}
-                height={205}
+                className="w-[180px] h-[180px] rounded-full mb-4"
+                width={180}
+                height={180}
               />
-              <div className="w-full border-b border-b-grey-800 mb-2 pb-6 ">
-                <p className="body-2 font-bold mb-2">{user?.username}</p>
+              <div className="w-full border-b border-b-grey-800 mb-2 pb-3 ">
+                <p className="body-2 font-bold mb-5">{user?.username}</p>
                 <p className="body-4 text-grey-400">
                   {maskWalletAddress(userProfile.walletAddress)}
                 </p>
-                <div className="flex gap-3 flex-col flex">
+                <div className="flex gap-3 flex-col">
                   {userProfile.socialAuths
                     .filter((con) => con.authStatus === "AUTHORIZED")
                     .filter((con) => con.platform !== "Figma")
@@ -92,10 +92,27 @@ export default function ProfilePreview({
                       </p>
                     </div>
                   )}
+                  {userProfile.twitterLink && (
+                     <div
+                     className="flex items-center gap-2"
+                   >
+                    <div className="w-5 h-5 bg-white rounded-full flex items-center justify-center">
+                      <Image
+                        src={`/icons/twitter.svg`}
+                        height={12}
+                        width={12}
+                        alt={""}
+                      />
+                    </div>
+                      <p className="body-4 text-grey-400">
+                        @{userProfile.twitterLink}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div className="w-full border-b border-b-grey-800 my-2 py-6 ">
+              <div className="w-full border-b border-b-grey-800 mb-2 pb-3 ">
                 <p className="body-4 font-bold mb-3">Roles</p>
                 <div className="flex gap-2 flex-wrap">
                   {userProfile.roles.map((role) => (
@@ -103,7 +120,7 @@ export default function ProfilePreview({
                   ))}
                 </div>
               </div>
-              <div className="w-full border-b border-b-grey-800 my-2 py-6">
+              <div className="w-full border-b border-b-grey-800 mb-2 pb-3">
                 <p className="body-4 font-bold mb-3">Skills</p>
                 <div className="flex gap-2 flex-wrap">
                   {userProfile.skills.map((skill) => (
@@ -115,14 +132,14 @@ export default function ProfilePreview({
           </div>
 
           {/* Right Column - Content */}
-          <div className="flex-1 space-y-6">
+          <div className="w-[78.65%] space-y-6">
             {/* About Me */}
             {userProfile?.bio && (
               <div>
                 <h3 className="text-lg font-semibold text-gray-400 mb-2">
                   About Me
                 </h3>
-                <p className="text-gray-300">{userProfile?.bio}</p>
+                <p className="text-gray-300 text-sm">{userProfile?.bio}</p>
               </div>
             )}
 
@@ -255,9 +272,9 @@ export default function ProfilePreview({
                 <div className="flex flex-wrap gap-4">
                   {userProfile.links
                     .filter((link) => link.pinned)
-                    .map((link, index) => (
+                    .map((link,index) => (
                       <div
-                        key={index}
+                        key={link.url + index}
                         className="w-[302px] rounded-[4px] pt-5 bg-[#1E293B] px-3 h-[132px] flex flex-col justify-start items-start"
                       >
                         <div className="flex mx-1 justify-start items-center">
@@ -298,7 +315,7 @@ export default function ProfilePreview({
                 <h3 className="text-lg font-semibold text-gray-400 mb-2">
                   Additional Info
                 </h3>
-                <p className="text-gray-300">{userProfile.additionalInfo}</p>
+                <p className="text-gray-300 text-sm">{userProfile.additionalInfo}</p>
               </div>
             )}
 

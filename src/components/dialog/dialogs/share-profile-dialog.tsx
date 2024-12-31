@@ -3,10 +3,12 @@ import { UserProfileFull } from "@/services/types";
 import { useToastStore } from "@/components/toast/store";
 import { maskWalletAddress } from "@/utils/wallet-adress";
 import { calculateMostPlayedRole, formatDate } from "@/utils/common";
-import html2canvas from "html2canvas";
 import ProfilePreview from "@/app/[lng]/(authed)/settings/extra/component/profile-preview";
 import { useClerk } from "@clerk/nextjs";
 import { User } from "@clerk/nextjs/server";
+import { useCallback, useRef, useState } from 'react';
+import html2canvas from 'html2canvas';
+import Image from 'next/image';
 
 interface ShareProfileDialogProps {
   data: {
@@ -22,6 +24,8 @@ export default function ShareProfileDialog({
   const addToast = useToastStore((s) => s.add);
   const { userProfile } = data;
   const user = useClerk().user;
+  const previewRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const handleCopyLink = () => {
     const profileUrl = `${window.location.origin}/en/user/${userProfile.id}`;
@@ -35,91 +39,74 @@ export default function ShareProfileDialog({
     });
   };
 
-  const handleDownloadPicture = async () => {
+  const handleDownloadPicture = useCallback(async () => {
+    if (isGenerating) return;
+    setIsGenerating(true);
+
     try {
-      // Create a temporary div to render the profile preview
-      const tempDiv = document.createElement('div');
-      tempDiv.style.position = 'absolute';
-      tempDiv.style.left = '-9999px';
-      tempDiv.style.width = '1200px'; // Fixed width for better quality
-      tempDiv.style.height = 'auto'; // Let height be determined by content
-      document.body.appendChild(tempDiv);
+      if (!previewRef.current) return;
 
-      // Render the ProfilePreview component into the temp div
-      const previewRoot = document.createElement('div');
-      previewRoot.style.backgroundColor = '#04051B';
-      previewRoot.style.padding = '20px';
-      previewRoot.style.width = '100%';
-      previewRoot.style.minHeight = '100%';
-      previewRoot.style.display = 'flex';
-      previewRoot.style.flexDirection = 'column';
-      tempDiv.appendChild(previewRoot);
+      // 预加载所有图片
+      // const images = Array.from(previewRef.current.getElementsByTagName('img'));
+      // await Promise.all(
+      //   images.map(
+      //     (img) =>
+      //       new Promise((resolve) => {
+      //         if (img.complete) {
+      //           resolve(null);
+      //         } else {
+      //           img.onload = () => resolve(null);
+      //           img.onerror = () => resolve(null);
+      //         }
+      //       })
+      //   )
+      // );
 
-      // Create a React root and render the ProfilePreview
-      const ReactDOM = (await import("react-dom/client")).default;
-      const root = ReactDOM.createRoot(previewRoot);
-      root.render(
-        <ProfilePreview
-          user={user as unknown as User}
-          userProfile={userProfile}
-          onBack={() => {}}
-        />,
-      );
-
-      // Wait for images and layout to load
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Get the actual height of the content
-      const actualHeight = previewRoot.getBoundingClientRect().height;
-      tempDiv.style.height = `${actualHeight}px`;
-
-      // Use html2canvas to capture the preview
-      const canvas = await html2canvas(previewRoot, {
+      const canvas = await html2canvas(previewRef.current, {
         backgroundColor: "#04051B",
-        scale: 2, // Higher scale for better quality
-        logging: false,
+        scale: 2,
         useCORS: true,
-        width: 1200,
-        height: actualHeight,
-        windowWidth: 1200,
-        windowHeight: actualHeight,
+        allowTaint: true,
+        logging: false,
+        onclone: (clonedDoc) => {
+          const clonedElement = clonedDoc.getElementById(previewRef.current?.id || '');
+          if (clonedElement) {
+            clonedElement.style.transform = 'none';
+            clonedElement.style.width = '1200px';
+            clonedElement.style.height = 'auto';
+          }
+        }
       });
 
-      // Convert to blob
       canvas.toBlob((blob) => {
         if (blob) {
-          // Create download link
           const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = `${userProfile.userName || userProfile.id}-profile.png`;
-          document.body.appendChild(a);
-          a.click();
-
-          // Cleanup
-          document.body.removeChild(a);
+          const link = document.createElement('a');
+          link.download = `${userProfile.userName || userProfile.id}-profile.png`;
+          link.href = url;
+          link.click();
           URL.revokeObjectURL(url);
-          root.unmount();
-          document.body.removeChild(tempDiv);
 
           addToast({
             type: "success",
             title: "Picture Downloaded",
             description: "Profile picture has been downloaded",
           });
-        }
-      }, "image/png");
 
-      close();
+          close();
+        }
+      }, 'image/png');
     } catch (error) {
-      console.error("Error generating profile picture:", error);
+      console.error("Error details:", error);
       addToast({
         type: "error",
         title: "Error",
         description: "Failed to generate profile picture",
       });
+    } finally {
+      setIsGenerating(false);
     }
-  };
+  }, [userProfile.userName, userProfile.id, addToast, close, isGenerating]);
 
   const handleCopyMarkdown = () => {
     const profileUrl = `${window.location.origin}/en/user/${userProfile.id}`;
@@ -127,9 +114,8 @@ export default function ShareProfileDialog({
 
     // Generate markdown content based on profile data
     const markdown = [
-      `# ${userProfile.userName || userProfile.id}`,
       `\n## Basic Info`,
-      `- 👤 Username: ${userProfile.userName || "N/A"}`,
+      `- 👤 Username: ${user?.username || "N/A"}`,
       `- 🔗 Wallet: ${maskWalletAddress(userProfile.walletAddress)}`,
       `- 📅 Member Since: ${formatDate(userProfile.createdAt)}`,
       `- 👥 Teammates: ${userProfile.teamMembers?.length || 0}`,
@@ -191,21 +177,54 @@ export default function ShareProfileDialog({
   };
 
   return (
-    <div className="p-6 min-w-[300px]">
-      <h2 className="text-xl font-semibold mb-4">Share Profile</h2>
-      <div className="flex flex-col gap-3">
-        <button className="btn btn-primary w-full" onClick={handleCopyLink}>
-          Copy Link
-        </button>
-        <button
-          className="btn btn-primary w-full"
-          onClick={handleDownloadPicture}
+    <div className="p-6 relative font-secondary flex justify-center items-center w-[436px] h-[236px]">
+      <h2 className="text-xl absolute top-5 left-5 text-white mb-4">Share</h2>
+      <div className="flex justify-center gap-8">
+        <button 
+          onClick={handleCopyLink}
+          className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          Download Picture
+          <div className="w-12 h-12 flex items-center justify-center bg-transparent rounded-lg">
+            <Image
+              src="/icons/copy-link.svg"
+              alt="Copy Link"
+              width={36}
+              height={36}
+            />
+          </div>
+          <span className="text-base text-white">Copy Link</span>
         </button>
-        <button className="btn btn-primary w-full" onClick={handleCopyMarkdown}>
-          Copy Markdown
+
+        <button 
+          onClick={handleCopyMarkdown}
+          className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
+        >
+          <div className="w-12 h-12 flex items-center justify-center bg-transparent rounded-lg">
+            <Image
+              src="/icons/markdown.svg"
+              alt="Markdown"
+              width={36}
+              height={36}
+            />
+          </div>
+          <span className="text-base text-white">Markdown</span>
         </button>
+
+        {/* <button 
+          onClick={handleDownloadPicture}
+          disabled={isGenerating}
+          className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
+        >
+          <div className="w-12 h-12 flex items-center justify-center bg-[#1E293B] rounded-lg">
+            <Image
+              src="/icons/picture.svg"
+              alt="Download Picture"
+              width={24}
+              height={24}
+            />
+          </div>
+          <span className="text-sm text-[#94A3B8]">{isGenerating ? 'Generating...' : 'Download Picture'}</span>
+        </button> */}
       </div>
     </div>
   );
