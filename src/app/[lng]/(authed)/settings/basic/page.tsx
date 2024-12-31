@@ -23,13 +23,17 @@ export default function Page() {
   const { data: socialConnections, isLoading } = useFetchUserSocialConnections(user?.id);
   const { data: userProfile } = useFetchUser(user?.id);
   const [telegramId, setTelegramId] = useState("");
+  const [twitterId, setTwitterId] = useState("");
   const addToast = useToastStore((s) => s.add);
 
   useEffect(() => {
     if (userProfile?.telegramLink) {
       setTelegramId(userProfile.telegramLink);
     }
-  }, [userProfile?.telegramLink]);
+    if (userProfile?.twitterLink) {
+      setTwitterId(userProfile.twitterLink);
+    }
+  }, [userProfile?.telegramLink, userProfile?.twitterLink]);
 
   useLoadingWhen(isLoading);
 
@@ -64,6 +68,26 @@ export default function Page() {
     } catch (error) {
       addToast({
         title: "Failed to update Telegram ID",
+        type: "error"
+      });
+    } finally {
+      dismissLoading();
+    }
+  };
+
+  const updateTwitter = async () => {
+    showLoading();
+    try {
+      await updateProfileMutation.mutateAsync({
+        twitterLink: twitterId
+      });
+      addToast({
+        title: "Twitter ID updated successfully",
+        type: "success"
+      });
+    } catch (error) {
+      addToast({
+        title: "Failed to update Twitter ID",
         type: "error"
       });
     } finally {
@@ -180,6 +204,38 @@ export default function Page() {
                 className="btn btn-secondary"
                 onClick={updateTelegram}
                 disabled={!telegramId || telegramId === userProfile?.telegramLink}
+              >
+                Save
+              </button>
+            </div>
+          </div>
+
+          {/* Twitter Section */}
+          <div className="rounded-md p-4 border border-gray-800 bg-night flex items-center gap-4">
+            <div className="flex items-center justify-center w-10 h-10 rounded-md bg-latenight">
+              <Image
+                src="/icons/twitter.svg"
+                width={24}
+                height={24}
+                alt="Twitter"
+              />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-white">Twitter</p>
+              <div className="mt-1">
+                <Input
+                  placeholder="Enter your twitter handle"
+                  value={twitterId}
+                  onChange={(e) => setTwitterId(e.target.value)}
+                  className="bg-night text-white border-gray-800 rounded-sm placeholder-gray-600"
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className="btn btn-secondary"
+                onClick={updateTwitter}
+                disabled={!twitterId || twitterId === userProfile?.twitterLink}
               >
                 Save
               </button>
