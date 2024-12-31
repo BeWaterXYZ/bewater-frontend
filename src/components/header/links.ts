@@ -25,7 +25,7 @@ export const user: MenuItemType[] = [
     path: "/profile",
   },
   {
-    label: "Account Settings",
+    label: "Builder Profile",
     path: "/settings",
   },
 ];

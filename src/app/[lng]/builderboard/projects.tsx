@@ -265,12 +265,12 @@ export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
     <>
       <div className={`${rowStyle} py-2`} />
 
-      {(ecosystem || sector) && (
+      {/* {(ecosystem || sector) && (
         <div className="py-4 text-sm text-gray-400">
           {ecosystem && <span className="mr-4">Ecosystem: {ecosystem}</span>}
           {sector && <span>Sector: {sector}</span>}
         </div>
-      )}
+      )} */}
 
       {(displayData ?? []).map((data, index) => (
         <Project data={data} rank={index + 1} key={index} />

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "ts-node src/index.ts",
-    "sync": "npm run build && npm start",
+    "sync": "npm run build && npm start bewater_syncer_resources.csv",
     "generate-tags": "npm run build && node dist/generate_ranking_tags.js",
     "dev": "ts-node-dev --respawn src/index.ts"
   },

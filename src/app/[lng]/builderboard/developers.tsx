@@ -34,7 +34,7 @@ const languageColors: { [key: string]: string } = {
 
 function Developer(props: { data: BuilderboardDeveloper; rank: number }) {
   const { data, rank } = props;
-  const popularRepo = JSON.parse(data.popular_repo as unknown as string || '{}');
+  const popularRepo = data.popular_repo;
   // 确保只显示前三种语言
   const topLanguages = popularRepo.languages?.slice(0, 3) || [];
   
@@ -299,12 +299,12 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
     <>
       <div className={`${rowStyle} py-2`} />
       
-      {(ecosystem || sector) && (
+      {/* {(ecosystem || sector) && (
         <div className="py-4 text-sm text-gray-400">
           {ecosystem && <span className="mr-4">Ecosystem: {ecosystem}</span>}
           {sector && <span>Sector: {sector}</span>}
         </div>
-      )}
+      )} */}
 
       {(displayData ?? []).map((data, index) => (
         <Developer
