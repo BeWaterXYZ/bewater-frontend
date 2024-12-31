@@ -6,15 +6,30 @@ import Image from "next/image";
 import { getOAuthUrl } from "@/services/auth";
 import { 
   useFetchUserSocialConnections,
-  useMutationDisconnectSocialConnection 
+  useMutationDisconnectSocialConnection,
+  useMutationUpdateUserProfile,
+  useFetchUser
 } from "@/services/user.query";
 import { useLoadingStoreAction, useLoadingWhen } from "@/components/loading/store";
+import { useState, useEffect } from "react";
+import { Input } from "@/components/form/control";
+import { useToastStore } from "@/components/toast/store";
 
 export default function Page() {
   const user = useClerk().user;
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const mutation = useMutationDisconnectSocialConnection();
+  const updateProfileMutation = useMutationUpdateUserProfile();
   const { data: socialConnections, isLoading } = useFetchUserSocialConnections(user?.id);
+  const { data: userProfile } = useFetchUser(user?.id);
+  const [telegramId, setTelegramId] = useState("");
+  const addToast = useToastStore((s) => s.add);
+
+  useEffect(() => {
+    if (userProfile?.telegramLink) {
+      setTelegramId(userProfile.telegramLink);
+    }
+  }, [userProfile?.telegramLink]);
 
   useLoadingWhen(isLoading);
 
@@ -31,6 +46,26 @@ export default function Page() {
     showLoading();
     try {
       await mutation.mutateAsync(platform);
+    } finally {
+      dismissLoading();
+    }
+  };
+
+  const updateTelegram = async () => {
+    showLoading();
+    try {
+      await updateProfileMutation.mutateAsync({
+        telegramLink: telegramId
+      });
+      addToast({
+        title: "Telegram ID updated successfully",
+        type: "success"
+      });
+    } catch (error) {
+      addToast({
+        title: "Failed to update Telegram ID",
+        type: "error"
+      });
     } finally {
       dismissLoading();
     }
@@ -118,6 +153,38 @@ export default function Page() {
               </div>
             );
           })}
+
+          {/* Telegram Section */}
+          <div className="rounded-md p-4 border border-gray-800 bg-night flex items-center gap-4">
+            <div className="flex items-center justify-center w-10 h-10 rounded-md bg-latenight">
+              <Image
+                src="/icons/telegram.svg"
+                width={24}
+                height={24}
+                alt="Telegram"
+              />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-medium text-white">Telegram</p>
+              <div className="mt-1">
+                <Input
+                  placeholder="Enter your telegram id"
+                  value={telegramId}
+                  onChange={(e) => setTelegramId(e.target.value)}
+                  className="bg-night text-white border-gray-800 rounded-sm placeholder-gray-600"
+                />
+              </div>
+            </div>
+            <div>
+              <button
+                className="btn btn-secondary"
+                onClick={updateTelegram}
+                disabled={!telegramId || telegramId === userProfile?.telegramLink}
+              >
+                Save
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

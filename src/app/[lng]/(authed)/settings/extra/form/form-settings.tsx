@@ -256,16 +256,18 @@ export const FormUserSettings = ({
     >
       {/* Bio Card */}
       <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
-        <div className="text-white whitespace-nowrap w-20">About me</div>
-        <div className="flex-1">
-          <TextArea
-            label={<span className="text-white">content</span>}
-            maxLength={1000}
-            rows={3}
-            placeholder="Introduce yourself :)"
-            error={errors["bio"]}
-            {...register("bio", { required: "Bio is required." })}
-          />
+        <div className="flex items-center gap-4">
+          <span className="text-white whitespace-nowrap w-20">About me</span>
+          <div className="flex-1">
+            <TextArea
+              label={<span className="text-white">content</span>}
+              maxLength={1000}
+              rows={3}
+              placeholder="Introduce yourself :)"
+              error={errors["bio"]}
+              {...register("bio", { required: "Bio is required." })}
+            />
+          </div>
         </div>
       </div>
 
@@ -296,21 +298,6 @@ export const FormUserSettings = ({
               control={control}
               hideError={true}
               {...register("skills")}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Telegram Card */}
-      <div className="border border-[#1E293B] bg-[#0B0C24] p-4">
-        <div className="flex items-center gap-4">
-          <span className="text-white whitespace-nowrap w-20">Telegram</span>
-          <div className="flex-1">
-            <Input
-              placeholder="Enter your telegram id"
-              error={errors["telegramLink"]}
-              hideError={true}
-              {...register("telegramLink")}
             />
           </div>
         </div>
