@@ -61,7 +61,9 @@
     "xlsx": "^0.18.5",
     "yet-another-react-lightbox": "^3.20.1",
     "zod": "^3.23.8",
-    "zustand": "^4.5.4"
+    "zustand": "^4.5.4",
+    "csv-parse": "^5.6.0",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
