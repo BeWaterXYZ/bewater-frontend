@@ -15,6 +15,7 @@ import { UserProfile, UserProfileFull } from "@/services/types";
 import { useToastStore } from "@/components/toast/store";
 import ProfilePreview from "./component/profile-preview";
 import { User } from "@clerk/nextjs/dist/types/server";
+import { useDialogStore } from "@/components/dialog/store";
 
 export default function Page() {
   const user = useClerk().user;
@@ -42,13 +43,8 @@ export default function Page() {
 
   const handleShare = () => {
     if (userProfile) {
-      const profileUrl = `${window.location.origin}/en/profile/${userProfile.id}`;
-      navigator.clipboard.writeText(profileUrl).then(() => {
-        addToast({
-          type: "success",
-          title: "Link Copied",
-          description: "Profile link has been copied to clipboard",
-        });
+      useDialogStore.getState().open("share_profile", {
+        userProfile: formData || userProfile,
       });
     }
   };

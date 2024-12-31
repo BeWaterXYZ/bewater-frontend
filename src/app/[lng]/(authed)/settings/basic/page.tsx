@@ -213,12 +213,14 @@ export default function Page() {
           {/* Twitter Section */}
           <div className="rounded-md p-4 border border-gray-800 bg-night flex items-center gap-4">
             <div className="flex items-center justify-center w-10 h-10 rounded-md bg-latenight">
-              <Image
-                src="/icons/twitter.svg"
-                width={24}
-                height={24}
-                alt="Twitter"
-              />
+              <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                <Image
+                  src="/icons/twitter.svg"
+                  width={16}
+                  height={16}
+                  alt="Twitter"
+                />
+              </div>
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-white">Twitter</p>

@@ -5,10 +5,15 @@ import {
   Project,
   Team,
   TeamID,
+  UserProfile,
+  UserProfileFull,
 } from "@/services/types";
 import { create } from "zustand";
 
 export type Dialogs = {
+  share_profile?: {
+    userProfile: UserProfileFull;
+  };
   metamask_not_support?: boolean;
   team_join?: Team;
   team_create?: { challenge?: Challenge; team?: Team & Project };

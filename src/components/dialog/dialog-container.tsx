@@ -19,6 +19,9 @@ type DialogMap = Record<
 >;
 
 const dialogMaps: DialogMap = {
+  share_profile: dynamicLoad(() => import("./dialogs/share-profile-dialog"), {
+    loading: () => <Loading />,
+  }),
   metamask_not_support: dynamicLoad(
     () => import("./dialogs/metamask-not-support")
   ),
