@@ -54,7 +54,7 @@ export default function Page() {
   };
 
   return (
-    <div className="container">
+    <div className="container font-secondary">
       {isPreviewMode ? (
         <ProfilePreview
           user={user as unknown as User}

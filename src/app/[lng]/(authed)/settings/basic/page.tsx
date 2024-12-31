@@ -96,7 +96,7 @@ export default function Page() {
   };
 
   return (
-    <div className="pt-8">
+    <div className="pt-8 font-secondary">
       <UserProfile
         appearance={{
           baseTheme: dark,
