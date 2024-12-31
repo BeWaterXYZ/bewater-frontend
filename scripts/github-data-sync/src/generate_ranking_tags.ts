@@ -9,19 +9,35 @@ const COLUMN_INDICES = {
   PROJECT_NAME: 2,
   PROJECT_TAG: 3,
   BUILDER_NAME: 4,
-  BUILDER_TAG: 5
+  BUILDER_TAG: 5,
+  REPO_URL: 1,  // repoUrl 列索引
+  CONTRIBUTORS: 9,  // contributors 列索引
+  TRACKS: 16  // Tracks 列索引
 };
 
-function generateRankingTagsSql(tags: Set<string>) {
-  const values = Array.from(tags).map(tag => {
-    return `(
+function generateRankingTagsSql(ecosystemTags: Set<string>, sectorTags: Set<string>) {
+  const values = [
+    // Ecosystem tags
+    ...Array.from(ecosystemTags).map(tag => {
+      return `(
       '${tag.replace(/'/g, "''")}',
       'ECOSYSTEM',
       NULL,
       NOW(),
       NOW()
     )`;
-  });
+    }),
+    // Sector tags
+    ...Array.from(sectorTags).map(tag => {
+      return `(
+      '${tag.replace(/'/g, "''")}',
+      'SECTOR',
+      NULL,
+      NOW(),
+      NOW()
+    )`;
+    })
+  ];
 
   if (values.length === 0) {
     return `
@@ -45,8 +61,34 @@ ON DUPLICATE KEY UPDATE
 `;
 }
 
+function generateProjectSectorsSql(projectSectors: Map<string, string[]>) {
+  const values = Array.from(projectSectors.entries()).map(([repoUrl, sectors]) => {
+    return `UPDATE operationProject 
+    SET sectors = '${JSON.stringify(sectors)}',
+        updatedAt = NOW()
+    WHERE repoUrl = '${repoUrl.replace(/'/g, "''")}'`;
+  });
+
+  if (values.length === 0) return '';
+
+  return values.join(';\n') + ';';
+}
+
+function generateDeveloperSectorsSql(developerSectors: Map<string, string[]>) {
+  const values = Array.from(developerSectors.entries()).map(([login, sectors]) => {
+    return `UPDATE operationDeveloper 
+    SET sectors = '${JSON.stringify(sectors)}',
+        updatedAt = NOW()
+    WHERE login = '${login.replace(/'/g, "''")}'`;
+  });
+
+  if (values.length === 0) return '';
+
+  return values.join(';\n') + ';';
+}
+
 async function main() {
-  console.log('Starting ranking tags SQL generation...\n');
+  console.log('Starting SQL generation...\n');
   
   const csvFile = process.argv[2];
   if (!csvFile) {
@@ -68,6 +110,9 @@ async function main() {
   console.log(lines.slice(0, 3).join('\n'));
 
   const ecosystemTags = new Set<string>();
+  const sectorTags = new Set<string>();
+  const projectSectors = new Map<string, string[]>();
+  const developerSectors = new Map<string, string[]>();
 
   // Skip header line
   for (let i = 1; i < lines.length; i++) {
@@ -77,34 +122,60 @@ async function main() {
     // Split the line by comma, but handle quoted values correctly
     const values = line.split(',').map(v => v.trim());
     
-    // Get tags from each tag column
-    const tags = [
-      values[COLUMN_INDICES.ORG_TAG],
-      values[COLUMN_INDICES.PROJECT_TAG],
-      values[COLUMN_INDICES.BUILDER_TAG]
-    ];
-    
-    tags.forEach(tag => {
-      if (tag && tag !== '') {
-        console.log(`Found tag: "${tag}"`);
-        ecosystemTags.add(tag);
+    // Get tracks
+    const tracks = values[COLUMN_INDICES.TRACKS];
+    if (!tracks || tracks === '') continue;
+
+    // Add to sector tags
+    const sectors = tracks.split(',').map(s => s.trim());
+    sectors.forEach(sector => {
+      if (sector && sector !== '') {
+        sectorTags.add(sector);
       }
     });
+
+    // Add to project sectors
+    const repoUrl = values[COLUMN_INDICES.REPO_URL];
+    if (repoUrl) {
+      projectSectors.set(repoUrl, sectors);
+    }
+
+    // Add to developer sectors
+    try {
+      const contributorsJson = values[COLUMN_INDICES.CONTRIBUTORS];
+      if (contributorsJson) {
+        const contributors = JSON.parse(contributorsJson);
+        contributors.forEach((contributor: any) => {
+          if (contributor.login) {
+            const existingSectors = developerSectors.get(contributor.login) || [];
+            const newSectors = [...new Set([...existingSectors, ...sectors])];
+            developerSectors.set(contributor.login, newSectors);
+          }
+        });
+      }
+    } catch (e) {
+      console.error(`Error parsing contributors for line ${i + 1}:`, e);
+    }
   }
 
-  // Generate ranking tags SQL
-  const tagsSql = generateRankingTagsSql(ecosystemTags);
+  // Generate SQL files
+  const tagsSql = generateRankingTagsSql(ecosystemTags, sectorTags);
   fs.writeFileSync(path.join(sqlOutputDir, 'ranking_tags.sql'), tagsSql);
+
+  const projectSectorsSql = generateProjectSectorsSql(projectSectors);
+  fs.writeFileSync(path.join(sqlOutputDir, 'project_sectors.sql'), projectSectorsSql);
+
+  const developerSectorsSql = generateDeveloperSectorsSql(developerSectors);
+  fs.writeFileSync(path.join(sqlOutputDir, 'developer_sectors.sql'), developerSectorsSql);
   
-  if (ecosystemTags.size > 0) {
-    console.log(`\nFound ${ecosystemTags.size} ecosystem tags:`);
-    console.log(Array.from(ecosystemTags).join(', '));
+  if (sectorTags.size > 0) {
+    console.log(`\nFound ${sectorTags.size} sector tags:`);
+    console.log(Array.from(sectorTags).join(', '));
   } else {
-    console.log('\nNo ecosystem tags found in the CSV file');
-    console.log('Please check if the CSV file has the correct format and contains Tags columns');
+    console.log('\nNo sector tags found in the CSV file');
   }
   
-  console.log('\nSQL file has been saved to:', path.join(sqlOutputDir, 'ranking_tags.sql'));
+  console.log('\nSQL files have been saved to:', sqlOutputDir);
   console.log('\nGeneration completed!');
 }
 
