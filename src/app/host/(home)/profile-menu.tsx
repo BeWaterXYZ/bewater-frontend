@@ -253,7 +253,7 @@ export default function ProfileMenu(props: {
                     />
                   </div>
                 </div>
-                <p>Builder Profile</p>
+                <p>Account Settings</p>
               </div>
             </Link>
             <div
