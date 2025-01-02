@@ -45,7 +45,8 @@ export const Footer = async (params: Props) => {
             </svg>
           </Link>
           <Link
-            href="https://t.co/oPJUASWXjh"
+            // href="https://t.co/oPJUASWXjh"
+            href="https://t.me/+PmvPLRAAsAFlYWQ1"
             target="_blank"
             className="fill-white/20 hover:fill-white"
           >
