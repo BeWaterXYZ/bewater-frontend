@@ -15,7 +15,7 @@ export const RoleSet = [
 
 export type RoleUnion = (typeof RoleSet)[number];
 
-const styleMap: Record<RoleUnion, string> = {
+export const styleMap: Record<RoleUnion, string> = {
   "Product Manager": "!bg-[#713F12] !border-[#A16207] border",
   Designer: "!bg-[#831843] !border-[#BE185D] border",
   "Frontend Developer": "!bg-[#14532D] !border-[#15803D] border",

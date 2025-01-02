@@ -5,10 +5,21 @@ import {
   Project,
   Team,
   TeamID,
+  UserProfile,
+  UserProfileFull,
 } from "@/services/types";
 import { create } from "zustand";
+import { User } from "@clerk/nextjs/server";
 
 export type Dialogs = {
+  share_profile?: {
+    userProfile: UserProfileFull;
+  };
+  profile_preview?: {
+    userProfile: UserProfileFull;
+    user: User | null | undefined;
+    onExport: () => void;
+  };
   metamask_not_support?: boolean;
   team_join?: Team;
   team_create?: { challenge?: Challenge; team?: Team & Project };
@@ -47,6 +58,15 @@ export type Dialogs = {
     tagOptions: string[];
     selectedTags: string[];
     setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
+  };
+  link_import?: {
+    onLinkAdd: (linkInfo: { icon: string; url: string; description: string }) => void;
+    editMode?: boolean;
+    initialData?: {
+      icon: string;
+      url: string;
+      description?: string;
+    };
   };
 };
 

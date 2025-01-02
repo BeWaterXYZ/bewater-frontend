@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useTranslation } from "@/app/i18n";
 import Menu from "./menu";
 import DesktopMenu from "./desktop-menu";
+import { headers } from "next/headers";
 export const BeWaterLogo = async (params: { lng: string }) => {
   const lng = (params || {}).lng ? params.lng : "en";
   // eslint-disable-next-line react-hooks/rules-of-hooks

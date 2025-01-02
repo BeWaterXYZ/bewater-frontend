@@ -10,6 +10,7 @@ export type UserID = string;
 export interface UserProfile {
   id: UserID;
   email: string;
+  createdAt: string;
   walletAddress: string;
   userName?: string;
   avatarURI?: string;
@@ -28,6 +29,20 @@ export interface UserProfile {
   aboutMe?: string;
   externalNa?: string;
   githubRepo?: GithubRepo[];
+  projects: Project[];
+  showChallenges?: boolean;
+  showTeamwork?: boolean;
+  showStats?: boolean;
+  links: Array<{
+    icon: string;
+    url: string;
+    description?: string;
+    pinned: boolean;
+  }>;
+  showAdditionalInfo?: boolean;
+  additionalInfo?: string;
+  showPinnedLinks?: boolean;
+  showPinnedProjects?: boolean;
 }
 
 export interface GithubRepo {
@@ -315,6 +330,7 @@ export interface Project {
   customSelect1?: string;
   customSelect2?: string;
   customSelect3?: string;
+  isPinned?: boolean;
 }
 
 export interface TeamMember {

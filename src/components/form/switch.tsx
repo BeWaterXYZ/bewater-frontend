@@ -18,7 +18,7 @@ export const SwitchRaw = ({
       <RSwitch.Root
         checked={checked}
         onCheckedChange={onCheckedChange}
-        className="bg-gray-200 w-[32px] h-5 rounded-full relative data-[state='checked']:bg-day mr-2"
+        className="bg-[#1E293B] w-[32px] h-5 rounded-full relative data-[state='checked']:bg-day mr-2"
         id={`switch-${id}`}
       >
         <RSwitch.Thumb className="w-4 h-4 block rounded-full translate-x-[2px] bg-white data-[state='checked']:translate-x-[14px] transition-transform" />

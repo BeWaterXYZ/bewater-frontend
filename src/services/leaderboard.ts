@@ -88,16 +88,94 @@ export interface LeaderboardDeveloper {
   }[];
 }
 
+export interface BuilderboardLanguage {
+  name: string;
+  percentage: number;
+}
+
+export interface BuilderboardDeveloper {
+  html_url: string; // GitHub 个人主页链接
+  avatar_url: string; // 头像 URL
+  login: string; // GitHub 用户名
+  total_stars: number; // 总 star 数
+  followers: number; // 关注者数量
+  bio: string | null; // 个人简介
+  popular_repo: {
+    // 最受欢迎的仓库
+    html_url: string;
+    name: string;
+    description: string | null;
+    languages: BuilderboardLanguage[]; // 仓库使用的语言列表
+  };
+}
+export interface BuilderboardContributor {
+  login: string;
+  avatar_url: string;
+}
+
+export interface BuilderboardProject {
+  repoName: string; // 仓库全名 (owner/repo)
+  name: string; // 仓库名称
+  description: string; // 仓库描述
+  languages: string[]; // 主要编程语言
+  stargazers_count: number; // star 数量
+  forks_count: number; // fork 数量
+  topics: string[]; // 项目标签
+  updated_at: string; // 最后更新时间
+  contributors: BuilderboardContributor[]; // 贡献者列表
+}
+
+export enum RankingTagType {
+  ECOSYSTEM = "ECOSYSTEM",
+  SECTOR = "SECTOR",
+}
+
+export interface RankingTag {
+  id: number;
+  name: string;
+  type: RankingTagType;
+  description?: string;
+}
+
+export async function getRankingTags() {
+  const { data } = await agentAuthed.get<RankingTag[]>(
+    `/billboard/ranking-tags`,
+  );
+  return data;
+}
+
 export async function getLeaderboardProject(limit: number) {
   const { data } = await agentAuthed.get<LeaderboardProject[]>(
-    `/billboard/project-list?limit=${limit}`
+    `/billboard/project-list?limit=${limit}`,
   );
   return data;
 }
 
 export async function getLeaderboardDeveloper(limit: number, language: string) {
   const { data } = await agentAuthed.get<LeaderboardDeveloper[]>(
-    `/billboard/developer-list?limit=${limit}&language=${language}`
+    `/billboard/developer-list?limit=${limit}&language=${language}`,
+  );
+  return data;
+}
+
+export async function getBuilderboardDeveloper(
+  limit: number,
+  ecosystem?: string,
+  sector?: string,
+) {
+  const { data } = await agentAuthed.get<BuilderboardDeveloper[]>(
+    `/billboard/operation/developer-list?limit=${limit}&ecosystem=${ecosystem}&sector=${sector}`,
+  );
+  return data;
+}
+
+export async function getBuilderboardProject(
+  limit: number,
+  ecosystem?: string,
+  sector?: string,
+) {
+  const { data } = await agentAuthed.get<BuilderboardProject[]>(
+    `/billboard/operation/project-list?limit=${limit}&ecosystem=${ecosystem}&sector=${sector}`,
   );
   return data;
 }

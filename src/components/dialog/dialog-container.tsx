@@ -4,6 +4,10 @@ import { Loading } from "../loading/loading";
 
 import { Dialog } from "./dialog";
 import { CloseDialogFunc, Dialogs, DialogsKeys } from "./store";
+import { useDialogStore } from "./store";
+import GithubRepoImportDialog from "./dialogs/github-repo-import";
+import LinkImportDialog from "./dialogs/link-import";
+
 interface DialogContainerProps {
   dialogs: Dialogs;
   closeDialog: CloseDialogFunc;
@@ -15,6 +19,12 @@ type DialogMap = Record<
 >;
 
 const dialogMaps: DialogMap = {
+  share_profile: dynamicLoad(() => import("./dialogs/share-profile-dialog"), {
+    loading: () => <Loading />,
+  }),
+  profile_preview: dynamicLoad(() => import("./dialogs/profile-preview-dialog"), {
+    loading: () => <Loading />,
+  }),
   metamask_not_support: dynamicLoad(
     () => import("./dialogs/metamask-not-support")
   ),
@@ -77,6 +87,9 @@ const dialogMaps: DialogMap = {
     loading: () => <Loading />,
   }),
   challenge_page_filter: dynamicLoad(() => import("./dialogs/challenge-filter"), {
+    loading: () => <Loading />,
+  }),
+  link_import: dynamicLoad(() => import("./dialogs/link-import"), {
     loading: () => <Loading />,
   }),
 };

@@ -9,7 +9,7 @@ const links = [
     path: "/settings/basic",
   },
   {
-    label: "Builder Settings",
+    label: "Builder Profile",
     path: "/settings/extra",
   },
 ] as const;
@@ -23,7 +23,7 @@ export function Nav({ lng }: { lng: string }) {
           key={link.path}
           href={`/${lng}${link.path}`}
           className={clsx(
-            "body-3 text-grey-400 p-3 lg:p-4 inline-block w-full rounded-sm text-center",
+            "body-3 text-grey-400 p-3 lg:p-4 inline-block w-full rounded-sm text-left",
             segment && link.path.includes(segment)
               ? "bg-grey-900 "
               : "border lg:border-none border-grey-800"
