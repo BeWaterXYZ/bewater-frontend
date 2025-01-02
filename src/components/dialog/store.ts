@@ -9,10 +9,16 @@ import {
   UserProfileFull,
 } from "@/services/types";
 import { create } from "zustand";
+import { User } from "@clerk/nextjs/server";
 
 export type Dialogs = {
   share_profile?: {
     userProfile: UserProfileFull;
+  };
+  profile_preview?: {
+    userProfile: UserProfileFull;
+    user: User | null | undefined;
+    onExport: () => void;
   };
   metamask_not_support?: boolean;
   team_join?: Team;

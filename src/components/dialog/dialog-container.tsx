@@ -22,6 +22,9 @@ const dialogMaps: DialogMap = {
   share_profile: dynamicLoad(() => import("./dialogs/share-profile-dialog"), {
     loading: () => <Loading />,
   }),
+  profile_preview: dynamicLoad(() => import("./dialogs/profile-preview-dialog"), {
+    loading: () => <Loading />,
+  }),
   metamask_not_support: dynamicLoad(
     () => import("./dialogs/metamask-not-support")
   ),

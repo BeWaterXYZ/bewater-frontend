@@ -4,11 +4,11 @@ import { useToastStore } from "@/components/toast/store";
 import { maskWalletAddress } from "@/utils/wallet-adress";
 import { calculateMostPlayedRole, formatDate } from "@/utils/common";
 import ProfilePreview from "@/app/[lng]/(authed)/settings/extra/component/profile-preview";
-import { useClerk } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
+import { useClerk, useUser } from "@clerk/nextjs";
 import { useCallback, useRef, useState } from 'react';
-import html2canvas from 'html2canvas';
 import Image from 'next/image';
+import { useDialogStore } from "../store";
+import { User } from "@clerk/nextjs/server";
 
 interface ShareProfileDialogProps {
   data: {
@@ -23,9 +23,8 @@ export default function ShareProfileDialog({
 }: ShareProfileDialogProps) {
   const addToast = useToastStore((s) => s.add);
   const { userProfile } = data;
-  const user = useClerk().user;
-  const previewRef = useRef<HTMLDivElement>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const { user } = useUser();
+  const { open } = useDialogStore((s) => s);
 
   const handleCopyLink = () => {
     const profileUrl = `${window.location.origin}/en/user/${userProfile.id}`;
@@ -39,74 +38,19 @@ export default function ShareProfileDialog({
     });
   };
 
-  const handleDownloadPicture = useCallback(async () => {
-    if (isGenerating) return;
-    setIsGenerating(true);
-
-    try {
-      if (!previewRef.current) return;
-
-      // 预加载所有图片
-      // const images = Array.from(previewRef.current.getElementsByTagName('img'));
-      // await Promise.all(
-      //   images.map(
-      //     (img) =>
-      //       new Promise((resolve) => {
-      //         if (img.complete) {
-      //           resolve(null);
-      //         } else {
-      //           img.onload = () => resolve(null);
-      //           img.onerror = () => resolve(null);
-      //         }
-      //       })
-      //   )
-      // );
-
-      const canvas = await html2canvas(previewRef.current, {
-        backgroundColor: "#04051B",
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        onclone: (clonedDoc) => {
-          const clonedElement = clonedDoc.getElementById(previewRef.current?.id || '');
-          if (clonedElement) {
-            clonedElement.style.transform = 'none';
-            clonedElement.style.width = '1200px';
-            clonedElement.style.height = 'auto';
-          }
-        }
-      });
-
-      canvas.toBlob((blob) => {
-        if (blob) {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.download = `${userProfile.userName || userProfile.id}-profile.png`;
-          link.href = url;
-          link.click();
-          URL.revokeObjectURL(url);
-
-          addToast({
-            type: "success",
-            title: "Picture Downloaded",
-            description: "Profile picture has been downloaded",
-          });
-
-          close();
-        }
-      }, 'image/png');
-    } catch (error) {
-      console.error("Error details:", error);
-      addToast({
-        type: "error",
-        title: "Error",
-        description: "Failed to generate profile picture",
-      });
-    } finally {
-      setIsGenerating(false);
-    }
-  }, [userProfile.userName, userProfile.id, addToast, close, isGenerating]);
+  const handleShowPreview = () => {
+    open("profile_preview", {
+      userProfile,
+      user: user as unknown as User,
+      onExport: () => {
+        addToast({
+          type: "success",
+          title: "Screenshot Reminder",
+          description: "Please use your system screenshot tool to capture the profile preview",
+        });
+      }
+    });
+  };
 
   const handleCopyMarkdown = () => {
     const profileUrl = `${window.location.origin}/en/user/${userProfile.id}`;
@@ -210,21 +154,20 @@ export default function ShareProfileDialog({
           <span className="text-base text-white">Markdown</span>
         </button>
 
-        {/* <button 
-          onClick={handleDownloadPicture}
-          disabled={isGenerating}
+        <button 
+          onClick={handleShowPreview}
           className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
         >
-          <div className="w-12 h-12 flex items-center justify-center bg-[#1E293B] rounded-lg">
+          <div className="w-12 h-12 flex items-center justify-center bg-transparent rounded-lg">
             <Image
               src="/icons/picture.svg"
               alt="Download Picture"
-              width={24}
-              height={24}
+              width={36}
+              height={36}
             />
           </div>
-          <span className="text-sm text-[#94A3B8]">{isGenerating ? 'Generating...' : 'Download Picture'}</span>
-        </button> */}
+          <span className="text-base text-white">Download Picture</span>
+        </button>
       </div>
     </div>
   );

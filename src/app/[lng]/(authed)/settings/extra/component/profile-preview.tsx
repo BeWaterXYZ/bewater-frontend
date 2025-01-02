@@ -16,7 +16,7 @@ import { TagRole, TagSkill } from "@/components/tag";
 interface ProfilePreviewProps {
   user: User | null | undefined;
   userProfile: UserProfileFull;
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 export default function ProfilePreview({
@@ -31,15 +31,17 @@ export default function ProfilePreview({
   const mostPlayedRole = calculateMostPlayedRole(userProfile?.teamMembers);
   return (
     <div className="bg-[#04051B] font-secondary">
-      <div className="flex items-center gap-3 my-2">
-        <button
-          className="btn btn-ghost border-none text-white"
-          onClick={onBack}
+      {onBack && (
+        <div className="flex items-center gap-3 my-2">
+          <button
+            className="btn btn-ghost border-none text-white"
+            onClick={onBack}
         >
           <ChevronLeftIcon className="w-5 h-5" />
           Back
-        </button>
-      </div>
+          </button>
+        </div>
+      )}
 
       <div className="border border-[#1E293B] rounded-lg p-6 bg-[#04051B]">
         <div className="flex gap-5 w-full">
