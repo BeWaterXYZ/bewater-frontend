@@ -1,48 +1,10 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const csv_parse_1 = require("csv-parse");
-const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
-const axios_1 = __importDefault(require("axios"));
-const dotenv_1 = require("dotenv");
+import { parse } from 'csv-parse';
+import * as fs from 'fs';
+import * as path from 'path';
+import axios from 'axios';
+import { config } from 'dotenv';
 // Load environment variables
-(0, dotenv_1.config)();
+config();
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 if (!GITHUB_TOKEN) {
     console.error('Please set GITHUB_TOKEN in .env file');
@@ -142,7 +104,7 @@ class TokenManager {
     async handleRateLimitError(token) {
         console.log(`Checking rate limit status for token ${token.slice(0, 8)}...${token.slice(-8)}`);
         try {
-            const response = await axios_1.default.get('https://api.github.com/rate_limit', {
+            const response = await axios.get('https://api.github.com/rate_limit', {
                 headers: {
                     Authorization: `token ${token}`,
                     Accept: 'application/vnd.github.v3+json',
@@ -235,7 +197,7 @@ if (tokens.length === 0) {
 }
 const tokenManager = new TokenManager(tokens);
 // Update the github axios instance to use token manager
-const github = axios_1.default.create({
+const github = axios.create({
     baseURL: 'https://api.github.com',
     headers: {
         Accept: 'application/vnd.github.v3+json',
@@ -749,7 +711,7 @@ async function main() {
     let hasValidToken = false;
     for (const token of tokens) {
         try {
-            const response = await axios_1.default.get('https://api.github.com/rate_limit', {
+            const response = await axios.get('https://api.github.com/rate_limit', {
                 headers: {
                     Authorization: `token ${token}`,
                     Accept: 'application/vnd.github.v3+json',
@@ -788,7 +750,7 @@ async function main() {
     const fileContent = fs.readFileSync(path.resolve(csvFile), 'utf-8');
     console.log('CSV file content preview:');
     console.log(fileContent.split('\n').slice(0, 3).join('\n'));
-    const parser = fs.createReadStream(path.resolve(csvFile)).pipe((0, csv_parse_1.parse)({
+    const parser = fs.createReadStream(path.resolve(csvFile)).pipe(parse({
         columns: false,
         skip_empty_lines: true,
         trim: true,
