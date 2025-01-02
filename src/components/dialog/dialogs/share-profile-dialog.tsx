@@ -5,8 +5,8 @@ import { maskWalletAddress } from "@/utils/wallet-adress";
 import { calculateMostPlayedRole, formatDate } from "@/utils/common";
 import ProfilePreview from "@/app/[lng]/(authed)/settings/extra/component/profile-preview";
 import { useClerk, useUser } from "@clerk/nextjs";
-import { useCallback, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useCallback, useRef, useState } from "react";
+import Image from "next/image";
 import { useDialogStore } from "../store";
 import { User } from "@clerk/nextjs/server";
 
@@ -45,10 +45,10 @@ export default function ShareProfileDialog({
       onExport: () => {
         addToast({
           type: "success",
-          title: "Screenshot Reminder",
-          description: "Please use your system screenshot tool to capture the profile preview",
+          title: "Download Complete",
+          description: "Profile image has been downloaded to your device",
         });
-      }
+      },
     });
   };
 
@@ -121,10 +121,10 @@ export default function ShareProfileDialog({
   };
 
   return (
-    <div className="p-6 relative font-secondary flex justify-center items-center w-[436px] h-[236px]">
-      <h2 className="text-xl absolute top-5 left-5 text-white mb-4">Share</h2>
+    <div className="p-6 font-secondary flex flex-col justify-center items-center w-[436px]">
+      <h2 className="self-start text-xl text-white my-4">Share</h2>
       <div className="flex justify-center gap-8">
-        <button 
+        <button
           onClick={handleCopyLink}
           className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
         >
@@ -139,7 +139,24 @@ export default function ShareProfileDialog({
           <span className="text-base text-white">Copy Link</span>
         </button>
 
-        <button 
+        <button
+          onClick={handleShowPreview}
+          className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
+        >
+          <div className="w-12 h-12 flex items-center justify-center bg-transparent rounded-lg">
+            <Image
+              src="/icons/download-pic.svg"
+              alt="Download Picture"
+              width={36}
+              height={36}
+            />
+          </div>
+          <span className="text-base text-white">Download Picture</span>
+        </button>
+      </div>
+      <h2 className="self-start text-xl text-white my-4">More</h2>
+      <div className="flex justify-center gap-8">
+        <button
           onClick={handleCopyMarkdown}
           className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
         >
@@ -152,21 +169,6 @@ export default function ShareProfileDialog({
             />
           </div>
           <span className="text-base text-white">Markdown</span>
-        </button>
-
-        <button 
-          onClick={handleShowPreview}
-          className="flex flex-col items-center gap-2 hover:opacity-80 transition-opacity"
-        >
-          <div className="w-12 h-12 flex items-center justify-center bg-transparent rounded-lg">
-            <Image
-              src="/icons/picture.svg"
-              alt="Download Picture"
-              width={36}
-              height={36}
-            />
-          </div>
-          <span className="text-base text-white">Download Picture</span>
         </button>
       </div>
     </div>
