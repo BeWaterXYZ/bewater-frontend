@@ -84,18 +84,18 @@ export default function ProfilePreviewDialog({
 
       // Create download link
       const link = document.createElement('a');
-      link.download = `${userProfile.userName || userProfile.id}-profile.png`;
+      link.download = `builder-profile.png`;
       link.href = dataUrl;
       link.click();
       
       onExport();
       close();
     } catch (error) {
-      console.error("Screenshot failed:", error);
+      console.error("Export failed:", error);
       addToast({
         type: "error",
-        title: "Screenshot failed",
-        description: "Please try again or use your system screenshot tool",
+        title: "Export failed",
+        description: "Please try again",
       });
     } finally {
       setIsCapturing(false);
