@@ -103,10 +103,10 @@ export default function ProfilePreviewDialog({
   };
 
   return (
-    <div className="p-6 relative font-secondary max-h-[90vh] flex flex-col">
+    <div className="p-6 relative font-secondary w-[90vw] max-w-[1200px] max-h-[90vh] flex flex-col">
       <h2 className="text-xl text-white mb-4">Profile Preview</h2>
-      <div className="flex-1 overflow-y-auto mb-4" ref={previewRef}>
-        <div ref={contentRef}>
+      <div className="flex-1 min-h-0 overflow-y-auto mb-4 custom-scrollbar" ref={previewRef}>
+        <div ref={contentRef} className="min-w-[1000px]">
           <ProfilePreview 
             userProfile={userProfile} 
             user={user} 
