@@ -17,6 +17,18 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
   const { data: ecosystemTags = [] } = useRankingTags(RankingTagType.ECOSYSTEM);
   const { data: sectorTags = [] } = useRankingTags(RankingTagType.SECTOR);
   
+  // Sort tags to put "Others" at the end
+  const sortTags = (tags: any[]) => {
+    return [...tags].sort((a, b) => {
+      if (a.name === "Other") return 1;
+      if (b.name === "Other") return -1;
+      return a.name.localeCompare(b.name);
+    });
+  };
+
+  const sortedEcosystemTags = sortTags(ecosystemTags);
+  const sortedSectorTags = sortTags(sectorTags);
+  
   useEffect(() => {
     onChange({ ecosystem: selectedEcosystem, sector: selectedSector });
   }, [onChange, selectedEcosystem, selectedSector]);
@@ -33,7 +45,7 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
           >
             All
           </p>
-          {ecosystemTags.map((tag) => (
+          {sortedEcosystemTags.map((tag) => (
             <p
               key={tag.id}
               className={clsx(
@@ -57,7 +69,7 @@ export default function TagSelector({ onChange }: TagSelectorProps) {
           >
             All
           </p>
-          {sectorTags.map((tag) => (
+          {sortedSectorTags.map((tag) => (
             <p
               key={tag.id}
               className={clsx(
