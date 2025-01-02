@@ -51,7 +51,7 @@ export default function ProfilePreview({
               <Image
                 src={user?.imageUrl || "/default-avatar.png"}
                 alt="Profile"
-                className="w-[180px] h-[180px] rounded-full mb-4"
+                className="w-[100px] h-[100px] lg:w-[180px] lg:h-[180px] rounded-full mb-4"
                 width={180}
                 height={180}
               />
