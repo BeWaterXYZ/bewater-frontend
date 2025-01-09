@@ -3,7 +3,7 @@ import { dark } from "@clerk/themes";
 
 export default function Page() {
   return (
-    <div className=" container  pt-20 flex flex-1 justify-center items-center min-h-[calc(100vh-80px)]">
+    <div className="container pt-20 flex flex-1 justify-center items-center min-h-[calc(100vh-80px)]">
       <SignIn
         afterSignUpUrl={"/onboarding"}
         appearance={{
@@ -18,12 +18,13 @@ export default function Page() {
             dividerRow: "",
             formFieldInput:
               "bg-night text-white border-gray-800 rounded-sm placeholder-gray-600",
-            formFieldLabel: "text-gray-500 ",
+            formFieldLabel: "text-gray-500",
             formFieldLabelRow: "mb-2",
             header: "text-xl gap-2",
             identityPreviewEditButton: "text-gray-500",
             formResendCodeLink:
               "text-day hover:text-[#00cccc] active:text-[#009999] rounded-none focus:shadow-none",
+            providerIcon__okx_wallet: "[background:radial-gradient(circle,_#fff_50%,_#000_50%)] scale-[1.5]",
           },
         }}
       />
