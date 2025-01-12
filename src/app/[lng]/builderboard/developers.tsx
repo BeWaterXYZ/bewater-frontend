@@ -5,8 +5,8 @@ import { useTranslation } from "@/app/i18n/client";
 import { BuilderboardDeveloper, BuilderboardLanguage } from "@/services/leaderboard";
 import { useBuilderboardDeveloper } from "@/services/leaderboard.query";
 
-const gridTemplate = "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
-const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
+const gridTemplate = "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const rowStyle = `grid gap-2 md:gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 // 添加语言颜色映射
 const languageColors: { [key: string]: string } = {
@@ -35,52 +35,54 @@ const languageColors: { [key: string]: string } = {
 function Developer(props: { data: BuilderboardDeveloper; rank: number }) {
   const { data, rank } = props;
   const popularRepo = data.popular_repo;
-  // 确保只显示前三种语言
   const topLanguages = popularRepo.languages?.slice(0, 3) || [];
   
   return (
-    <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
+    <div className={`${rowStyle} py-4 items-start md:items-center text-xs text-[#F8FAFC]`}>
       {/* Rank */}
-      <p className="text-base">#{rank}</p>
+      <p className="text-base hidden md:block">#{rank}</p>
 
       {/* Developer Info */}
       <div className="flex flex-col gap-2">
-        <a href={data.html_url} className="flex items-center gap-2">
-          <Image
-            src={data.avatar_url}
-            alt={data.login}
-            width={48}
-            height={48}
-            className="rounded-full"
-          />
-          <p className="font-bold text-base text-[#F8FAFC]">
-            {data.login}
-          </p>
-        </a>
-        <div className="flex gap-6 text-[#94A3B8]">
+        <div className="flex items-center gap-2">
+          <span className="md:hidden text-base">#{rank}</span>
+          <a href={data.html_url} className="flex items-center gap-2">
+            <Image
+              src={data.avatar_url}
+              alt={data.login}
+              width={48}
+              height={48}
+              className="rounded-full w-8 h-8 md:w-12 md:h-12"
+            />
+            <p className="font-bold text-sm md:text-base text-[#F8FAFC]">
+              {data.login}
+            </p>
+          </a>
+        </div>
+        <div className="flex gap-4 text-[#94A3B8] text-xs">
           <span>{data.total_stars} stars</span>
           <span>{data.followers} followers</span>
         </div>
-        <p className="text-sm text-[#94A3B8] line-clamp-2">
+        <p className="text-xs md:text-sm text-[#94A3B8] line-clamp-2">
           {data.bio}
         </p>
       </div>
 
       {/* Popular Repo */}
-      <div className="flex flex-col gap-2">
-        <a href={popularRepo?.html_url} className="font-bold text-base text-[#F8FAFC] hover:underline">
+      <div className="flex flex-col gap-2 mt-4 md:mt-0">
+        <a href={popularRepo?.html_url} className="font-bold text-sm md:text-base text-[#F8FAFC] hover:underline">
           {popularRepo?.name}
         </a>
-        <p className="text-sm text-[#94A3B8] line-clamp-2">
+        <p className="text-xs md:text-sm text-[#94A3B8] line-clamp-2">
           {popularRepo?.description}
         </p>
       </div>
 
       {/* Languages */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mt-4 md:mt-0">
         {topLanguages.map((lang: BuilderboardLanguage) => (
           <div key={lang.name} className="flex flex-col gap-1">
-            <span className="text-[#F8FAFC]">{lang.name}</span>
+            <span className="text-[#F8FAFC] text-xs">{lang.name}</span>
             <div className="h-1 bg-[#1E293B] rounded-full overflow-hidden">
               <div 
                 className="h-full rounded-full"

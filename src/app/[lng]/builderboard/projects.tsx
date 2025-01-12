@@ -7,8 +7,8 @@ import { BuilderboardProject } from "@/services/leaderboard";
 import { useBuilderboardProject } from "@/services/leaderboard.query";
 
 const gridTemplate =
-  "grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
-const rowStyle = `grid gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
+  "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+const rowStyle = `grid gap-2 md:gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 const USE_GITHUB_API =
   process.env.NEXT_PUBLIC_USE_BUILDERBOARD_GITHUB_API === "true";
@@ -155,47 +155,50 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
   const contributors = data.contributors || [];
 
   return (
-    <div className={`${rowStyle} py-4 items-center text-xs text-[#F8FAFC]`}>
+    <div className={`${rowStyle} py-4 items-start md:items-center text-xs text-[#F8FAFC]`}>
       {/* Rank */}
-      <p className="text-base">#{rank}</p>
+      <p className="text-base hidden md:block">#{rank}</p>
 
       {/* Project Info */}
       <div className="flex flex-col gap-2">
-        <a
-          href={`https://github.com/${data.repoName}`}
-          className="flex items-center font-bold text-base mb-2"
-        >
-          <div className="text-[#B4B4BB] mr-1">
-            <BookmarkIcon />
-          </div>
-          <p className="truncate" title={`${owner} / ${repo}`}>
-            <span className="text-[#94A3B8] mr-1">{owner}</span>
-            <span className="text-white mr-1">/</span>
-            <span>{repo}</span>
-          </p>
-        </a>
-        <p className="text-sm text-[#94A3B8] line-clamp-2">
+        <div className="flex items-center gap-2">
+          <span className="md:hidden text-base">#{rank}</span>
+          <a
+            href={`https://github.com/${data.repoName}`}
+            className="flex items-center font-bold text-sm md:text-base"
+          >
+            <div className="text-[#B4B4BB] mr-1">
+              <BookmarkIcon />
+            </div>
+            <p className="truncate" title={`${owner} / ${repo}`}>
+              <span className="text-[#94A3B8] mr-1">{owner}</span>
+              <span className="text-white mr-1">/</span>
+              <span>{repo}</span>
+            </p>
+          </a>
+        </div>
+        <p className="text-xs md:text-sm text-[#94A3B8] line-clamp-2">
           {data.description}
         </p>
       </div>
 
       {/* Stats & Tags */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mt-4 md:mt-0">
         <div className="flex items-center gap-2">
           <div className="text-[#919191]">
             <CodeSandboxLogoIcon />
           </div>
-          <span className="text-[#F8FAFC]">{data.languages[0] || "N/A"}</span>
+          <span className="text-[#F8FAFC] text-xs">{data.languages[0] || "N/A"}</span>
         </div>
-        <div className="flex gap-4 text-[#94A3B8]">
+        <div className="flex gap-4 text-[#94A3B8] text-xs">
           <span>{data.stargazers_count} stars</span>
           <span>{data.forks_count} forks</span>
         </div>
-        <p className="text-[#94A3B8] line-clamp-2">{data.topics.join(", ")}</p>
+        <p className="text-[#94A3B8] text-xs line-clamp-2">{data.topics.join(", ")}</p>
       </div>
 
       {/* Contributors & Activity */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 mt-4 md:mt-0">
         <div className="flex ml-2">
           {contributors.map((contributor: any, i: number) => (
             <a href={`https://github.com/${contributor.login}`} key={i}>
