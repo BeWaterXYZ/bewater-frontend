@@ -9,6 +9,7 @@ import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 import { useDialogStore } from "../store";
 import { User } from "@clerk/nextjs/server";
+import { isDEV } from "@/constants";
 
 interface ShareProfileDialogProps {
   data: {
@@ -16,6 +17,41 @@ interface ShareProfileDialogProps {
   };
   close: () => void;
 }
+
+
+export async function hashUserId(userId: string): Promise<string> {
+  if (userId === 'anonymous') return userId;
+
+  // 将字符串转换为 Uint8Array
+  const encoder = new TextEncoder();
+  const data = encoder.encode(userId);
+
+  // 使用 SHA-256 进行哈希
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+
+  // 将 buffer 转换为十六进制字符串
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  
+  // 返回前32位
+  return hashHex.slice(0, 32);
+}
+
+// 埋点函数
+const trackShareAction = async (actionType: 'copy_link' | 'download_picture' | 'copy_markdown', userId: string) => {
+  const hashedUserId = await hashUserId(userId);
+  
+  // @ts-ignore
+  window.gtag('event', 'share_complete', {
+    event_category: 'Share Flow',
+    event_label: `Share Method Selected - ${actionType}`,
+    flow_step: 'complete',
+    share_method: actionType,
+    user_hash: hashedUserId,
+    environment: isDEV ? 'development' : 'production',
+    is_production: !isDEV,
+  });
+};
 
 export default function ShareProfileDialog({
   data,
@@ -26,7 +62,9 @@ export default function ShareProfileDialog({
   const { user } = useUser();
   const { open } = useDialogStore((s) => s);
 
-  const handleCopyLink = () => {
+  const handleCopyLink = async () => {
+    const userId = user?.id || 'anonymous';
+    await trackShareAction('copy_link', userId);
     const profileUrl = `${window.location.origin}/en/user/${userProfile.id}`;
     navigator.clipboard.writeText(profileUrl).then(() => {
       addToast({
@@ -38,7 +76,9 @@ export default function ShareProfileDialog({
     });
   };
 
-  const handleShowPreview = () => {
+  const handleShowPreview = async () => {
+    const userId = user?.id || 'anonymous';
+    await trackShareAction('download_picture', userId);
     open("profile_preview", {
       userProfile,
       user: user as unknown as User,
@@ -52,7 +92,9 @@ export default function ShareProfileDialog({
     });
   };
 
-  const handleCopyMarkdown = () => {
+  const handleCopyMarkdown = async () => {
+    const userId = user?.id || 'anonymous';
+    await trackShareAction('copy_markdown', userId);
     const profileUrl = `${window.location.origin}/en/user/${userProfile.id}`;
     const mostPlayedRole = calculateMostPlayedRole(userProfile.teamMembers);
 

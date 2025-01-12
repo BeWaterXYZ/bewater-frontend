@@ -16,6 +16,8 @@ import { useToastStore } from "@/components/toast/store";
 import ProfilePreview from "./component/profile-preview";
 import { User } from "@clerk/nextjs/dist/types/server";
 import { useDialogStore } from "@/components/dialog/store";
+import { isDEV } from "@/constants";
+import { hashUserId } from "@/components/dialog/dialogs/share-profile-dialog";
 
 export default function Page() {
   const user = useClerk().user;
@@ -41,7 +43,23 @@ export default function Page() {
   if (isLoading || isLoading2) return null;
   if (!userProfile) return null;
 
-  const handleShare = () => {
+
+  const handleShare = async () => {
+    const pageName = 'Settings Page';
+    const userId = user?.id || 'anonymous';
+    const hashedUserId = await hashUserId(userId);
+
+    // 记录主分享按钮点击事件
+    // @ts-ignore
+    window.gtag('event', 'share_initiate', {
+      event_category: 'Share Flow',
+      event_label: `Share Dialog Open - ${pageName}`,
+      flow_step: 'initiate',
+      user_hash: hashedUserId,  // 使用哈希后的用户标识
+      environment: isDEV ? 'development' : 'production',
+      is_production: !isDEV,
+    });
+
     if (userProfile) {
       useDialogStore.getState().open("share_profile", {
         userProfile: formData || userProfile,
