@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useTranslation } from "@/app/i18n/client";
 import { BuilderboardDeveloper, BuilderboardLanguage } from "@/services/leaderboard";
 import { useBuilderboardDeveloper } from "@/services/leaderboard.query";
+import PageSwitcher from "./page-switcher";
+import { UpdateIcon, PersonIcon } from "@radix-ui/react-icons";
 
 const gridTemplate = "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
 const rowStyle = `grid gap-2 md:gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
@@ -266,11 +268,12 @@ interface DevelopersProps {
 const USE_GITHUB_API = process.env.NEXT_PUBLIC_USE_BUILDERBOARD_GITHUB_API === 'true';
 
 export default function Developers({ ecosystem, sector, lng }: DevelopersProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardDeveloper[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // 使用 API 的查询
-  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(20, ecosystem, sector);
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(100, ecosystem, sector);
 
   useEffect(() => {
     async function loadData() {
@@ -289,32 +292,58 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
     }
   }, [ecosystem, sector]);
 
-  
-  const displayLoading = USE_GITHUB_API ? loading:apiLoading;
-  const displayData = USE_GITHUB_API ?   data:apiData
+  // 当标签改变时重置页码
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [ecosystem, sector]);
+
+  const displayLoading = USE_GITHUB_API ? loading : apiLoading;
+  const displayData = USE_GITHUB_API ? data : apiData;
+
+  // 计算当前页的数据
+  const currentPageData = (displayData ?? []).slice(
+    ITEMS_PER_PAGE * (currentPage - 1),
+    ITEMS_PER_PAGE * currentPage
+  );
 
   if (displayLoading) {
-    return <div className="text-white">Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center py-20">
+        <UpdateIcon className="w-8 h-8 text-[#00FFFF] animate-spin" />
+        <p className="mt-4 text-[#94A3B8]">Loading developers...</p>
+      </div>
+    );
+  }
+
+  if (!displayData || displayData.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <PersonIcon className="w-12 h-12 text-[#475569] mb-4" />
+        <p className="text-[#94A3B8] mb-2">No developers found</p>
+      </div>
+    );
   }
 
   return (
     <>
       <div className={`${rowStyle} py-2`} />
-      
-      {/* {(ecosystem || sector) && (
-        <div className="py-4 text-sm text-gray-400">
-          {ecosystem && <span className="mr-4">Ecosystem: {ecosystem}</span>}
-          {sector && <span>Sector: {sector}</span>}
-        </div>
-      )} */}
 
-      {(displayData ?? []).map((data, index) => (
-        <Developer
+      {currentPageData.map((data, index) => (
+        data && <Developer
           data={data}
-          rank={index + 1}
-          key={index}
+          rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE}
+          key={data.login || index}
         />
       ))}
+
+      {displayData.length > 0 && (
+        <PageSwitcher
+          currentPage={currentPage}
+          rowsPerPage={ITEMS_PER_PAGE}
+          totalRows={displayData.length}
+          onPageChange={(p) => setCurrentPage(p)}
+        />
+      )}
     </>
   );
 }

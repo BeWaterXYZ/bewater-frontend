@@ -1,35 +1,20 @@
 import { useState } from "react";
-
 import clsx from "clsx";
-import { ChevronRightIcon, ChevronLeftIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import { ChevronRightIcon, ChevronLeftIcon } from "@radix-ui/react-icons";
 
-const chevron = "p-2 text-[#F8FAFC] cursor-pointer";
+const chevron = "p-3 text-[#F8FAFC] cursor-pointer";
 const chevronDisabled = `${chevron} !text-[#475569]`;
 const pageNum =
-  "w-5 h-5 py-[2px] text-[#64748B] text-center rounded-full cursor-pointer";
-const currentPageNum = `${pageNum} bg-[#00FFFF] text-[#1E293B]`;
-
-const rowsPerPageOptions = [
-  { value: 25, label: "25 rows" },
-  { value: 50, label: "50 rows" },
-  { value: 100, label: "100 rows" },
-];
+  "w-8 h-8 flex items-center justify-center text-[#64748B] rounded-full cursor-pointer text-base hover:bg-[#1E293B] transition-colors";
+const currentPageNum = `${pageNum} !bg-[#00FFFF] !text-[#1E293B] hover:bg-[#00FFFF]`;
 
 export default function PageSwitcher(props: {
   currentPage: number;
-  rowsPerPage: 25 | 50 | 100;
+  rowsPerPage: number;
   totalRows: number;
   onPageChange: (page: number) => void;
-  onRowsPerPageChange: (rowsPerPage: 25 | 50 | 100) => void;
 }) {
-  const {
-    currentPage,
-    rowsPerPage,
-    totalRows,
-    onPageChange,
-    onRowsPerPageChange,
-  } = props;
-  const [showRowsMenu, setShowRowsMenu] = useState(false);
+  const { currentPage, rowsPerPage, totalRows, onPageChange } = props;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
 
   const pageOptions = [1, 2, 3, 4, 5].map(
@@ -40,74 +25,45 @@ export default function PageSwitcher(props: {
   if (totalRows === 0) return null;
   
   return (
-    <>
-      <div className="mt-8 flex text-xs items-center justify-end">
-        <div className="flex gap-4 items-center mr-8">
-          <div
-            className={clsx({
-              [chevronDisabled]: currentPage === 1,
-              [chevron]: currentPage !== 1,
-            })}
-            onClick={() => currentPage !== 1 && onPageChange(currentPage - 1)}
-          >
-            {<ChevronLeftIcon/>}
-          </div>
-          <div className="flex gap-4">
-            {pageOptions.map((num) => (
-              <div
-                key={num}
-                className={clsx(
-                  num === currentPage ? currentPageNum : pageNum,
-                  {
-                    hidden: num > totalPages,
-                  }
-                )}
-                onClick={() => onPageChange(num)}
-              >
-                {num}
-              </div>
-            ))}
-          </div>
-          <div
-            className={clsx({
-              [chevronDisabled]: currentPage === totalPages,
-              [chevron]: currentPage !== totalPages,
-            })}
-            onClick={() =>
-              currentPage !== totalPages && onPageChange(currentPage + 1)
-            }
-          >
-            {<ChevronRightIcon/>}
-          </div>
-        </div>
+    <div className="mt-12 flex text-base items-center justify-center">
+      <div className="flex gap-6 items-center">
         <div
-          className="flex items-center select-none cursor-pointer"
-          onClick={() => setShowRowsMenu(!showRowsMenu)}
+          className={clsx({
+            [chevronDisabled]: currentPage === 1,
+            [chevron]: currentPage !== 1,
+          })}
+          onClick={() => currentPage !== 1 && onPageChange(currentPage - 1)}
         >
-          <p className="text-gray-50 mr-2">Show:</p>
-          <div className="flex items-center justify-between w-[12ch] rounded-sm border border-gray-200 py-1 px-2 bg-white text-xs text-gray-700">
-            <p className="mr-1">{rowsPerPage} rows</p>
-            <div>{<ChevronDownIcon/>}</div>
-          </div>
+          <ChevronLeftIcon className="w-5 h-5" />
         </div>
-      </div>
-      {showRowsMenu && (
-        <div className="float-right w-[14ch] rounded-sm border border-gray-200 bg-white text-xs text-gray-700">
-          {rowsPerPageOptions.map((option) => (
-            <p
-              key={option.value}
-              className="py-1 px-2 select-none cursor-pointer hover:bg-gray-200 transition-colors"
-              onClick={() => {
-                onRowsPerPageChange(option.value as 25 | 50 | 100);
-                onPageChange(1);
-                setShowRowsMenu(false);
-              }}
+        <div className="flex gap-4">
+          {pageOptions.map((num) => (
+            <div
+              key={num}
+              className={clsx(
+                num === currentPage ? currentPageNum : pageNum,
+                {
+                  hidden: num > totalPages,
+                }
+              )}
+              onClick={() => onPageChange(num)}
             >
-              {option.label}
-            </p>
+              {num}
+            </div>
           ))}
         </div>
-      )}
-    </>
+        <div
+          className={clsx({
+            [chevronDisabled]: currentPage === totalPages,
+            [chevron]: currentPage !== totalPages,
+          })}
+          onClick={() =>
+            currentPage !== totalPages && onPageChange(currentPage + 1)
+          }
+        >
+          <ChevronRightIcon className="w-5 h-5" />
+        </div>
+      </div>
+    </div>
   );
 } 
