@@ -1,10 +1,11 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
-import { BookmarkIcon, CodeSandboxLogoIcon } from "@radix-ui/react-icons";
+import { BookmarkIcon, CodeSandboxLogoIcon, UpdateIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
 import { BuilderboardProject } from "@/services/leaderboard";
 import { useBuilderboardProject } from "@/services/leaderboard.query";
+import PageSwitcher from "../../../app/[lng]/builderboard/page-switcher";
 
 const gridTemplate =
   "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
@@ -235,10 +236,12 @@ interface ProjectsProps {
 }
 
 export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardProject[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(20, ecosystem, sector);
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(100, ecosystem, sector);
 
   useEffect(() => {
     async function loadData() {
@@ -257,27 +260,58 @@ export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
     }
   }, [ecosystem, sector]);
 
+  // 当标签改变时重置页码
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [ecosystem, sector]);
+
   const displayLoading = USE_GITHUB_API ? loading : apiLoading;
   const displayData = USE_GITHUB_API ? data : apiData;
 
+  // 计算当前页的数据
+  const currentPageData = (displayData ?? []).slice(
+    ITEMS_PER_PAGE * (currentPage - 1),
+    ITEMS_PER_PAGE * currentPage
+  );
+
   if (displayLoading) {
-    return <div className="text-white">Loading...</div>;
+    return (
+      <div className="flex flex-col items-center justify-center py-20">
+        <UpdateIcon className="w-8 h-8 text-[#00FFFF] animate-spin" />
+        <p className="mt-4 text-[#94A3B8]">Loading projects...</p>
+      </div>
+    );
+  }
+
+  if (!displayData || displayData.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+        <CodeSandboxLogoIcon className="w-12 h-12 text-[#475569] mb-4" />
+        <p className="text-[#94A3B8] mb-2">No projects found</p>
+      </div>
+    );
   }
 
   return (
     <>
       <div className={`${rowStyle} py-2`} />
 
-      {/* {(ecosystem || sector) && (
-        <div className="py-4 text-sm text-gray-400">
-          {ecosystem && <span className="mr-4">Ecosystem: {ecosystem}</span>}
-          {sector && <span>Sector: {sector}</span>}
-        </div>
-      )} */}
-
-      {(displayData ?? []).map((data, index) => (
-        <Project data={data} rank={index + 1} key={index} />
+      {currentPageData.map((data, index) => (
+        data && <Project 
+          data={data} 
+          rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE} 
+          key={data.repoName || index} 
+        />
       ))}
+
+      {displayData.length > 0 && (
+        <PageSwitcher
+          currentPage={currentPage}
+          rowsPerPage={ITEMS_PER_PAGE}
+          totalRows={displayData.length}
+          onPageChange={(p) => setCurrentPage(p)}
+        />
+      )}
     </>
   );
 }
