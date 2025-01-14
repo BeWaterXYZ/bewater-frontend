@@ -83,7 +83,7 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
           <span className="md:hidden text-base">#{rank}</span>
           <a
             href={`https://github.com/${data.repoName}`}
-            className="flex items-center font-bold text-sm md:text-base"
+            className="flex items-center font-bold text-sm md:text-base truncate"
           >
             
             <div className="truncate" title={`${owner} / ${repo}`}>
@@ -92,7 +92,7 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
                 <span className="text-[#94A3B8] mr-1">{owner}</span>
               </div>
               
-              <span className="block">{repo}</span>
+              <span className="block truncate">{repo}</span>
             </div>
           </a>
         </div>
