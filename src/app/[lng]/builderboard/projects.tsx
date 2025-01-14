@@ -58,89 +58,6 @@ async function fetchTopProjects(): Promise<BuilderboardProject[]> {
       }),
     );
 
-    //     // 构建批量插入的 VALUES 部分
-    //     const values = projectsWithContributors.map(project => {
-    //       const [owner, repoName] = project.repoName.split('/');
-
-    //       const contributorsJson = `JSON_ARRAY(${project.contributors.map((contributor: { login: any; avatar_url: any; }) =>
-    //         `JSON_OBJECT('login', '${contributor.login}', 'avatar_url', '${contributor.avatar_url}')`
-    //       ).join(', ')})`;
-
-    //       const languagesJson = `JSON_ARRAY(${project.languages.map((lang: any) =>
-    //         `'${lang}'`
-    //       ).join(', ')})`;
-
-    //       const topicsJson = `JSON_ARRAY(${project.topics.map((topic: any) =>
-    //         `'${topic}'`
-    //       ).join(', ')})`;
-
-    //       // 随机决定是否包含 Ethereum 和 DeFi
-    //       const includeEthereum = Math.random() > 0.5;
-    //       const includeDefi = Math.random() > 0.5;
-
-    //       const ecosystemsJson = includeEthereum ?
-    //         `JSON_ARRAY('Ethereum')` :
-    //         'JSON_ARRAY()';
-
-    //       const sectorsJson = includeDefi ?
-    //         `JSON_ARRAY('DeFi')` :
-    //         'JSON_ARRAY()';
-
-    //       return `(
-    //         'https://github.com/${project.repoName}',
-    //         '${project.repoName}',
-    //         '${project.name}',
-    //         ${project.description ? `'${project.description.replace(/'/g, "''")}'` : 'NULL'},
-    //         ${languagesJson},
-    //         ${project.stargazers_count},
-    //         ${project.forks_count},
-    //         ${topicsJson},
-    //         ${contributorsJson},
-    //         '${project.updated_at}',
-    //         NOW(),
-    //         ${ecosystemsJson},
-    //         ${sectorsJson},
-    //         NOW(),
-    //         NOW()
-    //       )`;
-    //     }).join(',\n');
-
-    //     // 构建完整的批量插入 SQL
-    //     const sql = `
-    // INSERT INTO operationProject (
-    //   repoUrl,
-    //   repoName,
-    //   name,
-    //   description,
-    //   languages,
-    //   stargazers_count,
-    //   forks_count,
-    //   topics,
-    //   contributors,
-    //   updated_at,
-    //   created_at,
-    //   ecosystems,
-    //   sectors,
-    //   createdAt,
-    //   updatedAt
-    // ) VALUES
-    // ${values}
-    // ON DUPLICATE KEY UPDATE
-    //   name = VALUES(name),
-    //   description = VALUES(description),
-    //   languages = VALUES(languages),
-    //   stargazers_count = VALUES(stargazers_count),
-    //   forks_count = VALUES(forks_count),
-    //   topics = VALUES(topics),
-    //   contributors = VALUES(contributors),
-    //   updated_at = VALUES(updated_at),
-    //   updatedAt = NOW();
-    // `;
-
-    //     console.log('Batch SQL for all projects:');
-    //     console.log(sql);
-    //     console.log('----------------------------------------');
-
     return projectsWithContributors;
   } catch (error) {
     console.error("Error fetching GitHub data:", error);
@@ -168,14 +85,15 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
             href={`https://github.com/${data.repoName}`}
             className="flex items-center font-bold text-sm md:text-base"
           >
-            <div className="text-[#B4B4BB] mr-1">
-              <BookmarkIcon />
+            
+            <div className="truncate" title={`${owner} / ${repo}`}>
+              <div className="flex items-center">
+                <BookmarkIcon className="text-[#B4B4BB] mr-1" />
+                <span className="text-[#94A3B8] mr-1">{owner}</span>
+              </div>
+              
+              <span className="block">{repo}</span>
             </div>
-            <p className="truncate" title={`${owner} / ${repo}`}>
-              <span className="text-[#94A3B8] mr-1">{owner}</span>
-              <span className="text-white mr-1">/</span>
-              <span>{repo}</span>
-            </p>
           </a>
         </div>
         <p className="text-xs md:text-sm text-[#94A3B8] line-clamp-2">
