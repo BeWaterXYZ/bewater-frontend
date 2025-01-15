@@ -92,6 +92,12 @@ const dialogMaps: DialogMap = {
   link_import: dynamicLoad(() => import("./dialogs/link-import"), {
     loading: () => <Loading />,
   }),
+  builderboard_import: dynamicLoad(
+    () => import("./dialogs/builderboard-import"),
+    {
+      loading: () => <Loading />,
+    }
+  ),
 };
 
 export function DialogContainer({

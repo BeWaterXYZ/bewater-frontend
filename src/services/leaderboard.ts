@@ -179,3 +179,11 @@ export async function getBuilderboardProject(
   );
   return data;
 }
+
+export async function importGithubProject(repoUrl: string) {
+  const { data } = await agentAuthed.post<BuilderboardProject[]>(
+    `/billboard/operation/import-github-project`,
+    { repoUrl },
+  );
+  return data;
+}
