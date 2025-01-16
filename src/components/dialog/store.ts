@@ -11,7 +11,7 @@ import {
 import { create } from "zustand";
 import { User } from "@clerk/nextjs/server";
 
-export type Dialogs = {
+export interface Dialogs {
   share_profile?: {
     userProfile: UserProfileFull;
   };
@@ -60,7 +60,11 @@ export type Dialogs = {
     setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
   };
   link_import?: {
-    onLinkAdd: (linkInfo: { icon: string; url: string; description: string }) => void;
+    onLinkAdd: (linkInfo: {
+      icon: string;
+      url: string;
+      description: string;
+    }) => void;
     editMode?: boolean;
     initialData?: {
       icon: string;
@@ -68,7 +72,8 @@ export type Dialogs = {
       description?: string;
     };
   };
-};
+  builderboard_import?: {};
+}
 
 type State = {
   dialogs: Dialogs;
@@ -80,7 +85,7 @@ export type CloseDialogFunc = <T extends DialogsKeys>(name: T) => void;
 type Actions = {
   open: <T extends DialogsKeys>(
     name: T,
-    data: Dialogs[T] | ((v: Dialogs[T]) => Dialogs[T])
+    data: Dialogs[T] | ((v: Dialogs[T]) => Dialogs[T]),
   ) => void;
   close: CloseDialogFunc;
 };
