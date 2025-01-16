@@ -31,10 +31,10 @@ export default function BuilderBoard({
           <h1 className="!font-secondary heading-5 md:heading-3 text-white [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center mb-4">
             {t("builderboard.title")}
           </h1>
-          <p className="text-center text-gray-200 mb-12">
+          <p className="text-xs text-center text-gray-200 mb-12">
             Join Us in Building Builderboard:{" "}
             <a
-              className="text-day cursor-pointer"
+              className="text-day cursor-pointer underline"
               onClick={() => openDialog("builderboard_import", {})}
             >
               Add

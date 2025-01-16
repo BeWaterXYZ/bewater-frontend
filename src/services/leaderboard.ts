@@ -182,7 +182,7 @@ export async function getBuilderboardProject(
 
 export async function importGithubProject(repoUrl: string) {
   const { data } = await agentAuthed.post<BuilderboardProject[]>(
-    `/billboard/operation/import-github-project`,
+    `/billboard/import-github-project`,
     { repoUrl },
   );
   return data;

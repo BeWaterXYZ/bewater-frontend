@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Dialogs } from "../store";
 import { useImportGithubProject } from "@/services/leaderboard.query";
+import { AxiosError } from "axios";
 
 const schema = z.object({
   repoUrl: z.string()
@@ -39,6 +40,16 @@ export default function BuilderboardImportDialog({
   const onSubmit = async (formData: Inputs) => {
     showLoading();
     try {
+      const match = formData.repoUrl.match(/^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/?$/);
+      if (!match) {
+        addToast({
+          type: "error",
+          title: "Error",
+          description: "Please enter a valid GitHub repository URL (https://github.com/owner/repo)",
+        });
+        return;
+      }
+
       await importMutation.mutateAsync(formData.repoUrl);
       addToast({
         type: "success",
@@ -46,11 +57,11 @@ export default function BuilderboardImportDialog({
         description: "Project has been queued for import",
       });
       close();
-    } catch (error) {
+    } catch (error: any) {
       addToast({
         type: "error",
         title: "Error",
-        description: "Failed to import project. Please try again.",
+        description: error?.response?.data?.message || "Failed to import project. Please try again.",
       });
     } finally {
       dismissLoading();
@@ -65,29 +76,23 @@ export default function BuilderboardImportDialog({
         <img src="/icons/github.svg" alt="GitHub" className="w-16 h-16" />
       </div>
 
-      <p className="text-center text-gray-200 mb-6">
+      <p className="text-center text-white/70 mb-6">
         Information about verified projects and developers will be displayed on the Builderboard.
       </p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <Input
-          label="GitHub Repository URL"
+          // label="GitHub Repository URL"
+          inputClassName="h-12"
           placeholder="example: https://github.com/owner/repo"
           error={errors["repoUrl"]}
           {...register("repoUrl")}
         />
 
-        <div className="flex justify-end mt-6">
-          <button 
-            type="button" 
-            className="btn btn-secondary mr-2" 
-            onClick={close}
-          >
-            Cancel
-          </button>
+        <div className="flex justify-center mt-6">
           <button 
             type="submit" 
-            className="btn btn-primary"
+            className="btn btn-primary w-60"
           >
             Submit
           </button>
