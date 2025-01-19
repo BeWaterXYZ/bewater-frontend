@@ -7,7 +7,28 @@ INSERT INTO rankingTags (
   updatedAt
 ) VALUES 
 (
-      'Polkadot',
+      'EVM',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'COSMOS',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Other',
+      'ECOSYSTEM',
+      NULL,
+      NOW(),
+      NOW()
+    ),
+(
+      'Ton',
       'ECOSYSTEM',
       NULL,
       NOW(),
