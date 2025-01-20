@@ -30,7 +30,7 @@ export function GithubStatsDisplay({ project }: { project: Project }) {
         name="github"
         title="github"
         className="w-full h-[800px] md:h-[400px]"
-        src={`https://alpha.metatrust.io/score/bewater/radar?repoUrl=${project.githubURI}`}
+        src={`https://score.metatrust.io/bewater/radar?repoUrl=${project.githubURI}`}
       />
       <div className="flex flex-col gap-3">
         <div className="bg-latenight border border-grey-800 rounded-sm p-3 flex flex-col gap-2">
