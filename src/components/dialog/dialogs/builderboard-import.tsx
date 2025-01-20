@@ -70,7 +70,7 @@ export default function BuilderboardImportDialog({
 
   return (
     <div className="flex flex-col justify-center w-[80vw] max-w-md">
-      <h2 className="heading-6 mb-6 text-center">Upload Github Link</h2>
+      <h2 className="heading-6 mb-6 text-center">Submit Github Link</h2>
       
       <div className="flex justify-center mb-6">
         <img src="/icons/github.svg" alt="GitHub" className="w-16 h-16" />
