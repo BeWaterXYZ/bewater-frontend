@@ -344,6 +344,11 @@ function mergeEcosystems(existing, newEcosystem) {
 async function fetchRepoInfo(repoFullName, ecosystem, existingData) {
     // Process requests sequentially instead of using Promise.all
     const repo = await githubRequest(`/repos/${repoFullName}`);
+    // Skip forked repositories
+    if (repo.fork) {
+        console.log(`Skipping forked repository: ${repoFullName}`);
+        return null;
+    }
     await delay(REQUEST_DELAY);
     let contributors = [];
     try {
@@ -676,10 +681,27 @@ ON DUPLICATE KEY UPDATE
 }
 async function processOrganization(orgName, ecosystem) {
     console.log(`Processing organization: ${orgName}`);
-    const repos = await githubRequest(`/orgs/${orgName}/repos?per_page=100`);
-    // Filter out archived repos
-    const activeRepos = repos.filter(repo => !repo.archived);
-    console.log(`Found ${repos.length} total repos, ${activeRepos.length} active repos in ${orgName}`);
+    let page = 1;
+    const allRepos = [];
+    // Keep fetching until we get all repos
+    while (true) {
+        console.log(`Fetching page ${page} for organization ${orgName}...`);
+        const repos = await githubRequest(`/orgs/${orgName}/repos?per_page=100&page=${page}`);
+        if (!repos || repos.length === 0) {
+            break; // No more repos to fetch
+        }
+        allRepos.push(...repos);
+        if (repos.length < 100) {
+            break; // This was the last page
+        }
+        page++;
+        // Add a small delay to avoid hitting rate limits too quickly
+        await delay(REQUEST_DELAY);
+    }
+    console.log(`Found ${allRepos.length} total repos in ${orgName}`);
+    // Filter out archived and forked repos
+    const activeRepos = allRepos.filter(repo => !repo.archived && !repo.fork);
+    console.log(`Found ${allRepos.length} total repos, ${activeRepos.length} active non-forked repos in ${orgName}`);
     // 使用批量处理而不是串行处理
     const repoInfos = [];
     const batchSize = 5; // 每批处理5个仓库

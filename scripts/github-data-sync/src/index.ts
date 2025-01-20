@@ -44,6 +44,7 @@ interface GithubRepo {
   updated_at: string;
   contributors_url: string;
   archived: boolean;
+  fork: boolean;
   owner: {
     login: string;
   };
@@ -471,6 +472,13 @@ function mergeEcosystems(existing: string[], newEcosystem: string): string[] {
 async function fetchRepoInfo(repoFullName: string, ecosystem: string, existingData?: any) {
   // Process requests sequentially instead of using Promise.all
   const repo = await githubRequest<GithubRepo>(`/repos/${repoFullName}`);
+  
+  // Skip forked repositories
+  if (repo.fork) {
+    console.log(`Skipping forked repository: ${repoFullName}`);
+    return null;
+  }
+  
   await delay(REQUEST_DELAY);
   
   let contributors: Contributor[] = [];
@@ -817,11 +825,34 @@ ON DUPLICATE KEY UPDATE
 
 async function processOrganization(orgName: string, ecosystem: string) {
   console.log(`Processing organization: ${orgName}`);
-  const repos = await githubRequest<GithubRepo[]>(`/orgs/${orgName}/repos?per_page=100`);
+  let page = 1;
+  const allRepos: GithubRepo[] = [];
   
-  // Filter out archived repos
-  const activeRepos = repos.filter(repo => !repo.archived);
-  console.log(`Found ${repos.length} total repos, ${activeRepos.length} active repos in ${orgName}`);
+  // Keep fetching until we get all repos
+  while (true) {
+    console.log(`Fetching page ${page} for organization ${orgName}...`);
+    const repos = await githubRequest<GithubRepo[]>(`/orgs/${orgName}/repos?per_page=100&page=${page}`);
+    
+    if (!repos || repos.length === 0) {
+      break; // No more repos to fetch
+    }
+    
+    allRepos.push(...repos);
+    
+    if (repos.length < 100) {
+      break; // This was the last page
+    }
+    
+    page++;
+    // Add a small delay to avoid hitting rate limits too quickly
+    await delay(REQUEST_DELAY);
+  }
+  
+  console.log(`Found ${allRepos.length} total repos in ${orgName}`);
+  
+  // Filter out archived and forked repos
+  const activeRepos = allRepos.filter(repo => !repo.archived && !repo.fork);
+  console.log(`Found ${allRepos.length} total repos, ${activeRepos.length} active non-forked repos in ${orgName}`);
   
   // 使用批量处理而不是串行处理
   const repoInfos = [];
