@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "@/app/i18n/client";
+import { useSearchParams } from "next/navigation";
 import TagSelector from "./tag-selector";
 import Developers from "./developers";
 import Projects from "./projects";
@@ -17,12 +18,19 @@ export default function BuilderBoard({
   params: { lng: string };
 }) {
   const { t } = useTranslation(lng, "translation");
+  const searchParams = useSearchParams();
   const [currentTab, setCurrentTab] = useState("developers");
   const [selectedTags, setSelectedTags] = useState({
     ecosystem: "",
     sector: "",
   });
   const openDialog = useDialogStore((s) => s.open);
+
+  useEffect(() => {
+    if (searchParams.get('action') === 'add') {
+      openDialog("builderboard_import", {});
+    }
+  }, [searchParams, openDialog]);
 
   return (
     <div className="mb-[160px] font-secondary">
