@@ -159,31 +159,62 @@ export async function getLeaderboardDeveloper(limit: number, language: string) {
 }
 
 export async function getBuilderboardDeveloper(
-  limit: number,
+  limit?: number,
   ecosystem?: string,
   sector?: string,
-) {
-  const { data } = await agentAuthed.get<BuilderboardDeveloper[]>(
-    `/billboard/operation/developer-list?limit=${limit}&ecosystem=${ecosystem}&sector=${sector}`,
-  );
-  return data;
+  subEcosystem?: string,
+): Promise<BuilderboardDeveloper[]> {
+  try {
+    const params = new URLSearchParams();
+    if (limit) params.append("limit", limit.toString());
+    if (ecosystem) params.append("ecosystem", ecosystem);
+    if (sector) params.append("sector", sector);
+    if (subEcosystem) params.append("subEcosystem", subEcosystem);
+
+    const { data } = await agentAuthed.get<BuilderboardDeveloper[]>(
+      `/billboard/operation/developer-list?${params.toString()}`,
+    );
+    return data || []; // 确保返回空数组而不是 undefined
+  } catch (error) {
+    console.error("Error fetching developer data:", error);
+    return []; // 出错时返回空数组
+  }
 }
 
 export async function getBuilderboardProject(
-  limit: number,
+  limit?: number,
   ecosystem?: string,
   sector?: string,
-) {
-  const { data } = await agentAuthed.get<BuilderboardProject[]>(
-    `/billboard/operation/project-list?limit=${limit}&ecosystem=${ecosystem}&sector=${sector}`,
-  );
-  return data;
+  subEcosystem?: string,
+): Promise<BuilderboardProject[]> {
+  try {
+    const params = new URLSearchParams();
+    if (limit) params.append("limit", limit.toString());
+    if (ecosystem) params.append("ecosystem", ecosystem);
+    if (sector) params.append("sector", sector);
+    if (subEcosystem) params.append("subEcosystem", subEcosystem);
+
+    const { data } = await agentAuthed.get<BuilderboardProject[]>(
+      `/billboard/operation/project-list?${params.toString()}`,
+    );
+    console.log(data);
+    return data || []; // 确保返回空数组而不是 undefined
+  } catch (error) {
+    console.error("Error fetching project data:", error);
+    return []; // 出错时返回空数组
+  }
 }
 
-export async function importGithubProject(repoUrl: string) {
-  const { data } = await agentAuthed.post<BuilderboardProject[]>(
-    `/billboard/import-github-project`,
-    { repoUrl },
+export async function importGithubProject(params: {
+  repoUrl: string;
+  tags?: {
+    ecosystem?: string;
+    subEcosystem?: string;
+  };
+}): Promise<any> {
+  const { data } = await agentAuthed.post(
+    "/billboard/import-github-project",
+    params,
   );
   return data;
 }

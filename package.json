@@ -84,5 +84,13 @@
     "prettier": "^2.8.8",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.2"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@clerk/shared"
+    ],
+    "onlyBuiltDependencies": [
+      "@clerk/shared"
+    ]
   }
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "@/app/i18n/client";
 import { useSearchParams } from "next/navigation";
 import TagSelector from "./tag-selector";
@@ -12,6 +12,12 @@ const tab =
 const activeTab = "text-white border-[#00FFFF]";
 const inactiveTab = "text-[#FFFFFF80] border-transparent";
 
+interface SelectedTags {
+  ecosystem: string;
+  sector: string;
+  subEcosystem: string | undefined;
+}
+
 export default function BuilderBoard({
   params: { lng },
 }: {
@@ -20,11 +26,36 @@ export default function BuilderBoard({
   const { t } = useTranslation(lng, "translation");
   const searchParams = useSearchParams();
   const [currentTab, setCurrentTab] = useState("developers");
-  const [selectedTags, setSelectedTags] = useState({
+  const [selectedTags, setSelectedTags] = useState<SelectedTags>({
     ecosystem: "",
     sector: "",
+    subEcosystem: undefined
   });
+  
   const openDialog = useDialogStore((s) => s.open);
+  const isMovement = searchParams.get('category') === 'movement';
+
+  const handleTagsChange = useCallback((tags: { 
+    ecosystem: string; 
+    sector: string; 
+    subEcosystem?: string 
+  }) => {
+    setSelectedTags({
+      ecosystem: tags.ecosystem,
+      sector: tags.sector,
+      subEcosystem: tags.subEcosystem
+    });
+  }, []);
+
+  useEffect(() => {
+    if (isMovement) {
+      setSelectedTags(prev => ({
+        ...prev,
+        ecosystem: "Move",
+        subEcosystem: "Movement"
+      }));
+    }
+  }, [isMovement]);
 
   useEffect(() => {
     if (searchParams.get('action') === 'add') {
@@ -37,8 +68,15 @@ export default function BuilderBoard({
       <div className="container mx-auto py-20">
         <div className="flex flex-col items-center">
           <h1 className="!font-secondary heading-5 md:heading-3 text-white [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center mb-4">
-            {t("builderboard.title")}
+            {isMovement ? "Movement Projects & Developers" : t("builderboard.title")}
           </h1>
+          
+          {isMovement && (
+            <p className="text-sm text-center text-gray-200 mb-4">
+              Discover top Movement projects and developers
+            </p>
+          )}
+
           <p className="text-xs text-center text-gray-200 mb-12">
             Join Us in Building Builderboard:{" "}
             <a
@@ -47,7 +85,7 @@ export default function BuilderBoard({
             >
               Add
             </a>{" "}
-            Top Projects and Developers!
+            {isMovement ? "Movement Projects" : "Top Projects and Developers"}!
           </p>
 
           <div className="flex justify-center mb-[70px]">
@@ -70,12 +108,18 @@ export default function BuilderBoard({
           </div>
 
           <div className="w-full max-w-4xl">
-            <TagSelector onChange={setSelectedTags} />
+            <TagSelector 
+              onChange={handleTagsChange}
+              hideEcosystem={isMovement}
+              forcedEcosystem={isMovement ? "Move" : undefined}
+              forcedSubEcosystem={isMovement ? "Movement" : undefined}
+            />
             <div className="mt-[10px]">
               {currentTab === "developers" && (
                 <Developers
                   ecosystem={selectedTags.ecosystem}
                   sector={selectedTags.sector}
+                  subEcosystem={selectedTags.subEcosystem}
                   lng={lng}
                 />
               )}
@@ -83,6 +127,7 @@ export default function BuilderBoard({
                 <Projects
                   ecosystem={selectedTags.ecosystem}
                   sector={selectedTags.sector}
+                  subEcosystem={selectedTags.subEcosystem}
                   lng={lng}
                 />
               )}

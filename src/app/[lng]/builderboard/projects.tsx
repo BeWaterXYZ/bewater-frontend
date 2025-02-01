@@ -150,16 +150,22 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
 interface ProjectsProps {
   ecosystem: string;
   sector: string;
+  subEcosystem?: string | undefined;
   lng: string;
 }
 
-export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
+export default function Projects({ ecosystem, sector, subEcosystem, lng }: ProjectsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardProject[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(100, ecosystem, sector);
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(
+    100, 
+    ecosystem, 
+    sector,
+    subEcosystem
+  );
 
   useEffect(() => {
     async function loadData() {
@@ -176,12 +182,12 @@ export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
     if (USE_GITHUB_API) {
       loadData();
     }
-  }, [ecosystem, sector]);
+  }, [ecosystem, sector, subEcosystem]);
 
   // 当标签改变时重置页码
   useEffect(() => {
     setCurrentPage(1);
-  }, [ecosystem, sector]);
+  }, [ecosystem, sector, subEcosystem]);
 
   const displayLoading = USE_GITHUB_API ? loading : apiLoading;
   const displayData = USE_GITHUB_API ? data : apiData;
@@ -214,7 +220,7 @@ export default function Projects({ ecosystem, sector, lng }: ProjectsProps) {
     <>
       <div className={`${rowStyle} py-2`} />
 
-      {currentPageData.map((data, index) => (
+      {currentPageData.map((data: BuilderboardProject, index: number) => (
         data && <Project 
           data={data} 
           rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE} 
