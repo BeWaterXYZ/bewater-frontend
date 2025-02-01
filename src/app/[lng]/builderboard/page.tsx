@@ -68,7 +68,7 @@ export default function BuilderBoard({
       <div className="container mx-auto py-20">
         <div className="flex flex-col items-center">
           <h1 className="!font-secondary heading-5 md:heading-3 text-white [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center mb-4">
-            {isMovement ? "Movement Projects & Developers" : t("builderboard.title")}
+            {isMovement ? "Movement Buidlerboard" : t("builderboard.title")}
           </h1>
           
           {isMovement && (
