@@ -261,19 +261,25 @@ async function fetchTopDevelopers(): Promise<BuilderboardDeveloper[]> {
 interface DevelopersProps {
   ecosystem: string;
   sector: string;
+  subEcosystem?: string | undefined;
   lng: string;
 }
 
 
 const USE_GITHUB_API = process.env.NEXT_PUBLIC_USE_BUILDERBOARD_GITHUB_API === 'true';
 
-export default function Developers({ ecosystem, sector, lng }: DevelopersProps) {
+export default function Developers({ ecosystem, sector, subEcosystem, lng }: DevelopersProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardDeveloper[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(100, ecosystem, sector);
+  const { data: apiData, isLoading: apiLoading } = useBuilderboardDeveloper(
+    100, 
+    ecosystem, 
+    sector,
+    subEcosystem
+  );
 
   useEffect(() => {
     async function loadData() {
@@ -290,12 +296,12 @@ export default function Developers({ ecosystem, sector, lng }: DevelopersProps) 
     if (USE_GITHUB_API) {
       loadData();
     }
-  }, [ecosystem, sector]);
+  }, [ecosystem, sector, subEcosystem]);
 
   // 当标签改变时重置页码
   useEffect(() => {
     setCurrentPage(1);
-  }, [ecosystem, sector]);
+  }, [ecosystem, sector, subEcosystem]);
 
   const displayLoading = USE_GITHUB_API ? loading : apiLoading;
   const displayData = USE_GITHUB_API ? data : apiData;

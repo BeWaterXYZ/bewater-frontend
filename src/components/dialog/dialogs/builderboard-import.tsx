@@ -8,6 +8,7 @@ import { z } from "zod";
 import { Dialogs } from "../store";
 import { useImportGithubProject } from "@/services/leaderboard.query";
 import { AxiosError } from "axios";
+import { useSearchParams } from "next/navigation";
 
 const schema = z.object({
   repoUrl: z.string()
@@ -23,11 +24,14 @@ interface BuilderboardImportDialogProps {
 }
 
 export default function BuilderboardImportDialog({
+  data,
   close,
 }: BuilderboardImportDialogProps) {
   const { showLoading, dismissLoading } = useLoadingStoreAction();
   const addToast = useToastStore((s) => s.add);
   const importMutation = useImportGithubProject();
+  const searchParams = useSearchParams();
+  const isMovement = searchParams.get('category') === 'movement';
 
   const {
     register,
@@ -50,7 +54,17 @@ export default function BuilderboardImportDialog({
         return;
       }
 
-      await importMutation.mutateAsync(formData.repoUrl);
+      // 如果是 Movement 页面,自动添加标签
+      const tags = isMovement ? {
+        ecosystem: "Move",
+        subEcosystem: "Movement"
+      } : undefined;
+
+      await importMutation.mutateAsync({
+        repoUrl: formData.repoUrl,
+        tags
+      });
+      
       addToast({
         type: "success",
         title: "Success",
@@ -70,7 +84,9 @@ export default function BuilderboardImportDialog({
 
   return (
     <div className="flex flex-col justify-center w-[80vw] max-w-md">
-      <h2 className="heading-6 mb-6 text-center">Submit Github Link</h2>
+      <h2 className="heading-6 mb-6 text-center">
+        {isMovement ? "Submit Movement Project" : "Submit Github Link"}
+      </h2>
       
       <div className="flex justify-center mb-6">
         <img src="/icons/github.svg" alt="GitHub" className="w-16 h-16" />
