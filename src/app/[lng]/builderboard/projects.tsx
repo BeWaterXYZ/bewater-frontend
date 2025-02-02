@@ -72,6 +72,13 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
   const [owner, repo] = data.repoName.split("/");
   const contributors = data.contributors || [];
 
+  // Handle language display - ensure we're displaying a string
+  const primaryLanguage = Array.isArray(data.languages) && data.languages[0]
+    ? typeof data.languages[0] === 'string' 
+      ? data.languages[0]
+      : (data.languages[0] as any).name
+    : 'N/A';
+
   return (
     <div className={`${rowStyle} py-4 items-start md:items-center text-xs text-[#F8FAFC]`}>
       {/* Rank */}
@@ -107,7 +114,7 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
           <div className="text-[#919191]">
             <CodeSandboxLogoIcon />
           </div>
-          <span className="text-[#F8FAFC] text-xs">{data.languages[0] || "N/A"}</span>
+          <span className="text-[#F8FAFC] text-xs">{primaryLanguage}</span>
         </div>
         <div className="flex gap-4 text-[#94A3B8] text-xs">
           <span>{data.stargazers_count} stars</span>
