@@ -70,6 +70,9 @@ export default function Page() {
   const handlePreview = () => {
     setIsPreviewMode(true);
   };
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="container font-secondary">

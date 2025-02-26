@@ -1,7 +1,9 @@
 "use client";
+import { useClerk } from "@clerk/nextjs";
 import clsx from "clsx";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { redirect, useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useEffect } from "react";
 
 const links = [
   {
@@ -16,6 +18,11 @@ const links = [
 
 export function Nav({ lng }: { lng: string }) {
   let segment = useSelectedLayoutSegment();
+  const clerk = useClerk();
+  
+  if (!clerk.user) {
+    return null;
+  }
   return (
     <nav className=" w-full flex flex-row lg:flex-col gap-3 ">
       {links.map((link) => (

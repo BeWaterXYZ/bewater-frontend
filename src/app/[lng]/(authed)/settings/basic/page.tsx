@@ -34,8 +34,8 @@ export default function Page() {
       setTwitterId(userProfile.twitterLink);
     }
   }, [userProfile?.telegramLink, userProfile?.twitterLink]);
-
-  useLoadingWhen(isLoading);
+  
+  useLoadingWhen(!!user?.id && isLoading);
 
   const connect = async (platform: string) => {
     showLoading();
@@ -94,7 +94,9 @@ export default function Page() {
       dismissLoading();
     }
   };
-
+  if (!user) {
+    return null;
+  }
   return (
     <div className="pt-8 font-secondary">
       <UserProfile

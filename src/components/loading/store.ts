@@ -26,7 +26,11 @@ export function useLoadingWhen(loading: boolean) {
   let { showLoading, dismissLoading } = useLoadingStoreAction();
 
   useEffect(() => {
-    loading ? showLoading() : dismissLoading();
+    if (loading) {
+      showLoading();
+    } else {
+      dismissLoading();
+    }
     // eslint-disable-next-line
   }, [loading]);
 }
