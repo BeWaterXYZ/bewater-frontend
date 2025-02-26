@@ -24,7 +24,8 @@ export default async function Layout({
   if (!profile) return null;
   let clerkUser;
   try {
-    clerkUser = await clerkClient().users.getUser(profile.clerkId);
+    const client = await clerkClient();
+    clerkUser = await client.users.getUser(profile.clerkId);
     // console.log(clerkUser)
   } catch (error) {
     console.error('Failed to fetch Clerk user:', error);

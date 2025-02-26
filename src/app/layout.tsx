@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import { languages } from "./i18n/settings";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Dumpster } from "./[lng]/dumpster";
+import { Suspense } from "react";
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -55,13 +56,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider dynamic>
       <html className={`${fontSecondary.variable} ${fontPrimary.variable}`}>
         <head />
         <body>
           <QueryProvider>
             <div className="min-h-[100vh] flex flex-col bg-night">
-              <div className="flex-1">{children}</div>
+              <div className="flex-1">
+                <Suspense fallback={<div>Loading...</div>}>
+                  {children}
+                </Suspense>
+              </div>
               <Dumpster />
             </div>
           </QueryProvider>
