@@ -10,7 +10,7 @@
     "format": "prettier . -w"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.5.2",
+    "@clerk/nextjs": "^6.1.2",
     "@clerk/themes": "^1.7.17",
     "@hookform/resolvers": "^3.6.0",
     "@hugocxl/react-to-image": "^0.0.9",

@@ -123,6 +123,7 @@ export interface BuilderboardProject {
   topics: string[]; // 项目标签
   updated_at: string; // 最后更新时间
   contributors: BuilderboardContributor[]; // 贡献者列表
+  tags: string[]; // 标签
 }
 
 export enum RankingTagType {

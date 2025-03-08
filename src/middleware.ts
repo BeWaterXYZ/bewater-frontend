@@ -72,11 +72,15 @@ const isPublicRoute = createRouteMatcher([
   "/en/user(.*)",
   "/api/og",
   "/leaderboard(.*)",
+  // "/zh/builderboard(.*)",
+  // "/en/builderboard(.*)",
+  // "/en/settings(.*)",
+  // "/zh/settings(.*)",
 ]);
 export default clerkMiddleware(
   async (auth,req) => {
     if(!isPublicRoute(req)) {
-      auth().protect();
+      await auth.protect()
       return i18n(req);
     }
     if (isPublicRoute(req)) {
