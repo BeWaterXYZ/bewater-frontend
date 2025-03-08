@@ -65,7 +65,7 @@ async function fetchTopProjects(): Promise<BuilderboardProject[]> {
   }
 }
 
-function Project(props: { data: BuilderboardProject; rank: number }) {
+function Project(props: { data: BuilderboardProject; rank: number; isMovement?: boolean }) {
   const avatar =
     "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
   const { data, rank } = props;
@@ -121,6 +121,11 @@ function Project(props: { data: BuilderboardProject; rank: number }) {
           <span>{data.forks_count} forks</span>
         </div>
         <p className="text-[#94A3B8] text-xs line-clamp-2">{data.topics.join(", ")}</p>
+        {props.isMovement && (
+          <div className="text-[#94A3B8] text-xs line-clamp-2">
+            {data.tags.join(", ")}
+          </div>
+        )}
       </div>
 
       {/* Contributors & Activity */}
@@ -159,9 +164,10 @@ interface ProjectsProps {
   sector: string;
   subEcosystem?: string | undefined;
   lng: string;
+  isMovement?: boolean;
 }
 
-export default function Projects({ ecosystem, sector, subEcosystem, lng }: ProjectsProps) {
+export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovement }: ProjectsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardProject[]>([]);
@@ -232,6 +238,7 @@ export default function Projects({ ecosystem, sector, subEcosystem, lng }: Proje
           data={data} 
           rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE} 
           key={data.repoName || index} 
+          isMovement={isMovement}
         />
       ))}
 

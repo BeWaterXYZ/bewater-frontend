@@ -125,6 +125,7 @@ export default function BuilderBoard({
               )}
               {currentTab === "projects" && (
                 <Projects
+                  isMovement={isMovement}
                   ecosystem={selectedTags.ecosystem}
                   sector={selectedTags.sector}
                   subEcosystem={selectedTags.subEcosystem}
