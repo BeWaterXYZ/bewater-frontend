@@ -5,6 +5,8 @@ import { useSearchParams } from "next/navigation";
 import TagSelector from "./tag-selector";
 import Developers from "./developers";
 import Projects from "./projects";
+import AIAnalyze from "./ai-analyze";
+import { Bot } from "lucide-react";
 import { useDialogStore } from "@/components/dialog/store";
 
 const tab =
@@ -31,6 +33,7 @@ export default function BuilderBoard({
     sector: "",
     subEcosystem: undefined
   });
+  const [selectedProject, setSelectedProject] = useState<string | undefined>(undefined);
   
   const openDialog = useDialogStore((s) => s.open);
   const isMovement = searchParams.get('category') === 'movement';
@@ -45,6 +48,17 @@ export default function BuilderBoard({
       sector: tags.sector,
       subEcosystem: tags.subEcosystem
     });
+  }, []);
+
+  const handleProjectSelect = useCallback((projectName: string, setTab?: boolean) => {
+    setSelectedProject(projectName);
+    if (setTab) {
+      setCurrentTab("ai-analyze");
+    }
+  }, []);
+
+  const handleBackToProjects = useCallback(() => {
+    setCurrentTab("projects");
   }, []);
 
   useEffect(() => {
@@ -130,6 +144,17 @@ export default function BuilderBoard({
                   sector={selectedTags.sector}
                   subEcosystem={selectedTags.subEcosystem}
                   lng={lng}
+                  onSelectProject={handleProjectSelect}
+                />
+              )}
+              {currentTab === "ai-analyze" && isMovement && (
+                <AIAnalyze
+                  ecosystem={selectedTags.ecosystem}
+                  sector={selectedTags.sector}
+                  subEcosystem={selectedTags.subEcosystem}
+                  lng={lng}
+                  projectName={selectedProject}
+                  onBack={handleBackToProjects}
                 />
               )}
             </div>

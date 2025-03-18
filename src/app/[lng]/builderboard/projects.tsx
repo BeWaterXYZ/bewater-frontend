@@ -2,6 +2,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { BookmarkIcon, CodeSandboxLogoIcon, UpdateIcon } from "@radix-ui/react-icons";
+import { Bot } from "lucide-react";
 import { format } from "date-fns";
 import { BuilderboardProject } from "@/services/leaderboard";
 import { useBuilderboardProject } from "@/services/leaderboard.query";
@@ -65,10 +66,10 @@ async function fetchTopProjects(): Promise<BuilderboardProject[]> {
   }
 }
 
-function Project(props: { data: BuilderboardProject; rank: number; isMovement?: boolean }) {
+function Project(props: { data: BuilderboardProject; rank: number; isMovement?: boolean; onSelectProject?: (projectName: string, setTab?: boolean) => void }) {
   const avatar =
     "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
-  const { data, rank } = props;
+  const { data, rank, onSelectProject } = props;
   const [owner, repo] = data.repoName.split("/");
   const contributors = data.contributors || [];
 
@@ -121,6 +122,17 @@ function Project(props: { data: BuilderboardProject; rank: number; isMovement?: 
           <span>{data.forks_count} forks</span>
         </div>
         <p className="text-[#94A3B8] text-xs line-clamp-2">{data.topics.join(", ")}</p>
+        
+        {props.isMovement && onSelectProject && (
+          <button 
+            onClick={() => onSelectProject(data.repoName, true)}
+            className="text-xs px-3 py-1 bg-[#334155] hover:bg-[#475569] text-[#00FFFF] rounded-md flex items-center gap-1 w-fit"
+          >
+            <Bot size={14} className="text-[#00FFFF]" />
+            <span>AI Analyze</span>
+          </button>
+        )}
+
         {props.isMovement && (
           <div className="text-[#94A3B8] text-xs line-clamp-2">
             {data.tags.join(", ")}
@@ -165,9 +177,10 @@ interface ProjectsProps {
   subEcosystem?: string | undefined;
   lng: string;
   isMovement?: boolean;
+  onSelectProject?: (projectName: string, setTab?: boolean) => void;
 }
 
-export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovement }: ProjectsProps) {
+export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovement, onSelectProject }: ProjectsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardProject[]>([]);
@@ -239,6 +252,7 @@ export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovem
           rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE} 
           key={data.repoName || index} 
           isMovement={isMovement}
+          onSelectProject={onSelectProject}
         />
       ))}
 

@@ -76,6 +76,7 @@ const isPublicRoute = createRouteMatcher([
   // "/en/builderboard(.*)",
   // "/en/settings(.*)",
   // "/zh/settings(.*)",
+  // "/host(.*)",
 ]);
 export default clerkMiddleware(
   async (auth,req) => {
