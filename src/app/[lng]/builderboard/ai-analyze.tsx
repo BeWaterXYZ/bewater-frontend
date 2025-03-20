@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/i18n/client";
 import { Bot, ArrowLeft, Github, Loader2, BookOpen, GitCompare, BrainCircuit, XCircle, CheckCircle2, AlertTriangle, Star, Sparkles } from "lucide-react";
 import { useAIAnalysisData, getAnalysisForRepo, extractProjectName } from "@/services/ai-analyze.query";
-// @ts-ignore - React-markdown has type issues but works fine
 import ReactMarkdown from "react-markdown";
+import DOMPurify from 'dompurify';
 
 interface AIAnalyzeProps {
   ecosystem: string;
@@ -37,8 +37,8 @@ function enhanceMarkdown(text: string): string {
   
   // 高亮"Final Summary"部分
   enhanced = enhanced.replace(
-    /\*\*(?:Final |Overall |)Summary\*\*/g,
-    '**<span class="highlight">Summary</span>**'
+    /\*\*((?:Final |Overall |)Summary)\*\*/g,
+    '**<span class="highlight">$1</span>**'
   );
   
   // 高亮"Strengths"和"Areas for Improvement"部分
@@ -47,19 +47,19 @@ function enhanceMarkdown(text: string): string {
     '**<span class="section-highlight">$1</span>**'
   );
   
-  // 美化✅/❌/⚠️ 的条目
+  // 美化✅/❌/⚠️ 的条目 - 修复了正则表达式，移除了 \n 前面的额外反斜杠
   enhanced = enhanced.replace(
-    /(^|\\n)([✓✅]) /gm, 
+    /(^|\n)([✓✅]) /gm, 
     '$1<span class="success-item">$2</span> '
   );
   
   enhanced = enhanced.replace(
-    /(^|\\n)([✗❌]) /gm, 
+    /(^|\n)([✗❌]) /gm, 
     '$1<span class="error-item">$2</span> '
   );
   
   enhanced = enhanced.replace(
-    /(^|\\n)([⚠]) /gm, 
+    /(^|\n)([⚠]) /gm, 
     '$1<span class="warning-item">$2</span> '
   );
   
@@ -67,6 +67,13 @@ function enhanceMarkdown(text: string): string {
   enhanced = enhanced.replace(
     /\*\*3 Snippets(?:\s*\([^)]*\))?\*\*/g, 
     '**<span class="code-highlight">Code Analysis</span>**'
+  );
+  
+  // 将https://开头的URL转换为Markdown链接格式
+  // 匹配https://开头的URL，排除已经在markdown链接中的URL
+  enhanced = enhanced.replace(
+    /(?<!\]\()https:\/\/[^\s)'"<>]+/g,
+    (url) => `[${url}](${url})`
   );
   
   return enhanced;
@@ -79,12 +86,10 @@ export default function AIAnalyze({ ecosystem, sector, subEcosystem, lng, projec
   // Fetch AI analysis data
   const { data: analysisData, isLoading, error } = useAIAnalysisData();
   
-  // Get the analysis for the current project
   const analysis = projectName ? getAnalysisForRepo(analysisData, projectName) : null;
   
-  // Extract the project name from the prompt
   const projectTitle = analysis ? extractProjectName(analysis.prompt) : null;
-
+  // console.log(analysis?.solution);
   return (
     <div className="w-full py-10">
       <div className="bg-[#1E293B] rounded-lg p-6 overflow-hidden relative">
@@ -282,16 +287,92 @@ export default function AIAnalyze({ ecosystem, sector, subEcosystem, lng, projec
                     h1: ({ node, ...props }) => <h1 className="text-2xl font-bold text-white mb-4 mt-6 border-b border-gray-700 pb-2" {...props} />,
                     h2: ({ node, ...props }) => <h2 className="text-xl font-bold text-white mb-3 mt-5 border-b border-gray-800 pb-1" {...props} />,
                     h3: ({ node, ...props }) => <h3 className="text-lg font-bold text-[#00FFFF] mb-2 mt-4" {...props} />,
-                    p: ({ node, ...props }) => <p className="text-[#94A3B8] mb-3 leading-relaxed" {...props} />,
+                    p: ({ node, children, ...props }) => {
+                      // Parse the children content for special spans
+                      const content = children?.toString() || '';
+                      
+                      // Check if this paragraph contains our custom spans
+                      const hasCustomSpans = 
+                        content.includes('<span class="success-item">') || 
+                        content.includes('<span class="error-item">') || 
+                        content.includes('<span class="warning-item">') ||
+                        content.includes('<span class="highlight">') ||
+                        content.includes('<span class="section-highlight">') ||
+                        content.includes('<span class="code-highlight">');
+                        
+                      if (hasCustomSpans) {
+                        // If it has our custom spans, use dangerouslySetInnerHTML
+                        return (
+                          <p 
+                            className="text-[#94A3B8] mb-3 leading-relaxed" 
+                            dangerouslySetInnerHTML={{ 
+                              __html: DOMPurify.sanitize(content.replace(/,/g, ''))
+                            }} 
+                          />
+                        );
+                      }
+                      
+                      // Otherwise, render normally
+                      return <p className="text-[#94A3B8] mb-3 leading-relaxed" {...props}>{children}</p>;
+                    },
                     ul: ({ node, ...props }) => <ul className="list-none pl-4 mb-4 text-[#94A3B8] space-y-2" {...props} />,
                     ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-4 text-[#94A3B8]" {...props} />,
-                    li: ({ node, ...props }) => <li className="mb-1 leading-relaxed" {...props} />,
-                    a: ({ node, ...props }) => <a className="text-[#00FFFF] hover:underline" {...props} />,
+                    li: ({ node, children, ...props }) => {
+                      // Parse the children content for special spans
+                      const content = children?.toString() || '';
+                      
+                      // Check if this list item contains our custom spans
+                      const hasCustomSpans = 
+                        content.includes('<span class="success-item">') || 
+                        content.includes('<span class="error-item">') || 
+                        content.includes('<span class="warning-item">');
+                        
+                      if (hasCustomSpans) {
+                        // If it has our custom spans, use dangerouslySetInnerHTML
+                        return (
+                          <li 
+                            className="mb-1 leading-relaxed" 
+                            dangerouslySetInnerHTML={{ 
+                              __html: DOMPurify.sanitize(content.replace(/,/g, ''))
+                            }} 
+                          />
+                        );
+                      }
+                      
+                      // Otherwise, render normally
+                      return <li className="mb-1 leading-relaxed" {...props}>{children}</li>;
+                    },
+                    a: ({ node, ...props }) => <a className="text-[#00FFFF] hover:underline" target="_blank" rel="noopener noreferrer" {...props} />,
                     blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-[#334155] pl-4 italic text-gray-400 my-3" {...props} />,
                     code: ({ node, ...props }) => <code className="bg-[#0F172A] px-1.5 py-0.5 rounded text-[#E2E8F0] font-mono text-sm" {...props} />,
                     pre: ({ node, ...props }) => <pre className="bg-[#0F172A] p-3 rounded-lg overflow-x-auto mb-4 text-[#E2E8F0] border border-[#1E293B]" {...props} />,
                     em: ({ node, ...props }) => <em className="text-gray-300 italic" {...props} />,
-                    strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
+                    strong: ({ node, children, ...props }) => {
+                      // Parse the children content for special spans
+                      const content = children?.toString() || '';
+                      
+                      // Check if this strong element contains our custom spans
+                      const hasCustomSpans = 
+                        content.includes('<span class="highlight">') ||
+                        content.includes('<span class="section-highlight">') ||
+                        content.includes('<span class="code-highlight">');
+                        
+                      if (hasCustomSpans) {
+                        // If it has our custom spans, use dangerouslySetInnerHTML
+                        // Use content directly without toString() to avoid extra commas
+                        return (
+                          <strong 
+                            className="font-bold text-white" 
+                            dangerouslySetInnerHTML={{ 
+                              __html: DOMPurify.sanitize(content.replace(/,/g, ''))
+                            }} 
+                          />
+                        );
+                      }
+                      
+                      // Otherwise, render normally
+                      return <strong className="font-bold text-white" {...props}>{children}</strong>;
+                    },
                     table: ({ node, ...props }) => <div className="overflow-x-auto mb-4"><table className="min-w-full border-collapse border border-[#1E293B]" {...props} /></div>,
                     th: ({ node, ...props }) => <th className="border border-[#1E293B] bg-[#0F172A] px-4 py-2 text-left text-[#00FFFF]" {...props} />,
                     td: ({ node, ...props }) => <td className="border border-[#1E293B] px-4 py-2 text-[#94A3B8]" {...props} />,
