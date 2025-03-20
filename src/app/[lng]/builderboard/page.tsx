@@ -27,52 +27,57 @@ export default function BuilderBoard({
 }) {
   const { t } = useTranslation(lng, "translation");
   const searchParams = useSearchParams();
-  const [currentTab, setCurrentTab] = useState("developers");
+  const [currentTab, setCurrentTab] = useState("projects");
   const [selectedTags, setSelectedTags] = useState<SelectedTags>({
     ecosystem: "",
     sector: "",
-    subEcosystem: undefined
+    subEcosystem: undefined,
   });
-  const [selectedProject, setSelectedProject] = useState<string | undefined>(undefined);
-  
+  const [selectedProject, setSelectedProject] = useState<string | undefined>(
+    undefined,
+  );
+  const [showAIAnalyze, setShowAIAnalyze] = useState(false);
+
   const openDialog = useDialogStore((s) => s.open);
-  const isMovement = searchParams.get('category') === 'movement';
+  const isMovement = searchParams.get("category") === "movement";
 
-  const handleTagsChange = useCallback((tags: { 
-    ecosystem: string; 
-    sector: string; 
-    subEcosystem?: string 
-  }) => {
-    setSelectedTags({
-      ecosystem: tags.ecosystem,
-      sector: tags.sector,
-      subEcosystem: tags.subEcosystem
-    });
-  }, []);
+  const handleTagsChange = useCallback(
+    (tags: { ecosystem: string; sector: string; subEcosystem?: string }) => {
+      setSelectedTags({
+        ecosystem: tags.ecosystem,
+        sector: tags.sector,
+        subEcosystem: tags.subEcosystem,
+      });
+    },
+    [],
+  );
 
-  const handleProjectSelect = useCallback((projectName: string, setTab?: boolean) => {
-    setSelectedProject(projectName);
-    if (setTab) {
-      setCurrentTab("ai-analyze");
-    }
-  }, []);
+  const handleProjectSelect = useCallback(
+    (projectName: string, setTab?: boolean) => {
+      setSelectedProject(projectName);
+      if (setTab) {
+        setShowAIAnalyze(true);
+      }
+    },
+    [],
+  );
 
   const handleBackToProjects = useCallback(() => {
-    setCurrentTab("projects");
+    setShowAIAnalyze(false);
   }, []);
 
   useEffect(() => {
     if (isMovement) {
-      setSelectedTags(prev => ({
+      setSelectedTags((prev) => ({
         ...prev,
         ecosystem: "Move",
-        subEcosystem: "Movement"
+        subEcosystem: "Movement",
       }));
     }
   }, [isMovement]);
 
   useEffect(() => {
-    if (searchParams.get('action') === 'add') {
+    if (searchParams.get("action") === "add") {
       openDialog("builderboard_import", {});
     }
   }, [searchParams, openDialog]);
@@ -84,7 +89,7 @@ export default function BuilderBoard({
           <h1 className="!font-secondary heading-5 md:heading-3 text-white [text-shadow:0_4px_36px_rgba(0_255_255_/_0.4)] text-center mb-4">
             {isMovement ? "Movement Buidlerboard" : t("builderboard.title")}
           </h1>
-          
+
           {isMovement && (
             <p className="text-sm text-center text-gray-200 mb-4">
               Discover top Movement projects and developers
@@ -104,14 +109,6 @@ export default function BuilderBoard({
 
           <div className="flex justify-center mb-[70px]">
             <button
-              onClick={() => setCurrentTab("developers")}
-              className={`${tab} ${
-                currentTab === "developers" ? activeTab : inactiveTab
-              }`}
-            >
-              {t("builderboard.developers")}
-            </button>
-            <button
               onClick={() => setCurrentTab("projects")}
               className={`${tab} ${
                 currentTab === "projects" ? activeTab : inactiveTab
@@ -119,10 +116,18 @@ export default function BuilderBoard({
             >
               {t("builderboard.projects")}
             </button>
+            <button
+              onClick={() => setCurrentTab("developers")}
+              className={`${tab} ${
+                currentTab === "developers" ? activeTab : inactiveTab
+              }`}
+            >
+              {t("builderboard.developers")}
+            </button>
           </div>
 
           <div className="w-full max-w-4xl">
-            <TagSelector 
+            <TagSelector
               onChange={handleTagsChange}
               hideEcosystem={isMovement}
               forcedEcosystem={isMovement ? "Move" : undefined}
@@ -138,24 +143,31 @@ export default function BuilderBoard({
                 />
               )}
               {currentTab === "projects" && (
-                <Projects
-                  isMovement={isMovement}
-                  ecosystem={selectedTags.ecosystem}
-                  sector={selectedTags.sector}
-                  subEcosystem={selectedTags.subEcosystem}
-                  lng={lng}
-                  onSelectProject={handleProjectSelect}
-                />
-              )}
-              {currentTab === "ai-analyze" && isMovement && (
-                <AIAnalyze
-                  ecosystem={selectedTags.ecosystem}
-                  sector={selectedTags.sector}
-                  subEcosystem={selectedTags.subEcosystem}
-                  lng={lng}
-                  projectName={selectedProject}
-                  onBack={handleBackToProjects}
-                />
+                <>
+                  <div style={{ display: showAIAnalyze ? 'none' : 'block' }}>
+                    <Projects
+                      isMovement={isMovement}
+                      ecosystem={selectedTags.ecosystem}
+                      sector={selectedTags.sector}
+                      subEcosystem={selectedTags.subEcosystem}
+                      lng={lng}
+                      onSelectProject={handleProjectSelect}
+                    />
+                  </div>
+                  
+                  {isMovement && (
+                    <div style={{ display: showAIAnalyze ? 'block' : 'none' }}>
+                      <AIAnalyze
+                        ecosystem={selectedTags.ecosystem}
+                        sector={selectedTags.sector}
+                        subEcosystem={selectedTags.subEcosystem}
+                        lng={lng}
+                        projectName={selectedProject}
+                        onBack={handleBackToProjects}
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
