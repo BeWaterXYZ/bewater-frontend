@@ -56,16 +56,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider dynamic>
+    <ClerkProvider clerkJSUrl={process.env.NEXT_PUBLIC_CLERK_JS_URL as string}>
       <html className={`${fontSecondary.variable} ${fontPrimary.variable}`}>
         <head />
         <body>
           <QueryProvider>
             <div className="min-h-[100vh] flex flex-col bg-night">
               <div className="flex-1">
-                <Suspense fallback={<div>Loading...</div>}>
-                  {children}
-                </Suspense>
+                <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
               </div>
               <Dumpster />
             </div>
