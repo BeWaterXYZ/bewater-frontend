@@ -56,7 +56,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider clerkJSUrl={process.env.NEXT_PUBLIC_CLERK_JS_URL as string}>
+    <ClerkProvider
+      dynamic
+      clerkJSUrl={process.env.NEXT_PUBLIC_CLERK_JS_URL as string}
+    >
       <html className={`${fontSecondary.variable} ${fontPrimary.variable}`}>
         <head />
         <body>
