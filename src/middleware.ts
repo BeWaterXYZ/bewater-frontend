@@ -9,6 +9,7 @@ acceptLanguage.languages(languages);
 const cookieName = "i18next";
 
 function i18n(req: NextRequest) {
+  console.log(req.nextUrl.pathname);
   if (
     req.nextUrl.pathname.startsWith("/sign-in") ||
     req.nextUrl.pathname.startsWith("/sign-up") ||
@@ -71,6 +72,7 @@ const isPublicRoute = createRouteMatcher([
   "/zh/user(.*)",
   "/en/user(.*)",
   "/api/og",
+  "/api/billboard/import-github-project",
   "/leaderboard(.*)",
   // "/zh/builderboard(.*)",
   // "/en/builderboard(.*)",
@@ -112,6 +114,6 @@ export default clerkMiddleware(
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|assets|icons|logo|sponsors|challenge/og|challenge/assets|favicon.ico|sw.js).*)",
+    "/((?!_next/static|_next/image|assets|icons|logo|sponsors|challenge/og|challenge/assets|favicon.ico|sw.js).*)",
   ],
 };
