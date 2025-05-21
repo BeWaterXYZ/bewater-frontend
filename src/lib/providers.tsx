@@ -17,7 +17,7 @@ export const modal = createAppKit({
     name: "BeWater",
     description: "BeWater",
     url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001",
-    icons: ["https://bewater.io/favicon.ico"],
+    icons: [],
   },
   projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "60b8a3ddf0bd9d87c01e12e1ae4af6d3",
   networks: [mainnet],
