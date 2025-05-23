@@ -25,7 +25,7 @@ export default function BuilderBoard({
 }: {
   params: { lng: string };
 }) {
-  const { t } = useTranslation(lng, "translation");
+  const { t, i18n } = useTranslation(lng, "translation");
   const searchParams = useSearchParams();
   const [currentTab, setCurrentTab] = useState("projects");
   const [selectedTags, setSelectedTags] = useState<SelectedTags>({
@@ -37,6 +37,7 @@ export default function BuilderBoard({
     undefined,
   );
   const [showAIAnalyze, setShowAIAnalyze] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const openDialog = useDialogStore((s) => s.open);
   const isMovement = searchParams.get("category") === "movement";
@@ -81,6 +82,16 @@ export default function BuilderBoard({
       openDialog("builderboard_import", {});
     }
   }, [searchParams, openDialog]);
+
+  useEffect(() => {
+    if (i18n.isInitialized) {
+      setIsLoading(false);
+    }
+  }, [i18n.isInitialized]);
+
+  if (isLoading) {
+    return null; // or a loading spinner
+  }
 
   return (
     <div className="mb-[160px] font-secondary">

@@ -46,13 +46,15 @@ const HeaderImpl = ({ logo, nav, lang, user }: HeaderImplProps) => {
 export const Header = ({ lng }: { lng: string }) => {
   const pathname = usePathname();
   const isBuilderBoard = pathname?.includes('/builderboard');
+  const isGrantPage = pathname?.includes('/grant-protocol') || pathname?.includes('/grant/');
+  const showWalletConnect = isBuilderBoard || isGrantPage;
 
   return (
     <HeaderImpl
       logo={<BeWaterLogo lng={lng} />}
       nav={<Nav />}
       lang={<Lng lng={lng} />}
-      user={isBuilderBoard ? <WalletConnect /> : <UserArea lng={lng} />}
+      user={showWalletConnect ? <WalletConnect /> : <UserArea lng={lng} />}
     />
   );
 };

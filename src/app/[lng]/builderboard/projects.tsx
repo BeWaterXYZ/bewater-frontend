@@ -2,11 +2,12 @@
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { BookmarkIcon, CodeSandboxLogoIcon, UpdateIcon } from "@radix-ui/react-icons";
-import { Bot } from "lucide-react";
+import { Bot, Gift } from "lucide-react";
 import { format } from "date-fns";
 import { BuilderboardProject } from "@/services/leaderboard";
 import { useBuilderboardProject } from "@/services/leaderboard.query";
 import PageSwitcher from "../../../app/[lng]/builderboard/page-switcher";
+import { useRouter } from "next/navigation";
 
 const gridTemplate =
   "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
@@ -66,7 +67,8 @@ async function fetchTopProjects(): Promise<BuilderboardProject[]> {
   }
 }
 
-function Project(props: { data: BuilderboardProject; rank: number; isMovement?: boolean; onSelectProject?: (projectName: string, setTab?: boolean) => void }) {
+function Project(props: { lng: string; data: BuilderboardProject; rank: number; isMovement?: boolean; onSelectProject?: (projectName: string, setTab?: boolean) => void }) {
+  const router = useRouter();
   const avatar =
     "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
   const { data, rank, onSelectProject } = props;
@@ -79,6 +81,10 @@ function Project(props: { data: BuilderboardProject; rank: number; isMovement?: 
       ? data.languages[0]
       : (data.languages[0] as any).name
     : 'N/A';
+
+  const handleGrantClick = () => {
+    router.push(`/${props.lng}/grant/${owner}/${repo}`);
+  };
 
   return (
     <div className={`${rowStyle} py-4 items-start md:items-center text-xs text-[#F8FAFC]`}>
@@ -166,6 +172,13 @@ function Project(props: { data: BuilderboardProject; rank: number; isMovement?: 
         <div className="text-[10px] leading-3 text-[#64748B]">
           Updated on {format(new Date(data.updated_at), "LLL dd, yyyy")}
         </div>
+        <button 
+          onClick={handleGrantClick}
+          className="text-xs px-3 py-1 bg-[#334155] hover:bg-[#475569] text-[#00FFFF] rounded-md flex items-center gap-1 w-fit"
+        >
+          <Gift size={14} className="text-[#00FFFF]" />
+          <span>Grant</span>
+        </button>
       </div>
     </div>
   );
@@ -248,6 +261,7 @@ export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovem
 
       {currentPageData.map((data: BuilderboardProject, index: number) => (
         data && <Project 
+          lng={lng}
           data={data} 
           rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE} 
           key={data.repoName || index} 

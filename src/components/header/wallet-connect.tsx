@@ -40,7 +40,7 @@ export const WalletConnect = () => {
     return (
       <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="text-day hover:bg-white/10 h-10 px-4 w-[180px] justify-between">
+          <Button variant="ghost" className="text-day hover:bg-white/10 h-10 px-4 w-[180px] justify-between hidden md:flex">
             <div className="flex items-center gap-2">
               <Wallet className="h-4 w-4" />
               <span className="text-sm font-medium">
@@ -77,7 +77,7 @@ export const WalletConnect = () => {
   return (
     <Button
       onClick={handleConnect}
-      className="btn btn-primary-invert h-10 py-4 px-8 uppercase body-4 text-day flex items-center gap-2"
+      className="btn btn-primary-invert h-10 py-4 px-8 uppercase body-4 text-day flex items-center gap-2 hidden md:flex"
     >
       <Wallet className="w-4 h-4" />
       Connect Wallet
