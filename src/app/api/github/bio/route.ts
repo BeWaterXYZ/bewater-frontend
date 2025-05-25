@@ -3,7 +3,7 @@ import { headers } from 'next/headers';
 
 // 缓存实现
 const cache = new Map<string, { data: any; timestamp: number }>();
-const CACHE_DURATION = 1000 * 60 * 60; // 1小时缓存
+const CACHE_DURATION = 1000 * 60; // 1分钟缓存
 
 // 获取 GitHub token
 const getGitHubToken = () => {
@@ -15,14 +15,24 @@ const getGitHubToken = () => {
 };
 
 // 解析地址信息
-const parseGrantAddress = (text: string): { bio: string; addresses: any[] } | null => {
+const parseSponsorAddress = (text: string): { bio: string; addresses: any[] } | null => {
   try {
-    const regex = /bewater:grant:([^|]+(?:\|[^|]+)*)/;
+    // 在文本中查找符合规范的赞助地址
+    const regex = /bewater:sponsor:([^|]+(?:\|[^|]+)*)/;
     const match = text.match(regex);
     if (match) {
       const chainAddresses = match[1].split('|').map(pair => {
         const [chain, address] = pair.split(':');
-        return { chain, address };
+        // 标准化链名称
+        const normalizedChain = chain.toLowerCase();
+        return { 
+          chain: normalizedChain === 'eth' ? 'ethereum' : 
+                 normalizedChain === 'matic' ? 'polygon' : 
+                 normalizedChain === 'arb' ? 'arbitrum' : 
+                 normalizedChain === 'op' ? 'optimism' : 
+                 normalizedChain,
+          address 
+        };
       });
 
       if (chainAddresses.length > 0) {
@@ -34,7 +44,7 @@ const parseGrantAddress = (text: string): { bio: string; addresses: any[] } | nu
     }
     return null;
   } catch (error) {
-    console.error('Error parsing grant address:', error);
+    console.error('Error parsing sponsor address:', error);
     return null;
   }
 };
@@ -92,7 +102,7 @@ export async function GET(request: Request) {
         if (readmeResponse.ok) {
           const readmeData = await readmeResponse.json();
           const readmeContent = Buffer.from(readmeData.content, 'base64').toString();
-          const parsedAddresses = parseGrantAddress(readmeContent);
+          const parsedAddresses = parseSponsorAddress(readmeContent);
           if (parsedAddresses) {
             addresses = parsedAddresses.addresses;
           }

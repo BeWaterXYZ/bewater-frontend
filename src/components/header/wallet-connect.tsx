@@ -65,7 +65,7 @@ export const WalletConnect = ({ lng }: { lng: string }) => {
           sideOffset={8}
         >
           <DropdownMenuItem 
-            onClick={() => router.push(`/${lng}/profile/${address}`)}
+            onClick={() => router.push(`/${lng}/sponsor-profile/${address}`)}
             className="text-day hover:bg-[#FFF2] focus:bg-[#FFF2] text-sm"
           >
             <User className="mr-2 h-4 w-4" />

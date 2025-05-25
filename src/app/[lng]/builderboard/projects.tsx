@@ -1,7 +1,11 @@
 "use client";
 import { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
-import { BookmarkIcon, CodeSandboxLogoIcon, UpdateIcon } from "@radix-ui/react-icons";
+import {
+  BookmarkIcon,
+  CodeSandboxLogoIcon,
+  UpdateIcon,
+} from "@radix-ui/react-icons";
 import { Bot, Gift } from "lucide-react";
 import { format } from "date-fns";
 import { BuilderboardProject } from "@/services/leaderboard";
@@ -67,7 +71,13 @@ async function fetchTopProjects(): Promise<BuilderboardProject[]> {
   }
 }
 
-function Project(props: { lng: string; data: BuilderboardProject; rank: number; isMovement?: boolean; onSelectProject?: (projectName: string, setTab?: boolean) => void }) {
+function Project(props: {
+  lng: string;
+  data: BuilderboardProject;
+  rank: number;
+  isMovement?: boolean;
+  onSelectProject?: (projectName: string, setTab?: boolean) => void;
+}) {
   const router = useRouter();
   const avatar =
     "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
@@ -76,18 +86,21 @@ function Project(props: { lng: string; data: BuilderboardProject; rank: number; 
   const contributors = data.contributors || [];
 
   // Handle language display - ensure we're displaying a string
-  const primaryLanguage = Array.isArray(data.languages) && data.languages[0]
-    ? typeof data.languages[0] === 'string' 
-      ? data.languages[0]
-      : (data.languages[0] as any).name
-    : 'N/A';
+  const primaryLanguage =
+    Array.isArray(data.languages) && data.languages[0]
+      ? typeof data.languages[0] === "string"
+        ? data.languages[0]
+        : (data.languages[0] as any).name
+      : "N/A";
 
-  const handleGrantClick = () => {
-    router.push(`/${props.lng}/grant/${owner}/${repo}`);
+  const handleSponsorClick = () => {
+    router.push(`/${props.lng}/sponsor/${owner}/${repo}`);
   };
 
   return (
-    <div className={`${rowStyle} py-4 items-start md:items-center text-xs text-[#F8FAFC]`}>
+    <div
+      className={`${rowStyle} py-4 items-start md:items-center text-xs text-[#F8FAFC]`}
+    >
       {/* Rank */}
       <p className="text-base hidden md:block">#{rank}</p>
 
@@ -99,13 +112,12 @@ function Project(props: { lng: string; data: BuilderboardProject; rank: number; 
             href={`https://github.com/${data.repoName}`}
             className="flex items-center font-bold text-sm md:text-base truncate"
           >
-            
             <div className="truncate" title={`${owner} / ${repo}`}>
               <div className="flex items-center">
                 <BookmarkIcon className="text-[#B4B4BB] mr-1" />
                 <span className="text-[#94A3B8] mr-1">{owner}</span>
               </div>
-              
+
               <span className="block truncate">{repo}</span>
             </div>
           </a>
@@ -127,10 +139,12 @@ function Project(props: { lng: string; data: BuilderboardProject; rank: number; 
           <span>{data.stargazers_count} stars</span>
           <span>{data.forks_count} forks</span>
         </div>
-        <p className="text-[#94A3B8] text-xs line-clamp-2">{data.topics.join(", ")}</p>
-        
+        <p className="text-[#94A3B8] text-xs line-clamp-2">
+          {data.topics.join(", ")}
+        </p>
+
         {props.isMovement && onSelectProject && (
-          <button 
+          <button
             onClick={() => onSelectProject(data.repoName, true)}
             className="text-xs px-3 py-1 bg-[#334155] hover:bg-[#475569] text-[#00FFFF] rounded-md flex items-center gap-1 w-fit"
           >
@@ -172,13 +186,15 @@ function Project(props: { lng: string; data: BuilderboardProject; rank: number; 
         <div className="text-[10px] leading-3 text-[#64748B]">
           Updated on {format(new Date(data.updated_at), "LLL dd, yyyy")}
         </div>
-        <button 
-          onClick={handleGrantClick}
-          className="text-xs px-3 py-1 bg-[#334155] hover:bg-[#475569] text-[#00FFFF] rounded-md flex items-center gap-1 w-fit"
-        >
-          <Gift size={14} className="text-[#00FFFF]" />
-          <span>Grant</span>
-        </button>
+        {props.isMovement && (
+          <button
+            onClick={handleSponsorClick}
+            className="text-xs px-3 py-1 bg-[#334155] hover:bg-[#475569] text-[#00FFFF] rounded-md flex items-center gap-1 w-fit"
+          >
+            <Gift size={14} className="text-[#00FFFF]" />
+            <span>Sponsor</span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -193,17 +209,24 @@ interface ProjectsProps {
   onSelectProject?: (projectName: string, setTab?: boolean) => void;
 }
 
-export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovement, onSelectProject }: ProjectsProps) {
+export default function Projects({
+  ecosystem,
+  sector,
+  subEcosystem,
+  lng,
+  isMovement,
+  onSelectProject,
+}: ProjectsProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 20;
   const [data, setData] = useState<BuilderboardProject[]>([]);
   const [loading, setLoading] = useState(true);
 
   const { data: apiData, isLoading: apiLoading } = useBuilderboardProject(
-    100, 
-    ecosystem, 
+    100,
+    ecosystem,
     sector,
-    subEcosystem
+    subEcosystem,
   );
 
   useEffect(() => {
@@ -234,7 +257,7 @@ export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovem
   // 计算当前页的数据
   const currentPageData = (displayData ?? []).slice(
     ITEMS_PER_PAGE * (currentPage - 1),
-    ITEMS_PER_PAGE * currentPage
+    ITEMS_PER_PAGE * currentPage,
   );
 
   if (displayLoading) {
@@ -259,16 +282,19 @@ export default function Projects({ ecosystem, sector, subEcosystem, lng, isMovem
     <>
       <div className={`${rowStyle} py-2`} />
 
-      {currentPageData.map((data: BuilderboardProject, index: number) => (
-        data && <Project 
-          lng={lng}
-          data={data} 
-          rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE} 
-          key={data.repoName || index} 
-          isMovement={isMovement}
-          onSelectProject={onSelectProject}
-        />
-      ))}
+      {currentPageData.map(
+        (data: BuilderboardProject, index: number) =>
+          data && (
+            <Project
+              lng={lng}
+              data={data}
+              rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE}
+              key={data.repoName || index}
+              isMovement={isMovement}
+              onSelectProject={onSelectProject}
+            />
+          ),
+      )}
 
       {displayData.length > 0 && (
         <PageSwitcher

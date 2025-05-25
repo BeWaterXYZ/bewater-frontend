@@ -953,6 +953,28 @@ model AdminAccount {
   @@map("admin_accounts")
 }
 
+model SponsorTransaction {
+  id              BigInt    @id @default(autoincrement())
+  txHash          String    @unique
+  fromAddress     String
+  toAddress       String
+  amount          String    // 使用 String 类型存储金额，因为加密货币金额可能需要高精度
+  currency        String    // 货币类型，如 ETH, USDT 等
+  decimals        Int       // token 精度
+  chain           String    // 区块链网络，如 ethereum, polygon 等
+  projectOwner    String    // 项目所有者用户名
+  projectName     String    // 项目名称
+  status          TransactionStatus @default(PENDING)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([fromAddress])
+  @@index([toAddress])
+  @@index([txHash])
+  @@index([projectOwner, projectName]) // 添加项目索引
+  @@map("sponsorTransaction")
+}
+
 enum InvitatonStatus {
   WaitingToJoin
   Joined
@@ -1093,4 +1115,10 @@ enum AdminRole {
   ADMIN
   EDITOR
   VIEWER
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
 }

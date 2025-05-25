@@ -46,8 +46,9 @@ const HeaderImpl = ({ logo, nav, lang, user }: HeaderImplProps) => {
 export const Header = ({ lng }: { lng: string }) => {
   const pathname = usePathname();
   const isBuilderBoard = pathname?.includes('/builderboard');
-  const isGrantPage = pathname?.includes('/grant-protocol') || pathname?.includes('/grant/');
-  const showWalletConnect = isBuilderBoard || isGrantPage;
+  const isSponsorPage = pathname?.includes('/sponsor-protocol') || pathname?.includes('/sponsor/');
+  const isSponsorProfile = pathname?.includes('/sponsor-profile');
+  const showWalletConnect = isBuilderBoard || isSponsorPage || isSponsorProfile;
 
   return (
     <HeaderImpl
