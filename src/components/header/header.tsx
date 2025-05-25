@@ -54,7 +54,7 @@ export const Header = ({ lng }: { lng: string }) => {
       logo={<BeWaterLogo lng={lng} />}
       nav={<Nav />}
       lang={<Lng lng={lng} />}
-      user={showWalletConnect ? <WalletConnect /> : <UserArea lng={lng} />}
+      user={showWalletConnect ? <WalletConnect lng={lng} /> : <UserArea lng={lng} />}
     />
   );
 };

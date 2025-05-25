@@ -9,7 +9,7 @@ const NavItem = "ml-8 text-sm leading-5 text-bold";
 export default function Header() {
   return (
     <div className="mx-[152px] flex items-center h-[72px]">
-      <Link href="https://bewater.xyz">
+      <Link href="https://bewater.pro/">
         <Image
           src="/logo/bewater-h.svg"
           width={120}
@@ -21,13 +21,13 @@ export default function Header() {
         <a href="/campaigns">
           <p className={NavItem}>Campaigns</p>
         </a>
-        <a href="https://docs.bewater.xyz/">
+        <a href="https://docs.bewater.pro/">
           <p className={NavItem}>Docs</p>
         </a>
         <a href="/host">
           <p className={NavItem}>Host</p>
         </a>
-        <a href="https://bewater.xyz/venturestudio">
+        <a href="https://bewater.pro/venturestudio">
           <p className={`${NavItem} flex items-center gap-1`}>
             Venture Studio
             <IconNew />

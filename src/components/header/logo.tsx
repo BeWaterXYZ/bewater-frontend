@@ -12,7 +12,7 @@ export const BeWaterLogo = async (params: { lng: string }) => {
   return (
     <div className="flex flex-row relative">
       <Menu lng={lng}></Menu>
-      <Link href="https://bewater.xyz">
+      <Link href="https://bewater.pro">
         <Image
           src="/logo/bewater_black.svg"
           width={120}

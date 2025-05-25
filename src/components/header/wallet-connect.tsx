@@ -2,7 +2,7 @@
 
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Button } from "@/components/ui/button";
-import { Wallet, LogOut, ChevronDown } from "lucide-react";
+import { Wallet, LogOut, ChevronDown, User } from "lucide-react";
 import { useAppKit } from '@reown/appkit/react';
 import {
   DropdownMenu,
@@ -12,13 +12,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
-export const WalletConnect = () => {
+export const WalletConnect = ({ lng }: { lng: string }) => {
   const { address, isConnected } = useAccount();
   const { connect, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const { open } = useAppKit();
   const [openMenu, setOpenMenu] = useState(false);
+  const router = useRouter();
 
   const handleConnect = async () => {
     try {
@@ -40,7 +42,7 @@ export const WalletConnect = () => {
     return (
       <DropdownMenu open={openMenu} onOpenChange={setOpenMenu}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="text-day hover:bg-white/10 h-10 px-4 w-[180px] justify-between hidden md:flex">
+          <Button variant="ghost" className="text-day hover:bg-white/10 h-10 px-4 w-[189px] justify-between hidden md:flex">
             <div className="flex items-center gap-2">
               <Wallet className="h-4 w-4" />
               <span className="text-sm font-medium">
@@ -62,6 +64,13 @@ export const WalletConnect = () => {
           )}
           sideOffset={8}
         >
+          <DropdownMenuItem 
+            onClick={() => router.push(`/${lng}/profile/${address}`)}
+            className="text-day hover:bg-[#FFF2] focus:bg-[#FFF2] text-sm"
+          >
+            <User className="mr-2 h-4 w-4" />
+            <span>Profile</span>
+          </DropdownMenuItem>
           <DropdownMenuItem 
             onClick={handleDisconnect} 
             className="text-red-500 hover:bg-[#FFF2] focus:bg-[#FFF2] text-sm"

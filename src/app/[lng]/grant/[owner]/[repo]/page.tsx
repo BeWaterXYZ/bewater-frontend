@@ -29,6 +29,7 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import PageSwitcher from "@/app/[lng]/builderboard/page-switcher";
+import Image from "next/image";
 
 interface ChainAddress {
   chain: string;
@@ -252,7 +253,7 @@ export default function GrantPage({
   }
 
   return (
-    <div className="container mx-auto py-6 md:py-12 px-4">
+    <div className="container mx-auto py-6 md:py-12 px-4 max-w-6xl">
       <button
         onClick={handleBack}
         className="flex items-center text-[#00FFFF] hover:text-[#00FFFF80] mb-6 md:mb-8"
@@ -266,9 +267,11 @@ export default function GrantPage({
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6 mb-6 md:mb-8">
           <div className="flex-1 w-full">
             <div className="flex items-start md:items-center gap-4 mb-3">
-              <img 
+              <Image 
                 src={projectInfo.owner.avatar_url} 
                 alt={projectInfo.owner.login}
+                width={48}
+                height={48}
                 className="w-10 h-10 md:w-12 md:h-12 rounded-full flex-shrink-0"
               />
               <div className="flex-1 min-w-0">
@@ -450,7 +453,7 @@ export default function GrantPage({
             <div className="bg-[#1E293B] p-3 md:p-4 rounded">
               <p className="text-[#94A3B8] text-sm md:text-base">
                 {ownerData?.type === 'organization' 
-                  ? "No grant address found in organization&apos;s README.md file"
+                  ? "No grant address found in organization's README.md file"
                   : "No grant address found in project owner's bio"}
               </p>
               {ownerData?.type === 'organization' && (

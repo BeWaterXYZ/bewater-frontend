@@ -77,6 +77,8 @@ const isPublicRoute = createRouteMatcher([
   "/leaderboard(.*)",
   "/en/grant(.*)",
   "/zh/grant(.*)",
+  "/en/profile(.*)",
+  "/zh/profile(.*)",
   // "/zh/builderboard(.*)",
   // "/en/builderboard(.*)",
   // "/en/settings(.*)",
