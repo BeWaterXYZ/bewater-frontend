@@ -1,3 +1,4 @@
+'use client'
 import { BeWaterLogo } from "./logo";
 import { Nav } from "./nav";
 import { Lng } from "./lng";
@@ -5,6 +6,8 @@ import dynamicLoad from "next/dynamic";
 import { HeaderScrollHelper } from "./scroll-helper";
 import { Callout } from "../callout";
 import { headers } from 'next/headers';
+import { WalletConnect } from "./wallet-connect";
+import { usePathname } from "next/navigation";
 
 interface HeaderImplProps {
   logo: React.ReactNode;
@@ -41,12 +44,18 @@ const HeaderImpl = ({ logo, nav, lang, user }: HeaderImplProps) => {
 };
 
 export const Header = ({ lng }: { lng: string }) => {
+  const pathname = usePathname();
+  const isBuilderBoard = pathname?.includes('/builderboard');
+  const isSponsorPage = pathname?.includes('/sponsor-protocol') || pathname?.includes('/sponsor/');
+  const isSponsorProfile = pathname?.includes('/sponsor-profile');
+  const showWalletConnect = isBuilderBoard || isSponsorPage || isSponsorProfile;
+
   return (
     <HeaderImpl
       logo={<BeWaterLogo lng={lng} />}
       nav={<Nav />}
       lang={<Lng lng={lng} />}
-      user={<UserArea lng={lng} />}
+      user={showWalletConnect ? <WalletConnect lng={lng} /> : <UserArea lng={lng} />}
     />
   );
 };

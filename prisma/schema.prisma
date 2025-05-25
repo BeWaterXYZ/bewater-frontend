@@ -1,0 +1,1124 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearchPostgres"]
+  binaryTargets   = ["native", "linux-arm64-openssl-1.1.x"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Whitelist {
+  id            BigInt @id @default(autoincrement())
+  walletAddress String
+
+  @@map("whitelist")
+}
+
+model UserAuth {
+  id            BigInt   @id @default(autoincrement())
+  externalId    String?  @unique
+  walletAddress String?
+  nonce         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("userAuth")
+}
+
+model UserProfile {
+  id                       BigInt                    @id @default(autoincrement())
+  externalId               String                    @unique @default(uuid())
+  userAuthId               BigInt?
+  walletAddress            String?
+  email                    String?                   @default("")
+  userName                 String?                   @default("")
+  platformId               BigInt?
+  fullName                 String?                   @default("")
+  bio                      String?                   @default("")
+  roles                    Json?
+  skills                   Json?
+  githubRepo               Json?
+  avatarURI                String?                   @db.VarChar(356)
+  clerkId                  String                    @unique
+  telegramLink             String?                   @default("")
+  websiteLink              String?                   @default("")
+  createdAt                DateTime                  @default(now())
+  firstName                String?                   @default("")
+  lastName                 String?                   @default("")
+  visitAt                  DateTime                  @default(now())
+  status                   UserStatus                @default(ACTIVE)
+  aboutMe                  String?                   @db.VarChar(4096)
+  aspectaLink              String?
+  discordLink              String?
+  githubLink               String?
+  twitterLink              String?
+  externalNa               String?
+  showChallenges           Boolean                   @default(false)
+  showTeamwork             Boolean                   @default(false)
+  showStats                Boolean                   @default(false)
+  links                    Json?
+  showAdditionalInfo       Boolean                   @default(false)
+  additionalInfo           String?
+  showPinnedLinks          Boolean                   @default(false)
+  showPinnedProjects       Boolean                   @default(false)
+  badges                   Badge[]
+  challenges               Challenge[]
+  reviewers                ChallengeReviewer[]
+  receivedGroupingRequests GroupingRequest[]         @relation("ReceivedGroupingRequest")
+  sentGroupingRequests     GroupingRequest[]         @relation("SentGroupingRequest")
+  notifications            Notification[]
+  notificationMessages     NotificationMessage[]
+  operations               Operation[]
+  OrganizationMember       OrganizationMember[]
+  projects                 Project[]
+  socialAuths              SocialAuth[]
+  teamMembers              TeamMember[]
+  userTeamProjectRelations UserTeamProjectRelation[]
+
+  @@index([walletAddress])
+  @@index([email], map: "email_fkey")
+  @@index([userName], map: "username_fkey")
+  @@index([externalNa])
+  @@map("userProfile")
+}
+
+model EmailVerification {
+  id              BigInt    @id @default(autoincrement())
+  externalId      String?
+  userAuthId      BigInt?
+  verficationCode String?
+  emailAddress    String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  expireAt        DateTime?
+
+  @@map("emailVerification")
+}
+
+model Challenge {
+  id                       BigInt                    @id @default(autoincrement())
+  externalId               String?                   @unique
+  title                    String
+  description              String?
+  hostName                 String?
+  requirements             String?
+  reviewDimension          String?
+  startTime                DateTime?
+  endTime                  DateTime?
+  totalAward               Int?
+  awardCurrency            String?
+  status                   ChallengeStatus           @default(DRAFT)
+  bannerUrl                String?
+  location                 ChallengeLocation         @default(ONLINE)
+  milestones               Json?
+  awardAssorts             Json?
+  agenda                   Json?
+  city                     String?
+  createdBy                String
+  discordLink              String?
+  hostIcon                 String?
+  metadata                 Json?
+  telegramLink             String?
+  twitterLink              String?
+  type                     ChallengeType             @default(OTHERS)
+  wechatURL                String?
+  joinLink                 String?
+  yotadata                 Json?
+  ownerId                  BigInt
+  track                    Json?
+  otherInfo                Json?
+  challengeTags            Json?
+  linkText                 String?
+  result                   Json?
+  trackPanel               Json?
+  scoreDimension           Json?
+  organizationId           BigInt?
+  shortlist                Json?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @default(now()) @updatedAt
+  timeZone                 Int                       @default(8)
+  organization             Organization?             @relation(fields: [organizationId], references: [id])
+  hostUser                 UserProfile               @relation(fields: [ownerId], references: [id])
+  judges                   ChallengeJudge[]          @relation("challengeJudge")
+  reviewers                ChallengeReviewer[]
+  future                   Future?
+  gaReport                 GaReport?
+  keySponsors              KeySponsor?
+  sponsors                 NorSponsor?
+  notificationMessages     NotificationMessage[]
+  teams                    Team[]
+  userTeamProjectRelations UserTeamProjectRelation[]
+
+  @@index([startTime])
+  @@index([endTime])
+  @@index([organizationId])
+  @@index([ownerId])
+  @@map("challenge")
+}
+
+model ChallengeJudge {
+  id          BigInt    @id @default(autoincrement())
+  challengeId BigInt
+  judgeId     BigInt
+  challenge   Challenge @relation("challengeJudge", fields: [challengeId], references: [id])
+  judge       Judge     @relation("challengeJudge", fields: [judgeId], references: [id])
+
+  @@index([challengeId])
+  @@index([judgeId])
+  @@map("challengeJudge")
+}
+
+model Judge {
+  id           BigInt           @id @default(autoincrement())
+  externalId   String?
+  name         String
+  title        String?
+  organization String?
+  avatarURI    String?
+  order        Int
+  description  String?
+  twitterLink  String?
+  email        String?
+  challenges   ChallengeJudge[] @relation("challengeJudge")
+  projectRank  ProjectRank[]
+
+  @@map("judge")
+}
+
+model KeySponsor {
+  id          BigInt    @id @default(autoincrement())
+  data        Json
+  challengeId BigInt    @unique
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+
+  @@map("keySponsor")
+}
+
+model NorSponsor {
+  id          BigInt    @id @default(autoincrement())
+  data        Json
+  challengeId BigInt    @unique
+  challenge   Challenge @relation(fields: [challengeId], references: [id])
+
+  @@map("norSponsor")
+}
+
+model Sponsorship {
+  id          BigInt   @id @default(autoincrement())
+  amount      Int
+  currency    String
+  challengeId BigInt
+  sponsorId   BigInt?
+  sponsor     Sponsor? @relation(fields: [sponsorId], references: [id])
+
+  @@index([challengeId])
+  @@index([sponsorId])
+  @@map("sponsorship")
+}
+
+model Sponsor {
+  id           BigInt        @id
+  sponsorName  String
+  logoURI      String?
+  sponsorships Sponsorship[]
+
+  @@map("sponsor")
+}
+
+model Team {
+  id                       BigInt                    @id @default(autoincrement())
+  externalId               String                    @unique
+  name                     String
+  status                   TeamStatus                @default(ACTIVE)
+  challengeId              BigInt
+  openingRoles             Json
+  skills                   Json
+  nation                   String?
+  description              String?                   @db.VarChar(4096)
+  groupRequests            GroupingRequest[]
+  notificationMessage      NotificationMessage[]
+  project                  Project?
+  challenge                Challenge                 @relation(fields: [challengeId], references: [id])
+  teamMembers              TeamMember[]
+  userTeamProjectRelations UserTeamProjectRelation[]
+
+  @@index([challengeId])
+  @@map("team")
+}
+
+model TeamMember {
+  id          BigInt      @id @default(autoincrement())
+  externalId  String      @unique
+  teamId      BigInt
+  userId      BigInt
+  teamRole    String
+  isLeader    Boolean
+  team        Team        @relation(fields: [teamId], references: [id])
+  userProfile UserProfile @relation(fields: [userId], references: [id])
+
+  @@index([teamId])
+  @@index([userId])
+  @@map("teamMember")
+}
+
+model GroupingRequest {
+  id          BigInt                @id @default(autoincrement())
+  externalId  String                @unique
+  type        GroupingRequestType
+  status      GroupingRequestStatus
+  senderId    BigInt
+  recipientId BigInt
+  teamId      BigInt
+  teamRole    String
+  message     String
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  recipient   UserProfile           @relation("ReceivedGroupingRequest", fields: [recipientId], references: [id])
+  sender      UserProfile           @relation("SentGroupingRequest", fields: [senderId], references: [id])
+  team        Team                  @relation(fields: [teamId], references: [id])
+
+  @@index([recipientId])
+  @@index([senderId])
+  @@index([teamId])
+  @@map("groupingRequest")
+}
+
+model Project {
+  id                       BigInt                    @id @default(autoincrement())
+  externalId               String                    @unique
+  name                     String
+  description              String                    @db.VarChar(4096)
+  tags                     Json
+  githubTags               Json?
+  filterTags               Json?
+  bountyTrack              Json
+  status                   ProjectStatus
+  demoURI                  String?                   @db.VarChar(384)
+  videoURI                 String?                   @db.VarChar(384)
+  deckURI                  String?                   @db.VarChar(384)
+  githubURI                String?                   @db.VarChar(384)
+  teamId                   BigInt?                   @unique
+  userId                   BigInt?
+  mediaURLs                Json?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+  vCount                   Int                       @default(1)
+  experience               Int?
+  pastGrant                String?                   @db.VarChar(1000)
+  builtDate                DateTime?
+  siteURI                  String?                   @db.VarChar(384)
+  contact                  String?                   @db.VarChar(384)
+  recommendedFrom          String?                   @db.VarChar(384)
+  membersCount             Int?
+  offlineDemoDay           Int?
+  onSiteDays               String?                   @db.VarChar(191)
+  creditsInterested        Int?
+  customSelect1            String?                   @db.VarChar(384)
+  customSelect2            String?                   @db.VarChar(384)
+  customSelect3            String?                   @db.VarChar(384)
+  isPinned                 Boolean                   @default(false)
+  githubStars              Int                       @default(0)
+  team                     Team?                     @relation(fields: [teamId], references: [id])
+  owner                    UserProfile?              @relation(fields: [userId], references: [id])
+  projectRank              ProjectRank[]
+  projectScore             ProjectScore[]
+  userTeamProjectRelations UserTeamProjectRelation[]
+
+  @@map("project")
+}
+
+model SocialAuth {
+  id              BigInt           @id @default(autoincrement())
+  externalId      String           @unique
+  platform        String
+  state           String
+  redirectURI     String
+  authStatus      SocialAuthStatus
+  scope           String?
+  accessToken     String?
+  refreshToken    String?
+  tokenExpiration DateTime?
+  handle          String?
+  userId          BigInt
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  user            UserProfile      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, platform], name: "userPlatform")
+  @@map("socialAuth")
+}
+
+model NotificationMessage {
+  id            BigInt           @id @default(autoincrement())
+  externalId    String           @unique
+  type          NotificationType
+  messageBody   String?
+  targetUserId  BigInt
+  teamId        BigInt
+  challengeId   BigInt?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  notifications Notification[]
+  challenge     Challenge?       @relation(fields: [challengeId], references: [id])
+  targetUser    UserProfile      @relation(fields: [targetUserId], references: [id])
+  team          Team             @relation(fields: [teamId], references: [id])
+
+  @@index([challengeId])
+  @@index([targetUserId])
+  @@index([teamId])
+  @@map("notificationMessage")
+}
+
+model Notification {
+  id                    BigInt              @id @default(autoincrement())
+  externalId            String              @unique
+  recipentId            BigInt
+  notificationMessageId BigInt
+  status                NotificationStatus
+  notificationMessage   NotificationMessage @relation(fields: [notificationMessageId], references: [id])
+  recipent              UserProfile         @relation(fields: [recipentId], references: [id])
+
+  @@index([notificationMessageId])
+  @@index([recipentId])
+  @@map("notification")
+}
+
+model Badge {
+  id         BigInt      @id @default(autoincrement())
+  externalId String      @unique
+  holderId   BigInt
+  name       String
+  type       BadgeType
+  claimed    Boolean
+  badgeURI   String?
+  collection String?
+  baseURI    String?
+  tokenId    String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  holder     UserProfile @relation(fields: [holderId], references: [id])
+
+  @@index([holderId])
+  @@map("badge")
+}
+
+model Counters {
+  id       BigInt @id @default(autoincrement())
+  kind     String @unique
+  seqValue BigInt
+
+  @@map("counters")
+}
+
+model HostUser {
+  id            BigInt     @id @default(autoincrement())
+  externalId    String?
+  userId        String     @unique
+  email         String?
+  walletAddress Json?
+  name          String?
+  avatar        String?    @db.VarChar(356)
+  description   String?
+  style         HostStyle  @default(DEF)
+  status        HostStatus @default(PENDING)
+  credential    Json?
+  city          String?
+  preference    Json?
+  mediaURI      String?
+  website       String?
+  createdAt     DateTime   @default(now())
+  github        String?
+  twitter       String?
+  visitAt       DateTime   @default(now())
+  weibo         String?
+
+  @@map("hostUser")
+}
+
+model ProjectRank {
+  id        BigInt  @id @default(autoincrement())
+  projectId BigInt
+  judgeId   BigInt
+  mark      Json?
+  judge     Judge   @relation(fields: [judgeId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+
+  @@unique([projectId, judgeId], name: "judgeProject")
+  @@index([judgeId])
+  @@index([projectId])
+  @@map("projectRank")
+}
+
+model PreLaunch {
+  id          BigInt   @id @default(autoincrement())
+  challengeId BigInt   @unique
+  startTime   DateTime
+
+  @@map("preLaunch")
+}
+
+model Invitation {
+  id          BigInt          @id @default(autoincrement())
+  challengeId BigInt
+  email       String
+  userId      BigInt?
+  status      InvitatonStatus
+
+  @@unique([challengeId, email], name: "challengeInvitation")
+  @@map("invitation")
+}
+
+model Organization {
+  id                     BigInt                   @id @default(autoincrement())
+  clerkId                String                   @unique
+  name                   String
+  slug                   String?                  @unique
+  bio                    String?
+  website                String?
+  status                 OrgStatus
+  Challenge              Challenge[]
+  operations             Operation[]
+  OrganizationInvitation OrganizationInvitation[]
+  OrganizationMember     OrganizationMember[]
+
+  @@map("organization")
+}
+
+model OrganizationMember {
+  id             BigInt          @id @default(autoincrement())
+  clerkId        String          @unique
+  userId         BigInt?
+  organizationId BigInt?
+  role           OrgMemberRole
+  status         OrgMemberStatus
+  orgClerkId     String?
+  userClerkId    String?
+  organization   Organization?   @relation(fields: [organizationId], references: [id])
+  user           UserProfile?    @relation(fields: [userId], references: [id])
+
+  @@unique([userId, organizationId], name: "orgMember")
+  @@index([userId])
+  @@index([organizationId])
+  @@map("organizationMember")
+}
+
+model OrganizationInvitation {
+  id             BigInt              @id @default(autoincrement())
+  clerkId        String              @unique
+  organizationId BigInt?
+  email          String
+  role           OrgMemberRole
+  status         OrgInvitationStatus
+  orgClerkId     String?
+  organization   Organization?       @relation(fields: [organizationId], references: [id])
+
+  @@index([organizationId])
+  @@map("organizationInvitation")
+}
+
+model ChallengeReviewer {
+  id            BigInt         @id @default(autoincrement())
+  challengeId   BigInt
+  userId        BigInt
+  createdAt     DateTime       @default(now())
+  order         Int            @default(0)
+  challenge     Challenge      @relation(fields: [challengeId], references: [id])
+  userProfile   UserProfile    @relation(fields: [userId], references: [id])
+  projectScores ProjectScore[]
+
+  @@unique([challengeId, userId])
+  @@index([challengeId])
+  @@index([userId])
+  @@map("challengeReviewer")
+}
+
+model ProjectScore {
+  id         BigInt            @id @default(autoincrement())
+  projectId  BigInt
+  reviewerId BigInt
+  mark       Json?
+  createdAt  DateTime          @default(now())
+  project    Project           @relation(fields: [projectId], references: [id])
+  reviewer   ChallengeReviewer @relation(fields: [reviewerId], references: [id])
+
+  @@unique([projectId, reviewerId], name: "projectScore")
+  @@index([projectId])
+  @@index([reviewerId])
+  @@map("projectScore")
+}
+
+model Future {
+  id                BigInt    @id @default(autoincrement())
+  challengeId       BigInt    @unique
+  createdAt         DateTime  @default(now())
+  active            DateTime?
+  announceShortlist DateTime?
+  announceResult    DateTime?
+  challenge         Challenge @relation(fields: [challengeId], references: [id])
+
+  @@map("future")
+}
+
+model Operation {
+  id             BigInt        @id @default(autoincrement())
+  userId         BigInt
+  organizationId BigInt?
+  type           Int
+  description    String?       @db.VarChar(200)
+  createdAt      DateTime      @default(now())
+  ownerId        BigInt
+  organization   Organization? @relation(fields: [organizationId], references: [id])
+  user           UserProfile   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([ownerId])
+  @@index([organizationId])
+  @@map("operation")
+}
+
+model Visit {
+  id          BigInt   @id @default(autoincrement())
+  challengeId BigInt
+  userId      BigInt
+  device      String?
+  createdAt   DateTime @default(now())
+  visitAt     DateTime @default(now())
+
+  @@unique([challengeId, userId], name: "visitRecord")
+  @@index([challengeId])
+  @@index([userId])
+  @@map("visit")
+}
+
+model GaReport {
+  id                BigInt    @id @default(autoincrement())
+  challengeId       BigInt    @unique
+  weeklyPV          Json?
+  visitors          Json?
+  pvUpdatedAt       DateTime?
+  visitorsUpdatedAt DateTime?
+  browsers          Json?
+  locations         Json?
+  topReferrers      Json?
+  challenge         Challenge @relation(fields: [challengeId], references: [id])
+
+  @@map("gaReport")
+}
+
+model GithubRepos {
+  id                BigInt     @id @default(autoincrement())
+  allow_forking     Boolean?
+  contributors      Json?
+  default_branch    String?
+  description       String?
+  fork              Boolean?
+  forks_count       Int        @default(0)
+  language          String?
+  languages         Json?
+  name              String?
+  network_count     Int        @default(0)
+  open_issues_count Int        @default(0)
+  owner             Json?
+  private           Boolean?
+  repoName          String
+  stargazers_count  Int        @default(0)
+  subscribers_count Int        @default(0)
+  topics            Json?
+  totalCommits      Int        @default(0)
+  totalPullRequests Int        @default(0)
+  visibility        String?
+  watchers_count    Int        @default(0)
+  created_at        DateTime
+  updated_at        DateTime
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @default(now()) @updatedAt
+  developerId       BigInt
+  stars             Int        @default(0)
+  developer         Developers @relation(fields: [developerId], references: [id])
+
+  @@index([developerId])
+  @@index([repoName])
+  @@map("githubRepos")
+}
+
+model Developers {
+  id                 BigInt        @id @default(autoincrement())
+  login              String
+  type               String
+  name               String?
+  bio                String?
+  company            String?
+  email              String?
+  location           String?
+  twitter_username   String?
+  hireable           Boolean?
+  languageSum        Json?
+  projectArr         Json?
+  followers          Int           @default(0)
+  totalForksCount    Int           @default(0)
+  totalOwnProjects   Int           @default(0)
+  totalProjects      Int           @default(0)
+  totalStars         Int           @default(0)
+  totalWatchersCount Int           @default(0)
+  memberLength       Int           @default(0)
+  created_at         DateTime
+  updated_at         DateTime
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @default(now()) @updatedAt
+  avatar_url         String?
+  languageArr        Json?
+  repos              Json?
+  gitRepos           GithubRepos[]
+
+  @@index([login])
+  @@index([followers])
+  @@index([totalStars])
+  @@index([updated_at])
+  @@index([updatedAt])
+  @@map("developers")
+}
+
+model GithubRepoUrl {
+  id        BigInt   @id @default(autoincrement())
+  repoUrl   String   @db.VarChar(256)
+  createdAt DateTime @default(now())
+
+  @@index([repoUrl])
+  @@index([createdAt])
+  @@map("githubRepoUrl")
+}
+
+model GithubWeb3Repos {
+  id                BigInt         @id @default(autoincrement())
+  allow_forking     Boolean?
+  contributors      Json?
+  default_branch    String?
+  description       String?
+  fork              Boolean?
+  forks_count       Int            @default(0)
+  language          String?
+  languages         Json?
+  name              String?
+  network_count     Int            @default(0)
+  open_issues_count Int            @default(0)
+  owner             Json?
+  private           Boolean?
+  repoName          String
+  stargazers_count  Int            @default(0)
+  subscribers_count Int            @default(0)
+  topics            Json?
+  totalCommits      Int            @default(0)
+  totalPullRequests Int            @default(0)
+  visibility        String?
+  watchers_count    Int            @default(0)
+  created_at        DateTime
+  updated_at        DateTime
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @default(now()) @updatedAt
+  developerId       BigInt
+  stars             Int            @default(0)
+  developer         Web3Developers @relation(fields: [developerId], references: [id])
+
+  @@index([developerId])
+  @@index([repoName])
+  @@map("githubWeb3Repos")
+}
+
+model Web3Developers {
+  id                 BigInt            @id @default(autoincrement())
+  login              String
+  type               String
+  name               String?
+  bio                String?
+  company            String?
+  email              String?
+  location           String?
+  twitter_username   String?
+  avatar_url         String?
+  hireable           Boolean?
+  languageSum        Json?
+  projectArr         Json?
+  followers          Int               @default(0)
+  totalForksCount    Int               @default(0)
+  totalOwnProjects   Int               @default(0)
+  totalProjects      Int               @default(0)
+  totalStars         Int               @default(0)
+  totalWatchersCount Int               @default(0)
+  memberLength       Int               @default(0)
+  created_at         DateTime
+  updated_at         DateTime
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @default(now()) @updatedAt
+  languageArr        Json?
+  repos              Json?
+  repoLanguageArr    Json?
+  gitRepos           GithubWeb3Repos[]
+
+  @@index([login])
+  @@index([followers])
+  @@index([totalStars])
+  @@index([updated_at])
+  @@index([updatedAt])
+  @@map("web3Developers")
+}
+
+model GithubWeb3RepoUrl {
+  id        BigInt   @id @default(autoincrement())
+  repoUrl   String   @db.VarChar(256)
+  createdAt DateTime @default(now())
+
+  @@index([repoUrl])
+  @@index([createdAt])
+  @@map("githubWeb3RepoUrl")
+}
+
+model CrawlResult {
+  id        BigInt   @id @default(autoincrement())
+  day       String   @unique
+  repo      Int      @default(0)
+  developer Int      @default(0)
+  upDevelop Int      @default(0)
+  upRepo    Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("crawlResult")
+}
+
+model GithubCrawl {
+  id        BigInt   @id @default(autoincrement())
+  day       String   @unique
+  result    Json?
+  createdAt DateTime @default(now())
+
+  @@map("githubCrawl")
+}
+
+model UserTeamProjectRelation {
+  id          BigInt      @id @default(autoincrement())
+  userId      BigInt
+  teamId      BigInt
+  projectId   BigInt?
+  challengeId BigInt
+  role        String
+  isLeader    Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  challenge   Challenge   @relation(fields: [challengeId], references: [id])
+  project     Project?    @relation(fields: [projectId], references: [id])
+  team        Team        @relation(fields: [teamId], references: [id])
+  user        UserProfile @relation(fields: [userId], references: [id])
+
+  @@unique([userId, teamId])
+  @@index([userId])
+  @@index([teamId])
+  @@index([projectId])
+  @@index([challengeId])
+  @@map("userTeamProjectRelation")
+}
+
+model OperationProject {
+  id                   Int                           @id @default(autoincrement())
+  repoUrl              String                        @unique
+  repoName             String                        @unique
+  name                 String
+  description          String?
+  languages            Json?
+  stargazers_count     Int?                          @default(0)
+  forks_count          Int?                          @default(0)
+  topics               Json?
+  contributors         Json?
+  updated_at           DateTime?
+  created_at           DateTime?
+  ecosystems           Json?
+  sectors              Json?
+  is_fork              Boolean                       @default(false)
+  createdAt            DateTime                      @default(now())
+  updatedAt            DateTime                      @updatedAt
+  stars                Int                           @default(0)
+  ai_report_url        String?
+  tags                 Json                          @default("[]")
+  contributorRelations OperationProjectContributor[]
+
+  @@map("operationProject")
+}
+
+model OperationDeveloper {
+  id                  Int                           @id @default(autoincrement())
+  html_url            String                        @unique
+  avatar_url          String?
+  login               String?                       @unique
+  name                String?
+  bio                 String?
+  company             String?
+  location            String?
+  email               String?
+  twitter_username    String?
+  followers           Int?
+  following           Int?
+  public_repos        Int?
+  total_stars         Int?                          @default(0)
+  popular_repo        Json?
+  repos               Json?
+  created_at          DateTime?
+  updated_at          DateTime?
+  ecosystems          Json?
+  sectors             Json?
+  is_deleted          Boolean                       @default(false)
+  delete_reason       String                        @default("")
+  createdAt           DateTime                      @default(now())
+  updatedAt           DateTime                      @updatedAt
+  is_org              Boolean                       @default(false)
+  contributedProjects OperationProjectContributor[]
+
+  @@map("operationDeveloper")
+}
+
+model OperationProjectContributor {
+  id          Int                @id @default(autoincrement())
+  projectId   Int
+  developerId Int
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  developer   OperationDeveloper @relation(fields: [developerId], references: [id])
+  project     OperationProject   @relation(fields: [projectId], references: [id])
+
+  @@unique([projectId, developerId])
+  @@index([projectId])
+  @@index([developerId])
+  @@map("operationProjectContributor")
+}
+
+model RankingTags {
+  id          Int            @id @default(autoincrement())
+  name        String
+  type        RankingTagType
+  description String?
+  parentId    Int?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  parent      RankingTags?   @relation("SubTags", fields: [parentId], references: [id])
+  children    RankingTags[]  @relation("SubTags")
+
+  @@unique([name, type])
+  @@index([parentId])
+  @@map("rankingTags")
+}
+
+model OperationCrawlRecord {
+  id              Int       @id @default(autoincrement())
+  day             String    @unique
+  result          Json
+  isRunning       Boolean   @default(false)
+  currentType     String?
+  startTime       DateTime?
+  currentProgress Json?
+  lastError       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@map("operationCrawlRecord")
+}
+
+model ImportedGithubProject {
+  id          Int                         @id @default(autoincrement())
+  repoUrl     String                      @unique
+  repoName    String
+  status      ImportedGithubProjectStatus @default(PENDING)
+  processedAt DateTime?
+  error       String?
+  createdAt   DateTime                    @default(now())
+  updatedAt   DateTime                    @updatedAt
+  tags        Json?
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("importedGithubProject")
+}
+
+model AdminAccount {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         AdminRole @default(EDITOR)
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  createdBy    String?
+
+  @@map("admin_accounts")
+}
+
+model SponsorTransaction {
+  id              BigInt    @id @default(autoincrement())
+  txHash          String    @unique
+  fromAddress     String
+  toAddress       String
+  amount          String    // 使用 String 类型存储金额，因为加密货币金额可能需要高精度
+  currency        String    // 货币类型，如 ETH, USDT 等
+  decimals        Int       // token 精度
+  chain           String    // 区块链网络，如 ethereum, polygon 等
+  projectOwner    String    // 项目所有者用户名
+  projectName     String    // 项目名称
+  status          TransactionStatus @default(PENDING)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([fromAddress])
+  @@index([toAddress])
+  @@index([txHash])
+  @@index([projectOwner, projectName]) // 添加项目索引
+  @@map("sponsorTransaction")
+}
+
+enum InvitatonStatus {
+  WaitingToJoin
+  Joined
+  Error
+}
+
+enum OrgMemberStatus {
+  JOINED
+  DELETED
+}
+
+enum OrgStatus {
+  ACTIVE
+  DELETED
+}
+
+enum OrgMemberRole {
+  Admin
+  Member
+}
+
+enum OrgInvitationStatus {
+  Accepted
+  Pending
+  Revoked
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKING
+  DELETED
+}
+
+enum ChallengeStatus {
+  DRAFT
+  INREVIEW
+  ACTIVE
+  COMPLETED
+  CANCELED
+  PAUSED
+  DELETED
+  REFUSED
+}
+
+enum ChallengeLocation {
+  ONLINE
+  OFFLINE
+  MIXED
+  OTHERS
+}
+
+enum ChallengeType {
+  CHALLENGE
+  WORKSHOP
+  OTHERS
+}
+
+enum TeamStatus {
+  ACTIVE
+  DISMISSED
+}
+
+enum GroupingRequestType {
+  APPLICATION
+  INVITATION
+}
+
+enum GroupingRequestStatus {
+  PENDING
+  DECLINED
+  ACCEPTED
+  REVOKED
+  INVALID
+}
+
+enum ProjectStatus {
+  INITIATED
+  SELECTED
+  REJECTED
+  TERMINATED
+}
+
+enum SocialAuthStatus {
+  PENDING
+  AUTHORIZED
+}
+
+enum NotificationType {
+  MEMBER_REMOVED
+  MEMBER_JOINED
+  MEMBER_LEFT
+  MEMBER_ROLE_UPDATED
+  TEAM_DISMISSED
+  TEAM_INFO_UPDATED
+  PROJECT_UPDATED
+  CHALLENGE_UPDATED
+}
+
+enum NotificationStatus {
+  PENDING
+  READ
+}
+
+enum BadgeType {
+  SBT
+  NFT
+}
+
+enum HostStyle {
+  PERSON
+  CO
+  FUND
+  DEF
+}
+
+enum HostStatus {
+  ACTIVE
+  PENDING
+  BLOCKING
+  DELETED
+}
+
+enum RankingTagType {
+  ECOSYSTEM
+  SECTOR
+}
+
+enum ImportedGithubProjectStatus {
+  PENDING
+  PROCESSING
+  PROCESSED
+  FAILED
+  INVALID
+}
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum TransactionStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
