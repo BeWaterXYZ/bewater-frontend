@@ -1,4 +1,4 @@
-import { agentAuthed } from "./agent";
+import { agentAuthed, agentNext } from "./agent";
 
 export interface LeaderboardProject {
   id: string;
@@ -213,8 +213,8 @@ export async function importGithubProject(params: {
     subEcosystem?: string;
   };
 }): Promise<any> {
-  const { data } = await agentAuthed.post(
-    "/billboard/import-github-project",
+  const { data } = await agentNext.post(
+    "/api/billboard/import-github-project",
     params,
   );
   return data;
