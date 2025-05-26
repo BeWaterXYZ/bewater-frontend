@@ -1,3 +1,4 @@
+// https://build.bewater.pro/zh/campaigns
 "use client";
 import { useState, useMemo } from "react";
 // import { useDialogStore } from "@/components/dialog/store";
@@ -155,17 +156,6 @@ const [showActiveOnly, setShowActiveOnly] = useState(false);
                   : challenge.joinLink ?? ""
               }
             >
-              <Aspect ratio={5 / 2}>
-                <Image
-                  fill
-                  src={
-                    challenge.bannerUrl ??
-                    `/challenge/assets/${challenge.id}withTitle.png`
-                  }
-                  alt=""
-                  className="object-cover w-full h-full"
-                />
-              </Aspect>
               <div className="relative p-4 flex flex-row justify-between">
                 {challenge.totalAward > 0 ? (
                   <div className="absolute bottom-full  text-day text-[24px] font-secondary p-2">
@@ -176,7 +166,15 @@ const [showActiveOnly, setShowActiveOnly] = useState(false);
                 <div className="flex-1 overflow-hidden">
                   <div className="body-2 py-1 text-ellipsis truncate">
                     {challenge.title}
+                    <br></br>
+                    {challenge.totalAward > 0 ? (
+                    <div className="text-day">
+                      {formatMoney(challenge.totalAward)}{" "}
+                      {challenge.awardCurrency ? challenge.awardCurrency : "USD"}
+                    </div>
+                ) : null}
                   </div>
+                  
                   <div className="body-3 text-grey-500">
                     {`${formatYYYYMMMDD(
                       challenge.startTime
@@ -184,6 +182,7 @@ const [showActiveOnly, setShowActiveOnly] = useState(false);
                   </div>
                 </div>
                 <div className="" style={{ maxWidth: "40%" }}>
+                  <br></br>
                   <div className="body-2 py-1 text-gray-400 invisible">
                     {challenge.location}
                   </div>
@@ -203,14 +202,14 @@ const [showActiveOnly, setShowActiveOnly] = useState(false);
               ) : null}
               {challenge.hostIcon && challenge.type !== "OTHERS" ? (
                 <div className="flex absolute w-full top-12 h-12 z-10">
-                  <Image
+                  {/* <Image
                     src={challenge.hostIcon}
                     width={144}
                     height={40}
                     alt=""
                     className="mx-auto h-10"
                     style={{ width: "auto" }}
-                  />
+                  /> */}
                 </div>
               ) : null}
             </Link>

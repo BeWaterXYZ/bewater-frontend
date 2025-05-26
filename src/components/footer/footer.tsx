@@ -30,7 +30,7 @@ export const Footer = async (params: Props) => {
         </div>
         <div className="flex flex-row gap-x-4 items-center justify-end">
           <Link
-            href="https://twitter.com/BeWaterOfficial"
+            href="https://twitter.com/BeWaterDAO"
             target="_blank"
             className="fill-white/20 hover:fill-white"
           >
@@ -93,7 +93,7 @@ export const Footer = async (params: Props) => {
             </svg>
           </Link>
           <Link
-            href="https://blog.bewater.xyz"
+            href="https://blog.bewater.pro"
             target="_blank"
             className="fill-white/20 hover:fill-white"
           >

@@ -26,7 +26,8 @@ export function ProjectItem({
           project.team.challenge!.externalId ?? project.team.challenge!.id
         }/projects/${project.id}`}
       >
-        <Aspect ratio={3 / 2}>
+        {/* HINT: Shown cover image here. */}
+        {/* <Aspect ratio={3 / 2}>
           <Image
             width={450}
             height={300}
@@ -34,7 +35,7 @@ export function ProjectItem({
             alt={project.description}
             className="object-cover block w-full h-full"
           />
-        </Aspect>
+        </Aspect> */}
         <div className="absolute top-[8px] right-[8px] flex gap-2">
           {project.githubTags?.map((tag) => (
             <div
