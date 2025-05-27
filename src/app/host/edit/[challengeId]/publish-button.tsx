@@ -41,7 +41,7 @@ export function PublishButton({ challengeId }: { challengeId: ChallengeID }) {
               Done
             </a>{" "}
             <a
-              href={`https://build.bewater.xyz/en/campaigns/${challengeId}`}
+              href={`https://build.bewater.pro/en/campaigns/${challengeId}`}
               className="btn btn-secondary-invert gap-2"
             >
               <OpenInNewWindowIcon />

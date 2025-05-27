@@ -1,7 +1,7 @@
 import { Challenge, Milestone } from "@/services/types";
 // import { format, parseISO, subDays, addDays } from "date-fns";
 const YYYYMMDD = "yyyy-MM-dd";
-const bewaterLogo = "https://build.bewater.xyz/sponsors/bewater.png";
+const bewaterLogo = "https://build.bewater.pro/sponsors/bewater.png";
 import { defMilestoneArr as defValArr } from "@/utils/default";
 
 export function mock(challenge: Challenge) {

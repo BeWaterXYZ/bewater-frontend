@@ -26,7 +26,7 @@ export const Callout = () => {
           <div className="mr-2">{icons.partyPopper_16}</div>
           <p className="font-bold text-xs">
             <span>Discover groundbreaking insights in the new </span>
-            <a href="https://docs.bewater.xyz/zh/aixcrypto/">
+            <a href="https://docs.bewater.pro/zh/aixcrypto/">
               <span className="text-day">AI × Crypto Report</span>
             </a>
           </p>

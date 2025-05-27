@@ -40,7 +40,7 @@ export default function Upgrade() {
           Dismiss
         </button>
         <button className="font-semibold text-sm text-[#00FFFF]">
-          <a href="mailto:support@bewater.xyz">Contact us</a>
+          <a href="mailto:support@bewater.pro">Contact us</a>
         </button>
       </div>
     </div>

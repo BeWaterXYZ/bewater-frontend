@@ -118,10 +118,11 @@ export default function Page({ params }: any) {
             <Rate project={project} challenge={challenge} />
           </div>
         </div>
-        <div className="mt-10">
+        {/* HINT: Shown media here. */}
+        {/* <div className="mt-10">
           <h3 className="body-3 font-bold text-grey-500">Media</h3>
           <ProjectMedia project={project} challenge={challenge} />
-        </div>
+        </div> */}
   
         <div className="flex flex-col lg:flex-row gap-10 mb-30">
           <div className="flex-[2] lg:max-w-[400px]">
@@ -165,7 +166,7 @@ export default function Page({ params }: any) {
       </div>
 
       <div className="flex flex-wrap rounded border border-[#24254E]">
-        <div className="w-full lg:w-[400px]">
+        {/* <div className="w-full lg:w-[400px]">
           <div className="hidden lg:block h-full relative">
             <Image
               width={450}
@@ -186,7 +187,7 @@ export default function Page({ params }: any) {
               />
             </Aspect>
           </div>
-        </div>
+        </div> */}
         <div className="flex-1 p-7">
           <div className="flex justify-between ">
             <p className="heading-6 ">{project.name}</p>
@@ -220,10 +221,11 @@ export default function Page({ params }: any) {
           <Rate project={project} challenge={challenge} />
         </div>
       </div>
-      <div className="mt-10">
+      {/* HINT: Shown media here. */}
+      {/* <div className="mt-10">
         <h3 className="body-3 font-bold text-grey-500">Media</h3>
         <ProjectMedia project={project} challenge={challenge} />
-      </div>
+      </div> */}
 
       <div className="flex flex-col lg:flex-row gap-10 mb-30">
         <div className="flex-[2] lg:max-w-[400px]">

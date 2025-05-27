@@ -9,7 +9,7 @@ const NavItem = "ml-8 text-sm leading-5 text-bold";
 export default function Header() {
   return (
     <div className="mx-[152px] flex items-center h-[72px]">
-      <Link href="https://bewater.pro/">
+      <Link href="https://bewater.pro">
         <Image
           src="/logo/bewater-h.svg"
           width={120}

@@ -25,6 +25,7 @@ export default function Campaign(props: { campaign: OngoingChallenge }) {
             <Image alt="Banner image" width={302} height={96} src={bannerUrl} />
           )}
         </div>
+
         <p className="leading-[28px] text-lg font-bold">{title}</p>
         <div className="flex text-xs leading-[16px] w-fit">
           <div className="mr-[14px] px-[10px] py-[5px] bg-grey-800 rounded-[1000px] w-fit">

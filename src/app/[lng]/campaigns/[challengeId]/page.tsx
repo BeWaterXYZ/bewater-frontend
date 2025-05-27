@@ -578,10 +578,10 @@ export default async function ChallengeIntro({ params }: any) {
                       </div>
                     </Link>
                   ) : null}
-                  {(challenge.keySponsors ?? []).length > 0 ? (
+                  {/* {(challenge.keySponsors ?? []).length > 0 ? (
                     <div className="relative w-full flex flex-col gap-10 items-center">
                       <p className="body-1 md:heading-5 font-bold text-white/30 md:text-white/30">
-                        {t("campaign.t29")}
+                        {t("campaign.t29")} 
                       </p>
                       <Marquee>
                         {(challenge.keySponsors ?? []).map((sp, i) => {
@@ -614,7 +614,7 @@ export default async function ChallengeIntro({ params }: any) {
                         })}
                       </Marquee>
                     </div>
-                  ) : null}
+                  ) : null} */}
                 </div>
               </div>
             )
@@ -645,21 +645,8 @@ export default async function ChallengeIntro({ params }: any) {
                   ? challenge.judges.map((judge) => {
                       return (
                         <div key={judge.id!} className="w-[180px] mb-2 ">
-                          <Aspect ratio={1 / 1} className="">
-                            {/* <HoverCard
-                                side="right"
-                                card={
-                                  <div className="min-w-[100px] max-w-[200px] text-white">
-                                    {judge.description ?? ''}
-                                  </div>
-                                }>
-                              <Image
-                                fill
-                                src={judge.avatarURI}
-                                className="object-cover w-full h-full bg-white/5"
-                                alt={judge.name}
-                              />
-                            </HoverCard> */}
+                          {/* HINT: Shown judge avatar here. */}
+                          {/* <Aspect ratio={1 / 1} className="">
                             <Image
                               fill
                               src={judge.avatarURI}
@@ -669,7 +656,7 @@ export default async function ChallengeIntro({ params }: any) {
                               className="object-cover w-full h-full bg-white/5"
                               alt={judge.name}
                             />
-                          </Aspect>
+                          </Aspect> */}
                           <p className="body-3 mt-4 mb-2 text-white">
                             {judge.name}
                           </p>
@@ -820,7 +807,8 @@ export default async function ChallengeIntro({ params }: any) {
           </div>
         )}
       </>
-      {(challenge.sponsors ?? []).length > 0 ? (
+      {/* HINT: Shown sponsors here. */}
+      {/* {(challenge.sponsors ?? []).length > 0 ? (
         <div className="container" id="sponsors">
           <div>
             <h3 className="text-white  text-[24px] md:text-[36px] font-bold mb-16 text-center">
@@ -898,7 +886,7 @@ export default async function ChallengeIntro({ params }: any) {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : null} */}
       <div className="flex flex-col justify-center items-center pt-[80px] pb-[160px]">
         <p className="heading-6 md:heading-4 text-center">
           <Balancer ratio={0.9}>

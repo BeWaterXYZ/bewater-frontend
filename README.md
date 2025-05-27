@@ -2,7 +2,7 @@
 
 > The prod: [https://bewatet.xyz](https://bewatet.xyz)
 > 
-> The dev: [https://dev.bewater.xyz](https://dev.bewater.xyz)
+> The dev: [https://dev.bewater.pro](https://dev.bewater.pro)
 
 This repo is managed via [Yarn](https://yarnpkg.com).
 

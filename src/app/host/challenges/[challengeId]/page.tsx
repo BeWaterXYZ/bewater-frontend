@@ -450,8 +450,7 @@ export default function Page({ params, mode, frameWidth }: any) {
                                           challenge.awardCurrency
                                         )
                                           ? ""
-                                          : " " + challenge?.awardCurrency ??
-                                            ""}
+                                          : " " + (challenge?.awardCurrency || "")}
                                       </p>
                                       <p className="body-3 text-white/60">
                                         x{award.count}
