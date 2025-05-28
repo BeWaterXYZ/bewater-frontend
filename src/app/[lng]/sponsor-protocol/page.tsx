@@ -45,11 +45,11 @@ export default function SponsorProtocolPage({
             <div className="bg-[#334155] p-4 md:p-6 rounded-lg">
               <p className="text-white font-mono text-sm md:text-base mb-3 md:mb-4">Format:</p>
               <code className="block bg-[#1E293B] p-3 md:p-4 rounded text-[#00FFFF] text-xs md:text-sm mb-3 md:mb-4 overflow-x-auto whitespace-nowrap">
-                bewater:sponsor:chain1:address1|chain2:address2|...
+                bewater:sponsor:chain1:address1|chain2:address2|...|
               </code>
               <p className="text-[#94A3B8] text-xs md:text-sm">Example:</p>
               <code className="block bg-[#1E293B] p-3 md:p-4 rounded text-[#00FFFF] text-xs md:text-sm overflow-x-auto whitespace-nowrap">
-                bewater:sponsor:ethereum:0x1234567890abcdef1234567890abcdef12345678
+                bewater:sponsor:evm:0x1234567890abcdef1234567890abcdef12345678|
               </code>
             </div>
           </section>
@@ -60,17 +60,15 @@ export default function SponsorProtocolPage({
               <div className="bg-[#334155] p-3 md:p-4 rounded">
                 <h3 className="text-white font-bold mb-2 text-sm md:text-base">Currently Supported</h3>
                 <ul className="text-[#94A3B8] space-y-1 md:space-y-2 text-sm">
-                  <li>• Ethereum (ethereum/eth)</li>
+                  <li>• EVM Chains (evm)</li>
+                  <li className="ml-4 text-[#94A3B8]">Currently only supports Ethereum</li>
+                  <li className="ml-4 text-[#94A3B8]">Other EVM chains coming soon</li>
                 </ul>
               </div>
               <div className="bg-[#334155] p-3 md:p-4 rounded">
                 <h3 className="text-white font-bold mb-2 text-sm md:text-base">Coming Soon</h3>
                 <ul className="text-[#94A3B8] space-y-1 md:space-y-2 text-sm">
                   <li>• Bitcoin (bitcoin/btc)</li>
-                  <li>• Polygon (polygon/matic)</li>
-                  <li>• Arbitrum (arbitrum/arb)</li>
-                  <li>• Optimism (optimism/op)</li>
-                  <li>• Base (base/base)</li>
                 </ul>
               </div>
             </div>
@@ -88,34 +86,14 @@ export default function SponsorProtocolPage({
                   </thead>
                   <tbody className="text-[#94A3B8]">
                     <tr className="border-b border-[#475569]">
-                      <td className="py-2">Ethereum</td>
-                      <td className="py-2">ethereum</td>
-                      <td className="py-2">eth</td>
+                      <td className="py-2">EVM</td>
+                      <td className="py-2">evm</td>
+                      <td className="py-2">evm</td>
                     </tr>
-                    <tr className="border-b border-[#475569]">
+                    <tr>
                       <td className="py-2">Bitcoin</td>
                       <td className="py-2">bitcoin</td>
                       <td className="py-2">btc</td>
-                    </tr>
-                    <tr className="border-b border-[#475569]">
-                      <td className="py-2">Polygon</td>
-                      <td className="py-2">polygon</td>
-                      <td className="py-2">matic</td>
-                    </tr>
-                    <tr className="border-b border-[#475569]">
-                      <td className="py-2">Arbitrum</td>
-                      <td className="py-2">arbitrum</td>
-                      <td className="py-2">arb</td>
-                    </tr>
-                    <tr className="border-b border-[#475569]">
-                      <td className="py-2">Optimism</td>
-                      <td className="py-2">optimism</td>
-                      <td className="py-2">op</td>
-                    </tr>
-                    <tr>
-                      <td className="py-2">Base</td>
-                      <td className="py-2">base</td>
-                      <td className="py-2">base</td>
                     </tr>
                   </tbody>
                 </table>
@@ -147,6 +125,24 @@ export default function SponsorProtocolPage({
                 <span>Update addresses if they change</span>
               </li>
             </ul>
+          </section>
+
+          <section>
+            <h2 className="text-lg md:text-xl text-white mb-3 md:mb-4">Examples</h2>
+            <div className="bg-[#334155] p-4 md:p-6 rounded-lg space-y-4">
+              <div>
+                <p className="text-white font-mono text-sm md:text-base mb-2">Single EVM Chain:</p>
+                <code className="block bg-[#1E293B] p-3 md:p-4 rounded text-[#00FFFF] text-xs md:text-sm overflow-x-auto whitespace-nowrap">
+                  bewater:sponsor:evm:0x1234567890abcdef1234567890abcdef12345678|
+                </code>
+              </div>
+              <div>
+                <p className="text-white font-mono text-sm md:text-base mb-2">Multiple Chains:</p>
+                <code className="block bg-[#1E293B] p-3 md:p-4 rounded text-[#00FFFF] text-xs md:text-sm overflow-x-auto whitespace-nowrap">
+                  bewater:sponsor:evm:0x1234567890abcdef1234567890abcdef12345678|bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh|
+                </code>
+              </div>
+            </div>
           </section>
         </div>
       </div>

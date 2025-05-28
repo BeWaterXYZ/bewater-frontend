@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/i18n/client";
 import { useParams, useSearchParams } from "next/navigation";
 import { 
@@ -31,10 +31,9 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import PageSwitcher from "@/app/[lng]/builderboard/page-switcher";
 import Image from "next/image";
-import { useAccount, useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';
-import { parseEther } from 'viem';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useAccount } from 'wagmi';
+import { useAppKit } from '@reown/appkit/react';
+import { SponsorDonationDialog } from '@/components/dialog/dialogs/sponsor-donation';
 
 interface SponsorAddress {
   type: string;
@@ -112,152 +111,6 @@ interface PaginationInfo {
   totalPages: number;
 }
 
-// 添加捐赠弹窗组件
-const DonationModal = ({ 
-  isOpen, 
-  onClose, 
-  onConfirm, 
-  isLoading,
-  isRecordCreating,
-  address,
-  chain,
-  hash,
-  isTransactionSuccess,
-  isTransactionError
-}: { 
-  isOpen: boolean; 
-  onClose: () => void; 
-  onConfirm: (amount: string) => void;
-  isLoading: boolean;
-  isRecordCreating: boolean;
-  address: string;
-  chain: string;
-  hash?: `0x${string}`;
-  isTransactionSuccess?: boolean;
-  isTransactionError?: boolean;
-}) => {
-  const [amount, setAmount] = useState('');
-  const { t } = useTranslation('en', 'translation');
-
-  // 重置金额输入
-  useEffect(() => {
-    if (isOpen) {
-      setAmount('');
-    }
-  }, [isOpen]);
-
-  const handleClose = () => {
-    if (isLoading || isRecordCreating) {
-      toast.error('Transaction is in progress. Please wait for it to complete.');
-      return;
-    }
-    onClose();
-  };
-
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-[#0F172A] rounded-lg p-6 w-full max-w-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-white">Sponsor Project</h2>
-          <button onClick={handleClose} className="text-[#94A3B8] hover:text-white">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-        
-        <div className="mb-4">
-          <p className="text-[#94A3B8] text-sm mb-2">Recipient Address:</p>
-          <p className="text-white text-sm break-all bg-[#1E293B] p-2 rounded">{address}</p>
-        </div>
-
-        <div className="mb-4">
-          <p className="text-[#94A3B8] text-sm mb-2">Chain:</p>
-          <p className="text-white text-sm bg-[#1E293B] p-2 rounded">{chain}</p>
-        </div>
-
-        {!hash && (
-          <div className="mb-6">
-            <label className="block text-[#94A3B8] text-sm mb-2">
-              Donation Amount (ETH)
-            </label>
-            <input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
-              className="w-full bg-[#1E293B] text-white px-3 py-2 rounded text-sm"
-              min="0"
-              step="0.0001"
-            />
-          </div>
-        )}
-
-        {hash && (
-          <div className="mb-6">
-            <div className="bg-[#1E293B] p-3 rounded">
-              <p className="text-[#94A3B8] text-sm mb-2">Transaction Hash:</p>
-              <p className="text-white text-sm break-all">{hash}</p>
-              <a
-                href={`https://etherscan.io/tx/${hash}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#00FFFF] hover:text-[#00FFFF80] text-xs flex items-center mt-2"
-              >
-                <ExternalLink className="w-3 h-3 mr-1" />
-                View on Etherscan
-              </a>
-            </div>
-          </div>
-        )}
-
-        {isTransactionError && (
-          <div className="mb-6">
-            <div className="bg-[#FF4D4D20] p-3 rounded">
-              <p className="text-[#FF4D4D] text-sm">
-                Transaction failed. Please try again.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {isTransactionSuccess && !isRecordCreating && (
-          <div className="mb-6">
-            <div className="bg-[#00FFFF20] p-3 rounded">
-              <p className="text-[#00FFFF] text-sm">
-                Transaction successful! Record has been created.
-              </p>
-            </div>
-          </div>
-        )}
-
-        <button
-          className="w-full bg-[#00FFFF] text-black font-bold py-2 px-4 rounded-md hover:bg-[#00FFFF80] transition-colors text-sm flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={() => onConfirm(amount)}
-          disabled={isLoading || isRecordCreating || !amount || parseFloat(amount) <= 0}
-        >
-          {isLoading ? (
-            <>
-              <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-black mr-2"></div>
-              Processing Transaction...
-            </>
-          ) : isRecordCreating ? (
-            <>
-              <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-black mr-2"></div>
-              Creating Record...
-            </>
-          ) : (
-            <>
-              <Wallet className="w-4 h-4 mr-2" />
-              Confirm Donation
-            </>
-          )}
-        </button>
-      </div>
-    </div>
-  );
-};
-
 export default function SponsorPage({
   params: { lng, owner, repo },
 }: {
@@ -271,39 +124,25 @@ export default function SponsorPage({
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const [currentTab, setCurrentTab] = useState('all');
-  const [donationAmount, setDonationAmount] = useState('');
   const { address } = useAccount();
-  const queryClient = useQueryClient();
-  const hasProcessedRef = useRef(false);
+  const { open } = useAppKit();
   const [isDonationModalOpen, setIsDonationModalOpen] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState<{address: string; chain: string} | null>(null);
-  const [isRecordCreating, setIsRecordCreating] = useState(false);
-  const [isTransactionError, setIsTransactionError] = useState(false);
 
-  // 重置所有状态
-  const resetStates = () => {
-    setDonationAmount('');
-    setIsRecordCreating(false);
-    setIsTransactionError(false);
-    hasProcessedRef.current = false;
+  const handleBack = () => {
+    router.back();
   };
 
   // 处理弹窗打开
   const handleOpenModal = (addr: {address: string; chain: string}) => {
-    resetStates();
+    if (!address) {
+      open();
+      return;
+    }
     setSelectedAddress(addr);
     setIsDonationModalOpen(true);
   };
 
-  // 处理弹窗关闭
-  const handleCloseModal = () => {
-    if (isRecordCreating) {
-      toast.error('Transaction is in progress. Please wait for it to complete.');
-      return;
-    }
-    resetStates();
-    setIsDonationModalOpen(false);
-  };
 
   // 从 API 获取项目信息
   const { data: projectData, isLoading: isProjectLoading } = useQuery({
@@ -329,7 +168,7 @@ export default function SponsorPage({
     queryKey: ['owner', owner],
     queryFn: async () => {
       const response = await fetch(
-        `/api/github/bio?username=${owner}&type=bio`,
+        `/api/github/bio?username=${owner}&repo=${repo}&type=bio`,
         {
           headers: {
             'Accept': 'application/json',
@@ -342,10 +181,7 @@ export default function SponsorPage({
       return response.json();
     },
     onSuccess: (data) => {
-      if (data.type === 'user') {
-        const addressInfo = parseSponsorAddress(data.bio || '');
-        setSponsorAddress(addressInfo);
-      } else if (data.type === 'organization' && data.addresses) {
+      if (data.addresses) {
         setSponsorAddress({
           type: 'sponsor',
           addresses: data.addresses
@@ -398,128 +234,6 @@ export default function SponsorPage({
       console.error('Error parsing sponsor address:', error);
       return null;
     }
-  };
-
-  // 模拟捐赠历史数据
-  const mockDonations: Donation[] = [
-    {
-      id: '1',
-      amount: 1.5,
-      currency: 'ETH',
-      from: '0x1234...5678',
-      timestamp: '2024-03-20T10:00:00Z',
-      txHash: '0xabcd...efgh',
-      type: 'received'
-    },
-    {
-      id: '2',
-      amount: 2.0,
-      currency: 'ETH',
-      from: '0x5678...1234',
-      timestamp: '2024-03-19T10:00:00Z',
-      txHash: '0xefgh...abcd',
-      type: 'sent'
-    }
-  ];
-
-  // Create transaction record mutation
-  const createTransactionMutation = useMutation({
-    mutationFn: async (data: {
-      txHash: string;
-      fromAddress: string;
-      toAddress: string;
-      amount: string;
-      currency: string;
-      decimals: number;
-      chain: string;
-      projectOwner: string;
-      projectName: string;
-    }) => {
-      const response = await fetch('/api/sponsor/transaction', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to create transaction record');
-      }
-      
-      return response.json();
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['sponsorTransactions'] });
-      toast.success('Sponsor record created successfully');
-      setIsRecordCreating(false);
-    },
-    onError: (error: Error) => {
-      toast.error(error.message);
-      setIsRecordCreating(false);
-    },
-  });
-
-  // Send ETH transaction
-  const { sendTransaction, data: hash, error: transactionError } = useSendTransaction();
-
-  // Wait for transaction confirmation
-  const { isLoading: isTransactionLoading, isSuccess: isTransactionSuccess, data: receipt } = useWaitForTransactionReceipt({
-    hash,
-  });
-
-  // 监听交易错误
-  useEffect(() => {
-    if (transactionError) {
-      setIsTransactionError(true);
-      toast.error('Transaction failed. Please try again.');
-    }
-  }, [transactionError]);
-
-  // 监听交易成功
-  useEffect(() => {
-    if (isTransactionSuccess && receipt && !hasProcessedRef.current) {
-      hasProcessedRef.current = true;
-      setIsRecordCreating(true);
-      createTransactionMutation.mutate({
-        txHash: receipt.transactionHash,
-        fromAddress: address as string,
-        toAddress: sponsorAddress?.addresses[0]?.address as string,
-        amount: donationAmount,
-        currency: 'ETH',
-        decimals: 18,
-        chain: sponsorAddress?.addresses[0]?.chain || 'ethereum',
-        projectOwner: owner,
-        projectName: repo,
-      });
-    }
-  }, [isTransactionSuccess, receipt, address, createTransactionMutation, donationAmount, owner, repo, sponsorAddress?.addresses]);
-
-  const handleDonate = async (amount: string) => {
-    if (!address) {
-      toast.error('Please connect your wallet first');
-      return;
-    }
-
-    if (!amount || parseFloat(amount) <= 0) {
-      toast.error('Please enter a valid donation amount');
-      return;
-    }
-
-    try {
-      sendTransaction({
-        to: selectedAddress?.address as `0x${string}`,
-        value: parseEther(amount),
-      });
-    } catch (error) {
-      toast.error('Failed to send transaction');
-      console.error('Failed to send transaction:', error);
-    }
-  };
-
-  const handleBack = () => {
-    router.back();
   };
 
   // 获取赞助记录
@@ -729,27 +443,13 @@ export default function SponsorPage({
           </h2>
           <p className="text-[#94A3B8] text-xs md:text-sm mb-4 md:mb-6 flex items-center">
             <Info className="w-3 h-3 md:w-4 md:h-4 mr-2 text-[#00FFFF]" />
-            {ownerData?.type === 'organization' ? (
-              <>
-                For organizations, add sponsor addresses in the README.md file of the organization&apos;s profile repository.{" "}
+            Add sponsor addresses in the README.md file of your project repository.{" "}
                 <Link
                   href={`/${lng}/sponsor-protocol`}
                   className="text-[#00FFFF] hover:text-[#00FFFF80] underline ml-1"
                 >
                   Learn more
                 </Link>
-              </>
-            ) : (
-              <>
-                Learn about the sponsor address protocol and how to use it.{" "}
-                <Link
-                  href={`/${lng}/sponsor-protocol`}
-                  className="text-[#00FFFF] hover:text-[#00FFFF80] underline ml-1"
-                >
-                  Learn more
-                </Link>
-              </>
-            )}
           </p>
           {sponsorAddress ? (
             <div className="space-y-3 md:space-y-4">
@@ -762,11 +462,10 @@ export default function SponsorPage({
                         Chain: {addr.chain}
                       </p>
                     </div>
-                    {addr.chain.toLowerCase() === 'ethereum' || addr.chain.toLowerCase() === 'eth' ? (
+                    {addr.chain.toLowerCase() === 'evm' ? (
                       <button 
                         className="bg-[#00FFFF] text-black font-bold py-2 px-4 rounded-md hover:bg-[#00FFFF80] transition-colors text-xs md:text-sm flex items-center justify-center whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={() => handleOpenModal(addr)}
-                        disabled={!address || isRecordCreating || (hash ? isTransactionLoading : false)}
                       >
                         <Wallet className="w-3 h-3 md:w-4 md:h-4 mr-2" />
                         Sponsor
@@ -786,19 +485,17 @@ export default function SponsorPage({
               <p className="text-[#94A3B8] text-sm md:text-base">
                 {ownerData?.type === 'organization' 
                   ? "No sponsor address found in organization's README.md file"
-                  : "No sponsor address found in project owner's bio"}
+                  : "No sponsor address found in project's README.md file"}
               </p>
-              {ownerData?.type === 'organization' && (
                 <div className="mt-3 md:mt-4 text-xs md:text-sm">
                   <p className="text-[#94A3B8] mb-2">To add sponsor addresses:</p>
                   <ol className="list-decimal list-inside text-[#94A3B8] space-y-1">
-                    <li>Go to your organization&apos;s profile repository</li>
+                  <li>Go to your project&apos;s repository</li>
                     <li>Edit the README.md file</li>
-                    <li>Add the sponsor address in the format: <code className="bg-[#0F172A] px-2 py-1 rounded">bewater:sponsor:chain:address</code></li>
+                  <li>Add the sponsor address in the format: <code className="bg-[#0F172A] px-2 py-1 rounded">bewater:sponsor:chain:address|</code></li>
                     <li>Save the changes</li>
                   </ol>
                 </div>
-              )}
             </div>
           )}
         </div>
@@ -847,7 +544,7 @@ export default function SponsorPage({
                   <div>
                     <div className="flex items-center gap-2">
                       <p className="text-white font-medium text-sm md:text-base">
-                        {Number(transaction.amount) / Math.pow(10, transaction.decimals)} {transaction.currency}
+                        {transaction.amount} {transaction.currency}
                       </p>
                       {currentTab === 'my' && (
                         <span className={`text-xs px-2 py-0.5 rounded flex items-center gap-1 ${
@@ -911,18 +608,14 @@ export default function SponsorPage({
       </div>
 
       {/* Donation Modal */}
-      <DonationModal
-        isOpen={isDonationModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleDonate}
-        isLoading={!!hash && isTransactionLoading}
-        isRecordCreating={isRecordCreating}
+      {isDonationModalOpen && <SponsorDonationDialog
+        open={isDonationModalOpen}
+        onOpenChange={setIsDonationModalOpen}
         address={selectedAddress?.address || ''}
         chain={selectedAddress?.chain || ''}
-        hash={hash}
-        isTransactionSuccess={isTransactionSuccess}
-        isTransactionError={isTransactionError}
-      />
+        projectOwner={owner}
+        projectName={repo}
+      />}
     </div>
   );
 } 

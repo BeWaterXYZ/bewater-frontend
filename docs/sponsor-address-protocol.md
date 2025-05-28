@@ -11,13 +11,13 @@ The protocol uses a simple, human-readable format:
 ### For Individual Developers
 Add to GitHub bio:
 ```
-bewater:sponsor:chain1:address1|chain2:address2|...
+bewater:sponsor:chain1:address1|chain2:address2|...|
 ```
 
 ### For Organizations
 Add to organization's profile repository README.md file:
 ```
-bewater:sponsor:chain1:address1|chain2:address2|...
+bewater:sponsor:chain1:address1|chain2:address2|...|
 ```
 
 ### Components
@@ -25,18 +25,14 @@ bewater:sponsor:chain1:address1|chain2:address2|...
 - `bewater`: Protocol identifier
 - `sponsor`: Type of address (currently only supports sponsor)
 - `chain1:address1`: First chain and its address
-- `|`: Separator between different chain addresses
+- `|`: Separator between different chain addresses and end marker
 - `chain2:address2`: Additional chain and its address
 
 ## Examples
 
 ### Individual Developer Bio
 ```
-Blockchain Developer | bewater:sponsor:ethereum:0x1234567890abcdef1234567890abcdef12345678
-```
-or
-```
-Blockchain Developer | bewater:sponsor:eth:0x1234567890abcdef1234567890abcdef12345678
+Blockchain Developer | bewater:sponsor:evm:0x1234567890abcdef1234567890abcdef12345678|
 ```
 
 ### Organization README.md
@@ -46,48 +42,33 @@ Blockchain Developer | bewater:sponsor:eth:0x1234567890abcdef1234567890abcdef123
 Welcome to our organization!
 
 ## Sponsor Addresses
-bewater:sponsor:ethereum:0x1234567890abcdef1234567890abcdef12345678|polygon:0xabcdef1234567890abcdef1234567890abcdef12
-```
-or
-```markdown
-# Organization Name
-
-Welcome to our organization!
-
-## Sponsor Addresses
-bewater:sponsor:eth:0x1234567890abcdef1234567890abcdef12345678|matic:0xabcdef1234567890abcdef1234567890abcdef12
+bewater:sponsor:evm:0x1234567890abcdef1234567890abcdef12345678|bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh|
 ```
 
 ### Multiple Chains
 ```
-bewater:sponsor:ethereum:0x1234567890abcdef1234567890abcdef12345678|polygon:0xabcdef1234567890abcdef1234567890abcdef12|arbitrum:0x7890abcdef1234567890abcdef1234567890abcdef
+bewater:sponsor:evm:0x1234567890abcdef1234567890abcdef12345678|bitcoin:bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh|
 ```
 
 ## Supported Chains
 
 Currently supported:
-- Ethereum (ethereum/eth)
+- EVM Chains (evm)
+  - Currently only supports Ethereum
+  - Other EVM chains coming soon
 
 Coming soon:
 - Bitcoin (bitcoin/btc)
-- Polygon (polygon/matic)
-- Arbitrum (arbitrum/arb)
-- Optimism (optimism/op)
-- Base (base/base)
 
 ### Chain Name Format
 Each chain can be specified using either its full name or its short name:
 
 | Chain | Full Name | Short Name |
 |-------|-----------|------------|
-| Ethereum | ethereum | eth |
+| EVM | evm | evm |
 | Bitcoin | bitcoin | btc |
-| Polygon | polygon | matic |
-| Arbitrum | arbitrum | arb |
-| Optimism | optimism | op |
-| Base | base | base |
 
-Note: While the protocol format supports multiple chains, currently only Ethereum addresses are being processed. Support for additional chains will be added in future updates.
+Note: While the protocol format supports multiple chains, currently only Ethereum addresses are being processed. Support for additional EVM chains and Bitcoin will be added in future updates.
 
 ## Implementation
 
