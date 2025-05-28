@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -49,8 +51,11 @@ export async function GET(request: NextRequest) {
       take: pageSize,
     });
 
+    // 移除每条记录中的 id 字段
+    const transactionsWithoutId = transactions.map(({ id, ...rest }) => rest);
+
     return NextResponse.json({
-      transactions,
+      transactions: transactionsWithoutId,
       pagination: {
         total,
         page,

@@ -57,9 +57,12 @@ export async function POST(request: Request) {
       }
     });
 
+    // 只返回必要的字段，不包含 id
+    const { id, ...transactionData } = transaction;
+
     return NextResponse.json({
       success: true,
-      data: transaction
+      data: transactionData
     });
 
   } catch (error) {

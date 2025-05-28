@@ -167,7 +167,6 @@ export default function ProfilePage({
                           <p className="text-white font-medium text-base md:text-lg truncate">
                             {transaction.projectOwner}/{transaction.projectName}
                           </p>
-                          <Github className="w-4 h-4 text-[#94A3B8] flex-shrink-0" />
                         </div>
                       </div>
                     </div>
@@ -176,7 +175,7 @@ export default function ProfilePage({
                     <div className="flex flex-col items-start md:items-end gap-2 flex-shrink-0">
                       <div className="flex items-center gap-2">
                         <span className="text-white font-medium text-lg">
-                          {Number(transaction.amount) / Math.pow(10, transaction.decimals)} {transaction.currency}
+                          {transaction.amount} {transaction.currency}
                         </span>
                         <span className={`text-xs px-2 py-1 rounded-full flex items-center gap-1 ${
                           transaction.fromAddress === address
