@@ -2,13 +2,13 @@
 import { createConfig, http, WagmiProvider, type Config } from "wagmi";
 import { QueryProvider } from "../app/[lng]/query";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { mainnet } from "@reown/appkit/networks";
+import { mainnet, optimism } from "@reown/appkit/networks";
 import { createAppKit } from "@reown/appkit/react";
 
 const wagmiAdapter = new WagmiAdapter({
   ssr: true,
   projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "60b8a3ddf0bd9d87c01e12e1ae4af6d3",
-  networks: [mainnet],
+  networks: [mainnet, optimism],
 });
 
 export const modal = createAppKit({
@@ -20,7 +20,7 @@ export const modal = createAppKit({
     icons: [],
   },
   projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "60b8a3ddf0bd9d87c01e12e1ae4af6d3",
-  networks: [mainnet],
+  networks: [mainnet, optimism],
   defaultNetwork: mainnet,
   features: {
     analytics: false,

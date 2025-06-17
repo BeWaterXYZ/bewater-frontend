@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Select from '@radix-ui/react-select';
 import { cn } from "@/lib/utils";
-import { useAccount, useSendTransaction, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
+import { useAccount, useSendTransaction, useWaitForTransactionReceipt, useWriteContract, useChainId, useSwitchChain } from 'wagmi';
 import { parseEther, parseUnits } from 'viem';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { USDT_CONTRACTS, USDT_ABI } from '@/constants/tokens';
@@ -35,6 +35,8 @@ export function SponsorDonationDialog({
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
   const { t } = useTranslation('en', 'translation');
   const { address: userAddress } = useAccount();
+  const chainId = useChainId();
+  const { switchChain } = useSwitchChain();
   const queryClient = useQueryClient();
   const hasProcessedRef = useRef(false);
   const [isRecordCreating, setIsRecordCreating] = useState(false);
@@ -53,6 +55,18 @@ export function SponsorDonationDialog({
       hasProcessedRef.current = false;
     }
   }, [open]);
+
+  // 监听链切换
+  useEffect(() => {
+    console.log('chainId', chainId);
+    if (chainId) {
+      if (chainId === 1) {
+        setSelectedChain('ethereum');
+      } else if (chainId === 10) {
+        setSelectedChain('optimism');
+      }
+    }
+  }, [chainId]);
 
   const createTransactionMutation = useMutation({
     mutationFn: async (data: {
@@ -143,10 +157,27 @@ export function SponsorDonationDialog({
     }
 
     try {
-      // 目前只支持以太坊，其他 EVM 链的支持将在后续添加
-      if (selectedChain && selectedChain !== 'ethereum') {
-        toast.error('Currently only Ethereum is supported. Other EVM chains will be supported soon.');
-        return;
+      console.log('selectedChain', selectedChain);
+      console.log('chainId', chainId);
+      // 检查并切换网络
+      if (selectedChain === 'ethereum' && chainId !== 1) {
+        try {
+          await switchChain({ chainId: 1 });
+          toast.success('Switched to Ethereum network');
+        } catch (error) {
+          toast.error('Failed to switch to Ethereum network');
+          setIsSendingTransaction(false);
+          return;
+        }
+      } else if (selectedChain === 'optimism' && chainId !== 10) {
+        try {
+          await switchChain({ chainId: 10 });
+          toast.success('Switched to Optimism network');
+        } catch (error) {
+          toast.error('Failed to switch to Optimism network');
+          setIsSendingTransaction(false);
+          return;
+        }
       }
 
       if (selectedCurrency === 'ETH') {
@@ -165,6 +196,7 @@ export function SponsorDonationDialog({
     } catch (error) {
       toast.error('Failed to send transaction');
       console.error('Failed to send transaction:', error);
+      setIsSendingTransaction(false);
     }
   };
 
@@ -190,7 +222,7 @@ export function SponsorDonationDialog({
     { value: 'ethereum', label: 'Ethereum', disabled: false },
     { value: 'polygon', label: 'Polygon', disabled: true },
     { value: 'arbitrum', label: 'Arbitrum', disabled: true },
-    { value: 'optimism', label: 'Optimism', disabled: true },
+    { value: 'optimism', label: 'Optimism', disabled: false },
     { value: 'base', label: 'Base', disabled: true }
   ];
 
