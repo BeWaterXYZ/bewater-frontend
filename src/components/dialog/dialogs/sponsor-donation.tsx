@@ -2,15 +2,31 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useTranslation } from "@/app/i18n/client";
-import { Wallet, ExternalLink, ChevronDown, Check, X, ChevronUp, ChevronDown as ChevronDownIcon, AlertTriangle } from "lucide-react";
+import {
+  Wallet,
+  ExternalLink,
+  ChevronDown,
+  Check,
+  X,
+  ChevronUp,
+  ChevronDown as ChevronDownIcon,
+  AlertTriangle,
+} from "lucide-react";
 import { toast } from "sonner";
-import * as Dialog from '@radix-ui/react-dialog';
-import * as Select from '@radix-ui/react-select';
+import * as Dialog from "@radix-ui/react-dialog";
+import * as Select from "@radix-ui/react-select";
 import { cn } from "@/lib/utils";
-import { useAccount, useSendTransaction, useWaitForTransactionReceipt, useWriteContract, useChainId, useSwitchChain } from 'wagmi';
-import { parseEther, parseUnits } from 'viem';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { USDT_CONTRACTS, USDT_ABI } from '@/constants/tokens';
+import {
+  useAccount,
+  useSendTransaction,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+  useChainId,
+  useSwitchChain,
+} from "wagmi";
+import { parseEther, parseUnits } from "viem";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { USDT_CONTRACTS, USDT_ABI } from "@/constants/tokens";
 
 interface SponsorDonationDialogProps {
   open: boolean;
@@ -27,13 +43,13 @@ export function SponsorDonationDialog({
   address,
   chain,
   projectOwner,
-  projectName
+  projectName,
 }: SponsorDonationDialogProps) {
-  const [amount, setAmount] = useState('');
-  const [selectedChain, setSelectedChain] = useState('ethereum');
-  const [selectedCurrency, setSelectedCurrency] = useState('ETH');
+  const [amount, setAmount] = useState("");
+  const [selectedChain, setSelectedChain] = useState("ethereum");
+  const [selectedCurrency, setSelectedCurrency] = useState("ETH");
   const [showCloseConfirm, setShowCloseConfirm] = useState(false);
-  const { t } = useTranslation('en', 'translation');
+  const { t } = useTranslation("en", "translation");
   const { address: userAddress } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
@@ -46,9 +62,9 @@ export function SponsorDonationDialog({
   // 重置状态
   useEffect(() => {
     if (open) {
-      setAmount('');
-      setSelectedChain('ethereum');
-      setSelectedCurrency('ETH');
+      setAmount("");
+      setSelectedChain("ethereum");
+      setSelectedCurrency("ETH");
       setIsRecordCreating(false);
       setIsTransactionError(false);
       setIsSendingTransaction(false);
@@ -58,12 +74,12 @@ export function SponsorDonationDialog({
 
   // 监听链切换
   useEffect(() => {
-    console.log('chainId', chainId);
+    // console.log('chainId', chainId);
     if (chainId) {
       if (chainId === 1) {
-        setSelectedChain('ethereum');
+        setSelectedChain("ethereum");
       } else if (chainId === 10) {
-        setSelectedChain('optimism');
+        setSelectedChain("optimism");
       }
     }
   }, [chainId]);
@@ -80,24 +96,24 @@ export function SponsorDonationDialog({
       projectOwner: string;
       projectName: string;
     }) => {
-      const response = await fetch('/api/sponsor/transaction', {
-        method: 'POST',
+      const response = await fetch("/api/sponsor/transaction", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-      
+
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Failed to create transaction record');
+        throw new Error(error.error || "Failed to create transaction record");
       }
-      
+
       return response.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['sponsorTransactions'] });
-      toast.success('Sponsor record created successfully');
+      queryClient.invalidateQueries({ queryKey: ["sponsorTransactions"] });
+      toast.success("Sponsor record created successfully");
       setIsRecordCreating(false);
     },
     onError: (error: Error) => {
@@ -106,13 +122,25 @@ export function SponsorDonationDialog({
     },
   });
 
-  const { sendTransaction, data: hash, error: transactionError } = useSendTransaction();
+  const {
+    sendTransaction,
+    data: hash,
+    error: transactionError,
+  } = useSendTransaction();
 
   // USDT contract write
-  const { writeContract: writeUSDT, data: usdtHash, error: usdtError } = useWriteContract();
+  const {
+    writeContract: writeUSDT,
+    data: usdtHash,
+    error: usdtError,
+  } = useWriteContract();
 
-  const { isLoading: isTransactionLoading, isSuccess: isTransactionSuccess, data: receipt } = useWaitForTransactionReceipt({
-    hash: selectedCurrency === 'ETH' ? hash : usdtHash,
+  const {
+    isLoading: isTransactionLoading,
+    isSuccess: isTransactionSuccess,
+    data: receipt,
+  } = useWaitForTransactionReceipt({
+    hash: selectedCurrency === "ETH" ? hash : usdtHash,
   });
 
   // 监听交易错误
@@ -120,7 +148,7 @@ export function SponsorDonationDialog({
     if (transactionError || usdtError) {
       setIsTransactionError(true);
       setIsSendingTransaction(false);
-      toast.error('Transaction failed. Please try again.');
+      toast.error("Transaction failed. Please try again.");
     }
   }, [transactionError, usdtError]);
 
@@ -136,66 +164,87 @@ export function SponsorDonationDialog({
         toAddress: address,
         amount: amount,
         currency: selectedCurrency,
-        decimals: selectedCurrency === 'ETH' ? 18 : 6,
+        decimals: selectedCurrency === "ETH" ? 18 : 6,
         chain: chain,
         projectOwner: projectOwner,
         projectName: projectName,
       });
     }
-  }, [isTransactionSuccess, receipt, userAddress, createTransactionMutation, amount, projectOwner, projectName, address, chain, selectedCurrency]);
+  }, [
+    isTransactionSuccess,
+    receipt,
+    userAddress,
+    createTransactionMutation,
+    amount,
+    projectOwner,
+    projectName,
+    address,
+    chain,
+    selectedCurrency,
+  ]);
 
   const handleDonate = async () => {
     setIsSendingTransaction(true);
     if (!userAddress) {
-      toast.error('Please connect your wallet first');
+      toast.error("Please connect your wallet first");
       return;
     }
 
     if (!amount || parseFloat(amount) <= 0) {
-      toast.error('Please enter a valid donation amount');
+      toast.error("Please enter a valid donation amount");
       return;
     }
 
     try {
-      console.log('selectedChain', selectedChain);
-      console.log('chainId', chainId);
+      // console.log('selectedChain', selectedChain);
+      // console.log('chainId', chainId);
       // 检查并切换网络
-      if (selectedChain === 'ethereum' && chainId !== 1) {
-        try {
-          await switchChain({ chainId: 1 });
-          toast.success('Switched to Ethereum network');
-        } catch (error) {
-          toast.error('Failed to switch to Ethereum network');
-          setIsSendingTransaction(false);
-          return;
-        }
-      } else if (selectedChain === 'optimism' && chainId !== 10) {
-        try {
-          await switchChain({ chainId: 10 });
-          toast.success('Switched to Optimism network');
-        } catch (error) {
-          toast.error('Failed to switch to Optimism network');
-          setIsSendingTransaction(false);
-          return;
-        }
+      // if (selectedChain === 'ethereum' && chainId !== 1) {
+      //   try {
+      //     await switchChain({ chainId: 1 });
+      //     toast.success('Switched to Ethereum network');
+      //   } catch (error) {
+      //     toast.error('Failed to switch to Ethereum network');
+      //     setIsSendingTransaction(false);
+      //     return;
+      //   }
+      // } else if (selectedChain === 'optimism' && chainId !== 10) {
+      //   try {
+      //     await switchChain({ chainId: 10 });
+      //     toast.success('Switched to Optimism network');
+      //   } catch (error) {
+      //     toast.error('Failed to switch to Optimism network');
+      //     setIsSendingTransaction(false);
+      //     return;
+      //   }
+      // }
+      let selectedChainId = 0;
+      if (selectedChain === "ethereum") {
+        selectedChainId = 1;
+      } else if (selectedChain === "optimism") {
+        selectedChainId = 10;
       }
 
-      if (selectedCurrency === 'ETH') {
+      if (selectedCurrency === "ETH") {
         sendTransaction({
           to: address as `0x${string}`,
           value: parseEther(amount),
+          chainId: selectedChainId,
         });
-      } else if (selectedCurrency === 'USDT') {
+      } else if (selectedCurrency === "USDT") {
         writeUSDT({
           abi: USDT_ABI,
-          address: USDT_CONTRACTS[selectedChain as keyof typeof USDT_CONTRACTS] as `0x${string}`,
-          functionName: 'transfer',
+          address: USDT_CONTRACTS[
+            selectedChain as keyof typeof USDT_CONTRACTS
+          ] as `0x${string}`,
+          functionName: "transfer",
           args: [address as `0x${string}`, parseUnits(amount, 6)],
+          chainId: selectedChainId,
         });
       }
     } catch (error) {
-      toast.error('Failed to send transaction');
-      console.error('Failed to send transaction:', error);
+      toast.error("Failed to send transaction");
+      console.error("Failed to send transaction:", error);
       setIsSendingTransaction(false);
     }
   };
@@ -219,12 +268,21 @@ export function SponsorDonationDialog({
 
   // EVM 链选项
   const evmChains = [
-    { value: 'ethereum', label: 'Ethereum', disabled: false },
-    { value: 'polygon', label: 'Polygon', disabled: true },
-    { value: 'arbitrum', label: 'Arbitrum', disabled: true },
-    { value: 'optimism', label: 'Optimism', disabled: false },
-    { value: 'base', label: 'Base', disabled: true }
+    { value: "ethereum", label: "Ethereum", disabled: false },
+    { value: "optimism", label: "Optimism", disabled: false },
+    { value: "polygon", label: "Polygon", disabled: true },
+    { value: "arbitrum", label: "Arbitrum", disabled: true },
+    { value: "base", label: "Base", disabled: true },
   ];
+
+  const handleChainChange = (value: string) => {
+    setSelectedChain(value);
+    if (value === "ethereum") {
+      switchChain({ chainId: 1 });
+    } else if (value === "optimism") {
+      switchChain({ chainId: 10 });
+    }
+  };
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
@@ -247,10 +305,14 @@ export function SponsorDonationDialog({
               <div className="bg-[#0F172A] rounded-lg p-6 w-full max-w-md mx-4">
                 <div className="flex items-center gap-3 mb-4">
                   <AlertTriangle className="w-6 h-6 text-[#FF4D4D]" />
-                  <h3 className="text-lg font-bold text-white">Confirm Close</h3>
+                  <h3 className="text-lg font-bold text-white">
+                    Confirm Close
+                  </h3>
                 </div>
                 <p className="text-[#94A3B8] mb-6">
-                  There is an ongoing transaction. Are you sure you want to close this dialog? The transaction will continue in the background.
+                  There is an ongoing transaction. Are you sure you want to
+                  close this dialog? The transaction will continue in the
+                  background.
                 </p>
                 <div className="flex justify-end gap-3">
                   <button
@@ -276,7 +338,9 @@ export function SponsorDonationDialog({
 
           <div className="space-y-4">
             <div>
-              <label className="block text-[#94A3B8] text-sm mb-2">Recipient Address</label>
+              <label className="block text-[#94A3B8] text-sm mb-2">
+                Recipient Address
+              </label>
               <div className="p-2 bg-[#1E293B] rounded-md">
                 <p className="text-white text-sm break-all">{address}</p>
               </div>
@@ -291,11 +355,16 @@ export function SponsorDonationDialog({
 
             {!hash && !usdtHash && (
               <>
-                {chain === 'evm' && (
+                {chain === "evm" && (
                   <>
                     <div>
-                      <label className="block text-[#94A3B8] text-sm mb-2">Select EVM Chain</label>
-                      <Select.Root value={selectedChain} onValueChange={setSelectedChain}>
+                      <label className="block text-[#94A3B8] text-sm mb-2">
+                        Select EVM Chain
+                      </label>
+                      <Select.Root
+                        value={selectedChain}
+                        onValueChange={handleChainChange}
+                      >
                         <Select.Trigger className="w-full bg-[#1E293B] text-white px-3 py-2 rounded text-sm flex justify-between items-center">
                           <Select.Value placeholder="Select chain" />
                           <Select.Icon>
@@ -303,12 +372,12 @@ export function SponsorDonationDialog({
                           </Select.Icon>
                         </Select.Trigger>
                         <Select.Portal>
-                          <Select.Content 
+                          <Select.Content
                             className={cn(
                               "bg-[#1E293B] text-white rounded-md shadow-lg overflow-hidden",
                               "data-[state=open]:animate-slide-in-from-top",
                               "data-[state=closed]:animate-slide-out-to-top",
-                              "duration-200"
+                              "duration-200",
                             )}
                             sideOffset={4}
                           >
@@ -324,20 +393,26 @@ export function SponsorDonationDialog({
                                   className={cn(
                                     "relative flex items-center px-8 py-2 text-sm rounded-sm select-none",
                                     "transition-colors duration-200 ease-in-out",
-                                    !chain.disabled && "cursor-pointer hover:bg-[#0F172A] focus:bg-[#0F172A] focus:outline-none",
+                                    !chain.disabled &&
+                                      "cursor-pointer hover:bg-[#0F172A] focus:bg-[#0F172A] focus:outline-none",
                                     "data-[highlighted]:bg-[#0F172A] data-[highlighted]:text-white",
                                     "data-[state=checked]:bg-[#0F172A] data-[state=checked]:text-white",
                                     "disabled:opacity-40 disabled:cursor-not-allowed",
-                                    chain.disabled && "!text-[#94A3B8] data-[state=checked]:!text-[#94A3B8] data-[highlighted]:!text-[#94A3B8]"
+                                    chain.disabled &&
+                                      "!text-[#94A3B8] data-[state=checked]:!text-[#94A3B8] data-[highlighted]:!text-[#94A3B8]",
                                   )}
                                 >
-                                  <Select.ItemText className={cn(
-                                    "flex items-center justify-between w-full",
-                                    chain.disabled && "!text-[#94A3B8]"
-                                  )}>
+                                  <Select.ItemText
+                                    className={cn(
+                                      "flex items-center justify-between w-full",
+                                      chain.disabled && "!text-[#94A3B8]",
+                                    )}
+                                  >
                                     <span>{chain.label}</span>
                                     {chain.disabled && (
-                                      <span className="text-xs text-[#94A3B8] ml-2">Coming Soon</span>
+                                      <span className="text-xs text-[#94A3B8] ml-2">
+                                        Coming Soon
+                                      </span>
                                     )}
                                   </Select.ItemText>
                                   <Select.ItemIndicator className="absolute left-2 inline-flex items-center">
@@ -354,8 +429,13 @@ export function SponsorDonationDialog({
                       </Select.Root>
                     </div>
                     <div>
-                      <label className="block text-[#94A3B8] text-sm mb-2">Select Currency</label>
-                      <Select.Root value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                      <label className="block text-[#94A3B8] text-sm mb-2">
+                        Select Currency
+                      </label>
+                      <Select.Root
+                        value={selectedCurrency}
+                        onValueChange={setSelectedCurrency}
+                      >
                         <Select.Trigger className="w-full bg-[#1E293B] text-white px-3 py-2 rounded text-sm flex justify-between items-center">
                           <Select.Value placeholder="Select currency" />
                           <Select.Icon>
@@ -363,12 +443,12 @@ export function SponsorDonationDialog({
                           </Select.Icon>
                         </Select.Trigger>
                         <Select.Portal>
-                          <Select.Content 
+                          <Select.Content
                             className={cn(
                               "bg-[#1E293B] text-white rounded-md shadow-lg overflow-hidden",
                               "data-[state=open]:animate-slide-in-from-top",
                               "data-[state=closed]:animate-slide-out-to-top",
-                              "duration-200"
+                              "duration-200",
                             )}
                             sideOffset={4}
                           >
@@ -379,7 +459,7 @@ export function SponsorDonationDialog({
                                   "relative flex items-center px-8 py-2 text-sm rounded-sm select-none",
                                   "cursor-pointer hover:bg-[#0F172A] focus:bg-[#0F172A] focus:outline-none",
                                   "data-[highlighted]:bg-[#0F172A] data-[highlighted]:text-white",
-                                  "data-[state=checked]:bg-[#0F172A] data-[state=checked]:text-white"
+                                  "data-[state=checked]:bg-[#0F172A] data-[state=checked]:text-white",
                                 )}
                               >
                                 <Select.ItemText>ETH</Select.ItemText>
@@ -393,7 +473,7 @@ export function SponsorDonationDialog({
                                   "relative flex items-center px-8 py-2 text-sm rounded-sm select-none",
                                   "cursor-pointer hover:bg-[#0F172A] focus:bg-[#0F172A] focus:outline-none",
                                   "data-[highlighted]:bg-[#0F172A] data-[highlighted]:text-white",
-                                  "data-[state=checked]:bg-[#0F172A] data-[state=checked]:text-white"
+                                  "data-[state=checked]:bg-[#0F172A] data-[state=checked]:text-white",
                                 )}
                               >
                                 <Select.ItemText>USDT</Select.ItemText>
@@ -407,24 +487,33 @@ export function SponsorDonationDialog({
                       </Select.Root>
                     </div>
                     <div>
-                      <label className="block text-[#94A3B8] text-sm mb-2">Donation Amount ({selectedCurrency})</label>
+                      <label className="block text-[#94A3B8] text-sm mb-2">
+                        Donation Amount ({selectedCurrency})
+                      </label>
                       <div className="relative">
                         <input
                           type="number"
                           value={amount}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAmount(e.target.value)}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setAmount(e.target.value)
+                          }
                           placeholder="Enter amount"
                           className="w-full bg-[#1E293B] text-white px-3 py-2 rounded text-sm pr-12 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                           min="0"
-                          step={selectedCurrency === 'ETH' ? "0.0001" : "0.01"}
+                          step={selectedCurrency === "ETH" ? "0.0001" : "0.01"}
                         />
                         <div className="absolute right-0 top-0 h-full flex flex-col border-l border-[#334155]">
                           <button
                             type="button"
                             onClick={() => {
                               const currentValue = parseFloat(amount) || 0;
-                              const step = selectedCurrency === 'ETH' ? 0.0001 : 0.01;
-                              setAmount((currentValue + step).toFixed(selectedCurrency === 'ETH' ? 4 : 2));
+                              const step =
+                                selectedCurrency === "ETH" ? 0.0001 : 0.01;
+                              setAmount(
+                                (currentValue + step).toFixed(
+                                  selectedCurrency === "ETH" ? 4 : 2,
+                                ),
+                              );
                             }}
                             className="flex-1 px-2 hover:bg-[#0F172A] transition-colors flex items-center justify-center border-b border-[#334155]"
                           >
@@ -434,9 +523,14 @@ export function SponsorDonationDialog({
                             type="button"
                             onClick={() => {
                               const currentValue = parseFloat(amount) || 0;
-                              const step = selectedCurrency === 'ETH' ? 0.0001 : 0.01;
+                              const step =
+                                selectedCurrency === "ETH" ? 0.0001 : 0.01;
                               if (currentValue >= step) {
-                                setAmount((currentValue - step).toFixed(selectedCurrency === 'ETH' ? 4 : 2));
+                                setAmount(
+                                  (currentValue - step).toFixed(
+                                    selectedCurrency === "ETH" ? 4 : 2,
+                                  ),
+                                );
                               }
                             }}
                             className="flex-1 px-2 hover:bg-[#0F172A] transition-colors flex items-center justify-center"
@@ -453,9 +547,13 @@ export function SponsorDonationDialog({
 
             {(hash || usdtHash) && (
               <div>
-                <label className="block text-[#94A3B8] text-sm mb-2">Transaction Hash</label>
+                <label className="block text-[#94A3B8] text-sm mb-2">
+                  Transaction Hash
+                </label>
                 <div className="p-2 bg-[#1E293B] rounded-md">
-                  <p className="text-white text-sm break-all">{hash || usdtHash}</p>
+                  <p className="text-white text-sm break-all">
+                    {hash || usdtHash}
+                  </p>
                   <a
                     href={`https://etherscan.io/tx/${hash || usdtHash}`}
                     target="_blank"
@@ -496,7 +594,11 @@ export function SponsorDonationDialog({
                   handleDonate();
                 }
               }}
-              disabled={isSendingTransaction || isRecordCreating || (!isTransactionSuccess && (!amount || parseFloat(amount) <= 0))}
+              disabled={
+                isSendingTransaction ||
+                isRecordCreating ||
+                (!isTransactionSuccess && (!amount || parseFloat(amount) <= 0))
+              }
             >
               {isSendingTransaction ? (
                 <>
@@ -509,9 +611,7 @@ export function SponsorDonationDialog({
                   Creating Record...
                 </>
               ) : isTransactionSuccess ? (
-                <>
-                  Close
-                </>
+                <>Close</>
               ) : (
                 <>
                   <Wallet className="w-4 h-4 mr-2" />
@@ -524,4 +624,4 @@ export function SponsorDonationDialog({
       </Dialog.Portal>
     </Dialog.Root>
   );
-} 
+}
