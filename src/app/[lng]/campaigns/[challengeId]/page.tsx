@@ -125,22 +125,22 @@ export default async function ChallengeIntro({ params }: any) {
             challenge.telegramLink ||
             challenge.telegramLink
           )
-            ? "flex flex-col gap-10 md:gap-10 items-center my-10 mb-0"
-            : "flex flex-col gap-10 md:gap-20 items-center my-10"
+            ? "flex flex-col gap-6 md:gap-10 items-center my-6 md:my-10 mb-0"
+            : "flex flex-col gap-6 md:gap-20 items-center my-6 md:my-10"
         }`}
       >
         <div
           className={clsx(
-            "flex flex-col gap-4 md:flex-row md:gap-20 items-center",
+            "flex flex-col gap-4 md:flex-row md:gap-20 items-center px-4 md:px-0",
             {
-              "mt-[100px]": challenge.milestones?.length === 0,
+              "mt-[60px] md:mt-[100px]": challenge.milestones?.length === 0,
             }
           )}
         >
-          <div className="heading-5 md:heading-3 whitespace-nowrap py-4">
+          <div className="heading-5 md:heading-3 whitespace-nowrap py-2 md:py-4">
             {t("campaign.t5")}
           </div>
-          <div className="body-3 md:body-2 [&_p]:px-[4vw] [&_p]:md:px-0 text-white [&_p]:w-dvw md:[&_p]:w-fit [&_a]:border-b [&_a]:border-b-white [&_p]:break-words [&_p]:my-1 md:[&_p]:my-2 [&_h1]:my-4">
+          <div className="body-3 md:body-2 [&_p]:px-0 [&_p]:md:px-0 text-white [&_p]:w-full md:[&_p]:w-fit [&_a]:border-b [&_a]:border-b-white [&_p]:break-words [&_p]:my-1 md:[&_p]:my-2 [&_h1]:my-4">
             {challenge.description?.endsWith("--edit-by-markdown") ? (
               <Markdown style={{ color: "white" }}>
                 {challenge.description.substring(
