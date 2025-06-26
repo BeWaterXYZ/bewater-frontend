@@ -76,7 +76,7 @@ export function useBuilderboardProject(
       return getBuilderboardProject(limit, ecosystem, sector, subEcosystem);
     },
     {
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: 1000 * 60 * 10, // 10 minutes
     }
   );
 }

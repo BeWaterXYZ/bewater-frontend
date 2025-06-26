@@ -6,7 +6,7 @@ import {
   CodeSandboxLogoIcon,
   UpdateIcon,
 } from "@radix-ui/react-icons";
-import { Bot, Gift } from "lucide-react";
+import { Bot, Gift, Trophy } from "lucide-react";
 import { format } from "date-fns";
 import { BuilderboardProject } from "@/services/leaderboard";
 import { useBuilderboardProject } from "@/services/leaderboard.query";
@@ -14,7 +14,7 @@ import PageSwitcher from "../../../app/[lng]/builderboard/page-switcher";
 import { useRouter } from "next/navigation";
 
 const gridTemplate =
-  "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_4fr)_minmax(0,_4fr)_minmax(0,_3fr)]";
+  "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_3fr)_minmax(0,_3fr)_minmax(0,_2fr)_minmax(0,_2fr)]";
 const rowStyle = `grid gap-2 md:gap-4 border-b border-b-[#334155] box-border ${gridTemplate}`;
 
 const USE_GITHUB_API =
@@ -60,6 +60,7 @@ async function fetchTopProjects(): Promise<BuilderboardProject[]> {
             login: c.login,
             avatar_url: c.avatar_url,
           })),
+          hackathons: [], // GitHub API 没有黑客松信息，返回空数组
         };
       }),
     );
@@ -84,6 +85,7 @@ function Project(props: {
   const { data, rank, onSelectProject } = props;
   const [owner, repo] = data.repoName.split("/");
   const contributors = data.contributors || [];
+  const hackathons = data.hackathons || [];
 
   // Handle language display - ensure we're displaying a string
   const primaryLanguage =
@@ -95,6 +97,10 @@ function Project(props: {
 
   const handleSponsorClick = () => {
     router.push(`/${props.lng}/sponsor/${owner}/${repo}`);
+  };
+
+  const handleHackathonClick = (url: string) => {
+    window.open(url, '_blank');
   };
 
   return (
@@ -157,6 +163,37 @@ function Project(props: {
           <div className="text-[#94A3B8] text-xs line-clamp-2">
             {data.tags.join(", ")}
           </div>
+        )}
+      </div>
+
+      {/* Hackathons */}
+      <div className="flex flex-col gap-2 mt-4 md:mt-0 h-full">
+        {hackathons.length > 0 ? (
+          <>
+            <div className="flex items-center gap-1 text-[#94A3B8] text-xs">
+              <Trophy size={12} className="text-[#F59E0B]" />
+              <span>Hackathons</span>
+            </div>
+            <div className="flex flex-col gap-1">
+              {hackathons.slice(0, 3).map((hackathon, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleHackathonClick(hackathon.url)}
+                  className="text-[#00FFFF] text-xs hover:text-[#00FFFF]/80 text-left truncate"
+                  title={hackathon.name}
+                >
+                  {hackathon.name}
+                </button>
+              ))}
+              {hackathons.length > 3 && (
+                <span className="text-[#64748B] text-xs">
+                  +{hackathons.length - 3} more
+                </span>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="text-[#64748B] text-xs flex justify-center items-center h-full">No hackathons</div>
         )}
       </div>
 
@@ -280,8 +317,6 @@ export default function Projects({
 
   return (
     <>
-      <div className={`${rowStyle} py-2`} />
-
       {currentPageData.map(
         (data: BuilderboardProject, index: number) =>
           data && (

@@ -76,6 +76,7 @@ const isPublicRoute = createRouteMatcher([
   "/api/sponsor/transaction(.*)",
   "/api/sponsor/transactions(.*)",
   "/api/billboard/import-github-project",
+  "/api/billboard/operation/project-list",
   "/leaderboard(.*)",
   "/en/sponsor(.*)",
   "/zh/sponsor(.*)",

@@ -108,9 +108,15 @@ export interface BuilderboardDeveloper {
     languages: BuilderboardLanguage[]; // 仓库使用的语言列表
   };
 }
+
 export interface BuilderboardContributor {
   login: string;
   avatar_url: string;
+}
+
+export interface BuilderboardHackathon {
+  name: string;
+  url: string;
 }
 
 export interface BuilderboardProject {
@@ -124,6 +130,7 @@ export interface BuilderboardProject {
   updated_at: string; // 最后更新时间
   contributors: BuilderboardContributor[]; // 贡献者列表
   tags: string[]; // 标签
+  hackathons: BuilderboardHackathon[]; // 参与过的黑客松列表
 }
 
 export enum RankingTagType {
@@ -195,8 +202,8 @@ export async function getBuilderboardProject(
     if (sector) params.append("sector", sector);
     if (subEcosystem) params.append("subEcosystem", subEcosystem);
 
-    const { data } = await agentAuthed.get<BuilderboardProject[]>(
-      `/billboard/operation/project-list?${params.toString()}`,
+    const { data } = await agentNext.get<BuilderboardProject[]>(
+      `/api/billboard/operation/project-list?${params.toString()}`,
     );
     console.log(data);
     return data || []; // 确保返回空数组而不是 undefined
