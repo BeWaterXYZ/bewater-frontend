@@ -555,13 +555,17 @@ export function SponsorDonationDialog({
                     {hash || usdtHash}
                   </p>
                   <a
-                    href={`https://etherscan.io/tx/${hash || usdtHash}`}
+                    href={
+                      selectedChain === "optimism"
+                        ? `https://optimistic.etherscan.io/tx/${hash || usdtHash}`
+                        : `https://etherscan.io/tx/${hash || usdtHash}`
+                    }
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-[#00FFFF] hover:text-[#00FFFF80] text-xs flex items-center mt-2"
                   >
                     <ExternalLink className="w-3 h-3 mr-1" />
-                    View on Etherscan
+                    View on {selectedChain === "optimism" ? "Optimistic Etherscan" : "Etherscan"}
                   </a>
                 </div>
               </div>
