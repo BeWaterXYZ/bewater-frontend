@@ -10,6 +10,7 @@ import {
 } from "@/services/types";
 import { create } from "zustand";
 import { User } from "@clerk/nextjs/server";
+import { BuilderboardHackathon } from "@/services/leaderboard";
 
 export interface Dialogs {
   share_profile?: {
@@ -73,6 +74,7 @@ export interface Dialogs {
     };
   };
   builderboard_import?: {};
+  hackathon_details?: BuilderboardHackathon;
 }
 
 type State = {

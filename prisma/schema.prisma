@@ -840,6 +840,7 @@ model OperationProject {
   stars                Int                           @default(0)
   ai_report_url        String?
   tags                 Json                          @default("[]")
+  hackathons           Json?                         // 参与过的黑客松信息 [{"name": "xxx", "url": "xxx"}]
   contributorRelations OperationProjectContributor[]
 
   @@map("operationProject")
