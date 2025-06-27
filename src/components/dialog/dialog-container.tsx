@@ -98,6 +98,12 @@ const dialogMaps: DialogMap = {
       loading: () => <Loading />,
     }
   ),
+  hackathon_details: dynamicLoad(
+    () => import("./dialogs/hackathon-details"),
+    {
+      loading: () => <Loading />,
+    }
+  ),
 };
 
 export function DialogContainer({

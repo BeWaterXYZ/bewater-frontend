@@ -10,6 +10,7 @@ interface BuilderboardContributor {
 interface BuilderboardHackathon {
   name: string;
   url: string;
+  host: string;
 }
 
 interface BuilderboardProject {
@@ -27,6 +28,13 @@ interface BuilderboardProject {
 }
 
 function formatProjectResponse(project: any): BuilderboardProject {
+  // Process hackathons to ensure they have the host field
+  const processedHackathons = (project.hackathons || []).map((hackathon: any) => ({
+    name: hackathon.name || '',
+    url: hackathon.url || '',
+    host: hackathon.host || 'Unknown Host', // Provide default value for existing data
+  }));
+
   return {
     repoName: project.repoName,
     name: project.name,
@@ -38,7 +46,7 @@ function formatProjectResponse(project: any): BuilderboardProject {
     updated_at: project.updated_at?.toISOString() || new Date().toISOString(),
     contributors: project.contributors || [],
     tags: project.tags || [],
-    hackathons: project.hackathons || [],
+    hackathons: processedHackathons,
   };
 }
 

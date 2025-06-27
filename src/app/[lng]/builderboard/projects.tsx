@@ -12,6 +12,7 @@ import { BuilderboardProject } from "@/services/leaderboard";
 import { useBuilderboardProject } from "@/services/leaderboard.query";
 import PageSwitcher from "../../../app/[lng]/builderboard/page-switcher";
 import { useRouter } from "next/navigation";
+import { useDialogStore } from "@/components/dialog/store";
 
 const gridTemplate =
   "grid-cols-1 md:grid-cols-[minmax(0,_0.5fr)_minmax(0,_3fr)_minmax(0,_3fr)_minmax(0,_2fr)_minmax(0,_2fr)]";
@@ -80,6 +81,7 @@ function Project(props: {
   onSelectProject?: (projectName: string, setTab?: boolean) => void;
 }) {
   const router = useRouter();
+  const { open } = useDialogStore();
   const avatar =
     "w-6 h-6 rounded-full border border-[#F1F5F9] bg-gray-700 overflow-hidden ml-[-8px] border-box";
   const { data, rank, onSelectProject } = props;
@@ -99,8 +101,8 @@ function Project(props: {
     router.push(`/${props.lng}/sponsor/${owner}/${repo}`);
   };
 
-  const handleHackathonClick = (url: string) => {
-    window.open(url, '_blank');
+  const handleHackathonClick = (hackathon: any) => {
+    open("hackathon_details", hackathon);
   };
 
   return (
@@ -178,7 +180,7 @@ function Project(props: {
               {hackathons.slice(0, 3).map((hackathon, index) => (
                 <button
                   key={index}
-                  onClick={() => handleHackathonClick(hackathon.url)}
+                  onClick={() => handleHackathonClick(hackathon)}
                   className="text-[#00FFFF] text-xs hover:text-[#00FFFF]/80 text-left truncate"
                   title={hackathon.name}
                 >

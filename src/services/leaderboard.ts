@@ -117,6 +117,7 @@ export interface BuilderboardContributor {
 export interface BuilderboardHackathon {
   name: string;
   url: string;
+  host: string;
 }
 
 export interface BuilderboardProject {
