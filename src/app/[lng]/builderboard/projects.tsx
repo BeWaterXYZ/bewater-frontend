@@ -327,7 +327,7 @@ export default function Projects({
               data={data}
               rank={index + 1 + (currentPage - 1) * ITEMS_PER_PAGE}
               key={data.repoName || index}
-              isMovement={isMovement}
+              isMovement={true}
               onSelectProject={onSelectProject}
             />
           ),
