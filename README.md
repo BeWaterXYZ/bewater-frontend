@@ -1,6 +1,6 @@
 # bewater frontend
 
-> The prod: [https://bewatet.xyz](https://bewatet.xyz)
+> The prod: [https://bewater.pro](https://bewater.pro)
 > 
 > The dev: [https://dev.bewater.pro](https://dev.bewater.pro)
 
