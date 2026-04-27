@@ -79,7 +79,7 @@
     "sonner": "^2.0.3",
     "sortablejs": "^1.15.2",
     "tailwind-merge": "^2.5.3",
-    "viem": "^2.30.0",
+    "viem": "^2.48.4",
     "wagmi": "^2.15.4",
     "xlsx": "^0.18.5",
     "yet-another-react-lightbox": "^3.20.1",
